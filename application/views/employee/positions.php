@@ -7,6 +7,7 @@
             <th rowspan="2" data-options="field:'name',width:200,halign:'center'">Name</th>
             <th rowspan="2" data-options="field:'description',width:150,halign:'center'">Description</th>
             <th rowspan="2" data-options="field:'level',width:150,halign:'center'">Level</th>
+            <th rowspan="2" data-options="field:'access',width:120,halign:'center'">Access</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
@@ -44,6 +45,10 @@
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Level</span>
                 <input style="width:60%;" name="level" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Access</span>
+                <input style="width:60%;" name="access" id="access" class="easyui-combogrid">
             </div>
         </fieldset>
     </form>
@@ -153,6 +158,43 @@
                     });
                 }
             }]
+        });
+
+        $('#access').combogrid({
+            url: '<?= base_url('employee/employees/reads') ?>',
+            panelWidth: 450,
+            idField: 'number',
+            textField: 'name',
+            mode: 'remote',
+            fitColumns: true,
+            prompt: 'Choose Employee',
+            columns: [
+                [{
+                    field: 'number',
+                    title: 'Employee ID',
+                    width: 120
+                }, {
+                    field: 'name',
+                    title: 'Employee Name',
+                    width: 200
+                }]
+            ],
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combogrid('clear').combogrid('textbox').focus();
+                }
+            }],
+            onSelect: function(emp) {
+                $.ajax({
+                    url: '<?= base_url('attandance/cash_carries/requestCode') ?>',
+                    type: 'post',
+                    data: 'departement_id=' + emp.departement_id,
+                    success: function(requestCode) {
+                        $("#request_code").textbox('setValue', requestCode);
+                    }
+                });
+            }
         });
     });
 </script>

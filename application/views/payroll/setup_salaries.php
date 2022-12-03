@@ -8,7 +8,7 @@
             <th rowspan="2" data-options="field:'division_name',width:200,halign:'center'">Division</th>
             <th rowspan="2" data-options="field:'departement_name',width:200,halign:'center'">Departement</th>
             <th rowspan="2" data-options="field:'departement_sub_name',width:200,halign:'center'">Departement Sub</th>
-            <th rowspan="2" data-options="field:'allowance_name',width:200,halign:'center'">Allowance</th>
+            <th rowspan="2" data-options="field:'component_salary_name',width:200,halign:'center'">Component Salary</th>
             <th rowspan="2" data-options="field:'amount',width:100,halign:'center', align:'right', formatter:numberformat">Amount</th>
             <th rowspan="2" data-options="field:'description',width:300,halign:'center'">Description</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
@@ -51,8 +51,12 @@
                 <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
             </div>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Allowance</span>
-                <input style="width:60%;" id="filter_allowance" class="easyui-combobox">
+                <span style="width:35%; display:inline-block;">Salary Component</span>
+                <input style="width:60%;" id="filter_component_salary" class="easyui-combobox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Position</span>
+                <input style="width:60%;" id="filter_position" class="easyui-combobox">
             </div>
         </div>
     </fieldset>
@@ -69,12 +73,12 @@
                 <input style="width:60%;" name="employee_id" id="employee_id" required="" class="easyui-combogrid">
             </div>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Allowance</span>
-                <input style="width:60%;" name="allowance_id" id="allowance_id" required="" class="easyui-combobox">
+                <span style="width:35%; display:inline-block;">Component Salary</span>
+                <input style="width:60%;" name="salary_component_id" id="salary_component_id" class="easyui-combobox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Amount</span>
-                <input style="width:60%;" name="amount" required="" data-options="buttonText:'Rp', buttonAlign:'left'" class="easyui-numberbox">
+                <input style="width:60%;" name="amount" id="amount" required="" data-options="buttonText:'Rp', buttonAlign:'left'" class="easyui-numberbox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Description</span>
@@ -105,13 +109,13 @@
 </div>
 
 <!-- PDF -->
-<iframe id="printout" src="<?= base_url('payroll/setup_allowances/print') ?>" style="width: 100%;" hidden></iframe>
+<iframe id="printout" src="<?= base_url('payroll/setup_salaries/print') ?>" style="width: 100%;" hidden></iframe>
 
 <script>
     //ADD DATA
     function add() {
         $('#dlg_insert').dialog('open');
-        url_save = '<?= base_url('payroll/setup_allowances/create') ?>';
+        url_save = '<?= base_url('payroll/setup_salaries/create') ?>';
         $('#frm_insert').form('clear');
     }
 
@@ -121,7 +125,7 @@
         if (row) {
             $('#dlg_insert').dialog('open');
             $('#frm_insert').form('load', row);
-            url_save = '<?= base_url('payroll/setup_allowances/update') ?>?id=' + btoa(row.id);
+            url_save = '<?= base_url('payroll/setup_salaries/update') ?>?id=' + btoa(row.id);
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
         }
@@ -137,7 +141,7 @@
                         var row = rows[i];
                         $.ajax({
                             method: 'post',
-                            url: '<?= base_url('payroll/setup_allowances/delete') ?>',
+                            url: '<?= base_url('payroll/setup_salaries/delete') ?>',
                             data: {
                                 id: row.id
                             },
@@ -174,20 +178,18 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combobox('getValue');
-        var filter_allowance = $("#filter_allowance").combobox('getValue');
 
         var url = "?filter_division=" + filter_division +
             "&filter_departement=" + filter_departement +
             "&filter_departement_sub=" + filter_departement_sub +
-            "&filter_employee=" + filter_employee +
-            "&filter_allowance=" + filter_allowance;
+            "&filter_employee=" + filter_employee;
 
         $('#dg').datagrid({
-            url: '<?= base_url('payroll/setup_allowances/datatables') ?>' + url
+            url: '<?= base_url('payroll/setup_salaries/datatables') ?>' + url
         });
 
         $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
-        $("#printout").attr('src', '<?= base_url('payroll/setup_allowances/print') ?>' + url);
+        $("#printout").attr('src', '<?= base_url('payroll/setup_salaries/print') ?>' + url);
     }
 
     //PRINT PDF
@@ -200,15 +202,13 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combobox('getValue');
-        var filter_allowance = $("#filter_allowance").combobox('getValue');
 
         var url = "?filter_division=" + filter_division +
             "&filter_departement=" + filter_departement +
             "&filter_departement_sub=" + filter_departement_sub +
-            "&filter_employee=" + filter_employee +
-            "&filter_allowance=" + filter_allowance;
+            "&filter_employee=" + filter_employee;
 
-        window.location.assign('<?= base_url('payroll/setup_allowances/print/excel') ?>' + url);
+        window.location.assign('<?= base_url('payroll/setup_salaries/print/excel') ?>' + url);
     }
     //RELOAD
     function reload() {
@@ -218,7 +218,7 @@
     $(function() {
         //SETTING DATAGRID EASYUI
         $('#dg').datagrid({
-            url: '<?= base_url('payroll/setup_allowances/datatables') ?>',
+            url: '<?= base_url('payroll/setup_salaries/datatables') ?>',
             pagination: true,
             rownumbers: true
         });
@@ -256,14 +256,14 @@
             buttons: [{
                 text: 'List Failed',
                 handler: function() {
-                    window.open('<?= base_url('payroll/setup_allowances/uploadDownloadFailed') ?>', '_blank');
+                    window.open('<?= base_url('payroll/setup_salaries/uploadDownloadFailed') ?>', '_blank');
                 }
             }, {
                 text: 'Upload',
                 iconCls: 'icon-ok',
                 handler: function() {
                     $('#frm_upload').form('submit', {
-                        url: '<?= base_url('payroll/setup_allowances/upload') ?>',
+                        url: '<?= base_url('payroll/setup_salaries/upload') ?>',
                         onSubmit: function() {
                             if ($(this).form('validate') == false) {
                                 return $(this).form('validate');
@@ -279,7 +279,7 @@
 
                             //Clear File
                             $.ajax({
-                                url: "<?= base_url('payroll/setup_allowances/uploadclearFailed') ?>"
+                                url: "<?= base_url('payroll/setup_salaries/uploadclearFailed') ?>"
                             });
 
                             var json = eval('(' + result + ')');
@@ -295,7 +295,7 @@
                                     $.ajax({
                                         type: "POST",
                                         async: true,
-                                        url: "<?= base_url('payroll/setup_allowances/uploadCreate') ?>",
+                                        url: "<?= base_url('payroll/setup_salaries/uploadCreate') ?>",
                                         data: {
                                             "data": json[number - 1]
                                         },
@@ -314,7 +314,7 @@
                                                 $.ajax({
                                                     type: "POST",
                                                     async: true,
-                                                    url: "<?= base_url('payroll/setup_allowances/uploadcreateFailed') ?>",
+                                                    url: "<?= base_url('payroll/setup_salaries/uploadcreateFailed') ?>",
                                                     data: {
                                                         data: json[number - 1],
                                                         message: result.message
@@ -433,8 +433,21 @@
             ],
         });
 
-        $('#filter_allowance').combobox({
-            url: '<?= base_url('payroll/allowances/reads') ?>',
+        $('#filter_component_salary').combobox({
+            url: '<?= base_url('payroll/components/reads') ?>',
+            valueField: 'id',
+            textField: 'name',
+            prompt: "Choose All",
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combobox('clear').combobox('textbox').focus();
+                }
+            }]
+        });
+
+        $('#filter_position').combobox({
+            url: '<?= base_url('employee/positions/reads') ?>',
             valueField: 'id',
             textField: 'name',
             prompt: "Choose All",
@@ -477,11 +490,20 @@
             }
         });
 
-        $('#allowance_id').combobox({
-            url: '<?= base_url('payroll/allowances/reads') ?>',
+        $('#salary_component_id').combobox({
+            url: '<?= base_url('payroll/components/reads') ?>',
             valueField: 'id',
             textField: 'name',
-            prompt: "Choose Allowance"
+            prompt: "Optional",
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combobox('clear').combobox('textbox').focus();
+                }
+            }],
+            onSelect: function(salary){
+                $("#amount").numberbox('setValue', salary.salary);
+            }
         });
     });
 
