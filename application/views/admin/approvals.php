@@ -52,6 +52,7 @@
                     <option value="overtimes">Overtimes</option>
                     <option value="cash_carries">Cash Carries</option>
                     <option value="permits">Permits</option>
+                    <option value="change_days">Change Days</option>
                 </select>
             </div>
             <div class="fitem">

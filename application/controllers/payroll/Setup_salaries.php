@@ -47,6 +47,8 @@ class Setup_salaries extends CI_Controller
             $filter_departement = $this->input->get('filter_departement');
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
+            $filter_component_salary = $this->input->get('filter_component_salary');
+            $filter_position = $this->input->get('filter_position');
 
             $page = $this->input->post('page');
             $rows = $this->input->post('rows');
@@ -56,12 +58,25 @@ class Setup_salaries extends CI_Controller
             $offset = ($page - 1) * $rows;
             $result = array();
             //Select Query
-            $this->db->select('a.*, c.number as employee_number, c.name as employee_name, d.name as division_name, e.name as departement_name, f.name as departement_sub_name');
+            $this->db->select('a.*, 
+                c.number as employee_number, 
+                c.name as employee_name, 
+                d.name as division_name, 
+                e.name as departement_name,
+                f.name as departement_sub_name, 
+                g.name as component_salary_name,
+                ((a.amount * 75) / 100) as basic,
+                ((a.amount * 25) / 100) as allowance_fix,
+                ((a.amount * 25) / 100) as other,
+                ((((a.amount * 25) / 100) * 40) / 100) as position,
+                ((((a.amount * 25) / 100) * 60) / 100) as skill
+            ');
             $this->db->from('setup_salaries a');
             $this->db->join('employees c', 'a.employee_id = c.id');
             $this->db->join('divisions d', 'c.division_id = d.id');
             $this->db->join('departements e', 'c.departement_id = e.id');
             $this->db->join('departement_subs f', 'c.departement_sub_id = f.id');
+            $this->db->join('salary_components g', 'a.salary_component_id = g.id', 'left');
             $this->db->where('a.deleted', 0);
             $this->db->where('c.deleted', 0);
             $this->db->where('c.status', 0);
@@ -69,6 +84,8 @@ class Setup_salaries extends CI_Controller
             $this->db->like('d.id', $filter_division);
             $this->db->like('e.id', $filter_departement);
             $this->db->like('f.id', $filter_departement_sub);
+            $this->db->like('a.salary_component_id', $filter_component_salary);
+            $this->db->like('c.position_id', $filter_position);
             $this->db->order_by('c.name', 'ASC');
             //Total Data
             $totalRows = $this->db->count_all_results('', false);
@@ -95,7 +112,7 @@ class Setup_salaries extends CI_Controller
                     $send   = $this->crud->create('setup_salaries', $post);
                     echo $send;
                 } else {
-                    show_error("Employee and Allowance has been created");
+                    show_error("Employee has been created");
                 }
             } else {
                 show_error(validation_errors());
@@ -140,7 +157,8 @@ class Setup_salaries extends CI_Controller
         for ($i = 3; $i <= $total_row; $i++) {
             $datas[] = array(
                 'employee_number' => $data->val($i, 2),
-                'amount' => $data->val($i, 3)
+                'salary_component_number' => $data->val($i, 3),
+                'amount' => $data->val($i, 4),
             );
         }
 
@@ -183,6 +201,13 @@ class Setup_salaries extends CI_Controller
         if ($this->input->post()) {
             $data = $this->input->post('data');
             $employees = $this->crud->read('employees', ["number" => $data['employee_number'], "status" => 0]);
+            $salary_component = $this->crud->read('salary_components', [], ["number" => $data['salary_component_number']]);
+
+            if (!empty($salary_component->id)) {
+                $salary_component_id = $salary_component->id;
+            } else {
+                $salary_component_id = "";
+            }
 
             if (!empty($employees)) {
                 $this->db->select('*');
@@ -195,6 +220,7 @@ class Setup_salaries extends CI_Controller
                 } else {
                     $post = array(
                         'employee_id' => $employees->id,
+                        'salary_component_id' => $salary_component_id,
                         'amount' => $data['amount']
                     );
 
@@ -220,18 +246,33 @@ class Setup_salaries extends CI_Controller
         $filter_departement = $this->input->get('filter_departement');
         $filter_departement_sub = $this->input->get('filter_departement_sub');
         $filter_employee = $this->input->get('filter_employee');
+        $filter_component_salary = $this->input->get('filter_component_salary');
+        $filter_position = $this->input->get('filter_position');
 
         //Config
         $this->db->select('*');
         $this->db->from('config');
         $config = $this->db->get()->row();
 
-        $this->db->select('a.*, c.number as employee_number, c.name as employee_name, d.name as division_name, e.name as departement_name, f.name as departement_sub_name');
+        $this->db->select('a.*, 
+            c.number as employee_number, 
+            c.name as employee_name, 
+            d.name as division_name, 
+            e.name as departement_name,
+            f.name as departement_sub_name, 
+            g.name as component_salary_name,
+            ((a.amount * 75) / 100) as basic,
+            ((a.amount * 25) / 100) as allowance_fix,
+            ((a.amount * 25) / 100) as other,
+            ((((a.amount * 25) / 100) * 40) / 100) as position,
+            ((((a.amount * 25) / 100) * 60) / 100) as skill
+        ');
         $this->db->from('setup_salaries a');
         $this->db->join('employees c', 'a.employee_id = c.id');
         $this->db->join('divisions d', 'c.division_id = d.id');
         $this->db->join('departements e', 'c.departement_id = e.id');
         $this->db->join('departement_subs f', 'c.departement_sub_id = f.id');
+        $this->db->join('salary_components g', 'a.salary_component_id = g.id', 'left');
         $this->db->where('a.deleted', 0);
         $this->db->where('c.deleted', 0);
         $this->db->where('c.status', 0);
@@ -239,10 +280,12 @@ class Setup_salaries extends CI_Controller
         $this->db->like('d.id', $filter_division);
         $this->db->like('e.id', $filter_departement);
         $this->db->like('f.id', $filter_departement_sub);
+        $this->db->like('a.salary_component_id', $filter_component_salary);
+        $this->db->like('c.position_id', $filter_position);
         $this->db->order_by('c.name', 'ASC');
         $records = $this->db->get()->result_array();
 
-        $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+        $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: center;color: black;}</style><body>
         <center>
             <div style="float: left; font-size: 12px; text-align: left;">
                 <table style="width: 100%;">
@@ -266,14 +309,24 @@ class Setup_salaries extends CI_Controller
         
         <table id="customers" border="1">
             <tr>
-                <th width="20">No</th>
-                <th>Employee ID</th>
-                <th>Employee Name</th>
-                <th>Division</th>
-                <th>Departement</th>
-                <th>Departement Sub</th>
-                <th>Amount</th>
-                <th>Description</th>
+                <th rowspan="2" width="20">No</th>
+                <th rowspan="2">Employee ID</th>
+                <th rowspan="2">Employee Name</th>
+                <th rowspan="2">Division</th>
+                <th rowspan="2">Departement</th>
+                <th rowspan="2">Departement Sub</th>
+                <th rowspan="2">Component Salary</th>
+                <th rowspan="2">Total Salary</th>
+                <th colspan="2">Salary</th>
+                <th rowspan="2">Other</th>
+                <th colspan="2">Allowance</th>
+                <th rowspan="2">Description</th>
+            </tr>
+            <tr>
+                <th>Basic (75%)</th>
+                <th>Allowance (25%)</th>
+                <th>Position (40%)</th>
+                <th>Skill (60%)</th>
             </tr>';
         $no = 1;
         foreach ($records as $data) {
@@ -284,7 +337,13 @@ class Setup_salaries extends CI_Controller
                     <td>' . $data['division_name'] . '</td>
                     <td>' . $data['departement_name'] . '</td>
                     <td>' . $data['departement_sub_name'] . '</td>
+                    <td>' . $data['component_salary_name'] . '</td>
                     <td>' . number_format($data['amount']) . '</td>
+                    <td>' . number_format($data['basic']) . '</td>
+                    <td>' . number_format($data['allowance_fix']) . '</td>
+                    <td>' . number_format($data['other']) . '</td>
+                    <td>' . number_format($data['position']) . '</td>
+                    <td>' . number_format($data['skill']) . '</td>
                     <td>' . $data['description'] . '</td>';
             $no++;
         }

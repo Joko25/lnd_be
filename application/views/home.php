@@ -2,8 +2,12 @@
 
 	<!-- Header -->
 	<div data-options="region:'north', border:false" id="header">
+		<div style="float: left;">
+			<img src="<?= base_url('assets/image/hris.png') ?>" width="100">
+		</div>
+
 		<div class="logo-company">
-			<img src="<?= $config->favicon ?>" width="55"><br>
+			<img src="<?= $config->favicon ?>" width="60"><br>
 		</div>
 		<div class="name-company">
 			<b style="font-size: 16px !important;"><?= $config->name ?></b><br>
@@ -65,10 +69,8 @@
 	<!-- TABS AND MODULE -->
 	<div data-options="region:'center'" style="width: 100%;">
 		<div class="easyui-tabs" id="tabs" style="width:100%; height: 100%;">
-			<div title="Dashboard" style="padding:10px;">
-				<div style="width: 100%;">
-
-				</div>
+			<div title="Dashboard">
+				<iframe src="<?= base_url("dashboard/dashboard") ?>" scrolling="yes" id="page" style="border: 0; width: 100%; height: 99%; margin:0;"></iframe>
 			</div>
 		</div>
 	</div>

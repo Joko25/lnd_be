@@ -18,6 +18,7 @@ class Home extends CI_Controller
         if ($this->session->username != "") {
             $data['config'] = $this->crud->read('config');
             $data['users'] = $this->crud->reads('users', [], ["actived" => 0, "deleted" => 0], "", "name", "asc");
+
             $this->load->view('template/header');
             $this->load->view('home', $data);
         } else {
@@ -669,18 +670,20 @@ class Home extends CI_Controller
                 d.name as departement_name,
                 e.name as departement_sub_name,
                 b.number as employee_number,
-                b.name as employee_name
+                b.name as employee_name,
+                f.name as fullname
             ');
             $this->db->from('overtimes a');
             $this->db->join('employees b', 'a.employee_id = b.id');
             $this->db->join('divisions c', 'b.division_id = c.id');
             $this->db->join('departements d', 'b.departement_id = d.id');
             $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
+            $this->db->join('users f', "a.created_by = f.username");
             $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'overtimes'", 'left');
             $this->db->where('b.deleted', 0);
             $this->db->where('b.status', 0);
             $this->db->where('a.deleted', 0);
-            $this->db->where('b.users_id_to', $this->session->username);
+            $this->db->where('g.users_id_to', $this->session->username);
             $this->db->group_by('a.trans_date');
             $this->db->group_by('a.employee_id');
             $this->db->group_by('a.type');
@@ -734,7 +737,7 @@ class Home extends CI_Controller
                                 <td>' . $no . '</td>
                                 <td>' . $data['trans_date'] . '</td>
                                 <td>' . $data['request_code'] . '</td>
-                                <td>' . $data['created_by'] . '</td>
+                                <td>' . $data['fullname'] . '</td>
                                 <td>' . $data['employee_id'] . '</td>
                                 <td>' . $data['employee_name'] . '</td>
                                 <td>' . $data['division_name'] . '</td>
@@ -769,18 +772,20 @@ class Home extends CI_Controller
                 d.name as departement_name,
                 e.name as departement_sub_name,
                 b.number as employee_number,
-                b.name as employee_name
+                b.name as employee_name,
+                f.name as fullname
             ');
-            $this->db->from('overtimes a');
+            $this->db->from('cash_carries a');
             $this->db->join('employees b', 'a.employee_id = b.id');
             $this->db->join('divisions c', 'b.division_id = c.id');
             $this->db->join('departements d', 'b.departement_id = d.id');
             $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
-            $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'overtimes'", 'left');
+            $this->db->join('users f', "a.created_by = f.username");
+            $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'cash_carries'", 'left');
             $this->db->where('b.deleted', 0);
             $this->db->where('b.status', 0);
             $this->db->where('a.deleted', 0);
-            $this->db->where('b.users_id_to', $this->session->username);
+            $this->db->where('g.users_id_to', $this->session->username);
             $this->db->group_by('a.trans_date');
             $this->db->group_by('a.employee_id');
             $this->db->group_by('a.type');
@@ -817,9 +822,9 @@ class Home extends CI_Controller
                         <th>Departement</th>
                         <th>Departement Sub</th>
                         <th>Trans Date</th>
-                        <th>Start Overtime</th>
-                        <th>End Overtime</th>
-                        <th>Type Overtime</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Type</th>
                         <th>Duration</th>
                         <th>Convert</th>
                         <th>Amount</th>
@@ -834,7 +839,7 @@ class Home extends CI_Controller
                                 <td>' . $no . '</td>
                                 <td>' . $data['trans_date'] . '</td>
                                 <td>' . $data['request_code'] . '</td>
-                                <td>' . $data['created_by'] . '</td>
+                                <td>' . $data['fullname'] . '</td>
                                 <td>' . $data['employee_id'] . '</td>
                                 <td>' . $data['employee_name'] . '</td>
                                 <td>' . $data['division_name'] . '</td>
@@ -847,6 +852,95 @@ class Home extends CI_Controller
                                 <td>' . $data['duration_hour'] . '</td>
                                 <td>' . $data['duration_convert'] . '</td>
                                 <td>' . $data['amount'] . '</td>
+                                <td>' . $data['remarks'] . '</td>
+                                <td>
+                                    <div id="' . $data['id'] . '">
+                                        <a href="#" onclick="' . $approve . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:10px;" href="">Y</a>
+                                        <a href="#" onclick="' . $disapprove . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:10px;" href="">X</a>
+                                    </div>
+                                </td>
+                            </tr>';
+                $no++;
+            }
+
+            $html .= '</table></body></html>';
+            echo $html;
+        } elseif ($table == "change_days") {
+            $this->db->select('a.*, 
+                g.users_id_from as status_check,
+                g.users_id_to as status_notification, 
+                g.updated_date as status_date,
+                c.name as division_name,
+                d.name as departement_name,
+                e.name as departement_sub_name,
+                b.number as employee_number,
+                b.name as employee_name,
+                f.name as fullname
+            ');
+            $this->db->from('change_days a');
+            $this->db->join('employees b', 'a.employee_id = b.id');
+            $this->db->join('divisions c', 'b.division_id = c.id');
+            $this->db->join('departements d', 'b.departement_id = d.id');
+            $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
+            $this->db->join('users f', "a.created_by = f.username");
+            $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'change_days'", 'left');
+            $this->db->where('b.deleted', 0);
+            $this->db->where('b.status', 0);
+            $this->db->where('a.deleted', 0);
+            $this->db->where('g.users_id_to', $this->session->username);
+            $this->db->group_by('a.start');
+            $this->db->group_by('a.employee_id');
+            $this->db->order_by('a.created_date', 'DESC');
+            $records = $this->db->get()->result_array();
+
+            foreach ($records as $all) {
+                $arr_all[] = array(
+                    'id' => $all['id']
+                );
+            }
+
+            $approveall = "return approveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'change_days')";
+            $disapproveall = "return disapproveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'change_days')";
+            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+                        <center>
+                            <div style="margin-top:20px; margin-bottom:20px;">
+                                <u style="font-weight:bold; font-size:16px !important;">APPROVAL CHANGE DAYS</u>
+                            </div>
+                            
+                            <a href="#" onclick="' . $approveall . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:12px;" href="">Approve All</a>
+                            <a href="#" onclick="' . $disapproveall . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:12px;" href="">Disapprove All</a>
+                            <br><br>
+                        </center>
+                <table id="customers" border="1">
+                    <tr>
+                        <th width="20">No</th>
+                        <th>Request No</th>
+                        <th>Request Name</th>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Division</th>
+                        <th>Departement</th>
+                        <th>Departement Sub</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Remarks</th>
+                        <th>#</th>
+                    </tr>';
+            $no = 1;
+            foreach ($records as $data) {
+                $approve = "approve('$data[id]', 'change_days')";
+                $disapprove = "disapprove('$data[id]', 'change_days')";
+                $html .= '  <tr>
+                                <td>' . $no . '</td>
+                                <td>' . $data['request_code'] . '</td>
+                                <td>' . $data['fullname'] . '</td>
+                                <td>' . $data['employee_id'] . '</td>
+                                <td>' . $data['employee_name'] . '</td>
+                                <td>' . $data['division_name'] . '</td>
+                                <td>' . $data['departement_name'] . '</td>
+                                <td>' . $data['departement_sub_name'] . '</td>
+                                <td>' . date("d F Y", strtotime($data['start'])) . '</td>
+                                <td>' . date("d F Y", strtotime($data['end'])) . '</td>
                                 <td>' . $data['remarks'] . '</td>
                                 <td>
                                     <div id="' . $data['id'] . '">

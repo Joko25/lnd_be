@@ -41,7 +41,14 @@ $config = $this->db->get()->row();
     <script type="text/javascript" src="<?= base_url('assets/vendors/toastr.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/vendors/sweetalert2.all.min.js') ?>"></script>
 
+    <!-- Charts -->
+    <script src="<?= base_url('assets/vendors/charts/code/highcharts.js') ?>"></script>
+
     <style type="text/css">
+        .highcharts-credits {
+            display: none;
+        }
+
         .preloader {
             position: fixed;
             top: 0;

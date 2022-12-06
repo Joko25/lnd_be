@@ -41,13 +41,6 @@
                 <input style="width:60%;" id="filter_group" name="filter_group" class="easyui-combobox">
             </div>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Display</span>
-                <select style="width:60%;" id="filter_display" panelHeight="auto" name="filter_display" class="easyui-combobox">
-                    <option value="REKAP">Rekap</option>
-                    <option value="DETAIL">Detail</option>
-                </select>
-            </div>
-            <div class="fitem">
                 <span style="width:35%; display:inline-block;">Status</span>
                 <select style="width:60%;" id="filter_status" panelHeight="auto" name="filter_status" class="easyui-combobox">
                     <option value="">Select All</option>
@@ -82,10 +75,9 @@
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_created_by = $("#filter_created_by").combobox('getValue');
         var filter_group = $("#filter_group").combobox('getValue');
-        var filter_display = $("#filter_display").combobox('getValue');
         var filter_status = $("#filter_status").combobox('getValue');
 
-        if (filter_year == "") {
+        if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Choose Filter Date");
         } else {
             var url = "?filter_from=" + filter_from +
@@ -96,7 +88,6 @@
                 "&filter_employee=" + filter_employee +
                 "&filter_created_by=" + filter_created_by +
                 "&filter_group=" + filter_group +
-                "&filter_display=" + filter_display +
                 "&filter_status=" + filter_status;
 
             $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
@@ -113,10 +104,9 @@
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_created_by = $("#filter_created_by").combobox('getValue');
         var filter_group = $("#filter_group").combobox('getValue');
-        var filter_display = $("#filter_display").combobox('getValue');
         var filter_status = $("#filter_status").combobox('getValue');
 
-        if (filter_year == "") {
+        if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Choose Filter Date");
         } else {
             var url = "?filter_from=" + filter_from +
@@ -127,7 +117,6 @@
                 "&filter_employee=" + filter_employee +
                 "&filter_created_by=" + filter_created_by +
                 "&filter_group=" + filter_group +
-                "&filter_display=" + filter_display +
                 "&filter_status=" + filter_status;
 
             window.location.assign('<?= base_url('report/cash_carries/print/excel') ?>' + url);

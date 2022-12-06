@@ -9,12 +9,20 @@
             <th rowspan="2" data-options="field:'departement_name',width:200,halign:'center'">Departement</th>
             <th rowspan="2" data-options="field:'departement_sub_name',width:200,halign:'center'">Departement Sub</th>
             <th rowspan="2" data-options="field:'component_salary_name',width:200,halign:'center'">Component Salary</th>
-            <th rowspan="2" data-options="field:'amount',width:100,halign:'center', align:'right', formatter:numberformat">Amount</th>
+            <th rowspan="2" data-options="field:'amount',width:150,halign:'center', align:'right', formatter:numberformat">Total Salary</th>
+            <th colspan="2" data-options="field:'',width:150,halign:'center'"> Salary</th>
+            <th rowspan="2" data-options="field:'other',width:150,halign:'center', align:'right', formatter:numberformat">Other (25%)</th>
+            <th colspan="2" data-options="field:'',width:100,halign:'center'"> Allowance</th>
             <th rowspan="2" data-options="field:'description',width:300,halign:'center'">Description</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
         <tr>
+            <th data-options="field:'basic',width:150,halign:'center', align:'right', formatter:numberformat"> Basic (75%)</th>
+            <th data-options="field:'allowance_fix',width:150,halign:'center', align:'right', formatter:numberformat"> Fix Allowance (25%)</th>
+            <th data-options="field:'position',width:150,halign:'center', align:'right', formatter:numberformat"> Position (40%)</th>
+            <th data-options="field:'skill',width:150,halign:'center', align:'right', formatter:numberformat"> Skill (60%)</th>
+            <th data-options="field:'created_date',width:150,align:'center'"> Date</th>
             <th data-options="field:'created_by',width:100,align:'center'"> By</th>
             <th data-options="field:'created_date',width:150,align:'center'"> Date</th>
             <th data-options="field:'updated_by',width:100,align:'center'"> By</th>
@@ -170,7 +178,7 @@
     }
 
     function download_excel() {
-        window.location.assign('<?= base_url('template/tmp_allowance.xls') ?>');
+        window.location.assign('<?= base_url('template/tmp_setup_salary.xls') ?>');
     }
 
     function filter() {
@@ -178,11 +186,15 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combobox('getValue');
+        var filter_component_salary = $("#filter_component_salary").combobox('getValue');
+        var filter_position = $("#filter_position").combobox('getValue');
 
         var url = "?filter_division=" + filter_division +
             "&filter_departement=" + filter_departement +
             "&filter_departement_sub=" + filter_departement_sub +
-            "&filter_employee=" + filter_employee;
+            "&filter_employee=" + filter_employee +
+            "&filter_component_salary=" + filter_component_salary +
+            "&filter_position=" + filter_position;
 
         $('#dg').datagrid({
             url: '<?= base_url('payroll/setup_salaries/datatables') ?>' + url
@@ -202,11 +214,15 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combobox('getValue');
+        var filter_component_salary = $("#filter_component_salary").combobox('getValue');
+        var filter_position = $("#filter_position").combobox('getValue');
 
         var url = "?filter_division=" + filter_division +
             "&filter_departement=" + filter_departement +
             "&filter_departement_sub=" + filter_departement_sub +
-            "&filter_employee=" + filter_employee;
+            "&filter_employee=" + filter_employee +
+            "&filter_component_salary=" + filter_component_salary +
+            "&filter_position=" + filter_position;
 
         window.location.assign('<?= base_url('payroll/setup_salaries/print/excel') ?>' + url);
     }
@@ -501,7 +517,7 @@
                     $(e.data.target).combobox('clear').combobox('textbox').focus();
                 }
             }],
-            onSelect: function(salary){
+            onSelect: function(salary) {
                 $("#amount").numberbox('setValue', salary.salary);
             }
         });

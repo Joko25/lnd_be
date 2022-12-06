@@ -5,7 +5,7 @@
             <th rowspan="2" field="ck" checkbox="true"></th>
             <th rowspan="2" data-options="field:'trans_date',width:100,halign:'center'">Request Date</th>
             <th rowspan="2" data-options="field:'request_code',width:200,halign:'center'">Request No</th>
-            <th rowspan="2" data-options="field:'created_by',width:100,halign:'center'">Request Name</th>
+            <th rowspan="2" data-options="field:'fullname',width:100,halign:'center'">Request Name</th>
             <th rowspan="2" data-options="field:'employee_id',width:100,halign:'center'">Employee ID</th>
             <th rowspan="2" data-options="field:'employee_name',width:250,halign:'center'">Employee Name</th>
             <th rowspan="2" data-options="field:'start',width:80,halign:'center'">Start</th>
@@ -103,7 +103,7 @@
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Type</span>
-                <select style="width:60%;" id="type" panelHeight="auto" data-options="prompt:'Choose Type Overtime'" required name="type" class="easyui-combobox">
+                <select style="width:60%;" id="type" panelHeight="auto" data-options="prompt:'Choose Type Cash Carry'" required name="type" class="easyui-combobox">
                     <option value="REGULAR">REGULAR</option>
                     <option value="CORRECTION">CORRECTION</option>
                 </select>
@@ -186,8 +186,7 @@
                             method: 'post',
                             url: '<?= base_url('attandance/cash_carries/delete') ?>',
                             data: {
-                                number: row.number,
-                                date_in: row.date_in
+                                id: row.id
                             },
                             success: function(result) {
                                 var result = eval('(' + result + ')');

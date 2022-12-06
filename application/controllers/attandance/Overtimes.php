@@ -50,27 +50,25 @@ class Overtimes extends CI_Controller
 
     public function readRequestCode()
     {
-        if ($this->input->get()) {
-            $filter_from = $this->input->get('filter_from');
-            $filter_to = $this->input->get('filter_to');
-            $filter_division = $this->input->get('filter_division');
-            $filter_departement = $this->input->get('filter_departement');
-            $filter_departement_sub = $this->input->get('filter_departement_sub');
+        $filter_from = $this->input->get('filter_from');
+        $filter_to = $this->input->get('filter_to');
+        $filter_division = $this->input->get('filter_division');
+        $filter_departement = $this->input->get('filter_departement');
+        $filter_departement_sub = $this->input->get('filter_departement_sub');
 
-            $this->db->select('a.request_code');
-            $this->db->from('overtimes a');
-            $this->db->join('employees b', 'a.employee_id = b.id');
-            if ($filter_from != "" && $filter_to != "") {
-                $this->db->where('a.trans_date >=', $filter_from);
-                $this->db->where('a.trans_date <=', $filter_to);
-            }
-            $this->db->like('b.division_id', $filter_division);
-            $this->db->like('b.departement_id', $filter_departement);
-            $this->db->like('b.departement_sub_id', $filter_departement_sub);
-            $this->db->group_by('a.request_code');
-            $records = $this->db->get()->result_array();
-            echo json_encode($records);
+        $this->db->select('a.request_code');
+        $this->db->from('overtimes a');
+        $this->db->join('employees b', 'a.employee_id = b.id');
+        if ($filter_from != "" && $filter_to != "") {
+            $this->db->where('a.trans_date >=', $filter_from);
+            $this->db->where('a.trans_date <=', $filter_to);
         }
+        $this->db->like('b.division_id', $filter_division);
+        $this->db->like('b.departement_id', $filter_departement);
+        $this->db->like('b.departement_sub_id', $filter_departement_sub);
+        $this->db->group_by('a.request_code');
+        $records = $this->db->get()->result_array();
+        echo json_encode($records);
     }
 
     public function requestCode()
@@ -211,7 +209,7 @@ class Overtimes extends CI_Controller
         $shift_employee = $this->db->get()->row();
 
         $this->db->select('b.salary');
-        $this->db->from('salary_setups a');
+        $this->db->from('setup_salaries a');
         $this->db->join('salary_components b', 'a.salary_component_id = b.id', 'left');
         $this->db->where('a.employee_id', $employee_id);
         $salary = $this->db->get()->row();
@@ -329,7 +327,8 @@ class Overtimes extends CI_Controller
                 d.name as departement_name,
                 e.name as departement_sub_name,
                 b.number as employee_number,
-                b.name as employee_name
+                b.name as employee_name,
+                f.name as fullname
             ');
 
             $this->db->from('overtimes a');
@@ -337,6 +336,7 @@ class Overtimes extends CI_Controller
             $this->db->join('divisions c', 'b.division_id = c.id');
             $this->db->join('departements d', 'b.departement_id = d.id');
             $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
+            $this->db->join('users f', "a.created_by = f.username");
             $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'overtimes'", 'left');
             $this->db->where('b.deleted', 0);
             $this->db->where('b.status', 0);
@@ -355,7 +355,7 @@ class Overtimes extends CI_Controller
             if ($filter_approval == "0") {
                 $this->db->where("(g.users_id_to = '' or g.users_id_to is null)");
             } elseif ($filter_approval == "1") {
-                $this->db->where("(g.users_id_to != '' or g.users_id_to is not null)");
+                $this->db->where("(g.users_id_to != '')");
             }
             $this->db->group_by('a.trans_date');
             $this->db->group_by('a.employee_id');
@@ -387,6 +387,7 @@ class Overtimes extends CI_Controller
             $start = $post['start'];
             $end = $post['end'];
             $type = $post['type'];
+            $remarks = $post['remarks'];
 
             //Set Duration
             $time_begin = strtotime($trans_date . " " . $start);
@@ -409,10 +410,11 @@ class Overtimes extends CI_Controller
                 "duration" =>  $duration,
                 "duration_hour" =>  $duration_hour,
                 "duration_convert" =>  $ot_amount['convert'],
-                "amount" =>  $ot_amount['amount']
+                "amount" =>  $ot_amount['amount'],
+                "remarks" =>  $remarks
             );
 
-            $overtime = json_decode($this->crud->reads('overtimes', [], ["employee_id" => $employee_id, "trans_date" => $trans_date, "type" => $type]));
+            $overtime = $this->crud->reads('overtimes', [], ["employee_id" => $employee_id, "trans_date" => $trans_date, "type" => $type]);
             if (count($overtime) > 0) {
                 echo json_encode(array("title" => "Duplicate", "message" => "Overtime has been created", "theme" => "error"));
             } else {
@@ -464,7 +466,7 @@ class Overtimes extends CI_Controller
     public function delete()
     {
         $data = $this->input->post();
-        $delete = $this->crud->delete("overtimes", ['number' => $data['number'], 'date_in' => $data['date_in']]);
+        $delete = $this->crud->delete("overtimes", ['id' => $data['id']]);
         echo $delete;
     }
 
@@ -510,8 +512,8 @@ class Overtimes extends CI_Controller
 
         $date = date("ymd");
         $this->db->select('max(SUBSTRING(request_code, -4)) as code');
-        $this->db->from('overtime');
-        $this->db->where('deleted_is', 0);
+        $this->db->from('overtimes');
+        $this->db->where('deleted', 0);
         $this->db->where('SUBSTRING(request_code, 4, 6)=', $date);
         $records = $this->db->get()->row();
 
@@ -521,7 +523,7 @@ class Overtimes extends CI_Controller
         $template = "OT/" . $date . "/";
         $templatefinal = $template . sprintf("%04s", $requestcode);
 
-        for ($i = 2; $i <= $total_row; $i++) {
+        for ($i = 3; $i <= $total_row; $i++) {
             $datas[] = array(
                 'number' => $data->val($i, 2),
                 'trans_date' => $data->val($i, 3),
@@ -570,14 +572,14 @@ class Overtimes extends CI_Controller
     public function uploadcreate()
     {
         if ($this->input->post()) {
-            $data = $this->input->post();
+            $data = $this->input->post('data');
             if ($data['trans_date'] == "") {
                 echo json_encode(array("title" => "Format Date", "message" => $data['number'] . " Format Date is Null", "theme" => "error"));
             } else {
                 $employee = $this->crud->read('employees', [], ["number" => $data['number']]);
 
                 if (!empty($employee)) {
-                    $overtime = $this->crud->read('overtimes', [], ["employee_id" => $employee->id, "trans_date" => $data['trans_date'], "type_overtime" => $data['type_overtime']]);
+                    $overtime = $this->crud->read('overtimes', [], ["employee_id" => $employee->id, "trans_date" => $data['trans_date'], "type" => $data['type']]);
 
                     if (!empty($overtime)) {
                         echo json_encode(array("title" => "Available", "message" => $employee->name . " has been created", "theme" => "error"));
@@ -651,7 +653,8 @@ class Overtimes extends CI_Controller
                 d.name as departement_name,
                 e.name as departement_sub_name,
                 b.number as employee_number,
-                b.name as employee_name
+                b.name as employee_name,
+                f.name as fullname
             ');
 
         $this->db->from('overtimes a');
@@ -659,6 +662,7 @@ class Overtimes extends CI_Controller
         $this->db->join('divisions c', 'b.division_id = c.id');
         $this->db->join('departements d', 'b.departement_id = d.id');
         $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
+        $this->db->join('users f', "a.created_by = f.username");
         $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'overtimes'", 'left');
         $this->db->where('b.deleted', 0);
         $this->db->where('b.status', 0);
@@ -733,7 +737,7 @@ class Overtimes extends CI_Controller
                             <td>' . $no . '</td>
                             <td>' . $data['trans_date'] . '</td>
                             <td>' . $data['request_code'] . '</td>
-                            <td>' . $data['created_by'] . '</td>
+                            <td>' . $data['fullname'] . '</td>
                             <td>' . $data['employee_id'] . '</td>
                             <td>' . $data['employee_name'] . '</td>
                             <td>' . $data['division_name'] . '</td>

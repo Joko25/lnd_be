@@ -565,7 +565,7 @@ class Attandances extends CI_Controller
                     }
                 }
             } else {
-                echo json_encode(array("title" => "Warning", "message" => "Empoyee Un Registered", "theme" => "error"));
+                echo json_encode(array("title" => "Warning", "message" => $data['number'] . " Empoyee ID Un Registered", "theme" => "error"));
             }
         }
     }

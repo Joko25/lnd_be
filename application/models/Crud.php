@@ -124,25 +124,6 @@ class Crud extends CI_Model
             $this->db->where($where);
             if ($this->db->update($table, $data)) {
                 $this->logs("Update", json_encode($data), $table);
-
-                //Approval
-                $read = $this->read($table, [], $where);
-                $approval = $this->read('approvals', [], ["table_name" => $table]);
-                if (!empty($approval)) {
-                    $this->db->where(["table_id" => $read->id]);
-                    $this->db->update("notifications", [
-                        "approvals_id" => $approval->id,
-                        "users_id_from" => $this->session->username,
-                        "users_id_to" => $approval->user_approval_1,
-                        "table_name" => $table,
-                        "name" => "UPDATED APPROVAL",
-                        "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $table)) . "</b>",
-                        "status" => 1,
-                        "updated_by" => $this->session->username,
-                        "updated_date" => date('Y-m-d H:i:s')
-                    ]);
-                }
-
                 return json_encode(array("title" => "Good Job", "message" => "Data Updated Successfully", "theme" => "success"));
             } else {
                 return log_message('error', 'There is an error in your system or data');

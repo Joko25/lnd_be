@@ -72,7 +72,9 @@ class Attandances extends CI_Controller
             $this->db->like('a.id', $filter_employee);
             $this->db->like('f.id', $filter_group);
             $this->db->group_by('a.id');
+            $this->db->order_by('c.name', 'asc');
             $this->db->order_by('d.name', 'asc');
+            $this->db->order_by('e.name', 'asc');
             $records = $this->db->get()->result_array();
 
             //Config
@@ -83,8 +85,8 @@ class Attandances extends CI_Controller
             $start = strtotime($filter_from);
             $finish = strtotime($filter_to);
             $no = 1;
-            foreach ($records as $header) {
 
+            foreach ($records as $record) {
                 $html .= '<div style="page-break-after:always;"><center>
                     <div style="float: left; font-size: 12px; text-align: left;">
                         <table style="width: 100%;">
@@ -114,27 +116,27 @@ class Attandances extends CI_Controller
                     <tr>
                         <td>Employee ID</td>
                         <td>:</td>
-                        <td><b>' . $header['number'] . '</b></td>
+                        <td><b>' . $record['number'] . '</b></td>
                     </tr>
                     <tr>
                         <td>Employee Name</td>
                         <td>:</td>
-                        <td><b>' . $header['name'] . '</b></td>
+                        <td><b>' . $record['name'] . '</b></td>
                     </tr>
                     <tr>
                         <td width="100">Division</td>
                         <td width="10">:</td>
-                        <td><b>' . $header['division_name'] . '</b></td>
+                        <td><b>' . $record['division_name'] . '</b></td>
                     </tr>
                     <tr>
                         <td>Departement</td>
                         <td>:</td>
-                        <td><b>' . $header['departement_name'] . '</b></td>
+                        <td><b>' . $record['departement_name'] . '</b></td>
                     </tr>
                     <tr>
                         <td>Sub Departement</td>
                         <td>:</td>
-                        <td><b>' . $header['departement_sub_name'] . '</b></td>
+                        <td><b>' . $record['departement_sub_name'] . '</b></td>
                     </tr>
                 </table>
                 <br>
@@ -156,233 +158,189 @@ class Attandances extends CI_Controller
                         <th style="text-align:center;">Start</th>
                         <th style="text-align:center;">End</th>
                     </tr>';
+                $working_date = "";
+                $description = "";
+                $style = "";
+                for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
+                    $working_date = date('Y-m-d', $i);
 
-                $this->db->select("a.id as employee_id, a.number, a.name, a.division_id, a.departement_id, a.departement_sub_id, c.name as division_name, d.name as departement_name, e.name as departement_sub_name");
-                $this->db->from('employees a');
-                $this->db->join('attandances b', 'a.number = b.number');
-                $this->db->join('divisions c', 'a.division_id = c.id');
-                $this->db->join('departements d', 'a.departement_id = d.id');
-                $this->db->join('departement_subs e', 'a.departement_sub_id = e.id');
-                if ($filter_from != "" && $filter_to != "") {
-                    $this->db->where('b.date_in >=', $filter_from);
-                    $this->db->where('b.date_in <=', $filter_to);
-                }
-                $this->db->like('a.id', $header['id']);
-                $this->db->group_by(array('a.number'));
-                $this->db->order_by('a.name', 'asc');
-                $employees = $this->db->get()->result_array();
-
-                foreach ($employees as $employee) {
-                    $working_date = "";
-                    $description = "";
-                    $style = "";
-                    for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
-                        $working_date = date('Y-m-d', $i);
-
-                        if (date('w', $i) !== '0' && date('w', $i) !== '6') {
-                            $working = "WEEKDAY";
-                        } else {
-                            $working = "WEEKEND";
-                        }
-
-                        //Working Calendar
-                        $this->db->select('description');
-                        $this->db->from('calendars');
-                        $this->db->where('trans_date', $working_date);
-                        $holiday = $this->db->get()->result_array();
-
-                        //Permit
-                        $this->db->select("a.*, c.name as reason_name, d.name as permit_name");
-                        $this->db->from('permits a');
-                        $this->db->join('employees b', 'a.employee_id = b.id');
-                        $this->db->join('reasons c', 'a.reason_id = c.id');
-                        $this->db->join('permit_types d', 'a.permit_type_id = d.id');
-                        $this->db->where('b.number', $employee['number']);
-                        $this->db->where('a.permit_date <=', $working_date);
-                        $this->db->where('a.permit_date >=', $working_date);
-                        $permit = $this->db->get()->result_array();
-
-                        //Attandance and Overtime
-                        $this->db->select("b.date_in, b.time_in, b.date_out, b.time_out, c.request_code, c.start, c.end, c.duration, c.remarks");
-                        $this->db->from('employees a');
-                        $this->db->join('attandances b', 'a.number = b.number');
-                        $this->db->join('overtimes c', 'a.id = c.employee_id and b.date_in = c.trans_date', 'left');
-                        $this->db->where('b.date_in =', $working_date);
-                        $this->db->like('a.division_id', $employee['division_id']);
-                        $this->db->like('a.departement_id', $employee['departement_id']);
-                        $this->db->like('a.departement_sub_id', $employee['departement_sub_id']);
-                        $this->db->like('a.id', $employee['employee_id']);
-                        $this->db->order_by('a.name', 'asc');
-                        $this->db->order_by('b.date_in', 'asc');
-                        $attandance = $this->db->get()->result_array();
-
-                        //Shift and Setting Group
-                        $this->db->select("d.start, d.end, d.days, d.working, d.tolerance, d.name as shift_name");
-                        $this->db->from('employees a');
-                        $this->db->join('shift_employees b', 'a.id = b.employee_id');
-                        $this->db->join('shifts c', 'c.id = b.shift_id');
-                        $this->db->join('shift_details d', 'd.shift_id = c.id');
-                        $this->db->like('a.division_id', $employee['division_id']);
-                        $this->db->like('a.departement_id', $employee['departement_id']);
-                        $this->db->like('a.departement_sub_id', $employee['departement_sub_id']);
-                        $this->db->like('a.id', $employee['employee_id']);
-                        $this->db->where('d.working', $working);
-
-                        $shifts = $this->db->get()->result_array();
-
-                        //Check Shift
-                        $time_in = "";
-                        $shift_name = "";
-                        foreach ($shifts as $shift) {
-                            $start_min = date_create(@$working_date . ' ' . $shift['start']);
-                            date_add($start_min, date_interval_create_from_date_string('-' . $shift['tolerance'] . ' hours'));
-                            $tolerance_min = date_format($start_min, 'H:i:s');
-                            $tolerance_date_min = date_format($start_min, 'Y-m-d H:i:s');
-
-                            $start_plus = date_create(@$working_date . ' ' . $shift['start']);
-                            date_add($start_plus, date_interval_create_from_date_string($shift['tolerance'] . ' hours'));
-                            $tolerance_plus = date_format($start_plus, 'H:i:s');
-                            $tolerance_date_plus = date_format($start_plus, 'Y-m-d H:i:s');
-
-                            if (@$shift['start'] >= @$attandance[0]['time_in'] && @$tolerance_min <= @$attandance[0]['time_in']) {
-                                $time_in = $shift['start'];
-                                $time_out = $shift['end'];
-                                $shift_name = $shift['shift_name'];
-                            } elseif (@$shift['start'] <= @$attandance[0]['time_in'] && @$tolerance_plus >= @$attandance[0]['time_in']) {
-                                $time_in = $shift['start'];
-                                $time_out = $shift['end'];
-                                $shift_name = $shift['shift_name'];
-                            }
-                        }
-
-                        $permit_description = @$permit[0]['note'];
-                        $permit_name = @$permit[0]['permit_name'];
-
-                        //Jika hari kerja nya adalah 5 hari
-                        if (@$shift[0]['days'] == "5") {
-                            //sabtu dan minggu libur
-                            if (date('w', $i) !== '0' && date('w', $i) !== '6') {
-                                $weekend = "";
-                            } else {
-                                $weekend = "Weekend";
-                            }
-                        } else {
-                            //sabtu doang libur
-                            if (date('w', $i) !== '0') {
-                                $weekend = "";
-                            } else {
-                                $weekend = "Weekend";
-                            }
-                        }
-
-                        if (@$time_in >= @$attandance[0]['time_in']) {
-                            $status_masuk = "ON TIME";
-                        } elseif (@$time_in == null) {
-                            $status_masuk = "UN SETTING";
-                        } elseif (@$time_in <= @$attandance[0]['time_in']) {
-                            $status_masuk = "LATE";
-                        } else {
-                            $status_masuk = "ERROR";
-                        }
-
-                        //jika status tanggal merah nya kosong
-                        if (@$holiday[0]['description'] == null) {
-                            //cek apakah harinya minggu jika iya maka default Weekend
-                            if ($weekend == "Weekend") {
-                                $holiday = $weekend;
-                                $style = "style='background: #FF5F5F; color:white;'";
-                            } elseif ($permit_name != null) {
-                                $holiday = @$permit_description;
-                                $style = "style='background: #FFC25F; color:white;'";
-                            } else {
-                                $holiday = @$holiday[0]['description'];
-                                $style = "";
-                            }
-                            //isi dengan tanggal merah
-                        } else {
-                            $holiday = @$holiday[0]['description'];
-                            $style = "style='background: #FF5F5F; color:white;'";
-                        }
-
-                        if (@$attandance[0]['time_in'] == null && $holiday != 'Weekend') {
-                            if ($permit_name != null) {
-                                $attandance_status = @strtoupper($permit[0]['permit_name']);
-                                $style_status = "style='color:black; font-weight:bold;'";
-                            } elseif ($holiday != null) {
-                                $attandance_status = "";
-                                $style_status = "style='color:red; font-weight:bold;'";
-                            } else {
-                                $attandance_status = "ABSENCE";
-                                $style_status = "style='color:red; font-weight:bold;'";
-                            }
-                        } else {
-                            if ($holiday == "Weekend") {
-                                $attandance_status = "";
-                            } elseif (@$permit_name != null) {
-                                $attandance_status = @strtoupper($permit[0]['permit_name']);
-                            } else {
-                                $attandance_status = @$status_masuk;
-                            }
-
-                            if (@$status_masuk == "LATE") {
-                                $style_status = "style='color:red; font-weight:bold;'";
-                            } else if (@$status_masuk == "ON TIME") {
-                                $style_status = "style='color:green; font-weight:bold;'";
-                            } else {
-                                $style_status = "style='color:orange; font-weight:bold;'";
-                            }
-                        }
-
-                        if ($filter_status != "" or $filter_permit_type != "") {
-                            if ($holiday == "") {
-                                if ($filter_status == $attandance_status) {
-                                    $html .= '<tr ' . $style . '>
-                                                    <td>' . $no . '</td>
-                                                    <td>' . date('d F Y', strtotime($working_date)) . '</td>
-                                                    <td>' . @$shift_name . '</td>
-                                                    <td>' . @$attandance[0]['time_in'] . '</td>
-                                                    <td>' . @$attandance[0]['time_out'] . '</td>
-                                                    <td>' . @$attandance[0]['request_code'] . '</td>
-                                                    <td>' . @$attandance[0]['start'] . '</td>
-                                                    <td>' . @$attandance[0]['end'] . '
-                                                    <td>' . @$attandance[0]['duration'] . '</td>
-                                                    <td ' . $style_status . '>' . $attandance_status . '</td>
-                                                    <td>' . $holiday . '</td>
-                                                </tr>';
-                                } elseif ($attandance_status == @strtoupper($filter_permit_type)) {
-                                    $html .= '<tr ' . $style . '>
-                                                    <td>' . $no . '</td>
-                                                    <td>' . date('d F Y', strtotime($working_date)) . '</td>
-                                                    <td>' . @$shift_name . '</td>
-                                                    <td>' . @$attandance[0]['time_in'] . '</td>
-                                                    <td>' . @$attandance[0]['time_out'] . '</td>
-                                                    <td>' . @$attandance[0]['request_code'] . '</td>
-                                                    <td>' . @$attandance[0]['start'] . '</td>
-                                                    <td>' . @$attandance[0]['end'] . '
-                                                    <td>' . @$attandance[0]['duration'] . '</td>
-                                                    <td ' . $style_status . '>' . $attandance_status . '</td>
-                                                    <td>' . $holiday . '</td>
-                                                </tr>';
-                                }
-                            }
-                        } else {
-                            $html .= '<tr ' . $style . '>
-                                                <td>' . $no . '</td>
-                                                <td>' . date('d F Y', strtotime($working_date)) . '</td>
-                                                <td>' . @$shift_name . '</td>
-                                                <td>' . @$attandance[0]['time_in'] . '</td>
-                                                <td>' . @$attandance[0]['time_out'] . '</td>
-                                                <td>' . @$attandance[0]['request_code'] . '</td>
-                                                <td>' . @$attandance[0]['start'] . '</td>
-                                                <td>' . @$attandance[0]['end'] . '
-                                                <td>' . @$attandance[0]['duration'] . '</td>
-                                                <td ' . $style_status . '>' . $attandance_status . '</td>
-                                                <td>' . $holiday . '</td>
-                                            </tr>';
-                        }
-
-                        $no++;
+                    if (date('w', $i) !== '0' && date('w', $i) !== '6') {
+                        $working = "WEEKDAY";
+                    } else {
+                        $working = "WEEKEND";
                     }
+
+                    //Working Calendar
+                    $this->db->select('description');
+                    $this->db->from('calendars');
+                    $this->db->where('trans_date', $working_date);
+                    $holiday = $this->db->get()->row();
+
+                    //Permit
+                    $this->db->select("a.*, c.name as reason_name, d.name as permit_name");
+                    $this->db->from('permits a');
+                    $this->db->join('reasons c', 'a.reason_id = c.id');
+                    $this->db->join('permit_types d', 'a.permit_type_id = d.id');
+                    $this->db->where('a.employee_id', $record['id']);
+                    $this->db->where('a.permit_date', $working_date);
+                    $permit = $this->db->get()->row();
+
+                    //Attandance and Overtime
+                    $this->db->select("b.date_in, b.time_in, b.date_out, b.time_out, c.request_code, c.start, c.end, c.duration, c.remarks");
+                    $this->db->from('employees a');
+                    $this->db->join('attandances b', 'a.number = b.number');
+                    $this->db->join('overtimes c', 'a.id = c.employee_id and b.date_in = c.trans_date', 'left');
+                    $this->db->where('b.date_in', $working_date);
+                    $this->db->where('a.id', $record['id']);
+                    $this->db->order_by('a.name', 'asc');
+                    $this->db->order_by('b.date_in', 'asc');
+                    $attandance = $this->db->get()->row();
+
+                    //Shift and Setting Group
+                    $this->db->select("d.start, d.end, d.days, d.working, d.tolerance, d.name as shift_name");
+                    $this->db->from('shift_employees b');
+                    $this->db->join('shifts c', 'c.id = b.shift_id');
+                    $this->db->join('shift_details d', 'd.shift_id = c.id');
+                    $this->db->where('b.employee_id', $record['id']);
+                    $this->db->where('d.working', $working);
+                    $shift = $this->db->get()->row();
+
+                    $this->db->select("*");
+                    $this->db->from('change_days');
+                    $this->db->where('employee_id', $record['id']);
+                    $this->db->where('start', $working_date);
+                    $change_day = $this->db->get()->row();
+
+                    //Jika hari kerja nya adalah 5 hari
+                    if (@$shift->days == "5") {
+                        //sabtu dan minggu libur
+                        if (date('w', $i) !== '0' && date('w', $i) !== '6') {
+                            $weekend = "";
+                        } else {
+                            $weekend = "Weekend";
+                        }
+                    } else {
+                        //sabtu doang libur
+                        if (date('w', $i) !== '0') {
+                            $weekend = "";
+                        } else {
+                            $weekend = "Weekend";
+                        }
+                    }
+
+                    if (@$shift->start >= @$attandance->time_in) {
+                        $status_masuk = "ON TIME";
+                    } elseif (@$shift->start == null) {
+                        $status_masuk = "UN SETTING";
+                    } elseif (@$shift->start <= @$attandance->time_in) {
+                        $status_masuk = "LATE";
+                    } else {
+                        $status_masuk = "ERROR";
+                    }
+
+                    //jika status tanggal merah nya kosong
+                    if (@$holiday->description == null) {
+                        //cek apakah harinya minggu jika iya maka default Weekend
+                        if ($weekend == "Weekend") {
+                            $holiday = $weekend;
+                            $style = "style='background: #FF5F5F; color:white;'";
+                        } elseif (@$permit->permit_name != null) {
+                            $holiday = @$permit->note;
+                            $style = "style='background: #FFC25F; color:white;'";
+                        } elseif (@$change_day->start != null) {
+                            $holiday = "Change Days to " . $change_day->end;
+                            $style = "style='background: #905d5d; color:white;'";
+                        } elseif (@$attandance->remarks != null) {
+                            $holiday = @$attandance->remarks;
+                            $style = "";
+                        } else {
+                            $holiday = @$holiday->description;
+                            $style = "";
+                        }
+                        //isi dengan tanggal merah
+                    } else {
+                        $holiday = @$holiday->description;
+                        $style = "style='background: #FF5F5F; color:white;'";
+                    }
+
+                    if (@$attandance->time_in == null && $holiday != 'Weekend') {
+                        if (@$permit->permit_name != null) {
+                            $attandance_status = @strtoupper($permit->permit_name);
+                            $style_status = "style='color:black; font-weight:bold;'";
+                        } elseif ($holiday != null) {
+                            $attandance_status = "";
+                            $style_status = "style='color:red; font-weight:bold;'";
+                        } else {
+                            $attandance_status = "ABSENCE";
+                            $style_status = "style='color:red; font-weight:bold;'";
+                        }
+                    } else {
+                        if ($holiday == "Weekend") {
+                            $attandance_status = "";
+                        } elseif (@$permit->permit_name != null) {
+                            $attandance_status = @strtoupper($permit->permit_name);
+                        } else {
+                            $attandance_status = @$status_masuk;
+                        }
+
+                        if (@$status_masuk == "LATE") {
+                            $style_status = "style='color:red; font-weight:bold;'";
+                        } else if (@$status_masuk == "ON TIME") {
+                            $style_status = "style='color:green; font-weight:bold;'";
+                        } else {
+                            $style_status = "style='color:orange; font-weight:bold;'";
+                        }
+                    }
+
+                    if ($filter_status != "" or $filter_permit_type != "") {
+                        if ($holiday == "") {
+                            if ($filter_status == $attandance_status) {
+                                $html .= '<tr ' . $style . '>
+                                                    <td>' . $no . '</td>
+                                                    <td>' . date('d F Y', strtotime($working_date)) . '</td>
+                                                    <td>' . @@$shift->shift_name . '</td>
+                                                    <td>' . @$attandance->time_in . '</td>
+                                                    <td>' . @$attandance->time_out . '</td>
+                                                    <td>' . @$attandance->request_code . '</td>
+                                                    <td>' . @$attandance->start . '</td>
+                                                    <td>' . @$attandance->end . '
+                                                    <td>' . @$attandance->duration . '</td>
+                                                    <td ' . $style_status . '>' . $attandance_status . '</td>
+                                                    <td>' . $holiday . '</td>
+                                                </tr>';
+                            } elseif ($attandance_status == @strtoupper($filter_permit_type)) {
+                                $html .= '<tr ' . $style . '>
+                                                    <td>' . $no . '</td>
+                                                    <td>' . date('d F Y', strtotime($working_date)) . '</td>
+                                                    <td>' . @@$shift->shift_name . '</td>
+                                                    <td>' . @$attandance->time_in . '</td>
+                                                    <td>' . @$attandance->time_out . '</td>
+                                                    <td>' . @$attandance->request_code . '</td>
+                                                    <td>' . @$attandance->start . '</td>
+                                                    <td>' . @$attandance->end . '
+                                                    <td>' . @$attandance->duration . '</td>
+                                                    <td ' . $style_status . '>' . $attandance_status . '</td>
+                                                    <td>' . $holiday . '</td>
+                                                </tr>';
+                            }
+                        }
+                    } else {
+                        $html .= '<tr ' . $style . '>
+                                    <td>' . $no . '</td>
+                                    <td>' . date('d F Y', strtotime($working_date)) . '</td>
+                                    <td>' . @@$shift->shift_name . '</td>
+                                    <td>' . @$attandance->time_in . '</td>
+                                    <td>' . @$attandance->time_out . '</td>
+                                    <td>' . @$attandance->request_code . '</td>
+                                    <td>' . @$attandance->start . '</td>
+                                    <td>' . @$attandance->end . '
+                                    <td>' . @$attandance->duration . '</td>
+                                    <td ' . $style_status . '>' . $attandance_status . '</td>
+                                    <td>' . $holiday . '</td>
+                                </tr>';
+                    }
+
+                    $no++;
                 }
                 $html .= '</table></div><br><br>';
             }

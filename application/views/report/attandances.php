@@ -78,7 +78,7 @@
         var filter_group = $("#filter_group").combobox('getValue');
         var filter_status = $("#filter_status").combobox('getValue');
 
-        if (filter_from == "" || filter_to == "" || filter_division == "" || filter_departement == "") {
+        if (filter_from == "" || filter_to == "" || filter_division == "") {
             toastr.warning("Please Choose Filter Date, Division and Departement");
         } else {
             var url = "?filter_division=" + filter_division +
@@ -107,7 +107,7 @@
         var filter_group = $("#filter_group").combobox('getValue');
         var filter_status = $("#filter_status").combobox('getValue');
 
-        if (filter_from == "" || filter_to == "" || filter_division == "" || filter_departement == "") {
+        if (filter_from == "" || filter_to == "" || filter_division == "") {
             toastr.warning("Please Choose Filter Date, Division and Departement");
         } else {
             var url = "?filter_division=" + filter_division +
