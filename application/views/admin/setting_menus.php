@@ -3,7 +3,8 @@
     <thead>
         <tr>
             <th field="ck" checkbox="true"></th>
-            <th data-options="field:'menu_name',width:250">Menu Name</th>
+            <th data-options="field:'parent_name',width:150">Parent Name</th>
+            <th data-options="field:'menu_name',width:200">Menu Name</th>
             <th data-options="field:'m_view',width:100, styler:cellStyler, formatter:cellFormatter">View</th>
             <th data-options="field:'m_add',width:100, styler:cellStyler, formatter:cellFormatter">Add</th>
             <th data-options="field:'m_edit',width:100, styler:cellStyler, formatter:cellFormatter">Edit</th>

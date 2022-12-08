@@ -51,9 +51,10 @@ class Setting_menus extends CI_Controller
             $offset = ($page - 1) * $rows;
             $result = array();
             //Select Query
-            $this->db->select('a.*, b.name as menu_name');
+            $this->db->select('a.*, b.name as menu_name, c.name as parent_name');
             $this->db->from('setting_menus a');
-            $this->db->join('menus b', 'a.menus_id = b.id', 'join');
+            $this->db->join('menus b', 'a.menus_id = b.id');
+            $this->db->join('menus c', 'b.menus_id = c.id', 'left');
             $this->db->where('a.deleted', 0);
             if (@count($filters) > 0) {
                 foreach ($filters as $filter) {
@@ -62,7 +63,8 @@ class Setting_menus extends CI_Controller
                     }
                 }
             }
-            $this->db->order_by('b.name', 'ASC');
+            $this->db->order_by('c.name', 'ASC');
+            $this->db->order_by('b.sort', 'ASC');
             //Total Data
             $totalRows = $this->db->count_all_results('', false);
             //Limit 1 - 10
@@ -125,13 +127,13 @@ class Setting_menus extends CI_Controller
         //CONFIG
         $config = $this->crud->read('config');
 
-        $name = $this->input->get('name');
-        $this->db->select('a.*, b.name as menu_name');
+        $this->db->select('a.*, b.name as menu_name, c.name as parent_name');
         $this->db->from('setting_menus a');
-        $this->db->join('menus b', 'a.menus_id = b.id', 'join');
-        $this->db->where('a.deleted_is', 0);
-        $this->db->like('b.name', $name);
-        $this->db->order_by('b.name', 'ASC');
+        $this->db->join('menus b', 'a.menus_id = b.id');
+        $this->db->join('menus c', 'b.menus_id = c.id', 'left');
+        $this->db->where('a.deleted', 0);
+        $this->db->order_by('c.name', 'ASC');
+        $this->db->order_by('b.sort', 'ASC');
         $records = $this->db->get()->result_array();
 
         $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
@@ -159,6 +161,7 @@ class Setting_menus extends CI_Controller
         <table id="customers" border="1">
             <tr>
                 <th width="20">No</th>
+                <th>Parent Name</th>
                 <th>Menu Name</th>
                 <th>View</th>
                 <th>Add</th>
@@ -173,6 +176,7 @@ class Setting_menus extends CI_Controller
         foreach ($records as $data) {
             $html .= '<tr>
                         <td>' . $no . '</td>
+                        <td>' . $data['parent_name'] . '</td>
                         <td>' . $data['menu_name'] . '</td>
                         <td>' . $data['m_view'] . '</td>
                         <td>' . $data['m_add'] . '</td>

@@ -61,6 +61,7 @@ class Reasons extends CI_Controller
             $this->db->where('a.deleted', 0);
             $this->db->like('a.permit_type_id', $filter_permit_type);
             $this->db->like('a.name', $filter_name);
+            $this->db->order_by('b.name', 'ASC');
             $this->db->order_by('a.name', 'ASC');
             //Total Data
             $totalRows = $this->db->count_all_results('', false);
@@ -135,6 +136,7 @@ class Reasons extends CI_Controller
         $this->db->where('a.deleted', 0);
         $this->db->like('a.permit_type_id', $filter_permit_type);
         $this->db->like('a.name', $filter_name);
+        $this->db->order_by('b.name', 'ASC');
         $this->db->order_by('a.name', 'ASC');
         $records = $this->db->get()->result_array();
 

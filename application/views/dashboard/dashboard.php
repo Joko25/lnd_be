@@ -56,17 +56,22 @@
                     <p style="font-size: 16px !important; margin:0;">Used Leave</p>
                     <b style="font-size: 40px !important;"><?= $permit['used'] ?></b><small> Days</small>
                 </div>
-                <div class="easyui-panel" title="who's permit today" style="width:100%; padding:10px;" data-options="collapsible:true">
+                <div class="easyui-panel" title="Permission Today" style="width:100%; padding:10px;" data-options="collapsible:true">
                     <?= $permittoday ?>
                 </div>
-                <div class="easyui-panel" title="Task Lists" style="width:100%; padding:10px;" data-options="collapsible:true">
+                <div class="easyui-panel" title="Contract & Probation" style="width:100%; padding:10px;" data-options="collapsible:true">
                     <center>
-                        <b>No Task Available</b>
+                        <b>No Contract & Probation Available</b>
                     </center>
                 </div>
                 <div class="easyui-panel" title="Information Employee" style="width:100%; padding:10px;" data-options="collapsible:true">
                     <center>
                         <b>No Information Available</b>
+                    </center>
+                </div>
+                <div class="easyui-panel" title="Task Lists" style="width:100%; padding:10px;" data-options="collapsible:true">
+                    <center>
+                        <b>No Task Available</b>
                     </center>
                 </div>
             </td>

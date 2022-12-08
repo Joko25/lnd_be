@@ -1,10 +1,3 @@
-<?php
-//Config
-$this->db->select('*');
-$this->db->from('config');
-$config = $this->db->get()->row();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,12 +17,12 @@ $config = $this->db->get()->row();
 			<div class="wrap-login100">
 				<form class="login100-form validate-form" method="post">
 					<center>
-						<img src="<?= $config->logo ?>" width="300">
+						<img src="<?= $config->logo ?>" width="200">
 					</center>
 					<br>
-					<br>
 					<?= $message ?>
-					<h3>WELCOME IN ERP SYSTEM</h3>
+					<small>WELCOME IN</small>
+					<h3>HUMAN RESOURCE INFORMATION SYSTEM</h3>
 					<h2><?= $config->name ?></h2>
 					<p>Please enter your username and password</p>
 					<br>
@@ -41,9 +34,10 @@ $config = $this->db->get()->row();
 					</div>
 					<br>
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" type="submit">
+						<button class="login100-form-btn" type="submit" style="margin-bottom: 10px;">
 							Login
 						</button>
+						<a href="login/forgot">Forgot Password ?</a>
 					</div>
 				</form>
 				<div class="login100-more" style="background-image: url('<?= $config->image ?>');"></div>

@@ -11,6 +11,7 @@ class Login extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->model('crud');
+        $this->load->model('emails');
     }
 
     public function macAddress()
@@ -50,7 +51,7 @@ class Login extends CI_Controller
 
                 if ($user) {
                     if ($user->actived == 1) {
-                        $data['message'] = '<div style="background:red; color:white; padding:10px; font-size:10px;"><strong>Not Active</strong><br>Your account is not active, please check your email or contact the admin</div>';
+                        $data['message'] = '<div padding: 10px; background-color: #B49651; color: white; margin: 10px; border-radius: 1rem;>Your account is not active</div>';
                         $this->load->view('login', $data);
                     } else {
                         $session = array(
@@ -67,7 +68,7 @@ class Login extends CI_Controller
                         redirect('home');
                     }
                 } else {
-                    $data['message'] = '<div style="background:red; color:white; padding:10px; font-size:10px;"><strong>Failed Login!</strong><br>Your Username and Password is wrong, please try again!!</div>';
+                    $data['message'] = '<div style="padding: 10px; background-color: #B45151; color: white; border-radius: 1rem; margin: 10px;">Username or Password Not Exist</div>';
                     $this->load->view('login', $data);
                 }
             } else {
@@ -76,6 +77,69 @@ class Login extends CI_Controller
             }
         } else {
             redirect('home');
+        }
+    }
+
+    public function forgot()
+    {
+        //Config
+        $data['config'] = $this->crud->read('config');
+
+        if ($this->session->username == "") {
+            if ($this->input->post()) {
+                $post = $this->input->post();
+                $user = $this->crud->read("users", [], [
+                    "deleted" => 0,
+                    "email" => $post['email']
+                ]);
+
+                if ($user) {
+                    $this->emails->emailForgot($post['email']);
+                    $data['message'] = '<div style="padding: 10px; background-color: #65B451; color: white; border-radius: 1rem; margin: 10px;">Success, Please check your email </div>';
+                    $this->load->view('forgot', $data);
+                } else {
+                    $data['message'] = '<div style="padding: 10px; background-color: #B45151; color: white; border-radius: 1rem; margin: 10px;">Your Email is not Exist</div>';
+                    $this->load->view('forgot', $data);
+                }
+            } else {
+                $data['message'] = "";
+                $this->load->view('forgot', $data);
+            }
+        } else {
+            redirect('home');
+        }
+    }
+
+    public function reset($email = "")
+    {
+        //Config
+        $data['config'] = $this->crud->read('config');
+
+        if ($email != "") {
+            if ($this->input->post()) {
+                $post = $this->input->post();
+                $emailFinal = base64_decode($email);
+                $user = $this->crud->read("users", [], [
+                    "deleted" => 0,
+                    "email" => $emailFinal
+                ]);
+
+                if ($user) {
+                    $this->db->where(["email" => $emailFinal]);
+                    if ($this->db->update("users", ["password" => $post['password']])) {
+                        $data['message'] = '<div style="padding: 10px; background-color: #65B451; color: white; border-radius: 1rem; margin: 10px;">Success, your password is Changed! </div>';
+                        $this->load->view('reset', $data);
+                    }
+                } else {
+                    $data['message'] = '<div style="padding: 10px; background-color: #B45151; color: white; border-radius: 1rem; margin: 10px;">Your Email is not Exist</div>';
+                    $this->load->view('reset', $data);
+                }
+            } else {
+                $data['message'] = "";
+                $this->load->view('reset', $data);
+            }
+        } else {
+            redirect('login');
         }
     }
 
