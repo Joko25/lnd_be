@@ -34,6 +34,7 @@ $config = $this->db->get()->row();
 
     <!-- Fontawesome -->
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/icons/fontawesome/css/font-awesome.min.css') ?>">
+    <script src="https://kit.fontawesome.com/c568386327.js" crossorigin="anonymous"></script>
 
     <!-- Vendors -->
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/vendors/toastr.min.css') ?>">

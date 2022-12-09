@@ -17,14 +17,14 @@
 		</div>
 		<div class="logo">
 			<a onclick="notification()" title="Notification" class="notification">
-				<i class="fa fa-bell"></i>
+				<i class="fa fa-bell" style="font-size: 25px !important;"></i>
 				<div id="notificationCount"></div>
 			</a>
 			<a onclick="profile()" title="Profile" class="notification">
-				<i class="fa fa-users"></i>
+				<i class="fa fa-users" style="font-size: 25px !important;"></i>
 			</a>
 			<a href="<?= base_url('login/logout') ?>" title="Logout" class="notification">
-				<i class="fa fa-share"></i>
+				<i class="fa fa-share" style="font-size: 25px !important;"></i>
 			</a>
 			<!-- <img src="assets/image/pixelphy-logo.png" width="100" style="margin-right: 50px; margin-top: 15px;"> -->
 		</div>

@@ -49,7 +49,7 @@ body {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-image: url(../../assets/image/header_v5.jpg);
+	background-image: url(../../assets/image/header_v6.jpg);
 	height: 100%;
 }
 
@@ -123,18 +123,13 @@ fieldset {
 .notification {
 	margin-top: 5px;
 	margin-right: 10px;
-	background-color: black;
-	color: white;
-	text-decoration: none;
+	color: #464646;
 	padding: 10px;
-	position: relative;
 	display: inline-block;
-	border-radius: 30px;
-	font-size: 14px;
 }
 
 .notification:hover {
-	background: gray;
+	color: white;
 }
 
 .notification .badge {
