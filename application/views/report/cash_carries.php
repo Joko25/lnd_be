@@ -235,7 +235,7 @@
         });
 
         $('#filter_group').combobox({
-            url: '<?= base_url('master/groups/reads') ?>',
+            url: '<?= base_url('admin/privilege_groups/reads') ?>',
             valueField: 'id',
             textField: 'name',
             prompt: "Choose All",

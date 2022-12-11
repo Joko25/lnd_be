@@ -20,6 +20,8 @@ if ($employee->image_profile == "" || $employee->image_profile == null) {
             <legend><b>Foto Profile</b></legend>
             <?= $image ?>
             <?= $status ?>
+            <br><br>
+            <a class="button-red" href="<?= base_url('employee/employees/index/'. $id_menu) ?>" style="width: 100%; font-size: 20px !important;">BACK</a>
         </fieldset>
         <fieldset style="width:75%; padding:11px; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Personal Information</b></legend>

@@ -49,6 +49,8 @@ class Setup_salaries extends CI_Controller
             $filter_employee = $this->input->get('filter_employee');
             $filter_component_salary = $this->input->get('filter_component_salary');
             $filter_position = $this->input->get('filter_position');
+            $filter_group = $this->input->get('filter_group');
+            $username = $this->session->username;
 
             $page = $this->input->post('page');
             $rows = $this->input->post('rows');
@@ -77,6 +79,7 @@ class Setup_salaries extends CI_Controller
             $this->db->join('departements e', 'c.departement_id = e.id');
             $this->db->join('departement_subs f', 'c.departement_sub_id = f.id');
             $this->db->join('salary_components g', 'a.salary_component_id = g.id', 'left');
+            $this->db->join('privilege_groups h', "c.group_id = h.group_id and h.username = '$username'");
             $this->db->where('a.deleted', 0);
             $this->db->where('c.deleted', 0);
             $this->db->where('c.status', 0);
@@ -86,6 +89,7 @@ class Setup_salaries extends CI_Controller
             $this->db->like('f.id', $filter_departement_sub);
             $this->db->like('a.salary_component_id', $filter_component_salary);
             $this->db->like('c.position_id', $filter_position);
+            $this->db->like('h.group_id', $filter_group);
             $this->db->order_by('c.name', 'ASC');
             //Total Data
             $totalRows = $this->db->count_all_results('', false);
@@ -248,6 +252,8 @@ class Setup_salaries extends CI_Controller
         $filter_employee = $this->input->get('filter_employee');
         $filter_component_salary = $this->input->get('filter_component_salary');
         $filter_position = $this->input->get('filter_position');
+        $filter_group = $this->input->get('filter_group');
+        $username = $this->session->username;
 
         //Config
         $this->db->select('*');
@@ -255,24 +261,25 @@ class Setup_salaries extends CI_Controller
         $config = $this->db->get()->row();
 
         $this->db->select('a.*, 
-            c.number as employee_number, 
-            c.name as employee_name, 
-            d.name as division_name, 
-            e.name as departement_name,
-            f.name as departement_sub_name, 
-            g.name as component_salary_name,
-            ((a.amount * 75) / 100) as basic,
-            ((a.amount * 25) / 100) as allowance_fix,
-            ((a.amount * 25) / 100) as other,
-            ((((a.amount * 25) / 100) * 40) / 100) as position,
-            ((((a.amount * 25) / 100) * 60) / 100) as skill
-        ');
+                c.number as employee_number, 
+                c.name as employee_name, 
+                d.name as division_name, 
+                e.name as departement_name,
+                f.name as departement_sub_name, 
+                g.name as component_salary_name,
+                ((a.amount * 75) / 100) as basic,
+                ((a.amount * 25) / 100) as allowance_fix,
+                ((a.amount * 25) / 100) as other,
+                ((((a.amount * 25) / 100) * 40) / 100) as position,
+                ((((a.amount * 25) / 100) * 60) / 100) as skill
+            ');
         $this->db->from('setup_salaries a');
         $this->db->join('employees c', 'a.employee_id = c.id');
         $this->db->join('divisions d', 'c.division_id = d.id');
         $this->db->join('departements e', 'c.departement_id = e.id');
         $this->db->join('departement_subs f', 'c.departement_sub_id = f.id');
         $this->db->join('salary_components g', 'a.salary_component_id = g.id', 'left');
+        $this->db->join('privilege_groups h', "c.group_id = h.group_id and h.username = '$username'");
         $this->db->where('a.deleted', 0);
         $this->db->where('c.deleted', 0);
         $this->db->where('c.status', 0);
@@ -282,6 +289,7 @@ class Setup_salaries extends CI_Controller
         $this->db->like('f.id', $filter_departement_sub);
         $this->db->like('a.salary_component_id', $filter_component_salary);
         $this->db->like('c.position_id', $filter_position);
+        $this->db->like('h.group_id', $filter_group);
         $this->db->order_by('c.name', 'ASC');
         $records = $this->db->get()->result_array();
 

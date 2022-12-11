@@ -55,6 +55,7 @@ class Cash_carries extends CI_Controller
             $filter_group = $this->input->get('filter_group');
             $filter_display = $this->input->get('filter_display');
             $filter_status = $this->input->get('filter_status');
+            $username = $this->session->username;
             $aprvDepartement = $this->checkApprovalAccess('cash_carries');
 
             $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
@@ -77,6 +78,7 @@ class Cash_carries extends CI_Controller
             $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
             $this->db->join('users f', "a.created_by = f.username");
             $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'cash_carries'", 'left');
+            $this->db->join('privilege_groups h', "b.group_id = h.group_id and h.username = '$username'");
             $this->db->where('b.deleted', 0);
             $this->db->where('b.status', 0);
             $this->db->where('a.deleted', 0);
@@ -90,6 +92,7 @@ class Cash_carries extends CI_Controller
             $this->db->like('b.departement_sub_id', $filter_departement_sub);
             $this->db->like('b.id', $filter_employee);
             $this->db->like('a.created_by', $filter_created_by);
+            $this->db->like('h.group_id', $filter_group);
             $this->db->group_by('a.trans_date');
             $this->db->group_by('a.employee_id');
             $this->db->group_by('a.type');

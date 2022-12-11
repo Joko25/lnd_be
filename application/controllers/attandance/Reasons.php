@@ -55,7 +55,7 @@ class Reasons extends CI_Controller
             $offset = ($page - 1) * $rows;
             $result = array();
             //Select Query
-            $this->db->select('a.*, b.name as permit_type_name');
+            $this->db->select('a.*, b.name as permit_type_name, b.number as permit_type_number');
             $this->db->from('reasons a');
             $this->db->join('permit_types b', 'a.permit_type_id = b.id');
             $this->db->where('a.deleted', 0);

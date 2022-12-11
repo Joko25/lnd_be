@@ -17,12 +17,13 @@ class Employees extends CI_Controller
     }
 
     //HALAMAN UTAMA
-    public function index()
+    public function index($id_menu = "")
     {
         if (empty($this->session->username)) {
             redirect('error_session');
         } elseif ($this->checkuserAccess($this->id_menu()) > 0) {
             $data['button'] = $this->getbutton($this->id_menu());
+            $data['id_menu'] = $id_menu;
 
             $this->load->view('template/header', $data);
             $this->load->view('employee/employees');
@@ -32,7 +33,7 @@ class Employees extends CI_Controller
     }
 
     //DETAIL
-    public function details($number)
+    public function details($number, $id_menu)
     {
         if (empty($this->session->username)) {
             redirect('error_session');
@@ -47,6 +48,7 @@ class Employees extends CI_Controller
             $data['marital'] = $this->crud->read('maritals', [], ["id" => $data['employee']->marital_id]);
             $data['religion'] = $this->crud->read('religions', [], ["id" => $data['employee']->religion_id]);
             $data['service'] = $this->readService($data['employee']->date_sign);
+            $data['id_menu'] = $id_menu;
 
             $this->load->view('template/header', $data);
             $this->load->view('employee/employee_details');

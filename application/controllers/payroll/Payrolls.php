@@ -172,6 +172,7 @@ class Payrolls extends CI_Controller
             $filter_employee = $this->input->get('filter_employee');
             $filter_employee_type = $this->input->get('filter_employee_type');
             $filter_group = $this->input->get('filter_group');
+            $username = $this->session->username;
 
             $query = $this->db->query("SELECT a.*, 
                     b.name as division_name,
@@ -202,6 +203,7 @@ class Payrolls extends CI_Controller
                 LEFT JOIN shift_details l ON n.id = l.shift_id
                 JOIN setup_salaries p ON p.employee_id = a.id
                 LEFT JOIN maritals q ON a.marital_id = q.id
+                JOIN privilege_groups m ON i.id = m.group_id and m.username = '$username'
                 WHERE a.deleted = 0 and a.status = 0
                 AND a.division_id LIKE '%$filter_division%'
                 AND a.departement_id LIKE '%$filter_departement%'

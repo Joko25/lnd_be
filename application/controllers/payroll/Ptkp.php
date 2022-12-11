@@ -13,7 +13,7 @@ class Ptkp extends CI_Controller
         $this->load->model('crud');
 
         //VALIDASI FORM
-        $this->form_validation->set_rules('amount', 'PTKP', 'required|min_length[1]|max_length[20]|is_unique[ptkp.amount]');
+        $this->form_validation->set_rules('marital_id', 'PTKP', 'required|min_length[1]|max_length[20]|is_unique[ptkp.marital_id]');
     }
 
     //HALAMAN UTAMA

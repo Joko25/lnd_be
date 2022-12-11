@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Users extends CI_Controller
+class Privilege_groups extends CI_Controller
 {
     public function __construct()
     {
@@ -11,13 +11,10 @@ class Users extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->model('crud');
-        $this->load->model('emails');
 
         //VALIDASI FORM
-        $this->form_validation->set_rules('name', 'Name', 'required|min_length[5]|max_length[50]');
-        $this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|max_length[30]|is_unique[users.username]');
-        $this->form_validation->set_rules('password', 'Password', 'required|min_length[5]|max_length[30]');
-        $this->form_validation->set_rules('email', 'Email', 'required|min_length[5]|max_length[30]|is_unique[users.email]|valid_email');
+        $this->form_validation->set_rules('username', 'Users', 'required|min_length[1]|max_length[30]');
+        $this->form_validation->set_rules('group_id', 'Group', 'required|min_length[1]|max_length[30]');
     }
 
     //HALAMAN UTAMA
@@ -25,11 +22,11 @@ class Users extends CI_Controller
     {
         if (empty($this->session->username)) {
             redirect('error_session');
-        } elseif ($this->checkuserAccess($this->id_menu()) == 1) {
+        } elseif ($this->checkuserAccess($this->id_menu()) > 0) {
             $data['button'] = $this->getbutton($this->id_menu());
 
             $this->load->view('template/header', $data);
-            $this->load->view('admin/users');
+            $this->load->view('admin/privilege_groups');
         } else {
             redirect('error_access');
         }
@@ -38,8 +35,10 @@ class Users extends CI_Controller
     //GET DATA
     public function reads()
     {
-        $users = $this->crud->reads('users', ["deleted" => 0]);
-        echo json_encode($users);
+        $post = isset($_POST['q']) ? $_POST['q'] : "";
+        $username = $this->session->username;
+        $send = $this->crud->query("SELECT a.* FROM groups a JOIN privilege_groups b ON a.id = b.group_id WHERE b.username = '$username'");
+        echo json_encode($send);
     }
 
     //GET DATATABLES
@@ -47,24 +46,29 @@ class Users extends CI_Controller
     {
         if ($this->input->post()) {
             $filters = json_decode($this->input->post('filterRules'));
-            $page   = $this->input->post('page');
-            $rows   = $this->input->post('rows');
+            $page = $this->input->post('page');
+            $rows = $this->input->post('rows');
             //Pagination 1-10
             $page   = isset($page) ? intval($page) : 1;
             $rows   = isset($rows) ? intval($rows) : 10;
             $offset = ($page - 1) * $rows;
             $result = array();
             //Select Query
-            $this->db->select('*');
-            $this->db->from('users');
-            $this->db->where('deleted', 0);
-            //Filter Automatic
+            $this->db->select('a.*, b.name as user_name, c.name as group_name');
+            $this->db->from('privilege_groups a');
+            $this->db->join('users b', 'a.username = b.username');
+            $this->db->join('groups c', 'a.group_id = c.id');
+            $this->db->where('a.deleted', 0);
             if (@count($filters) > 0) {
                 foreach ($filters as $filter) {
-                    $this->db->like($filter->field, $filter->value);
+                    if ($filter->field == "user_name") {
+                        $this->db->like("b.name", $filter->value);
+                    } elseif ($filter->field == "group_name") {
+                        $this->db->like("c.name", $filter->value);
+                    }
                 }
             }
-            $this->db->order_by('name', 'ASC');
+            $this->db->order_by('b.name', 'ASC');
             //Total Data
             $totalRows = $this->db->count_all_results('', false);
             //Limit 1 - 10
@@ -84,11 +88,13 @@ class Users extends CI_Controller
         if ($this->input->post()) {
             if ($this->form_validation->run() == TRUE) {
                 $post = $this->input->post();
-                $avatar = $this->crud->upload('avatar', ["jpg", "png", "jpeg"], 'assets/image/users/', ["username" => $post['username']], "users", "avatar");
-                $postFinal = array_merge($post, ["avatar" => $avatar]);
-                $users = $this->crud->create('users', $postFinal);
-                $email = $this->emails->emailRegistration($post['email'], $post['name'], $post['username'], $post['password']);
-                echo $users;
+                $reads = $this->crud->reads('privilege_groups', [], ["username" => $post['username'], "group_id" => $post['group_id']]);
+                if (count($reads)) {
+                    show_error("Duplicate Data");
+                } else {
+                    $send = $this->crud->create('privilege_groups', $post);
+                    echo $send;
+                }
             } else {
                 show_error(validation_errors());
             }
@@ -101,11 +107,10 @@ class Users extends CI_Controller
     public function update()
     {
         if ($this->input->post()) {
-            $id = base64_decode($this->input->get('id'));
-            $upload = $this->crud->upload('avatar', ["jpg", "png", "jpeg"], 'assets/image/users/', ["id" => $id], "users", "avatar");
-            $postFinal   = array_merge($this->input->post(), ["avatar" => $upload]);
-            $users = $this->crud->update('users', ["id" => $id], $postFinal);
-            echo $users;
+            $id   = base64_decode($this->input->get('id'));
+            $post = $this->input->post();
+            $send = $this->crud->update('privilege_groups', ["id" => $id], $post);
+            echo $send;
         } else {
             show_error("Cannot Process your request");
         }
@@ -115,27 +120,30 @@ class Users extends CI_Controller
     public function delete()
     {
         $data = $this->input->post();
-        $users = $this->crud->update('users', ["id" => $data['id']], ["deleted" => 1]);
-        echo $users;
+        $send = $this->crud->delete('privilege_groups', $data);
+        echo $send;
     }
 
-    //PRINT DATA
+    //PRINT & EXCEL DATA
     public function print($option = "")
     {
         if ($option == "excel") {
             $format  = date("Ymd");
             header("Content-type: application/vnd-ms-excel");
-            header("Content-Disposition: attachment; filename=users_$format.xls");
+            header("Content-Disposition: attachment; filename=privilege_groups_$format.xls");
         }
 
         //Config
-        $config = $this->crud->read('config');
-
-        $post = $this->input->get();
         $this->db->select('*');
-        $this->db->from('users');
-        $this->db->where('deleted', 0);
-        $this->db->like($post);
+        $this->db->from('config');
+        $config = $this->db->get()->row();
+
+        $this->db->select('a.*, b.number as employee_number, b.name as employee_name, c.name as group_name');
+        $this->db->from('privilege_groups a');
+        $this->db->join('employees b', 'a.employee_id = b.id');
+        $this->db->join('groups c', 'a.group_id = c.id');
+        $this->db->where('a.deleted', 0);
+        $this->db->order_by('b.name', 'ASC');
         $records = $this->db->get()->result_array();
 
         $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
@@ -148,7 +156,7 @@ class Users extends CI_Controller
                         </td>
                         <td style="font-size: 14px; text-align: left; margin:2px;">
                             <b>' . $config->name . '</b><br>
-                            <small>MASTER USERS</small>
+                            <small>PRIVILEGE GROUP</small>
                         </td>
                     </tr>
                 </table>
@@ -163,33 +171,17 @@ class Users extends CI_Controller
         <table id="customers" border="1">
             <tr>
                 <th width="20">No</th>
-                <th>Number ID</th>
-                <th>Fullname</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Position</th>
-                <th>Status</th>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Group Name</th>
             </tr>';
-
         $no = 1;
         foreach ($records as $data) {
-            if ($data['actived'] == "0") {
-                $status = "Active";
-            } else {
-                $status = "Not Active";
-            }
-
-            $html .= '  <tr>
-                            <td>' . $no . '</td>
-                            <td>' . $data['number'] . '</td>
-                            <td>' . $data['name'] . '</td>
-                            <td>' . $data['username'] . '</td>
-                            <td>' . $data['email'] . '</td>
-                            <td>' . $data['phone'] . '</td>
-                            <td>' . $data['position'] . '</td>
-                            <td>' . $status . '</td>
-                        </tr>';
+            $html .= '<tr>
+                    <td>' . $no . '</td>
+                    <td>' . $data['employee_number'] . '</td>
+                    <td>' . $data['employee_name'] . '</td>
+                    <td>' . $data['group_name'] . '</td>';
             $no++;
         }
 

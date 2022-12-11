@@ -2281,7 +2281,7 @@
     };
 
     function FormatterDetail(val, row) {
-        return '<a class="button-green" style="width:100%;" href="<?= base_url('employee/employees/details/') ?>' + row.id + '"><i class="fa fa-user"></i></a>';
+        return '<a class="button-green" style="width:100%;" href="<?= base_url('employee/employees/details/') ?>' + row.id + '/<?= $id_menu ?>"><i class="fa fa-user"></i></a>';
     };
 
     function FormatterDate(val) {

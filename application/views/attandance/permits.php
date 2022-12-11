@@ -1,8 +1,9 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar">
+<table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar">
     <thead>
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
+            <th rowspan="2" data-options="field:'trans_date',width:120,halign:'center'">Request Date</th>
             <th rowspan="2" data-options="field:'id',width:120,halign:'center'">Request No</th>
             <th rowspan="2" data-options="field:'request_name',width:200,halign:'center'">Request Name</th>
             <th rowspan="2" data-options="field:'division_name',width:200,halign:'center'">Division</th>
@@ -90,6 +91,10 @@
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Form Data</b></legend>
             <div class="fitem">
+                <span style="width:30%; display:inline-block;">Trans Date</span>
+                <input style="width:60%;" name="trans_date" id="trans_date" class="easyui-datebox" required data-options="formatter:myformatter,parser:myparser, editable:false">
+            </div>
+            <div class="fitem">
                 <span style="width:30%; display:inline-block;">Employee</span>
                 <input style="width:60%;" name="employee_id" id="employee_id" required="">
             </div>
@@ -156,6 +161,7 @@
         $('#frm_insert').form('clear');
         $('#employee_id').combogrid('enable');
         $('#permit_date').datebox('enable');
+        $("#trans_date").datebox('setValue', "<?= date("Y-m-d") ?>")
     }
 
     //EDIT DATA
@@ -302,7 +308,7 @@
                                 toastr.error(result.message, result.title);
                             }
 
-                            $('#dlg_insert').dialog('close');
+                            //$('#dlg_insert').dialog('close');
                             $('#dg').datagrid('reload');
                         }
                     });

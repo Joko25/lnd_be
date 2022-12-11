@@ -46,6 +46,7 @@ class Attandances extends CI_Controller
             $filter_permit_type = $this->input->get('filter_permit_type');
             $filter_status = $this->input->get('filter_status');
             $filter_group = $this->input->get('filter_group');
+            $username = $this->session->username;
 
             $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
             $this->db->select("a.*, c.name as division_name, d.name as departement_name, e.name as departement_sub_name");
@@ -57,6 +58,7 @@ class Attandances extends CI_Controller
             $this->db->join('groups f', 'a.group_id = f.id');
             $this->db->join('permits g', 'a.id = g.employee_id', 'left');
             $this->db->join('permit_types h', 'h.id = g.permit_type_id', 'left');
+            $this->db->join('privilege_groups i', "a.group_id = i.group_id and i.username = '$username'");
             $this->db->where('a.deleted', 0);
             $this->db->where('a.status', 0);
             if ($filter_from != "" && $filter_to != "") {

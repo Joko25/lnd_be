@@ -217,8 +217,9 @@ class Permits extends CI_Controller
                 'number' => $data->val($i, 2),
                 'permit_type_number' => $data->val($i, 3),
                 'reason_number' => $data->val($i, 4),
-                'permit_date' => $data->val($i, 5),
-                'note' => $data->val($i, 6)
+                'trans_date' => $data->val($i, 5),
+                'permit_date' => $data->val($i, 6),
+                'note' => $data->val($i, 7)
             );
         }
 
@@ -259,7 +260,7 @@ class Permits extends CI_Controller
     public function uploadcreate()
     {
         if ($this->input->post()) {
-            $data = $this->input->post();
+            $data = $this->input->post('data');
             $employee = $this->crud->read('employees', ["number" => $data['number'], "status" => 0]);
             $permittype = $this->crud->read('permit_types', ["number" => $data['permit_type_number']]);
             $reason = $this->crud->read('reasons', ["number" => $data['reason_number']]);
@@ -271,6 +272,8 @@ class Permits extends CI_Controller
                         $this->db->from('permits');
                         $this->db->where("employee_id", $employee->id);
                         $this->db->where("permit_date", $data['permit_date']);
+                        $this->db->where("permit_type_id", $permittype->id);
+                        $this->db->where("reason_id", $reason->id);
                         $permit = $this->db->get()->row();
 
                         if (!empty($permit)) {
@@ -288,7 +291,7 @@ class Permits extends CI_Controller
 
                             if (count($records) > 0) {
                                 $permitType = $this->crud->read('permit_types', ["id" => $permittype->id, "cutoff" => "YES"]);
-                                $permits = $this->crud->read('permits', ["employee_id" => $employee->id, "DATE_FORMAT(permit_date, '%Y')" => $year, "permit_type_id" => @$permitType->id]);
+                                $permits = $this->crud->reads('permits', ["employee_id" => $employee->id, "DATE_FORMAT(permit_date, '%Y')" => $year, "permit_type_id" => @$permitType->id]);
                                 $totalPermit = 0;
                                 $duration = 0;
                                 foreach ($permits as $permit) {
@@ -303,13 +306,14 @@ class Permits extends CI_Controller
                                         'employee_id' => $employee->id,
                                         'permit_type_id' => $permittype->id,
                                         'reason_id' => $reason->id,
+                                        'trans_date' => $data['trans_date'],
                                         'permit_date' => $data['permit_date'],
                                         'duration' => $duration,
                                         'leave' => (12 - $totalPermit),
                                         'note' => $data['note']
                                     );
 
-                                    $send = $this->api->create('permits', $post_permit);
+                                    $send = $this->crud->create('permits', $post_permit);
                                     echo $send;
                                 }
                             } else {

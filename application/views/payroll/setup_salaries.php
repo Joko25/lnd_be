@@ -66,6 +66,10 @@
                 <span style="width:35%; display:inline-block;">Position</span>
                 <input style="width:60%;" id="filter_position" class="easyui-combobox">
             </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Group</span>
+                <input style="width:60%;" id="filter_group" class="easyui-combobox">
+            </div>
         </div>
     </fieldset>
     <?= $button ?>
@@ -188,13 +192,15 @@
         var filter_employee = $("#filter_employee").combobox('getValue');
         var filter_component_salary = $("#filter_component_salary").combobox('getValue');
         var filter_position = $("#filter_position").combobox('getValue');
+        var filter_group = $("#filter_group").combobox('getValue');
 
         var url = "?filter_division=" + filter_division +
             "&filter_departement=" + filter_departement +
             "&filter_departement_sub=" + filter_departement_sub +
             "&filter_employee=" + filter_employee +
             "&filter_component_salary=" + filter_component_salary +
-            "&filter_position=" + filter_position;
+            "&filter_position=" + filter_position +
+            "&filter_group=" + filter_group;
 
         $('#dg').datagrid({
             url: '<?= base_url('payroll/setup_salaries/datatables') ?>' + url
@@ -216,13 +222,15 @@
         var filter_employee = $("#filter_employee").combobox('getValue');
         var filter_component_salary = $("#filter_component_salary").combobox('getValue');
         var filter_position = $("#filter_position").combobox('getValue');
+        var filter_group = $("#filter_group").combobox('getValue');
 
         var url = "?filter_division=" + filter_division +
             "&filter_departement=" + filter_departement +
             "&filter_departement_sub=" + filter_departement_sub +
             "&filter_employee=" + filter_employee +
             "&filter_component_salary=" + filter_component_salary +
-            "&filter_position=" + filter_position;
+            "&filter_position=" + filter_position +
+            "&filter_group=" + filter_group;
 
         window.location.assign('<?= base_url('payroll/setup_salaries/print/excel') ?>' + url);
     }
@@ -475,6 +483,19 @@
             }]
         });
 
+        $('#filter_group').combobox({
+            url: '<?= base_url('admin/privilege_groups/reads') ?>',
+            valueField: 'id',
+            textField: 'name',
+            prompt: "Choose All",
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combobox('clear').combobox('textbox').focus();
+                }
+            }]
+        });
+
         $('#employee_id').combogrid({
             url: '<?= base_url('employee/employees/reads') ?>',
             panelWidth: 450,
@@ -521,6 +542,7 @@
                 $("#amount").numberbox('setValue', salary.salary);
             }
         });
+
     });
 
     function numberformat(value, row) {
