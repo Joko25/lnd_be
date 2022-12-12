@@ -853,7 +853,7 @@ class Payrolls extends CI_Controller
         $post = $this->input->post();
         $period_start = date("Y-m", strtotime($post['filter_from']));
 
-        $this->db->delete("generate_payroll", ['period_start' => $period_start]);
+        $this->db->delete("payrolls", ['period_start' => $period_start]);
     }
 
     //PRINT & EXCEL DATA
@@ -862,7 +862,7 @@ class Payrolls extends CI_Controller
         if ($option == "excel") {
             $format  = date("Ymd");
             header("Content-type: application/vnd-ms-excel");
-            header("Content-Disposition: attachment; filename=generate_payroll_$format.xls");
+            header("Content-Disposition: attachment; filename=payrolls_$format.xls");
         }
 
         $permit_type = $this->crud->reads('permit_types', [], ['payroll' => 'NON DEDUCTION']);

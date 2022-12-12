@@ -1,5 +1,5 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar">
+<table id="dg" class="easyui-datagrid" style="width:100%; height: 670px;" toolbar="#toolbar">
     <thead frozen="true">
         <tr>
             <th data-options="field:'number',width:150,halign:'center'">Employee ID</th>
@@ -105,7 +105,7 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 255px;">
+<div id="toolbar" style="height: 260px;">
     <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
         <div style="width: 50%; float: left;">
@@ -150,7 +150,10 @@
     <a href="javascript:;" id="btnLock" onclick="lock_payroll()" data-options="plain:true" class="easyui-linkbutton"><i class="fa fa-lock"></i> <span id="txtLock">Lock Payroll</span></a>
 </div>
 
-<div id="dlg_generate" class="easyui-dialog" title="Generating Data" data-options="closed: true,modal:true" style="width: 500px; padding:10px; top: 20px;">
+<div id="dlg_generate" class="easyui-dialog" title="Generating Data" data-options="closed: true,modal:true,closable: false" style="width: 500px; padding:10px; top: 20px;">
+    <div class="alert alert-warning" role="alert">
+        Please wait until the generate process is complete
+    </div>
     <div id="p_upload" class="easyui-progressbar" style="width:460px; margin-top: 10px;"></div>
     <center><b id="p_start">0</b> Of <b id="p_finish">0</b></center>
     <div id="p_remarks" class="easyui-panel" style="width:460px; height:200px; padding:10px; margin-top: 10px;">
@@ -457,9 +460,10 @@
     }
 
     $(function() {
+        $("#add").html("Generate Payroll");
         $('#dg').datagrid({
             url: '<?= base_url('payroll/payrolls/datatables') ?>',
-            pagination: true,
+            pagination: false,
             rownumbers: true
         });
 

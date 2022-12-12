@@ -39,8 +39,12 @@ $config = $this->db->get()->row();
     <!-- Vendors -->
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/vendors/toastr.min.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/vendors/sweetalert2.min.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/vendors/guidely.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/bootstrap/css/bootstrap.min.css?4') ?>">
     <script type="text/javascript" src="<?= base_url('assets/vendors/toastr.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/vendors/sweetalert2.all.min.js') ?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/vendors/guidely.min.js') ?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/bootstrap/js/bootstrap.min.js?3') ?>"></script>
 
     <!-- Charts -->
     <script src="<?= base_url('assets/vendors/charts/code/highcharts.js') ?>"></script>

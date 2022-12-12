@@ -197,7 +197,6 @@ class Crud extends CI_Model
     {
         $id = $this->autoid('logs');
         $data = array(
-            "id" => $id,
             "created_by" => $this->session->username,
             "created_date" => date('Y-m-d H:i:s'),
             "ip_address" => $this->input->ip_address(),

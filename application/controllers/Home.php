@@ -182,7 +182,9 @@ class Home extends CI_Controller
                 </li>';
             }
         } else {
-            echo '<center><h3>Notifications is Not Found</h3></center>';
+            echo '  <div class="alert alert-info" role="alert">
+                        Notification Not Found
+                    </div>';
         }
     }
 
@@ -206,27 +208,30 @@ class Home extends CI_Controller
 
             $approveall = "return approveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'users')";
             $disapproveall = "return disapproveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'users')";
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+            $html = '<html><head><title>Print Data</title>
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/icons/fontawesome/css/font-awesome.min.css') . '">
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/bootstrap/css/bootstrap.min.css?4') . '">
+                        </head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
                         <center>
                             <div style="margin-top:20px; margin-bottom:20px;">
-                                <u style="font-weight:bold; font-size:16px;">APPROVAL USERS</u>
+                                <b style="font-size:20px !important;">APPROVAL USERS</b>
                             </div>
                             
-                            <a href="#" onclick="' . $approveall . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:12px;" href="">Approve All</a>
-                            <a href="#" onclick="' . $disapproveall . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:12px;" href="">Disapprove All</a>
+                            <a href="#" onclick="' . $approveall . '"  class="btn btn-success" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i> Approve All</a>
+                            <a href="#" onclick="' . $disapproveall . '" class="btn btn-danger" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i> Disapprove All</a>
                             <br><br>
                         </center>
-            <table id="customers" border="1">
+            <table class="table table-responsive table-bordered table-hover">
                 <tr>
                     <th width="20">No</th>
                     <th>User ID</th>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Username</th>
-                    <th>email</th>
-                    <th>phone</th>
-                    <th>position</th>
-                    <th>actived</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Position</th>
+                    <th>Actived</th>
                     <th>#</th>
                 </tr>';
             $no = 1;
@@ -245,8 +250,8 @@ class Home extends CI_Controller
                                 <td>' . $data['actived'] . '</td>
                                 <td>
                                     <div id="' . $data['id'] . '">
-                                        <a href="#" onclick="' . $approve . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:10px;" href="">Y</a>
-                                        <a href="#" onclick="' . $disapprove . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:10px;" href="">X</a>
+                                        <a href="#" onclick="' . $approve . '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i></a>
+                                        <a href="#" onclick="' . $disapprove . '" class="btn btn-danger btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i></a>
                                     </div>
                                 </td>
                             </tr>';
@@ -285,14 +290,17 @@ class Home extends CI_Controller
 
             $approveall = "return approveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'employees')";
             $disapproveall = "return disapproveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'employees')";
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+            $html = '<html><head><title>Print Data</title>
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/icons/fontawesome/css/font-awesome.min.css') . '">
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/bootstrap/css/bootstrap.min.css?4') . '">
+                        </head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
                         <center>
                             <div style="margin-top:20px; margin-bottom:20px;">
-                                <u style="font-weight:bold; font-size:16px !important;">APPROVAL EMPLOYEE</u>
+                                <b style="font-size:20px !important;">APPROVAL EMPLOYEE</b>
                             </div>
                             
-                            <a href="#" onclick="' . $approveall . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:12px;" href="">Approve All</a>
-                            <a href="#" onclick="' . $disapproveall . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:12px;" href="">Disapprove All</a>
+                            <a href="#" onclick="' . $approveall . '"  class="btn btn-success" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i> Approve All</a>
+                            <a href="#" onclick="' . $disapproveall . '" class="btn btn-danger" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i> Disapprove All</a>
                             <br><br>
                         </center>
                 <table id="customers" border="1">
@@ -326,8 +334,8 @@ class Home extends CI_Controller
                                 <td>' . $data['date_expired'] . '</td>
                                 <td>
                                     <div id="' . $data['id'] . '">
-                                        <a href="#" onclick="' . $approve . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:10px;" href="">Y</a>
-                                        <a href="#" onclick="' . $disapprove . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:10px;" href="">X</a>
+                                        <a href="#" onclick="' . $approve . '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i></a>
+                                        <a href="#" onclick="' . $disapprove . '" class="btn btn-danger btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i></a>
                                     </div>
                                 </td>
                             </tr>';
@@ -367,14 +375,17 @@ class Home extends CI_Controller
 
             $approveall = "return approveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'agreements')";
             $disapproveall = "return disapproveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'agreements')";
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+            $html = '<html><head><title>Print Data</title>
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/icons/fontawesome/css/font-awesome.min.css') . '">
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/bootstrap/css/bootstrap.min.css?4') . '">
+                        </head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
                         <center>
                             <div style="margin-top:20px; margin-bottom:20px;">
-                                <u style="font-weight:bold; font-size:16px !important;">APPROVAL AGREEMENT</u>
+                                <b style="font-size:20px !important;">APPROVAL AGREEMENT</b>
                             </div>
                             
-                            <a href="#" onclick="' . $approveall . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:12px;" href="">Approve All</a>
-                            <a href="#" onclick="' . $disapproveall . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:12px;" href="">Disapprove All</a>
+                            <a href="#" onclick="' . $approveall . '"  class="btn btn-success" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i> Approve All</a>
+                            <a href="#" onclick="' . $disapproveall . '" class="btn btn-danger" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i> Disapprove All</a>
                             <br><br>
                         </center>
                 <table id="customers" border="1">
@@ -408,8 +419,8 @@ class Home extends CI_Controller
                                 <td>' . $data['note'] . '</td>
                                 <td>
                                     <div id="' . $data['id'] . '">
-                                        <a href="#" onclick="' . $approve . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:10px;" href="">Y</a>
-                                        <a href="#" onclick="' . $disapprove . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:10px;" href="">X</a>
+                                        <a href="#" onclick="' . $approve . '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i></a>
+                                        <a href="#" onclick="' . $disapprove . '" class="btn btn-danger btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i></a>
                                     </div>
                                 </td>
                             </tr>';
@@ -445,14 +456,17 @@ class Home extends CI_Controller
 
             $approveall = "return approveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'mutations')";
             $disapproveall = "return disapproveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'mutations')";
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+            $html = '<html><head><title>Print Data</title>
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/icons/fontawesome/css/font-awesome.min.css') . '">
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/bootstrap/css/bootstrap.min.css?4') . '">
+                        </head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
                         <center>
                             <div style="margin-top:20px; margin-bottom:20px;">
-                                <u style="font-weight:bold; font-size:16px !important;">APPROVAL MUTATION</u>
+                                <b style="font-size:20px !important;">APPROVAL MUTATION</b>
                             </div>
                             
-                            <a href="#" onclick="' . $approveall . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:12px;" href="">Approve All</a>
-                            <a href="#" onclick="' . $disapproveall . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:12px;" href="">Disapprove All</a>
+                            <a href="#" onclick="' . $approveall . '"  class="btn btn-success" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i> Approve All</a>
+                            <a href="#" onclick="' . $disapproveall . '" class="btn btn-danger" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i> Disapprove All</a>
                             <br><br>
                         </center>
                 <table id="customers" border="1">
@@ -484,8 +498,8 @@ class Home extends CI_Controller
                                 <td>' . $data['description'] . '</td>
                                 <td>
                                     <div id="' . $data['id'] . '">
-                                        <a href="#" onclick="' . $approve . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:10px;" href="">Y</a>
-                                        <a href="#" onclick="' . $disapprove . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:10px;" href="">X</a>
+                                        <a href="#" onclick="' . $approve . '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i></a>
+                                        <a href="#" onclick="' . $disapprove . '" class="btn btn-danger btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i></a>
                                     </div>
                                 </td>
                             </tr>';
@@ -519,14 +533,17 @@ class Home extends CI_Controller
 
             $approveall = "return approveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'employee_requests')";
             $disapproveall = "return disapproveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'employee_requests')";
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+            $html = '<html><head><title>Print Data</title>
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/icons/fontawesome/css/font-awesome.min.css') . '">
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/bootstrap/css/bootstrap.min.css?4') . '">
+                        </head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
                         <center>
                             <div style="margin-top:20px; margin-bottom:20px;">
-                                <u style="font-weight:bold; font-size:16px !important;">APPROVAL EMPLOYEE REQUEST</u>
+                                <b style="font-size:20px !important;">APPROVAL EMPLOYEE REQUEST</b>
                             </div>
                             
-                            <a href="#" onclick="' . $approveall . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:12px;" href="">Approve All</a>
-                            <a href="#" onclick="' . $disapproveall . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:12px;" href="">Disapprove All</a>
+                            <a href="#" onclick="' . $approveall . '"  class="btn btn-success" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i> Approve All</a>
+                            <a href="#" onclick="' . $disapproveall . '" class="btn btn-danger" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i> Disapprove All</a>
                             <br><br>
                         </center>
                 <table id="customers" border="1">
@@ -558,8 +575,8 @@ class Home extends CI_Controller
                                 <td>' . $data['description'] . '</td>
                                 <td>
                                     <div id="' . $data['id'] . '">
-                                        <a href="#" onclick="' . $approve . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:10px;" href="">Y</a>
-                                        <a href="#" onclick="' . $disapprove . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:10px;" href="">X</a>
+                                        <a href="#" onclick="' . $approve . '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i></a>
+                                        <a href="#" onclick="' . $disapprove . '" class="btn btn-danger btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i></a>
                                     </div>
                                 </td>
                             </tr>';
@@ -606,14 +623,17 @@ class Home extends CI_Controller
 
             $approveall = "return approveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'permits')";
             $disapproveall = "return disapproveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'permits')";
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+            $html = '<html><head><title>Print Data</title>
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/icons/fontawesome/css/font-awesome.min.css') . '">
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/bootstrap/css/bootstrap.min.css?4') . '">
+                        </head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
                         <center>
                             <div style="margin-top:20px; margin-bottom:20px;">
-                                <u style="font-weight:bold; font-size:16px !important;">APPROVAL PERMIT</u>
+                                <b style="font-size:20px !important;">APPROVAL PERMIT</b>
                             </div>
                             
-                            <a href="#" onclick="' . $approveall . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:12px;" href="">Approve All</a>
-                            <a href="#" onclick="' . $disapproveall . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:12px;" href="">Disapprove All</a>
+                            <a href="#" onclick="' . $approveall . '"  class="btn btn-success" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i> Approve All</a>
+                            <a href="#" onclick="' . $disapproveall . '" class="btn btn-danger" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i> Disapprove All</a>
                             <br><br>
                         </center>
                 <table id="customers" border="1">
@@ -651,8 +671,8 @@ class Home extends CI_Controller
                                 <td>' . $data['note'] . '</td>
                                 <td>
                                     <div id="' . $data['id'] . '">
-                                        <a href="#" onclick="' . $approve . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:10px;" href="">Y</a>
-                                        <a href="#" onclick="' . $disapprove . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:10px;" href="">X</a>
+                                        <a href="#" onclick="' . $approve . '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i></a>
+                                        <a href="#" onclick="' . $disapprove . '" class="btn btn-danger btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i></a>
                                     </div>
                                 </td>
                             </tr>';
@@ -698,14 +718,17 @@ class Home extends CI_Controller
 
             $approveall = "return approveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'overtimes')";
             $disapproveall = "return disapproveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'overtimes')";
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+            $html = '<html><head><title>Print Data</title>
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/icons/fontawesome/css/font-awesome.min.css') . '">
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/bootstrap/css/bootstrap.min.css?4') . '">
+                        </head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
                         <center>
                             <div style="margin-top:20px; margin-bottom:20px;">
-                                <u style="font-weight:bold; font-size:16px !important;">APPROVAL OVERTIME</u>
+                                <b style="font-size:20px !important;">APPROVAL OVERTIME</b>
                             </div>
                             
-                            <a href="#" onclick="' . $approveall . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:12px;" href="">Approve All</a>
-                            <a href="#" onclick="' . $disapproveall . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:12px;" href="">Disapprove All</a>
+                            <a href="#" onclick="' . $approveall . '"  class="btn btn-success" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i> Approve All</a>
+                            <a href="#" onclick="' . $disapproveall . '" class="btn btn-danger" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i> Disapprove All</a>
                             <br><br>
                         </center>
                 <table id="customers" border="1">
@@ -753,8 +776,8 @@ class Home extends CI_Controller
                                 <td>' . $data['remarks'] . '</td>
                                 <td>
                                     <div id="' . $data['id'] . '">
-                                        <a href="#" onclick="' . $approve . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:10px;" href="">Y</a>
-                                        <a href="#" onclick="' . $disapprove . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:10px;" href="">X</a>
+                                        <a href="#" onclick="' . $approve . '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i></a>
+                                        <a href="#" onclick="' . $disapprove . '" class="btn btn-danger btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i></a>
                                     </div>
                                 </td>
                             </tr>';
@@ -800,14 +823,17 @@ class Home extends CI_Controller
 
             $approveall = "return approveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'cash_carries')";
             $disapproveall = "return disapproveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'cash_carries')";
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+            $html = '<html><head><title>Print Data</title>
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/icons/fontawesome/css/font-awesome.min.css') . '">
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/bootstrap/css/bootstrap.min.css?4') . '">
+                        </head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
                         <center>
                             <div style="margin-top:20px; margin-bottom:20px;">
-                                <u style="font-weight:bold; font-size:16px !important;">APPROVAL CASH CARRY</u>
+                                <b style="font-size:20px !important;">APPROVAL CASH CARRY</b>
                             </div>
                             
-                            <a href="#" onclick="' . $approveall . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:12px;" href="">Approve All</a>
-                            <a href="#" onclick="' . $disapproveall . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:12px;" href="">Disapprove All</a>
+                            <a href="#" onclick="' . $approveall . '"  class="btn btn-success" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i> Approve All</a>
+                            <a href="#" onclick="' . $disapproveall . '" class="btn btn-danger" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i> Disapprove All</a>
                             <br><br>
                         </center>
                 <table id="customers" border="1">
@@ -855,8 +881,8 @@ class Home extends CI_Controller
                                 <td>' . $data['remarks'] . '</td>
                                 <td>
                                     <div id="' . $data['id'] . '">
-                                        <a href="#" onclick="' . $approve . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:10px;" href="">Y</a>
-                                        <a href="#" onclick="' . $disapprove . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:10px;" href="">X</a>
+                                        <a href="#" onclick="' . $approve . '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i></a>
+                                        <a href="#" onclick="' . $disapprove . '" class="btn btn-danger btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i></a>
                                     </div>
                                 </td>
                             </tr>';
@@ -901,14 +927,17 @@ class Home extends CI_Controller
 
             $approveall = "return approveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'change_days')";
             $disapproveall = "return disapproveall(" . str_replace('"', "'", json_encode($arr_all)) . ", 'change_days')";
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+            $html = '<html><head><title>Print Data</title>
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/icons/fontawesome/css/font-awesome.min.css') . '">
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/bootstrap/css/bootstrap.min.css?4') . '">
+                        </head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
                         <center>
                             <div style="margin-top:20px; margin-bottom:20px;">
-                                <u style="font-weight:bold; font-size:16px !important;">APPROVAL CHANGE DAYS</u>
+                                <b style="font-size:20px !important;">APPROVAL CHANGE DAY</b>
                             </div>
                             
-                            <a href="#" onclick="' . $approveall . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:12px;" href="">Approve All</a>
-                            <a href="#" onclick="' . $disapproveall . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:12px;" href="">Disapprove All</a>
+                            <a href="#" onclick="' . $approveall . '"  class="btn btn-success" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i> Approve All</a>
+                            <a href="#" onclick="' . $disapproveall . '" class="btn btn-danger" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i> Disapprove All</a>
                             <br><br>
                         </center>
                 <table id="customers" border="1">
@@ -944,8 +973,8 @@ class Home extends CI_Controller
                                 <td>' . $data['remarks'] . '</td>
                                 <td>
                                     <div id="' . $data['id'] . '">
-                                        <a href="#" onclick="' . $approve . '" style="text-decoration:none; font-weight:bold; background:green; color:white; padding:5px; font-size:10px;" href="">Y</a>
-                                        <a href="#" onclick="' . $disapprove . '" style="text-decoration:none; font-weight:bold; background:red; color:white; padding:5px; font-size:10px;" href="">X</a>
+                                        <a href="#" onclick="' . $approve . '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i></a>
+                                        <a href="#" onclick="' . $disapprove . '" class="btn btn-danger btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i></a>
                                     </div>
                                 </td>
                             </tr>';

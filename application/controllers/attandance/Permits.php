@@ -49,6 +49,20 @@ class Permits extends CI_Controller
         echo json_encode($records);
     }
 
+    public function readShifts()
+    {
+        $employee_id = $this->input->post('employee_id');
+        $this->db->select('c.name, c.days');
+        $this->db->from('shift_employees a');
+        $this->db->join('shifts b', 'a.shift_id = b.id');
+        $this->db->join('shift_details c', 'b.id = c.shift_id');
+        $this->db->where('a.deleted', 0);
+        $this->db->where('a.employee_id', $employee_id);
+        $results = $this->db->get()->row();
+
+        echo json_encode($results);
+    }
+
     public function readLeave()
     {
         $employee_id = $this->input->post('employee_id');
@@ -72,6 +86,36 @@ class Permits extends CI_Controller
 
         echo json_encode(@array_merge($records, ["total" => (12 - $totalPermit)]));
     }
+
+    public function getDays()
+    {
+        $date_from = $this->input->post('date_from');
+        $date_to = $this->input->post('date_to');
+        $working_day = $this->input->post('working_day');
+
+        $date_from = strtotime($date_from);
+        $date_to = strtotime($date_to);
+
+        for ($i = $date_from; $i <= $date_to; $i += (60 * 60 * 24)) {
+            if ($working_day == "6") {
+                if (date('w', $i) !== '0') {
+                    $weekdays[] = $i;
+                } else {
+                    $weekends[] = $i;
+                }
+            } else {
+                if (date('w', $i) !== '0' && date('w', $i) !== '6') {
+                    $weekdays[] = $i;
+                } else {
+                    $weekends[] = $i;
+                }
+            }
+        }
+
+        $total_days = @count($weekdays);
+        echo $total_days;
+    }
+
 
     //GET DATATABLES
     public function datatables()
@@ -156,21 +200,44 @@ class Permits extends CI_Controller
     public function create()
     {
         if ($this->input->post()) {
-            $post   = $this->input->post();
-            $this->db->select('*');
-            $this->db->from('permits');
-            $this->db->where("employee_id", $post['employee_id']);
-            $this->db->where("permit_date", $post['permit_date']);
-            $permit = $this->db->get()->row();
+            $post = $this->input->post();
 
-            if (!empty($permit)) {
-                echo json_encode(array("title" => "Available", "message" => "The permit requestion for this employee and permit date has been created", "theme" => "error"));
-            } else {
-                $attachment = $this->crud->upload('attachment', ['pdf', 'png', 'jpg', 'jpeg'], 'assets/image/attandance/');
-                $post_final = array_merge($post, ["attachment" => $attachment]);
-                $send = $this->crud->create('permits', $post_final);
-                echo $send;
+            $date_from = strtotime($post['date_from']);
+            $date_to = strtotime($post['date_to']);
+
+            $send = "";
+            $leave = $post['leave'];
+            for ($i = $date_from; $i <= $date_to; $i += (60 * 60 * 24)) {
+                $permit_date = date('Y-m-d', $i);
+                $this->db->select('*');
+                $this->db->from('permits');
+                $this->db->where("employee_id", $post['employee_id']);
+                $this->db->where("permit_date", $permit_date);
+                $permit = $this->db->get()->row();
+
+                if (!empty($permit)) {
+                    echo json_encode(array("title" => "Available", "message" => "The permit requestion for this employee and permit date has been created", "theme" => "error"));
+                    exit;
+                } else {
+                    $attachment = $this->crud->upload('attachment', ['pdf', 'png', 'jpg', 'jpeg'], 'assets/image/attandance/');
+                    $post_final = array(
+                        "employee_id" => $post['employee_id'],
+                        "permit_type_id" => $post['permit_type_id'],
+                        "reason_id" => $post['reason_id'],
+                        "trans_date" => $post['trans_date'],
+                        "permit_date" => $permit_date,
+                        "duration" => $post['duration'],
+                        "leave" => ($leave - $post['duration']),
+                        "note" => $post['note'],
+                        "attachment" => $attachment
+                    );
+                    $send = $this->crud->create('permits', $post_final);
+                }
+
+                $leave = ($leave - $post['duration']);
             }
+
+            echo $send;
         } else {
             show_error("Cannot Process your request");
         }
@@ -218,8 +285,9 @@ class Permits extends CI_Controller
                 'permit_type_number' => $data->val($i, 3),
                 'reason_number' => $data->val($i, 4),
                 'trans_date' => $data->val($i, 5),
-                'permit_date' => $data->val($i, 6),
-                'note' => $data->val($i, 7)
+                'date_from' => $data->val($i, 6),
+                'date_to' => $data->val($i, 7),
+                'note' => $data->val($i, 8)
             );
         }
 
@@ -260,74 +328,86 @@ class Permits extends CI_Controller
     public function uploadcreate()
     {
         if ($this->input->post()) {
-            $data = $this->input->post('data');
-            $employee = $this->crud->read('employees', ["number" => $data['number'], "status" => 0]);
-            $permittype = $this->crud->read('permit_types', ["number" => $data['permit_type_number']]);
-            $reason = $this->crud->read('reasons', ["number" => $data['reason_number']]);
+            $post = $this->input->post('data');
+            $date_from = strtotime($post['date_from']);
+            $date_to = strtotime($post['date_to']);
+
+            $employee = $this->crud->read('employees', ["number" => $post['number'], "status" => 0]);
+            $permittype = $this->crud->read('permit_types', ["number" => $post['permit_type_number']]);
+            $reason = $this->crud->read('reasons', ["number" => $post['reason_number']]);
 
             if (!empty($employee)) {
                 if (!empty($permittype)) {
                     if (!empty($reason)) {
-                        $this->db->select('*');
-                        $this->db->from('permits');
-                        $this->db->where("employee_id", $employee->id);
-                        $this->db->where("permit_date", $data['permit_date']);
-                        $this->db->where("permit_type_id", $permittype->id);
-                        $this->db->where("reason_id", $reason->id);
-                        $permit = $this->db->get()->row();
+                        $send = "";
+                        $leave = $post['leave'];
+                        for ($i = $date_from; $i <= $date_to; $i += (60 * 60 * 24)) {
+                            $permit_date = date('Y-m-d', $i);
+                            $this->db->select('*');
+                            $this->db->from('permits');
+                            $this->db->where("employee_id", $employee->id);
+                            $this->db->where("permit_date", $permit_date);
+                            $permit = $this->db->get()->row();
 
-                        if (!empty($permit)) {
-                            echo json_encode(array("title" => "Available", "message" => $employee->name . " has been created", "theme" => "error"));
-                        } else {
-                            $year = date("Y");
-                            $this->db->select('c.name, c.days');
-                            $this->db->from('shift_employees a');
-                            $this->db->join('shifts b', 'a.shift_id = b.id');
-                            $this->db->join('shift_details c', 'b.id = c.shift_id');
-                            $this->db->where('a.deleted', 0);
-                            $this->db->where('a.employee_id', $employee->id);
-                            $this->db->limit(1);
-                            $records = $this->db->get()->result_array();
-
-                            if (count($records) > 0) {
-                                $permitType = $this->crud->read('permit_types', ["id" => $permittype->id, "cutoff" => "YES"]);
-                                $permits = $this->crud->reads('permits', ["employee_id" => $employee->id, "DATE_FORMAT(permit_date, '%Y')" => $year, "permit_type_id" => @$permitType->id]);
-                                $totalPermit = 0;
-                                $duration = 0;
-                                foreach ($permits as $permit) {
-                                    $totalPermit += $permit->duration;
-                                    $duration = 1;
-                                }
-
-                                if ((12 - ($totalPermit + $duration)) <= 0) {
-                                    echo json_encode(array("title" => "Not Found", "message" => $employee->name . " This total permit is over", "theme" => "error"));
-                                } else {
-                                    $post_permit = array(
-                                        'employee_id' => $employee->id,
-                                        'permit_type_id' => $permittype->id,
-                                        'reason_id' => $reason->id,
-                                        'trans_date' => $data['trans_date'],
-                                        'permit_date' => $data['permit_date'],
-                                        'duration' => $duration,
-                                        'leave' => (12 - $totalPermit),
-                                        'note' => $data['note']
-                                    );
-
-                                    $send = $this->crud->create('permits', $post_permit);
-                                    echo $send;
-                                }
+                            if (!empty($permit)) {
+                                echo json_encode(array("title" => "Available", "message" => "The permit requestion for this employee and permit date has been created", "theme" => "error"));
+                                exit;
                             } else {
-                                echo json_encode(array("title" => "Not Found", "message" => $employee->name . " Un setting in setting group menu", "theme" => "error"));
+                                $year = date("Y");
+                                $this->db->select('c.name, c.days');
+                                $this->db->from('shift_employees a');
+                                $this->db->join('shifts b', 'a.shift_id = b.id');
+                                $this->db->join('shift_details c', 'b.id = c.shift_id');
+                                $this->db->where('a.deleted', 0);
+                                $this->db->where('a.employee_id', $employee->id);
+                                $this->db->limit(1);
+                                $records = $this->db->get()->result_array();
+
+                                if (count($records) > 0) {
+                                    $permitType = $this->crud->read('permit_types', ["id" => $permittype->id, "cutoff" => "YES"]);
+                                    $permits = $this->crud->reads('permits', ["employee_id" => $employee->id, "DATE_FORMAT(permit_date, '%Y')" => $year, "permit_type_id" => @$permitType->id]);
+                                    $totalPermit = 0;
+                                    $duration = 0;
+                                    foreach ($permits as $permit) {
+                                        $totalPermit += $permit->duration;
+                                        $duration = 1;
+                                    }
+
+                                    if ((12 - ($totalPermit + $duration)) <= 0) {
+                                        echo json_encode(array("title" => "Not Found", "message" => $employee->name . " This total permit is over", "theme" => "error"));
+                                        exit;
+                                    } else {
+                                        $post_permit = array(
+                                            'employee_id' => $employee->id,
+                                            'permit_type_id' => $permittype->id,
+                                            'reason_id' => $reason->id,
+                                            'trans_date' => $post['trans_date'],
+                                            'permit_date' => $permit_date,
+                                            'duration' => $duration,
+                                            'leave' => (12 - $totalPermit),
+                                            'note' => $post['note']
+                                        );
+
+                                        $send = $this->crud->create('permits', $post_permit);
+                                    }
+                                } else {
+                                    echo json_encode(array("title" => "Not Found", "message" => $employee->name . " Un setting in setting group menu", "theme" => "error"));
+                                    exit;
+                                }
                             }
+
+                            $leave = ($leave - $post['duration']);
                         }
+
+                        echo $send;
                     } else {
-                        echo json_encode(array("title" => "Not Found", "message" => $data['reason_number'] . " Reason ID Not Found", "theme" => "error"));
+                        echo json_encode(array("title" => "Not Found", "message" => $post['reason_number'] . " Reason ID Not Found", "theme" => "error"));
                     }
                 } else {
-                    echo json_encode(array("title" => "Not Found", "message" => $data['permit_type_number'] . " Permit Type ID Not Found", "theme" => "error"));
+                    echo json_encode(array("title" => "Not Found", "message" => $post['permit_type_number'] . " Permit Type ID Not Found", "theme" => "error"));
                 }
             } else {
-                echo json_encode(array("title" => "Not Found", "message" => $data['number'] . " Employee ID Not Found", "theme" => "error"));
+                echo json_encode(array("title" => "Not Found", "message" => $post['number'] . " Employee ID Not Found", "theme" => "error"));
             }
         }
     }

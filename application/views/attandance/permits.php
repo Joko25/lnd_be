@@ -99,10 +99,6 @@
                 <input style="width:60%;" name="employee_id" id="employee_id" required="">
             </div>
             <div class="fitem">
-                <span style="width:30%; display:inline-block;">Permit Date</span>
-                <input style="width:60%;" name="permit_date" id="permit_date" class="easyui-datebox" required data-options="formatter:myformatter,parser:myparser, editable:false">
-            </div>
-            <div class="fitem">
                 <span style="width:30%; display:inline-block;">Permit Type</span>
                 <input style="width:60%;" name="permit_type_id" id="permit_type_id" required="" class="easyui-combobox">
             </div>
@@ -110,9 +106,18 @@
                 <span style="width:30%; display:inline-block;">Reason</span>
                 <input style="width:60%;" name="reason_id" id="reason_id" required="" class="easyui-combobox">
             </div>
+            <div class="fitem">
+                <span style="width:30%; display:inline-block;">Permit Date</span>
+                <input style="width:30%;" name="date_from" id="date_from" class="easyui-datebox" required data-options="formatter:myformatter,parser:myparser, editable:false">
+                <input style="width:30%;" name="date_to" id="date_to" class="easyui-datebox" required data-options="formatter:myformatter,parser:myparser, editable:false">
+            </div>
             <div class="fitem" hidden>
                 <span style="width:30%; display:inline-block;">Duration</span>
                 <input style="width:30%;" name="duration" id="duration" readonly required class="easyui-numberbox" data-options="buttonText:'Day', buttonAlign:'right'">
+            </div>
+            <div class="fitem">
+                <span style="width:30%; display:inline-block;">Working Day</span>
+                <input style="width:30%;" name="working_day" id="working_day" readonly required class="easyui-numberbox" data-options="buttonText:'Day', buttonAlign:'right'">
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Permit Available</span>
@@ -161,7 +166,7 @@
         $('#frm_insert').form('clear');
         $('#employee_id').combogrid('enable');
         $('#permit_date').datebox('enable');
-        $("#trans_date").datebox('setValue', "<?= date("Y-m-d") ?>")
+        $("#trans_date").datebox('setValue', "<?= date("Y-m-d") ?>");
     }
 
     //EDIT DATA
@@ -308,7 +313,7 @@
                                 toastr.error(result.message, result.title);
                             }
 
-                            //$('#dlg_insert').dialog('close');
+                            $('#dlg_insert').dialog('close');
                             $('#dg').datagrid('reload');
                         }
                     });
@@ -543,6 +548,21 @@
                     width: 200
                 }]
             ],
+            onSelect: function(value, employee) {
+                $.ajax({
+                    url: '<?= base_url('attandance/permits/readShifts') ?>',
+                    type: 'post',
+                    data: 'employee_id=' + employee.id,
+                    success: function(row) {
+                        var result = eval('(' + row + ')');
+                        if (row == "null") {
+                            $("#working_day").numberbox('clear');
+                        } else {
+                            $("#working_day").numberbox('setValue', result.days);
+                        }
+                    }
+                });
+            }
         });
 
         $("#permit_type_id").combobox({
@@ -563,14 +583,12 @@
                         } else {
                             if (permit.cutoff == "YES") {
                                 $("#duration").numberbox('setValue', 1);
-                                $("#leave").numberbox('setValue', (result.total - 1));
+                                $("#leave").numberbox('setValue', (result.total));
                             } else {
                                 $("#duration").numberbox('setValue', 0);
                                 $("#leave").numberbox('setValue', (result.total));
                             }
                         }
-
-
                     }
                 });
 
@@ -579,6 +597,56 @@
                     valueField: 'id',
                     textField: 'name',
                     prompt: 'Choose Reason',
+                });
+
+                $("#date_from").datebox({
+                    onChange: function(index) {
+                        var date_to = $("#date_to").datebox('getValue');
+                        var working_day = $("#working_day").numberbox('getValue');
+
+                        if (date_from == "" || date_from > index) {
+                            toastr.warning("Please Select Permit Date From < Date To");
+                        } else {
+                            $.ajax({
+                                url: '<?= base_url('attandance/permits/getDays') ?>',
+                                type: 'post',
+                                data: 'date_from=' + index + '&date_to=' + date_to + '&working_day=' + working_day,
+                                success: function(days) {
+                                    var leave = $("#leave").numberbox('getValue');
+
+                                    if (parseInt(leave - days) < 0) {
+                                        toastr.error("the Leave is over", "Leave 0");
+                                        $("#date_from").datebox('clear');
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+
+                $("#date_to").datebox({
+                    onChange: function(index) {
+                        var date_from = $("#date_from").datebox('getValue');
+                        var working_day = $("#working_day").numberbox('getValue');
+
+                        if (date_from == "" || date_from > index) {
+                            toastr.warning("Please Select Permit Date From < Date To");
+                        } else {
+                            $.ajax({
+                                url: '<?= base_url('attandance/permits/getDays') ?>',
+                                type: 'post',
+                                data: 'date_from=' + date_from + '&date_to=' + index + '&working_day=' + working_day,
+                                success: function(days) {
+                                    var leave = $("#leave").numberbox('getValue');
+
+                                    if (parseInt(leave - days) < 0) {
+                                        toastr.error("the Leave is over", "Leave 0");
+                                        $("#date_to").datebox('clear');
+                                    }
+                                }
+                            });
+                        }
+                    }
                 });
             }
         });

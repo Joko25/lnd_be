@@ -138,9 +138,9 @@ class Privilege_groups extends CI_Controller
         $this->db->from('config');
         $config = $this->db->get()->row();
 
-        $this->db->select('a.*, b.number as employee_number, b.name as employee_name, c.name as group_name');
+        $this->db->select('a.*, b.name as user_name, c.name as group_name');
         $this->db->from('privilege_groups a');
-        $this->db->join('employees b', 'a.employee_id = b.id');
+        $this->db->join('users b', 'a.username = b.username');
         $this->db->join('groups c', 'a.group_id = c.id');
         $this->db->where('a.deleted', 0);
         $this->db->order_by('b.name', 'ASC');
@@ -171,16 +171,14 @@ class Privilege_groups extends CI_Controller
         <table id="customers" border="1">
             <tr>
                 <th width="20">No</th>
-                <th>Employee ID</th>
-                <th>Employee Name</th>
+                <th>User Name</th>
                 <th>Group Name</th>
             </tr>';
         $no = 1;
         foreach ($records as $data) {
             $html .= '<tr>
                     <td>' . $no . '</td>
-                    <td>' . $data['employee_number'] . '</td>
-                    <td>' . $data['employee_name'] . '</td>
+                    <td>' . $data['user_name'] . '</td>
                     <td>' . $data['group_name'] . '</td>';
             $no++;
         }

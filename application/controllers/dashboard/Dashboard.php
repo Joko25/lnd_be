@@ -18,8 +18,8 @@ class Dashboard extends CI_Controller
         if ($this->session->username != "") {
             $data['config'] = $this->crud->read('config');
             $data['users'] = $this->crud->reads('users', [], ["actived" => 0, "deleted" => 0], "", "name", "asc");
+            $data['user'] = $this->crud->read('users', [], ["actived" => 0, "deleted" => 0, "username" => $this->session->username], "", "name", "asc");
             $data['attandance'] = $this->myattandance();
-            $data['permit'] = $this->myleave();
             $data['permittoday'] = $this->permitToday();
 
             if (date("H:i:s") >= "00:00:00" and date("H:i:s") <= "11:00:00") {
@@ -81,7 +81,7 @@ class Dashboard extends CI_Controller
             $this->db->join('attandances b', 'a.number = b.number');
             $this->db->join('overtimes c', 'a.id = c.employee_id and b.date_in = c.trans_date', 'left');
             $this->db->where('b.date_in =', $working_date);
-            $this->db->like('a.number', $number);
+            $this->db->where('a.number', $number);
             $this->db->order_by('a.name', 'asc');
             $this->db->order_by('b.date_in', 'asc');
             $attandance = $this->db->get()->row();
@@ -315,28 +315,6 @@ class Dashboard extends CI_Controller
         echo $html;
     }
 
-    public function myleave()
-    {
-        $number = $this->session->number;
-
-        $year = date("Y");
-        $this->db->select('b.duration');
-        $this->db->from('employees a');
-        $this->db->join('permits b', 'a.id = b.employee_id');
-        $this->db->join('permit_types c', 'b.permit_type_id = c.id');
-        $this->db->where('a.deleted', 0);
-        $this->db->where('a.number', $number);
-        $this->db->where('c.cutoff', "YES");
-        $this->db->where("DATE_FORMAT(b.permit_date, '%Y') = '$year'");
-        $records = $this->db->get()->result_array();
-        $totalPermit = 0;
-        foreach ($records as $permit) {
-            $totalPermit += $permit->duration;
-        }
-
-        return array("balance" => (12 - $totalPermit), "used" => $totalPermit);
-    }
-
     public function permitToday()
     {
         $permits = $this->crud->reads("permits", [], ["permit_date" => date("Y-m-d")]);
@@ -362,7 +340,9 @@ class Dashboard extends CI_Controller
 
             $html .= "</table>";
         } else {
-            $html = '<center><b>No Permission Today</b></center>';
+            $html = '<div class="alert alert-danger" role="alert">
+                        No Permission Today
+                    </div>';
         }
 
         return $html;

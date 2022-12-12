@@ -109,7 +109,7 @@ class Setup_salaries extends CI_Controller
     {
         if ($this->input->post()) {
             if ($this->form_validation->run() == TRUE) {
-                $post   = $this->input->post();
+                $post = $this->input->post();
                 $setup_salaries = $this->crud->read("setup_salaries", [], ["employee_id" => $post['employee_id']]);
 
                 if (empty($setup_salaries)) {
@@ -209,8 +209,10 @@ class Setup_salaries extends CI_Controller
 
             if (!empty($salary_component->id)) {
                 $salary_component_id = $salary_component->id;
+                $amount = $salary_component->salary;
             } else {
                 $salary_component_id = "";
+                $amount = $data['amount'];
             }
 
             if (!empty($employees)) {
@@ -225,7 +227,7 @@ class Setup_salaries extends CI_Controller
                     $post = array(
                         'employee_id' => $employees->id,
                         'salary_component_id' => $salary_component_id,
-                        'amount' => $data['amount']
+                        'amount' => $amount
                     );
 
                     $send = $this->crud->create('setup_salaries', $post);

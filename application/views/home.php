@@ -7,7 +7,7 @@
 		</div>
 
 		<div class="logo-company">
-			<img src="<?= $config->favicon ?>" width="60"><br>
+			<img src="<?= $config->favicon ?>" width="50"><br>
 		</div>
 		<div class="name-company">
 			<b style="font-size: 16px !important;"><?= $config->name ?></b><br>
@@ -16,17 +16,16 @@
 			</div>
 		</div>
 		<div class="logo">
-			<a onclick="notification()" title="Notification" class="notification">
+			<a onclick="notification()" href="#" title="Notification" class="notification">
 				<i class="fa fa-bell" style="font-size: 25px !important;"></i>
 				<div id="notificationCount"></div>
 			</a>
-			<a onclick="profile()" title="Profile" class="notification">
+			<a onclick="profile()" href="#" title="Profile" class="notification">
 				<i class="fa fa-users" style="font-size: 25px !important;"></i>
 			</a>
 			<a href="<?= base_url('login/logout') ?>" title="Logout" class="notification">
 				<i class="fa fa-share" style="font-size: 25px !important;"></i>
 			</a>
-			<!-- <img src="assets/image/pixelphy-logo.png" width="100" style="margin-right: 50px; margin-top: 15px;"> -->
 		</div>
 	</div>
 
@@ -61,7 +60,7 @@
 
 	<!-- FOOTER -->
 	<div data-options="region:'south',border:false" style="overflow: hidden;" id="footer">
-		Welcome in Application Enterprise Resource Planning System <b><?= $this->session->name ?></b> You are login in time <?= date("d F Y H:m:s"); ?>
+		Welcome in Application <?= $config->description ?> <b><?= $this->session->name ?></b> You are login in time <?= date("d F Y H:m:s"); ?>
 		<a href="<?= base_url('login/logout') ?>">[Logout]</a>
 		<span style="float: right;"> Copyright &copy; <?= $config->name ?> 2022 Version 1.0</span>
 	</div>
@@ -106,6 +105,20 @@
 </body>
 
 <script>
+	// $(function() {
+	// 	guidely.add({
+	// 		attachTo: '#footer',
+	// 		anchor: 'top-left',
+	// 		title: 'Guide Title',
+	// 		text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.'
+	// 	});
+
+	// 	guidely.init({
+	// 		welcome: true,
+	// 		startTrigger: false
+	// 	});
+	// });
+
 	$(function() {
 		$('#dlg_profile').dialog({
 			buttons: [{
