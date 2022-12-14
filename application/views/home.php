@@ -23,7 +23,7 @@
 			<a onclick="profile()" href="#" title="Profile" class="notification">
 				<i class="fa fa-users" style="font-size: 25px !important;"></i>
 			</a>
-			<a href="<?= base_url('login/logout') ?>" title="Logout" class="notification">
+			<a href="#" onClick="logout()" title="Logout" class="notification">
 				<i class="fa fa-share" style="font-size: 25px !important;"></i>
 			</a>
 		</div>
@@ -61,7 +61,6 @@
 	<!-- FOOTER -->
 	<div data-options="region:'south',border:false" style="overflow: hidden;" id="footer">
 		Welcome in Application <?= $config->description ?> <b><?= $this->session->name ?></b> You are login in time <?= date("d F Y H:m:s"); ?>
-		<a href="<?= base_url('login/logout') ?>">[Logout]</a>
 		<span style="float: right;"> Copyright &copy; <?= $config->name ?> 2022 Version 1.0</span>
 	</div>
 
@@ -105,20 +104,6 @@
 </body>
 
 <script>
-	// $(function() {
-	// 	guidely.add({
-	// 		attachTo: '#footer',
-	// 		anchor: 'top-left',
-	// 		title: 'Guide Title',
-	// 		text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.'
-	// 	});
-
-	// 	guidely.init({
-	// 		welcome: true,
-	// 		startTrigger: false
-	// 	});
-	// });
-
 	$(function() {
 		$('#dlg_profile').dialog({
 			buttons: [{
@@ -390,6 +375,37 @@
 				});
 			}
 		});
+	}
+
+	function logout() {
+		Swal.fire({
+			title: 'Please Wait for Logout System',
+			showConfirmButton: false,
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+			didOpen: () => {
+				Swal.showLoading();
+			},
+		});
+
+		processingLogout();
+
+		function processingLogout() {
+			$.ajax({
+				type: "post",
+				url: "<?= base_url('login/logout') ?>",
+				dataType: "html",
+				success: function(response) {
+					if (response == 0) {
+						setTimeout(function() {
+							window.location.assign("<?= base_url('login') ?>");
+						}, 10000);
+					} else {
+						processingLogout();
+					}
+				}
+			});
+		}
 	}
 </script>
 

@@ -44,7 +44,9 @@ class Attandance_summary extends CI_Controller
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
 
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
+            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+            <style> .str{ mso-number-format:\@; } </style>
+            <body>';
             $this->db->select("a.id as employee_id, a.number, a.name, a.division_id, a.departement_id, a.departement_sub_id, c.name as division_name, d.name as departement_name, e.name as departement_sub_name");
             $this->db->from('employees a');
             $this->db->join('attandances b', 'a.number = b.number');
@@ -301,7 +303,7 @@ class Attandance_summary extends CI_Controller
                     $html .= '<tr>
                                 <td>' . $no . '</td>
                                 <td>' . $data['departement_sub_name'] . '</td>
-                                <td>' . $data['number'] . '</td>
+                                <td class="str">' . $data['number'] . '</td>
                                 <td>' . $data['name'] . '</td>
                                 <td>' . @$shifts[0]['shift_name'] . '</td>';
                     $total_permit = 0;

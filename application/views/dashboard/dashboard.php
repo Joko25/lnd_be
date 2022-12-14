@@ -1,12 +1,12 @@
 <body>
     <div class="greeting">
-        <p style="font-size: 25px !important; margin:0;"><?= $day ?>, <b style="font-size: 25px !important;"><?= $user->name ?></b>!</p>
-        <span>It's <?= date("D, d F Y") ?></span>
+        <p style="font-size: 25px !important; margin:0;"><?= $day ?>, <b style="font-size: 25px !important;"><?= $session_name ?></b>!</p>
+        <span>It's <?= date("D, d F Y") ?>, do you want to know the features in this dashboard? <a href="#" onclick="guidlyBegin()">Click here</a></span>
     </div>
     <div class="row m-0">
         <div class="col-lg-9">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-3" id="check_in">
                     <div class="alert-success" style="height: 70px;">
                         <div style="float: left; width: 60px;">
                             <i class="fa fa-calendar-check-o" style="font-size: 50px !important;"></i>
@@ -17,7 +17,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3" id="absent">
                     <div class="alert-danger" style="height: 70px;">
                         <div style="float: left; width: 60px;">
                             <i class="fa fa-calendar-times-o" style="font-size: 50px !important;"></i>
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3" id="permit">
 
                     <div class="alert-info" style="height: 70px;">
                         <div style="float: left; width: 60px;">
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3" id="late">
 
                     <div class="alert-warning" style="height: 70px;">
                         <div style="float: left; width: 60px;">
@@ -60,7 +60,7 @@
         </div>
         <div class="col-lg-3">
             <div class="row">
-                <div class="col-lg-12 mt-3">
+                <div class="col-lg-12 mt-3" id="permission">
                     <div class="card">
                         <div class="card-header">
                             Permission Today
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12 mt-3">
+                <div class="col-lg-12 mt-3" id="contract">
                     <div class="card">
                         <div class="card-header">
                             Contract & Probation
@@ -82,7 +82,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12 mt-3">
+                <div class="col-lg-12 mt-3" id="announcement">
                     <div class="card">
                         <div class="card-header">
                             Announcement
@@ -94,7 +94,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12 mt-3">
+                <div class="col-lg-12 mt-3" id="tasklist">
                     <div class="card">
                         <div class="card-header">
                             Task List
@@ -111,6 +111,77 @@
     </div>
 </body>
 <script>
+    function guidlyBegin() {
+        guidely.add({
+            attachTo: '#check_in',
+            anchor: 'top-left',
+            title: 'Check In',
+            text: 'This is the number of information you have Check In'
+        });
+
+        guidely.add({
+            attachTo: '#absent',
+            anchor: 'top-left',
+            title: 'Absent',
+            text: 'This is the number of information you have Absent from work'
+        });
+
+        guidely.add({
+            attachTo: '#permit',
+            anchor: 'top-left',
+            title: 'Permit',
+            text: 'This is the number of information you have Absent from work due to permission'
+        });
+
+        guidely.add({
+            attachTo: '#late',
+            anchor: 'top-left',
+            title: 'Late',
+            text: 'This is the number of information you have Late to Work'
+        });
+
+        guidely.add({
+            attachTo: '#calendar',
+            anchor: 'top-left',
+            title: 'Calendar',
+            text: 'This is the Information about your check in and check out'
+        });
+
+        guidely.add({
+            attachTo: '#permission',
+            anchor: 'top-left',
+            title: 'Permission',
+            text: 'This is the list of Employee in Permission today'
+        });
+
+        guidely.add({
+            attachTo: '#contract',
+            anchor: 'top-left',
+            title: 'Contract & Probation',
+            text: 'This is the list of Employee in Contract & Probation today'
+        });
+
+        guidely.add({
+            attachTo: '#announcement',
+            anchor: 'top-left',
+            title: 'Announcement',
+            text: 'This is the list of Announcement in created with Employees'
+        });
+
+        guidely.add({
+            attachTo: '#tasklist',
+            anchor: 'top-left',
+            title: 'Task List',
+            text: 'This is the list of Tasks in created with your Departement Head'
+        });
+
+
+        guidely.init({
+            welcome: true,
+            startTrigger: false
+        });
+    }
+
     $(function() {
         // Highcharts.chart('chartServices', {
         //     chart: {

@@ -354,45 +354,31 @@ class Permits extends CI_Controller
                                 exit;
                             } else {
                                 $year = date("Y");
-                                $this->db->select('c.name, c.days');
-                                $this->db->from('shift_employees a');
-                                $this->db->join('shifts b', 'a.shift_id = b.id');
-                                $this->db->join('shift_details c', 'b.id = c.shift_id');
-                                $this->db->where('a.deleted', 0);
-                                $this->db->where('a.employee_id', $employee->id);
-                                $this->db->limit(1);
-                                $records = $this->db->get()->result_array();
+                                $permitType = $this->crud->read('permit_types', ["id" => $permittype->id, "cutoff" => "YES"]);
+                                $permits = $this->crud->reads('permits', ["employee_id" => $employee->id, "DATE_FORMAT(permit_date, '%Y')" => $year, "permit_type_id" => @$permitType->id]);
+                                $totalPermit = 0;
+                                $duration = 0;
+                                foreach ($permits as $permit) {
+                                    $totalPermit += $permit->duration;
+                                    $duration = 1;
+                                }
 
-                                if (count($records) > 0) {
-                                    $permitType = $this->crud->read('permit_types', ["id" => $permittype->id, "cutoff" => "YES"]);
-                                    $permits = $this->crud->reads('permits', ["employee_id" => $employee->id, "DATE_FORMAT(permit_date, '%Y')" => $year, "permit_type_id" => @$permitType->id]);
-                                    $totalPermit = 0;
-                                    $duration = 0;
-                                    foreach ($permits as $permit) {
-                                        $totalPermit += $permit->duration;
-                                        $duration = 1;
-                                    }
-
-                                    if ((12 - ($totalPermit + $duration)) <= 0) {
-                                        echo json_encode(array("title" => "Not Found", "message" => $employee->name . " This total permit is over", "theme" => "error"));
-                                        exit;
-                                    } else {
-                                        $post_permit = array(
-                                            'employee_id' => $employee->id,
-                                            'permit_type_id' => $permittype->id,
-                                            'reason_id' => $reason->id,
-                                            'trans_date' => $post['trans_date'],
-                                            'permit_date' => $permit_date,
-                                            'duration' => $duration,
-                                            'leave' => (12 - $totalPermit),
-                                            'note' => $post['note']
-                                        );
-
-                                        $send = $this->crud->create('permits', $post_permit);
-                                    }
-                                } else {
-                                    echo json_encode(array("title" => "Not Found", "message" => $employee->name . " Un setting in setting group menu", "theme" => "error"));
+                                if ((12 - ($totalPermit + $duration)) <= 0) {
+                                    echo json_encode(array("title" => "Not Found", "message" => $employee->name . " This total permit is over", "theme" => "error"));
                                     exit;
+                                } else {
+                                    $post_permit = array(
+                                        'employee_id' => $employee->id,
+                                        'permit_type_id' => $permittype->id,
+                                        'reason_id' => $reason->id,
+                                        'trans_date' => $post['trans_date'],
+                                        'permit_date' => $permit_date,
+                                        'duration' => $duration,
+                                        'leave' => (12 - $totalPermit),
+                                        'note' => $post['note']
+                                    );
+
+                                    $send = $this->crud->create('permits', $post_permit);
                                 }
                             }
 

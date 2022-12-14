@@ -81,7 +81,9 @@ class Bpjs extends CI_Controller
             $this->db->from('config');
             $config = $this->db->get()->row();
 
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+                    <style> .str{ mso-number-format:\@; } </style>
+                    <body>
                     <center>
                         <div style="float: left; font-size: 12px; text-align: left;">
                             <table style="width: 100%;">
@@ -184,10 +186,10 @@ class Bpjs extends CI_Controller
 
                 $html .= '<tr>
                             <td>' . $no . '</td>
-                            <td style="text-align:center;">' . $record['jamsostek'] . '</td>
-                            <td style="text-align:center;">' . $record['national_id'] . '</td>
+                            <td style="text-align:center;" class="str">' . $record['jamsostek'] . '</td>
+                            <td style="text-align:center;" class="str">' . $record['national_id'] . '</td>
                             <td>' . $record['name'] . '</td>
-                            <td style="text-align:center;">' . $record['number'] . '</td>
+                            <td style="text-align:center;" class="str">' . $record['number'] . '</td>
                             <td style="text-align:center;">' . date("d-m-Y", strtotime($record['birthday'])) . '</td>
                             <td style="text-align:center;">' . $jamsostek . '</td>
                             <td style="text-align:center;">' . number_format($record['amount'], 0, ',', '.') . '</td>

@@ -295,7 +295,9 @@ class Setup_salaries extends CI_Controller
         $this->db->order_by('c.name', 'ASC');
         $records = $this->db->get()->result_array();
 
-        $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: center;color: black;}</style><body>
+        $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: center;color: black;}</style>
+        <style> .str{ mso-number-format:\@; } </style>
+        <body>
         <center>
             <div style="float: left; font-size: 12px; text-align: left;">
                 <table style="width: 100%;">
@@ -341,20 +343,21 @@ class Setup_salaries extends CI_Controller
         $no = 1;
         foreach ($records as $data) {
             $html .= '<tr>
-                    <td>' . $no . '</td>
-                    <td>' . $data['employee_number'] . '</td>
-                    <td>' . $data['employee_name'] . '</td>
-                    <td>' . $data['division_name'] . '</td>
-                    <td>' . $data['departement_name'] . '</td>
-                    <td>' . $data['departement_sub_name'] . '</td>
-                    <td>' . $data['component_salary_name'] . '</td>
-                    <td>' . number_format($data['amount']) . '</td>
-                    <td>' . number_format($data['basic']) . '</td>
-                    <td>' . number_format($data['allowance_fix']) . '</td>
-                    <td>' . number_format($data['other']) . '</td>
-                    <td>' . number_format($data['position']) . '</td>
-                    <td>' . number_format($data['skill']) . '</td>
-                    <td>' . $data['description'] . '</td>';
+                        <td>' . $no . '</td>
+                        <td class="str">' . $data['employee_number'] . '</td>
+                        <td>' . $data['employee_name'] . '</td>
+                        <td>' . $data['division_name'] . '</td>
+                        <td>' . $data['departement_name'] . '</td>
+                        <td>' . $data['departement_sub_name'] . '</td>
+                        <td>' . $data['component_salary_name'] . '</td>
+                        <td>' . number_format($data['amount']) . '</td>
+                        <td>' . number_format($data['basic']) . '</td>
+                        <td>' . number_format($data['allowance_fix']) . '</td>
+                        <td>' . number_format($data['other']) . '</td>
+                        <td>' . number_format($data['position']) . '</td>
+                        <td>' . number_format($data['skill']) . '</td>
+                        <td>' . $data['description'] . '</td>
+                    </tr>';
             $no++;
         }
 

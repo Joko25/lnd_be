@@ -4,9 +4,9 @@
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
             <th rowspan="2" data-options="field:'number',width:80,align:'center'">Code</th>
+            <th rowspan="2" data-options="field:'group_name',width:200,halign:'center'">Group</th>
             <th rowspan="2" data-options="field:'name',width:200,halign:'center'">Name</th>
-            <th rowspan="2" data-options="field:'description',width:150,halign:'center'">Description</th>
-            <th rowspan="2" data-options="field:'level',width:150,halign:'center'">Level</th>
+            <th rowspan="2" data-options="field:'description',width:300,halign:'center'">Address</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
@@ -34,29 +34,29 @@
                 <input style="width:30%;" name="number" required="" class="easyui-textbox">
             </div>
             <div class="fitem">
+                <span style="width:35%; display:inline-block;">Group</span>
+                <input style="width:60%;" name="group_id" id="group_id" required="" class="easyui-combobox">
+            </div>
+            <div class="fitem">
                 <span style="width:35%; display:inline-block;">Name</span>
                 <input style="width:60%;" name="name" required="" class="easyui-textbox">
             </div>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Description</span>
-                <input style="width:60%;" name="description" class="easyui-textbox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Level</span>
-                <input style="width:60%;" name="level" class="easyui-textbox">
+                <span style="width:35%; display:inline-block;">Address</span>
+                <input style="width:60%; height:60px;" name="description" class="easyui-textbox" multiline="true">
             </div>
         </fieldset>
     </form>
 </div>
 
 <!-- PDF -->
-<iframe id="printout" src="<?= base_url('employee/positions/print') ?>" style="width: 100%;" hidden></iframe>
+<iframe id="printout" src="<?= base_url('employee/sources/print') ?>" style="width: 100%;" hidden></iframe>
 
 <script>
     //ADD DATA
     function add() {
         $('#dlg_insert').dialog('open');
-        url_save = '<?= base_url('employee/positions/create') ?>';
+        url_save = '<?= base_url('employee/sources/create') ?>';
         $('#frm_insert').form('clear');
     }
 
@@ -66,7 +66,7 @@
         if (row) {
             $('#dlg_insert').dialog('open');
             $('#frm_insert').form('load', row);
-            url_save = '<?= base_url('employee/positions/update') ?>?id=' + btoa(row.id);
+            url_save = '<?= base_url('employee/sources/update') ?>?id=' + btoa(row.id);
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
         }
@@ -82,7 +82,7 @@
                         var row = rows[i];
                         $.ajax({
                             method: 'post',
-                            url: '<?= base_url('employee/positions/delete') ?>',
+                            url: '<?= base_url('employee/sources/delete') ?>',
                             data: {
                                 id: row.id
                             },
@@ -110,7 +110,7 @@
     }
     //PRINT EXCEL
     function excel() {
-        window.location.assign('<?= base_url('employee/positions/print/excel') ?>');
+        window.location.assign('<?= base_url('employee/sources/print/excel') ?>');
     }
     //RELOAD
     function reload() {
@@ -120,7 +120,7 @@
     $(function() {
         //SETTING DATAGRID EASYUI
         $('#dg').datagrid({
-            url: '<?= base_url('employee/positions/datatables') ?>',
+            url: '<?= base_url('employee/sources/datatables') ?>',
             pagination: true,
             clientPaging: false,
             remoteFilter: true,
@@ -153,6 +153,13 @@
                     });
                 }
             }]
+        });
+
+        $('#group_id').combobox({
+            url: '<?php echo base_url('employee/groups/reads'); ?>',
+            valueField: 'id',
+            textField: 'name',
+            prompt: 'Choose Group'
         });
     });
 </script>

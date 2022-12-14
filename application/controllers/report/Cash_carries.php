@@ -58,7 +58,9 @@ class Cash_carries extends CI_Controller
             $username = $this->session->username;
             $aprvDepartement = $this->checkApprovalAccess('cash_carries');
 
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
+            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+            <style> .str{ mso-number-format:\@; } </style>
+            <body>';
             $this->db->select('a.*, 
                 g.users_id_from as status_check,
                 g.users_id_to as status_notification, 
@@ -156,7 +158,7 @@ class Cash_carries extends CI_Controller
                                 <td>' . date("d F Y", strtotime($data['trans_date'])) . '</td>
                                 <td>' . $data['request_code'] . '</td>
                                 <td>' . $data['fullname'] . '</td>
-                                <td>' . $data['employee_id'] . '</td>
+                                <td class="str">' . $data['employee_number'] . '</td>
                                 <td>' . $data['employee_name'] . '</td>
                                 <td>' . $data['division_name'] . '</td>
                                 <td>' . $data['departement_name'] . '</td>

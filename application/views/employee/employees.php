@@ -173,9 +173,13 @@
                     <span style="width:35%; display:inline-block;">Position</span>
                     <input style="width:60%;" name="position_id" id="position_id" required="" class="easyui-combogrid">
                 </div>
-                <div class="fitem" style="margin-bottom: 5px;">
+                <div class="fitem">
                     <span style="width:35%; display:inline-block;">Group</span>
                     <input style="width:60%;" name="group_id" id="group_id" required="" class="easyui-combobox">
+                </div>
+                <div class="fitem" style="margin-bottom: 5px;">
+                    <span style="width:35%; display:inline-block;">Source</span>
+                    <input style="width:60%;" name="source_id" id="source_id" class="easyui-combobox">
                 </div>
                 <div class="fitem" style="margin-bottom: 5px;">
                     <span style="width:35%; display:inline-block;">Employee Status</span>
@@ -2200,7 +2204,15 @@
             url: '<?php echo base_url('employee/groups/reads'); ?>',
             valueField: 'id',
             textField: 'name',
-            prompt: 'Choose Group'
+            prompt: 'Choose Group',
+            onSelect: function(group) {
+                $('#source_id').combobox({
+                    url: '<?php echo base_url('employee/sources/reads'); ?>/' + group.id,
+                    valueField: 'id',
+                    textField: 'name',
+                    prompt: 'Choose Source'
+                });
+            }
         });
 
         $('#marital_id').combogrid({

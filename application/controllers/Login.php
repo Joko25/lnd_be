@@ -37,6 +37,7 @@ class Login extends CI_Controller
 
     public function index()
     {
+        $this->output->delete_cache();
         //Config
         $data['config'] = $this->crud->read('config');
 
@@ -145,13 +146,17 @@ class Login extends CI_Controller
 
     public function logout()
     {
-        session_start();
         $this->session->unset_userdata('id');
-		$this->session->unset_userdata('departement_id');
-		$this->session->unset_userdata('number');
-		$this->session->unset_userdata('name');
-		$this->session->unset_userdata('username');
-		$this->session->unset_userdata('position');
-        redirect('login');
+        $this->session->unset_userdata('departement_id');
+        $this->session->unset_userdata('number');
+        $this->session->unset_userdata('name');
+        $this->session->unset_userdata('username');
+        $this->session->unset_userdata('position');
+
+        if ($this->session->userdata('id')) {
+            die("1");
+        } else {
+            die("0");
+        }
     }
 }

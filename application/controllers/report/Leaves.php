@@ -51,7 +51,9 @@ class Leaves extends CI_Controller
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
 
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
+            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+            <style> .str{ mso-number-format:\@; } </style>
+            <body>';
             $this->db->select("a.*, b.name as division_name, c.name as departement_name, d.name as departement_sub_name");
             $this->db->from('employees a');
             $this->db->join('divisions b', 'a.division_id = b.id');
@@ -166,7 +168,7 @@ class Leaves extends CI_Controller
                     $html .= '<tr>
                                 <th>' . $no . '</th>
                                 <th>' . $employee['departement_sub_name'] . '</th>
-                                <th>' . $employee['number'] . '</th>
+                                <th class="str">' . $employee['number'] . '</th>
                                 <th>' . $employee['name'] . '</th>
                                 <th style="text-align:center;">' . 12 . '</th>
                                 <th style="text-align:center;">' . $employee['leaves'] . '</th>

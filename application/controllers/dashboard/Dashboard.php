@@ -18,7 +18,7 @@ class Dashboard extends CI_Controller
         if ($this->session->username != "") {
             $data['config'] = $this->crud->read('config');
             $data['users'] = $this->crud->reads('users', [], ["actived" => 0, "deleted" => 0], "", "name", "asc");
-            $data['user'] = $this->crud->read('users', [], ["actived" => 0, "deleted" => 0, "username" => $this->session->username], "", "name", "asc");
+            $data['session_name'] = $this->session->name;
             $data['attandance'] = $this->myattandance();
             $data['permittoday'] = $this->permitToday();
 
