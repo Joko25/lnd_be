@@ -505,27 +505,28 @@ class Employees extends CI_Controller
                 'position_number' => $data->val($i, 11),
                 'level' => $data->val($i, 12),
                 'group_number' => $data->val($i, 13),
-                'address' => $data->val($i, 14),
-                'place_birth' => $data->val($i, 15),
-                'birthday' => $this->formatDate($data->val($i, 16)),
-                'gender' => $data->val($i, 17),
-                'blood' => $data->val($i, 18),
-                'religion_number' => $data->val($i, 19),
-                'marital_number' => $data->val($i, 20),
-                'national_id' => $data->val($i, 21),
-                'tax_id' => $data->val($i, 22),
-                'jamsostek' => $data->val($i, 23),
-                'jamsostek_date' => $data->val($i, 24),
-                'jkn' => $data->val($i, 25),
-                'jkn_date' => $data->val($i, 26),
-                'telphone' => $data->val($i, 27),
-                'mobile_phone' => $data->val($i, 28),
-                'emergency_no' => $data->val($i, 29),
-                'email' => $data->val($i, 30),
-                'maps' => $data->val($i, 31),
-                'bank_no' => $data->val($i, 32),
-                'bank_name' => $data->val($i, 33),
-                'bank_branch' => $data->val($i, 34),
+                'source_number' => $data->val($i, 14),
+                'address' => $data->val($i, 15),
+                'place_birth' => $data->val($i, 16),
+                'birthday' => $this->formatDate($data->val($i, 17)),
+                'gender' => $data->val($i, 18),
+                'blood' => $data->val($i, 19),
+                'religion_number' => $data->val($i, 20),
+                'marital_number' => $data->val($i, 21),
+                'national_id' => $data->val($i, 22),
+                'tax_id' => $data->val($i, 23),
+                'jamsostek' => $data->val($i, 24),
+                'jamsostek_date' => $data->val($i, 25),
+                'jkn' => $data->val($i, 26),
+                'jkn_date' => $data->val($i, 27),
+                'telphone' => $data->val($i, 28),
+                'mobile_phone' => $data->val($i, 29),
+                'emergency_no' => $data->val($i, 30),
+                'email' => $data->val($i, 31),
+                'maps' => $data->val($i, 32),
+                'bank_no' => $data->val($i, 33),
+                'bank_name' => $data->val($i, 34),
+                'bank_branch' => $data->val($i, 35),
             );
         }
 
@@ -689,6 +690,7 @@ class Employees extends CI_Controller
             $positions = $this->crud->read('positions', ["number" => $data['position_number']]);
             $contracts = $this->crud->read('contracts', ["number" => $data['contract_number']]);
             $groups = $this->crud->read('groups', ["number" => $data['group_number']]);
+            $sources = $this->crud->read('sources', ["number" => $data['source_number'], "group_id" => $groups->id]);
             $religions = $this->crud->read('religions', ["number" => $data['religion_number']]);
             $maritals = $this->crud->read('maritals', ["number" => $data['marital_number']]);
 
@@ -699,6 +701,7 @@ class Employees extends CI_Controller
                 'contract_id' => @$contracts->id,
                 'position_id' => @$positions->id,
                 'group_id' => @$groups->id,
+                'source_id' => @$sources->id,
                 'marital_id' => @$maritals->id,
                 'religion_id' => @$religions->id,
                 'number' => $data['number'],

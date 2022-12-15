@@ -217,6 +217,7 @@ class Shift_employees extends CI_Controller
         $filter_departement = $this->input->get('filter_departement');
         $filter_departement_sub = $this->input->get('filter_departement_sub');
         $filter_employee = $this->input->get('filter_employee');
+        $filter_status = $this->input->get('filter_status');
 
         //Config
         $this->db->select('*');
