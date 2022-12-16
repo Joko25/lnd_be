@@ -13,7 +13,7 @@ class Setup_salaries extends CI_Controller
         $this->load->model('crud');
 
         //VALIDASI FORM
-        $this->form_validation->set_rules('amount', 'Amount', 'required|min_length[1]|max_length[20]|is_unique[setup_salaries.amount]');
+        $this->form_validation->set_rules('employee_id', 'Employee', 'required|min_length[1]|max_length[20]|is_unique[setup_salaries.employee_id]');
     }
 
     //HALAMAN UTAMA

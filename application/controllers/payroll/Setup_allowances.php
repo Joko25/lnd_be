@@ -13,7 +13,7 @@ class Setup_allowances extends CI_Controller
         $this->load->model('crud');
 
         //VALIDASI FORM
-        $this->form_validation->set_rules('amount', 'Amount', 'required|min_length[1]|max_length[20]|is_unique[setup_allowances.amount]');
+        $this->form_validation->set_rules('employee_id', 'Employee', 'required|min_length[1]|max_length[30]');
     }
 
     //HALAMAN UTAMA
