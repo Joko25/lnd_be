@@ -28,6 +28,38 @@ class Student_payrolls extends CI_Controller
         }
     }
 
+    public function readService($dateSign = "")
+    {
+        if ($dateSign == "") {
+            $date = $this->input->post('date');
+        } else {
+            $date = $dateSign;
+        }
+
+        $start  = date_create($date);
+        $end = date_create(); // waktu sekarang
+        $diff  = date_diff($start, $end);
+        $d = $diff->d . ' Days ';
+
+        if ($diff->y == 0) {
+            $y = '';
+        } else {
+            $y = $diff->y . ' Years, ';
+        }
+
+        if ($diff->m == 0) {
+            $m = '';
+        } else {
+            $m = $diff->m . ' Month, ';
+        }
+
+        if ($dateSign == "") {
+            echo $y . $m . $d;
+        } else {
+            return $y . $m . $d;
+        }
+    }
+
     public function print($option = "")
     {
         if ($option == "excel") {
@@ -99,13 +131,15 @@ class Student_payrolls extends CI_Controller
                         <th rowspan="2">Employee ID</th>
                         <th rowspan="2">Employee Name</th>
                         <th rowspan="2">Join Date</th>
+                        <th rowspan="2">Fit of Service</th>
+                        <th rowspan="2">Division</th>
                         <th rowspan="2">Departement</th>
                         <th rowspan="2">Attandance</th>
                         <th colspan="3" style="text-align:center;">Months</th>
                         <th colspan="3" style="text-align:center;">Allowence Amount Type</th>
                         <th rowspan="2">Allowence</th>
-                        <th rowspan="2">Correction</th>
-                        <th rowspan="2">Overtime</th>
+                        <th colspan="2" style="text-align:center;">Correction</th>
+                        <th rowspan="2">Cash Carry</th>
                         <th rowspan="2">Total</th>
                     </tr>
                     <tr>
@@ -115,11 +149,14 @@ class Student_payrolls extends CI_Controller
                         <th width="50">1 (' . @number_format($allowance_1->amount) . ')</th>
                         <th width="50">2 (' . @number_format($allowance_2->amount) . ')</th>
                         <th width="50">3 (' . @number_format($allowance_3->amount) . ')</th>
+                        <th width="50">PLUS</th>
+                        <th width="50">MINUS</th>
                     </tr>';
 
                 $no = 1;
-                $this->db->select("a.id, a.number, a.name, a.date_sign, c.name as departement_name");
+                $this->db->select("a.id, a.number, a.name, a.date_sign, b.name as division_name, c.name as departement_name");
                 $this->db->from('employees a');
+                $this->db->join('divisions b', 'a.division_id = b.id');
                 $this->db->join('departements c', 'a.departement_id = c.id');
                 $this->db->join('groups d', 'a.group_id = d.id');
                 $this->db->join('sources e', 'a.source_id = e.id');
@@ -133,8 +170,9 @@ class Student_payrolls extends CI_Controller
                     $employee_id = $employee['id'];
                     $employee_number = $employee['number'];
                     $attandance = $this->crud->query("SELECT COUNT(`number`) as att FROM attandances WHERE date_in BETWEEN '$filter_from' and '$filter_to' and `number` = '$employee_number' GROUP BY `number`");
-                    $correction = $this->crud->query("SELECT SUM(amount) as total FROM corrections WHERE trans_date BETWEEN '$filter_from' and '$filter_to' and employee_id = '$employee_id' and correction_type = 'PLUS' GROUP BY employee_id");
-                    $overtime = $this->crud->query("SELECT SUM(amount) as total FROM overtimes WHERE trans_date BETWEEN '$filter_from' and '$filter_to' and employee_id = '$employee_id' GROUP BY employee_id");
+                    $correctionPlus = $this->crud->query("SELECT SUM(amount) as total FROM corrections WHERE trans_date BETWEEN '$filter_from' and '$filter_to' and employee_id = '$employee_id' and correction_type = 'PLUS' GROUP BY employee_id");
+                    $correctionMinus = $this->crud->query("SELECT SUM(amount) as total FROM corrections WHERE trans_date BETWEEN '$filter_from' and '$filter_to' and employee_id = '$employee_id' and correction_type = 'MINUS' GROUP BY employee_id");
+                    $cashCarries = $this->crud->query("SELECT SUM(amount) as total FROM cash_carries WHERE trans_date BETWEEN '$filter_from' and '$filter_to' and employee_id = '$employee_id' GROUP BY employee_id");
 
                     $date_sign = date_create($employee['date_sign']);
                     $payroll_end = date_create($filter_to);
@@ -158,17 +196,17 @@ class Student_payrolls extends CI_Controller
                         $payroll_3 = @$attandance[0]->att;
                         $payroll_2 = "0";
                         $payroll_1 = "0";
-                        $allowence = @number_format($attandance[0]->att * $allowance_3->amount);
+                        $allowence = (@$attandance[0]->att * @$allowance_3->amount);
                     } elseif ($interval->m == 2) {
                         $payroll_3 = "0";
                         $payroll_2 = @$attandance[0]->att;
                         $payroll_1 = "0";
-                        $allowence = @number_format($attandance[0]->att * $allowance_2->amount);
+                        $allowence = (@$attandance[0]->att * @$allowance_2->amount);
                     } else {
                         $payroll_3 = "0";
                         $payroll_2 = "0";
                         $payroll_1 = @$attandance[0]->att;
-                        $allowence = @number_format($attandance[0]->att * $allowance_1->amount);
+                        $allowence = (@$attandance[0]->att * @$allowance_1->amount);
                     }
 
 
@@ -177,6 +215,8 @@ class Student_payrolls extends CI_Controller
                                     <td class="str">' . $employee_number . '</td>
                                     <td>' . $employee['name'] . '</td>
                                     <td>' . date("d F Y", strtotime($employee['date_sign'])) . '</td>
+                                    <td>' . $this->readService($employee['date_sign']) . '</td>
+                                    <td>' . $employee['division_name'] . '</td>
                                     <td>' . $employee['departement_name'] . '</td>
                                     <td>' . @$attandance[0]->att . '</td>
                                     <td>' . $month_1 . '</td>
@@ -185,10 +225,11 @@ class Student_payrolls extends CI_Controller
                                     <td>' . $payroll_1 . '</td>
                                     <td>' . $payroll_2 . '</td>
                                     <td>' . $payroll_3 . '</td>
-                                    <td>' . $allowence . '</td>
-                                    <td>' . number_format(@$correction[0]->total) . '</td>
-                                    <td>' . number_format(@$overtime[0]->total) . '</td>
-                                    <td>' . number_format($allowence + @$correction[0]->total + @$overtime[0]->total) . '</td>
+                                    <td>' . number_format($allowence) . '</td>
+                                    <td>' . number_format(@$correctionPlus[0]->total) . '</td>
+                                    <td>' . number_format(@$correctionMinus[0]->total) . '</td>
+                                    <td>' . number_format(@$cashCarries[0]->total) . '</td>
+                                    <td>' . @number_format(($allowence + ($correctionPlus[0]->total - $correctionMinus[0]->total) + $cashCarries[0]->total)) . '</td>
                                 </tr>';
                     $no++;
                 }

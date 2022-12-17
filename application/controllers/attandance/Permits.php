@@ -340,7 +340,6 @@ class Permits extends CI_Controller
                 if (!empty($permittype)) {
                     if (!empty($reason)) {
                         $send = "";
-                        $leave = $post['leave'];
                         for ($i = $date_from; $i <= $date_to; $i += (60 * 60 * 24)) {
                             $permit_date = date('Y-m-d', $i);
                             $this->db->select('*');
@@ -381,8 +380,6 @@ class Permits extends CI_Controller
                                     $send = $this->crud->create('permits', $post_permit);
                                 }
                             }
-
-                            $leave = ($leave - $post['duration']);
                         }
 
                         echo $send;
