@@ -8,7 +8,7 @@
             <th rowspan="2" data-options="field:'tolerance',width:100,halign:'center'">Time Tolerance</th>
             <th rowspan="2" data-options="field:'briefing',width:100,halign:'center'">Time Briefing</th>
             <th rowspan="2" data-options="field:'start',width:100,halign:'center'">Start</th>
-            <th rowspan="2" data-options="field:'ending',width:100,halign:'center'">End</th>
+            <th rowspan="2" data-options="field:'end',width:100,halign:'center'">End</th>
             <th rowspan="2" data-options="field:'working',width:120,halign:'center'">Working Status</th>
             <th rowspan="2" data-options="field:'days',width:150,halign:'center'">Working Day</th>
             <th rowspan="2" data-options="field:'description',width:200,halign:'center'">Remarks</th>

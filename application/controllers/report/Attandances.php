@@ -204,7 +204,6 @@ class Attandances extends CI_Controller
                     $this->db->join('shifts c', 'c.id = b.shift_id');
                     $this->db->join('shift_details d', 'd.shift_id = c.id');
                     $this->db->where('b.employee_id', $record['id']);
-                    $this->db->where('d.working', $working);
                     $shift = $this->db->get()->row();
 
                     $this->db->select("*");
@@ -300,7 +299,7 @@ class Attandances extends CI_Controller
                                 $html .= '<tr ' . $style . '>
                                                     <td>' . $no . '</td>
                                                     <td>' . date('d F Y', strtotime($working_date)) . '</td>
-                                                    <td>' . @@$shift->shift_name . '</td>
+                                                    <td>' . @$shift->shift_name . '</td>
                                                     <td>' . @$attandance->time_in . '</td>
                                                     <td>' . @$attandance->time_out . '</td>
                                                     <td>' . @$attandance->request_code . '</td>
@@ -314,7 +313,7 @@ class Attandances extends CI_Controller
                                 $html .= '<tr ' . $style . '>
                                                     <td>' . $no . '</td>
                                                     <td>' . date('d F Y', strtotime($working_date)) . '</td>
-                                                    <td>' . @@$shift->shift_name . '</td>
+                                                    <td>' . @$shift->shift_name . '</td>
                                                     <td>' . @$attandance->time_in . '</td>
                                                     <td>' . @$attandance->time_out . '</td>
                                                     <td>' . @$attandance->request_code . '</td>
@@ -330,7 +329,7 @@ class Attandances extends CI_Controller
                         $html .= '<tr ' . $style . '>
                                     <td>' . $no . '</td>
                                     <td>' . date('d F Y', strtotime($working_date)) . '</td>
-                                    <td>' . @@$shift->shift_name . '</td>
+                                    <td>' . @$shift->shift_name . '</td>
                                     <td>' . @$attandance->time_in . '</td>
                                     <td>' . @$attandance->time_out . '</td>
                                     <td>' . @$attandance->request_code . '</td>

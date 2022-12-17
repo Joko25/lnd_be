@@ -132,7 +132,6 @@ class Attandances extends CI_Controller
                     $this->db->like('a.departement_id', $data['departement_id']);
                     $this->db->like('a.departement_sub_id', $data['departement_sub_id']);
                     $this->db->like('a.id', $data['id']);
-                    $this->db->where('d.working', $status_working);
                     $shift = $this->db->get()->result_array();
 
                     //Check Shift

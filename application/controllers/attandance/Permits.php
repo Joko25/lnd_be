@@ -354,7 +354,7 @@ class Permits extends CI_Controller
                             } else {
                                 $year = date("Y");
                                 $permitType = $this->crud->read('permit_types', ["id" => $permittype->id, "cutoff" => "YES"]);
-                                $permits = $this->crud->reads('permits', ["employee_id" => $employee->id, "DATE_FORMAT(permit_date, '%Y')" => $year, "permit_type_id" => @$permitType->id]);
+                                $permits = $this->crud->reads('permits', [], ["employee_id" => $employee->id, "DATE_FORMAT(permit_date, '%Y')" => $year, "permit_type_id" => @$permitType->id]);
                                 $totalPermit = 0;
                                 $duration = 0;
                                 foreach ($permits as $permit) {
@@ -362,7 +362,7 @@ class Permits extends CI_Controller
                                     $duration = 1;
                                 }
 
-                                if ((12 - ($totalPermit + $duration)) <= 0) {
+                                if ((12 - ($totalPermit + $duration)) < 0) {
                                     echo json_encode(array("title" => "Not Found", "message" => $employee->name . " This total permit is over", "theme" => "error"));
                                     exit;
                                 } else {

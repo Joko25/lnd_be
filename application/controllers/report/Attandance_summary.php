@@ -139,7 +139,8 @@ class Attandance_summary extends CI_Controller
                     d.name as departement_name, 
                     e.name as departement_sub_name, 
                     g.name as shift_name,
-                    b.attandance_total");
+                    b.attandance_total,
+                    h.days");
                 $this->db->from('employees a');
                 $this->db->join("(SELECT number, COUNT(date_in) as attandance_total FROM attandances WHERE date_in BETWEEN '$filter_from' and '$filter_to' GROUP BY number) b", 'a.number = b.number');
                 $this->db->join('divisions c', 'a.division_id = c.id');
@@ -156,15 +157,45 @@ class Attandance_summary extends CI_Controller
                 $this->db->order_by('e.name, a.name', 'asc');
                 $employees = $this->db->get()->result_array();
 
-                $total_days = 0;
-                for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
-                    $total_days++;
-                }
-
                 foreach ($employees as $data) {
-                    $absence = ($total_days - $data['attandance_total']);
+                    $total_days = 0;
+                    $holiday = 0;
+                    $weekend = 0;
+                    $working_date = "";
+                    for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
+                        $working_date = date('Y-m-d', $i);
+
+                        if (@$data['days'] == "5") {
+                            //sabtu dan minggu libur
+                            if (date('w', $i) !== '0' && date('w', $i) !== '6') {
+                                $weekend += 0;
+                            } else {
+                                $weekend += 1;
+                            }
+                        } else {
+                            //sabtu doang libur
+                            if (date('w', $i) !== '0') {
+                                $weekend += 0;
+                            } else {
+                                $weekend += 1;
+                            }
+                        }
+
+                        $this->db->select('description');
+                        $this->db->from('calendars');
+                        $this->db->where('trans_date', $working_date);
+                        $holidays = $this->db->get()->row();
+
+                        if (@$holidays->description == null) {
+                            $holiday += 0;
+                        } else {
+                            $holiday += 1;
+                        }
+
+                        $total_days++;
+                    }
                     //Permit
-                    $q_permit = $this->db->query("SELECT b.name, SUM(a.duration) as permit
+                    $q_permit = $this->db->query("SELECT b.name, COUNT(a.duration) as permit
                             FROM permit_types b
                             LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$data[employee_id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to'
                             GROUP BY b.id ORDER BY b.name asc");
@@ -181,7 +212,14 @@ class Attandance_summary extends CI_Controller
                         $html .= '<td style="text-align:center;">' . $data_permit['permit'] . '</td>';
                         $total_permit += $data_permit['permit'];
                     }
-                    $html .= '  <td style="text-align:center;">' . ($absence - $total_permit) . '</td>
+
+                    $absence = ($total_days - $data['attandance_total'] - $total_permit - $holiday - $weekend);
+                    if ($absence >= 0) {
+                        $totalAbsence = $absence;
+                    } else {
+                        $totalAbsence = 0;
+                    }
+                    $html .= '  <td style="text-align:center;">' . $totalAbsence . '</td>
                                 <td style="text-align:center;">' . $data['attandance_total'] . '</td>
                                 <td style="text-align:center;">' . $total_days . '</td>
                             </tr>';
