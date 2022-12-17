@@ -1,162 +1,126 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar">
-    <thead>
-        <tr>
-            <th rowspan="2" field="ck" checkbox="true"></th>
-            <th rowspan="2" data-options="field:'user_name',width:200,halign:'center'">User Name</th>
-            <th rowspan="2" data-options="field:'group_name',width:150,halign:'center'">Group</th>
-            <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
-            <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
-        </tr>
-        <tr>
-            <th data-options="field:'created_by',width:100,align:'center'"> By</th>
-            <th data-options="field:'created_date',width:150,align:'center'"> Date</th>
-            <th data-options="field:'updated_by',width:100,align:'center'"> By</th>
-            <th data-options="field:'updated_date',width:150,align:'center'"> Date</th>
-        </tr>
-    </thead>
-</table>
+<table id="dg" class="easyui-datagrid" style="width:100%; height: 600px;" data-options="rownumbers:true,singleSelect:true" toolbar="#toolbar"></table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 35px;">
-    <?= $button ?>
+<div id="toolbar" style="height: 75px;">
+    <fieldset style="margin-bottom: 10px;">
+        <legend>Choose User</legend>
+        <form id="frm_search" method="post" enctype="multipart/form-data" novalidate>
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="fitem">
+                        <span style="width:150px; display:inline-block;">Name</span>
+                        <input style="width:300px;" id="username" class="easyui-textbox">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </fieldset>
 </div>
 
-<!-- DIALOG SAVE AND UPDATE -->
-<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 400px; padding:10px; top: 20px;">
-    <form id="frm_insert" method="post" novalidate>
-        <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
-            <legend><b>Form Data</b></legend>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Employee</span>
-                <input style="width:60%;" name="username" id="username" required="" class="easyui-combobox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Name</span>
-                <input style="width:60%;" name="group_id" id="group_id" required="" class="easyui-combobox">
-            </div>
-        </fieldset>
-    </form>
-</div>
-
-<!-- PDF -->
-<iframe id="printout" src="<?= base_url('admin/privilege_groups/print') ?>" style="width: 100%;" hidden></iframe>
+<br>
 
 <script>
-    //ADD DATA
-    function add() {
-        $('#dlg_insert').dialog('open');
-        url_save = '<?= base_url('admin/privilege_groups/create') ?>';
-        $('#frm_insert').form('clear');
-    }
-
-    //EDIT DATA
-    function update() {
-        var row = $('#dg').datagrid('getSelected');
-        if (row) {
-            $('#dlg_insert').dialog('open');
-            $('#frm_insert').form('load', row);
-            url_save = '<?= base_url('admin/privilege_groups/update') ?>?id=' + btoa(row.id);
-        } else {
-            toastr.warning("Please select one of the data in the table first!", "Information");
-        }
-    }
-
-    //DELETE DATA
-    function deleted() {
-        var rows = $('#dg').datagrid('getSelections');
-        if (rows.length > 0) {
-            $.messager.confirm('Warning', 'Are you sure you want to delete this data?', function(r) {
-                if (r) {
-                    for (var i = 0; i < rows.length; i++) {
-                        var row = rows[i];
-                        $.ajax({
-                            method: 'post',
-                            url: '<?= base_url('admin/privilege_groups/delete') ?>',
-                            data: {
-                                id: row.id
+    $(function() {
+        $('#username').combogrid({
+            onSelect: function(value, row) {
+                var username = row.username;
+                $.ajax({
+                    url: '<?= base_url('admin/privilege_groups/create') ?>',
+                    type: 'post',
+                    data: 'username=' + username,
+                    success: function(msg) {
+                        $('#dg').treegrid({
+                            url: '<?= base_url('admin/privilege_groups/datatables') ?>?username=' + username,
+                            rownumbers: true,
+                            singleSelect: true,
+                            idField: 'id',
+                            treeField: 'name',
+                            onBeforeLoad: function(row, param) {
+                                if (!row) {
+                                    param.id = 0;
+                                }
                             },
-                            success: function(result) {
-                                var result = eval('(' + result + ')');
+                            columns: [
+                                [{
+                                    field: 'name',
+                                    title: 'Group Name',
+                                    width: 250,
+                                    align: 'left'
+                                }, {
+                                    field: 'status',
+                                    title: 'Status',
+                                    width: 80,
+                                    align: 'center',
+                                    formatter: function(hasil, row) {
+                                        var action = "save_data('" + row.id + "')";
+                                        if (row.status == "1") {
+                                            return '<input type="checkbox" id="status' + row.id + '" value="status" onclick="' + action + '" checked>';
+                                        } else {
+                                            return '<input type="checkbox" id="status' + row.id + '" value="status" onclick="' + action + '">';
+                                        }
+                                    }
+                                }]
+                            ],
+                            onCheck: function(index, row) {
+                                //$(this).datagrid('refreshRow', index);
                             },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                toastr.error(jqXHR.statusText);
-                                $.messager.alert("Error", jqXHR.statusText, 'error');
-                            },
-                            complete: function(data) {
-                                $('#dg').datagrid('reload');
+                            onUncheck: function(index, row) {
+                                //$(this).datagrid('refreshRow', index);
                             }
                         });
                     }
-                }
-            });
-        } else {
-            toastr.warning("Please select one of the data in the table first!", "Information");
-        }
-    }
-    //PRINT PDF
-    function pdf() {
-        $("#printout").get(0).contentWindow.print();
-    }
-    //PRINT EXCEL
-    function excel() {
-        window.location.assign('<?= base_url('admin/privilege_groups/print/excel') ?>');
-    }
-    //RELOAD
-    function reload() {
-        window.location.reload();
-    }
-
-    $(function() {
-        //SETTING DATAGRID EASYUI
-        $('#dg').datagrid({
-            url: '<?= base_url('admin/privilege_groups/datatables') ?>',
-            pagination: true,
-            clientPaging: false,
-            remoteFilter: true,
-            rownumbers: true
-        }).datagrid('enableFilter');
-
-        //SAVE DATA
-        $('#dlg_insert').dialog({
-            buttons: [{
-                text: 'Save',
-                iconCls: 'icon-ok',
-                handler: function() {
-                    $('#frm_insert').form('submit', {
-                        url: url_save,
-                        onSubmit: function() {
-                            return $(this).form('validate');
-                        },
-                        success: function(result) {
-                            var result = eval('(' + result + ')');
-
-                            if (result.theme == "success") {
-                                toastr.success(result.message, result.title);
-                            } else {
-                                toastr.error(result.message, result.title);
-                            }
-
-                            //$('#dlg_insert').dialog('close');
-                            $('#dg').datagrid('reload');
-                        }
-                    });
-                }
-            }]
+                });
+            }
         });
 
-        $('#username').combobox({
-            url: '<?php echo base_url('admin/users/reads'); ?>',
-            valueField: 'username',
+        //Get Username
+        $('#username').combogrid({
+            url: '<?= base_url('admin/privilege_groups/getUsers') ?>',
+            panelWidth: 400,
+            idField: 'username',
             textField: 'name',
-            prompt: 'Choose Users',
-        });
-
-        $('#group_id').combobox({
-            url: '<?php echo base_url('employee/groups/reads'); ?>',
-            valueField: 'id',
-            textField: 'name',
-            prompt: 'Choose Groups',
+            mode: 'remote',
+            fitColumns: true,
+            columns: [
+                [{
+                    field: 'name',
+                    title: 'Name',
+                    width: 200
+                }, {
+                    field: 'username',
+                    title: 'Username',
+                    width: 200
+                }, ]
+            ]
         });
     });
+
+    function save_data(data) {
+        var username = $("#username").val();
+        var id = data;
+
+        if ($("#status" + data).is(':checked')) {
+            var h_status = "1";
+        } else {
+            var h_status = "0";
+        }
+
+        $.ajax({
+            url: '<?= base_url('admin/privilege_groups/update/') ?>?id=' + window.btoa(id),
+            type: 'post',
+            data: '&status=' + h_status,
+            success: function(msg) {
+                var result = eval('(' + msg + ')');
+                if (result.theme == "success") {
+                    toastr.success(result.message, result.title);
+                } else {
+                    toastr.error(result.message, result.title);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                toastr.error(jqXHR.statusText);
+            }
+        });
+    }
 </script>

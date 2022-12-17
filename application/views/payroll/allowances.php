@@ -1,10 +1,11 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar">
+<table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar">
     <thead>
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
             <th rowspan="2" data-options="field:'number',width:100,align:'center'">Code</th>
             <th rowspan="2" data-options="field:'name',width:200,halign:'center'">Name</th>
+            <th rowspan="2" data-options="field:'amount',width:100,halign:'center', align:'right', formatter:numberformat">Amount</th>
             <th rowspan="2" data-options="field:'salary',width:300,halign:'center'">Description</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
@@ -35,6 +36,10 @@
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Name</span>
                 <input style="width:60%;" name="name" required="" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Amount</span>
+                <input style="width:60%;" name="amount" required="" data-options="buttonText:'Rp', buttonAlign:'left'" class="easyui-numberbox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Description</span>
@@ -150,4 +155,14 @@
             }]
         });
     });
+
+    function numberformat(value, row) {
+        const formatter = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        });
+
+        return "<b>" + formatter.format(value) + "</b>";
+    }
 </script>

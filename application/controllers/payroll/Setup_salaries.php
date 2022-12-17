@@ -39,6 +39,29 @@ class Setup_salaries extends CI_Controller
         echo json_encode($send);
     }
 
+    public function readUnregistered()
+    {
+        $filters = json_decode($this->input->post('filterRules'));
+        $this->db->select('a.number, a.name');
+        $this->db->from('employees a');
+        $this->db->join('setup_salaries b', 'a.id = b.employee_id', 'left');
+        $this->db->where('a.deleted', 0);
+        $this->db->where('a.status', 0);
+        $this->db->where("b.amount is null or b.amount = 0");
+        if (@count($filters) > 0) {
+            foreach ($filters as $filter) {
+                if ($filter->field == "number") {
+                    $this->db->like("a.number", $filter->value);
+                } elseif ($filter->field == "name") {
+                    $this->db->like("a.name", $filter->value);
+                }
+            }
+        }
+        $this->db->order_by('a.name', 'ASC');
+        $records = $this->db->get()->result_array();
+        echo json_encode($records);
+    }
+
     //GET DATATABLES
     public function datatables()
     {
@@ -79,7 +102,7 @@ class Setup_salaries extends CI_Controller
             $this->db->join('departements e', 'c.departement_id = e.id');
             $this->db->join('departement_subs f', 'c.departement_sub_id = f.id');
             $this->db->join('salary_components g', 'a.salary_component_id = g.id', 'left');
-            $this->db->join('privilege_groups h', "c.group_id = h.group_id and h.username = '$username'");
+            $this->db->join('privilege_groups h', "c.group_id = h.group_id and h.username = '$username' and h.status = '1'");
             $this->db->where('a.deleted', 0);
             $this->db->where('c.deleted', 0);
             $this->db->where('c.status', 0);

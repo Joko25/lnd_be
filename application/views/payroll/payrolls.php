@@ -1,5 +1,5 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:100%; height: 670px;" toolbar="#toolbar">
+<table id="dg" class="easyui-datagrid" style="width:99.5%; height: 670px;" toolbar="#toolbar">
     <thead frozen="true">
         <tr>
             <th data-options="field:'number',width:150,halign:'center'">Employee ID</th>

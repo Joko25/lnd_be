@@ -1,5 +1,5 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar">
+<table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar">
     <thead>
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
@@ -73,6 +73,7 @@
         </div>
     </fieldset>
     <?= $button ?>
+    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="unregistered()"><i class="fa fa-users"></i> Unregistered Salary</a>
 </div>
 
 <!-- DIALOG SAVE AND UPDATE -->
@@ -118,6 +119,17 @@
 
         </ul>
     </div>
+</div>
+
+<div id="dlg_unregistered" class="easyui-dialog" title="Unregistered Salary" data-options="closed: true,modal:true" style="width: 500px; height: 500px; top: 20px;">
+    <table id="dg_unregistered" class="easyui-datagrid" style="width:100%;">
+        <thead>
+            <tr>
+                <th data-options="field:'number',width:150,halign:'center'">Employee ID</th>
+                <th data-options="field:'name',width:200,halign:'center'">Employee Name</th>
+            </tr>
+        </thead>
+    </table>
 </div>
 
 <!-- PDF -->
@@ -237,6 +249,16 @@
     //RELOAD
     function reload() {
         window.location.reload();
+    }
+    //UNREGISTERED
+    function unregistered() {
+        $('#dlg_unregistered').dialog('open');
+        $('#dg_unregistered').datagrid({
+            url: '<?= base_url('payroll/setup_salaries/readUnregistered') ?>',
+            clientPaging: false,
+            remoteFilter: true,
+            rownumbers: true
+        }).datagrid('enableFilter');
     }
 
     $(function() {

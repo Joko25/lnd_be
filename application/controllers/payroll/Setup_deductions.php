@@ -39,6 +39,29 @@ class Setup_deductions extends CI_Controller
         echo json_encode($send);
     }
 
+    public function readUnregistered()
+    {
+        $filters = json_decode($this->input->post('filterRules'));
+        $this->db->select('a.number, a.name');
+        $this->db->from('employees a');
+        $this->db->join('setup_deductions b', 'a.id = b.employee_id', 'left');
+        $this->db->where('a.deleted', 0);
+        $this->db->where('a.status', 0);
+        $this->db->where("b.deduction_id is null");
+        if (@count($filters) > 0) {
+            foreach ($filters as $filter) {
+                if ($filter->field == "number") {
+                    $this->db->like("a.number", $filter->value);
+                } elseif ($filter->field == "name") {
+                    $this->db->like("a.name", $filter->value);
+                }
+            }
+        }
+        $this->db->order_by('a.name', 'ASC');
+        $records = $this->db->get()->result_array();
+        echo json_encode($records);
+    }
+
     //GET DATATABLES
     public function datatables()
     {

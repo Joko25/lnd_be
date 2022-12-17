@@ -1,5 +1,5 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar">
+<table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar">
     <thead>
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
@@ -51,12 +51,13 @@
                 <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
             </div>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Allowance</span>
+                <span style="width:35%; display:inline-block;">Allowence</span>
                 <input style="width:60%;" id="filter_allowance" class="easyui-combobox">
             </div>
         </div>
     </fieldset>
     <?= $button ?>
+    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="unregistered()"><i class="fa fa-users"></i> Unregistered Allowence</a>
 </div>
 
 <!-- DIALOG SAVE AND UPDATE -->
@@ -74,7 +75,7 @@
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Amount</span>
-                <input style="width:60%;" name="amount" required="" data-options="buttonText:'Rp', buttonAlign:'left'" class="easyui-numberbox">
+                <input style="width:60%;" name="amount" id="amount" required="" data-options="buttonText:'Rp', buttonAlign:'left'" class="easyui-numberbox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Description</span>
@@ -102,6 +103,17 @@
 
         </ul>
     </div>
+</div>
+
+<div id="dlg_unregistered" class="easyui-dialog" title="Unregistered Allowence" data-options="closed: true,modal:true" style="width: 500px; height: 500px; top: 20px;">
+    <table id="dg_unregistered" class="easyui-datagrid" style="width:100%;">
+        <thead>
+            <tr>
+                <th data-options="field:'number',width:150,halign:'center'">Employee ID</th>
+                <th data-options="field:'name',width:200,halign:'center'">Employee Name</th>
+            </tr>
+        </thead>
+    </table>
 </div>
 
 <!-- PDF -->
@@ -213,6 +225,16 @@
     //RELOAD
     function reload() {
         window.location.reload();
+    }
+    //UNREGISTERED
+    function unregistered() {
+        $('#dlg_unregistered').dialog('open');
+        $('#dg_unregistered').datagrid({
+            url: '<?= base_url('payroll/setup_allowances/readUnregistered') ?>',
+            clientPaging: false,
+            remoteFilter: true,
+            rownumbers: true
+        }).datagrid('enableFilter');
     }
 
     $(function() {
@@ -481,7 +503,10 @@
             url: '<?= base_url('payroll/allowances/reads') ?>',
             valueField: 'id',
             textField: 'name',
-            prompt: "Choose Allowance"
+            prompt: "Choose Allowance",
+            onSelect: function(allowance) {
+                $("#amount").numberbox('setValue', allowance.amount);
+            }
         });
     });
 
