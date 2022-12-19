@@ -113,6 +113,53 @@ class Home extends CI_Controller
         echo $send;
     }
 
+    public function approvePayrolls()
+    {
+        $id = $this->input->post('id');
+        $tablename = $this->input->post('tablename');
+
+        $this->db->select('a.id');
+        $this->db->from('payrolls a');
+        $this->db->join('employees b', 'a.employee_id = b.id');
+        $this->db->where('b.group_id', $id);
+        $this->db->where('b.deleted', 0);
+        $this->db->where('b.status', 0);
+        $this->db->where('a.status', 0);
+        $this->db->group_by('a.employee_id');
+        $records = $this->db->get()->result_array();
+
+        $users_id = "";
+        foreach ($records as $record) {
+            $payroll_id = $record['id'];
+            $notifications = $this->crud->read('notifications', [], ["table_id" => $payroll_id, "table_name" => $tablename]);
+            $approvals = $this->crud->read('approvals', [], ["table_name" => $tablename]);
+
+            if (@$notifications->status == 1) {
+                $users_id = @$approvals->user_approval_2;
+            } elseif (@$notifications->status == 2) {
+                $users_id = @$approvals->user_approval_3;
+            } elseif (@$notifications->status == 3) {
+                $users_id = @$approvals->user_approval_4;
+            } elseif (@$notifications->status == 4) {
+                $users_id = @$approvals->user_approval_5;
+            } else {
+                $users_id = "";
+            }
+
+            $values = array(
+                "created_by" => $this->session->username,
+                "created_date" => date('Y-m-d H:i:s'),
+                "users_id_from" => $this->session->username,
+                "users_id_to" => $users_id,
+                "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $tablename)) . "</b>",
+                "status" => @$notifications->status + 1,
+            );
+
+            $send = $this->crud->update('notifications', ["table_id" => $payroll_id, "table_name" => $tablename], $values);
+        }
+        echo $send;
+    }
+
     public function disapprove()
     {
         $id = $this->input->post('id');
@@ -122,6 +169,31 @@ class Home extends CI_Controller
         /* Default */
         $send = $this->crud->delete('notifications', ["table_id" => $id, "table_name" => $tablename]);
         $send = $this->crud->delete($tablename, ["id" => $id]);
+        echo $send;
+    }
+
+    public function disapprovePayrolls()
+    {
+        $id = $this->input->post('id');
+        $tablename = $this->input->post('tablename');
+        $this->db->select('a.id');
+        $this->db->from('payrolls a');
+        $this->db->join('employees b', 'a.employee_id = b.id');
+        $this->db->where('b.group_id', $id);
+        $this->db->where('b.deleted', 0);
+        $this->db->where('b.status', 0);
+        $this->db->where('a.status', 0);
+        $this->db->group_by('a.employee_id');
+        $records = $this->db->get()->result_array();
+
+        foreach ($records as $record) {
+            $payroll_id = $record['id'];
+            $notifications = $this->crud->read('notifications', [], ["table_id" => $payroll_id, "table_name" => $tablename]);
+
+            /* Default */
+            $send = $this->crud->delete('notifications', ["table_id" => $payroll_id, "table_name" => $tablename]);
+            $send = $this->crud->delete($tablename, ["id" => $payroll_id]);
+        }
         echo $send;
     }
 
@@ -973,6 +1045,68 @@ class Home extends CI_Controller
                                 <td>' . $data['remarks'] . '</td>
                                 <td>
                                     <div id="' . $data['id'] . '">
+                                        <a href="#" onclick="' . $approve . '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i></a>
+                                        <a href="#" onclick="' . $disapprove . '" class="btn btn-danger btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i></a>
+                                    </div>
+                                </td>
+                            </tr>';
+                $no++;
+            }
+
+            $html .= '</table></body></html>';
+            echo $html;
+        } elseif ($table == "payrolls") {
+            $this->db->select('b.group_id, d.name as group_name, c.name, a.created_date, COUNT(a.employee_id) as employee, SUM(a.net_income) as amount');
+            $this->db->from('payrolls a');
+            $this->db->join('employees b', 'a.employee_id = b.id');
+            $this->db->join('users c', 'a.created_by = c.username');
+            $this->db->join('groups d', 'b.group_id = d.id');
+            $this->db->join('notifications e', "a.id = e.table_id and e.table_name = 'payrolls'", 'left');
+            $this->db->where('b.deleted', 0);
+            $this->db->where('b.status', 0);
+            $this->db->where('a.status', 0);
+            $this->db->where('e.users_id_to', $this->session->username);
+            $this->db->group_by('b.group_id');
+            $records = $this->db->get()->result_array();
+
+            foreach ($records as $all) {
+                $arr_all[] = array(
+                    'id' => $all['group_id']
+                );
+            }
+
+            $html = '<html><head><title>Print Data</title>
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/icons/fontawesome/css/font-awesome.min.css') . '">
+                        <link rel="stylesheet" type="text/css" href="' . base_url('assets/bootstrap/css/bootstrap.min.css?4') . '">
+                        </head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+                        <center>
+                            <div style="margin-top:20px; margin-bottom:20px;">
+                                <b style="font-size:20px !important;">APPROVAL PAYROLL</b>
+                            </div>
+                        </center>
+                <table id="customers" border="1">
+                    <tr>
+                        <th width="20">No</th>
+                        <th>Description</th>
+                        <th>Employee</th>
+                        <th>Amount</th>
+                        <th>Created By</th>
+                        <th>Created Date</th>
+                        <th width="100">#</th>
+                    </tr>';
+            $no = 1;
+            foreach ($records as $data) {
+                $approve = "approvePayrolls('$data[group_id]', 'payrolls')";
+                $disapprove = "disapprovePayrolls('$data[group_id]', 'payrolls')";
+                $html .= '  <tr>
+                                <td>' . $no . '</td>
+                                <td>' . $data['group_name'] . '</td>
+                                <td style="text-align:right;">' . number_format($data['employee']) . '</td>
+                                <td style="text-align:right;">' . number_format($data['amount']) . '</td>
+                                <td>' . $data['name'] . '</td>
+                                <td>' . date("d F Y", strtotime($data['created_date'])) . '</td>
+                                <td>
+                                    <div id="' . $data['group_id'] . '">
                                         <a href="#" onclick="' . $approve . '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-check"></i></a>
                                         <a href="#" onclick="' . $disapprove . '" class="btn btn-danger btn-sm" style="pointer-events: auto; opacity:1;"><i class="fa fa-times"></i></a>
                                     </div>

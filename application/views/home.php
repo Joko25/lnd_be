@@ -377,6 +377,69 @@
 		});
 	}
 
+	function approvePayrolls(id, tablename) {
+		$.messager.confirm('Warning', 'Are you sure you want to approve this data?', function(r) {
+			if (r) {
+				Swal.fire({
+					title: 'Please Wait to Approved Data',
+					showConfirmButton: false,
+					allowOutsideClick: false,
+					allowEscapeKey: false,
+					didOpen: () => {
+						Swal.showLoading();
+					},
+				});
+
+				$.post('<?= base_url('home/approvePayrolls') ?>', {
+					id: id,
+					tablename: tablename
+				}, function(result) {
+					var result = eval('(' + result + ')');
+					if (result.theme == "success") {
+						toastr.success(result.message, result.title);
+						$("#" + id).html("Approved");
+						Swal.close();
+					} else {
+						toastr.error(result.message, result.title);
+						Swal.close();
+					}
+				});
+			}
+		});
+	}
+
+	function disapprovePayrolls(id, tablename) {
+		$.messager.confirm('Warning', 'Are you sure you want to disapprove this data?', function(r) {
+			if (r) {
+				Swal.fire({
+					title: 'Please Wait to Disapprove Data',
+					showConfirmButton: false,
+					allowOutsideClick: false,
+					allowEscapeKey: false,
+					didOpen: () => {
+						Swal.showLoading();
+					},
+				});
+
+				$.post('<?= base_url('home/disapprovePayrolls') ?>', {
+					id: id,
+					tablename: tablename
+				}, function(result) {
+					var result = eval('(' + result + ')');
+
+					if (result.theme == "success") {
+						toastr.success(result.message, result.title);
+						$("#" + id).html("Disapproved");
+						Swal.close();
+					} else {
+						toastr.error(result.message, result.title);
+						Swal.close();
+					}
+				});
+			}
+		});
+	}
+
 	function logout() {
 		Swal.fire({
 			title: 'Please Wait for Logout System',

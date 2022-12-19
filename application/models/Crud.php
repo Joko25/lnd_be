@@ -214,7 +214,7 @@ class Crud extends CI_Model
 
         $user = $this->read('users', [], ["username" => $this->session->username]);
         //Approval
-        $approval = $this->read('approvals', [], ["table_name" => $table, "departement_id" => @$user->departement_id]);
+        $approval = $this->read('approvals', ["departement_id" => @$user->departement_id], ["table_name" => $table]);
         if (!empty($approval)) {
             $this->db->insert("notifications", [
                 "id" => $id,

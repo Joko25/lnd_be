@@ -53,6 +53,7 @@
                     <option value="cash_carries">Cash Carries</option>
                     <option value="permits">Permits</option>
                     <option value="change_days">Change Days</option>
+                    <option value="payrolls">Payrolls</option>
                 </select>
             </div>
             <div class="fitem">

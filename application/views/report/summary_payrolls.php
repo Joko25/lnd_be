@@ -32,6 +32,10 @@
                 <span style="width:35%; display:inline-block;">Employee</span>
                 <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
             </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Group</span>
+                <input style="width:60%;" id="filter_group" name="filter_group" class="easyui-combobox">
+            </div>
         </div>
     </fieldset>
 
@@ -57,6 +61,7 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
+        var filter_group = $("#filter_group").combobox('getValue');
 
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Choose Filter Date");
@@ -66,7 +71,8 @@
                 "&filter_departement_sub=" + filter_departement_sub +
                 '&filter_from=' + filter_from +
                 '&filter_to=' + filter_to +
-                '&filter_employee=' + filter_employee;
+                '&filter_employee=' + filter_employee +
+                '&filter_group=' + filter_group;
 
             $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
             $("#printout").attr('src', '<?= base_url('report/summary_payrolls/print') ?>' + url);
@@ -80,6 +86,7 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
+        var filter_group = $("#filter_group").combobox('getValue');
 
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Choose Filter Date");
@@ -89,7 +96,8 @@
                 "&filter_departement_sub=" + filter_departement_sub +
                 '&filter_from=' + filter_from +
                 '&filter_to=' + filter_to +
-                '&filter_employee=' + filter_employee;
+                '&filter_employee=' + filter_employee +
+                '&filter_group=' + filter_group;
 
             window.location.assign('<?= base_url('report/summary_payrolls/print/excel') ?>' + url);
         }
@@ -191,6 +199,19 @@
                     width: 200
                 }]
             ],
+        });
+
+        $("#filter_group").combobox({
+            url: '<?= base_url('admin/privilege_groups/reads') ?>',
+            valueField: 'id',
+            textField: 'name',
+            prompt: "Choose All",
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combobox('clear').combobox('textbox').focus();
+                }
+            }],
         });
     });
 

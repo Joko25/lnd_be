@@ -11,6 +11,7 @@
             <th data-options="field:'position',width:200">Position</th>
             <th data-options="field:'avatar',width:200">File Foto</th>
             <th data-options="field:'actived',width:150, styler:cellStyler, formatter:cellFormatter">Status</th>
+            <th data-options="field:'access',width:150, styler:cellStyler2, formatter:cellFormatter2">Access</th>
         </tr>
     </thead>
 </table>
@@ -31,7 +32,7 @@
             </div>
             <div class="fitem" hidden>
                 <span style="width:35%; display:inline-block;">Departement</span>
-                <input style="width:60%;" name="departement_id" id="departement_id" required="" class="easyui-textbox">
+                <input style="width:60%;" name="departement_id" id="departement_id" class="easyui-textbox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Fullname</span>
@@ -68,6 +69,17 @@
                     <option value="1">Not Active</option>
                 </select>
             </div>
+            <div class="alert alert-warning" role="alert">
+                If you select full access then all departments will appear, if limited then only appear
+                according to department
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Access</span>
+                <select style="width:60%;" name="access" required="" panelHeight="auto" class="easyui-combobox">
+                    <option value="0">Full Access</option>
+                    <option value="1">Limited</option>
+                </select>
+            </div>
         </fieldset>
     </form>
 </div>
@@ -78,7 +90,6 @@
     //ADD DATA
     function add() {
         $('#dlg_insert').dialog('open');
-        $('#number').textbox('enable');
         $('#username').textbox('enable');
         $('#password').textbox('enable');
         url_save = '<?= base_url('admin/users/create') ?>';
@@ -90,7 +101,6 @@
         if (row) {
             $('#dlg_insert').dialog('open');
             $('#frm_insert').form('load', row);
-            $('#number').textbox('disable');
             $('#username').textbox('disable');
             $('#password').textbox('disable');
             url_save = '<?= base_url('admin/users/update') ?>?id=' + btoa(row.id);
@@ -218,12 +228,28 @@
             return 'background: #FF5F5F; color:white;';
         }
     }
+
+    function cellStyler2(value, row, index) {
+        if (value == 0) {
+            return 'background: #53D636; color:white;';
+        } else {
+            return 'background: #FAD277; color:white;';
+        }
+    }
     //FORMATTER STATUS
     function cellFormatter(value) {
         if (value == 0) {
             return 'Active';
         } else {
             return 'Not Active';
+        }
+    };
+
+    function cellFormatter2(value) {
+        if (value == 0) {
+            return 'Full Access';
+        } else {
+            return 'Limited';
         }
     };
 </script>

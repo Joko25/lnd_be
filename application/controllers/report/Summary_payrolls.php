@@ -43,17 +43,21 @@ class Summary_payrolls extends CI_Controller
             $filter_departement = $this->input->get('filter_departement');
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
+            $filter_group = $this->input->get('filter_group');
+            $username = $this->session->username;
 
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
             $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no FROM payrolls a
                 JOIN employees b ON a.employee_id = b.id
+                LEFT JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                 WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
                 AND b.division_id LIKE '%$filter_division%'
                 AND b.departement_id LIKE '%$filter_departement%'
                 AND b.departement_sub_id LIKE '%$filter_departement_sub%'
                 AND a.employee_id LIKE '%$filter_employee%'
+                AND c.group_id LIKE '%$filter_group%'
                 ORDER BY a.`name` ASC");
             $records = $query->result_array();
 
