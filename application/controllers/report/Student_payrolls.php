@@ -28,16 +28,21 @@ class Student_payrolls extends CI_Controller
         }
     }
 
-    public function readService($dateSign = "")
+    public function readService($dateSign = "", $dateout = "")
     {
         if ($dateSign == "") {
             $date = $this->input->post('date');
         } else {
             $date = $dateSign;
         }
+        
+        if($dateout == ""){
+            $end = date_create(); // waktu sekarang
+        }else{
+            $end = date_create($dateout);
+        }
 
         $start  = date_create($date);
-        $end = date_create(); // waktu sekarang
         $diff  = date_diff($start, $end);
         $d = $diff->d . ' Days ';
 
@@ -138,6 +143,8 @@ class Student_payrolls extends CI_Controller
                         <th colspan="3" style="text-align:center;">Months</th>
                         <th colspan="3" style="text-align:center;">Allowence Amount Type</th>
                         <th rowspan="2">Allowence</th>
+                        <th rowspan="2">Intern Fee</th>
+                        <th rowspan="2">Boarding Fee</th>
                         <th colspan="2" style="text-align:center;">Correction</th>
                         <th rowspan="2">Cash Carry</th>
                         <th rowspan="2">Total</th>
@@ -154,7 +161,7 @@ class Student_payrolls extends CI_Controller
                     </tr>';
 
                 $no = 1;
-                $this->db->select("a.id, a.number, a.name, a.date_sign, b.name as division_name, c.name as departement_name");
+                $this->db->select("a.id, a.number, a.name, a.date_sign, b.name as division_name, c.name as departement_name, e.amount, e.boarding_fee");
                 $this->db->from('employees a');
                 $this->db->join('divisions b', 'a.division_id = b.id');
                 $this->db->join('departements c', 'a.departement_id = c.id');
@@ -177,6 +184,8 @@ class Student_payrolls extends CI_Controller
                     $date_sign = date_create($employee['date_sign']);
                     $payroll_end = date_create($filter_to);
                     $interval = date_diff($date_sign, $payroll_end);
+                    $internship = $employee['amount'];
+                    $boarding = $employee['boarding_fee'];
 
                     if ($interval->m >= 3) {
                         $month_3 = @$attandance[0]->att;
@@ -215,7 +224,7 @@ class Student_payrolls extends CI_Controller
                                     <td class="str">' . $employee_number . '</td>
                                     <td>' . $employee['name'] . '</td>
                                     <td>' . date("d F Y", strtotime($employee['date_sign'])) . '</td>
-                                    <td>' . $this->readService($employee['date_sign']) . '</td>
+                                    <td>' . $this->readService($employee['date_sign'], $filter_to) . '</td>
                                     <td>' . $employee['division_name'] . '</td>
                                     <td>' . $employee['departement_name'] . '</td>
                                     <td>' . @$attandance[0]->att . '</td>
@@ -226,10 +235,12 @@ class Student_payrolls extends CI_Controller
                                     <td>' . $payroll_2 . '</td>
                                     <td>' . $payroll_3 . '</td>
                                     <td>' . number_format($allowence) . '</td>
+                                    <td>' . number_format($internship * @$attandance[0]->att) . '</td>
+                                    <td>' . number_format($boarding) . '</td>
                                     <td>' . number_format(@$correctionPlus[0]->total) . '</td>
                                     <td>' . number_format(@$correctionMinus[0]->total) . '</td>
                                     <td>' . number_format(@$cashCarries[0]->total) . '</td>
-                                    <td>' . @number_format(($allowence + ($correctionPlus[0]->total - $correctionMinus[0]->total) + $cashCarries[0]->total)) . '</td>
+                                    <td>' . @number_format(($allowence + ($correctionPlus[0]->total - $correctionMinus[0]->total) + $cashCarries[0]->total + ($internship * @$attandance[0]->att) + $boarding)) . '</td>
                                 </tr>';
                     $no++;
                 }
