@@ -4,7 +4,7 @@
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
             <th rowspan="2" data-options="field:'trans_date',width:100,halign:'center'">Trans Date</th>
-            <th rowspan="2" data-options="field:'employee_id',width:120,halign:'center'">Employee ID</th>
+            <th rowspan="2" data-options="field:'employee_number',width:120,halign:'center'">Employee ID</th>
             <th rowspan="2" data-options="field:'employee_name',width:200,halign:'center'">Employee Name</th>
             <th rowspan="2" data-options="field:'correction_type',width:120,halign:'center'">Correction Type</th>
             <th rowspan="2" data-options="field:'correction_name',width:120,halign:'center'">Correction Name</th>
