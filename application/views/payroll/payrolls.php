@@ -176,7 +176,7 @@
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_employee_type = $("#filter_employee_type").combobox('getValue');
-        var filter_group = $("#filter_group").combogrid('getValue');
+        var filter_group = $("#filter_group").combobox('getValue');
 
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Enter Cut Off Period", "Filter Date");
@@ -340,62 +340,74 @@
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Enter Cut Off Period", "Filter Date");
         } else {
-            $.messager.confirm('Warning', 'Are you sure you want to lock this payroll?', function(r) {
-                if (r) {
-                    Swal.fire({
-                        title: 'Please Wait for Locking Payroll',
-                        showConfirmButton: false,
-                        allowOutsideClick: false,
-                        allowEscapeKey: false,
-                        didOpen: () => {
-                            Swal.showLoading();
-                        },
-                    });
+            $.ajax({
+                type: "post",
+                url: "<?= base_url('payroll/payrolls/readApproval') ?>",
+                data: "filter_from=" + filter_from + "&filter_to=" + filter_to,
+                dataType: "json",
+                success: function(response) {
+                    if (response.status == "APPROVE") {
+                        $.messager.confirm('Warning', 'Are you sure you want to lock this payroll?', function(r) {
+                            if (r) {
+                                Swal.fire({
+                                    title: 'Please Wait for Locking Payroll',
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                    },
+                                });
 
-                    $.ajax({
-                        url: "<?= base_url('payroll/payrolls/read') ?>",
-                        type: 'get',
-                        data: 'filter_from=' + filter_from,
-                        success: function(message) {
-                            var message_read = eval('(' + message + ')');
+                                $.ajax({
+                                    url: "<?= base_url('payroll/payrolls/read') ?>",
+                                    type: 'get',
+                                    data: 'filter_from=' + filter_from,
+                                    success: function(message) {
+                                        var message_read = eval('(' + message + ')');
 
-                            if (message_read['generate'] == "EXIST") {
-                                if (message_read['status'] == "0") {
-                                    $.ajax({
-                                        method: 'post',
-                                        url: '<?= base_url('payroll/payrolls/update') ?>',
-                                        data: {
-                                            filter_from: filter_from,
-                                        },
-                                        success: function(updated) {
-                                            $("#btnLock").css("display", "none");
+                                        if (message_read['generate'] == "EXIST") {
+                                            if (message_read['status'] == "0") {
+                                                $.ajax({
+                                                    method: 'post',
+                                                    url: '<?= base_url('payroll/payrolls/update') ?>',
+                                                    data: {
+                                                        filter_from: filter_from,
+                                                    },
+                                                    success: function(updated) {
+                                                        $("#btnLock").css("display", "none");
+                                                        Swal.close();
+                                                        Swal.fire(
+                                                            'Good job!',
+                                                            'The data has been successfully locked, you will not be able to generate payroll again until it is reopened by someone who is in control of this module',
+                                                            'success'
+                                                        );
+                                                    }
+                                                });
+                                            } else {
+                                                Swal.close();
+                                                Swal.fire(
+                                                    'Locked!',
+                                                    'Payroll in the period you entered has been locked',
+                                                    'warning'
+                                                );
+                                            }
+                                        } else {
                                             Swal.close();
                                             Swal.fire(
-                                                'Good job!',
-                                                'The data has been successfully locked, you will not be able to generate payroll again until it is reopened by someone who is in control of this module',
-                                                'success'
+                                                'Not Found!',
+                                                'The period you entered was not found in the database',
+                                                'warning'
                                             );
                                         }
-                                    });
-                                } else {
-                                    Swal.close();
-                                    Swal.fire(
-                                        'Locked!',
-                                        'Payroll in the period you entered has been locked',
-                                        'warning'
-                                    );
-                                }
-                            } else {
-                                Swal.close();
-                                Swal.fire(
-                                    'Not Found!',
-                                    'The period you entered was not found in the database',
-                                    'warning'
-                                );
-                            }
-                        }
-                    });
+                                    }
+                                });
 
+                            }
+                        });
+                    } else {
+                        toastr.warning("The cut off period data is still in the approval process");
+                    }
                 }
             });
         }
@@ -409,7 +421,7 @@
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_employee_type = $("#filter_employee_type").combobox('getValue');
-        var filter_group = $("#filter_group").combogrid('getValue');
+        var filter_group = $("#filter_group").combobox('getValue');
 
         var url = "?filter_from=" + filter_from +
             "&filter_to=" + filter_to +
@@ -441,7 +453,7 @@
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_employee_type = $("#filter_employee_type").combobox('getValue');
-        var filter_group = $("#filter_group").combogrid('getValue');
+        var filter_group = $("#filter_group").combobox('getValue');
 
         var url = "?filter_from=" + filter_from +
             "&filter_to=" + filter_to +
@@ -452,7 +464,20 @@
             "&filter_employee_type=" + filter_employee_type +
             "&filter_group=" + filter_group;
 
-        window.location.assign('<?= base_url('payroll/payrolls/print/excel') ?>' + url);
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('payroll/payrolls/readApproval') ?>",
+            data: "filter_from=" + filter_from + "&filter_to=" + filter_to,
+            dataType: "json",
+            success: function(response) {
+                if (response.status == "APPROVE") {
+                    toastr.success("Please wait to Export Excel");
+                    window.location.assign('<?= base_url('payroll/payrolls/print/excel') ?>' + url);
+                } else {
+                    toastr.warning("The cut off period data is still in the approval process");
+                }
+            }
+        });
     }
     //RELOAD
     function reload() {

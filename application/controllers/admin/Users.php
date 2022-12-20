@@ -85,7 +85,13 @@ class Users extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 $post = $this->input->post();
                 $avatar = $this->crud->upload('avatar', ["jpg", "png", "jpeg"], 'assets/image/users/', ["username" => $post['username']], "users", "avatar");
-                $postFinal = array_merge($post, ["avatar" => $avatar]);
+
+                if ($post['access'] == "0") {
+                    $postFinal = array_merge($post, ["avatar" => $avatar, "departement_id" => null]);
+                } else {
+                    $postFinal = array_merge($post, ["avatar" => $avatar]);
+                }
+
                 $users = $this->crud->create('users', $postFinal);
                 $email = $this->emails->emailRegistration($post['email'], $post['name'], $post['username'], $post['password']);
                 echo $users;
@@ -102,8 +108,14 @@ class Users extends CI_Controller
     {
         if ($this->input->post()) {
             $id = base64_decode($this->input->get('id'));
-            $upload = $this->crud->upload('avatar', ["jpg", "png", "jpeg"], 'assets/image/users/', ["id" => $id], "users", "avatar");
-            $postFinal   = array_merge($this->input->post(), ["avatar" => $upload]);
+            $post = $this->input->post();
+            $employee = $this->crud->read("employees", [], ["number" => $post['number']]);
+            $avatar = $this->crud->upload('avatar', ["jpg", "png", "jpeg"], 'assets/image/users/', ["id" => $id], "users", "avatar");
+            if ($post['access'] == "0") {
+                $postFinal = array_merge($post, ["avatar" => $avatar, "departement_id" => null]);
+            } else {
+                $postFinal = array_merge($post, ["avatar" => $avatar, "departement_id" => $employee->departement_id]);
+            }
             $users = $this->crud->update('users', ["id" => $id], $postFinal);
             echo $users;
         } else {
