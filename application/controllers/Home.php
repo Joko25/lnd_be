@@ -155,6 +155,10 @@ class Home extends CI_Controller
                 "status" => @$notifications->status + 1,
             );
 
+            if ($users_id == "") {
+                $send = $this->crud->update('payrolls', ["id" => $payroll_id], ["status" => 1]);
+            }
+
             $send = $this->crud->update('notifications', ["table_id" => $payroll_id, "table_name" => $tablename], $values);
         }
         echo $send;

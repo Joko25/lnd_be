@@ -1,13 +1,14 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar">
+<table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar" data-options="rownumbers: true">
     <thead>
         <tr>
-            <th data-options="field:'departement_name',width:150,halign:'center'">Departement</th>
-            <th data-options="field:'departement_sub_name',width:150,halign:'center'">Departement Sub</th>
-            <th data-options="field:'group_name',width:150,halign:'center'">Group</th>
-            <th data-options="field:'employee',width:150,halign:'center'">Employee</th>
-            <th data-options="field:'income',width:100,halign:'center', align:'right', formatter:numberformat">Pay Amount</th>
-            <th data-options="field:'departement_id',width:100,halign:'center',formatter:FormatterFile"> Print</th>
+            <th data-options="field:'departement_name',width:200,halign:'center'">Departement</th>
+            <th data-options="field:'departement_sub_name',width:200,halign:'center'">Departement Sub</th>
+            <th data-options="field:'group_name',width:120,halign:'center'">Group</th>
+            <th data-options="field:'employee',width:100,halign:'center'">Employee</th>
+            <th data-options="field:'income',width:150,halign:'center', align:'right', formatter:numberformat">Pay Amount</th>
+            <th data-options="field:'print',width:100,halign:'center',formatter:FormatterFile"> Print</th>
+            <th data-options="field:'excel',width:100,halign:'center',formatter:FormatterExcel"> Excel</th>
         </tr>
     </thead>
 </table>
@@ -52,14 +53,14 @@
     </fieldset>
 
     <?= $button ?>
-    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="pdf_recap()"><i class="fa fa-print"></i> Print Recap</a>
-    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="excel_recap()"><i class="fa fa-file"></i> Excel Recap</a>
-
     <iframe id="printout_recap" src="" style="width: 100%; height:500px; border: 0;" hidden></iframe>
 </div>
 
-<div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;">
-    <iframe id="printout" src="" style="width: 100%; height:500px; border: 0;"></iframe>
+<div id="dlg_print" class="easyui-window" title="Print Preview" data-options="closed: true,minimizable:false,collapsible:false,maximizable:true,modal:true,footer:'#footer'" style="width: 1000px; height: 500px; top: 20px;">
+    <iframe id="printout" src="" style="width: 100%; height:600px; border: 0;"></iframe>
+    <div id="footer" style="padding:5px; text-align:right;">
+        <a class="easyui-linkbutton c6" onclick="pdf_detail()" style="width:120px">Print</a>
+    </div>
 </div>
 <script>
     function reload() {
@@ -67,11 +68,11 @@
     }
 
     function pdf() {
-        $("#printout").get(0).contentWindow.print();
+        $("#printout_recap").get(0).contentWindow.print();
     }
 
-    function pdf_recap(){
-        $("#printout_recap").get(0).contentWindow.print();
+    function pdf_detail() {
+        $("#printout").get(0).contentWindow.print();
     }
 
     function filter() {
@@ -83,8 +84,8 @@
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_group = $("#filter_group").combobox('getValue');
 
-        if (filter_from == "" || filter_to == "") {
-            toastr.warning("Please Choose Filter Date");
+        if (filter_from == "" || filter_to == "" || filter_division == "") {
+            toastr.warning("Please Choose Filter Date & Division");
         } else {
             var url = "?filter_division=" + filter_division +
                 "&filter_departement=" + filter_departement +
@@ -102,7 +103,7 @@
         }
     }
 
-    function pdf_view(filter_departement, filter_departement_sub, filter_group){
+    function pdf_view(filter_departement, filter_departement_sub, filter_group) {
         var filter_from = $("#filter_from").datebox('getValue');
         var filter_to = $("#filter_to").datebox('getValue');
         var filter_division = $("#filter_division").combobox('getValue');
@@ -111,6 +112,7 @@
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Choose Filter Date");
         } else {
+            $("#dlg_print").window('open');
             var url = "?filter_division=" + filter_division +
                 "&filter_departement=" + filter_departement +
                 "&filter_departement_sub=" + filter_departement_sub +
@@ -119,19 +121,16 @@
                 '&filter_employee=' + filter_employee +
                 '&filter_group=' + filter_group;
 
-                $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
-                $("#printout").attr('src', '<?= base_url('report/summary_payrolls/print') ?>' + url);
+            $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
+            $("#printout").attr('src', '<?= base_url('report/summary_payrolls/print') ?>' + url);
         }
     }
 
-    function excel() {
+    function excel_detail(filter_departement, filter_departement_sub, filter_group) {
         var filter_from = $("#filter_from").datebox('getValue');
         var filter_to = $("#filter_to").datebox('getValue');
         var filter_division = $("#filter_division").combobox('getValue');
-        var filter_departement = $("#filter_departement").combobox('getValue');
-        var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
-        var filter_group = $("#filter_group").combobox('getValue');
 
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Choose Filter Date");
@@ -148,7 +147,7 @@
         }
     }
 
-    function excel_recap(){
+    function excel() {
         var filter_from = $("#filter_from").datebox('getValue');
         var filter_to = $("#filter_to").datebox('getValue');
         var filter_division = $("#filter_division").combobox('getValue');
@@ -157,8 +156,8 @@
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_group = $("#filter_group").combobox('getValue');
 
-        if (filter_from == "" || filter_to == "") {
-            toastr.warning("Please Choose Filter Date");
+        if (filter_from == "" || filter_to == "" || filter_division == "") {
+            toastr.warning("Please Choose Filter Date & Division");
         } else {
             var url = "?filter_division=" + filter_division +
                 "&filter_departement=" + filter_departement +
@@ -173,7 +172,7 @@
     }
 
     $(function() {
-        //Get Departement
+        //Get Division
         $('#filter_division').combobox({
             url: '<?php echo base_url('employee/divisions/reads'); ?>',
             valueField: 'id',
@@ -307,8 +306,13 @@
     }
 
     function FormatterFile(value, row) {
-        var linkPrint = "pdf_view('"+row.departement_id+"','"+row.departement_sub_id+"','"+row.group_id+"')";
-        return '<a href="#" onclick="' + linkPrint + '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-eye"></i> View</a>';
+        var linkPrint = "pdf_view('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
+        return '<a href="#" onclick="' + linkPrint + '" class="btn btn-primary btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-eye"></i> View</a>';
+    };
+
+    function FormatterExcel(value, row) {
+        var linkPrint = "excel_detail('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
+        return '<a href="#" onclick="' + linkPrint + '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-file"></i> Download</a>';
     };
 
     function numberformat(value, row) {

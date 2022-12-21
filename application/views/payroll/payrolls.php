@@ -147,7 +147,6 @@
         </div>
     </fieldset>
     <?= $button ?>
-    <a href="javascript:;" id="btnLock" onclick="lock_payroll()" data-options="plain:true" class="easyui-linkbutton"><i class="fa fa-lock"></i> <span id="txtLock">Lock Payroll</span></a>
 </div>
 
 <div id="dlg_generate" class="easyui-dialog" title="Generating Data" data-options="closed: true,modal:true,closable: false" style="width: 500px; padding:10px; top: 20px;">
@@ -250,6 +249,11 @@
 
                                                                     if (number == total) {
                                                                         $('#dlg_generate').dialog('close');
+                                                                        Swal.fire(
+                                                                            'Generate Completed',
+                                                                            'Generate payroll has been completed, please check the generated payroll data, if an error occurs, please generate it again before the data is approved',
+                                                                            'success'
+                                                                        );
                                                                     }
                                                                 }
                                                             });
@@ -313,6 +317,11 @@
 
                                                     if (number == total) {
                                                         $('#dlg_generate').dialog('close');
+                                                        Swal.fire(
+                                                            'Generate Completed',
+                                                            'Generate payroll has been completed, please check the generated payroll data, if an error occurs, please generate it again before the data is approved',
+                                                            'success'
+                                                        );
                                                     }
                                                 }
                                             });
@@ -323,90 +332,10 @@
                         }
                     } else {
                         Swal.fire(
-                            'Lock Payroll!',
-                            'Generate payroll has been locked, if there is a data change, contact the person in charge in this payroll',
+                            'Cannot Generate!',
+                            'the payroll data that you entered has been approved, please contact the relevant admin if you want to repeat generate payroll again',
                             'warning'
                         );
-                    }
-                }
-            });
-        }
-    }
-
-    function lock_payroll() {
-        var filter_from = $("#filter_from").datebox('getValue');
-        var filter_to = $("#filter_to").datebox('getValue');
-
-        if (filter_from == "" || filter_to == "") {
-            toastr.warning("Please Enter Cut Off Period", "Filter Date");
-        } else {
-            $.ajax({
-                type: "post",
-                url: "<?= base_url('payroll/payrolls/readApproval') ?>",
-                data: "filter_from=" + filter_from + "&filter_to=" + filter_to,
-                dataType: "json",
-                success: function(response) {
-                    if (response.status == "APPROVE") {
-                        $.messager.confirm('Warning', 'Are you sure you want to lock this payroll?', function(r) {
-                            if (r) {
-                                Swal.fire({
-                                    title: 'Please Wait for Locking Payroll',
-                                    showConfirmButton: false,
-                                    allowOutsideClick: false,
-                                    allowEscapeKey: false,
-                                    didOpen: () => {
-                                        Swal.showLoading();
-                                    },
-                                });
-
-                                $.ajax({
-                                    url: "<?= base_url('payroll/payrolls/read') ?>",
-                                    type: 'get',
-                                    data: 'filter_from=' + filter_from,
-                                    success: function(message) {
-                                        var message_read = eval('(' + message + ')');
-
-                                        if (message_read['generate'] == "EXIST") {
-                                            if (message_read['status'] == "0") {
-                                                $.ajax({
-                                                    method: 'post',
-                                                    url: '<?= base_url('payroll/payrolls/update') ?>',
-                                                    data: {
-                                                        filter_from: filter_from,
-                                                    },
-                                                    success: function(updated) {
-                                                        $("#btnLock").css("display", "none");
-                                                        Swal.close();
-                                                        Swal.fire(
-                                                            'Good job!',
-                                                            'The data has been successfully locked, you will not be able to generate payroll again until it is reopened by someone who is in control of this module',
-                                                            'success'
-                                                        );
-                                                    }
-                                                });
-                                            } else {
-                                                Swal.close();
-                                                Swal.fire(
-                                                    'Locked!',
-                                                    'Payroll in the period you entered has been locked',
-                                                    'warning'
-                                                );
-                                            }
-                                        } else {
-                                            Swal.close();
-                                            Swal.fire(
-                                                'Not Found!',
-                                                'The period you entered was not found in the database',
-                                                'warning'
-                                            );
-                                        }
-                                    }
-                                });
-
-                            }
-                        });
-                    } else {
-                        toastr.warning("The cut off period data is still in the approval process");
                     }
                 }
             });

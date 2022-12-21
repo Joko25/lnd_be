@@ -43,6 +43,7 @@ class Employee_salaries extends CI_Controller
             $filter_departement = $this->input->get('filter_departement');
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
+            $filter_bank = $this->input->get('filter_bank');
 
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
@@ -89,39 +90,108 @@ class Employee_salaries extends CI_Controller
                         <p style="margin:0;">Period ' . $filter_from . ' to ' . $filter_to . '</p>
                     </center>
                     <br>';
-            $html .= '  <table id="customers" border="1">
-                            <tr>
-                                <th width="20">No</th>
-                                <th style="text-align:center;">Acc No</th>
-                                <th style="text-align:center;">Trans Amount</th>
-                                <th style="text-align:center;">Employee Number</th>
-                                <th style="text-align:center;">Employee Name</th>
+
+            if ($filter_bank == "BCA") {
+                $html .= '  <table id="customers" border="1">
+                                <tr>
+                                    <th width="20">No</th>
+                                    <th style="text-align:center;">Acc No</th>
+                                    <th style="text-align:center;">Trans Amount</th>
+                                    <th style="text-align:center;">Employee Number</th>
+                                    <th style="text-align:center;">Employee Name</th>
+                                </tr>';
+                $no = 1;
+                foreach ($records as $record) {
+                    $html .= '<tr>
+                                <td>' . $no . '</td>
+                                <td>' . $record['bank_no'] . '</td>
+                                <td style="text-align:right;">' . $record['net_income'] . '</td>
+                                <td class="str">' . $record['number'] . '</td>
+                                <td>' . $record['name'] . '</td>
                             </tr>';
-            $no = 1;
-            foreach ($records as $record) {
-                $total_allowence = 0;
-                foreach (json_decode($record['allowence'], true) as $allowence => $val_allowence) {
-                    $total_allowence += (int)$val_allowence;
+                    $no++;
                 }
-
-                $total_deduction = 0;
-                foreach (json_decode($record['deduction'], true) as $deduction => $val_deduction) {
-                    $total_deduction += (int)$val_deduction;
+                $html .= '</table>';
+            } elseif ($filter_bank == "MANDIRI") {
+                $html .= '  <table id="customers" border="1">
+                                <tr>
+                                    <th width="20">No</th>
+                                    <th style="text-align:center;">NIK</th>
+                                    <th style="text-align:center;">NAMA</th>
+                                    <th style="text-align:center;">NO REK</th>
+                                    <th style="text-align:center;">JUMLAH</th>
+                                </tr>';
+                $no = 1;
+                foreach ($records as $record) {
+                    $html .= '<tr>
+                                <td>' . $no . '</td>
+                                <td class="str">' . $record['number'] . '</td>
+                                <td>' . $record['name'] . '</td>
+                                <td>' . $record['bank_no'] . '</td>
+                                <td style="text-align:right;">' . $record['net_income'] . '</td>
+                            </tr>';
+                    $no++;
                 }
-
-                $html .= '<tr>
-                            <td>' . $no . '</td>
-                            <td>' . $record['bank_no'] . '</td>
-                            <td style="text-align:right;">' . $record['net_income'] . '</td>
-                            <td class="str">' . $record['number'] . '</td>
-                            <td>' . $record['name'] . '</td>
-                        </tr>';
-                $no++;
+                $html .= '</table>';
             }
-            $html .= '</table>';
         }
 
         $html .= '</body></html>';
         echo $html;
+    }
+
+    public function csv()
+    {
+        $filename = "employee_salaries.csv";
+        $file = fopen('php://output', 'w');
+        header('Content-Disposition: attachment; filename=' . $filename);
+        header('Content-Type: text/csv');
+
+        $filter_from = $this->input->get('filter_from');
+        $filter_to = $this->input->get('filter_to');
+        $filter_division = $this->input->get('filter_division');
+        $filter_departement = $this->input->get('filter_departement');
+        $filter_departement_sub = $this->input->get('filter_departement_sub');
+        $filter_employee = $this->input->get('filter_employee');
+        $filter_bank = $this->input->get('filter_bank');
+
+        $period_start = date("Y-m", strtotime($filter_from));
+        $period_end = date("Y-m", strtotime($filter_to));
+
+        if ($filter_bank == "BCA") {
+            $query = $this->db->query("SELECT b.bank_no, a.net_income, a.number, a.name FROM payrolls a
+                JOIN employees b ON a.employee_id = b.id
+                WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
+                AND b.division_id LIKE '%$filter_division%'
+                AND b.departement_id LIKE '%$filter_departement%'
+                AND b.departement_sub_id LIKE '%$filter_departement_sub%'
+                AND a.employee_id LIKE '%$filter_employee%'
+                ORDER BY a.`name` ASC");
+            $records = $query->result_array();
+            $no = 1;
+            fputcsv($file, array('Acc No', 'Trans Amount', 'Employee Number', 'Employee Name'));
+            foreach ($records as $record => $line) {
+                fputcsv($file, $line);
+            }
+            fclose($file);
+            exit;
+        } elseif ($filter_bank == "MANDIRI") {
+            $query = $this->db->query("SELECT a.number, a.name, b.bank_no, a.net_income FROM payrolls a
+                JOIN employees b ON a.employee_id = b.id
+                WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
+                AND b.division_id LIKE '%$filter_division%'
+                AND b.departement_id LIKE '%$filter_departement%'
+                AND b.departement_sub_id LIKE '%$filter_departement_sub%'
+                AND a.employee_id LIKE '%$filter_employee%'
+                ORDER BY a.`name` ASC");
+            $records = $query->result_array();
+            $no = 1;
+            fputcsv($file, array('NIK', 'Nama', 'No Rek', 'Jumlah'));
+            foreach ($records as $record => $line) {
+                fputcsv($file, $line);
+            }
+            fclose($file);
+            exit;
+        }
     }
 }

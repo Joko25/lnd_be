@@ -70,8 +70,7 @@ class Summary_payrolls extends CI_Controller
         $this->db->like('b.group_id', $filter_group);
         $this->db->group_by(array("c.id", "d.id", "e.id"));
         $this->db->order_by('c.name', 'ASC');
-        $this->db->order_by('d.name', 'ASC');
-        $this->db->order_by('e.name', 'ASC');
+        $this->db->order_by('SUM(a.net_income)', 'ASC');
         //Get Data Array
         $records = $this->db->get()->result_array();
 
@@ -146,7 +145,6 @@ class Summary_payrolls extends CI_Controller
             $config = $this->db->get()->row();
 
             $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
-                    <style> .str{ mso-number-format:\@; } </style>
                     <body>
                     <center>
                         <div style="float: left; font-size: 12px; text-align: left;">
@@ -197,8 +195,8 @@ class Summary_payrolls extends CI_Controller
                             <td><b>' . $group_name . '</b></td>
                         </tr>
                     </table>
-                    <br>';
-            $html .= '  <table id="customers" border="1">
+                    <br>
+                    <table id="customers" border="1">
                         <tr>
                             <th rowspan="2" width="20">No</th>
                             <th rowspan="2" style="text-align:center;">Employee ID</th>
@@ -225,6 +223,7 @@ class Summary_payrolls extends CI_Controller
                             <th style="text-align:center;">ABS (AMT)</th>
                         </tr>';
             $no = 1;
+            $total = 0;
             foreach ($records as $record) {
 
                 $total_allowence = 0;
@@ -239,8 +238,8 @@ class Summary_payrolls extends CI_Controller
 
                 $html .= '<tr>
                             <td>' . $no . '</td>
-                            <td class="str">' . $record['number'] . '</td>
-                            <td class="str">' . $record['national_id'] . '</td>
+                            <td style="mso-number-format:\@;">' . $record['number'] . '</td>
+                            <td style="mso-number-format:\@;">' . $record['national_id'] . '</td>
                             <td>' . $record['name'] . '</td>
                             <td>' . $record['attandance_wd'] . '</td>
                             <td style="text-align:right;">' . number_format($record['salary']) . '</td>
@@ -258,10 +257,13 @@ class Summary_payrolls extends CI_Controller
                             <td style="text-align:right;">' . number_format($record['deduction_absence_amount'] + $record['bpjs_employee_total'] + $record['bpjs_company_total'] + $record['loan_cooperative'] + $record['loan_bank'] + $record['loan_other'] + $record['correction_minus']) . '</td>
                             <td style="text-align:right;">' . number_format(($record['net_income'])) . '</td>
                         </tr>';
+                $total += $record['net_income'];
                 $no++;
             }
-
-
+            $html .= '  <tr>
+                            <th style="text-align:right;" colspan="18">GRAND TOTAL</th>
+                            <th style="text-align:right;">' . number_format($total) . '</th>
+                        </tr>';
             $html .= '</table>';
         }
 
@@ -317,8 +319,7 @@ class Summary_payrolls extends CI_Controller
             $this->db->like('b.group_id', $filter_group);
             $this->db->group_by(array("c.id", "d.id", "e.id"));
             $this->db->order_by('c.name', 'ASC');
-            $this->db->order_by('d.name', 'ASC');
-            $this->db->order_by('e.name', 'ASC');
+            $this->db->order_by('SUM(a.net_income)', 'ASC');
             //Get Data Array
             $records = $this->db->get()->result_array();
 
@@ -351,28 +352,37 @@ class Summary_payrolls extends CI_Controller
                     
                     <table id="customers" border="1">
                         <tr>
-                            <th width="20">No</th>
-                            <th>Departement</th>
-                            <th>Departement Sub</th>
-                            <th>Group</th>
-                            <th>Employee</th>
-                            <th>Pay Amount</th>
+                            <th width="20" style="text-align:center;">No</th>
+                            <th style="text-align:center;">Departement</th>
+                            <th style="text-align:center;">Departement Sub</th>
+                            <th style="text-align:center;">Group</th>
+                            <th style="text-align:center;">Employee</th>
+                            <th style="text-align:center;">Pay Amount</th>
                         </tr>';
-                    $no = 1;
-                    foreach ($records as $data) {
-                        $html .= '  <tr>
-                                        <td>' . $no . '</td>
-                                        <td>' . $data['departement_name'] . '</td>
-                                        <td>' . $data['departement_sub_name'] . '</td>
-                                        <td>' . $data['group_name'] . '</td>
-                                        <td>' . number_format($data['employee']) . '</td>
-                                        <td>' . number_format($data['income']) . '</td>
-                                    </tr>';
-                        $no++;
-                    }
-            
-                    $html .= '</table></body></html>';
-                    echo $html;
+            $no = 1;
+            $totalEmployee = 0;
+            $totalIncome = 0;
+            foreach ($records as $data) {
+                $html .= '  <tr>
+                                <td style="text-align:center;">' . $no . '</td>
+                                <td>' . $data['departement_name'] . '</td>
+                                <td>' . $data['departement_sub_name'] . '</td>
+                                <td>' . $data['group_name'] . '</td>
+                                <td style="text-align:right;">' . number_format($data['employee']) . '</td>
+                                <td style="text-align:right;">' . number_format($data['income']) . '</td>
+                            </tr>';
+                $totalEmployee += $data['employee'];
+                $totalIncome += $data['income'];
+                $no++;
+            }
+            $html .= '  <tr>
+                            <th style="text-align:right;" colspan="4">GRAND TOTAL</th>
+                            <th style="text-align:right;">' . number_format($totalEmployee) . '</th>
+                            <th style="text-align:right;">' . number_format($totalIncome) . '</th>
+                        </tr>';
+
+            $html .= '</table></body></html>';
+            echo $html;
         }
     }
 }

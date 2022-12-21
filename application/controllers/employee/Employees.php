@@ -924,7 +924,9 @@ class Employees extends CI_Controller
                 j.number as religion_number,
                 j.name as religion_name,
                 k.number as marital_number,
-                k.name as marital_name');
+                k.name as marital_name,
+                l.number as source_number,
+                l.name as source_name');
         $this->db->from('employees a');
         $this->db->join('notifications b', 'a.id = b.table_id', 'left');
         $this->db->join('divisions c', 'c.id = a.division_id');
@@ -936,6 +938,7 @@ class Employees extends CI_Controller
         $this->db->join('groups i', 'i.id = a.group_id', 'left');
         $this->db->join('religions j', 'j.id = a.religion_id', 'left');
         $this->db->join('maritals k', 'k.id = a.marital_id', 'left');
+        $this->db->join('sources l', 'l.id = a.source_id', 'left');
         $this->db->where('a.deleted', 0);
         $this->db->like('a.status', $filter_status);
         $this->db->like('a.departement_id', $aprvDepartement);
@@ -952,6 +955,7 @@ class Employees extends CI_Controller
         $this->db->like("a.religion_id", $filter_religions);
         $this->db->like("a.marital_id", $filter_maritals);
         $this->db->order_by('a.name', 'ASC');
+        $this->db->group_by('a.number', 'ASC');
         $records = $this->db->get()->result_array();
 
         $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
@@ -988,6 +992,8 @@ class Employees extends CI_Controller
                 <th>Employee Type</th>
                 <th>ID Group</th>
                 <th>Group</th>
+                <th>ID Source</th>
+                <th>Source</th>
                 <th>Join Date</th>
                 <th>Contract Expired</th>
                 <th>Fit Of Service</th>
@@ -1039,6 +1045,8 @@ class Employees extends CI_Controller
                     <td>' . $data['contract_name'] . '</td>
                     <td><b style="color:red;">' . $data['group_number'] . '</b></td>
                     <td>' . $data['group_name'] . '</td>
+                    <td><b style="color:red;">' . $data['source_number'] . '</b></td>
+                    <td>' . $data['source_name'] . '</td>
                     <td>' . $data['date_sign'] . '</td>
                     <td>' . $data['date_expired'] . '</td>
                     <td>' . $this->readService($data['date_sign']) . '</td>
@@ -1063,7 +1071,7 @@ class Employees extends CI_Controller
                     <td>' . $data['driving_date'] . '</td>
                     <td>' . $data['stnk_no'] . '</td>
                     <td>' . $data['stnk_date'] . '</td>
-                    <td>' . $data['bank_branch'] . '</td>
+                    <td>' . $data['bank_name'] . '</td>
                     <td class="str">' . $data['bank_no'] . '</td>
                     <td>' . $data['image_id'] . '</td>
                     <td>' . $data['image_profile'] . '</td>

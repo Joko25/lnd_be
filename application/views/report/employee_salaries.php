@@ -32,10 +32,18 @@
                 <span style="width:35%; display:inline-block;">Employee</span>
                 <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
             </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Bank Name</span>
+                <select style="width:60%;" id="filter_bank" panelHeight="auto" class="easyui-combobox">
+                    <option value="MANDIRI">BANK MANDIRI / BSI</option>
+                    <option value="BCA">BANK CENTRAL ASIA (BCA)</option>
+                </select>
+            </div>
         </div>
     </fieldset>
 
     <?= $button ?>
+    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="csv()"><i class="fa fa-file"></i> CSV</a>
 </div>
 
 <div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;">
@@ -57,6 +65,7 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
+        var filter_bank = $("#filter_bank").combobox('getValue');
 
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Choose Filter Date");
@@ -66,7 +75,8 @@
                 "&filter_departement_sub=" + filter_departement_sub +
                 '&filter_from=' + filter_from +
                 '&filter_to=' + filter_to +
-                '&filter_employee=' + filter_employee;
+                '&filter_employee=' + filter_employee +
+                '&filter_bank=' + filter_bank;
 
             $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
             $("#printout").attr('src', '<?= base_url('report/employee_salaries/print') ?>' + url);
@@ -80,6 +90,7 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
+        var filter_bank = $("#filter_bank").combobox('getValue');
 
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Choose Filter Date");
@@ -89,9 +100,34 @@
                 "&filter_departement_sub=" + filter_departement_sub +
                 '&filter_from=' + filter_from +
                 '&filter_to=' + filter_to +
-                '&filter_employee=' + filter_employee;
+                '&filter_employee=' + filter_employee +
+                '&filter_bank=' + filter_bank;
 
             window.location.assign('<?= base_url('report/employee_salaries/print/excel') ?>' + url);
+        }
+    }
+
+    function csv() {
+        var filter_from = $("#filter_from").datebox('getValue');
+        var filter_to = $("#filter_to").datebox('getValue');
+        var filter_division = $("#filter_division").combobox('getValue');
+        var filter_departement = $("#filter_departement").combobox('getValue');
+        var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
+        var filter_employee = $("#filter_employee").combogrid('getValue');
+        var filter_bank = $("#filter_bank").combobox('getValue');
+
+        if (filter_from == "" || filter_to == "") {
+            toastr.warning("Please Choose Filter Date");
+        } else {
+            var url = "?filter_division=" + filter_division +
+                "&filter_departement=" + filter_departement +
+                "&filter_departement_sub=" + filter_departement_sub +
+                '&filter_from=' + filter_from +
+                '&filter_to=' + filter_to +
+                '&filter_employee=' + filter_employee +
+                '&filter_bank=' + filter_bank;
+
+            window.location.assign('<?= base_url('report/employee_salaries/csv') ?>' + url);
         }
     }
 

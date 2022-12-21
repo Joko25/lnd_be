@@ -103,8 +103,6 @@
                 });
             }
         });
-
-
     });
 
     //Format Datepicker
