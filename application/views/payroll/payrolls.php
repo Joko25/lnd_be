@@ -1,5 +1,5 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:99.5%; height: 670px;" toolbar="#toolbar">
+<table id="dg" class="easyui-datagrid" style="width:99.5%; height: 700px;" toolbar="#toolbar">
     <thead frozen="true">
         <tr>
             <th data-options="field:'number',width:150,halign:'center'">Employee ID</th>
@@ -464,20 +464,21 @@
             "&filter_employee_type=" + filter_employee_type +
             "&filter_group=" + filter_group;
 
-        $.ajax({
-            type: "post",
-            url: "<?= base_url('payroll/payrolls/readApproval') ?>",
-            data: "filter_from=" + filter_from + "&filter_to=" + filter_to,
-            dataType: "json",
-            success: function(response) {
-                if (response.status == "APPROVE") {
-                    toastr.success("Please wait to Export Excel");
-                    window.location.assign('<?= base_url('payroll/payrolls/print/excel') ?>' + url);
-                } else {
-                    toastr.warning("The cut off period data is still in the approval process");
-                }
-            }
-        });
+        window.location.assign('<?= base_url('payroll/payrolls/print/excel') ?>' + url);
+        // $.ajax({
+        //     type: "post",
+        //     url: "<?= base_url('payroll/payrolls/readApproval') ?>",
+        //     data: "filter_from=" + filter_from + "&filter_to=" + filter_to,
+        //     dataType: "json",
+        //     success: function(response) {
+        //         if (response.status == "APPROVE") {
+        //             toastr.success("Please wait to Export Excel");
+        //             window.location.assign('<?= base_url('payroll/payrolls/print/excel') ?>' + url);
+        //         } else {
+        //             toastr.warning("The cut off period data is still in the approval process");
+        //         }
+        //     }
+        // });
     }
     //RELOAD
     function reload() {
@@ -488,7 +489,7 @@
         $("#add").html("Generate Payroll");
         $('#dg').datagrid({
             url: '<?= base_url('payroll/payrolls/datatables') ?>',
-            pagination: false,
+            pagination: true,
             rownumbers: true
         });
 

@@ -80,22 +80,40 @@ class Payrolls extends CI_Controller
             $filter_group = $this->input->get('filter_group');
             $username = $this->session->username;
 
+            $page   = $this->input->post('page');
+            $rows   = $this->input->post('rows');
+            //Pagination 1-10
+            $page   = isset($page) ? intval($page) : 1;
+            $rows   = isset($rows) ? intval($rows) : 10;
+            $offset = ($page - 1) * $rows;
+            $result = array();
+            //Select Query
+
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            $query = $this->db->query("SELECT a.* FROM payrolls a
-                JOIN employees b on a.employee_id = b.id
-                JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
-                WHERE a.period_start = '$period_start' 
-                AND a.period_end = '$period_end'
-                AND b.division_id LIKE '%$filter_division%'
-                AND b.departement_id LIKE '%$filter_departement%'
-                AND b.departement_sub_id LIKE '%$filter_departement_sub%'
-                AND a.employee_id LIKE '%$filter_employee%'
-                AND b.contract_id LIKE '%$filter_employee_type%'
-                AND c.group_id LIKE '%$filter_group%'
-                ORDER BY a.name ASC");
-            $records = $query->result_array();
+            $this->db->select('a.*');
+            $this->db->from('payrolls a');
+            $this->db->join('employees b', 'a.employee_id = b.id');
+            $this->db->join('privilege_groups c', "b.group_id = c.group_id and c.username = '$username' and c.status = '1'");
+            if ($filter_from != "" && $filter_to != "") {
+                $this->db->where('a.period_start =', $period_start);
+                $this->db->where('a.period_end =', $period_end);
+            }
+            $this->db->like('b.division_id', $filter_division);
+            $this->db->like('b.departement_id', $filter_departement);
+            $this->db->like('b.departement_sub_id', $filter_departement_sub);
+            $this->db->like('b.id', $filter_employee);
+            $this->db->like('b.contract_id', $filter_employee_type);
+            $this->db->like('c.group_id', $filter_group);
+            $this->db->order_by('a.name', 'ASC');
+
+            //Total Data
+            $totalRows = $this->db->count_all_results('', false);
+            //Limit 1 - 10
+            $this->db->limit($rows, $offset);
+            //Get Data Array
+            $records = $this->db->get()->result_array();
             foreach ($records as $record) {
 
                 $arr = array(
@@ -173,7 +191,7 @@ class Payrolls extends CI_Controller
             }
 
             $datas = array();
-            $datas['total'] = count($result);
+            $datas['total'] = $totalRows;
             $datas['rows'] = $result;
             echo json_encode($datas);
         }
@@ -266,7 +284,7 @@ class Payrolls extends CI_Controller
                     LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to'
                     LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
                     WHERE b.payroll = 'NON DEDUCTION' and (c.users_id_to = '' or c.users_id_to is null)
-                    GROUP BY b.id ORDER BY b.name asc");
+                    GROUP BY b.id");
             $r_permit = $q_permit->result_array();
             $arr_permit_number = "";
             $arr_permit_amount = "";
@@ -897,6 +915,11 @@ class Payrolls extends CI_Controller
     {
         $post = $this->input->post();
         $period_start = date("Y-m", strtotime($post['filter_from']));
+        
+        $payrolls = $this->crud->reads("payrolls", [], ["period_start" => $period_start]);
+        foreach ($payrolls as $payroll){
+            $this->db->delete("notifications", ["table_id" => $payroll->id, "table_name" => "payrolls"]);
+        }
 
         $this->db->delete("payrolls", ['period_start' => $period_start]);
     }

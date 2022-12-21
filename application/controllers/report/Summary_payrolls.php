@@ -28,12 +28,62 @@ class Summary_payrolls extends CI_Controller
         }
     }
 
+    //GET DATATABLES
+    public function datatables()
+    {
+        $filter_from = $this->input->get('filter_from');
+        $filter_to = $this->input->get('filter_to');
+        $filter_division = $this->input->get('filter_division');
+        $filter_departement = $this->input->get('filter_departement');
+        $filter_departement_sub = $this->input->get('filter_departement_sub');
+        $filter_employee = $this->input->get('filter_employee');
+        $filter_group = $this->input->get('filter_group');
+        $username = $this->session->username;
+
+        $period_start = date("Y-m", strtotime($filter_from));
+        $period_end = date("Y-m", strtotime($filter_to));
+
+        //Select Query
+        $this->db->select('
+            b.departement_id,
+            b.departement_sub_id,
+            b.group_id,
+            c.name as departement_name, 
+            d.name as departement_sub_name, 
+            e.name as group_name, 
+            COUNT(b.id) as employee, 
+            SUM(a.net_income) as income');
+        $this->db->from('payrolls a');
+        $this->db->join('employees b', "a.employee_id = b.id");
+        $this->db->join('departements c', "b.departement_id = c.id");
+        $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
+        $this->db->join('groups e', "b.group_id = e.id");
+        $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
+        $this->db->where('a.deleted', 0);
+        $this->db->where('a.status', 0);
+        $this->db->where('a.period_start =', $period_start);
+        $this->db->where('a.period_end =', $period_end);
+        $this->db->like('b.id', $filter_employee);
+        $this->db->like('b.division_id', $filter_division);
+        $this->db->like('b.departement_id', $filter_departement);
+        $this->db->like('b.departement_sub_id', $filter_departement_sub);
+        $this->db->like('b.group_id', $filter_group);
+        $this->db->group_by(array("c.id", "d.id", "e.id"));
+        $this->db->order_by('c.name', 'ASC');
+        $this->db->order_by('d.name', 'ASC');
+        $this->db->order_by('e.name', 'ASC');
+        //Get Data Array
+        $records = $this->db->get()->result_array();
+
+        echo json_encode($records);
+    }
+
     public function print($option = "")
     {
         if ($option == "excel") {
             $format  = date("Ymd");
             header("Content-type: application/vnd-ms-excel");
-            header("Content-Disposition: attachment; filename=leave_$format.xls");
+            header("Content-Disposition: attachment; filename=report_summary_payroll_$format.xls");
         }
 
         if ($this->input->get()) {
@@ -60,6 +110,35 @@ class Summary_payrolls extends CI_Controller
                 AND c.group_id LIKE '%$filter_group%'
                 ORDER BY a.`name` ASC");
             $records = $query->result_array();
+
+            $division = $this->crud->read("divisions", [], ["id" => $filter_division]);
+            $departement = $this->crud->read("departements", [], ["id" => $filter_departement]);
+            $departement_sub = $this->crud->read("departement_subs", [], ["id" => $filter_departement_sub]);
+            $group = $this->crud->read("groups", [], ["id" => $filter_group]);
+
+            if (empty($division->id)) {
+                $division_name = "ALL";
+            } else {
+                $division_name = $division->name;
+            }
+
+            if (empty($departement->id)) {
+                $departement_name = "ALL";
+            } else {
+                $departement_name = $departement->name;
+            }
+
+            if (empty($departement_sub->id)) {
+                $departement_sub_name = "ALL";
+            } else {
+                $departement_sub_name = $departement_sub->name;
+            }
+
+            if (empty($group->id)) {
+                $group_name = "ALL";
+            } else {
+                $group_name = $group->name;
+            }
 
             //Config
             $this->db->select('*');
@@ -90,8 +169,34 @@ class Summary_payrolls extends CI_Controller
                     </center><br><br><br>
                     <center>
                         <h3 style="margin:0;">Report Payroll Summary</h3>
-                        <p style="margin:0;">Period ' . $filter_from . ' to ' . $filter_to . '</p>
                     </center>
+                    <table style="font-size:10px;">
+                        <tr>
+                            <td width="100">Period</td>
+                            <td width="20">:</td>
+                            <td width="300"><b>' . $filter_from . ' to ' . $filter_to . '</b></td>
+                        </tr>
+                        <tr>
+                            <td width="100">Plant</td>
+                            <td width="20">:</td>
+                            <td width="300"><b>' . $division_name . '</b></td>
+                        </tr>
+                        <tr>
+                            <td>Departement</td>
+                            <td>:</td>
+                            <td><b>' . $departement_name . '</b></td>
+                        </tr>
+                        <tr>
+                            <td>Departement Sub</td>
+                            <td>:</td>
+                            <td><b>' . $departement_sub_name . '</b></td>
+                        </tr>
+                        <tr>
+                            <td>Group</td>
+                            <td>:</td>
+                            <td><b>' . $group_name . '</b></td>
+                        </tr>
+                    </table>
                     <br>';
             $html .= '  <table id="customers" border="1">
                         <tr>
@@ -108,7 +213,7 @@ class Summary_payrolls extends CI_Controller
                             <th rowspan="2" style="text-align:center;">Loan</th>
                             <th rowspan="2" style="text-align:center;">Correction <br> Minus</th>
                             <th rowspan="2" style="text-align:center;">PPH21</th>
-                            <th rowspan="2" style="text-align:center;">Total<br>Reduction</th>
+                            <th rowspan="2" style="text-align:center;">Total<br>Deduction</th>
                             <th rowspan="2" style="text-align:center;">Nett Income</th>
                         </tr>
                         <tr>
@@ -116,12 +221,12 @@ class Summary_payrolls extends CI_Controller
                             <th style="text-align:center;">BPJS</th>
                             <th style="text-align:center;">BPJS</th>
                             <th style="text-align:center;">Deduction</th>
-                            <th style="text-align:center;">ABSENCE (DAY)</th>
-                            <th style="text-align:center;">ABSENCE (AMT)</th>
+                            <th style="text-align:center;">ABS (DAY)</th>
+                            <th style="text-align:center;">ABS (AMT)</th>
                         </tr>';
             $no = 1;
             foreach ($records as $record) {
-                
+
                 $total_allowence = 0;
                 foreach (json_decode($record['allowence'], true) as $allowence => $val_allowence) {
                     $total_allowence += (int)$val_allowence;
@@ -143,14 +248,14 @@ class Summary_payrolls extends CI_Controller
                             <td style="text-align:right;">' . number_format(($record['bpjs_company_total'])) . '</td>
                             <td style="text-align:right;">' . number_format(($record['correction_plus'])) . '</td>
                             <td style="text-align:right;">' . number_format(($record['salary'] + $total_allowence + $record['correction_plus'] + $record['bpjs_company_total'])) . '</td>
-                            <td style="text-align:right;">' . number_format(($record['bpjs_employee_total'])) . '</td>
+                            <td style="text-align:right;">' . number_format(($record['bpjs_employee_total'] + $record['bpjs_company_total'])) . '</td>
                             <td style="text-align:right;">' . number_format($total_deduction) . '</td>
                             <td style="text-align:right;">' . number_format($record['deduction_absence']) . '</td>
                             <td style="text-align:right;">' . number_format($record['deduction_absence_amount']) . '</td>
                             <td style="text-align:right;">' . number_format(($record['loan_cooperative'] + $record['loan_bank'] + $record['loan_other'])) . '</td>
                             <td style="text-align:right;">' . number_format($record['correction_minus']) . '</td>
                             <td style="text-align:right;">' . number_format($record['pph']) . '</td>
-                            <td style="text-align:right;">' . number_format($record['deduction_absence_amount'] + $record['bpjs_employee_total'] + $record['loan_cooperative'] + $record['loan_bank'] + $record['loan_other'] + $record['correction_minus']) . '</td>
+                            <td style="text-align:right;">' . number_format($record['deduction_absence_amount'] + $record['bpjs_employee_total'] + $record['bpjs_company_total'] + $record['loan_cooperative'] + $record['loan_bank'] + $record['loan_other'] + $record['correction_minus']) . '</td>
                             <td style="text-align:right;">' . number_format(($record['net_income'])) . '</td>
                         </tr>';
                 $no++;
@@ -162,5 +267,112 @@ class Summary_payrolls extends CI_Controller
 
         $html .= '</body></html>';
         echo $html;
+    }
+
+    public function print_recap($option = "")
+    {
+        if ($option == "excel") {
+            $format  = date("Ymd");
+            header("Content-type: application/vnd-ms-excel");
+            header("Content-Disposition: attachment; filename=report_summary_payroll_recap_$format.xls");
+        }
+
+        if ($this->input->get()) {
+            $filter_from = $this->input->get('filter_from');
+            $filter_to = $this->input->get('filter_to');
+            $filter_division = $this->input->get('filter_division');
+            $filter_departement = $this->input->get('filter_departement');
+            $filter_departement_sub = $this->input->get('filter_departement_sub');
+            $filter_employee = $this->input->get('filter_employee');
+            $filter_group = $this->input->get('filter_group');
+            $username = $this->session->username;
+
+            $period_start = date("Y-m", strtotime($filter_from));
+            $period_end = date("Y-m", strtotime($filter_to));
+
+            //Select Query
+            $this->db->select('
+                b.departement_id,
+                b.departement_sub_id,
+                b.group_id,
+                c.name as departement_name, 
+                d.name as departement_sub_name, 
+                e.name as group_name, 
+                COUNT(b.id) as employee, 
+                SUM(a.net_income) as income');
+            $this->db->from('payrolls a');
+            $this->db->join('employees b', "a.employee_id = b.id");
+            $this->db->join('departements c', "b.departement_id = c.id");
+            $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
+            $this->db->join('groups e', "b.group_id = e.id");
+            $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
+            $this->db->where('a.deleted', 0);
+            $this->db->where('a.status', 0);
+            $this->db->where('a.period_start =', $period_start);
+            $this->db->where('a.period_end =', $period_end);
+            $this->db->like('b.id', $filter_employee);
+            $this->db->like('b.division_id', $filter_division);
+            $this->db->like('b.departement_id', $filter_departement);
+            $this->db->like('b.departement_sub_id', $filter_departement_sub);
+            $this->db->like('b.group_id', $filter_group);
+            $this->db->group_by(array("c.id", "d.id", "e.id"));
+            $this->db->order_by('c.name', 'ASC');
+            $this->db->order_by('d.name', 'ASC');
+            $this->db->order_by('e.name', 'ASC');
+            //Get Data Array
+            $records = $this->db->get()->result_array();
+
+            //Config
+            $this->db->select('*');
+            $this->db->from('config');
+            $config = $this->db->get()->row();
+
+            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+                    <center>
+                        <div style="float: left; font-size: 12px; text-align: left;">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+                                        <img src="' . $config->favicon . '" width="30">
+                                    </td>
+                                    <td style="font-size: 14px; text-align: left; margin:2px;">
+                                        <b>' . $config->name . '</b><br>
+                                        <small>REPORT SUMMARY PAYROLL RECAP</small>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="float: right; font-size: 12px; text-align: right;">
+                            Print Date ' . date("d M Y H:m:s") . ' <br>
+                            Print By ' . $this->session->username . '  
+                        </div>
+                    </center>
+                    <br><br><br>
+                    
+                    <table id="customers" border="1">
+                        <tr>
+                            <th width="20">No</th>
+                            <th>Departement</th>
+                            <th>Departement Sub</th>
+                            <th>Group</th>
+                            <th>Employee</th>
+                            <th>Pay Amount</th>
+                        </tr>';
+                    $no = 1;
+                    foreach ($records as $data) {
+                        $html .= '  <tr>
+                                        <td>' . $no . '</td>
+                                        <td>' . $data['departement_name'] . '</td>
+                                        <td>' . $data['departement_sub_name'] . '</td>
+                                        <td>' . $data['group_name'] . '</td>
+                                        <td>' . number_format($data['employee']) . '</td>
+                                        <td>' . number_format($data['income']) . '</td>
+                                    </tr>';
+                        $no++;
+                    }
+            
+                    $html .= '</table></body></html>';
+                    echo $html;
+        }
     }
 }

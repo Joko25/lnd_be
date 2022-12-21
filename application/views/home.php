@@ -267,9 +267,8 @@
 		} else {
 			$('#dlg_notif_content').window('open');
 			$.ajax({
-				type: "post",
-				url: "<?= base_url('home/notificationDetail') ?>",
-				data: "table_name=" + table,
+				type: "get",
+				url: "<?= base_url('home/notificationDetail') ?>/" + table,
 				dataType: "html",
 				success: function(response) {
 					$('#dlg_notif_content').html(response);

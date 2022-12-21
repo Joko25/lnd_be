@@ -1,6 +1,18 @@
-<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar"></table>
+<!-- TABLE DATAGRID -->
+<table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar">
+    <thead>
+        <tr>
+            <th data-options="field:'departement_name',width:150,halign:'center'">Departement</th>
+            <th data-options="field:'departement_sub_name',width:150,halign:'center'">Departement Sub</th>
+            <th data-options="field:'group_name',width:150,halign:'center'">Group</th>
+            <th data-options="field:'employee',width:150,halign:'center'">Employee</th>
+            <th data-options="field:'income',width:100,halign:'center', align:'right', formatter:numberformat">Pay Amount</th>
+            <th data-options="field:'departement_id',width:100,halign:'center',formatter:FormatterFile"> Print</th>
+        </tr>
+    </thead>
+</table>
 
-<div id="toolbar" style="height: 220px;">
+<div id="toolbar" style="height: 230px;">
     <!-- <div style="width: 100%; display: grid; grid-template-columns: auto auto auto; grid-gap: 5px; display: flex;"> -->
     <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
@@ -40,6 +52,10 @@
     </fieldset>
 
     <?= $button ?>
+    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="pdf_recap()"><i class="fa fa-print"></i> Print Recap</a>
+    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="excel_recap()"><i class="fa fa-file"></i> Excel Recap</a>
+
+    <iframe id="printout_recap" src="" style="width: 100%; height:500px; border: 0;" hidden></iframe>
 </div>
 
 <div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;">
@@ -52,6 +68,10 @@
 
     function pdf() {
         $("#printout").get(0).contentWindow.print();
+    }
+
+    function pdf_recap(){
+        $("#printout_recap").get(0).contentWindow.print();
     }
 
     function filter() {
@@ -74,8 +94,33 @@
                 '&filter_employee=' + filter_employee +
                 '&filter_group=' + filter_group;
 
-            $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
-            $("#printout").attr('src', '<?= base_url('report/summary_payrolls/print') ?>' + url);
+            $('#dg').datagrid({
+                url: '<?= base_url('report/summary_payrolls/datatables') ?>' + url
+            });
+
+            $("#printout_recap").attr('src', '<?= base_url('report/summary_payrolls/print_recap') ?>' + url);
+        }
+    }
+
+    function pdf_view(filter_departement, filter_departement_sub, filter_group){
+        var filter_from = $("#filter_from").datebox('getValue');
+        var filter_to = $("#filter_to").datebox('getValue');
+        var filter_division = $("#filter_division").combobox('getValue');
+        var filter_employee = $("#filter_employee").combogrid('getValue');
+
+        if (filter_from == "" || filter_to == "") {
+            toastr.warning("Please Choose Filter Date");
+        } else {
+            var url = "?filter_division=" + filter_division +
+                "&filter_departement=" + filter_departement +
+                "&filter_departement_sub=" + filter_departement_sub +
+                '&filter_from=' + filter_from +
+                '&filter_to=' + filter_to +
+                '&filter_employee=' + filter_employee +
+                '&filter_group=' + filter_group;
+
+                $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
+                $("#printout").attr('src', '<?= base_url('report/summary_payrolls/print') ?>' + url);
         }
     }
 
@@ -100,6 +145,30 @@
                 '&filter_group=' + filter_group;
 
             window.location.assign('<?= base_url('report/summary_payrolls/print/excel') ?>' + url);
+        }
+    }
+
+    function excel_recap(){
+        var filter_from = $("#filter_from").datebox('getValue');
+        var filter_to = $("#filter_to").datebox('getValue');
+        var filter_division = $("#filter_division").combobox('getValue');
+        var filter_departement = $("#filter_departement").combobox('getValue');
+        var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
+        var filter_employee = $("#filter_employee").combogrid('getValue');
+        var filter_group = $("#filter_group").combobox('getValue');
+
+        if (filter_from == "" || filter_to == "") {
+            toastr.warning("Please Choose Filter Date");
+        } else {
+            var url = "?filter_division=" + filter_division +
+                "&filter_departement=" + filter_departement +
+                "&filter_departement_sub=" + filter_departement_sub +
+                '&filter_from=' + filter_from +
+                '&filter_to=' + filter_to +
+                '&filter_employee=' + filter_employee +
+                '&filter_group=' + filter_group;
+
+            window.location.assign('<?= base_url('report/summary_payrolls/print_recap/excel') ?>' + url);
         }
     }
 
@@ -235,5 +304,20 @@
         } else {
             return new Date();
         }
+    }
+
+    function FormatterFile(value, row) {
+        var linkPrint = "pdf_view('"+row.departement_id+"','"+row.departement_sub_id+"','"+row.group_id+"')";
+        return '<a href="#" onclick="' + linkPrint + '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-eye"></i> View</a>';
+    };
+
+    function numberformat(value, row) {
+        const formatter = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        });
+
+        return "<b>" + formatter.format(value) + "</b>";
     }
 </script>

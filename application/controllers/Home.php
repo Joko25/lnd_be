@@ -260,9 +260,9 @@ class Home extends CI_Controller
         }
     }
 
-    public function notificationDetail()
+    public function notificationDetail($table_name)
     {
-        $table = $this->input->post('table_name');
+        $table = $table_name;
 
         if ($table == "users") {
             $this->db->select('a.*');

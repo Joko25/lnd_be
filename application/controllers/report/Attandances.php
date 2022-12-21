@@ -244,13 +244,13 @@ class Attandances extends CI_Controller
                         //cek apakah harinya minggu jika iya maka default Weekend
                         if ($weekend == "Weekend") {
                             $holiday = $weekend;
-                            $style = "style='background: #FF5F5F; color:white;'";
+                            $style = "style='background: #FFBEB0;'";
                         } elseif (@$permit->permit_name != null) {
                             $holiday = @$permit->note;
-                            $style = "style='background: #FFC25F; color:white;'";
+                            $style = "style='background: #FDFFB0;'";
                         } elseif (@$change_day->start != null) {
                             $holiday = "Change Days to " . $change_day->end;
-                            $style = "style='background: #905d5d; color:white;'";
+                            $style = "style='background: #B0ADFF;'";
                         } elseif (@$attandance->remarks != null) {
                             $holiday = @$attandance->remarks;
                             $style = "";
@@ -261,7 +261,7 @@ class Attandances extends CI_Controller
                         //isi dengan tanggal merah
                     } else {
                         $holiday = @$holiday->description;
-                        $style = "style='background: #FF5F5F; color:white;'";
+                        $style = "style='background: #FFBEB0;'";
                     }
 
                     if (@$attandance->time_in == null && $holiday != 'Weekend') {

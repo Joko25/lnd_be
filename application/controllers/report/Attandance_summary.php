@@ -142,7 +142,7 @@ class Attandance_summary extends CI_Controller
                     b.attandance_total,
                     h.days");
                 $this->db->from('employees a');
-                $this->db->join("(SELECT number, COUNT(date_in) as attandance_total FROM attandances WHERE date_in BETWEEN '$filter_from' and '$filter_to' GROUP BY number) b", 'a.number = b.number');
+                $this->db->join("(SELECT number, COUNT(date_in) as attandance_total FROM attandances WHERE date_in BETWEEN '$filter_from' and '$filter_to' GROUP BY number) b", 'a.number = b.number', 'left');
                 $this->db->join('divisions c', 'a.division_id = c.id');
                 $this->db->join('departements d', 'a.departement_id = d.id');
                 $this->db->join('departement_subs e', 'a.departement_sub_id = e.id');
