@@ -72,6 +72,7 @@
                 "&filter_group=" + filter_group +
                 "&filter_source=" + filter_source;
 
+            $.messager.alert('Please Wait', 'Export Excel Data..!', 'info');
             window.location.assign('<?= base_url('report/student_payrolls/print/excel') ?>' + url);
         }
     }

@@ -171,7 +171,7 @@ class Summary_payrolls extends CI_Controller
                                 <div style="float: right; font-size: 12px; text-align: right;">
                                     Print Date ' . date("d M Y H:i:s") . ' <br>
                                     Print By ' . $this->session->username . ' <br>
-                                    page '.$hal.'/'.$page.'
+                                    page ' . $hal . '/' . $page . '
                                 </div>
                             </center><br><br><br>
                             <center>
@@ -232,8 +232,8 @@ class Summary_payrolls extends CI_Controller
                                     <th style="text-align:center;">ABS (AMT)</th>
                                 </tr>';
 
-                    $offset = ($i * 20);
-                    $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, b.national_id FROM payrolls a
+                $offset = ($i * 20);
+                $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, b.national_id FROM payrolls a
                     JOIN employees b ON a.employee_id = b.id
                     LEFT JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                     WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
@@ -243,23 +243,23 @@ class Summary_payrolls extends CI_Controller
                     AND a.employee_id LIKE '%$filter_employee%'
                     AND c.group_id LIKE '%$filter_group%'
                     ORDER BY a.`name` ASC LIMIT 20 OFFSET $offset");
-                    $records = $query->result_array();
+                $records = $query->result_array();
 
-                    $no = 1;
-                    $total = 0;
-                    foreach ($records as $record) {
+                $no = 1;
+                $total = 0;
+                foreach ($records as $record) {
 
-                        $total_allowence = 0;
-                        foreach (json_decode($record['allowence'], true) as $allowence => $val_allowence) {
-                            $total_allowence += (int)$val_allowence;
-                        }
+                    $total_allowence = 0;
+                    foreach (json_decode($record['allowence'], true) as $allowence => $val_allowence) {
+                        $total_allowence += (int)$val_allowence;
+                    }
 
-                        $total_deduction = 0;
-                        foreach (json_decode($record['deduction'], true) as $deduction => $val_deduction) {
-                            $total_deduction += (int)$val_deduction;
-                        }
+                    $total_deduction = 0;
+                    foreach (json_decode($record['deduction'], true) as $deduction => $val_deduction) {
+                        $total_deduction += (int)$val_deduction;
+                    }
 
-                        $html .= '<tr>
+                    $html .= '<tr>
                                     <td>' . $no . '</td>
                                     <td style="mso-number-format:\@;">' . $record['number'] . '</td>
                                     <td style="mso-number-format:\@;">' . $record['national_id'] . '</td>
@@ -280,15 +280,15 @@ class Summary_payrolls extends CI_Controller
                                     <td style="text-align:right;">' . number_format($record['deduction_absence_amount'] + $record['bpjs_employee_total'] + $record['bpjs_company_total'] + $record['loan_cooperative'] + $record['loan_bank'] + $record['loan_other'] + $record['correction_minus']) . '</td>
                                     <td style="text-align:right;">' . number_format(($record['net_income'])) . '</td>
                                 </tr>';
-                        $total += $record['net_income'];
-                        $no++;
-                    }
+                    $total += $record['net_income'];
+                    $no++;
+                }
 
-                    $html .= '  <tr>
+                $html .= '  <tr>
                                     <th style="text-align:right;" colspan="18">GRAND TOTAL</th>
                                     <th style="text-align:right;">' . number_format($total) . '</th>
                                 </tr>';
-                    $html .= '</table>
+                $html .= '</table>
                                 <br>
                                 <center>
                                     <table id="customers" style="width:70%;">
@@ -389,7 +389,6 @@ class Summary_payrolls extends CI_Controller
             $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
             $no = 1;
             $hal = 1;
-            $subtotal = 0;
             for ($i = 0; $i < $page; $i++) {
                 //Select Query
                 $this->db->select('
@@ -439,7 +438,7 @@ class Summary_payrolls extends CI_Controller
                             <div style="float: right; font-size: 12px; text-align: right;">
                                 Print Date ' . date("d M Y H:m:s") . ' <br>
                                 Print By ' . $this->session->username . ' <br>
-                                Page '.$hal.'/'.$page.'
+                                Page ' . $hal . '/' . $page . '
                             </div>
                         </center>
                         <br><br><br>
