@@ -764,7 +764,8 @@ class Payrolls extends CI_Controller
             }
 
             //Harga Potong Gaji kalo dia ga masuk kerja
-            $absence_amount = round(($record['salary'] / 30) * ($absence_qty_final));
+            $hkw = (@count($weekday) - @count($holiday));
+            $absence_amount = round((($record['salary'] + $arr_allowance_amount_total) / $hkw) * $absence_qty_final);
 
             //Total Pendapatan Gaji (Gaji + Tunjangan + BPJS dari perusahaan + Koreksi plus + lembur hari biasa + lembur hari libur)
             $total_all_allowance = ($record['salary'] + $arr_allowance_amount_total + $arr_bpjs_com_amount_total + $total_correction_plus + $final_total_ovetime_amount_weekday + $final_total_ovetime_amount_holiday + $final_total_ovetime_amount_correction);
