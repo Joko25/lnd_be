@@ -108,6 +108,7 @@ class Student_payrolls extends CI_Controller
                         JOIN employees b ON a.employee_id = b.id
                         LEFT JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                         WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
+                        AND b.status = 0
                         AND b.group_id = '$record[group_id]'
                         AND b.source_id = '$record[source_id]'
                         ORDER BY a.`name` ASC");
@@ -126,6 +127,7 @@ class Student_payrolls extends CI_Controller
                             JOIN employees b ON a.employee_id = b.id
                             LEFT JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                             WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
+                            AND b.status = 0
                             AND b.group_id = '$record[group_id]'
                             AND b.source_id = '$record[source_id]'
                             ORDER BY a.`name` ASC LIMIT 20 OFFSET $offset");
@@ -363,7 +365,6 @@ class Student_payrolls extends CI_Controller
                             // $payroll_end = date_create($filter_to);
                             // $interval = date_diff($date_sign, $payroll_end);
                             $internship = $employee['amount'];
-                            $boarding = $employee['boarding_fee'];
 
                             $payroll_3 = 0;
                             $payroll_2 = 0;
@@ -405,6 +406,16 @@ class Student_payrolls extends CI_Controller
                             $allowence1 = ($payroll_1 * @$allowance_1->amount);
                             $allowence = ($allowence1 + $allowence2 + $allowence3);
 
+                            if ($attandance_count == 0) {
+                                $total_income = 0;
+                                $intern_fee = 0;
+                                $boarding = 0;
+                            } else {
+                                $intern_fee = ($internship * @$attandance_count);
+                                $boarding = $employee['boarding_fee'];
+                                $total_income = @($allowence + ($correctionPlus[0]->total - $correctionMinus[0]->total) + ($internship * @$attandance_count) + $boarding);
+                            }
+
                             $html .= '  <tr>
                                             <td style="text-align:center;">' . $no . '</td>
                                             <td class="str">' . $employee_number . '</td>
@@ -417,13 +428,13 @@ class Student_payrolls extends CI_Controller
                                             <td style="text-align:center;">' . $payroll_2 . '</td>
                                             <td style="text-align:center;">' . $payroll_3 . '</td>
                                             <td style="text-align:right;">' . number_format($allowence) . '</td>
-                                            <td style="text-align:right;">' . number_format($internship * @$attandance_count) . '</td>
+                                            <td style="text-align:right;">' . number_format($intern_fee) . '</td>
                                             <td style="text-align:right;">' . number_format($boarding) . '</td>
                                             <td style="text-align:right;">' . number_format(@$correctionPlus[0]->total) . '</td>
                                             <td style="text-align:right;">' . number_format(@$correctionMinus[0]->total) . '</td>
-                                            <td style="text-align:right;">' . @number_format(($allowence + ($correctionPlus[0]->total - $correctionMinus[0]->total) + ($internship * @$attandance_count) + $boarding)) . '</td>
+                                            <td style="text-align:right;">' . @number_format($total_income) . '</td>
                                         </tr>';
-                            $total += @($allowence + ($correctionPlus[0]->total - $correctionMinus[0]->total) + ($internship * @$attandance_count) + $boarding);
+                            $total += $total_income;
                             $no++;
                         }
 
