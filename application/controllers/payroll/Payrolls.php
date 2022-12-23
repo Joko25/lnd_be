@@ -310,47 +310,6 @@ class Payrolls extends CI_Controller
             }
             //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
-            //Permit Deduction + Amount
-            //Mengambil field dan isinya dari permit deduction + total amount 
-            $q_permit_type = $this->db->query("SELECT b.number, b.name, SUM(a.duration) as amount, a.reason_id, b.cutoff
-                    FROM permit_types b
-                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to'
-                    LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
-                    WHERE b.payroll = 'DEDUCTION' and (c.users_id_to = '' or c.users_id_to is null)
-                    GROUP BY b.id ORDER BY b.name desc");
-            $r_permit_type = $q_permit_type->result_array();
-            $arr_permit_type_number = "";
-            $arr_permit_type_amount = "";
-            $arr_permit_type_number_b = "";
-            $arr_permit_type_amount_b = "";
-            $arr_permit_type_amount_b_total = 0;
-            foreach ($r_permit_type as $permit_type_data) {
-                if ($permit_type_data['cutoff'] == "YES") {
-                    $arr_permit_type_number_b .= strtolower($permit_type_data['number']) . "b,";
-                    $arr_permit_type_amount_b .= ($permit_type_data['amount'] / 2) . ",";
-                    $arr_permit_type_amount_qty = ($permit_type_data['amount'] / 2);
-                    $arr_permit_type_number .= strtolower($permit_type_data['number']) . "_amount,";
-                } else {
-                    $arr_permit_type_number_b .= strtolower($permit_type_data['number']) . "b,";
-                    $arr_permit_type_amount_b .= $permit_type_data['amount'] . ",";
-                    $arr_permit_type_amount_qty = $permit_type_data['amount'];
-                    $arr_permit_type_number .= strtolower($permit_type_data['number']) . "_amount,";
-                }
-
-                //Untuk mengambil nilai harga deduction rumus nya adalah Gaji / 30 hari x jumlah ijinnya
-                $arr_permit_type_amount .= round(($record['salary'] / 30) * $arr_permit_type_amount_qty) . ",";
-                @$arr_permit_type_amount_b_total += round(($record['salary'] / 30) * $arr_permit_type_amount_qty) . ",";
-            }
-
-            $arr_permit_type_number_ex = explode(",", substr($arr_permit_type_number, 0, -1));
-            $arr_permit_type_amount_ex = explode(",", substr($arr_permit_type_amount, 0, -1));
-            $arr_permit_type_combine = array_combine($arr_permit_type_number_ex, $arr_permit_type_amount_ex);
-
-            $arr_permit_type_number_ex_b = explode(",", substr($arr_permit_type_number_b, 0, -1));
-            $arr_permit_type_amount_ex_b = explode(",", substr($arr_permit_type_amount_b, 0, -1));
-            $arr_permit_type_combine_b = array_combine($arr_permit_type_number_ex_b, $arr_permit_type_amount_ex_b);
-            //-------------------------------------------------------------------------------------------------------------------------------------------------------
-
             //Working Calendar
             //Untuk mengambil jumlah hari libur nasional
             $this->db->select('trans_date');
@@ -639,6 +598,8 @@ class Payrolls extends CI_Controller
             }
             //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
+            $hkw = (@count($weekday) - @count($holiday));
+
             //Allowance Amount
             //jika dia ada tunjuangan ambil field dan isinya
             $q_allowance = $this->db->query("SELECT b.number, b.name, a.amount
@@ -752,6 +713,55 @@ class Payrolls extends CI_Controller
             $arr_bpjs_com_combine = array_combine($arr_bpjs_com_number_ex, $arr_bpjs_com_amount_ex);
             //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
+            //Permit Deduction + Amount
+            //Mengambil field dan isinya dari permit deduction + total amount 
+            $q_permit_type = $this->db->query("SELECT b.number, b.name, SUM(a.duration) as amount, a.reason_id, b.cutoff
+                    FROM permit_types b
+                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to'
+                    LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
+                    WHERE b.payroll = 'DEDUCTION' and (c.users_id_to = '' or c.users_id_to is null)
+                    GROUP BY b.id ORDER BY b.name desc");
+            $r_permit_type = $q_permit_type->result_array();
+            $arr_permit_type_number = "";
+            $arr_permit_type_amount = "";
+            $arr_permit_type_number_b = "";
+            $arr_permit_type_amount_b = "";
+            $arr_permit_type_amount_b_total = 0;
+            foreach ($r_permit_type as $permit_type_data) {
+                if ($permit_type_data['cutoff'] == "YES") {
+                    $arr_permit_type_number_b .= strtolower($permit_type_data['number']) . "b,";
+                    $arr_permit_type_amount_b .= ($permit_type_data['amount'] / 2) . ",";
+                    $arr_permit_type_amount_qty = ($permit_type_data['amount'] / 2);
+                    $arr_permit_type_number .= strtolower($permit_type_data['number']) . "_amount,";
+                } else {
+                    $arr_permit_type_number_b .= strtolower($permit_type_data['number']) . "b,";
+                    $arr_permit_type_amount_b .= $permit_type_data['amount'] . ",";
+                    $arr_permit_type_amount_qty = $permit_type_data['amount'];
+                    $arr_permit_type_number .= strtolower($permit_type_data['number']) . "_amount,";
+                }
+
+                //Untuk mengambil nilai harga deduction rumus nya adalah Gaji / 30 hari x jumlah ijinnya
+                // $arr_permit_type_amount .= round(($record['salary'] / 30) * $arr_permit_type_amount_qty) . ",";
+                // @$arr_permit_type_amount_b_total += round(($record['salary'] / 30) * $arr_permit_type_amount_qty) . ",";
+
+                if ($record['group_name'] == "MAGANG") {
+                    $arr_permit_type_amount .= round((($record['salary'] - $arr_deduction_amount_total) / $hkw) * $arr_permit_type_amount_qty) . ",";
+                    @$arr_permit_type_amount_b_total += round((($record['salary'] - $arr_deduction_amount_total) / $hkw) * $arr_permit_type_amount_qty) . ",";
+                } else {
+                    $arr_permit_type_amount .= round((($record['salary'] + $arr_allowance_amount_total) / $hkw) * $arr_permit_type_amount_qty) . ",";
+                    @$arr_permit_type_amount_b_total += round((($record['salary'] + $arr_allowance_amount_total) / $hkw) * $arr_permit_type_amount_qty) . ",";
+                }
+            }
+
+            $arr_permit_type_number_ex = explode(",", substr($arr_permit_type_number, 0, -1));
+            $arr_permit_type_amount_ex = explode(",", substr($arr_permit_type_amount, 0, -1));
+            $arr_permit_type_combine = array_combine($arr_permit_type_number_ex, $arr_permit_type_amount_ex);
+
+            $arr_permit_type_number_ex_b = explode(",", substr($arr_permit_type_number_b, 0, -1));
+            $arr_permit_type_amount_ex_b = explode(",", substr($arr_permit_type_amount_b, 0, -1));
+            $arr_permit_type_combine_b = array_combine($arr_permit_type_number_ex_b, $arr_permit_type_amount_ex_b);
+            //-------------------------------------------------------------------------------------------------------------------------------------------------------
+
             //Menghitung Total
             //Potong gaji jika dia ga masuk kerja
             //Rumus nya Gaji / 30 hari x jumlah dia ga absen
@@ -764,10 +774,9 @@ class Payrolls extends CI_Controller
             }
 
             //Harga Potong Gaji kalo dia ga masuk kerja
-            $hkw = (@count($weekday) - @count($holiday));
-            if($record['group_name'] == "MAGANG"){
-                $absence_amount = round((($record['salary'] - $arr_permit_type_amount_b_total) / $hkw) * $absence_qty_final);
-            }else{
+            if ($record['group_name'] == "MAGANG") {
+                $absence_amount = round((($record['salary'] - $arr_deduction_amount_total) / $hkw) * $absence_qty_final);
+            } else {
                 $absence_amount = round((($record['salary'] + $arr_allowance_amount_total) / $hkw) * $absence_qty_final);
             }
 
@@ -885,11 +894,16 @@ class Payrolls extends CI_Controller
                 $result = @$arr;
             }
 
-            $send = $this->crud->create('payrolls', $result);
-            if ($send) {
-                echo json_encode(array("title" => "Saved", "message" => $record['name'] . " Data has been created", "theme" => "success"));
+            $checkPayroll = $this->crud->read("payrolls", [], ["employee_id" => $record['id'], "period_start" => $period_start]);
+            if (!empty($checkPayroll->employee_id)) {
+                echo json_encode(array("title" => "Duplicate", "message" => "Duplicate Employee", "theme" => "error"));
             } else {
-                echo json_encode(array("title" => "Error", "message" => $record['name'] . " Failed to created", "theme" => "error"));
+                $send = $this->crud->create('payrolls', $result);
+                if ($send) {
+                    echo json_encode(array("title" => "Saved", "message" => $record['name'] . " Data has been created", "theme" => "success"));
+                } else {
+                    echo json_encode(array("title" => "Error", "message" => $record['name'] . " Failed to created", "theme" => "error"));
+                }
             }
         } else {
             echo json_encode(array("title" => "Error", "message" => "Cannot Process your request", "theme" => "error"));
@@ -920,9 +934,9 @@ class Payrolls extends CI_Controller
     {
         $post = $this->input->post();
         $period_start = date("Y-m", strtotime($post['filter_from']));
-        
+
         $payrolls = $this->crud->reads("payrolls", [], ["period_start" => $period_start]);
-        foreach ($payrolls as $payroll){
+        foreach ($payrolls as $payroll) {
             $this->db->delete("notifications", ["table_id" => $payroll->id, "table_name" => "payrolls"]);
         }
 
