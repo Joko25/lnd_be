@@ -42,18 +42,22 @@ class Employee_salaries extends CI_Controller
             $filter_division = $this->input->get('filter_division');
             $filter_departement = $this->input->get('filter_departement');
             $filter_departement_sub = $this->input->get('filter_departement_sub');
+            $filter_group = $this->input->get('filter_group');
             $filter_employee = $this->input->get('filter_employee');
             $filter_bank = $this->input->get('filter_bank');
+            $username = $this->session->username;
 
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no FROM payrolls a
+            $query = $this->db->query("SELECT b.bank_no, a.net_income, a.number, a.name FROM payrolls a
                 JOIN employees b ON a.employee_id = b.id
+                JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                 WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
                 AND b.division_id LIKE '%$filter_division%'
                 AND b.departement_id LIKE '%$filter_departement%'
                 AND b.departement_sub_id LIKE '%$filter_departement_sub%'
+                AND c.group_id LIKE '%$filter_group%'
                 AND a.employee_id LIKE '%$filter_employee%'
                 ORDER BY a.`name` ASC");
             $records = $query->result_array();
@@ -152,8 +156,10 @@ class Employee_salaries extends CI_Controller
         $filter_division = $this->input->get('filter_division');
         $filter_departement = $this->input->get('filter_departement');
         $filter_departement_sub = $this->input->get('filter_departement_sub');
+        $filter_group = $this->input->get('filter_group');
         $filter_employee = $this->input->get('filter_employee');
         $filter_bank = $this->input->get('filter_bank');
+        $username = $this->session->username;
 
         $period_start = date("Y-m", strtotime($filter_from));
         $period_end = date("Y-m", strtotime($filter_to));
@@ -161,10 +167,12 @@ class Employee_salaries extends CI_Controller
         if ($filter_bank == "BCA") {
             $query = $this->db->query("SELECT b.bank_no, a.net_income, a.number, a.name FROM payrolls a
                 JOIN employees b ON a.employee_id = b.id
+                JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                 WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
                 AND b.division_id LIKE '%$filter_division%'
                 AND b.departement_id LIKE '%$filter_departement%'
                 AND b.departement_sub_id LIKE '%$filter_departement_sub%'
+                AND c.group_id LIKE '%$filter_group%'
                 AND a.employee_id LIKE '%$filter_employee%'
                 ORDER BY a.`name` ASC");
             $records = $query->result_array();
@@ -178,11 +186,13 @@ class Employee_salaries extends CI_Controller
         } elseif ($filter_bank == "MANDIRI") {
             $query = $this->db->query("SELECT a.number, a.name, b.bank_no, a.net_income FROM payrolls a
                 JOIN employees b ON a.employee_id = b.id
+                JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                 WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
                 AND b.division_id LIKE '%$filter_division%'
                 AND b.departement_id LIKE '%$filter_departement%'
                 AND b.departement_sub_id LIKE '%$filter_departement_sub%'
                 AND a.employee_id LIKE '%$filter_employee%'
+                AND c.group_id LIKE '%$filter_group%'
                 ORDER BY a.`name` ASC");
             $records = $query->result_array();
             $no = 1;

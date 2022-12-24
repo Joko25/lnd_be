@@ -33,7 +33,7 @@ class Dashboard extends CI_Controller
             $this->load->view('template/header');
             $this->load->view('dashboard/dashboard', $data);
         } else {
-            redirect('login');
+            redirect('error_session');
         }
     }
 

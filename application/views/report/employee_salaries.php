@@ -29,6 +29,10 @@
                 <input style="width:60%;" id="filter_departement_sub" class="easyui-combobox">
             </div>
             <div class="fitem">
+                <span style="width:35%; display:inline-block;">Group</span>
+                <input style="width:60%;" id="filter_group" name="filter_group" class="easyui-combobox">
+            </div>
+            <div class="fitem">
                 <span style="width:35%; display:inline-block;">Employee</span>
                 <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
             </div>
@@ -65,6 +69,7 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
+        var filter_group = $("#filter_group").combobox('getValue');
         var filter_bank = $("#filter_bank").combobox('getValue');
 
         if (filter_from == "" || filter_to == "") {
@@ -75,6 +80,7 @@
                 "&filter_departement_sub=" + filter_departement_sub +
                 '&filter_from=' + filter_from +
                 '&filter_to=' + filter_to +
+                '&filter_group=' + filter_group +
                 '&filter_employee=' + filter_employee +
                 '&filter_bank=' + filter_bank;
 
@@ -89,6 +95,7 @@
         var filter_division = $("#filter_division").combobox('getValue');
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
+        var filter_group = $("#filter_group").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_bank = $("#filter_bank").combobox('getValue');
 
@@ -100,6 +107,7 @@
                 "&filter_departement_sub=" + filter_departement_sub +
                 '&filter_from=' + filter_from +
                 '&filter_to=' + filter_to +
+                '&filter_group=' + filter_group +
                 '&filter_employee=' + filter_employee +
                 '&filter_bank=' + filter_bank;
 
@@ -200,6 +208,19 @@
                     }
                 });
             }
+        });
+
+        $('#filter_group').combobox({
+            url: '<?= base_url('admin/privilege_groups/reads') ?>',
+            valueField: 'id',
+            textField: 'name',
+            prompt: "Choose All",
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combobox('clear').combobox('textbox').focus();
+                }
+            }]
         });
 
         $('#filter_employee').combogrid({
