@@ -38,9 +38,11 @@
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Bank Name</span>
-                <select style="width:60%;" id="filter_bank" panelHeight="auto" class="easyui-combobox">
-                    <option value="MANDIRI">BANK MANDIRI / BSI</option>
-                    <option value="BCA">BANK CENTRAL ASIA (BCA)</option>
+                <select style="width:60%;" name="filter_bank" id="filter_bank" class="easyui-combobox">
+                    <option value="-">Cash</option>
+                    <option value="Bank Mandiri">Bank Mandiri</option>
+                    <option value="Bank Syariah Indonesia">Bank Syariah Indonesia</option>
+                    <option value="Bank Central Asia">Bank Central Asia</option>
                 </select>
             </div>
         </div>

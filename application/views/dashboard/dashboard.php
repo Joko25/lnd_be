@@ -75,10 +75,8 @@
                         <div class="card-header">
                             Contract & Probation
                         </div>
-                        <div class="card-body">
-                            <div class="alert alert-danger" role="alert">
-                                No Contract & Probation
-                            </div>
+                        <div class="card-body" style="height: 200px; overflow: auto;">
+                            <?= $contracts ?>
                         </div>
                     </div>
                 </div>

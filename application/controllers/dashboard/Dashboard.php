@@ -21,6 +21,7 @@ class Dashboard extends CI_Controller
             $data['session_name'] = $this->session->name;
             $data['attandance'] = $this->myattandance();
             $data['permittoday'] = $this->permitToday();
+            $data['contracts'] = $this->contracts();
 
             if (date("H:i:s") >= "00:00:00" and date("H:i:s") <= "11:00:00") {
                 $data['day'] = "Good Morning";
@@ -34,6 +35,38 @@ class Dashboard extends CI_Controller
             $this->load->view('dashboard/dashboard', $data);
         } else {
             redirect('error_session');
+        }
+    }
+
+    public function readService($dateSign = "")
+    {
+        if ($dateSign == "") {
+            $date = $this->input->post('date');
+        } else {
+            $date = $dateSign;
+        }
+
+        $start  = date_create($date);
+        $end = date_create(); // waktu sekarang
+        $diff  = date_diff($start, $end);
+        $d = $diff->d . ' Days ';
+
+        if ($diff->y == 0) {
+            $y = '';
+        } else {
+            $y = $diff->y . ' Years, ';
+        }
+
+        if ($diff->m == 0) {
+            $m = '';
+        } else {
+            $m = $diff->m . ' Month, ';
+        }
+
+        if ($dateSign == "") {
+            echo $y . $m . $d;
+        } else {
+            return $y . $m . $d;
         }
     }
 
@@ -275,8 +308,12 @@ class Dashboard extends CI_Controller
             $attandances = $this->db->get()->row();
 
             if (!empty($attandances->time_in)) {
-                $in = "<div style='background:#65B451;border-radius:1rem;padding:2px;color:white;margin:0;'> IN : " . $attandances->time_in . "</div>";
-                $out = "<div style='background:#B45151;border-radius:1rem;padding:2px;color:white;margin:0;'>OUT : " . $attandances->time_out . "</div>";
+                $in = "<div style='background:#65B451;padding:2px;color:white;margin:0;'> IN : " . $attandances->time_in . "</div>";
+                if (!empty($attandances->time_out)) {
+                    $out = "<div style='background:#B45151;padding:2px;color:white;margin:0;'>OUT : " . $attandances->time_out . "</div>";
+                } else {
+                    $out = "";
+                }
             } else {
                 $in = "";
                 $out = "";
@@ -328,13 +365,22 @@ class Dashboard extends CI_Controller
                     $avatar = $employee->image_profile;
                 }
                 $html .= '	<tr>
-                                <td>
+                                <td width="50">
                                     <div class="icon-container">
                                         <img src="' . $avatar . '" class="user-online" />
                                         <div class="status-circle"></div>
                                     </div>
                                 </td>
-                                <td><a href="#" style="text-decoration:none;"><b style="font-size:12px;">' . $employee->name . '</b><br><small>' . $permit->note . '</small></a></td>
+                                <td>
+                                    <a href="#" style="text-decoration:none;">
+                                        <b style="font-size:12px; color:black;">' . $employee->name . '</b><br><small style="color:orange;">' . $permit->note . '</small>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <hr style="margin:0;">
+                                </td>
                             </tr>';
             }
 
@@ -342,6 +388,54 @@ class Dashboard extends CI_Controller
         } else {
             $html = '<div class="alert alert-danger" role="alert">
                         No Permission Today
+                    </div>';
+        }
+
+        return $html;
+    }
+
+    public function contracts()
+    {
+        $today = date("Y-m-d");
+        $nextday = date("Y-m-d", strtotime($today . ' + 3 days'));
+        $this->db->select('name, image_profile, date_expired');
+        $this->db->from('employees');
+        $this->db->where("date_expired between '$today' and '$nextday'");
+        $this->db->order_by('name', 'asc');
+        $employees = $this->db->get()->result_object();
+        if (count($employees) > 0) {
+            $html = '<table class="user-header" style="width: 100%;">';
+            foreach ($employees as $employee) {
+                $expired = $this->readService($employee->date_expired);
+                if ($employee->image_profile == "") {
+                    $avatar = base_url('assets/image/users/default.png');
+                } else {
+                    $avatar = $employee->image_profile;
+                }
+                $html .= '	<tr>
+                                <td width="50">
+                                    <div class="icon-container">
+                                        <img src="' . $avatar . '" class="user-online" />
+                                        <div class="status-circle"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="#" style="text-decoration:none;">
+                                        <b style="font-size:12px; color:black;">' . $employee->name . '</b><br><small style="color:red;">' . $expired . '</small>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <hr style="margin:0;">
+                                </td>
+                            </tr>';
+            }
+
+            $html .= "</table>";
+        } else {
+            $html = '<div class="alert alert-danger" role="alert">
+                        No Contract & Probation
                     </div>';
         }
 

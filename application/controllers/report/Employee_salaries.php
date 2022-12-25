@@ -33,7 +33,7 @@ class Employee_salaries extends CI_Controller
         if ($option == "excel") {
             $format  = date("Ymd");
             header("Content-type: application/vnd-ms-excel");
-            header("Content-Disposition: attachment; filename=leave_$format.xls");
+            header("Content-Disposition: attachment; filename=employee_salaries_$format.xls");
         }
 
         if ($this->input->get()) {
@@ -59,6 +59,7 @@ class Employee_salaries extends CI_Controller
                 AND b.departement_sub_id LIKE '%$filter_departement_sub%'
                 AND c.group_id LIKE '%$filter_group%'
                 AND a.employee_id LIKE '%$filter_employee%'
+                AND b.bank_name LIKE '%$filter_bank%'
                 ORDER BY a.`name` ASC");
             $records = $query->result_array();
 
@@ -95,7 +96,7 @@ class Employee_salaries extends CI_Controller
                     </center>
                     <br>';
 
-            if ($filter_bank == "BCA") {
+            if ($filter_bank == "Bank Central Asia") {
                 $html .= '  <table id="customers" border="1">
                                 <tr>
                                     <th width="20">No</th>
@@ -108,15 +109,15 @@ class Employee_salaries extends CI_Controller
                 foreach ($records as $record) {
                     $html .= '<tr>
                                 <td>' . $no . '</td>
-                                <td>' . $record['bank_no'] . '</td>
+                                <td style="mso-number-format:\@;">' . $record['bank_no'] . '</td>
                                 <td style="text-align:right;">' . $record['net_income'] . '</td>
-                                <td class="str">' . $record['number'] . '</td>
+                                <td style="mso-number-format:\@;" class="str">' . $record['number'] . '</td>
                                 <td>' . $record['name'] . '</td>
                             </tr>';
                     $no++;
                 }
                 $html .= '</table>';
-            } elseif ($filter_bank == "MANDIRI") {
+            } else {
                 $html .= '  <table id="customers" border="1">
                                 <tr>
                                     <th width="20">No</th>
@@ -129,9 +130,9 @@ class Employee_salaries extends CI_Controller
                 foreach ($records as $record) {
                     $html .= '<tr>
                                 <td>' . $no . '</td>
-                                <td class="str">' . $record['number'] . '</td>
+                                <td style="mso-number-format:\@;">' . $record['number'] . '</td>
                                 <td>' . $record['name'] . '</td>
-                                <td>' . $record['bank_no'] . '</td>
+                                <td style="mso-number-format:\@;">' . $record['bank_no'] . '</td>
                                 <td style="text-align:right;">' . $record['net_income'] . '</td>
                             </tr>';
                     $no++;
@@ -164,7 +165,7 @@ class Employee_salaries extends CI_Controller
         $period_start = date("Y-m", strtotime($filter_from));
         $period_end = date("Y-m", strtotime($filter_to));
 
-        if ($filter_bank == "BCA") {
+        if ($filter_bank == "Bank Central Asia") {
             $query = $this->db->query("SELECT b.bank_no, a.net_income, a.number, a.name FROM payrolls a
                 JOIN employees b ON a.employee_id = b.id
                 JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
@@ -174,6 +175,7 @@ class Employee_salaries extends CI_Controller
                 AND b.departement_sub_id LIKE '%$filter_departement_sub%'
                 AND c.group_id LIKE '%$filter_group%'
                 AND a.employee_id LIKE '%$filter_employee%'
+                AND b.bank_name LIKE '%$filter_bank%'
                 ORDER BY a.`name` ASC");
             $records = $query->result_array();
             $no = 1;
@@ -183,7 +185,7 @@ class Employee_salaries extends CI_Controller
             }
             fclose($file);
             exit;
-        } elseif ($filter_bank == "MANDIRI") {
+        } else {
             $query = $this->db->query("SELECT a.number, a.name, b.bank_no, a.net_income FROM payrolls a
                 JOIN employees b ON a.employee_id = b.id
                 JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
@@ -193,6 +195,7 @@ class Employee_salaries extends CI_Controller
                 AND b.departement_sub_id LIKE '%$filter_departement_sub%'
                 AND a.employee_id LIKE '%$filter_employee%'
                 AND c.group_id LIKE '%$filter_group%'
+                AND b.bank_name LIKE '%$filter_bank%'
                 ORDER BY a.`name` ASC");
             $records = $query->result_array();
             $no = 1;
