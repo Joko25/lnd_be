@@ -215,7 +215,7 @@ class Student_payrolls extends CI_Controller
                                         <td style="text-align:right;">' . number_format(($employee['loan_cooperative'] + $employee['loan_bank'] + $employee['loan_other'])) . '</td>
                                         <td style="text-align:right;">' . number_format($employee['correction_minus']) . '</td>
                                         <td style="text-align:right;">' . number_format($employee['pph']) . '</td>
-                                        <td style="text-align:right;">' . number_format($employee['deduction_absence_amount'] + $employee['bpjs_employee_total'] + $employee['bpjs_company_total'] + $employee['loan_cooperative'] + $employee['loan_bank'] + $employee['loan_other'] + $employee['correction_minus']) . '</td>
+                                        <td style="text-align:right;">' . number_format($total_deduction + $employee['deduction_absence_amount'] + $employee['bpjs_employee_total'] + $employee['bpjs_company_total'] + $employee['loan_cooperative'] + $employee['loan_bank'] + $employee['loan_other'] + $employee['correction_minus']) . '</td>
                                         <td style="text-align:right;">' . number_format(($employee['net_income'])) . '</td>
                                     </tr>';
                             $total += $employee['net_income'];
