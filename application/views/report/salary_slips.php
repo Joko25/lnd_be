@@ -36,6 +36,18 @@
     </fieldset>
 
     <?= $button ?>
+    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="slipMail()"><i class="fa fa-envelope"></i> Send Email</a>
+</div>
+
+<div id="dlg_generate" class="easyui-dialog" title="Generating Data" data-options="closed: true,modal:true,closable: false" style="width: 500px; padding:10px; top: 20px;">
+    <div class="alert alert-warning" role="alert">
+        Please wait until the sending mail process is complete
+    </div>
+    <div id="p_upload" class="easyui-progressbar" style="width:460px; margin-top: 10px;"></div>
+    <center><b id="p_start">0</b> Of <b id="p_finish">0</b></center>
+    <div id="p_remarks" class="easyui-panel" style="width:460px; height:200px; padding:10px; margin-top: 10px;">
+
+    </div>
 </div>
 
 <div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;">
@@ -92,6 +104,95 @@
                 '&filter_employee=' + filter_employee;
 
             window.location.assign('<?= base_url('report/salary_slips/print/excel') ?>' + url);
+        }
+    }
+
+    function slipMail() {
+        var filter_from = $("#filter_from").datebox('getValue');
+        var filter_to = $("#filter_to").datebox('getValue');
+        var filter_division = $("#filter_division").combobox('getValue');
+        var filter_departement = $("#filter_departement").combobox('getValue');
+        var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
+        var filter_employee = $("#filter_employee").combogrid('getValue');
+
+        if (filter_from == "" || filter_to == "") {
+            toastr.warning("Please Choose Filter Date");
+        } else {
+            var url = "filter_division=" + filter_division +
+                "&filter_departement=" + filter_departement +
+                "&filter_departement_sub=" + filter_departement_sub +
+                '&filter_from=' + filter_from +
+                '&filter_to=' + filter_to +
+                '&filter_employee=' + filter_employee;
+
+            Swal.fire({
+                title: 'Please Wait for Sending Mail',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
+            $.get("<?= base_url('report/salary_slips/getData') ?>", url,
+                function(data, textStatus, jqXHR) {
+                    $('#dlg_generate').dialog('open');
+                    Swal.close();
+
+                    if (data.length == 0) {
+                        Swal.fire(
+                            'Not Found',
+                            'Employee Not Found in Payroll',
+                            'error'
+                        );
+                    } else {
+                        requestSendMail(data.length, data);
+                    }
+
+                    function requestSendMail(total, json, number = 1, value = 0) {
+                        if (value < 100) {
+                            value = Math.floor((number / total) * 100);
+                            $('#p_upload').progressbar('setValue', value);
+                            $('#p_start').html(number);
+                            $('#p_finish').html(total);
+
+                            $.ajax({
+                                type: "POST",
+                                async: true,
+                                url: "<?= base_url('report/salary_slips/sendMail?filter_from=') ?>" + filter_from + "&filter_to=" + filter_to,
+                                data: {
+                                    "data": json[number - 1]
+                                },
+                                cache: false,
+                                dataType: "json",
+                                success: function(result) {
+                                    if (result.theme == "success") {
+                                        var title = "<b style='color: green;'>" + result.title + "</b> | " + result.message;
+                                        setTimeout(function() {
+                                            requestSendMail(total, json, number + 1, value);
+                                        }, 3000);
+                                    } else {
+                                        var title = "<b style='color: red;'>" + result.title + "</b> | " + result.message;
+                                        setTimeout(function() {
+                                            requestSendMail(total, json, number + 1, value);
+                                        }, 3000);
+                                    }
+                                    $("#p_remarks").append(title + "<br>");
+                                }
+                            });
+                        } else {
+                            $('#dlg_generate').dialog('close');
+                            Swal.fire(
+                                'Completed',
+                                'Send Mail Salary Slip is Completed',
+                                'success'
+                            );
+                        }
+                    }
+                },
+                "json"
+            );
         }
     }
 

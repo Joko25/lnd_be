@@ -30,7 +30,7 @@ class Emails extends CI_Model
         );
 
         $this->email->initialize($config);
-        $this->email->from('no-reply@aeconsys.com', 'AECONSYS');
+        $this->email->from('no-reply@aeconsys.com', 'AECONSYS [Registration]');
         $this->email->to($email);
         $this->email->subject('Registration New User');
         $this->email->message('<!doctype html>
@@ -103,7 +103,7 @@ class Emails extends CI_Model
         );
 
         $this->email->initialize($config);
-        $this->email->from('no-reply@aeconsys.com', 'AECONSYS');
+        $this->email->from('no-reply@aeconsys.com', 'AECONSYS [Reset Password]');
         $this->email->to($email);
         $this->email->subject('Reset Password');
         $this->email->message('<!doctype html>
@@ -142,5 +142,30 @@ class Emails extends CI_Model
         
         </html>');
         $this->email->send();
+    }
+
+    public function emailSalarySlip($email, $employee, $html)
+    {
+        $config = array(
+            'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
+            'smtp_host' => 'aeconsys.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'no-reply@aeconsys.com',
+            'smtp_pass' => 'Hilman1196',
+            'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
+            'mailtype' => 'html', //plaintext 'text' mails or 'html'
+            'smtp_timeout' => '4', //in seconds
+            'charset' => 'iso-8859-1',
+            'wordwrap' => TRUE
+        );
+
+        $this->email->initialize($config);
+        $this->email->from('no-reply@aeconsys.com', 'AECONSYS [Salary Slip]');
+        $this->email->to($email);
+        $this->email->subject('Salary Slip ' . $employee);
+        $this->email->message(base64_decode($html));
+        $email = $this->email->send();
+
+        return $email;
     }
 }
