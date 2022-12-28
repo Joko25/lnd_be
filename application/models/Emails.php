@@ -144,7 +144,7 @@ class Emails extends CI_Model
         $this->email->send();
     }
 
-    public function emailSalarySlip($email, $employee, $html)
+    public function emailSalarySlip($email, $employee, $company, $html)
     {
         $config = array(
             'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
@@ -160,7 +160,7 @@ class Emails extends CI_Model
         );
 
         $this->email->initialize($config);
-        $this->email->from('no-reply@aeconsys.com', 'AECONSYS [Salary Slip]');
+        $this->email->from('no-reply@aeconsys.com', $company . ' [Salary Slip]');
         $this->email->to($email);
         $this->email->subject('Salary Slip ' . $employee);
         $this->email->message(base64_decode($html));

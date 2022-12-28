@@ -102,9 +102,9 @@ class Salary_slips extends CI_Controller
         foreach ($r_allowance as $allowance_data) {
             $arr_allowance_amount_total += $allowance_data['amount'];
             $html_allowance .= ' <tr>
-                                                <td style="text-align:left;">' . $allowance_data['name'] . '</td>
-                                                <td style="text-align:right;"><b>' . number_format($allowance_data['amount']) . '</b></td>
-                                            </tr>';
+                                    <td style="text-align:left;">' . $allowance_data['name'] . '</td>
+                                    <td style="text-align:right;"><b>' . number_format($allowance_data['amount']) . '</b></td>
+                                </tr>';
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -121,24 +121,27 @@ class Salary_slips extends CI_Controller
         foreach ($r_deduction as $deduction_data) {
             $arr_deduction_amount_total += $deduction_data['amount'];
             $html_deduction .= ' <tr>
-                                                <td style="text-align:left;">' . $deduction_data['name'] . '</td>
-                                                <td style="text-align:right;"><b>' . number_format($deduction_data['amount']) . '</b></td>
-                                            </tr>';
+                                    <td style="text-align:left;">' . $deduction_data['name'] . '</td>
+                                    <td style="text-align:right;"><b>' . number_format($deduction_data['amount']) . '</b></td>
+                                </tr>';
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
         //BPJS Employee
         //Kalo dia mempunyai BPJS
-        $r_bpjs_emp = $this->crud->reads('bpjs', ['status' => 0]);
-        $arr_bpjs_emp_amount_total = 0;
+        $bpjsKeys = json_decode($record['bpjs_employee'], true);
         $html_bpjs_emp = "";
-        foreach ($r_bpjs_emp as $bpjs_emp_data) {
-            $arr_bpjs_emp_amount_total += round(($record['salary'] * $bpjs_emp_data->employee) / 100);
-            if ($bpjs_emp_data->employee > 0) {
+        $arr_bpjs_emp_amount_total = 0;
+        foreach ($bpjsKeys as $bpjs_employee => $bpjs_value) {
+            $arr_bpjs = explode("_", $bpjs_employee);
+            $r_bpjs_emp = $this->crud->read('bpjs', ['status' => 0], ["number" => $arr_bpjs[0]]);
+                
+            $arr_bpjs_emp_amount_total += !empty($bpjs_value) ? $bpjs_value : 0;
+            if (!empty($r_bpjs_emp->employee)) {
                 $html_bpjs_emp .= ' <tr>
-                                                <td style="text-align:left;">' . $bpjs_emp_data->name . '</td>
-                                                <td style="text-align:right;"><b>' . number_format(round(($record['salary'] * $bpjs_emp_data->employee) / 100)) . '</b></td>
-                                            </tr>';
+                                        <td style="text-align:left;">' . $r_bpjs_emp->name . '</td>
+                                        <td style="text-align:right;"><b>' . number_format($bpjs_value) . '</b></td>
+                                    </tr>';
             }
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -285,7 +288,7 @@ class Salary_slips extends CI_Controller
                     </center>';
         $html .= '</body></html>';
 
-        $email = $this->emails->emailSalarySlip($record['email'], $record['name'], base64_encode($html));
+        $email = $this->emails->emailSalarySlip($record['email'], $record['name'], $config->name, base64_encode($html));
         if (!filter_var($record['email'], FILTER_VALIDATE_EMAIL)) {
             echo json_encode(array("title" => "Not Registered", "message" => "Email not register in Employee List", "theme" => "error"));
         } elseif ($email) {
@@ -396,15 +399,18 @@ class Salary_slips extends CI_Controller
 
                 //BPJS Employee
                 //Kalo dia mempunyai BPJS
-                $r_bpjs_emp = $this->crud->reads('bpjs', ['status' => 0]);
-                $arr_bpjs_emp_amount_total = 0;
+                $bpjsKeys = json_decode($record['bpjs_employee'], true);
                 $html_bpjs_emp = "";
-                foreach ($r_bpjs_emp as $bpjs_emp_data) {
-                    $arr_bpjs_emp_amount_total += round(($record['salary'] * $bpjs_emp_data->employee) / 100);
-                    if ($bpjs_emp_data->employee > 0) {
+                $arr_bpjs_emp_amount_total = 0;
+                foreach ($bpjsKeys as $bpjs_employee => $bpjs_value) {
+                    $arr_bpjs = explode("_", $bpjs_employee);
+                    $r_bpjs_emp = $this->crud->read('bpjs', ['status' => 0], ["number" => $arr_bpjs[0]]);
+                        
+                    $arr_bpjs_emp_amount_total += !empty($bpjs_value) ? $bpjs_value : 0;
+                    if (!empty($r_bpjs_emp->employee)) {
                         $html_bpjs_emp .= ' <tr>
-                                                <td style="text-align:left;">' . $bpjs_emp_data->name . '</td>
-                                                <td style="text-align:right;"><b>' . number_format(round(($record['salary'] * $bpjs_emp_data->employee) / 100)) . '</b></td>
+                                                <td style="text-align:left;">' . $r_bpjs_emp->name . '</td>
+                                                <td style="text-align:right;"><b>' . number_format($bpjs_value) . '</b></td>
                                             </tr>';
                     }
                 }
