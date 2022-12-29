@@ -7,6 +7,7 @@
             <th data-options="field:'name',width:200">Menu Name</th>
             <th data-options="field:'link',width:200">Link</th>
             <th data-options="field:'sort',width:50">Sort</th>
+            <th data-options="field:'icon',width:100">Icon</th>
             <th data-options="field:'state',width:100">State</th>
         </tr>
     </thead>
@@ -37,6 +38,13 @@
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Sort</span>
                 <input style="width:60%;" name="sort" class="easyui-numberbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Icon</span>
+                <select style="width:60%;" name="icon" class="easyui-combobox">
+                    <option value="">Default</option>
+                    <option value="icon-ok">Icon Ok</option>
+                </select>
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">State</span>

@@ -189,7 +189,8 @@
 						$('#tabs').tabs('add', {
 							title: nama,
 							content: content,
-							closable: true
+							closable: true,
+							iconCls: node.iconCls
 						});
 					}
 				}
@@ -214,7 +215,8 @@
 					id: row.id,
 					text: row.name,
 					link: row.link,
-					state: row.state
+					state: row.state,
+					iconCls: row.icon
 				});
 			}
 		}
@@ -229,7 +231,11 @@
 			for (var i = 0; i < rows.length; i++) {
 				var row = rows[i];
 				if (row.state != "closed") {
-					var iconCls = "icon-document";
+					if(row.icon != ""){
+						var iconCls = row.icon;
+					}else{
+						var iconCls = "icon-document";
+					}
 				} else {
 					var iconCls = "";
 				}
