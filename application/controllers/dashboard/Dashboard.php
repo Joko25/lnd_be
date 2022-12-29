@@ -34,7 +34,7 @@ class Dashboard extends CI_Controller
                 $data['color'] = "black";
             } else {
                 $data['day'] = "Good Night";
-                $data['background'] = base_url('assets/image/morning.jpg');
+                $data['background'] = base_url('assets/image/night.jpg');
                 $data['color'] = "white";
             }
 
