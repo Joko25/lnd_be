@@ -111,8 +111,8 @@
         <div style="width: 50%; float: left;">
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Period Date</span>
-                <input style="width:28%;" name="filter_from" id="filter_from" value="<?= date("Y-m-01") ?>" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox"> To
-                <input style="width:28%;" name="filter_to" id="filter_to" value="<?= date("Y-m-t") ?>" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
+                <input style="width:28%;" name="filter_from" id="filter_from" class="easyui-combogrid"> To
+                <input style="width:28%;" name="filter_to" id="filter_to" data-options="prompt:'Date To'" readonly class="easyui-textbox">
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Division</span>
@@ -168,8 +168,8 @@
 
 <script>
     function add() {
-        var filter_from = $("#filter_from").datebox('getValue');
-        var filter_to = $("#filter_to").datebox('getValue');
+        var filter_from = $("#filter_from").combogrid('getValue');
+        var filter_to = $("#filter_to").textbox('getValue');
         var filter_division = $("#filter_division").combobox('getValue');
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
@@ -343,8 +343,8 @@
     }
 
     function filter() {
-        var filter_from = $("#filter_from").datebox('getValue');
-        var filter_to = $("#filter_to").datebox('getValue');
+        var filter_from = $("#filter_from").combogrid('getValue');
+        var filter_to = $("#filter_to").textbox('getValue');
         var filter_division = $("#filter_division").combobox('getValue');
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
@@ -361,12 +361,17 @@
             "&filter_employee_type=" + filter_employee_type +
             "&filter_group=" + filter_group;
 
-        $('#dg').datagrid({
-            url: '<?= base_url('payroll/payrolls/datatables') ?>' + url
-        });
+        if (filter_from == "" || filter_to == "") {
+            toastr.warning("Please Enter Cut Off Period");
+        } else {
 
-        $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
-        $("#printout").attr('src', '<?= base_url('payroll/payrolls/print') ?>' + url);
+            $('#dg').datagrid({
+                url: '<?= base_url('payroll/payrolls/datatables') ?>' + url
+            });
+
+            $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
+            $("#printout").attr('src', '<?= base_url('payroll/payrolls/print') ?>' + url);
+        }
     }
 
     //PRINT PDF
@@ -375,8 +380,8 @@
     }
     //PRINT EXCEL
     function excel() {
-        var filter_from = $("#filter_from").datebox('getValue');
-        var filter_to = $("#filter_to").datebox('getValue');
+        var filter_from = $("#filter_from").combogrid('getValue');
+        var filter_to = $("#filter_to").textbox('getValue');
         var filter_division = $("#filter_division").combobox('getValue');
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
@@ -393,21 +398,11 @@
             "&filter_employee_type=" + filter_employee_type +
             "&filter_group=" + filter_group;
 
-        window.location.assign('<?= base_url('payroll/payrolls/print/excel') ?>' + url);
-        // $.ajax({
-        //     type: "post",
-        //     url: "<?= base_url('payroll/payrolls/readApproval') ?>",
-        //     data: "filter_from=" + filter_from + "&filter_to=" + filter_to,
-        //     dataType: "json",
-        //     success: function(response) {
-        //         if (response.status == "APPROVE") {
-        //             toastr.success("Please wait to Export Excel");
-        //             window.location.assign('<?= base_url('payroll/payrolls/print/excel') ?>' + url);
-        //         } else {
-        //             toastr.warning("The cut off period data is still in the approval process");
-        //         }
-        //     }
-        // });
+        if (filter_from == "" || filter_to == "") {
+            toastr.warning("Please Enter Cut Off Period");
+        } else {
+            window.location.assign('<?= base_url('payroll/payrolls/print/excel') ?>' + url);
+        }
     }
     //RELOAD
     function reload() {
@@ -420,6 +415,31 @@
             url: '<?= base_url('payroll/payrolls/datatables') ?>',
             pagination: true,
             rownumbers: true
+        });
+
+        //Filter Cutoff
+        $('#filter_from').combogrid({
+            url: '<?= base_url('payroll/cutoff/reads') ?>',
+            panelWidth: 300,
+            idField: 'start',
+            textField: 'start',
+            mode: 'remote',
+            fitColumns: true,
+            prompt: 'Date From',
+            columns: [
+                [{
+                    field: 'start',
+                    title: 'Date From',
+                    width: 120
+                }, {
+                    field: 'finish',
+                    title: 'Date To',
+                    width: 120
+                }]
+            ],
+            onSelect: function(val, row) {
+                $("#filter_to").textbox('setValue', row.finish);
+            }
         });
 
         //Get Departement

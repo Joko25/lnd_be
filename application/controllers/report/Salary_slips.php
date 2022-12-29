@@ -38,6 +38,8 @@ class Salary_slips extends CI_Controller
             $filter_departement = $this->input->get('filter_departement');
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
+            $filter_group = $this->input->get('filter_group');
+            $username = $this->session->username;
 
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
@@ -45,11 +47,13 @@ class Salary_slips extends CI_Controller
                 JOIN employees b ON a.employee_id = b.id
                 LEFT JOIN (SELECT employee_id, `trans_date`, SUM(amount) as amount_plus_correction FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'CORRECTION' GROUP BY employee_id) c ON a.employee_id = c.employee_id
                 LEFT JOIN (SELECT employee_id, `trans_date`, SUM(amount) as amount_plus_salary FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'SALARY' GROUP BY employee_id) d ON a.employee_id = d.employee_id
+                LEFT JOIN privilege_groups e ON b.group_id = e.id and e.username = '$username' and e.status = '1'
                 WHERE a.period_start = '$period_start'
                 AND a.period_end = '$period_end'
                 AND b.division_id LIKE '%$filter_division%'
                 AND b.departement_id LIKE '%$filter_departement%'
                 AND b.departement_sub_id LIKE '%$filter_departement_sub%'
+                AND b.group_id LIKE '%$filter_group%'
                 AND a.employee_id LIKE '%$filter_employee%'
                 ORDER BY a.`name` ASC");
             $records = $query->result_array();
@@ -135,7 +139,7 @@ class Salary_slips extends CI_Controller
         foreach ($bpjsKeys as $bpjs_employee => $bpjs_value) {
             $arr_bpjs = explode("_", $bpjs_employee);
             $r_bpjs_emp = $this->crud->read('bpjs', ['status' => 0], ["number" => $arr_bpjs[0]]);
-                
+
             $arr_bpjs_emp_amount_total += !empty($bpjs_value) ? $bpjs_value : 0;
             if (!empty($r_bpjs_emp->employee)) {
                 $html_bpjs_emp .= ' <tr>
@@ -313,6 +317,8 @@ class Salary_slips extends CI_Controller
             $filter_departement = $this->input->get('filter_departement');
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
+            $filter_group = $this->input->get('filter_group');
+            $username = $this->session->username;
 
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
@@ -321,11 +327,13 @@ class Salary_slips extends CI_Controller
                 JOIN employees b ON a.employee_id = b.id
                 LEFT JOIN (SELECT employee_id, `trans_date`, SUM(amount) as amount_plus_correction FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'CORRECTION' GROUP BY employee_id) c ON a.employee_id = c.employee_id
                 LEFT JOIN (SELECT employee_id, `trans_date`, SUM(amount) as amount_plus_salary FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'SALARY' GROUP BY employee_id) d ON a.employee_id = d.employee_id
+                LEFT JOIN privilege_groups e ON b.group_id = e.id and e.username = '$username' and e.status = '1'
                 WHERE a.period_start = '$period_start'
                 AND a.period_end = '$period_end'
                 AND b.division_id LIKE '%$filter_division%'
                 AND b.departement_id LIKE '%$filter_departement%'
                 AND b.departement_sub_id LIKE '%$filter_departement_sub%'
+                AND b.group_id LIKE '%$filter_group%'
                 AND a.employee_id LIKE '%$filter_employee%'
                 ORDER BY a.`name` ASC");
             $records = $query->result_array();
@@ -405,7 +413,7 @@ class Salary_slips extends CI_Controller
                 foreach ($bpjsKeys as $bpjs_employee => $bpjs_value) {
                     $arr_bpjs = explode("_", $bpjs_employee);
                     $r_bpjs_emp = $this->crud->read('bpjs', ['status' => 0], ["number" => $arr_bpjs[0]]);
-                        
+
                     $arr_bpjs_emp_amount_total += !empty($bpjs_value) ? $bpjs_value : 0;
                     if (!empty($r_bpjs_emp->employee)) {
                         $html_bpjs_emp .= ' <tr>

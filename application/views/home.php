@@ -35,7 +35,7 @@
 	</div>
 
 	<!-- USERS ONLINE -->
-	<div data-options="region:'east',split:false, collapsed:true, hideCollapsedContent:false" title="Users Online" style="width:200px;">
+	<div data-options="region:'east',split:false, collapsed:true, hideCollapsedContent:false" title="Users Online" style="width:250px;">
 		<table class="user-header" style="width: 100%;">
 			<?php
 			foreach ($users as $user) {
@@ -45,13 +45,18 @@
 					$avatar = $user->avatar;
 				}
 				echo '	<tr>
-							<td>
+							<td style="padding:5px;">
 								<div class="icon-container">
 									<img src="' . $avatar . '" class="user-online" />
 									<div class="status-circle"></div>
 								</div>
 							</td>
-							<td><a href="#" style="text-decoration:none;"><b style="font-size:12px;">' . $user->name . '</b><br><small>' . $user->position . '</small></a></td>
+							<td>
+								<a href="#" onclick="startChats()" style="text-decoration:none;">
+									<b style="font-size:12px; color:black;">' . $user->name . '</b><br>
+									<small style="color:black;">' . $user->position . '</small>
+								</a>
+							</td>
 						</tr>';
 			}
 			?>
@@ -100,6 +105,12 @@
 	<!-- NOTIFICATION APPROVAL -->
 	<div id="dlg_notif_content" class="easyui-window" title="Approval Confirmation" data-options="closed: true,minimizable:false,collapsible:false" style="width: 1000px; height: 400px; top: 60px;">
 
+	</div>
+
+	<div id="dlg_chats" class="easyui-dialog" title="Chats" data-options="closed: true, cls:'c2',border:'thin'" style="width: 300px; height: 400px; top: 60px;">
+		<div class="alert alert-danger" role="alert">
+			Chats No Active
+		</div>
 	</div>
 </body>
 
@@ -231,9 +242,9 @@
 			for (var i = 0; i < rows.length; i++) {
 				var row = rows[i];
 				if (row.state != "closed") {
-					if(row.icon != ""){
+					if (row.icon != "") {
 						var iconCls = row.icon;
-					}else{
+					} else {
 						var iconCls = "icon-document";
 					}
 				} else {
@@ -474,6 +485,10 @@
 				}
 			});
 		}
+	}
+
+	function startChats() {
+		$("#dlg_chats").dialog('open');
 	}
 </script>
 

@@ -359,6 +359,7 @@ class Dashboard extends CI_Controller
             $html = '<table class="user-header" style="width: 100%;">';
             foreach ($permits as $permit) {
                 $employee = $this->crud->read("employees", [], ["id" => $permit->employee_id]);
+                $position = $this->crud->read("positions", [], ["id" => $employee->position_id]);
                 if ($employee->image_profile == "") {
                     $avatar = base_url('assets/image/users/default.png');
                 } else {
@@ -373,13 +374,12 @@ class Dashboard extends CI_Controller
                                 </td>
                                 <td>
                                     <a href="#" style="text-decoration:none;">
-                                        <b style="font-size:12px; color:black;">' . $employee->name . '</b><br><small style="color:orange;">' . $permit->note . '</small>
+                                        <b style="font-size:12px; color:black;">' . $employee->name . '</b><br>
+                                        <small style="color:orange;">' . $permit->note . '</small>
                                     </a>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <hr style="margin:0;">
+                                <td style="text-align:right;">
+                                    <b style="font-size:10px !important; color:green;">' . $position->name . '</b>
                                 </td>
                             </tr>';
             }
@@ -398,7 +398,7 @@ class Dashboard extends CI_Controller
     {
         $today = date("Y-m-d");
         $nextday = date("Y-m-d", strtotime($today . ' + 3 days'));
-        $this->db->select('name, image_profile, date_expired');
+        $this->db->select('name, image_profile, date_expired, position_id, departement_id');
         $this->db->from('employees');
         $this->db->where("date_expired between '$today' and '$nextday'");
         $this->db->order_by('name', 'asc');
@@ -406,6 +406,8 @@ class Dashboard extends CI_Controller
         if (count($employees) > 0) {
             $html = '<table class="user-header" style="width: 100%;">';
             foreach ($employees as $employee) {
+                $position = $this->crud->read("positions", [], ["id" => $employee->position_id]);
+
                 $expired = $this->readService($employee->date_expired);
                 if ($employee->image_profile == "") {
                     $avatar = base_url('assets/image/users/default.png');
@@ -421,13 +423,12 @@ class Dashboard extends CI_Controller
                                 </td>
                                 <td>
                                     <a href="#" style="text-decoration:none;">
-                                        <b style="font-size:12px; color:black;">' . $employee->name . '</b><br><small style="color:red;">' . $expired . '</small>
+                                        <b style="font-size:12px; color:black;">' . $employee->name . '</b><br>
+                                        <small style="color:red;">' . $expired . '</small>
                                     </a>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <hr style="margin:0;">
+                                <td style="text-align:right;">
+                                    <b style="font-size:10px !important; color:green;">' . $position->name . '</b>
                                 </td>
                             </tr>';
             }

@@ -2,6 +2,10 @@
 	background:url('icons/ok.png') no-repeat center center;
 }
 
+.icon-clear{
+	background:url('icons/clear.png') no-repeat center center;
+}
+
 .icon-user{
 	background:url('icons/user.png') no-repeat center center;
 }

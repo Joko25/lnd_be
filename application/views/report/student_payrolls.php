@@ -6,9 +6,9 @@
         <legend><b>Form Filter Data</b></legend>
         <div style="width: 50%; float:left;">
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Trans Date</span>
-                <input style="width:28%;" id="filter_from" class="easyui-datebox" value="<?= date("Y-m-01") ?>" data-options="formatter:myformatter,parser:myparser, editable:false"> To
-                <input style="width:28%;" id="filter_to" class="easyui-datebox" value="<?= date("Y-m-t") ?>" data-options="formatter:myformatter,parser:myparser, editable:false">
+                <span style="width:35%; display:inline-block;">Period Date</span>
+                <input style="width:28%;" name="filter_from" id="filter_from" class="easyui-combogrid"> To
+                <input style="width:28%;" name="filter_to" id="filter_to" data-options="prompt:'Date To'" readonly class="easyui-textbox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Group</span>
@@ -40,8 +40,8 @@
     }
 
     function filter() {
-        var filter_from = $("#filter_from").datebox('getValue');
-        var filter_to = $("#filter_to").datebox('getValue');
+        var filter_from = $("#filter_from").combogrid('getValue');
+        var filter_to = $("#filter_to").textbox('getValue');
         var filter_group = $("#filter_group").combobox('getValue');
         var filter_source = $("#filter_source").combobox('getValue');
 
@@ -59,8 +59,8 @@
     }
 
     function excel() {
-        var filter_from = $("#filter_from").datebox('getValue');
-        var filter_to = $("#filter_to").datebox('getValue');
+        var filter_from = $("#filter_from").combogrid('getValue');
+        var filter_to = $("#filter_to").textbox('getValue');
         var filter_group = $("#filter_group").combobox('getValue');
         var filter_source = $("#filter_source").combobox('getValue');
 
@@ -78,6 +78,31 @@
     }
 
     $(function() {
+        //Filter Cutoff
+        $('#filter_from').combogrid({
+            url: '<?= base_url('payroll/cutoff/reads') ?>',
+            panelWidth: 300,
+            idField: 'start',
+            textField: 'start',
+            mode: 'remote',
+            fitColumns: true,
+            prompt: 'Date From',
+            columns: [
+                [{
+                    field: 'start',
+                    title: 'Date From',
+                    width: 120
+                }, {
+                    field: 'finish',
+                    title: 'Date To',
+                    width: 120
+                }]
+            ],
+            onSelect: function(val, row) {
+                $("#filter_to").textbox('setValue', row.finish);
+            }
+        });
+
         $('#filter_group').combobox({
             url: '<?= base_url('admin/privilege_groups/reads') ?>',
             valueField: 'id',

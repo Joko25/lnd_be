@@ -19,9 +19,9 @@
         <legend><b>Form Filter Data</b></legend>
         <div style="width: 50%; float:left;">
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Trans Date</span>
-                <input style="width:28%;" id="filter_from" class="easyui-datebox" value="<?= date("Y-m-01") ?>" data-options="formatter:myformatter,parser:myparser, editable:false"> To
-                <input style="width:28%;" id="filter_to" class="easyui-datebox" value="<?= date("Y-m-t") ?>" data-options="formatter:myformatter,parser:myparser, editable:false">
+                <span style="width:35%; display:inline-block;">Period Date</span>
+                <input style="width:28%;" name="filter_from" id="filter_from" class="easyui-combogrid"> To
+                <input style="width:28%;" name="filter_to" id="filter_to" data-options="prompt:'Date To'" readonly class="easyui-textbox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Division</span>
@@ -76,8 +76,8 @@
     }
 
     function filter() {
-        var filter_from = $("#filter_from").datebox('getValue');
-        var filter_to = $("#filter_to").datebox('getValue');
+        var filter_from = $("#filter_from").combogrid('getValue');
+        var filter_to = $("#filter_to").textbox('getValue');
         var filter_division = $("#filter_division").combobox('getValue');
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
@@ -104,8 +104,8 @@
     }
 
     function pdf_view(filter_departement, filter_departement_sub, filter_group) {
-        var filter_from = $("#filter_from").datebox('getValue');
-        var filter_to = $("#filter_to").datebox('getValue');
+        var filter_from = $("#filter_from").combogrid('getValue');
+        var filter_to = $("#filter_to").textbox('getValue');
         var filter_division = $("#filter_division").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
 
@@ -127,8 +127,8 @@
     }
 
     function excel_detail(filter_departement, filter_departement_sub, filter_group) {
-        var filter_from = $("#filter_from").datebox('getValue');
-        var filter_to = $("#filter_to").datebox('getValue');
+        var filter_from = $("#filter_from").combogrid('getValue');
+        var filter_to = $("#filter_to").textbox('getValue');
         var filter_division = $("#filter_division").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
 
@@ -148,8 +148,8 @@
     }
 
     function excel() {
-        var filter_from = $("#filter_from").datebox('getValue');
-        var filter_to = $("#filter_to").datebox('getValue');
+        var filter_from = $("#filter_from").combogrid('getValue');
+        var filter_to = $("#filter_to").textbox('getValue');
         var filter_division = $("#filter_division").combobox('getValue');
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
@@ -172,6 +172,31 @@
     }
 
     $(function() {
+        //Filter Cutoff
+        $('#filter_from').combogrid({
+            url: '<?= base_url('payroll/cutoff/reads') ?>',
+            panelWidth: 300,
+            idField: 'start',
+            textField: 'start',
+            mode: 'remote',
+            fitColumns: true,
+            prompt: 'Date From',
+            columns: [
+                [{
+                    field: 'start',
+                    title: 'Date From',
+                    width: 120
+                }, {
+                    field: 'finish',
+                    title: 'Date To',
+                    width: 120
+                }]
+            ],
+            onSelect: function(val, row) {
+                $("#filter_to").textbox('setValue', row.finish);
+            }
+        });
+
         //Get Division
         $('#filter_division').combobox({
             url: '<?php echo base_url('employee/divisions/reads'); ?>',

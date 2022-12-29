@@ -59,15 +59,15 @@ if ($employee->image_profile == "" || $employee->image_profile == null) {
                 </div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Employee Type</span>
-                    <b style="width:60%;"><?= $contract->name ?></b>
+                    <b style="width:60%;"><?= @$contract->name ?></b>
                 </div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Position</span>
-                    <b style="width:60%;"><?= $position->name ?></b>
+                    <b style="width:60%;"><?= @$position->name ?></b>
                 </div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Group</span>
-                    <b style="width:60%;"><?= $group->name ?></b>
+                    <b style="width:60%;"><?= @$group->name ?></b>
                 </div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Sign In</span>
