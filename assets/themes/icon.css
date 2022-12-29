@@ -2,11 +2,43 @@
 	background:url('icons/ok.png') no-repeat center center;
 }
 
+.icon-user{
+	background:url('icons/user.png') no-repeat center center;
+}
+
+.icon-info{
+	background:url('icons/info.png') no-repeat center center;
+}
+
+.icon-user-private{
+	background:url('icons/user-private.png') no-repeat center center;
+}
+
+.icon-config{
+	background:url('icons/config.png') no-repeat center center;
+}
+
+.icon-requirement{
+	background:url('icons/requirement.png') no-repeat center center;
+}
+
+.icon-request{
+	background:url('icons/request.png') no-repeat center center;
+}
+
+.icon-candidate{
+	background:url('icons/candidate.png') no-repeat center center;
+}
+
 /* custom */
 .icon-document{
 	background:url('icons/google-docs.png') no-repeat center center;
 }
 
-.icon-config{
+.icon-file{
+	background:url('icons/document.png') no-repeat center center;
+}
+
+.icon-shield{
 	background:url('icons/shield.png') no-repeat center center;
 }

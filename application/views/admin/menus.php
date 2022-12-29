@@ -44,6 +44,16 @@
                 <select style="width:60%;" name="icon" class="easyui-combobox">
                     <option value="">Default</option>
                     <option value="icon-ok">Icon Ok</option>
+                    <option value="icon-user">Icon User</option>
+                    <option value="icon-user-private">Icon User Private</option>
+                    <option value="icon-config">Icon Config</option>
+                    <option value="icon-shield">Icon Shield</option>
+                    <option value="icon-info">Icon Info</option>
+                    <option value="icon-requirement">Icon Requirement</option>
+                    <option value="icon-request">Icon Request</option>
+                    <option value="icon-candidate">Icon Candidate</option>
+                    <option value="icon-document">Icon Document</option>
+                    <option value="icon-file">Icon File</option>
                 </select>
             </div>
             <div class="fitem">
