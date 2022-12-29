@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set("Asia/Bangkok");
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller
@@ -23,12 +24,18 @@ class Dashboard extends CI_Controller
             $data['permittoday'] = $this->permitToday();
             $data['contracts'] = $this->contracts();
 
-            if (date("H:i:s") >= "00:00:00" and date("H:i:s") <= "11:00:00") {
+            if (date("H:i:s") >= "05:00:00" and date("H:i:s") <= "11:00:00") {
                 $data['day'] = "Good Morning";
+                $data['background'] = base_url('assets/image/morning.jpg');
+                $data['color'] = "black";
             } elseif (date("H:i:s") >= "11:00:00" and date("H:i:s") <= "18:00:00") {
                 $data['day'] = "Good Afternoon";
+                $data['background'] = base_url('assets/image/afternoon.jpg');
+                $data['color'] = "black";
             } else {
                 $data['day'] = "Good Night";
+                $data['background'] = base_url('assets/image/morning.jpg');
+                $data['color'] = "white";
             }
 
             $this->load->view('template/header');
