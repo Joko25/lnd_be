@@ -255,6 +255,23 @@
                                                                             'success'
                                                                         );
                                                                     }
+                                                                },
+                                                                fail: function(jqXHR, textStatus) {
+                                                                    if (textStatus == "error") {
+                                                                        Swal.fire({
+                                                                            title: 'Connection Time Out, Check Your Connection',
+                                                                            showConfirmButton: false,
+                                                                            allowOutsideClick: false,
+                                                                            allowEscapeKey: false,
+                                                                            didOpen: () => {
+                                                                                Swal.showLoading();
+                                                                            },
+                                                                        });
+
+                                                                        setTimeout(function() {
+                                                                            requestData(total, json, number, value);
+                                                                        }, 5000);
+                                                                    }
                                                                 }
                                                             });
                                                         }
@@ -322,6 +339,23 @@
                                                             'Generate payroll has been completed, please check the generated payroll data, if an error occurs, please generate it again before the data is approved',
                                                             'success'
                                                         );
+                                                    }
+                                                },
+                                                fail: function(jqXHR, textStatus) {
+                                                    if (textStatus == "error") {
+                                                        Swal.fire({
+                                                            title: 'Connection Time Out, Check Your Connection',
+                                                            showConfirmButton: false,
+                                                            allowOutsideClick: false,
+                                                            allowEscapeKey: false,
+                                                            didOpen: () => {
+                                                                Swal.showLoading();
+                                                            },
+                                                        });
+
+                                                        setTimeout(function() {
+                                                            requestData(total, json, number, value);
+                                                        }, 5000);
                                                     }
                                                 }
                                             });

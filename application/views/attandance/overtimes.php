@@ -455,6 +455,23 @@
                                             }
 
                                             $("#p_remarks").append(title + "<br>");
+                                        },
+                                        fail: function(jqXHR, textStatus) {
+                                            if (textStatus == "error") {
+                                                Swal.fire({
+                                                    title: 'Connection Time Out, Check Your Connection',
+                                                    showConfirmButton: false,
+                                                    allowOutsideClick: false,
+                                                    allowEscapeKey: false,
+                                                    didOpen: () => {
+                                                        Swal.showLoading();
+                                                    },
+                                                });
+
+                                                setTimeout(function() {
+                                                    requestData(total, json, number, value, success + 0, failed + 0);
+                                                }, 5000);
+                                            }
                                         }
                                     });
                                 }

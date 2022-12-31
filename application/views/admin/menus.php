@@ -43,17 +43,33 @@
                 <span style="width:35%; display:inline-block;">Icon</span>
                 <select style="width:60%;" name="icon" class="easyui-combobox">
                     <option value="">Default</option>
+                    <option value="icon-back">Icon Back</option>
+                    <option value="icon-bank">Icon Bank</option>
+                    <option value="icon-clear">Icon Clear</option>
+                    <option value="icon-clock">Icon Clock</option>
+                    <option value="icon-company">Icon Company</option>
+                    <option value="icon-employee">Icon Employee</option>
+                    <option value="icon-filter">Icon Filter</option>
+                    <option value="icon-help">Icon Help</option>
+                    <option value="icon-key">Icon Key</option>
+                    <option value="icon-money">Icon Money</option>
+                    <option value="icon-more">Icon More</option>
+                    <option value="icon-no">Icon No</option>
                     <option value="icon-ok">Icon Ok</option>
+                    <option value="icon-payment">Icon Payment</option>
+                    <option value="icon-pencil">Icon Pencil</option>
+                    <option value="icon-people">Icon People</option>
+                    <option value="icon-pie-chart">Icon Pie Chart</option>
+                    <option value="icon-redo">Icon Redo</option>
+                    <option value="icon-reload">Icon Reload</option>
+                    <option value="icon-schedule">Icon Schedule</option>
+                    <option value="icon-search">Icon Search</option>
+                    <option value="icon-setting">Icon Setting</option>
+                    <option value="icon-sum">Icon Sum</option>
+                    <option value="icon-tip">Icon Tip</option>
+                    <option value="icon-undo">Icon Undo</option>
                     <option value="icon-user">Icon User</option>
-                    <option value="icon-user-private">Icon User Private</option>
-                    <option value="icon-config">Icon Config</option>
-                    <option value="icon-shield">Icon Shield</option>
-                    <option value="icon-info">Icon Info</option>
-                    <option value="icon-requirement">Icon Requirement</option>
-                    <option value="icon-request">Icon Request</option>
-                    <option value="icon-candidate">Icon Candidate</option>
-                    <option value="icon-document">Icon Document</option>
-                    <option value="icon-file">Icon File</option>
+                    <option value="icon-worker">Icon Worker</option>
                 </select>
             </div>
             <div class="fitem">

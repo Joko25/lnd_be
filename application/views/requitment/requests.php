@@ -54,7 +54,7 @@
     </fieldset>
     <fieldset style="width: 49%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px; float: left;">
         <legend><b>Information Request</b></legend>
-        <div style="height: 145px; overflow: auto;" id="infoproposal">
+        <div style="height: 146px; overflow: auto;" id="infoproposal">
             <center>
                 <h4>No information at this time</h4>
             </center>

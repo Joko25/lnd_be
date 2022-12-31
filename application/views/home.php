@@ -245,7 +245,7 @@
 					if (row.icon != "") {
 						var iconCls = row.icon;
 					} else {
-						var iconCls = "icon-document";
+						var iconCls = "icon-file";
 					}
 				} else {
 					var iconCls = "";

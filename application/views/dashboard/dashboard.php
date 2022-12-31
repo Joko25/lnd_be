@@ -70,7 +70,7 @@
                         <div class="card-header">
                             Permission Today
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="height: 250px; overflow: auto;">
                             <?= $permittoday ?>
                         </div>
                     </div>
@@ -80,32 +80,58 @@
                         <div class="card-header">
                             Contract & Probation
                         </div>
-                        <div class="card-body" style="height: 200px; overflow: auto;">
+                        <div class="card-body" style="height: 250px; overflow: auto;">
                             <?= $contracts ?>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12 mt-3" id="announcement">
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-3 mt-3" id="announcement">
                     <div class="card">
                         <div class="card-header">
                             Announcement
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="height: 250px; overflow: auto;">
                             <div class="alert alert-danger" role="alert">
                                 No Announcement
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12 mt-3" id="tasklist">
+                <div class="col-lg-3 mt-3" id="tasklist">
                     <div class="card">
                         <div class="card-header">
                             Task List
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="height: 250px; overflow: auto;">
                             <div class="alert alert-danger" role="alert">
                                 No Information Task
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 mt-3" id="chart_service">
+                    <div class="card">
+                        <div class="card-header">
+                            Chart Service
+                        </div>
+                        <div class="card-body p-0" style="height: 250px;">
+                            <div id="chartServices"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 mt-3" id="chart_employee">
+                    <div class="card">
+                        <div class="card-header">
+                            Chart Employee Status
+                        </div>
+                        <div class="card-body p-0" style="height: 250px;">
+                            <div id="chartEmployee"></div>
                         </div>
                     </div>
                 </div>
@@ -186,58 +212,59 @@
     }
 
     $(function() {
-        // Highcharts.chart('chartServices', {
-        //     chart: {
-        //         plotBackgroundColor: null,
-        //         plotBorderWidth: null,
-        //         plotShadow: true,
-        //         type: 'pie'
-        //     },
-        //     title: {
-        //         text: ''
-        //     },
-        //     tooltip: {
-        //         pointFormat: '{series.name}: <b>{point.y:.1f}</b>'
-        //     },
-        //     accessibility: {
-        //         point: {
-        //             valueSuffix: ''
-        //         }
-        //     },
-        //     plotOptions: {
-        //         pie: {
-        //             allowPointSelect: true,
-        //             cursor: 'pointer',
-        //             dataLabels: {
-        //                 enabled: true,
-        //                 format: '<b>{point.name}</b>'
-        //             }
-        //         }
-        //     },
-        //     series: [{
-        //         name: 'Total',
-        //         colorByPoint: true,
-        //         data: [{
-        //             name: '< 1 Year',
-        //             y: 250,
-        //         }, {
-        //             name: '1 - 2 Year',
-        //             y: 105
-        //         }, {
-        //             name: '2 - 5 Year',
-        //             y: 52
-        //         }, {
-        //             name: '5 - 8 Year',
-        //             y: 10
-        //         }, {
-        //             name: '8 - 10 Year',
-        //             y: 12
-        //         }, {
-        //             name: '> 10 Year',
-        //             y: 44
-        //         }]
-        //     }]
-        // });
+        Highcharts.chart('chartServices', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: true,
+                type: 'pie',
+                height: 250
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y:.1f}</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: ''
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>'
+                    }
+                }
+            },
+            series: [{
+                name: 'Total',
+                colorByPoint: true,
+                data: [{
+                    name: '< 1 Year',
+                    y: 250,
+                }, {
+                    name: '1 - 2 Year',
+                    y: 105
+                }, {
+                    name: '2 - 5 Year',
+                    y: 52
+                }, {
+                    name: '5 - 8 Year',
+                    y: 10
+                }, {
+                    name: '8 - 10 Year',
+                    y: 12
+                }, {
+                    name: '> 10 Year',
+                    y: 44
+                }]
+            }]
+        });
 
         calendars();
         setTimeout(function() {
