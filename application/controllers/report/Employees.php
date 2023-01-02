@@ -40,9 +40,9 @@ class Employees extends CI_Controller
         if ($this->input->get()) {
             $form = $this->input->get();
 
-            if(@$form['filter_column'][0] == ""){
+            if (@$form['filter_column'][0] == "") {
                 die('<h3 style="color:red;">PLEASE CHOOSE DISPLAY COLUMN</h3>');
-            }else{
+            } else {
                 $this->db->select("a.*, 
                         (case when a.date_expired = '0000-00-00' then '-' else a.date_expired end) as date_expired,
                         b.users_id_from as status_check,
@@ -54,7 +54,9 @@ class Employees extends CI_Controller
                         g.name as position_name,
                         h.name as contract_name,
                         i.name as group_name,
-                        j.name as source_name");
+                        j.name as source_name,
+                        k.name as marital_name,
+                        l.name as religion_name");
                 $this->db->from('employees a');
                 $this->db->join('notifications b', "a.id = b.table_id and b.table_name = 'employees'", 'left');
                 $this->db->join('divisions c', 'c.id = a.division_id');
@@ -65,6 +67,8 @@ class Employees extends CI_Controller
                 $this->db->join('contracts h', 'h.id = a.contract_id', 'left');
                 $this->db->join('groups i', 'i.id = a.group_id', 'left');
                 $this->db->join('sources j', 'j.id = a.source_id', 'left');
+                $this->db->join('maritals k', 'k.id = a.marital_id', 'left');
+                $this->db->join('religions l', 'l.id = a.religion_id', 'left');
                 $this->db->where('a.deleted', 0);
                 $this->db->like("a.division_id", $form['filter_division']);
                 $this->db->like("a.departement_id", $form['filter_departement']);
@@ -74,8 +78,8 @@ class Employees extends CI_Controller
                 $records = $this->db->get()->result_array();
 
                 $header = "<tr><th width='20'>No</th>";
-                for ($i=0; $i < count($form['filter_column']); $i++) { 
-                    $header .= "<th>".strtoupper(strtr($form['filter_column'][$i], "_", " "))."</th>";
+                for ($i = 0; $i < count($form['filter_column']); $i++) {
+                    $header .= "<th>" . strtoupper(strtr($form['filter_column'][$i], "_", " ")) . "</th>";
                 }
                 $header .= "</tr>";
 
@@ -112,14 +116,14 @@ class Employees extends CI_Controller
                 <br>
                 
                 <table id="customers" border="1">';
-                    $html .= $header;
+                $html .= $header;
 
                 $no = 1;
                 $content = "";
                 foreach ($records as $data) {
-                    $content = "<tr><td>". $no . "</td>";
-                    for ($z=0; $z < count($form['filter_column']); $z++) { 
-                        $content .= "<td>".$data[$form['filter_column'][$z]]."</td>";
+                    $content = "<tr><td>" . $no . "</td>";
+                    for ($z = 0; $z < count($form['filter_column']); $z++) {
+                        $content .= "<td>" . $data[$form['filter_column'][$z]] . "</td>";
                     }
                     $content .= "</tr>";
 

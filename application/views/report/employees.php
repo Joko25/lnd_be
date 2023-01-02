@@ -41,8 +41,8 @@
                         <option value="position_name">Position</option>
                         <option value="group_name">Group</option>
                         <option value="source_name">Source</option>
-                        <option value="martial_id">Marital Status</option>
-                        <option value="religion_id">Religion</option>
+                        <option value="marital_name">Marital Status</option>
+                        <option value="religion_name">Religion</option>
                         <option value="date_sign">Sign In</option>
                         <option value="date_expired">Sign Expired</option>
                         <option value="address">Address</option>
@@ -74,9 +74,9 @@
                 </div>
             </div>
         </fieldset>
-    
 
-    <?= $button ?>
+
+        <?= $button ?>
     </form>
 </div>
 

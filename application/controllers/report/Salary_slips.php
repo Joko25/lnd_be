@@ -30,6 +30,56 @@ class Salary_slips extends CI_Controller
         }
     }
 
+    public function datatables()
+    {
+        if ($this->input->get()) {
+            $filter_from = $this->input->get('filter_from');
+            $filter_to = $this->input->get('filter_to');
+            $filter_division = $this->input->get('filter_division');
+            $filter_departement = $this->input->get('filter_departement');
+            $filter_departement_sub = $this->input->get('filter_departement_sub');
+            $filter_employee = $this->input->get('filter_employee');
+            $filter_group = $this->input->get('filter_group');
+            $username = $this->session->username;
+
+            $period_start = date("Y-m", strtotime($filter_from));
+            $period_end = date("Y-m", strtotime($filter_to));
+
+            //Select Query
+            $this->db->select('
+            b.departement_id,
+            b.departement_sub_id,
+            b.group_id,
+            c.name as departement_name, 
+            d.name as departement_sub_name, 
+            e.name as group_name, 
+            COUNT(b.id) as employee, 
+            SUM(a.net_income) as income');
+            $this->db->from('payrolls a');
+            $this->db->join('employees b', "a.employee_id = b.id");
+            $this->db->join('departements c', "b.departement_id = c.id");
+            $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
+            $this->db->join('groups e', "b.group_id = e.id");
+            $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
+            $this->db->where('a.deleted', 0);
+            $this->db->where('a.status', 0);
+            $this->db->where('a.period_start =', $period_start);
+            $this->db->where('a.period_end =', $period_end);
+            $this->db->like('b.id', $filter_employee);
+            $this->db->like('b.division_id', $filter_division);
+            $this->db->like('b.departement_id', $filter_departement);
+            $this->db->like('b.departement_sub_id', $filter_departement_sub);
+            $this->db->like('b.group_id', $filter_group);
+            $this->db->group_by(array("c.id", "d.id"));
+            $this->db->order_by('c.name', 'ASC');
+            $this->db->order_by('SUM(a.net_income)', 'ASC');
+            //Get Data Array
+            $records = $this->db->get()->result_array();
+
+            echo json_encode($records);
+        }
+    }
+
     public function getData()
     {
         if ($this->input->get()) {
@@ -584,6 +634,161 @@ class Salary_slips extends CI_Controller
             $html .= '</body></html>';
             echo $html;
             $html .= '</table>';
+        }
+    }
+
+    public function print_recap($option = "")
+    {
+        if ($option == "excel") {
+            $format  = date("Ymd");
+            header("Content-type: application/vnd-ms-excel");
+            header("Content-Disposition: attachment; filename=report_summary_payroll_$format.xls");
+        }
+
+        if ($this->input->get()) {
+            $filter_from = $this->input->get('filter_from');
+            $filter_to = $this->input->get('filter_to');
+            $filter_division = $this->input->get('filter_division');
+            $filter_departement = $this->input->get('filter_departement');
+            $filter_departement_sub = $this->input->get('filter_departement_sub');
+            $filter_employee = $this->input->get('filter_employee');
+            $filter_group = $this->input->get('filter_group');
+            $username = $this->session->username;
+
+            $period_start = date("Y-m", strtotime($filter_from));
+            $period_end = date("Y-m", strtotime($filter_to));
+
+            //Select Query
+            $this->db->select('
+                b.departement_id,
+                b.departement_sub_id,
+                b.group_id,
+                c.name as departement_name, 
+                d.name as departement_sub_name, 
+                e.name as group_name, 
+                COUNT(b.id) as employee, 
+                SUM(a.net_income) as income');
+            $this->db->from('payrolls a');
+            $this->db->join('employees b', "a.employee_id = b.id");
+            $this->db->join('departements c', "b.departement_id = c.id");
+            $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
+            $this->db->join('groups e', "b.group_id = e.id");
+            $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
+            $this->db->where('a.deleted', 0);
+            $this->db->where('a.status', 0);
+            $this->db->where('a.period_start =', $period_start);
+            $this->db->where('a.period_end =', $period_end);
+            $this->db->like('b.id', $filter_employee);
+            $this->db->like('b.division_id', $filter_division);
+            $this->db->like('b.departement_id', $filter_departement);
+            $this->db->like('b.departement_sub_id', $filter_departement_sub);
+            $this->db->like('b.group_id', $filter_group);
+            $this->db->group_by(array("c.id", "d.id", "e.id"));
+            $this->db->order_by('c.name', 'ASC');
+            $this->db->order_by('SUM(a.net_income)', 'ASC');
+            //Get Data Array
+            $payrolls = $this->db->get()->result_array();
+
+            //Config Page
+            $rows = 40;
+            $page = ceil(count($payrolls) / $rows);
+
+            //Config
+            $this->db->select('*');
+            $this->db->from('config');
+            $config = $this->db->get()->row();
+
+            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
+            $no = 1;
+            $hal = 1;
+            for ($i = 0; $i < $page; $i++) {
+                //Select Query
+                $this->db->select('
+                    b.departement_id,
+                    b.departement_sub_id,
+                    b.group_id,
+                    c.name as departement_name, 
+                    d.name as departement_sub_name, 
+                    e.name as group_name, 
+                    COUNT(b.id) as employee, 
+                    SUM(a.net_income) as income');
+                $this->db->from('payrolls a');
+                $this->db->join('employees b', "a.employee_id = b.id");
+                $this->db->join('departements c', "b.departement_id = c.id");
+                $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
+                $this->db->join('groups e', "b.group_id = e.id");
+                $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
+                $this->db->where('a.deleted', 0);
+                $this->db->where('a.status', 0);
+                $this->db->where('a.period_start =', $period_start);
+                $this->db->where('a.period_end =', $period_end);
+                $this->db->like('b.id', $filter_employee);
+                $this->db->like('b.division_id', $filter_division);
+                $this->db->like('b.departement_id', $filter_departement);
+                $this->db->like('b.departement_sub_id', $filter_departement_sub);
+                $this->db->like('b.group_id', $filter_group);
+                $this->db->group_by(array("c.id", "d.id"));
+                $this->db->order_by('c.name', 'ASC');
+                $this->db->order_by('SUM(a.net_income)', 'ASC');
+                $this->db->limit(50, ($i * 50));
+                //Get Data Array
+                $records = $this->db->get()->result_array();
+
+                $html .= '  <center>
+                            <div style="float: left; font-size: 12px; text-align: left;">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+                                            <img src="' . $config->favicon . '" width="30">
+                                        </td>
+                                        <td style="font-size: 14px; text-align: left; margin:2px;">
+                                            <b>' . $config->name . '</b><br>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="float: right; font-size: 12px; text-align: right;">
+                                Print Date ' . date("d M Y H:m:s") . ' <br>
+                                Print By ' . $this->session->username . ' <br>
+                                Page ' . $hal . '/' . $page . '
+                            </div>
+                        </center>
+                        <br><br><br>
+                        <center>
+                            <h3 style="margin:0;">REPORT RECAP SALARY SLIP</h3>
+                            <p style="margin:0;">Period <b>' . date("d F Y", strtotime($filter_from)) . '</b> to <b>' . date("d F Y", strtotime($filter_to)) . '</b></p>
+                            <br>
+                        </center>
+                        
+                        <table id="customers" border="1">
+                            <tr>
+                                <th width="20" style="text-align:center;">No</th>
+                                <th style="text-align:center;">Departement</th>
+                                <th style="text-align:center;">Departement Sub</th>
+                                <th style="text-align:center;">Employee</th>
+                            </tr>';
+                $totalEmployee = 0;
+                $totalIncome = 0;
+                foreach ($records as $data) {
+                    $html .= '  <tr>
+                                    <td style="text-align:center;">' . $no . '</td>
+                                    <td>' . $data['departement_name'] . '</td>
+                                    <td>' . $data['departement_sub_name'] . '</td>
+                                    <td style="text-align:right;">' . number_format($data['employee']) . '</td>
+                                </tr>';
+                    $totalEmployee += $data['employee'];
+                    $totalIncome += $data['income'];
+                    $no++;
+                }
+
+                $hal++;
+                if (($i + 1) != $page) {
+                    $html .= '<div style="page-break-after:always;"></div>';
+                }
+            }
+
+            $html .= '</body></html>';
+            echo $html;
         }
     }
 }
