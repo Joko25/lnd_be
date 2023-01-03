@@ -246,22 +246,76 @@
                 colorByPoint: true,
                 data: [{
                     name: '< 1 Year',
-                    y: 250,
+                    y: <?= $chartServices[0]['y'] ?>,
                 }, {
                     name: '1 - 2 Year',
-                    y: 105
+                    y: <?= $chartServices[1]['y'] ?>
                 }, {
                     name: '2 - 5 Year',
-                    y: 52
+                    y: <?= $chartServices[2]['y'] ?>
                 }, {
                     name: '5 - 8 Year',
-                    y: 10
+                    y: <?= $chartServices[3]['y'] ?>
                 }, {
                     name: '8 - 10 Year',
-                    y: 12
+                    y: <?= $chartServices[4]['y'] ?>
                 }, {
                     name: '> 10 Year',
-                    y: 44
+                    y: <?= $chartServices[5]['y'] ?>
+                }]
+            }]
+        });
+
+        Highcharts.chart('chartEmployee', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: true,
+                type: 'pie',
+                height: 250
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y:.1f}</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: ''
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>'
+                    }
+                }
+            },
+            series: [{
+                name: 'Total',
+                colorByPoint: true,
+                data: [{
+                    name: '<?= $chartEmployee[0]->name ?>',
+                    y: <?= $chartEmployee[0]->employee ?>,
+                }, {
+                    name: '<?= $chartEmployee[1]->name ?>',
+                    y: <?= $chartEmployee[1]->employee ?>,
+                }, {
+                    name: '<?= $chartEmployee[2]->name ?>',
+                    y: <?= $chartEmployee[2]->employee ?>,
+                }, {
+                    name: '<?= $chartEmployee[3]->name ?>',
+                    y: <?= $chartEmployee[3]->employee ?>,
+                }, {
+                    name: '<?= $chartEmployee[4]->name ?>',
+                    y: <?= $chartEmployee[4]->employee ?>,
+                }, {
+                    name: '<?= $chartEmployee[5]->name ?>',
+                    y: <?= $chartEmployee[5]->employee ?>
                 }]
             }]
         });

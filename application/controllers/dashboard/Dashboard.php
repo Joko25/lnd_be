@@ -23,6 +23,8 @@ class Dashboard extends CI_Controller
             $data['attandance'] = $this->myattandance();
             $data['permittoday'] = $this->permitToday();
             $data['contracts'] = $this->contracts();
+            $data['chartServices'] = $this->chartServices();
+            $data['chartEmployee'] = $this->chartEmployee();
 
             if (date("H:i:s") >= "05:00:00" and date("H:i:s") <= "11:00:00") {
                 $data['day'] = "Good Morning";
@@ -448,5 +450,36 @@ class Dashboard extends CI_Controller
         }
 
         return $html;
+    }
+
+    public function chartServices()
+    {
+        $query = $this->crud->query("SELECT 
+        SUM(CASE WHEN (timestampdiff(year, date_sign, curdate()) > 10) THEN 1 ELSE 0 END) as ten,
+        SUM(CASE WHEN (timestampdiff(year, date_sign, curdate()) > 8) and (timestampdiff(year, date_sign, curdate()) <= 10) THEN 1 ELSE 0 END) as eightten, 
+        SUM(CASE WHEN (timestampdiff(year, date_sign, curdate()) > 5) and (timestampdiff(year, date_sign, curdate()) <= 8) THEN 1 ELSE 0 END) as fiveeight,
+        SUM(CASE WHEN (timestampdiff(year, date_sign, curdate()) > 2) and (timestampdiff(year, date_sign, curdate()) <= 5) THEN 1 ELSE 0 END) as twofive, 
+        SUM(CASE WHEN (timestampdiff(year, date_sign, curdate()) > 1) and (timestampdiff(year, date_sign, curdate()) <= 2) THEN 1 ELSE 0 END) as onetwo, 
+        SUM(CASE WHEN (timestampdiff(year, date_sign, curdate()) <= 1) THEN 1 ELSE 0 END) as one 
+        FROM employees");
+
+        foreach ($query as $row) {
+            $arr = array(
+                array("name" => "< 1 Year", "y" => $row->one),
+                array("name" => "1 - 2 Year", "y" => $row->onetwo),
+                array("name" => "2 - 5 Year", "y" => $row->twofive),
+                array("name" => "5 - 8 Year", "y" => $row->fiveeight),
+                array("name" => "8 - 10 Year", "y" => $row->eightten),
+                array("name" => "> 10 Year", "y" => $row->ten),
+            );
+        }
+
+        return $arr;
+    }
+
+    public function chartEmployee()
+    {
+        $query = $this->crud->query("SELECT b.name, COUNT(a.number) as employee FROM employees a JOIN contracts b  ON a.contract_id = b.id GROUP BY b.name");
+        return $query;
     }
 }
