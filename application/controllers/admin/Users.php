@@ -12,6 +12,7 @@ class Users extends CI_Controller
         $this->load->library('session');
         $this->load->model('crud');
         $this->load->model('emails');
+        $this->load->model('whatsapp');
 
         //VALIDASI FORM
         $this->form_validation->set_rules('name', 'Name', 'required|min_length[5]|max_length[50]');
