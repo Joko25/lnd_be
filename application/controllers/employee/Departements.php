@@ -36,7 +36,15 @@ class Departements extends CI_Controller
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
         $division_id = $this->input->get('division_id') ? $this->input->get('division_id') : "";
-        $send = $this->crud->reads('departements', ["name" => $post, "division_id" => $division_id, "id" => $this->session->departement_id]);
+        
+        $user = $this->crud->read("users", [], ["id" => $this->session->id]);
+        if($user->access == "0"){
+            $departement_id = "";
+        }else{
+            $departement_id = $this->session->departement_id;
+        }
+        
+        $send = $this->crud->reads('departements', ["name" => $post, "division_id" => $division_id, "id" => $departement_id]);
         echo json_encode($send);
     }
 
