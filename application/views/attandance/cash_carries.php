@@ -56,6 +56,7 @@
             <div class="fitem">
                 <span style="width:30%; display:inline-block;"></span>
                 <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
+                <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-list"></i> Attandance Cash Carry</a>
             </div>
         </div>
         <div style="width: 50%; float: left;">
@@ -117,6 +118,12 @@
                 <input style="width:30%;" name="end" mask="99:99:99" required id="end" class="easyui-maskedbox">
             </div>
             <div class="fitem">
+                <span style="width:30%; display:inline-block;">Duration <small style="color:red;">(hour)</small></span>
+                <input style="width:10%;" name="duration_hour" required id="duration_hour" class="easyui-numberbox" data-options="precision:2">
+                <input style="width:40%;" name="duration" required id="duration" class="easyui-textbox">
+                <a class="easyui-linkbutton" href="#" onclick="convertHour()"><i class="fa fa-clock"></i></a>
+            </div>
+            <div class="fitem">
                 <span style="width:30%; display:inline-block;">Remarks</span>
                 <input style="width:60%; height:50px;" multiline="true" name="remarks" id="remarks" class="easyui-textbox">
             </div>
@@ -158,6 +165,23 @@
         $('#end').maskedbox('setValue', '17:00:00');
         $('#employee_id').combogrid('enable');
         $('#request_code').textbox('enable');
+    }
+
+    function convertHour() {
+        var trans_date = $("#trans_date").datebox('getValue');
+        var start = $("#start").maskedbox('getValue');
+        var end = $("#end").maskedbox('getValue');
+
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('attandance/cash_carries/convertHour') ?>",
+            data: "trans_date=" + trans_date + "&start=" + start + "&end=" + end,
+            dataType: "json",
+            success: function(json) {
+                $("#duration").textbox('setValue', json.duration);
+                $("#duration_hour").numberbox('setValue', json.duration_hour);
+            }
+        });
     }
 
     //EDIT DATA

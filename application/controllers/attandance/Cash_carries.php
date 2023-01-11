@@ -89,7 +89,7 @@ class Cash_carries extends CI_Controller
         echo $templatefinal;
     }
 
-    public function readOvertimePrice($employee_id, $trans_date, $start, $end)
+    public function readOvertimePrice($employee_id, $trans_date, $hour)
     {
         $this->db->select('c.days');
         $this->db->from('shift_employees a');
@@ -105,11 +105,6 @@ class Cash_carries extends CI_Controller
         $salary = $this->db->get()->row();
 
         //ambil durasi berapa jam jika ada lemburan
-        $time_begin = strtotime(@$trans_date . " " . @$start);
-        $time_end = strtotime(@$trans_date . " " . @$end);
-        $diff = $time_end - $time_begin;
-        $hour = floor($diff / (60 * 60));
-
         $start = strtotime($trans_date);
 
         //cek apakah ada hari libur nasional per tanggal dari looping
@@ -119,71 +114,89 @@ class Cash_carries extends CI_Controller
         $calendars = $this->db->get()->result_array();
 
         $standard = @round($salary->salary / 173);
-        $total = 0;
-        $convert = 0;
+        $total = round($standard * $hour);
+        $convert = (1 * $hour);
 
         //Jika karyawan yg di looping masa kerja nya 5 hari dalam seminggu
-        if (@$shift_employee->days == "5") {
-            if (date('w', $start) !== '0' && date('w', $start) !== '6') {
+        // if (@$shift_employee->days == "5") {
+        //     if (date('w', $start) !== '0' && date('w', $start) !== '6') {
 
-                //Ini untuk menghitung overtime
-                //Kalo ada tanggal Merah
-                if (count($calendars) > 0) {
-                    //Looping dari durasi jam lembur
-                    for ($o = 0; $o < $hour; $o++) {
-                        $total += ($standard * 2);
-                        $convert += (1 * 2);
-                    }
-                } else {
-                    //Perhitungan Overtime
-                    for ($o = 0; $o < $hour; $o++) {
-                        if ($o == 0) {
-                            $total += ($standard * 1.5);
-                            $convert += (1 * 1.5);
-                        } else {
-                            $total += ($standard * 2);
-                            $convert += (1 * 2);
-                        }
-                    }
-                }
-            } else {
-                //Perhitungan Overtime
-                for ($o = 0; $o < $hour; $o++) {
-                    $total += ($standard * 2);
-                    $convert += (1 * 2);
-                }
-            }
-        } else {
-            if (date('w', $start) !== '0') {
+        //         //Ini untuk menghitung overtime
+        //         //Kalo ada tanggal Merah
+        //         if (count($calendars) > 0) {
+        //             //Looping dari durasi jam lembur
+        //             for ($o = 0; $o < $hour; $o++) {
+        //                 $total += ($standard * 2);
+        //                 $convert += (1 * 2);
+        //             }
+        //         } else {
+        //             //Perhitungan Overtime
+        //             for ($o = 0; $o < $hour; $o++) {
+        //                 if ($o == 0) {
+        //                     $total += ($standard * 1.5);
+        //                     $convert += (1 * 1.5);
+        //                 } else {
+        //                     $total += ($standard * 2);
+        //                     $convert += (1 * 2);
+        //                 }
+        //             }
+        //         }
+        //     } else {
+        //         //Perhitungan Overtime
+        //         for ($o = 0; $o < $hour; $o++) {
+        //             $total += ($standard * 2);
+        //             $convert += (1 * 2);
+        //         }
+        //     }
+        // } else {
+        //     if (date('w', $start) !== '0') {
 
-                //Kalo ada tanggal Merah
-                if (count($calendars) > 0) {
-                    for ($o = 0; $o < $hour; $o++) {
-                        $total += ($standard * 2);
-                        $convert += (1 * 2);
-                    }
-                } else {
-                    //Perhitungan Overtime
-                    for ($o = 0; $o < $hour; $o++) {
-                        if ($o == 0) {
-                            $total += ($standard * 1.5);
-                            $convert += (1 * 1.5);
-                        } else {
-                            $total += ($standard * 2);
-                            $convert += (1 * 2);
-                        }
-                    }
-                }
-            } else {
-                //Perhitungan Overtime
-                for ($o = 0; $o < $hour; $o++) {
-                    $total += ($standard * 2);
-                    $convert += (1 * 2);
-                }
-            }
-        }
+        //         //Kalo ada tanggal Merah
+        //         if (count($calendars) > 0) {
+        //             for ($o = 0; $o < $hour; $o++) {
+        //                 $total += ($standard * 2);
+        //                 $convert += (1 * 2);
+        //             }
+        //         } else {
+        //             //Perhitungan Overtime
+        //             for ($o = 0; $o < $hour; $o++) {
+        //                 if ($o == 0) {
+        //                     $total += ($standard * 1.5);
+        //                     $convert += (1 * 1.5);
+        //                 } else {
+        //                     $total += ($standard * 2);
+        //                     $convert += (1 * 2);
+        //                 }
+        //             }
+        //         }
+        //     } else {
+        //         //Perhitungan Overtime
+        //         for ($o = 0; $o < $hour; $o++) {
+        //             $total += ($standard * 2);
+        //             $convert += (1 * 2);
+        //         }
+        //     }
+        // }
 
         return array("amount" => round($total), "convert" => $convert);
+    }
+
+    public function convertHour()
+    {
+        $trans_date = $this->input->post('trans_date');
+        $start = $this->input->post('start');
+        $end = $this->input->post('end');
+
+        //Set Duration
+        $time_begin = strtotime($trans_date . " " . $start);
+        $time_end = strtotime($trans_date . " " . $end);
+        $diff = $time_end - $time_begin;
+        $hour = floor($diff / (60 * 60));
+        $minutes = ($diff - $hour * (60 * 60));
+        $duration = $hour . " Hour " . floor($minutes / 60) . " Minutes";
+        $duration_hour = $hour = round($diff / (60 * 60), 2);;
+        $arr = array("duration" => $duration, "duration_hour" => $duration_hour);
+        die(json_encode($arr));
     }
 
     //GET DATATABLES
@@ -276,19 +289,12 @@ class Cash_carries extends CI_Controller
             $request_code = $post['request_code'];
             $start = $post['start'];
             $end = $post['end'];
+            $duration = $post['duration'];
+            $duration_hour = $post['duration_hour'];
             $type = $post['type'];
             $remarks = $post['remarks'];
 
-            //Set Duration
-            $time_begin = strtotime($trans_date . " " . $start);
-            $time_end = strtotime($trans_date . " " . $end);
-            $diff = $time_end - $time_begin;
-            $hour = floor($diff / (60 * 60));
-            $minutes = $diff - $hour * (60 * 60);
-            $duration = $hour . " Hour " . floor($minutes / 60) . " Minutes";
-            $duration_hour = $hour;
-
-            $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, $start, $end);
+            $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, $duration_hour);
 
             $post_final = array(
                 "trans_date" =>  $trans_date,
@@ -323,20 +329,12 @@ class Cash_carries extends CI_Controller
             $id   = base64_decode($this->input->get('id'));
             $post = $this->input->post();
 
-            //Set Duration
-            $time_begin = strtotime($post['trans_date'] . " " . $post['start']);
-            $time_end = strtotime($post['trans_date'] . " " . $post['end']);
-            $diff = $time_end - $time_begin;
-            $hour = floor($diff / (60 * 60));
-            $minutes = $diff - $hour * (60 * 60);
-            $duration = $hour . " Hour " . floor($minutes / 60) . " Minutes";
-
             $post_final = array(
                 "trans_date" =>  $post['trans_date'],
                 "start" =>  $post['start'],
                 "end" =>  $post['end'],
                 "type" =>  $post['type'],
-                "duration" =>  $duration,
+                "duration" =>  $post['duration'],
                 "remarks" =>  $post['remarks'],
                 "updated_by" => $this->session->username,
                 "updated_date" => date('Y-m-d H:i:s')
@@ -419,8 +417,9 @@ class Cash_carries extends CI_Controller
                 'trans_date' => $data->val($i, 3),
                 'start' => $data->val($i, 4),
                 'end' => $data->val($i, 5),
-                'type' => $data->val($i, 6),
-                'remarks' => $data->val($i, 7),
+                'duration_hour' => $data->val($i, 6),
+                'type' => $data->val($i, 7),
+                'remarks' => $data->val($i, 8),
                 'request_code' => $templatefinal
             );
         }
@@ -479,11 +478,12 @@ class Cash_carries extends CI_Controller
                         $time_end = strtotime($data['trans_date'] . " " . $data['end']);
                         $diff = $time_end - $time_begin;
                         $hour = floor($diff / (60 * 60));
+
                         $minutes = $diff - $hour * (60 * 60);
                         $duration = $hour . " Hour " . floor($minutes / 60) . " Minutes";
                         $duration_hour = $hour;
 
-                        $ot_amount = $this->readOvertimePrice($employee->id, $data['trans_date'], $data['start'], $data['end']);
+                        $ot_amount = $this->readOvertimePrice($employee->id, $data['trans_date'], $duration_hour);
 
                         $post_cash_carries = array(
                             'employee_id' => $employee->id,
@@ -493,7 +493,7 @@ class Cash_carries extends CI_Controller
                             'end' => $data['end'],
                             'type' => $data['type'],
                             'duration' => $duration,
-                            'duration_hour' => $duration_hour,
+                            'duration_hour' => $data['duration_hour'],
                             'remarks' => $data['remarks'],
                             'duration_convert' =>  $ot_amount['convert'],
                             'amount' =>  $ot_amount['amount']

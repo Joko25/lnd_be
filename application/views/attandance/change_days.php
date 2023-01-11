@@ -7,7 +7,7 @@
             <th rowspan="2" data-options="field:'employee_id',width:100,halign:'center'">Employee ID</th>
             <th rowspan="2" data-options="field:'employee_name',width:200,halign:'center'">Employee Name</th>
             <th rowspan="2" data-options="field:'start',width:80,halign:'center'">Start</th>
-            <th rowspan="2" data-options="field:'end',width:80,halign:'center'">End</th>
+            <th rowspan="2" data-options="field:'end',width:80,halign:'center'">Replace</th>
             <th rowspan="2" data-options="field:'remarks',width:200,halign:'center'">Remarks</th>
             <th colspan="3" data-options="field:'',width:100,halign:'center'"> Approval</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
