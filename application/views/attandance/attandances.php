@@ -195,6 +195,7 @@
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combobox('getValue');
         var filter_status = $("#filter_status").combobox('getValue');
+
         var url = "?filter_from=" + filter_from +
             "&filter_to=" + filter_to +
             "&filter_division=" + filter_division +
@@ -203,19 +204,35 @@
             "&filter_employee=" + filter_employee +
             "&filter_status=" + filter_status;
 
-        $('#dg').datagrid({
-            url: '<?= base_url('attandance/attandances/datatables') ?>' + url,
-            rowStyler: function(index, row) {
-                if (row.reason != null) {
-                    return 'background-color:#FFE39E; font-weight:bold;';
-                } else if (row.holiday != null) {
-                    return 'background-color:#FF9E9E; color:white; font-weight:bold;';
-                }
-            }
-        });
+        // Copy date parts of the timestamps, discarding the time parts.
+        var date1 = new Date(filter_from);
+        var date2 = new Date(filter_to);
 
-        $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
-        $("#printout").attr('src', '<?= base_url('attandance/attandances/print') ?>' + url);
+        // // Do the math.
+        var Difference_In_Time = date2.getTime() - date1.getTime();
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+        if (Difference_In_Days <= 31) {
+            if ((filter_division != "" && filter_departement != "" && filter_departement_sub != "") || filter_employee != "") {
+                $('#dg').datagrid({
+                    url: '<?= base_url('attandance/attandances/datatables') ?>' + url,
+                    rowStyler: function(index, row) {
+                        if (row.reason != null) {
+                            return 'background-color:#FFE39E; font-weight:bold;';
+                        } else if (row.holiday != null) {
+                            return 'background-color:#FF9E9E; color:white; font-weight:bold;';
+                        }
+                    }
+                });
+
+                $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
+                $("#printout").attr('src', '<?= base_url('attandance/attandances/print') ?>' + url);
+            } else {
+                toastr.info("Please Select Division, Departement, Departement Sub or Employee");
+            }
+        } else {
+            toastr.error("Max Duration Period Date is 31 Days");
+        }
     }
 
     //PRINT PDF
@@ -239,7 +256,23 @@
             "&filter_employee=" + filter_employee +
             "&filter_status=" + filter_status;
 
-        window.location.assign('<?= base_url('attandance/attandances/print/excel') ?>' + url);
+        // Copy date parts of the timestamps, discarding the time parts.
+        var date1 = new Date(filter_from);
+        var date2 = new Date(filter_to);
+
+        // // Do the math.
+        var Difference_In_Time = date2.getTime() - date1.getTime();
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+        if (Difference_In_Days <= 31) {
+            if ((filter_division != "" && filter_departement != "" && filter_departement_sub != "") || filter_employee != "") {
+                window.location.assign('<?= base_url('attandance/attandances/print/excel') ?>' + url);
+            } else {
+                toastr.info("Please Select Division, Departement, Departement Sub or Employee");
+            }
+        } else {
+            toastr.error("Max Duration Period Date is 31 Days");
+        }
     }
     //RELOAD
     function reload() {

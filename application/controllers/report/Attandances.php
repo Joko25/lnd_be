@@ -213,6 +213,12 @@ class Attandances extends CI_Controller
                     $this->db->where('start', $working_date);
                     $change_day = $this->db->get()->row();
 
+                    $this->db->select("*");
+                    $this->db->from('cash_carries');
+                    $this->db->where('employee_id', $record['id']);
+                    $this->db->where('trans_date', $working_date);
+                    $cash_carry = $this->db->get()->row();
+
                     //Jika hari kerja nya adalah 5 hari
                     if (@$shift->days == "5") {
                         //sabtu dan minggu libur
@@ -243,7 +249,10 @@ class Attandances extends CI_Controller
                     //jika status tanggal merah nya kosong
                     if (@$holiday->description == null) {
                         //cek apakah harinya minggu jika iya maka default Weekend
-                        if ($weekend == "Weekend") {
+                        if (@$cash_carry->start != null) {
+                            $holiday = "Cash Carry " . $cash_carry->request_code;
+                            $style = "style='background: #ffe9ad;'";
+                        } elseif ($weekend == "Weekend") {
                             $holiday = $weekend;
                             $style = "style='background: #FFBEB0;'";
                         } elseif (@$permit->permit_name != null) {

@@ -929,8 +929,6 @@ class Home extends CI_Controller
                         <th>End</th>
                         <th>Type</th>
                         <th>Duration</th>
-                        <th>Convert</th>
-                        <th>Amount</th>
                         <th>Remarks</th>
                         <th>#</th>
                     </tr>';
@@ -953,8 +951,6 @@ class Home extends CI_Controller
                                 <td>' . $data['end'] . '</td>
                                 <td>' . $data['type'] . '</td>
                                 <td>' . $data['duration_hour'] . '</td>
-                                <td>' . $data['duration_convert'] . '</td>
-                                <td>' . $data['amount'] . '</td>
                                 <td>' . $data['remarks'] . '</td>
                                 <td>
                                     <div id="' . $data['id'] . '">

@@ -117,67 +117,6 @@ class Cash_carries extends CI_Controller
         $total = round($standard * $hour);
         $convert = (1 * $hour);
 
-        //Jika karyawan yg di looping masa kerja nya 5 hari dalam seminggu
-        // if (@$shift_employee->days == "5") {
-        //     if (date('w', $start) !== '0' && date('w', $start) !== '6') {
-
-        //         //Ini untuk menghitung overtime
-        //         //Kalo ada tanggal Merah
-        //         if (count($calendars) > 0) {
-        //             //Looping dari durasi jam lembur
-        //             for ($o = 0; $o < $hour; $o++) {
-        //                 $total += ($standard * 2);
-        //                 $convert += (1 * 2);
-        //             }
-        //         } else {
-        //             //Perhitungan Overtime
-        //             for ($o = 0; $o < $hour; $o++) {
-        //                 if ($o == 0) {
-        //                     $total += ($standard * 1.5);
-        //                     $convert += (1 * 1.5);
-        //                 } else {
-        //                     $total += ($standard * 2);
-        //                     $convert += (1 * 2);
-        //                 }
-        //             }
-        //         }
-        //     } else {
-        //         //Perhitungan Overtime
-        //         for ($o = 0; $o < $hour; $o++) {
-        //             $total += ($standard * 2);
-        //             $convert += (1 * 2);
-        //         }
-        //     }
-        // } else {
-        //     if (date('w', $start) !== '0') {
-
-        //         //Kalo ada tanggal Merah
-        //         if (count($calendars) > 0) {
-        //             for ($o = 0; $o < $hour; $o++) {
-        //                 $total += ($standard * 2);
-        //                 $convert += (1 * 2);
-        //             }
-        //         } else {
-        //             //Perhitungan Overtime
-        //             for ($o = 0; $o < $hour; $o++) {
-        //                 if ($o == 0) {
-        //                     $total += ($standard * 1.5);
-        //                     $convert += (1 * 1.5);
-        //                 } else {
-        //                     $total += ($standard * 2);
-        //                     $convert += (1 * 2);
-        //                 }
-        //             }
-        //         }
-        //     } else {
-        //         //Perhitungan Overtime
-        //         for ($o = 0; $o < $hour; $o++) {
-        //             $total += ($standard * 2);
-        //             $convert += (1 * 2);
-        //         }
-        //     }
-        // }
-
         return array("amount" => round($total), "convert" => $convert);
     }
 
@@ -223,6 +162,9 @@ class Cash_carries extends CI_Controller
             $result = array();
             //Select Query
             $this->db->select('a.*, 
+                b.contract_id,
+                h.time_in,
+                h.time_out,
                 g.users_id_from as status_check,
                 g.users_id_to as status_notification, 
                 g.updated_date as status_date,
@@ -241,6 +183,7 @@ class Cash_carries extends CI_Controller
             $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
             $this->db->join('users f', "a.created_by = f.username");
             $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'cash_carries'", 'left');
+            $this->db->join('attandances h', "b.number = h.number and a.trans_date = h.date_in", 'left');
             $this->db->where('b.deleted', 0);
             $this->db->where('b.status', 0);
             $this->db->where('a.deleted', 0);
@@ -272,9 +215,76 @@ class Cash_carries extends CI_Controller
             //Get Data Array
             $records = $this->db->get()->result_array();
 
+            foreach ($records as $record) {
+                $this->db->select('c.days');
+                $this->db->from('shift_employees a');
+                $this->db->join('shifts b', 'a.shift_id = b.id', 'left');
+                $this->db->join('shift_details c', 'b.id = c.shift_id', 'left');
+                $this->db->where('a.employee_id', $record['employee_id']);
+                $shift_employee = $this->db->get()->row();
+
+                $this->db->select('trans_date');
+                $this->db->from('calendars');
+                $this->db->where('trans_date', $record['trans_date']);
+                $calendars = $this->db->get()->result_array();
+
+                $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["contract_id" => $record['contract_id']]);
+
+                $start = strtotime($record['trans_date']);
+                $att_time_begin = strtotime(@$record['trans_date'] . " " . @$record['time_in']);
+                $att_time_end = strtotime(@$record['trans_date'] . " " . @$record['time_out']);
+                $att_diff = $att_time_end - $att_time_begin;
+                $att_hour = floor($att_diff / (60 * 60));
+
+                $cc_hour = $record['duration_hour'];
+
+                //Validasi Jam
+                if ($att_hour > $cc_hour) {
+                    $hour = $cc_hour;
+                } else {
+                    $hour = $att_hour;
+                }
+
+                //Validasi Uang makan
+                if ($record['meal'] == 0 or $record['time_in'] == "") {
+                    $meal = 0;
+                } else {
+                    $meal = @$allowance_cash_carry->meal;
+                }
+
+                if (@$shift_employee->days == "5") {
+                    if (date('w', $start) !== '0' && date('w', $start) !== '6') {
+
+                        //Kalo ada tanggal Merah
+                        if (count($calendars) > 0) {
+                            $total = ((@$allowance_cash_carry->holiday * $hour) + $meal);
+                        } else {
+                            $total = ((@$allowance_cash_carry->weekday * $hour) + $meal);
+                        }
+                    } else {
+                        $total = ((@$allowance_cash_carry->weekend * $hour) + $meal);
+                    }
+                } else {
+                    if (date('w', $start) !== '0') {
+
+                        //Kalo ada tanggal Merah
+                        if (count($calendars) > 0) {
+                            $total = ((@$allowance_cash_carry->holiday * $hour) + $meal);
+                        } else {
+                            $total = ((@$allowance_cash_carry->weekday * $hour) + $meal);
+                        }
+                    } else {
+                        $total = ((@$allowance_cash_carry->weekend * $hour) + $meal);
+                    }
+                }
+
+                $amount = ["amount" => $total, "duration_att" => number_format($att_hour, 2)];
+                $datas[] = array_merge($record, $amount);
+            }
+
             //Mapping Data
             $result['total'] = $totalRows;
-            $result = array_merge($result, ['rows' => @$records]);
+            $result = array_merge($result, ['rows' => @$datas]);
             echo json_encode($result);
         }
     }
@@ -292,6 +302,7 @@ class Cash_carries extends CI_Controller
             $duration = $post['duration'];
             $duration_hour = $post['duration_hour'];
             $type = $post['type'];
+            $meal = empty($post['meal']) ? 0 : 1;
             $remarks = $post['remarks'];
 
             $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, $duration_hour);
@@ -307,6 +318,7 @@ class Cash_carries extends CI_Controller
                 "duration_hour" =>  $duration_hour,
                 "duration_convert" =>  $ot_amount['convert'],
                 "amount" =>  $ot_amount['amount'],
+                "meal" =>  $meal,
                 "remarks" =>  $remarks,
             );
 
@@ -335,6 +347,7 @@ class Cash_carries extends CI_Controller
                 "end" =>  $post['end'],
                 "type" =>  $post['type'],
                 "duration" =>  $post['duration'],
+                "meal" =>  $post['meal'],
                 "remarks" =>  $post['remarks'],
                 "updated_by" => $this->session->username,
                 "updated_date" => date('Y-m-d H:i:s')
@@ -419,7 +432,8 @@ class Cash_carries extends CI_Controller
                 'end' => $data->val($i, 5),
                 'duration_hour' => $data->val($i, 6),
                 'type' => $data->val($i, 7),
-                'remarks' => $data->val($i, 8),
+                'meal' => $data->val($i, 8),
+                'remarks' => $data->val($i, 9),
                 'request_code' => $templatefinal
             );
         }
@@ -485,6 +499,12 @@ class Cash_carries extends CI_Controller
 
                         $ot_amount = $this->readOvertimePrice($employee->id, $data['trans_date'], $duration_hour);
 
+                        if ($data['meal'] == "YES") {
+                            $meal = "1";
+                        } else {
+                            $meal = "0";
+                        }
+
                         $post_cash_carries = array(
                             'employee_id' => $employee->id,
                             'trans_date' => $data['trans_date'],
@@ -492,6 +512,7 @@ class Cash_carries extends CI_Controller
                             'start' => $data['start'],
                             'end' => $data['end'],
                             'type' => $data['type'],
+                            'meal' => $meal,
                             'duration' => $duration,
                             'duration_hour' => $data['duration_hour'],
                             'remarks' => $data['remarks'],

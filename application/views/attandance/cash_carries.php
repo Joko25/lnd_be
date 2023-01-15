@@ -1,25 +1,34 @@
 <!-- TABLE DATAGRID -->
 <table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar">
+    <thead frozen="true">
+        <tr>
+            <th field="ck" checkbox="true"></th>
+            <th data-options="field:'employee_id',width:100,halign:'center'">Employee ID</th>
+            <th data-options="field:'employee_name',width:250,halign:'center'">Employee Name</th>
+        </tr>
+    </thead>
     <thead>
         <tr>
-            <th rowspan="2" field="ck" checkbox="true"></th>
-            <th rowspan="2" data-options="field:'trans_date',width:100,halign:'center'">Request Date</th>
-            <th rowspan="2" data-options="field:'request_code',width:200,halign:'center'">Request No</th>
-            <th rowspan="2" data-options="field:'fullname',width:100,halign:'center'">Request Name</th>
-            <th rowspan="2" data-options="field:'employee_id',width:100,halign:'center'">Employee ID</th>
-            <th rowspan="2" data-options="field:'employee_name',width:250,halign:'center'">Employee Name</th>
-            <th rowspan="2" data-options="field:'start',width:80,halign:'center'">Start</th>
-            <th rowspan="2" data-options="field:'end',width:80,halign:'center'">End</th>
             <th rowspan="2" data-options="field:'type',width:100,halign:'center'">Type</th>
-            <th rowspan="2" data-options="field:'duration_hour',width:120,halign:'center'">Duration</th>
-            <th rowspan="2" data-options="field:'duration_convert',width:80,halign:'center'">Convert</th>
-            <th rowspan="2" data-options="field:'amount',width:80,halign:'center', formatter:numberformat">Amount</th>
+            <th colspan="6" data-options="field:'',width:80,halign:'center'">Request</th>
+            <th colspan="3" data-options="field:'',width:80,halign:'center'">Attandance</th>
+            <th rowspan="2" data-options="field:'meal',width:80,halign:'center',align:'center',styler:cellStyler, formatter:cellFormatter">Meal</th>
+            <th rowspan="2" data-options="field:'amount',width:80,halign:'center',align:'right', formatter:numberformat">Amount</th>
             <th rowspan="2" data-options="field:'remarks',width:200,halign:'center'">Remarks</th>
             <th colspan="3" data-options="field:'',width:100,halign:'center'"> Approval</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
         <tr>
+            <th data-options="field:'trans_date',width:100,halign:'center'">Request Date</th>
+            <th data-options="field:'request_code',width:120,halign:'center'">Request No</th>
+            <th data-options="field:'fullname',width:120,halign:'center'">Request Name</th>
+            <th data-options="field:'start',width:80,align:'center'">Start</th>
+            <th data-options="field:'end',width:80,align:'center'">End</th>
+            <th data-options="field:'duration_hour',width:120,align:'center'">Duration</th>
+            <th data-options="field:'time_in',width:80,align:'center'">Time In</th>
+            <th data-options="field:'time_out',width:80,align:'center'">Time Out</th>
+            <th data-options="field:'duration_att',width:120,align:'center'">Duration</th>
             <th data-options="field:'status_notification',width:100,align:'center',styler:statusStyler, formatter:statusFormatter"> Status</th>
             <th data-options="field:'status_check',width:120,align:'center'"> By</th>
             <th data-options="field:'status_date',width:150,align:'center'"> Date</th>
@@ -56,7 +65,6 @@
             <div class="fitem">
                 <span style="width:30%; display:inline-block;"></span>
                 <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
-                <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-list"></i> Attandance Cash Carry</a>
             </div>
         </div>
         <div style="width: 50%; float: left;">
@@ -122,6 +130,10 @@
                 <input style="width:10%;" name="duration_hour" required id="duration_hour" class="easyui-numberbox" data-options="precision:2">
                 <input style="width:40%;" name="duration" required id="duration" class="easyui-textbox">
                 <a class="easyui-linkbutton" href="#" onclick="convertHour()"><i class="fa fa-clock"></i></a>
+            </div>
+            <div class="fitem">
+                <span style="width:30%; display:inline-block;">Meal</span>
+                <input name="meal" id="meal" class="easyui-checkbox" value="1"> Checked if Yes get Meal
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Remarks</span>
@@ -636,4 +648,22 @@
 
         return "<b>" + formatter.format(value) + "</b>";
     }
+
+    //CELLSTYLE STATUS
+    function cellStyler(value, row, index) {
+        if (value == 0) {
+            return 'background: #FF5F5F; color:white;';
+        } else {
+            return 'background: #53D636; color:white;';
+        }
+    }
+
+    //FORMATTER STATUS
+    function cellFormatter(value) {
+        if (value == 0) {
+            return 'NO';
+        } else {
+            return 'YES';
+        }
+    };
 </script>
