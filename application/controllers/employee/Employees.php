@@ -62,13 +62,23 @@ class Employees extends CI_Controller
         $get = $this->input->get();
         $aprvDepartement = $this->checkApprovalAccess('employees');
 
+        $session_id = $this->session->id;
+        $session_dept = $this->session->departement_id;
+
+        $user = $this->crud->read("users", [], ["id" => $session_id]);
+        if ($user->access == "0") {
+            $departement_id = "";
+        } else {
+            $departement_id = $session_dept;
+        }
+
         $this->db->select('*');
         $this->db->from('employees');
         $this->db->where('status', 0);
         if ($get) {
             $this->db->like($get);
         }
-        $this->db->like('departement_id', $aprvDepartement);
+        $this->db->like('departement_id', $departement_id);
         $this->db->group_start();
         $this->db->like('number', $post);
         $this->db->or_like('name', $post);

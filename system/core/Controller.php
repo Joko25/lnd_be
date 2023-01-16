@@ -161,16 +161,17 @@ class CI_Controller
 	public function checkApprovalAccess($module)
 	{
 		if ($this->session->username) {
-			$username = $this->session->username;
-			$this->db->select('b.departement_id');
-			$this->db->from('users a');
-			$this->db->join('employees b', 'a.number = b.number');
-			$this->db->join('approvals c', 'c.departement_id = b.departement_id');
-			$this->db->where('a.username', $username);
-			$this->db->where('c.table_name', $module);
-			$accessApprovals = $this->db->get()->row();
+			$session_id = $this->session->id;
+			$session_dept = $this->session->departement_id;
 
-			return @$accessApprovals->departement_id;
+			$user = $this->crud->read("users", [], ["id" => $session_id]);
+			if ($user->access == "0") {
+				$departement_id = "";
+			} else {
+				$departement_id = $session_dept;
+			}
+
+			return $departement_id;
 		} else {
 			return false;
 		}

@@ -3,20 +3,14 @@
     <thead>
         <tr>
             <th field="ck" checkbox="true"></th>
-            <th data-options="field:'date_in',width:80">Trans Date</th>
+            <th data-options="field:'dayname',width:80">Day</th>
+            <th data-options="field:'date_in',width:80">Date In</th>
             <th data-options="field:'departement_name',width:200">Departement</th>
             <th data-options="field:'number',width:120">Employee ID</th>
             <th data-options="field:'name',width:200">Employee Name</th>
             <th data-options="field:'contract_name',width:100">Type</th>
-            <th data-options="field:'shift_name',width:100">Shift Type</th>
-            <th data-options="field:'start',width:80">In</th>
-            <th data-options="field:'end',width:80">Out</th>
             <th data-options="field:'time_in',width:80">Check In</th>
             <th data-options="field:'time_out',width:80">Check Out</th>
-            <th data-options="field:'reason',width:100">Reason</th>
-            <th data-options="field:'note',width:100">Remarks</th>
-            <th data-options="field:'holiday',width:100">Holiday</th>
-            <th data-options="field:'status',width:80, styler:StylerStatus, formatter:FormatterStatus">Status</th>
         </tr>
     </thead>
 </table>
@@ -53,7 +47,7 @@
                 <span style="width:35%; display:inline-block;">Employee</span>
                 <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
             </div>
-            <div class="fitem">
+            <div class="fitem" hidden>
                 <span style="width:35%; display:inline-block;">Status</span>
                 <select style="width:60%;" id="filter_status" panelHeight="auto" class="easyui-combobox">
                     <option value="">Choose All</option>
