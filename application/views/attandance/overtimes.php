@@ -145,7 +145,7 @@
 </div>
 
 <!-- PDF -->
-<iframe id="printout" src="<?= base_url('attandance/overtimes/print') ?>" style="width: 100%;" hidden></iframe>
+<iframe id="printout" src="" style="width: 100%;" hidden></iframe>
 
 <script>
     //ADD DATA

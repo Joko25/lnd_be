@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set("Asia/Bangkok");
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Permits extends CI_Controller
@@ -381,13 +382,12 @@ class Permits extends CI_Controller
                                 }
                             }
                         }
-                        
-                        if($send == ""){
+
+                        if ($send == "") {
                             echo json_encode(array("title" => "Error", "message" => " Date Format not text", "theme" => "error"));
-                        }else{
+                        } else {
                             echo $send;
                         }
-                        
                     } else {
                         echo json_encode(array("title" => "Not Found", "message" => $post['reason_number'] . " Reason ID Not Found", "theme" => "error"));
                     }

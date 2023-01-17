@@ -65,8 +65,23 @@
             "&filter_departement_sub=" + filter_departement_sub +
             "&filter_employee=" + filter_employee;
 
-        $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
-        $("#printout").attr('src', '<?= base_url('report/attandance_days/print') ?>' + url);
+        var date1 = new Date(filter_from);
+        var date2 = new Date(filter_to);
+
+        // // Do the math.
+        var Difference_In_Time = date2.getTime() - date1.getTime();
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+        if (Difference_In_Days <= 31) {
+            if ((filter_division != "" && filter_departement != "") || filter_employee != "") {
+                $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
+                $("#printout").attr('src', '<?= base_url('report/attandance_days/print') ?>' + url);
+            } else {
+                toastr.info("Please Select Division, Departement or Employee");
+            }
+        } else {
+            toastr.error("Max Duration Period Date is 31 Days");
+        }
     }
 
     function excel() {
@@ -84,7 +99,22 @@
             "&filter_departement_sub=" + filter_departement_sub +
             "&filter_employee=" + filter_employee;
 
-        window.location.assign('<?= base_url('report/attandance_days/print/excel') ?>' + url);
+        var date1 = new Date(filter_from);
+        var date2 = new Date(filter_to);
+
+        // // Do the math.
+        var Difference_In_Time = date2.getTime() - date1.getTime();
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+        if (Difference_In_Days <= 31) {
+            if ((filter_division != "" && filter_departement != "") || filter_employee != "") {
+                window.location.assign('<?= base_url('report/attandance_days/print/excel') ?>' + url);
+            } else {
+                toastr.info("Please Select Division, Departement or Employee");
+            }
+        } else {
+            toastr.error("Max Duration Period Date is 31 Days");
+        }
     }
 
     $(function() {

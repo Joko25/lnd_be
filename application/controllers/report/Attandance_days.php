@@ -113,6 +113,11 @@ class Attandance_days extends CI_Controller
                 </tr>';
             $no = 1;
             foreach ($records as $data) {
+                if (empty($data['date_out'])) {
+                    $date_out = "-";
+                } else {
+                    $date_out = date("d F Y", strtotime($data['date_out']));
+                }
                 $html .= '  <tr>
                                 <td>' . $no . '</td>
                                 <td>' . $data['division_name'] . '</td>
@@ -121,7 +126,7 @@ class Attandance_days extends CI_Controller
                                 <td class="str">' . $data['employee_number'] . '</td>
                                 <td>' . $data['employee_name'] . '</td>
                                 <td>' . date("d F Y", strtotime($data['date_in'])) . '</td>
-                                <td>' . date("d F Y", strtotime($data['date_out'])) . '</td>
+                                <td>' . $date_out . '</td>
                                 <td>' . $data['time_in'] . '</td>
                                 <td>' . $data['time_out'] . '</td>
                             </tr>';

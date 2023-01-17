@@ -354,7 +354,6 @@ class Attandances extends CI_Controller
                     $no++;
                 }
                 $html .= '</table></div><br><br>';
-                $this->db->close();
             }
 
             die($html);

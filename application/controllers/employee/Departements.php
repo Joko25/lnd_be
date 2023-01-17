@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set("Asia/Bangkok");
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Departements extends CI_Controller
@@ -36,14 +37,14 @@ class Departements extends CI_Controller
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
         $division_id = $this->input->get('division_id') ? $this->input->get('division_id') : "";
-        
+
         $user = $this->crud->read("users", [], ["id" => $this->session->id]);
-        if($user->access == "0"){
+        if ($user->access == "0") {
             $departement_id = "";
-        }else{
+        } else {
             $departement_id = $this->session->departement_id;
         }
-        
+
         $send = $this->crud->reads('departements', ["name" => $post, "division_id" => $division_id, "id" => $departement_id]);
         echo json_encode($send);
     }
