@@ -354,7 +354,7 @@ class Permits extends CI_Controller
                             } else {
                                 $year = date("Y");
                                 $permitType = $this->crud->read('permit_types', ["id" => $permittype->id, "cutoff" => "YES"]);
-                                $permits = $this->crud->reads('permits', [], ["employee_id" => $employee->id, "DATE_FORMAT(permit_date, '%Y')" => $year, "permit_type_id" => @$permitType->id]);
+                                $permits = $this->crud->reads('permits', ["permit_date" => $year], ["employee_id" => $employee->id, "permit_type_id" => @$permitType->id]);
                                 $totalPermit = 0;
                                 $duration = 0;
                                 foreach ($permits as $permit) {
@@ -381,8 +381,13 @@ class Permits extends CI_Controller
                                 }
                             }
                         }
-
-                        echo $send;
+                        
+                        if($send == ""){
+                            echo json_encode(array("title" => "Error", "message" => " Date Format not text", "theme" => "error"));
+                        }else{
+                            echo $send;
+                        }
+                        
                     } else {
                         echo json_encode(array("title" => "Not Found", "message" => $post['reason_number'] . " Reason ID Not Found", "theme" => "error"));
                     }

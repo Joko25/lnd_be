@@ -49,7 +49,7 @@ class Attandances extends CI_Controller
             $filter_group = $this->input->get('filter_group');
             $username = $this->session->username;
 
-            echo '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
+            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
             $this->db->select("a.*, c.name as division_name, d.name as departement_name, e.name as departement_sub_name");
             $this->db->from('employees a');
             $this->db->join('attandances b', 'a.number = b.number');
@@ -90,7 +90,7 @@ class Attandances extends CI_Controller
             $no = 1;
 
             foreach ($records as $record) {
-                echo '<div style="page-break-after:always;"><center>
+                $html .= '<div style="page-break-after:always;"><center>
                     <div style="float: left; font-size: 12px; text-align: left;">
                         <table style="width: 100%;">
                             <tr>
@@ -306,7 +306,7 @@ class Attandances extends CI_Controller
                     if ($filter_status != "" or $filter_permit_type != "") {
                         if ($holiday == "") {
                             if ($filter_status == $attandance_status) {
-                                echo '<tr ' . $style . '>
+                                $html .= '<tr ' . $style . '>
                                                     <td>' . $no . '</td>
                                                     <td>' . date('d F Y', strtotime($working_date)) . '</td>
                                                     <td>' . @$shift->shift_name . '</td>
@@ -320,7 +320,7 @@ class Attandances extends CI_Controller
                                                     <td>' . $holiday . '</td>
                                                 </tr>';
                             } elseif ($attandance_status == @strtoupper($filter_permit_type)) {
-                                echo '<tr ' . $style . '>
+                                $html .= '<tr ' . $style . '>
                                                     <td>' . $no . '</td>
                                                     <td>' . date('d F Y', strtotime($working_date)) . '</td>
                                                     <td>' . @$shift->shift_name . '</td>
@@ -336,7 +336,7 @@ class Attandances extends CI_Controller
                             }
                         }
                     } else {
-                        echo '<tr ' . $style . '>
+                        $html .= '<tr ' . $style . '>
                                     <td>' . $no . '</td>
                                     <td>' . date('d F Y', strtotime($working_date)) . '</td>
                                     <td>' . @$shift->shift_name . '</td>
@@ -353,8 +353,11 @@ class Attandances extends CI_Controller
 
                     $no++;
                 }
-                echo '</table></div><br><br>';
+                $html .= '</table></div><br><br>';
+                $this->db->close();
             }
+
+            die($html);
         }
     }
 }
