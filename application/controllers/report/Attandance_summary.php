@@ -165,20 +165,55 @@ class Attandance_summary extends CI_Controller
                     $working_date = "";
                     for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
                         $working_date = date('Y-m-d', $i);
+                        
+                        $this->db->select("*");
+                        $this->db->from('attandances');
+                        $this->db->where('number', $record['number']);
+                        $this->db->where('date_in', $working_date);
+                        $attandance = $this->db->get()->row();
 
                         if (@$data['days'] == "5") {
                             //sabtu dan minggu libur
                             if (date('w', $i) !== '0' && date('w', $i) !== '6') {
                                 $weekend += 0;
+                                
+                                if (@$attandance->time_in == null) {
+                                    $masuk += 0;
+                                    $absen += 1;
+                                } else {
+                                    $masuk += 1;
+                                    $absen += 0;
+                                }
                             } else {
                                 $weekend += 1;
+                                if (@$attandance->time_in == null) {
+                                    $masuk += 0;
+                                    $absen += 0;
+                                } else {
+                                    $masuk += 1;
+                                    $absen += 0;
+                                }
                             }
                         } else {
                             //sabtu doang libur
                             if (date('w', $i) !== '0') {
                                 $weekend += 0;
+                                if (@$attandance->time_in == null) {
+                                    $masuk += 0;
+                                    $absen += 1;
+                                } else {
+                                    $masuk += 1;
+                                    $absen += 0;
+                                }
                             } else {
                                 $weekend += 1;
+                                if (@$attandance->time_in == null) {
+                                    $masuk += 0;
+                                    $absen += 0;
+                                } else {
+                                    $masuk += 1;
+                                    $absen += 0;
+                                }
                             }
                         }
 
@@ -214,7 +249,8 @@ class Attandance_summary extends CI_Controller
                         $total_permit += $data_permit['permit'];
                     }
 
-                    $absence = ($total_days - $data['attandance_total'] - $total_permit - $holiday - $weekend);
+                    //$absence = ($total_days - $data['attandance_total'] - $total_permit - $holiday - $weekend);
+                    $absence = ($absen);
                     if ($absence >= 0) {
                         $totalAbsence = $absence;
                     } else {

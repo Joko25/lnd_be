@@ -227,7 +227,7 @@ class Permits extends CI_Controller
                         "reason_id" => $post['reason_id'],
                         "trans_date" => $post['trans_date'],
                         "permit_date" => $permit_date,
-                        "duration" => $post['duration'],
+                        "duration" => "1",
                         "leave" => ($leave - $post['duration']),
                         "note" => $post['note'],
                         "attachment" => $attachment

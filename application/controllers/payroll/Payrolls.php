@@ -341,6 +341,7 @@ class Payrolls extends CI_Controller
             //Menentukan Masuk kerja dan libur
             //Looping berdasarkan cutoff periode per tanggal
             $masuk = 0;
+            $absen = 0;
             for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
                 $working_date = date('Y-m-d', $i);
 
@@ -457,6 +458,7 @@ class Payrolls extends CI_Controller
                             }
 
                             $masuk += 0;
+                            $absen += 0;
                         } else {
                             //Perhitungan Overtime
                             for ($o = 0; $o < $hour; $o++) {
@@ -484,8 +486,10 @@ class Payrolls extends CI_Controller
                             //Jika dia tidak absen
                             if (@$attandance->time_in == null) {
                                 $masuk += 0;
+                                $absen += 1;
                             } else {
                                 $masuk += 1;
+                                $absen += 0;
                             }
                         }
                     } else {
@@ -493,8 +497,10 @@ class Payrolls extends CI_Controller
                         //Jika dia tidak absen
                         if (@$attandance->time_in == null) {
                             $masuk += 0;
+                            $absen += 0;
                         } else {
                             $masuk += 1;
+                            $absen += 0;
                         }
 
                         //Perhitungan Overtime
@@ -529,6 +535,7 @@ class Payrolls extends CI_Controller
                             }
 
                             $masuk += 0;
+                            $absen += 0;
                         } else {
                             //Perhitungan Overtime
                             for ($o = 0; $o < $hour; $o++) {
@@ -556,8 +563,10 @@ class Payrolls extends CI_Controller
                             //Jika dia tidak absen
                             if (@$attandance->time_in == null) {
                                 $masuk += 0;
+                                $absen += 1;
                             } else {
                                 $masuk += 1;
+                                $absen += 0;
                             }
                         }
                     } else {
@@ -565,8 +574,10 @@ class Payrolls extends CI_Controller
                         //Jika dia tidak absen
                         if (@$attandance->time_in == null) {
                             $masuk += 0;
+                            $absen += 0;
                         } else {
                             $masuk += 1;
+                            $absen += 0;
                         }
 
                         //Perhitungan Overtime
@@ -766,7 +777,8 @@ class Payrolls extends CI_Controller
             //Menghitung Total
             //Potong gaji jika dia ga masuk kerja
             //Rumus nya Gaji / 30 hari x jumlah dia ga absen
-            $absence_qty = (@count($weekday) - @count($holiday) - $masuk - $arr_total_permit);
+            //$absence_qty = (@count($weekday) - @count($holiday) - $masuk - $arr_total_permit);
+            $absence_qty = ($absen - $arr_total_permit);
 
             if ($absence_qty > 0) {
                 $absence_qty_final = $absence_qty;
