@@ -163,9 +163,11 @@ class Attandance_summary extends CI_Controller
                     $holiday = 0;
                     $weekend = 0;
                     $working_date = "";
+                    $masuk = 0;
+                    $absen = 0;
                     for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
                         $working_date = date('Y-m-d', $i);
-                        
+
                         $this->db->select("*");
                         $this->db->from('attandances');
                         $this->db->where('number', $record['number']);
@@ -176,7 +178,7 @@ class Attandance_summary extends CI_Controller
                             //sabtu dan minggu libur
                             if (date('w', $i) !== '0' && date('w', $i) !== '6') {
                                 $weekend += 0;
-                                
+
                                 if (@$attandance->time_in == null) {
                                     $masuk += 0;
                                     $absen += 1;
@@ -250,7 +252,7 @@ class Attandance_summary extends CI_Controller
                     }
 
                     //$absence = ($total_days - $data['attandance_total'] - $total_permit - $holiday - $weekend);
-                    $absence = ($absen);
+                    $absence = ($absen - $total_permit);
                     if ($absence >= 0) {
                         $totalAbsence = $absence;
                     } else {
