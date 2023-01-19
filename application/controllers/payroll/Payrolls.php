@@ -979,12 +979,14 @@ class Payrolls extends CI_Controller
         $filter_employee = $this->input->get('filter_employee');
         $filter_employee_type = $this->input->get('filter_employee_type');
         $filter_group = $this->input->get('filter_group');
+        $username = $this->session->username;
 
         $period_start = date("Y-m", strtotime($filter_from));
         $period_end = date("Y-m", strtotime($filter_to));
-
+    
         $query = $this->db->query("SELECT a.* FROM payrolls a
                 JOIN employees b on a.employee_id = b.id
+                JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                 WHERE a.period_start = '$period_start' 
                 AND a.period_end = '$period_end'
                 AND b.division_id LIKE '%$filter_division%'
