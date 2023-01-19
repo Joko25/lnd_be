@@ -279,6 +279,7 @@ class Student_payrolls extends CI_Controller
                     $this->db->join('departements c', 'a.departement_id = c.id');
                     $this->db->join('groups d', 'a.group_id = d.id');
                     $this->db->join('sources e', 'a.source_id = e.id');
+                    $this->db->where('a.status', 0);
                     $this->db->where('a.group_id', $record['group_id']);
                     $this->db->where('a.source_id', $record['source_id']);
                     $this->db->group_by('a.number');
@@ -348,6 +349,7 @@ class Student_payrolls extends CI_Controller
                         $this->db->join('departements c', 'a.departement_id = c.id');
                         $this->db->join('groups d', 'a.group_id = d.id');
                         $this->db->join('sources e', 'a.source_id = e.id');
+                        $this->db->where('a.status', 0);
                         $this->db->where('a.group_id', $record['group_id']);
                         $this->db->where('a.source_id', $record['source_id']);
                         $this->db->group_by('a.number');
@@ -358,6 +360,7 @@ class Student_payrolls extends CI_Controller
                         foreach ($employees as $employee) {
                             $employee_id = $employee['id'];
                             $employee_number = $employee['number'];
+
                             $correctionPlus = $this->crud->query("SELECT SUM(amount) as total FROM corrections WHERE trans_date BETWEEN '$filter_from' and '$filter_to' and employee_id = '$employee_id' and correction_type = 'PLUS' GROUP BY employee_id");
                             $correctionMinus = $this->crud->query("SELECT SUM(amount) as total FROM corrections WHERE trans_date BETWEEN '$filter_from' and '$filter_to' and employee_id = '$employee_id' and correction_type = 'MINUS' GROUP BY employee_id");
                             //$cashCarries = $this->crud->query("SELECT SUM(amount) as total FROM cash_carries WHERE trans_date BETWEEN '$filter_from' and '$filter_to' and employee_id = '$employee_id' GROUP BY employee_id");
@@ -372,8 +375,20 @@ class Student_payrolls extends CI_Controller
                             $payroll_1 = 0;
                             $attandance_count = 0;
                             $working_date = "";
+                            $tidakabsen = 0;
                             for ($z = $start; $z <= $finish; $z += (60 * 60 * 24)) {
                                 $working_date = date('Y-m-d', $z);
+
+                                $this->db->select("employee_id, SUM(duration) as duration");
+                                $this->db->from('permits');
+                                $this->db->where('status', 0);
+                                $this->db->where('permit_type_id', '20221207000001');
+                                $this->db->where('employee_id', $employee_id);
+                                $this->db->where('permit_date', $working_date);
+                                $this->db->group_by('employee_id');
+                                $permit = $this->db->get()->row();
+
+                                $tidakabsen += @$permit->duration;
 
                                 $attandance = $this->crud->read("attandances", [], ["date_in" => $working_date, "number" => $employee_number]);
                                 if ($attandance) {
@@ -424,7 +439,7 @@ class Student_payrolls extends CI_Controller
                                             <td>' . date("d F Y", strtotime($employee['date_sign'])) . '</td>
                                             <td>' . $this->readService($employee['date_sign'], $filter_to) . '</td>
                                             <td>' . $employee['departement_name'] . '</td>
-                                            <td style="text-align:center;">' . @$attandance_count . '</td>
+                                            <td style="text-align:center;">' . (@$attandance_count + $tidakabsen) . '</td>
                                             <td style="text-align:center;">' . $payroll_1 . '</td>
                                             <td style="text-align:center;">' . $payroll_2 . '</td>
                                             <td style="text-align:center;">' . $payroll_3 . '</td>

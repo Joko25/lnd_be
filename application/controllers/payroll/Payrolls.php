@@ -664,9 +664,25 @@ class Payrolls extends CI_Controller
             $arr_bpjs_emp_amount_total = 0;
             foreach ($r_bpjs_emp as $bpjs_emp_data) {
                 $arr_bpjs_emp_number .= strtolower($bpjs_emp_data->number) . "_employee,";
-                if ($record['jamsostek'] == "" || $record['jamsostek'] == "-") {
+                if ($record['jamsostek'] == "" && $record['jkn'] == "") {
                     $arr_bpjs_emp_amount .= 0 . ",";
                     $arr_bpjs_emp_amount_total += 0;
+                } elseif ($record['jamsostek'] == "" && $record['jkn'] != "") {
+                    if ($bpjs_emp_data->number == "BPJS") {
+                        $arr_bpjs_emp_amount .= round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_emp_data->employee) / 100) . ",";
+                        $arr_bpjs_emp_amount_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_emp_data->employee) / 100);
+                    } else {
+                        $arr_bpjs_emp_amount .= 0 . ",";
+                        $arr_bpjs_emp_amount_total += 0;
+                    }
+                } elseif ($record['jamsostek'] != "" && $record['jkn'] == "") {
+                    if ($bpjs_emp_data->number != "BPJS") {
+                        $arr_bpjs_emp_amount .= round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_emp_data->employee) / 100) . ",";
+                        $arr_bpjs_emp_amount_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_emp_data->employee) / 100);
+                    } else {
+                        $arr_bpjs_emp_amount .= 0 . ",";
+                        $arr_bpjs_emp_amount_total += 0;
+                    }
                 } else {
                     $arr_bpjs_emp_amount .= round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_emp_data->employee) / 100) . ",";
                     $arr_bpjs_emp_amount_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_emp_data->employee) / 100);
@@ -688,11 +704,51 @@ class Payrolls extends CI_Controller
             foreach ($r_bpjs_com as $bpjs_com_data) {
                 $arr_bpjs_com_number .= strtolower($bpjs_com_data->number) . "_company,";
 
-                if ($record['jamsostek'] == "" || $record['jamsostek'] == "-") {
+                if ($record['jamsostek'] == "" && $record['jkn'] == "") {
                     $arr_bpjs_com_amount .= 0 . ",";
                     $arr_bpjs_com_amount_total += 0;
                     $arr_bpjs_com_amount_salary_total += 0;
                     $arr_bpjs_com_amount_jabatan_total += 0;
+                } elseif ($record['jamsostek'] == "" && $record['jkn'] != "") {
+                    if ($bpjs_com_data->number == "BPJS") {
+                        $arr_bpjs_com_amount .= round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100) . ",";
+                        $arr_bpjs_com_amount_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100);
+                        $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100);
+                        $arr_bpjs_com_amount_jabatan_total += 0;
+                    } else {
+                        $arr_bpjs_com_amount .= 0 . ",";
+                        $arr_bpjs_com_amount_total += 0;
+                        $arr_bpjs_com_amount_salary_total += 0;
+                        $arr_bpjs_com_amount_jabatan_total += 0;
+                    }
+                } elseif ($record['jamsostek'] != "" && $record['jkn'] == "") {
+                    if ($bpjs_com_data->number != "BPJS") {
+                        $arr_bpjs_com_amount .= round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100) . ",";
+                        $arr_bpjs_com_amount_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100);
+
+                        //Perhitungan PPH Salary - Jabatan
+                        if ($bpjs_com_data->number == "JKK") {
+                            $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100);
+                            $arr_bpjs_com_amount_jabatan_total += 0;
+                        } elseif ($bpjs_com_data->number == "JKM") {
+                            $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100);
+                            $arr_bpjs_com_amount_jabatan_total += 0;
+                        } elseif ($bpjs_com_data->number == "JHT") {
+                            $arr_bpjs_com_amount_salary_total += 0;
+                            $arr_bpjs_com_amount_jabatan_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100);
+                        } elseif ($bpjs_com_data->number == "JP") {
+                            $arr_bpjs_com_amount_salary_total += 0;
+                            $arr_bpjs_com_amount_jabatan_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100);
+                        } else {
+                            $arr_bpjs_com_amount_salary_total += 0;
+                            $arr_bpjs_com_amount_jabatan_total += 0;
+                        }
+                    } else {
+                        $arr_bpjs_com_amount .= 0 . ",";
+                        $arr_bpjs_com_amount_total += 0;
+                        $arr_bpjs_com_amount_salary_total += 0;
+                        $arr_bpjs_com_amount_jabatan_total += 0;
+                    }
                 } else {
                     $arr_bpjs_com_amount .= round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100) . ",";
                     $arr_bpjs_com_amount_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100);
@@ -704,15 +760,15 @@ class Payrolls extends CI_Controller
                     } elseif ($bpjs_com_data->number == "JKM") {
                         $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100);
                         $arr_bpjs_com_amount_jabatan_total += 0;
-                    } elseif ($bpjs_com_data->number == "KES") {
-                        $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100);
-                        $arr_bpjs_com_amount_jabatan_total += 0;
                     } elseif ($bpjs_com_data->number == "JHT") {
                         $arr_bpjs_com_amount_salary_total += 0;
                         $arr_bpjs_com_amount_jabatan_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100);
                     } elseif ($bpjs_com_data->number == "JP") {
                         $arr_bpjs_com_amount_salary_total += 0;
                         $arr_bpjs_com_amount_jabatan_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100);
+                    } elseif ($bpjs_com_data->number == "BPJS") {
+                        $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total) * $bpjs_com_data->company) / 100);
+                        $arr_bpjs_com_amount_jabatan_total += 0;
                     } else {
                         $arr_bpjs_com_amount_salary_total += 0;
                         $arr_bpjs_com_amount_jabatan_total += 0;
@@ -983,7 +1039,7 @@ class Payrolls extends CI_Controller
 
         $period_start = date("Y-m", strtotime($filter_from));
         $period_end = date("Y-m", strtotime($filter_to));
-    
+
         $query = $this->db->query("SELECT a.* FROM payrolls a
                 JOIN employees b on a.employee_id = b.id
                 JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
