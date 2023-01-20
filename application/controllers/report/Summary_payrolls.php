@@ -259,6 +259,16 @@ class Summary_payrolls extends CI_Controller
                     foreach (json_decode($record['deduction'], true) as $deduction => $val_deduction) {
                         $total_deduction += (int)$val_deduction;
                     }
+                    
+                    $total_ip = 0;
+                    foreach (json_decode($record['deduction_number'], true) as $ip => $val_ip) {
+                        $total_ip += (int)$val_ip;
+                    }
+                    
+                    $total_ip_amount = 0;
+                    foreach (json_decode($record['deduction_amount'], true) as $ip_amount => $val_ip_amount) {
+                        $total_ip_amount += (int)$val_ip_amount;
+                    }
 
                     $html .= '<tr>
                                     <td>' . $no . '</td>
@@ -273,12 +283,12 @@ class Summary_payrolls extends CI_Controller
                                     <td style="text-align:right;">' . number_format(($record['salary'] + $total_allowence + $record['correction_plus'] + $record['bpjs_company_total'])) . '</td>
                                     <td style="text-align:right;">' . number_format(($record['bpjs_employee_total'] + $record['bpjs_company_total'])) . '</td>
                                     <td style="text-align:right;">' . number_format($total_deduction) . '</td>
-                                    <td style="text-align:right;">' . number_format($record['deduction_absence']) . '</td>
-                                    <td style="text-align:right;">' . number_format($record['deduction_absence_amount']) . '</td>
+                                    <td style="text-align:right;">' . number_format($record['deduction_absence'] + $total_ip) . '</td>
+                                    <td style="text-align:right;">' . number_format($record['deduction_absence_amount'] + $total_ip_amount) . '</td>
                                     <td style="text-align:right;">' . number_format(($record['loan_cooperative'] + $record['loan_bank'] + $record['loan_other'])) . '</td>
                                     <td style="text-align:right;">' . number_format($record['correction_minus']) . '</td>
                                     <td style="text-align:right;">' . number_format($record['pph']) . '</td>
-                                    <td style="text-align:right;">' . number_format($record['deduction_absence_amount'] + $record['bpjs_employee_total'] + $record['bpjs_company_total'] + $record['loan_cooperative'] + $record['loan_bank'] + $record['loan_other'] + $record['correction_minus']) . '</td>
+                                    <td style="text-align:right;">' . number_format($record['deduction_absence_amount'] + $record['bpjs_employee_total'] + $record['bpjs_company_total'] + $record['loan_cooperative'] + $record['loan_bank'] + $record['loan_other'] + $record['correction_minus'] + $total_ip_amount + $total_deduction) . '</td>
                                     <td style="text-align:right;">' . number_format(($record['net_income'])) . '</td>
                                 </tr>';
                     $total += $record['net_income'];
