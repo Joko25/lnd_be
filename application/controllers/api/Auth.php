@@ -34,9 +34,9 @@ class Auth extends CI_Controller
         $kode = $row->kode;
 
         if ($kode == NULL) {
-            $autoid        = $date . sprintf("%06s", $kode + 1);
+            $autoid = $date . sprintf("%06s", $kode + 1);
         } else {
-            $autoid        = (int) $kode + 1;
+            $autoid = (int) $kode + 1;
         }
 
         return $autoid;
@@ -47,20 +47,44 @@ class Auth extends CI_Controller
         $this->output->delete_cache();
         if ($this->input->post()) {
             $post = $this->input->post();
+            $password = md5($post['password']);
             $user = $this->crud->read("users_m", [], [
                 "deleted" => 0,
                 "email" => $post['email'],
-                "password" => md5($post['password'])
+                "password" => $password,
             ]);
 
             if ($user) {
                 if ($user->status == 1) {
-                    die(json_encode(array("title" => "Not Active", "message" => "Cannot Login because your account is not active", "theme" => "info")));
+                    die(json_encode(array(
+                        "title" => "Not Active",
+                        "message" => "Cannot Login because your account is not active",
+                        "theme" => "info",
+                        "results" => array(
+                            "number" => $user->number,
+                            "email" => $post['email'],
+                            "status" => "Not Active"
+                        )
+                    )));
                 } else {
-                    die(json_encode(array("title" => "Login", "message" => "Login Success", "theme" => "success")));
+                    die(json_encode(array(
+                        "title" => "Login",
+                        "message" => "Login Success",
+                        "theme" => "success",
+                        "results" => array(
+                            "number" => $user->number,
+                            "email" => $post['email'],
+                            "status" => "Active"
+                        )
+                    )));
                 }
             } else {
-                die(json_encode(array("title" => "Not Exist", "message" => "Email or Password is wrong", "theme" => "info")));
+                die(json_encode(array(
+                    "title" => "Not Exist",
+                    "message" => "Email or Password is wrong",
+                    "theme" => "info",
+                    "results" => []
+                )));
             }
         } else {
             show_error("Cannot Process your request");

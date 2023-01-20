@@ -258,6 +258,7 @@ class Setup_allowances extends CI_Controller
         $filter_departement_sub = $this->input->get('filter_departement_sub');
         $filter_employee = $this->input->get('filter_employee');
         $filter_allowance = $this->input->get('filter_allowance');
+        $username = $this->session->username;
 
         //Config
         $this->db->select('*');
@@ -271,6 +272,7 @@ class Setup_allowances extends CI_Controller
         $this->db->join('divisions d', 'c.division_id = d.id');
         $this->db->join('departements e', 'c.departement_id = e.id');
         $this->db->join('departement_subs f', 'c.departement_sub_id = f.id');
+        $this->db->join('privilege_groups h', "c.group_id = h.group_id and h.username = '$username' and h.status = '1'");
         $this->db->where('a.deleted', 0);
         $this->db->where('c.deleted', 0);
         $this->db->where('c.status', 0);
