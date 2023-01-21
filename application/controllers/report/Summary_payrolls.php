@@ -59,11 +59,13 @@ class Summary_payrolls extends CI_Controller
         $this->db->join('departements c', "b.departement_id = c.id");
         $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
         $this->db->join('groups e', "b.group_id = e.id");
-        $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
+        $this->db->join('privilege_groups f', "b.group_id = f.id", "left");
         $this->db->where('a.deleted', 0);
         $this->db->where('a.status', 0);
         $this->db->where('a.period_start =', $period_start);
         $this->db->where('a.period_end =', $period_end);
+        $this->db->where('f.username =', $username);
+        $this->db->where('f.status =', "1");
         $this->db->like('b.id', $filter_employee);
         $this->db->like('b.division_id', $filter_division);
         $this->db->like('b.departement_id', $filter_departement);
@@ -259,12 +261,12 @@ class Summary_payrolls extends CI_Controller
                     foreach (json_decode($record['deduction'], true) as $deduction => $val_deduction) {
                         $total_deduction += (int)$val_deduction;
                     }
-                    
+
                     $total_ip = 0;
                     foreach (json_decode($record['deduction_number'], true) as $ip => $val_ip) {
                         $total_ip += (int)$val_ip;
                     }
-                    
+
                     $total_ip_amount = 0;
                     foreach (json_decode($record['deduction_amount'], true) as $ip_amount => $val_ip_amount) {
                         $total_ip_amount += (int)$val_ip_amount;

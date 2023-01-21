@@ -17,6 +17,7 @@ class Employees extends CI_Controller
     //HALAMAN UTAMA
     public function index()
     {
+        $this->load->view('template/header_mobile');
         $this->load->view('mobile/employees');
     }
 }
