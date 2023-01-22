@@ -6,6 +6,7 @@
             <th rowspan="2" data-options="field:'number',width:100,align:'center'">Code</th>
             <th rowspan="2" data-options="field:'name',width:200,halign:'center'">Name</th>
             <th rowspan="2" data-options="field:'amount',width:100,halign:'center', align:'right', formatter:numberformat">Amount</th>
+            <th rowspan="2" data-options="field:'calculate_days',width:80,align:'center',styler:cellStyler, formatter:cellFormatter">Calculate<br>Daily</th>
             <th rowspan="2" data-options="field:'salary',width:300,halign:'center'">Description</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
@@ -40,6 +41,10 @@
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Amount</span>
                 <input style="width:60%;" name="amount" required="" data-options="buttonText:'Rp', buttonAlign:'left'" class="easyui-numberbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Calculate (Daily)</span>
+                <input name="calculate_days" id="calculate_days" class="easyui-checkbox" value="1"> Checked if Yes calculated Daily
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Description</span>
@@ -165,4 +170,20 @@
 
         return "<b>" + formatter.format(value) + "</b>";
     }
+
+    function cellStyler(value, row, index) {
+        if (value == 0) {
+            return 'background: #FF5F5F; color:white;';
+        } else {
+            return 'background: #53D636; color:white;';
+        }
+    }
+    //FORMATTER STATUS
+    function cellFormatter(value) {
+        if (value == 0) {
+            return 'NO';
+        } else {
+            return 'YES';
+        }
+    };
 </script>

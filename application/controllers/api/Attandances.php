@@ -20,9 +20,12 @@ class Attandances extends CI_Controller
         show_error("Cannot Process your request");
     }
 
-    public function dashboard($number)
+    public function dashboard($token = "")
     {
-        if ($number != "") {
+        if ($token != "") {
+            $users_m = $this->crud->read("users_m", [], ["token" => $token]);
+            $employee = $this->crud->read("employees", [], ["number" => $users_m->number]);
+            $number = $users_m->number;
             $month = date("Y-m");
 
             $start = strtotime($month . '-01');
@@ -176,7 +179,13 @@ class Attandances extends CI_Controller
 
             die(json_encode(array(
                 "code" => "200",
-                "results" => array("working" => $working, "permission" => $permits, "absence" => $absence, "late" => $late),
+                "results" => array(
+                    "employee_name" => $employee->name,
+                    "working" => $working,
+                    "permission" => $permits,
+                    "absence" => $absence,
+                    "late" => $late
+                ),
                 "status" => "success",
             )));
         } else {

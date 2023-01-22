@@ -63,6 +63,7 @@ class Auth extends CI_Controller
                         "results" => array(
                             "number" => $user->number,
                             "email" => $post['email'],
+                            "token" => $user->token,
                             "status" => "Not Active"
                         )
                     )));
@@ -74,6 +75,7 @@ class Auth extends CI_Controller
                         "results" => array(
                             "number" => $user->number,
                             "email" => $post['email'],
+                            "token" => $user->token,
                             "status" => "Active"
                         )
                     )));
@@ -103,6 +105,10 @@ class Auth extends CI_Controller
                 if (!empty($employee)) {
                     if (empty($users_m)) {
                         $id = $this->autoid("users_m");
+
+                        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                        $token = 'key_' . substr(str_shuffle($permitted_chars), 0, 45);
+
                         $data = [
                             "id" => $id,
                             "created_date" => date('Y-m-d H:i:s'),
@@ -110,6 +116,7 @@ class Auth extends CI_Controller
                             "number" => $post['number'],
                             "email" => $post['email'],
                             "password" => md5($post['password']),
+                            "token" => $token,
                         ];
 
                         if ($this->db->insert("users_m", $data)) {
@@ -158,7 +165,7 @@ class Auth extends CI_Controller
                     show_error("Failed to Register");
                 }
             } else {
-                die(json_encode(array("title" => "Registered", "message" => "Your Employee ID has been registered", "theme" => "info")));
+                die(json_encode(array("title" => "Registered", "message" => "Your Email not found", "theme" => "info")));
             }
         } else {
             show_error("Cannot Process your request");

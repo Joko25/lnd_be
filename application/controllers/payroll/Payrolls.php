@@ -614,7 +614,7 @@ class Payrolls extends CI_Controller
 
             //Allowance Amount
             //jika dia ada tunjuangan ambil field dan isinya
-            $q_allowance = $this->db->query("SELECT b.number, b.name, a.amount
+            $q_allowance = $this->db->query("SELECT b.number, b.name, a.amount, b.calculate_days
                     FROM allowances b
                     LEFT JOIN setup_allowances a ON a.allowance_id = b.id and a.employee_id = '$record[id]'
                     GROUP BY b.id ORDER BY b.name asc");
@@ -624,9 +624,15 @@ class Payrolls extends CI_Controller
             $arr_allowance_amount = "";
             $arr_allowance_amount_total = 0;
             foreach ($r_allowance as $allowance_data) {
-                $arr_allowance_number .= strtolower($allowance_data['number']) . ",";
-                $arr_allowance_amount .= $allowance_data['amount'] . ",";
-                $arr_allowance_amount_total += $allowance_data['amount'];
+                if ($allowance_data['calculate_days'] == "1") {
+                    $arr_allowance_number .= strtolower($allowance_data['number']) . ",";
+                    $arr_allowance_amount .= ($allowance_data['amount'] * $masuk) . ",";
+                    $arr_allowance_amount_total += ($allowance_data['amount'] * $masuk);
+                } else {
+                    $arr_allowance_number .= strtolower($allowance_data['number']) . ",";
+                    $arr_allowance_amount .= $allowance_data['amount'] . ",";
+                    $arr_allowance_amount_total += $allowance_data['amount'];
+                }
             }
 
             $arr_allowance_number_ex = explode(",", substr($arr_allowance_number, 0, -1));
