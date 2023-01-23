@@ -2,13 +2,19 @@
 <table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar" data-options="rownumbers: true">
     <thead>
         <tr>
-            <th data-options="field:'departement_name',width:200,halign:'center'">Departement</th>
-            <th data-options="field:'departement_sub_name',width:200,halign:'center'">Departement Sub</th>
-            <th data-options="field:'group_name',width:120,halign:'center'">Group</th>
-            <th data-options="field:'employee',width:100,halign:'center'">Employee</th>
-            <th data-options="field:'income',width:150,halign:'center', align:'right', formatter:numberformat">Pay Amount</th>
-            <th data-options="field:'print',width:100,halign:'center',formatter:FormatterFile"> Print</th>
-            <th data-options="field:'excel',width:100,halign:'center',formatter:FormatterExcel"> Excel</th>
+            <th rowspan="2" data-options="field:'departement_name',width:200,halign:'center'">Departement</th>
+            <th rowspan="2" data-options="field:'departement_sub_name',width:200,halign:'center'">Departement Sub</th>
+            <th rowspan="2" data-options="field:'group_name',width:120,halign:'center'">Group</th>
+            <th rowspan="2" data-options="field:'employee',width:100,halign:'center'">Employee</th>
+            <th rowspan="2" data-options="field:'income',width:150,halign:'center', align:'right', formatter:numberformat">Pay Amount</th>
+            <th rowspan="2" data-options="field:'print',width:100,halign:'center',formatter:FormatterFile"> Print</th>
+            <th rowspan="2" data-options="field:'excel',width:100,halign:'center',formatter:FormatterExcel"> Excel</th>
+            <th colspan="3" data-options="field:'',width:100,halign:'center'"> Approval</th>
+        </tr>
+        <tr>
+            <th data-options="field:'status_notification',width:100,align:'center',styler:statusStyler, formatter:statusFormatter"> Status</th>
+            <th data-options="field:'status_check',width:120,align:'center'"> By</th>
+            <th data-options="field:'status_date',width:150,align:'center'"> Date</th>
         </tr>
     </thead>
 </table>
@@ -59,7 +65,7 @@
 <div id="dlg_print" class="easyui-window" title="Print Preview" data-options="closed: true,minimizable:false,collapsible:false,maximizable:true,modal:true,footer:'#footer'" style="width: 1000px; height: 500px; top: 20px;">
     <iframe id="printout" src="" style="width: 100%; height:600px; border: 0;"></iframe>
     <div id="footer" style="padding:5px; text-align:right;">
-        <a class="easyui-linkbutton c6" onclick="pdf_detail()" style="width:120px">Print</a>
+        <a class="easyui-linkbutton c6" id="pdf_detail" onclick="pdf_detail()" style="width:120px">Print</a>
     </div>
 </div>
 <script>
@@ -331,12 +337,23 @@
     }
 
     function FormatterFile(value, row) {
-        var linkPrint = "pdf_view('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
+        if (row.status_notification == "" || row.status_notification == null) {
+            var linkPrint = "pdf_view('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
+            $("#pdf_detail").linkbutton('enable');
+        } else {
+            var linkPrint = "toastr.info('Still Checked Approval')";
+            $("#pdf_detail").linkbutton('disable');
+        }
         return '<a href="#" onclick="' + linkPrint + '" class="btn btn-primary btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-eye"></i> View</a>';
     };
 
     function FormatterExcel(value, row) {
-        var linkPrint = "excel_detail('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
+        if (row.status_notification == "" || row.status_notification == null) {
+            var linkPrint = "excel_detail('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
+        } else {
+            var linkPrint = "toastr.info('Still Checked Approval')";
+        }
+
         return '<a href="#" onclick="' + linkPrint + '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-file"></i> Download</a>';
     };
 
@@ -349,4 +366,21 @@
 
         return "<b>" + formatter.format(value) + "</b>";
     }
+
+    //CELLSTYLE STATUS
+    function statusStyler(value, row, index) {
+        if (value == "" || value == null) {
+            return 'background: #53D636; color:white;';
+        } else {
+            return 'background: #FF5F5F; color:white;';
+        }
+    }
+    //FORMATTER STATUS
+    function statusFormatter(value) {
+        if (value == "" || value == null) {
+            return 'Approved';
+        } else {
+            return 'Checked';
+        }
+    };
 </script>

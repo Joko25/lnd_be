@@ -78,8 +78,8 @@ class Permits extends CI_Controller
         $this->db->where('a.employee_id', $employee_id);
         $records = $this->db->get()->result_array();
 
-        $permitType = $this->crud->read('permit_types', ["id" => $permit_type_id, "cutoff" => "YES"]);
-        $permits = $this->crud->reads('permits', ["employee_id" => $employee_id, "DATE_FORMAT(permit_date, '%Y')" => $year, "permit_type_id" => @$permitType->id]);
+        $permitType = $this->crud->read('permit_types', [], ["id" => $permit_type_id, "cutoff" => "YES"]);
+        $permits = $this->crud->reads('permits', ["employee_id" => $employee_id, "DATE_FORMAT(permit_date, '%Y')" => $year], ["permit_type_id" => @$permitType->id]);
         $totalPermit = 0;
         foreach ($permits as $permit) {
             $totalPermit += $permit->duration;
@@ -228,14 +228,14 @@ class Permits extends CI_Controller
                         "trans_date" => $post['trans_date'],
                         "permit_date" => $permit_date,
                         "duration" => "1",
-                        "leave" => ($leave - $post['duration']),
+                        "leave" => ($leave - 1),
                         "note" => $post['note'],
                         "attachment" => $attachment
                     );
                     $send = $this->crud->create('permits', $post_final);
                 }
 
-                $leave = ($leave - $post['duration']);
+                $leave = ($leave - 1);
             }
 
             echo $send;

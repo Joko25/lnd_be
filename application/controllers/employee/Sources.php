@@ -171,6 +171,9 @@ class Sources extends CI_Controller
                 <th>Group</th>
                 <th>Name</th>
                 <th>Address</th>
+                <th>Intern Fee</th>
+                <th>Boarding Fee</th>
+                <th>Sourcing Fee</th>
             </tr>';
         $no = 1;
         foreach ($records as $data) {
@@ -179,7 +182,10 @@ class Sources extends CI_Controller
                     <td>' . $data['number'] . '</td>
                     <td>' . $data['group_name'] . '</td>
                     <td>' . $data['name'] . '</td>
-                    <td>' . $data['description'] . '</td>';
+                    <td>' . $data['description'] . '</td>
+                    <td>' . number_format($data['intern_fee']) . '</td>
+                    <td>' . number_format($data['boarding_fee']) . '</td>
+                    <td>' . number_format($data['sourcing_fee']) . '</td>';
             $no++;
         }
 

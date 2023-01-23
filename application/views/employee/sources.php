@@ -9,6 +9,7 @@
             <th rowspan="2" data-options="field:'description',width:300,halign:'center'">Address</th>
             <th rowspan="2" data-options="field:'amount',width:150,halign:'center',align:'right',formatter:numberformat">Intern Fee</th>
             <th rowspan="2" data-options="field:'boarding_fee',width:150,halign:'center',align:'right',formatter:numberformat">Boarding Fee</th>
+            <th rowspan="2" data-options="field:'sourcing_fee',width:150,halign:'center',align:'right',formatter:numberformat">Sourcing Fee</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
@@ -55,6 +56,10 @@
                 <span style="width:35%; display:inline-block;">Boarding Fee</span>
                 <input style="width:60%;" name="boarding_fee" id="boarding_fee" required="" data-options="buttonText:'Rp', buttonAlign:'left'" class="easyui-numberbox">
             </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Sourcing Fee</span>
+                <input style="width:60%;" name="sourcing_fee" id="sourcing_fee" required="" data-options="buttonText:'Rp', buttonAlign:'left'" class="easyui-numberbox">
+            </div>
         </fieldset>
     </form>
 </div>
@@ -70,6 +75,7 @@
         $('#frm_insert').form('clear');
         $("#amount").numberbox('setValue', 0);
         $("#boarding_fee").numberbox('setValue', 0);
+        $("#sourcing_fee").numberbox('setValue', 0);
     }
 
     //EDIT DATA
@@ -174,7 +180,7 @@
             prompt: 'Choose Group'
         });
     });
-    
+
     function numberformat(value, row) {
         const formatter = new Intl.NumberFormat('id-ID', {
             style: 'currency',

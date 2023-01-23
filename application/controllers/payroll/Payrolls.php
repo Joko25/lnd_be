@@ -25,7 +25,7 @@ class Payrolls extends CI_Controller
         } elseif ($this->checkuserAccess($this->id_menu()) > 0) {
             $data['button'] = $this->getbutton($this->id_menu());
             $data['permit_type'] = $this->crud->reads('permit_types', [], ['payroll' => 'NON DEDUCTION']);
-            $data['allowance'] = $this->crud->reads('allowances');
+            $data['allowance'] = $this->crud->reads('allowances', [], [], "", "name", "asc");
             $data['deduction'] = $this->crud->reads('deductions');
             $data['permit_type_d'] = $this->crud->reads('permit_types', [], ['payroll' => 'DEDUCTION']);
             $data['bpjs'] = $this->crud->reads('bpjs', ['status' => 0]);
@@ -1028,7 +1028,7 @@ class Payrolls extends CI_Controller
         }
 
         $permit_type = $this->crud->reads('permit_types', [], ['payroll' => 'NON DEDUCTION']);
-        $allowance = $this->crud->reads('allowances');
+        $allowance = $this->crud->reads('allowances', [], [], "", "name", "asc");
         $deduction = $this->crud->reads('deductions');
         $permit_type_d = $this->crud->reads('permit_types', [], ['payroll' => 'DEDUCTION']);
         $bpjs = $this->crud->reads('bpjs', ['status' => 0]);

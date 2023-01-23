@@ -51,9 +51,10 @@ class Employee_salaries extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            $query = $this->db->query("SELECT b.bank_no, a.net_income, a.number, a.name FROM payrolls a
+            $query = $this->db->query("SELECT b.bank_no, a.net_income, a.number, a.name, d.name as source_name FROM payrolls a
                 JOIN employees b ON a.employee_id = b.id
                 JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
+                LEFT JOIN sources d ON b.source_id = d.id
                 WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
                 AND b.division_id LIKE '%$filter_division%'
                 AND b.departement_id LIKE '%$filter_departement%'
@@ -61,7 +62,7 @@ class Employee_salaries extends CI_Controller
                 AND c.group_id LIKE '%$filter_group%'
                 AND a.employee_id LIKE '%$filter_employee%'
                 AND b.bank_name LIKE '%$filter_bank%'
-                ORDER BY a.`name` ASC");
+                ORDER BY d.name, a.`name` ASC");
             $records = $query->result_array();
 
             //Config
@@ -126,6 +127,7 @@ class Employee_salaries extends CI_Controller
                                     <th style="text-align:center;">NAMA</th>
                                     <th style="text-align:center;">NO REK</th>
                                     <th style="text-align:center;">JUMLAH</th>
+                                    <th style="text-align:center;">SOURCE</th>
                                 </tr>';
                 $no = 1;
                 foreach ($records as $record) {
@@ -135,6 +137,7 @@ class Employee_salaries extends CI_Controller
                                 <td>' . $record['name'] . '</td>
                                 <td style="mso-number-format:\@;">' . $record['bank_no'] . '</td>
                                 <td style="text-align:right;">' . $record['net_income'] . '</td>
+                                <td>' . $record['source_name'] . '</td>
                             </tr>';
                     $no++;
                 }

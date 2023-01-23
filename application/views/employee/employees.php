@@ -240,12 +240,12 @@
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Jamsostek</span>
-                        <input style="width:35%;" name="jamsostek" id="jamsostek" class="easyui-numberbox">
+                        <input style="width:35%;" name="jamsostek" id="jamsostek" class="easyui-textbox">
                         <input style="width:20%;" name="jamsostek_date" id="jamsostek_date" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">JKN</span>
-                        <input style="width:35%;" name="jkn" id="jkn" class="easyui-numberbox">
+                        <input style="width:35%;" name="jkn" id="jkn" class="easyui-textbox">
                         <input style="width:20%;" name="jkn_date" id="jkn_date" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
                     </div>
                 </fieldset>
