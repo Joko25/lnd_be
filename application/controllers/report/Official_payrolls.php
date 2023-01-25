@@ -116,6 +116,8 @@ class Official_payrolls extends CI_Controller
             $total_cash = 0;
             $total_bsi = 0;
             $total_mandiri = 0;
+            $total_bal_mp = 0;
+            $total_bal_payroll = 0;
             foreach ($records as $record) {
                 $departement_id = $record['id'];
                 $qcash = $this->db->query("SELECT a.name, 
@@ -179,6 +181,8 @@ class Official_payrolls extends CI_Controller
                 $total_cash += @$rcash->total_payroll;
                 $total_bsi += @$rbsm->total_payroll;
                 $total_mandiri += @$rmandiri->total_payroll;
+                $total_bal_mp += ($record['total_employee'] - (@$rcash->total_employee + @$rbsm->total_employee + @$rmandiri->total_employee));
+                $total_bal_payroll += ($record['total_payroll'] - (@$rcash->total_payroll + @$rbsm->total_payroll + @$rmandiri->total_payroll));
                 $no++;
             }
 
@@ -250,8 +254,8 @@ class Official_payrolls extends CI_Controller
                         <td style="text-align:right;">' . number_format($total_bsi) . '</td>
                         <td style="text-align:center;">' . number_format($mp_mandiri) . '</td>
                         <td style="text-align:right;">' . number_format($total_mandiri) . '</td>
-                        <td style="text-align:center;">0</td>
-                        <td style="text-align:right;">0</td>
+                        <td style="text-align:center;">' . number_format($total_bal_mp) . '</td>
+                        <td style="text-align:right;">' . number_format($total_bal_payroll) . '</td>
                     </tr>
                     <tr style="background: #FFAFAF;">
                         <td colspan="2" style="text-align:right;"><b>TOTAL PAID (BEFORE)</b></td>
@@ -263,8 +267,8 @@ class Official_payrolls extends CI_Controller
                         <td style="text-align:right;">' . number_format(@$rbfbsi->total_payroll) . '</td>
                         <td style="text-align:center;">' . number_format(@$rbfmandiri->total_employee) . '</td>
                         <td style="text-align:right;">' . number_format(@$rbfmandiri->total_payroll) . '</td>
-                        <td style="text-align:center;">0</td>
-                        <td style="text-align:right;">0</td>
+                        <td style="text-align:center;">' . number_format(@$rbftotal->total_employee - (@$rbfcash->total_employee + @$rbfbsi->total_employee + @$rbfmandiri->total_employee)) . '</td>
+                        <td style="text-align:right;">' . number_format(@$rbftotal->total_payroll - (@$rbfcash->total_payroll + @$rbfbsi->total_payroll + @$rbfmandiri->total_payroll)) . '</td>
                     </tr>
                     <tr style="background: #FFF1AF;">
                         <td colspan="2" style="text-align:right;"><b>UP/DOWN</b></td>
@@ -276,8 +280,8 @@ class Official_payrolls extends CI_Controller
                         <td style="text-align:right;">' . number_format(($total_bsi - @$rbfbsi->total_payroll)) . '</td>
                         <td style="text-align:center;">' . number_format(($mp_mandiri - @$rbfmandiri->total_employee)) . '</td>
                         <td style="text-align:right;">' . number_format(($total_mandiri - @$rbfmandiri->total_payroll)) . '</td>
-                        <td style="text-align:center;">0</td>
-                        <td style="text-align:right;">0</td>
+                        <td style="text-align:center;">' . number_format(($mp_payroll - @$rbftotal->total_employee) - (($mp_cash - @$rbfcash->total_employee) + ($mp_bsi - @$rbfbsi->total_employee) + ($mp_mandiri - @$rbfmandiri->total_employee))) . '</td>
+                        <td style="text-align:right;">' . number_format(($total_payroll - @$rbftotal->total_payroll) - (($total_cash - @$rbfcash->total_payroll) + ($total_bsi - @$rbfbsi->total_payroll) + ($total_mandiri - @$rbfmandiri->total_payroll))) . '</td>
                     </tr>';
             $html .= '</table>
             <br>

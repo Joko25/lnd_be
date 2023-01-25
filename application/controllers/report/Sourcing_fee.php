@@ -131,8 +131,7 @@ class Sourcing_fee extends CI_Controller
                                 <th style="text-align:center;">Employee ID</th>
                                 <th style="text-align:center;">Employee Name</th>
                                 <th style="text-align:center;">WD</th>
-                                <th style="text-align:center;">HKW</th>
-                                <th style="text-align:center;">Salary</th>
+                                <th style="text-align:center;">Amount</th>
                             </tr>';
 
                 $total = 0;
@@ -150,16 +149,15 @@ class Sourcing_fee extends CI_Controller
                                     <td style="mso-number-format:\@;">' . $employee['number'] . '</td>
                                     <td>' . $employee['name'] . '</td>
                                     <td>' . $wd . '</td>
-                                    <td>' . $hkw . '</td>
-                                    <td style="text-align:right;">' . number_format($fee) . '</td>
+                                    <td style="text-align:right;">' . round($fee) . '</td>
                                 </tr>';
                     $total += $fee;
                     $no++;
                 }
 
                 $html .= '  <tr>
-                                <th colspan="5" style="text-align:right;">Grand Total</th>
-                                <th style="text-align:right;">' . number_format($total) . '</th>
+                                <th colspan="4" style="text-align:right;">Grand Total</th>
+                                <th style="text-align:right;">' . round($total) . '</th>
                             </tr>';
 
                 $html .= '</table>
