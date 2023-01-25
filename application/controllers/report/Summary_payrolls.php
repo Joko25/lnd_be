@@ -65,7 +65,6 @@ class Summary_payrolls extends CI_Controller
         $this->db->join('privilege_groups f', "b.group_id = f.group_id and f.username = '$username' and f.status = '1'");
         $this->db->join('notifications h', "a.id = h.table_id and h.table_name = 'payrolls'", 'left');
         $this->db->where('a.deleted', 0);
-        $this->db->where('a.status', 0);
         $this->db->where('a.period_start =', $period_start);
         $this->db->where('a.period_end =', $period_end);
         $this->db->like('b.id', $filter_employee);
@@ -378,7 +377,6 @@ class Summary_payrolls extends CI_Controller
             $this->db->join('groups e', "b.group_id = e.id");
             $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
             $this->db->where('a.deleted', 0);
-            $this->db->where('a.status', 0);
             $this->db->where('a.period_start =', $period_start);
             $this->db->where('a.period_end =', $period_end);
             $this->db->like('b.id', $filter_employee);
@@ -422,7 +420,6 @@ class Summary_payrolls extends CI_Controller
                 $this->db->join('groups e', "b.group_id = e.id");
                 $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
                 $this->db->where('a.deleted', 0);
-                $this->db->where('a.status', 0);
                 $this->db->where('a.period_start =', $period_start);
                 $this->db->where('a.period_end =', $period_end);
                 $this->db->like('b.id', $filter_employee);
