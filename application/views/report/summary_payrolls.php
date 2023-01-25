@@ -337,13 +337,13 @@
     }
 
     function FormatterFile(value, row) {
+        var linkPrint = "pdf_view('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
         if (row.status_notification == "" || row.status_notification == null) {
-            var linkPrint = "pdf_view('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
             $("#pdf_detail").linkbutton('enable');
         } else {
-            var linkPrint = "toastr.info('Still Checked Approval')";
             $("#pdf_detail").linkbutton('disable');
         }
+        
         return '<a href="#" onclick="' + linkPrint + '" class="btn btn-primary btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-eye"></i> View</a>';
     };
 
