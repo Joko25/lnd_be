@@ -1,5 +1,5 @@
 <!-- UPDATE DATA -->
-<div id="p" class="easyui-panel" title="Configuration" style="width:100%; height:800px; padding:10px; background:#fafafa;" data-options="collapsible:true, maximizable:true">
+<div id="p" class="easyui-panel" title="Configuration" style="width:100%; height:600px; padding:10px; background:#fafafa;" data-options="collapsible:true, maximizable:true">
     <form id="frm_insert" method="post" enctype="multipart/form-data" novalidate>
         <div style="width: 100%; float: left;">
             <fieldset style="width:35%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
@@ -60,27 +60,15 @@
                 <br>
             </fieldset>
             <fieldset style="width:30%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
-                <legend><b>Generate QR Code Check In</b></legend>
+                <legend><b>Generate QR Code Attandances</b></legend>
                 <div class="fitem">
-                    <input style="width:100%;" disabled name="token_in" value="<?= $config->token_in ?>" class="easyui-textbox">
+                    <input style="width:100%;" disabled name="token" value="<?= $config->token ?>" class="easyui-textbox">
                 </div>
                 <br>
                 <center>
-                    <a class="easyui-linkbutton c5" onclick="generateQrCodeIn()">Generate Check In</a>
+                    <a class="easyui-linkbutton c5" onclick="generateQrCode()">Generate QR Code</a>
                     <br>
-                    <img src="<?= base_url('assets/image/qrcode/' . $config->token_in . ".png") ?>" style="width: 80%;">
-                </center>
-            </fieldset>
-            <fieldset style="width:30%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
-                <legend><b>Generate QR Code Check out</b></legend>
-                <div class="fitem">
-                    <input style="width:100%;" disabled name="token_out" value="<?= $config->token_out ?>" class="easyui-textbox">
-                </div>
-                <br>
-                <center>
-                    <a class="easyui-linkbutton c5" onclick="generateQrCodeOut()">Generate Check Out</a>
-                    <br>
-                    <img src="<?= base_url('assets/image/qrcode/' . $config->token_out . ".png") ?>" style="width: 80%;">
+                    <img src="<?= base_url('assets/image/qrcode/' . $config->token . ".png") ?>" style="width: 80%;">
                 </center>
             </fieldset>
         </div>
@@ -108,31 +96,10 @@
     }
 
     //Generate QR Code
-    function generateQrCodeIn() {
+    function generateQrCode() {
         $.ajax({
             type: "post",
-            url: "<?= base_url('admin/config/generateQrCodeIn') ?>",
-            dataType: "json",
-            success: function(response) {
-                Swal.fire({
-                    title: response.message,
-                    icon: response.theme,
-                    confirmButtonText: 'Ok',
-                    allowOutsideClick: false,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.reload();
-                    }
-                });
-            }
-        });
-    }
-
-    //Generate QR Code
-    function generateQrCodeOut() {
-        $.ajax({
-            type: "post",
-            url: "<?= base_url('admin/config/generateQrCodeOut') ?>",
+            url: "<?= base_url('admin/config/generateQrCode') ?>",
             dataType: "json",
             success: function(response) {
                 Swal.fire({

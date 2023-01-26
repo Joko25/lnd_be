@@ -52,31 +52,15 @@ class Config extends CI_Controller
         }
     }
 
-    public function generateQrCodeIn()
+    public function generateQrCode()
     {
         $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $token_in = 'QRIN_' . substr(str_shuffle($permitted_chars), 0, 45);
-        $update = $this->db->update("config", ["token_in" => $token_in]);
+        $token = 'QR_' . substr(str_shuffle($permitted_chars), 0, 45);
+        $update = $this->db->update("config", ["token" => $token]);
 
         if ($update) {
             $config = $this->crud->read('config');
-            $this->createQrcode($config->token_in, "assets/image/qrcode/");
-
-            die(json_encode(array("message" => "Success Generated QR Code", "theme" => "success")));
-        } else {
-            die(json_encode(array("message" => "Failed Generated QR Code", "theme" => "error")));
-        }
-    }
-
-    public function generateQrCodeOut()
-    {
-        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $token_out = 'QROUT_' . substr(str_shuffle($permitted_chars), 0, 45);
-        $update = $this->db->update("config", ["token_out" => $token_out]);
-
-        if ($update) {
-            $config = $this->crud->read('config');
-            $this->createQrcode($config->token_out, "assets/image/qrcode/");
+            $this->createQrcode($config->token, "assets/image/qrcode/");
 
             die(json_encode(array("message" => "Success Generated QR Code", "theme" => "success")));
         } else {

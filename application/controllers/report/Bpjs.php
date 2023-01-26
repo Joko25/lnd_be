@@ -67,7 +67,7 @@ class Bpjs extends CI_Controller
                 JOIN departement_subs d ON a.departement_sub_id = d.id
                 JOIN maritals e ON a.marital_id = e.id
                 JOIN setup_salaries p ON p.employee_id = a.id
-                WHERE a.deleted = 0 and a.status = 0 and a.jamsostek != '' and a.jamsostek != '-'
+                WHERE a.deleted = 0 and a.jamsostek != '' and a.jamsostek != '-'
                 AND a.division_id LIKE '%$filter_division%'
                 AND a.departement_id LIKE '%$filter_departement%'
                 AND a.departement_sub_id LIKE '%$filter_departement_sub%'

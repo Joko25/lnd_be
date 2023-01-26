@@ -1,4 +1,4 @@
-<div class="p-4">
+<div class="p-4" style="margin-bottom: 50px;">
     <h1>Attandance</h1>
 
     <div class="alert alert-primary mt-4" role="alert">
@@ -15,8 +15,7 @@
         </center>
     </div>
 
-    <a class="btn btn-lg btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#modalCheckin"><i class="fa fa-clock-o"></i> Check In</a>
-    <a class="btn btn-lg btn-danger w-100 mb-5" data-bs-toggle="modal" data-bs-target="#modalCheckout"><i class="fa fa-clock-o"></i> Check Out</a>
+    <a class="btn btn-lg btn-success w-100 mb-5" id="check_in" onclick="check_in()"><i class="fa fa-clock-o"></i> Check In/Out</a>
 
     <div class="modal fade" id="modalCheckin" tabindex="-1">
         <div class="modal-dialog">
@@ -25,39 +24,31 @@
                     <h5 class="modal-title">Check In</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="readerScanIn">
-                </div>
-            </div>
-        </div>
-    </div>
+                <div class="modal-body p-0">
+                    <p id="readerScanIn">
 
-    <div class="modal fade" id="modalCheckout" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Check Out</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="readerScanOut">
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 
     <h4>Attandance Lists</h4>
-
+    <div class="alert alert-info mt-4" role="alert">
+        Max 31 Days
+    </div>
     <form method="post">
         <div class="input-group mb-3" hidden>
             <span class="input-group-text" id="f-maps-1"><i class="fa fa-user"></i></span>
-            <input type="text" id="number" class="form-control" value="<?= $number ?>" placeholder="Employee No" aria-describedby="f-maps-1">
+            <input type="text" id="number" readonly class="form-control" value="<?= $number ?>" placeholder="Employee No" aria-describedby="f-maps-1">
         </div>
         <div class="input-group mb-3" hidden>
             <span class="input-group-text" id="f-maps-1"><i class="fa fa-maps"></i></span>
-            <input type="text" id="latitude" class="form-control" placeholder="Latitude" aria-describedby="f-maps-1">
+            <input type="text" id="latitude" readonly class="form-control" placeholder="Latitude" aria-describedby="f-maps-1">
         </div>
         <div class="input-group mb-3" hidden>
             <span class="input-group-text" id="f-maps-1"><i class="fa fa-maps"></i></span>
-            <input type="text" id="longitude" class="form-control" placeholder="Longitude" aria-describedby="f-maps-1">
+            <input type="text" id="longitude" readonly class="form-control" placeholder="Longitude" aria-describedby="f-maps-1">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="f-calendar-1"><i class="fa fa-calendar"></i></span>
@@ -67,80 +58,111 @@
             <span class="input-group-text" id="f-calendar-2"><i class="fa fa-calendar"></i></span>
             <input type="date" id="date_to" class="form-control" value="<?= date("Y-m-d") ?>" aria-describedby="f-calendar-2">
         </div>
-        <button class="btn btn-sm btn-primary w-100 mb-3"><i class="fa fa-eye"></i> Filter Data</button>
+        <a class="btn btn-sm btn-primary w-100 mb-3" onclick="filter_data()"><i class="fa fa-eye"></i> View Attandance</a>
     </form>
 
-    <div class="alert alert-warning mt-4" role="alert">
-        Attandance Not Found
-    </div>
+    <div id="results">
 
-    <ul class="list-group mb-4">
-        <li class="list-group-item">
-            <div class="float-start">
-                <b>22 Januari 2022 </b>
-            </div>
-            <div class="float-end">
-                <span class="badge bg-success">07:20:12</span> <span class="badge bg-danger">19:29:00</span>
-            </div>
-        </li>
-    </ul>
+    </div>
 </div>
 
 <script>
+    function filter_data() {
+        var number = $("#number").val();
+        var date_from = $("#date_from").val();
+        var date_to = $("#date_to").val();
+
+        Swal.fire({
+            title: 'Please Wait',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
+
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('mobile/attandances/datatables') ?>",
+            data: "number=" + number + "&date_from=" + date_from + "&date_to=" + date_to,
+            dataType: "html",
+            success: function(response) {
+                Swal.close();
+                $("#results").html(response);
+            }
+        });
+    }
+
+    const html5QrCode = new Html5Qrcode("readerScanIn");
+
+    let config = {
+        fps: 10,
+        qrbox: 250,
+        rememberLastUsedCamera: true,
+        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
+    };
+    Html5Qrcode.getCameras().then(devices => {
+        if (devices && devices.length) {
+            html5QrCode.start({
+                facingMode: "environment"
+            }, config, onScanSuccess);
+        }
+    }).catch(err => {
+        // handle err
+    });
+
+    function check_in() {
+        $("#modalCheckin").modal('show');
+    }
+
     //Check In
     function onScanSuccess(decodedText, decodedResult) {
-        var number = $("#number").val();
-        var latitude = $("#latitude").val();
-        var longitude = $("#longitude").val();
+        html5QrCode.stop().then((ignore) => {
+            var number = $("#number").val();
+            var latitude = $("#latitude").val();
+            var longitude = $("#longitude").val();
 
-        if (latitude == "") {
-            Swal.fire({
-                title: "Your location not found",
-                icon: "error",
-                allowOutsideClick: false,
-            });
-        } else {
-            $.ajax({
-                type: "post",
-                url: "<?= base_url('mobile/attandances/checkin') ?>",
-                data: "token_in=" + decodedText + "&latitude=" + latitude + "&longitude=" + longitude + "&employee_id=" + employee_id,
-                dataType: "json",
-                success: function(response) {
-                    Swal.fire({
-                        title: response.message,
-                        icon: response.theme,
-                        allowOutsideClick: false,
-                    });
-                }
-            });
-        }
-    }
+            $("#modalCheckin").modal('hide');
 
-    var html5QrcodeScanner = new Html5QrcodeScanner(
-        "readerScanIn", {
-            fps: 10,
-            qrbox: 250
+            if (latitude == "") {
+                Swal.fire({
+                    text: "Your location not found",
+                    icon: "error",
+                    allowOutsideClick: false,
+                });
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "<?= base_url('mobile/attandances/checkin') ?>",
+                    data: "token_in=" + decodedText + "&latitude=" + latitude + "&longitude=" + longitude + "&number=" + number,
+                    dataType: "json",
+                    success: function(response) {
+                        Swal.fire({
+                            text: response.message,
+                            icon: response.theme,
+                            allowOutsideClick: false,
+                        });
+                    }
+                });
+            }
+        }).catch((err) => {
+            // Stop failed, handle it.
         });
-    html5QrcodeScanner.render(onScanSuccess);
-
-    //Check Out
-    function onScanSuccessOut(decodedText2, decodedResult2) {
-        alert(`Scan result: ${decodedText2}`, decodedResult2);
     }
-
-    var html5QrcodeScannerOut = new Html5QrcodeScanner(
-        "readerScanOut", {
-            fps: 10,
-            qrbox: 250
-        });
-    html5QrcodeScannerOut.render(onScanSuccessOut);
 
     $(document).ready(function() {
+        $("#check_in").addClass('disabled');
         navigator.geolocation.getCurrentPosition(function(position) {
             $("#latitude").val(position.coords.latitude);
             $("#longitude").val(position.coords.longitude);
+            $("#check_in").removeClass('disabled');
         }, function(e) {
-            alert('Please activate your gps');
+            Swal.fire({
+                text: "Please activate your gps",
+                icon: "warning",
+                allowOutsideClick: false,
+            });
         }, {
             enableHighAccuracy: true
         });

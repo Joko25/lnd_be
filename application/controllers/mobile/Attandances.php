@@ -36,18 +36,8 @@ class Attandances extends CI_Controller
             $this->db->order_by('d.start', 'asc');
             $shifts = $this->db->get()->result();
 
-            $date = date("Y-m-d");
-            $attandance = $this->crud->read("attandances", [], ["number" => $employee->number, "date_in" => $date]);
-
-            if($attandance->time_in != ""){
-                $disable_check_in = "disabled";
-            }else{
-                $disable_check_in = "";
-            }
-
             $data['number'] = $users_m->number;
             $data['shifts'] = $shifts;
-            $data['attandance'] = $attandance;
 
             $this->load->view('template/header_mobile');
             $this->load->view('mobile/attandances', $data);
@@ -87,20 +77,66 @@ class Attandances extends CI_Controller
             $this->db->from('config');
             $config = $this->db->get()->row();
 
-            if ($token_in != $config->token_in) {
-                die(json_encode(array("message" => "QR Code not found, you are not absent using this code", "theme" => "error")));
+            if ($token_in != $config->token) {
+                die(json_encode(array("message" => "QR Code not found, you are cannot check in using this code", "theme" => "error")));
             } elseif ($distance > 500) {
                 die(json_encode(array("message" => "Your location is far from " . $config->name, "theme" => "error")));
             } else {
                 $date_in = date("Y-m-d");
                 $time_in = date("H:i:s");
-                $attandance = $this->crud->read("attandances", [], ["number" => $number, "date_in" => $date_in]);
-                if (empty($attandance->number)) {
-                    $this->crud->create("attandances", ["number" => $number, "date_in" => $date_in, "time_in" => $time_in]);
+                $attandance_in = $this->crud->read("attandances", [], ["number" => $number, "date_in" => $date_in]);
+                //Jika tanggal sekarang belum ada absen maka
+                if (empty($attandance_in->number)) {
+                    //Tanggal terakhir
+                    $attandance_last = $this->crud->read("attandances", [], ["number" => $number], "1", "date_in", "desc");
+                    //Jika tanggal terakhir dan checkout nya kosong maka
+                    if ($attandance_last->time_out == null) {
+                        //Update absen pulang
+                        $this->crud->update("attandances", ["number" => $number, "id" => $attandance_last->id], ["date_out" => $date_in, "time_out" => $time_in]);
+                        die(json_encode(array("message" => "Check Out Success", "theme" => "success")));
+                    } else {
+                        $this->crud->create("attandances", ["number" => $number, "date_in" => $date_in, "time_in" => $time_in]);
+                        die(json_encode(array("message" => "Check In Success", "theme" => "success")));
+                    }
+                } elseif ($attandance_in->time_out == null) {
+                    $this->crud->update("attandances", ["number" => $number, "id" => $attandance_in->id], ["date_out" => $date_in, "time_out" => $time_in]);
+                    die(json_encode(array("message" => "Check Out Success", "theme" => "success")));
                 } else {
                     die(json_encode(array("message" => "On this date you have Checked In", "theme" => "error")));
                 }
             }
+        }
+    }
+
+    function datatables()
+    {
+        if ($this->input->post()) {
+            $number = $this->input->post("number");
+            $date_from = $this->input->post("date_from");
+            $date_to = $this->input->post("date_to");
+
+            $records = $this->crud->query("SELECT * FROM attandances WHERE `number` = '$number' and date_in BETWEEN '$date_from' and '$date_to' ORDER BY date_in ASC limit 31");
+            if (count($records) > 0) {
+                $html = '<ul class="list-group mb-4">';
+                foreach ($records as $record) {
+                    $html .= '  <li class="list-group-item">
+                                    <div class="float-start">
+                                        <b>' . date("d F Y", strtotime($record->date_in)) . '</b>
+                                    </div>
+                                    <div class="float-end">
+                                        <span class="badge bg-success">' . $record->time_in . '</span> <span class="badge bg-danger">' . $record->time_out . '</span>
+                                    </div>
+                                </li>';
+                }
+
+                $html .= '</ul>';
+            } else {
+                $html = '   <div class="alert alert-warning mt-4" role="alert">
+                                Attandance Not Found
+                            </div>';
+            }
+
+            die($html);
         }
     }
 }
