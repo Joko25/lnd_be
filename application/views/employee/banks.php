@@ -67,7 +67,12 @@
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Bank Name</span>
-                <input style="width:60%;" name="bank_name" required="" class="easyui-textbox">
+                <select style="width:60%;" name="bank_name" id="bank_name" class="easyui-combobox">
+                    <option value="-">Cash</option>
+                    <option value="Bank Mandiri">Bank Mandiri</option>
+                    <option value="Bank Syariah Indonesia">Bank Syariah Indonesia</option>
+                    <option value="Bank Central Asia">Bank Central Asia</option>
+                </select>
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Bank Branch</span>

@@ -57,7 +57,7 @@ class Banks extends CI_Controller
             $offset = ($page - 1) * $rows;
             $result = array();
             //Select Query
-            $this->db->select('number, name, bank_no, bank_name, bank_branch, created_by, created_date, updated_by, updated_date');
+            $this->db->select('id, number, name, bank_no, bank_name, bank_branch, created_by, created_date, updated_by, updated_date');
             $this->db->from('employees');
             $this->db->where('deleted', 0);
             $this->db->where('status', 0);
@@ -213,7 +213,7 @@ class Banks extends CI_Controller
         $this->db->from('config');
         $config = $this->db->get()->row();
 
-        $this->db->select('number, name, bank_no, bank_name, bank_branch');
+        $this->db->select('id, number, name, bank_no, bank_name, bank_branch');
         $this->db->from('employees');
         $this->db->where('deleted', 0);
         $this->db->where('status', 0);

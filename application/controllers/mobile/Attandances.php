@@ -36,8 +36,18 @@ class Attandances extends CI_Controller
             $this->db->order_by('d.start', 'asc');
             $shifts = $this->db->get()->result();
 
+            $date = date("Y-m-d");
+            $attandance = $this->crud->read("attandances", [], ["number" => $employee->number, "date_in" => $date]);
+
+            if($attandance->time_in != ""){
+                $disable_check_in = "disabled";
+            }else{
+                $disable_check_in = "";
+            }
+
             $data['number'] = $users_m->number;
             $data['shifts'] = $shifts;
+            $data['attandance'] = $attandance;
 
             $this->load->view('template/header_mobile');
             $this->load->view('mobile/attandances', $data);

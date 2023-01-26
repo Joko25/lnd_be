@@ -64,10 +64,12 @@ class Auth extends CI_Controller
                             "number" => $user->number,
                             "email" => $post['email'],
                             "token" => $user->token,
+                            "device_id" => $user->device_id,
                             "status" => "Not Active"
                         )
                     )));
                 } else {
+                    $this->db->update("users_m", ["device_id" => $post['device_id']], ["id" => $user->id]);
                     die(json_encode(array(
                         "title" => "Login",
                         "message" => "Login Success",
@@ -76,6 +78,7 @@ class Auth extends CI_Controller
                             "number" => $user->number,
                             "email" => $post['email'],
                             "token" => $user->token,
+                            "device_id" => $user->device_id,
                             "status" => "Active"
                         )
                     )));
@@ -137,6 +140,7 @@ class Auth extends CI_Controller
                             "email" => $post['email'],
                             "password" => md5($post['password']),
                             "token" => $token,
+                            "device_id" => $post['device_id'],
                         ];
 
                         if ($this->db->insert("users_m", $data)) {

@@ -47,15 +47,15 @@
     <h4>Attandance Lists</h4>
 
     <form method="post">
-        <div class="input-group mb-3">
+        <div class="input-group mb-3" hidden>
             <span class="input-group-text" id="f-maps-1"><i class="fa fa-user"></i></span>
             <input type="text" id="number" class="form-control" value="<?= $number ?>" placeholder="Employee No" aria-describedby="f-maps-1">
         </div>
-        <div class="input-group mb-3">
+        <div class="input-group mb-3" hidden>
             <span class="input-group-text" id="f-maps-1"><i class="fa fa-maps"></i></span>
             <input type="text" id="latitude" class="form-control" placeholder="Latitude" aria-describedby="f-maps-1">
         </div>
-        <div class="input-group mb-3">
+        <div class="input-group mb-3" hidden>
             <span class="input-group-text" id="f-maps-1"><i class="fa fa-maps"></i></span>
             <input type="text" id="longitude" class="form-control" placeholder="Longitude" aria-describedby="f-maps-1">
         </div>
