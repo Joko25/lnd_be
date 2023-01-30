@@ -15,23 +15,7 @@
         </center>
     </div>
 
-    <a class="btn btn-lg btn-success w-100 mb-5" id="check_in" onclick="check_in()"><i class="fa fa-clock-o"></i> Check In/Out</a>
-
-    <div class="modal fade" id="modalCheckin" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Check In</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <p id="readerScanIn">
-
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <a class="btn btn-lg btn-success w-100 mb-5" id="check_in" href="<?= base_url('mobile/attandances/absence/' . $token) ?>"><i class="fa fa-clock-o"></i> Check In/Out</a>
 
     <h4>Attandance Lists</h4>
     <div class="alert alert-info mt-4" role="alert">
@@ -41,6 +25,10 @@
         <div class="input-group mb-3" hidden>
             <span class="input-group-text" id="f-maps-1"><i class="fa fa-user"></i></span>
             <input type="text" id="number" readonly class="form-control" value="<?= $number ?>" placeholder="Employee No" aria-describedby="f-maps-1">
+        </div>
+        <div class="input-group mb-3" hidden>
+            <span class="input-group-text" id="f-maps-1"><i class="fa fa-user"></i></span>
+            <input type="text" id="token" readonly class="form-control" value="<?= $token ?>" placeholder="Employee No" aria-describedby="f-maps-1">
         </div>
         <div class="input-group mb-3" hidden>
             <span class="input-group-text" id="f-maps-1"><i class="fa fa-maps"></i></span>
@@ -91,63 +79,6 @@
                 Swal.close();
                 $("#results").html(response);
             }
-        });
-    }
-
-    const html5QrCode = new Html5Qrcode("readerScanIn");
-
-    let config = {
-        fps: 10,
-        qrbox: 250,
-        rememberLastUsedCamera: true,
-        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
-    };
-    Html5Qrcode.getCameras().then(devices => {
-        if (devices && devices.length) {
-            html5QrCode.start({
-                facingMode: "environment"
-            }, config, onScanSuccess);
-        }
-    }).catch(err => {
-        // handle err
-    });
-
-    function check_in() {
-        $("#modalCheckin").modal('show');
-    }
-
-    //Check In
-    function onScanSuccess(decodedText, decodedResult) {
-        html5QrCode.stop().then((ignore) => {
-            var number = $("#number").val();
-            var latitude = $("#latitude").val();
-            var longitude = $("#longitude").val();
-
-            $("#modalCheckin").modal('hide');
-
-            if (latitude == "") {
-                Swal.fire({
-                    text: "Your location not found",
-                    icon: "error",
-                    allowOutsideClick: false,
-                });
-            } else {
-                $.ajax({
-                    type: "post",
-                    url: "<?= base_url('mobile/attandances/checkin') ?>",
-                    data: "token_in=" + decodedText + "&latitude=" + latitude + "&longitude=" + longitude + "&number=" + number,
-                    dataType: "json",
-                    success: function(response) {
-                        Swal.fire({
-                            text: response.message,
-                            icon: response.theme,
-                            allowOutsideClick: false,
-                        });
-                    }
-                });
-            }
-        }).catch((err) => {
-            // Stop failed, handle it.
         });
     }
 

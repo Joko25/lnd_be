@@ -38,9 +38,29 @@ class Attandances extends CI_Controller
 
             $data['number'] = $users_m->number;
             $data['shifts'] = $shifts;
+            $data['token'] = $token;
 
             $this->load->view('template/header_mobile');
             $this->load->view('mobile/attandances', $data);
+        }
+    }
+
+    public function absence($token = ""){
+        if ($token == "") {
+            $this->load->view('template/header_mobile');
+            $this->load->view('mobile/404');
+        } else {
+            $users_m = $this->crud->read("users_m", [], ["token" => $token]);
+            $employee = $this->crud->read("employees", [], ["number" => $users_m->number]);
+            $users = $this->crud->read("users", [], ["number" => $users_m->number]);
+            if (empty($this->session->username)) {
+                $this->session->set_userdata(["username" => $users->username]);
+            }
+
+            $data['number'] = $users_m->number;
+
+            $this->load->view('template/header_mobile');
+            $this->load->view('mobile/attandances_absense', $data);
         }
     }
 
