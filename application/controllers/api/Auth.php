@@ -104,53 +104,58 @@ class Auth extends CI_Controller
                 $post = $this->input->post();
                 $employee = $this->crud->read("employees", [], ["number" => $post['number'], "status" => 0]);
                 $users_m = $this->crud->read("users_m", [], ["number" => $post['number'], "status" => 0]);
+                $users_email = $this->crud->read("users_m", [], ["email" => $post['email'], "status" => 0]);
                 $users = $this->crud->read("users", [], ["number" => $post['number'], "status" => 0]);
 
                 if (!empty($employee)) {
                     if (empty($users_m)) {
-                        $id = $this->autoid("users_m");
-                        $id_users = $this->autoid("users_m");
+                        if (empty($users_email)) {
+                            $id = $this->autoid("users_m");
+                            $id_users = $this->autoid("users");
 
-                        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                        $token = 'key_' . substr(str_shuffle($permitted_chars), 0, 45);
-                        $string = explode(' ', strtolower($employee->name));
-                        $username = $string[0] . "_" . substr(str_shuffle($permitted_chars), 0, 4);
+                            $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                            $token = 'key_' . substr(str_shuffle($permitted_chars), 0, 45);
+                            $string = explode(' ', strtolower($employee->name));
+                            $username = $string[0] . "_" . substr(str_shuffle($permitted_chars), 0, 4);
 
-                        $dataUsers = [
-                            "id" => $id_users,
-                            "created_date" => date('Y-m-d H:i:s'),
-                            "departement_id" => $employee->departement_id,
-                            "number" => $post['number'],
-                            "name" => $employee->name,
-                            "description" => "MOBILE REGISTER",
-                            "email" => $post['email'],
-                            "username" => $username,
-                            "phone" => $employee->mobile_phone,
-                            "position" => "USER MOBILE",
-                            "actived" => "1",
-                            "access" => "1",
-                            "password" => $post['password'],
-                        ];
+                            $dataUsers = [
+                                "id" => $id_users,
+                                "created_date" => date('Y-m-d H:i:s'),
+                                "departement_id" => $employee->departement_id,
+                                "number" => $post['number'],
+                                "name" => $employee->name,
+                                "description" => "MOBILE REGISTER",
+                                "email" => $post['email'],
+                                "username" => $username,
+                                "phone" => $employee->mobile_phone,
+                                "position" => "USER MOBILE",
+                                "actived" => "1",
+                                "access" => "1",
+                                "password" => $post['password'],
+                            ];
 
-                        $data = [
-                            "id" => $id,
-                            "created_date" => date('Y-m-d H:i:s'),
-                            "departement_id" => $employee->departement_id,
-                            "number" => $post['number'],
-                            "email" => $post['email'],
-                            "password" => md5($post['password']),
-                            "token" => $token,
-                            "device_id" => $post['device_id'],
-                        ];
+                            $data = [
+                                "id" => $id,
+                                "created_date" => date('Y-m-d H:i:s'),
+                                "departement_id" => $employee->departement_id,
+                                "number" => $post['number'],
+                                "email" => $post['email'],
+                                "password" => md5($post['password']),
+                                "token" => $token,
+                                "device_id" => $post['device_id'],
+                            ];
 
-                        if ($this->db->insert("users_m", $data)) {
-                            if (empty($users->number)) {
-                                $this->db->insert("users", $dataUsers);
+                            if ($this->db->insert("users_m", $data)) {
+                                if (empty($users->number)) {
+                                    $this->db->insert("users", $dataUsers);
+                                }
+                                $this->crud->logs("Create", json_encode($data), "users_m");
+                                die(json_encode(array("title" => "Success", "message" => "Success to Registered", "theme" => "success")));
+                            } else {
+                                show_error("Failed to Register");
                             }
-                            $this->crud->logs("Create", json_encode($data), "users_m");
-                            die(json_encode(array("title" => "Success", "message" => "Success to Registered", "theme" => "success")));
                         } else {
-                            show_error("Failed to Register");
+                            die(json_encode(array("title" => "Registered", "message" => "Your Email has been registered", "theme" => "info")));
                         }
                     } else {
                         die(json_encode(array("title" => "Registered", "message" => "Your Employee ID has been registered", "theme" => "info")));

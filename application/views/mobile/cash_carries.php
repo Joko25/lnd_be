@@ -2,7 +2,7 @@
     <h1>Cash Carries</h1>
 
     <div class="alert alert-info mt-4" role="alert">
-        The data only shows up the last 30 days
+        The data only shows up the last 31 days
     </div>
 
     <?php

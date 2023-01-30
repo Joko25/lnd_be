@@ -30,10 +30,12 @@ class Cash_carries extends CI_Controller
             $this->db->join('notifications b', "a.id = b.table_id and b.table_name = 'cash_carries'", 'left');
             $this->db->join('attandances c', "c.number = d.number and a.trans_date = c.date_in", 'left');
             $this->db->where('a.employee_id', $employee->id);
+            $this->db->where('d.status', "0");
             $this->db->group_by('a.trans_date');
             $this->db->group_by('a.employee_id');
             $this->db->group_by('a.type');
             $this->db->order_by('a.trans_date', 'DESC');
+            $this->db->limit(31);
             $cash_carries = $this->db->get()->result_array();
 
             $data['number'] = $users_m->number;

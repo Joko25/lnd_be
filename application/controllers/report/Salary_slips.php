@@ -105,6 +105,7 @@ class Salary_slips extends CI_Controller
                 AND b.departement_sub_id LIKE '%$filter_departement_sub%'
                 AND b.group_id LIKE '%$filter_group%'
                 AND a.employee_id LIKE '%$filter_employee%'
+                GROUP BY b.id
                 ORDER BY a.`name` ASC");
             $records = $query->result_array();
 

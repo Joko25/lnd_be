@@ -1,7 +1,7 @@
 <div class="p-4">
     <h1>Permission</h1>
 
-    <form method="post" class="mt-4">
+    <form method="post" id="form-insert" class="mt-4">
         <div class="mb-3 form-floating" hidden>
             <input type="text" id="employee_id" class="form-control" value="<?= $employee->id ?>">
             <label for="permit_date">Employee ID</label>
@@ -47,7 +47,7 @@
             You have <b id="leavePermit"></b> days left Permit
         </div>
         <button type="button" onclick="save()" class="btn btn btn-primary w-100 mb-3"><i class="fa fa-check"></i> Submit Submission </button>
-        <button class="btn btn btn-warning w-100 mb-3"><i class="fa fa-eye"></i> View Permit </button>
+        <a class="btn btn btn-warning w-100 mb-3" href="<?= base_url("mobile/permissions/lists/" . $api_key) ?>"><i class="fa fa-eye"></i> View Permit </a>
     </form>
 </div>
 
@@ -120,9 +120,8 @@
                             confirmButtonText: 'Ok',
                             allowOutsideClick: false,
                         }).then((result) => {
-                            if (result.isConfirmed) {
-                                history.back();
-                            }
+                            $('#form-insert').trigger('reset');
+                            $("#alertLeave").hide();
                         });
                     } else {
                         Swal.fire({
@@ -130,10 +129,6 @@
                             icon: "error",
                             confirmButtonText: 'Ok',
                             allowOutsideClick: false,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                history.back();
-                            }
                         });
                     }
                 }
