@@ -232,11 +232,11 @@
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">National ID No</span>
-                        <input style="width:60%;" name="national_id" id="national_id" class="easyui-numberbox">
+                        <input style="width:60%;" name="national_id" id="national_id" class="easyui-textbox">
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Tax No (NPWP)</span>
-                        <input style="width:60%;" name="tax_id" id="tax_id" class="easyui-numberbox">
+                        <input style="width:60%;" name="tax_id" id="tax_id" class="easyui-textbox">
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Jamsostek</span>

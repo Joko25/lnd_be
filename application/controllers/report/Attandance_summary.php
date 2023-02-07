@@ -158,6 +158,9 @@ class Attandance_summary extends CI_Controller
                 $this->db->order_by('e.name, a.name', 'asc');
                 $employees = $this->db->get()->result_array();
 
+                $total_absence = 0;
+                $attandance_total = 0;
+                $total_days_final = 0;
                 foreach ($employees as $data) {
                     $total_days = 0;
                     $holiday = 0;
@@ -232,6 +235,7 @@ class Attandance_summary extends CI_Controller
 
                         $total_days++;
                     }
+
                     //Permit
                     $q_permit = $this->db->query("SELECT b.name, COUNT(a.duration) as permit
                             FROM permit_types b
@@ -255,9 +259,15 @@ class Attandance_summary extends CI_Controller
                     $absence = ($absen - $total_permit);
                     if ($absence >= 0) {
                         $totalAbsence = $absence;
+                        $total_absence += $absence;
                     } else {
+                        $total_absence += 0;
                         $totalAbsence = 0;
                     }
+
+                    $attandance_total += $data['attandance_total'];
+                    $total_days_final += $total_days;
+
                     $html .= '  <td style="text-align:center;">' . $totalAbsence . '</td>
                                 <td style="text-align:center;">' . $data['attandance_total'] . '</td>
                                 <td style="text-align:center;">' . $total_days . '</td>
@@ -265,7 +275,29 @@ class Attandance_summary extends CI_Controller
                     $no++;
                 }
 
-                $html .= '</table></div><br><br>';
+                //Total Permit Final
+                $this->db->select("b.name, COUNT(a.duration) as permit");
+                $this->db->from("permit_types b");
+                $this->db->join(
+                    "(SELECT a.employee_id, a.permit_type_id, a.permit_date, a.duration, b.departement_id, b.departement_sub_id FROM permits a JOIN employees b ON a.employee_id = b.id) a",
+                    "a.permit_type_id = b.id and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.employee_id LIKE '%$filter_employee%' and a.departement_id LIKE '%$filter_departement%' and a.departement_sub_id LIKE '%$filter_departement_sub%'",
+                    "left"
+                );
+                $this->db->group_by("b.id");
+                $this->db->order_by("b.name", "ASC");
+                $rt_permit = $this->db->get()->result_array();
+
+                $html .= '  <tr><th colspan="5" style="text-align:right;">Grand Total</th>';
+                $row_total_permit = 0;
+                foreach ($rt_permit as $row) {
+                    $html .= '<td style="text-align:center;">' . $row['permit'] . '</td>';
+                    $row_total_permit += $row['permit'];
+                }
+                $html .= '  <th style="text-align:center;">' . $total_absence . '</th>
+                            <th style="text-align:center;">' . $attandance_total . '</th>
+                            <th style="text-align:center;">' . $total_days_final . '</th>
+                        </tr>
+                        </table></div><br><br>';
             }
 
             $html .= '</body></html>';

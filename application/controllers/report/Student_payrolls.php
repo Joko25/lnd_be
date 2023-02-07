@@ -79,6 +79,7 @@ class Student_payrolls extends CI_Controller
             $filter_to = $this->input->get('filter_to');
             $filter_group = $this->input->get('filter_group');
             $filter_source = $this->input->get('filter_source');
+            $filter_employee = $this->input->get('filter_employee');
 
             $username = $this->session->username;
 
@@ -112,6 +113,7 @@ class Student_payrolls extends CI_Controller
                         AND b.status = 0
                         AND b.group_id = '$record[group_id]'
                         AND b.source_id = '$record[source_id]'
+                        AND b.id like '%$filter_employee%'
                         ORDER BY a.`name` ASC");
                     $recordEmployees = $query->result_array();
 
@@ -131,6 +133,7 @@ class Student_payrolls extends CI_Controller
                             AND b.status = 0
                             AND b.group_id = '$record[group_id]'
                             AND b.source_id = '$record[source_id]'
+                            AND b.id like '%$filter_employee%'
                             ORDER BY a.`name` ASC LIMIT 20 OFFSET $offset");
                         $employees = $query->result_array();
 
@@ -282,6 +285,7 @@ class Student_payrolls extends CI_Controller
                     $this->db->where('a.status', 0);
                     $this->db->where('a.group_id', $record['group_id']);
                     $this->db->where('a.source_id', $record['source_id']);
+                    $this->db->like('a.id', $filter_employee);
                     $this->db->group_by('a.number');
                     $this->db->order_by('a.name', 'asc');
                     $recordEmployees = $this->db->get()->result_array();
@@ -352,11 +356,13 @@ class Student_payrolls extends CI_Controller
                         $this->db->where('a.status', 0);
                         $this->db->where('a.group_id', $record['group_id']);
                         $this->db->where('a.source_id', $record['source_id']);
+                        $this->db->like('a.id', $filter_employee);
                         $this->db->group_by('a.number');
                         $this->db->order_by('a.name', 'asc');
                         $this->db->limit(20, ($i * 20));
                         $employees = $this->db->get()->result_array();
                         $total = 0;
+                        
                         foreach ($employees as $employee) {
                             $employee_id = $employee['id'];
                             $employee_number = $employee['number'];
@@ -388,13 +394,13 @@ class Student_payrolls extends CI_Controller
                                 $this->db->group_by('employee_id');
                                 $permit = $this->db->get()->row();
 
-                                $tidakabsen += @$permit->duration;
+                                $tidakabsen = @$permit->duration;
 
                                 $attandance = $this->crud->read("attandances", [], ["date_in" => $working_date, "number" => $employee_number]);
                                 if ($attandance) {
-                                    $day = 1;
+                                    $day = (1 + $tidakabsen);
                                 } else {
-                                    $day = 0;
+                                    $day = $tidakabsen;
                                 }
 
                                 $payroll_end = date_create($working_date);
@@ -439,7 +445,7 @@ class Student_payrolls extends CI_Controller
                                             <td>' . date("d F Y", strtotime($employee['date_sign'])) . '</td>
                                             <td>' . $this->readService($employee['date_sign'], $filter_to) . '</td>
                                             <td>' . $employee['departement_name'] . '</td>
-                                            <td style="text-align:center;">' . (@$attandance_count + $tidakabsen) . '</td>
+                                            <td style="text-align:center;">' . (@$attandance_count) . '</td>
                                             <td style="text-align:center;">' . $payroll_1 . '</td>
                                             <td style="text-align:center;">' . $payroll_2 . '</td>
                                             <td style="text-align:center;">' . $payroll_3 . '</td>

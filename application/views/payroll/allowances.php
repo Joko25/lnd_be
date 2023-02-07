@@ -5,6 +5,7 @@
             <th rowspan="2" field="ck" checkbox="true"></th>
             <th rowspan="2" data-options="field:'number',width:100,align:'center'">Code</th>
             <th rowspan="2" data-options="field:'name',width:200,halign:'center'">Name</th>
+            <th rowspan="2" data-options="field:'type',width:100,align:'center'">Type</th>
             <th rowspan="2" data-options="field:'amount',width:100,halign:'center', align:'right', formatter:numberformat">Amount</th>
             <th rowspan="2" data-options="field:'calculate_days',width:80,align:'center',styler:cellStyler, formatter:cellFormatter">Calculate<br>Daily</th>
             <th rowspan="2" data-options="field:'salary',width:300,halign:'center'">Description</th>
@@ -37,6 +38,13 @@
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Name</span>
                 <input style="width:60%;" name="name" required="" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Type</span>
+                <select style="width:60%;" name="type" required="" class="easyui-combobox" panelHeight="auto">
+                    <option value="FIX">FIX</option>
+                    <option value="TEMPORARY">TEMPORARY</option>
+                </select>
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Amount</span>

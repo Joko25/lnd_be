@@ -104,7 +104,7 @@
         var form = $("#frm_search").serialize()
         var url = form;
 
-        window.location.assign('<?= base_url('report/employees/print/excel') ?>' + url);
+        window.location.assign('<?= base_url('report/employees/print/excel?') ?>' + url);
     }
 
     $(function() {

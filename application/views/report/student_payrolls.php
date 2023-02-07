@@ -19,6 +19,10 @@
                 <input style="width:60%;" id="filter_source" name="filter_source" class="easyui-combobox">
             </div>
             <div class="fitem">
+                <span style="width:35%; display:inline-block;">Employee</span>
+                <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
+            </div>
+            <div class="fitem">
                 <span style="width:35%; display:inline-block;"></span>
                 <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
             </div>
@@ -44,6 +48,7 @@
         var filter_to = $("#filter_to").textbox('getValue');
         var filter_group = $("#filter_group").combobox('getValue');
         var filter_source = $("#filter_source").combobox('getValue');
+        var filter_employee = $("#filter_employee").combogrid('getValue');
 
         if (filter_from == "" || filter_to == "" || filter_group == "") {
             toastr.warning("Please Choose Filter Date and Group");
@@ -51,7 +56,8 @@
             var url = "?filter_from=" + filter_from +
                 "&filter_to=" + filter_to +
                 "&filter_group=" + filter_group +
-                "&filter_source=" + filter_source;
+                "&filter_source=" + filter_source +
+                "&filter_employee=" + filter_employee;
 
             $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
             $("#printout").attr('src', '<?= base_url('report/student_payrolls/print') ?>' + url);
@@ -63,6 +69,7 @@
         var filter_to = $("#filter_to").textbox('getValue');
         var filter_group = $("#filter_group").combobox('getValue');
         var filter_source = $("#filter_source").combobox('getValue');
+        var filter_employee = $("#filter_employee").combogrid('getValue');
 
         if (filter_from == "" || filter_to == "" || filter_group == "") {
             toastr.warning("Please Choose Filter Date and Group");
@@ -70,7 +77,8 @@
             var url = "?filter_from=" + filter_from +
                 "&filter_to=" + filter_to +
                 "&filter_group=" + filter_group +
-                "&filter_source=" + filter_source;
+                "&filter_source=" + filter_source +
+                "&filter_employee=" + filter_employee;
 
             $.messager.alert('Please Wait', 'Export Excel Data..!', 'info');
             window.location.assign('<?= base_url('report/student_payrolls/print/excel') ?>' + url);
@@ -125,7 +133,35 @@
                         handler: function(e) {
                             $(e.data.target).combobox('clear').combobox('textbox').focus();
                         }
-                    }]
+                    }],
+                    onSelect: function(source) {
+                        $('#filter_employee').combogrid({
+                            url: '<?= base_url('employee/employees/reads?source_id=') ?>' + source.id,
+                            panelWidth: 450,
+                            idField: 'id',
+                            textField: 'name',
+                            mode: 'remote',
+                            fitColumns: true,
+                            prompt: 'Choose All',
+                            icons: [{
+                                iconCls: 'icon-clear',
+                                handler: function(e) {
+                                    $(e.data.target).combogrid('clear').combogrid('textbox').focus();
+                                }
+                            }],
+                            columns: [
+                                [{
+                                    field: 'number',
+                                    title: 'Employee ID',
+                                    width: 120
+                                }, {
+                                    field: 'name',
+                                    title: 'Employee Name',
+                                    width: 200
+                                }]
+                            ],
+                        });
+                    }
                 });
             }
         });

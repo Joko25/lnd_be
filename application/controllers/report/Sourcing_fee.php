@@ -91,7 +91,7 @@ class Sourcing_fee extends CI_Controller
 
             foreach ($records as $record) {
                 $no = 1;
-                $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, b.national_id FROM payrolls a
+                $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, b.national_id, b.date_sign FROM payrolls a
                             JOIN employees b ON a.employee_id = b.id
                             LEFT JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                             WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
@@ -130,13 +130,20 @@ class Sourcing_fee extends CI_Controller
                                 <th width="20">No</th>
                                 <th style="text-align:center;">Employee ID</th>
                                 <th style="text-align:center;">Employee Name</th>
+                                <th style="text-align:center;">Fit Of Service</th>
                                 <th style="text-align:center;">WD</th>
                                 <th style="text-align:center;">Amount</th>
                             </tr>';
 
                 $total = 0;
                 foreach ($employees as $employee) {
-                    if ($employee['attandance_wd'] >= $hkw) {
+                    $start  = date_create($employee['date_sign']);
+                    $end = date_create($filter_to);
+                    $diff  = date_diff($start, $end);
+                    $services = $diff->y . ' Years, ' . $diff->m . ' Month, ' . $diff->d . ' Days ';
+                    $selisih = date_diff(date_create($employee['date_sign']), date_create($filter_to));
+
+                    if ($selisih->format('%a') > 30) {
                         $wd = $hkw;
                     } else {
                         $wd = $employee['attandance_wd'];
@@ -148,6 +155,7 @@ class Sourcing_fee extends CI_Controller
                                     <td>' . $no . '</td>
                                     <td style="mso-number-format:\@;">' . $employee['number'] . '</td>
                                     <td>' . $employee['name'] . '</td>
+                                    <td>' . $services . '</td>
                                     <td>' . $wd . '</td>
                                     <td style="text-align:right;">' . round($fee) . '</td>
                                 </tr>';
@@ -156,7 +164,7 @@ class Sourcing_fee extends CI_Controller
                 }
 
                 $html .= '  <tr>
-                                <th colspan="4" style="text-align:right;">Grand Total</th>
+                                <th colspan="5" style="text-align:right;">Grand Total</th>
                                 <th style="text-align:right;">' . round($total) . '</th>
                             </tr>';
 
