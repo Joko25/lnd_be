@@ -636,7 +636,7 @@ class Payrolls extends CI_Controller
                 }
 
                 if ($allowance_data['type'] == "FIX") {
-                    $arr_allowance_amount_total_bpjs += ($allowance_data['amount'] * $masuk);
+                    $arr_allowance_amount_total_bpjs += ($allowance_data['amount']);
                 } else {
                     $arr_allowance_amount_total_bpjs += 0;
                 }

@@ -21,7 +21,7 @@
         </tr>
         <tr>
             <th data-options="field:'trans_date',width:100,halign:'center'">Request Date</th>
-            <th data-options="field:'request_code',width:120,halign:'center'">Request No</th>
+            <th data-options="field:'request_code',width:150,halign:'center'">Request No</th>
             <th data-options="field:'fullname',width:120,halign:'center'">Request Name</th>
             <th data-options="field:'start',width:80,align:'center'">Start</th>
             <th data-options="field:'end',width:80,align:'center'">End</th>
@@ -93,29 +93,64 @@
     <?= $button ?>
 </div>
 
-<!-- DIALOG SAVE AND UPDATE -->
-<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 400px; padding:10px; top: 20px;">
+<div id="toolbar2">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="append()"><i class="fa fa-plus"></i> Add</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="removeit()"><i class="fa fa-times"></i> Remove</a>
+</div>
+
+<!-- DIALOG SAVE -->
+<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 900px; height: 500px; padding:10px; top: 20px;">
     <form id="frm_insert" method="post" novalidate>
+        <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
+            <legend><b>Form Data</b></legend>
+            <div style="width: 50%; float: left;">
+                <div class="fitem">
+                    <span style="width:30%; display:inline-block;">Trans Date</span>
+                    <input style="width:60%;" name="trans_date" id="trans_date" required class="easyui-datebox" data-options="formatter:myformatter,parser:myparser,editable:false" value="<?= date("Y-m-d") ?>">
+                </div>
+                <div class="fitem">
+                    <span style="width:30%; display:inline-block;">Division</span>
+                    <input style="width:60%;" id="division_id" class="easyui-combobox" required>
+                </div>
+                <div class="fitem">
+                    <span style="width:30%; display:inline-block;">Departement</span>
+                    <input style="width:60%;" id="departement_id" class="easyui-combobox" required>
+                </div>
+            </div>
+            <div style="width: 50%; float: left;">
+                <div class="fitem">
+                    <span style="width:30%; display:inline-block;">Request Code</span>
+                    <input style="width:60%;" name="request_code" readonly data-options="prompt:'Automatic'" id="request_code" class="easyui-textbox" required>
+                </div>
+                <div class="fitem">
+                    <span style="width:30%; display:inline-block;">Request Name</span>
+                    <input style="width:60%;" name="request_name" readonly data-options="prompt:'Automatic'" id="request_name" class="easyui-textbox" required>
+                </div>
+                <div class="fitem">
+                    <span style="width:30%; display:inline-block;">Type</span>
+                    <select style="width:60%;" id="type" panelHeight="auto" data-options="prompt:'Choose Type Cash Carry'" required name="type" class="easyui-combobox">
+                        <option value="REGULAR">REGULAR</option>
+                        <option value="CORRECTION">CORRECTION</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+        <table id="dg2" class="easyui-datagrid" style="width:100%;" title="Employee Lists" toolbar="#toolbar2"></table>
+    </form>
+</div>
+
+<!-- DIALOG UPDATE -->
+<div id="dlg_update" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 400px; padding:10px; top: 20px;">
+    <form id="frm_update" method="post" novalidate>
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Form Data</b></legend>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Trans Date</span>
-                <input style="width:60%;" name="trans_date" id="trans_date" required class="easyui-datebox" data-options="formatter:myformatter,parser:myparser,editable:false" value="<?= date("Y-m-d") ?>">
-            </div>
-            <div class="fitem" id="edit_employee">
-                <span style="width:30%; display:inline-block;">Employee</span>
-                <input style="width:60%;" id="employee_id" name="employee_id" required class="easyui-combogrid">
+                <input style="width:60%;" name="trans_date" id="trans_date" readonly class="easyui-datebox" data-options="formatter:myformatter,parser:myparser,editable:false" value="<?= date("Y-m-d") ?>">
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Request Code</span>
-                <input style="width:60%;" name="request_code" readonly data-options="prompt:'Automatic from Employee'" id="request_code" class="easyui-textbox" required>
-            </div>
-            <div class="fitem">
-                <span style="width:30%; display:inline-block;">Type</span>
-                <select style="width:60%;" id="type" panelHeight="auto" data-options="prompt:'Choose Type Cash Carry'" required name="type" class="easyui-combobox">
-                    <option value="REGULAR">REGULAR</option>
-                    <option value="CORRECTION">CORRECTION</option>
-                </select>
+                <input style="width:60%;" name="request_code" readonly data-options="prompt:'Automatic'" id="request_code" class="easyui-textbox" required>
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Start <small style="color:red;">(time)</small></span>
@@ -126,18 +161,19 @@
                 <input style="width:30%;" name="end" mask="99:99:99" required id="end" class="easyui-maskedbox">
             </div>
             <div class="fitem">
-                <span style="width:30%; display:inline-block;">Duration <small style="color:red;">(hour)</small></span>
-                <input style="width:10%;" name="duration_hour" required id="duration_hour" class="easyui-numberbox" data-options="precision:2">
-                <input style="width:40%;" name="duration" required id="duration" class="easyui-textbox">
-                <a class="easyui-linkbutton" href="#" onclick="convertHour()"><i class="fa fa-clock"></i></a>
-            </div>
-            <div class="fitem">
                 <span style="width:30%; display:inline-block;">Meal</span>
                 <input name="meal" id="meal" class="easyui-checkbox" value="1"> Checked if Yes get Meal
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Remarks</span>
                 <input style="width:60%; height:50px;" multiline="true" name="remarks" id="remarks" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <span style="width:30%; display:inline-block;">Type</span>
+                <select style="width:60%;" id="type" panelHeight="auto" data-options="prompt:'Choose Type Cash Carry'" required name="type" class="easyui-combobox">
+                    <option value="REGULAR">REGULAR</option>
+                    <option value="CORRECTION">CORRECTION</option>
+                </select>
             </div>
         </fieldset>
     </form>
@@ -170,41 +206,161 @@
     //ADD DATA
     function add() {
         $('#dlg_insert').dialog('open');
-        url_save = '<?= base_url('attandance/cash_carries/create') ?>';
-        $('#frm_insert').form('clear');
+        $('#dg2').datagrid('loadData', []);
         $('#trans_date').datebox('setValue', '<?= date("Y-m-d") ?>');
-        $('#start').maskedbox('setValue', '08:00:00');
-        $('#end').maskedbox('setValue', '17:00:00');
-        $('#employee_id').combogrid('enable');
-        $('#request_code').textbox('enable');
+        $('#request_name').textbox('setValue', '<?= $this->session->name ?>');
     }
 
-    function convertHour() {
-        var trans_date = $("#trans_date").datebox('getValue');
-        var start = $("#start").maskedbox('getValue');
-        var end = $("#end").maskedbox('getValue');
-
-        $.ajax({
-            type: "post",
-            url: "<?= base_url('attandance/cash_carries/convertHour') ?>",
-            data: "trans_date=" + trans_date + "&start=" + start + "&end=" + end,
-            dataType: "json",
-            success: function(json) {
-                $("#duration").textbox('setValue', json.duration);
-                $("#duration_hour").numberbox('setValue', json.duration_hour);
-            }
+    function addTable(departement_id) {
+        var lastIndex;
+        var dg = $('#dg2').datagrid({
+            singleSelect: true,
+            columns: [
+                [{
+                    field: 'employee_name',
+                    width: 250,
+                    halign: 'center',
+                    title: "Employee Name",
+                    editor: {
+                        type: 'combogrid',
+                        options: {
+                            url: '<?= base_url('employee/employees/reads?departement_id=') ?>' + departement_id,
+                            required: true,
+                            panelWidth: 350,
+                            idField: 'name',
+                            textField: 'name',
+                            mode: 'remote',
+                            fitColumns: true,
+                            prompt: 'Choose Employee',
+                            columns: [
+                                [{
+                                    field: 'number',
+                                    title: 'Employee ID',
+                                    width: 100
+                                }, {
+                                    field: 'name',
+                                    title: 'Employee Name',
+                                    width: 200
+                                }]
+                            ],
+                            onSelect: function(value, rows) {
+                                var dg = $('#dg2');
+                                var row = dg.datagrid('getSelected');
+                                var rowIndex = dg.datagrid('getRowIndex', row);
+                                var ed = dg.datagrid('getEditor', {
+                                    index: rowIndex,
+                                    field: 'employee_id'
+                                });
+                                $(ed.target).textbox('setValue', rows.id);
+                            }
+                        }
+                    }
+                }, {
+                    field: 'employee_id',
+                    hidden: true,
+                    width: 100,
+                    halign: 'center',
+                    title: "ID",
+                    editor: {
+                        type: 'textbox'
+                    }
+                }, {
+                    field: 'start',
+                    width: 100,
+                    halign: 'center',
+                    title: "Start",
+                    editor: {
+                        type: 'textbox',
+                        options: {
+                            required: true
+                        }
+                    }
+                }, {
+                    field: 'end',
+                    width: 100,
+                    halign: 'center',
+                    title: "Start",
+                    editor: {
+                        type: 'textbox',
+                        options: {
+                            required: true
+                        }
+                    }
+                }, {
+                    field: 'meal',
+                    width: 80,
+                    align: 'center',
+                    title: "Meal",
+                    editor: {
+                        type: 'checkbox',
+                        options: {
+                            on: '1',
+                            off: '0'
+                        }
+                    }
+                }, {
+                    field: 'remarks',
+                    width: 200,
+                    halign: 'center',
+                    title: "Remarks",
+                    editor: {
+                        type: 'textbox'
+                    }
+                }]
+            ],
         });
+    }
+
+    var editIndex = undefined;
+
+    function endEditing() {
+        if (editIndex == undefined) {
+            return true
+        }
+        if ($('#dg2').datagrid('validateRow', editIndex)) {
+            $('#dg2').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function append() {
+        var departement_id = $("#departement_id").combobox('getValue');
+        if (departement_id != "") {
+            if (endEditing()) {
+                $('#dg2').datagrid('appendRow', {
+                    start: '08:00:00',
+                    end: '16:00:00',
+                });
+                editIndex = $('#dg2').datagrid('getRows').length - 1;
+                $('#dg2').datagrid('selectRow', editIndex).datagrid('beginEdit', editIndex);
+            }
+        } else {
+            toastr.error("Please Choose Departement first");
+        }
+    }
+
+    function removeit() {
+        if (editIndex == undefined) {
+            return
+        }
+        $('#dg2').datagrid('cancelEdit', editIndex).datagrid('deleteRow', editIndex);
+        editIndex = undefined;
     }
 
     //EDIT DATA
     function update() {
         var row = $('#dg').datagrid('getSelected');
         if (row) {
-            $('#dlg_insert').dialog('open');
-            $('#frm_insert').form('load', row);
-            $('#employee_id').combogrid('disable');
-            $('#request_code').textbox('disable');
-            url_save = '<?= base_url('attandance/cash_carries/update') ?>?id=' + window.btoa(row.id);
+            if (row.time_in != null) {
+                toastr.info("Cannot update the data because the time in is already filled!");
+            } else {
+                $('#dlg_update').dialog('open');
+                $('#frm_update').form('load', row);
+                url_update = '<?= base_url('attandance/cash_carries/update') ?>?id=' + window.btoa(row.id);
+            }
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
         }
@@ -321,21 +477,73 @@
                 text: 'Save',
                 iconCls: 'icon-ok',
                 handler: function() {
-                    $('#frm_insert').form('submit', {
-                        url: url_save,
+                    var trans_date = $("#trans_date").datebox('getValue');
+                    var request_code = $("#request_code").textbox('getValue');
+                    var request_name = $("#request_name").textbox('getValue');
+                    var type = $("#type").combobox('getValue');
+
+                    var rows = $('#dg2').datagrid('getRows');
+                    var totalrows = rows.length;
+                    endEditing();
+
+                    for (let i = 0; i < totalrows; i++) {
+                        if (rows[i].employee_id) {
+                            $.ajax({
+                                type: "post",
+                                url: '<?= base_url('attandance/cash_carries/create') ?>',
+                                data: {
+                                    trans_date: trans_date,
+                                    request_code: request_code,
+                                    request_name: request_name,
+                                    type: type,
+                                    employee_id: rows[i].employee_id,
+                                    start: rows[i].start,
+                                    end: rows[i].end,
+                                    meal: rows[i].meal,
+                                    remarks: rows[i].remarks
+                                },
+                                dataType: "json",
+                                success: function(result) {
+                                    //
+                                }
+                            });
+                        }
+                    }
+
+                    Swal.fire({
+                        title: "Save Cash Carries Success",
+                        icon: "success",
+                        confirmButtonText: 'Ok',
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload();
+                        }
+                    });
+                    $('#dlg_insert').dialog('close');
+                }
+            }]
+        });
+
+        //Update Data
+        $('#dlg_update').dialog({
+            buttons: [{
+                text: 'Update Data',
+                iconCls: 'icon-ok',
+                handler: function() {
+                    $('#frm_update').form('submit', {
+                        url: url_update,
                         onSubmit: function() {
                             return $(this).form('validate');
                         },
                         success: function(result) {
                             var result = eval('(' + result + ')');
-
                             if (result.theme == "success") {
                                 toastr.success(result.message, result.title);
                             } else {
                                 toastr.error(result.message, result.title);
                             }
-
-                            $('#dlg_insert').dialog('close');
+                            $('#dlg_update').dialog('close');
                             $('#dg').datagrid('reload');
                         }
                     });
@@ -542,37 +750,6 @@
             ],
         });
 
-        $('#employee_id').combogrid({
-            url: '<?= base_url('employee/employees/reads') ?>',
-            panelWidth: 450,
-            idField: 'id',
-            textField: 'name',
-            mode: 'remote',
-            fitColumns: true,
-            prompt: 'Choose Employee',
-            columns: [
-                [{
-                    field: 'number',
-                    title: 'Employee ID',
-                    width: 120
-                }, {
-                    field: 'name',
-                    title: 'Employee Name',
-                    width: 200
-                }]
-            ],
-            onSelect: function(emp) {
-                $.ajax({
-                    url: '<?= base_url('attandance/cash_carries/requestCode') ?>',
-                    type: 'post',
-                    data: 'departement_id=' + emp.departement_id,
-                    success: function(requestCode) {
-                        $("#request_code").textbox('setValue', requestCode);
-                    }
-                });
-            }
-        });
-
         $('#filter_request_code').combobox({
             url: '<?= base_url('attandance/cash_carries/readRequestCode') ?>',
             valueField: 'request_code',
@@ -589,7 +766,7 @@
         $('#filter_request').combobox({
             url: '<?= base_url('attandance/cash_carries/readRequest') ?>',
             valueField: 'created_by',
-            textField: 'created_by',
+            textField: 'name',
             prompt: "Choose All",
             icons: [{
                 iconCls: 'icon-clear',
@@ -597,6 +774,32 @@
                     $(e.data.target).combobox('clear').combobox('textbox').focus();
                 }
             }]
+        });
+
+        $('#division_id').combobox({
+            url: '<?php echo base_url('employee/divisions/reads'); ?>',
+            valueField: 'id',
+            textField: 'name',
+            prompt: 'Choose Division',
+            onSelect: function(div) {
+                $('#departement_id').combobox({
+                    url: '<?php echo base_url('employee/departements/reads'); ?>?division_id=' + div.id,
+                    valueField: 'id',
+                    textField: 'name',
+                    prompt: 'Choose Departement',
+                    onSelect: function(dept) {
+                        $.ajax({
+                            url: '<?= base_url('attandance/cash_carries/requestCode') ?>',
+                            type: 'post',
+                            data: 'departement_id=' + dept.id,
+                            success: function(requestCode) {
+                                addTable(dept.id);
+                                $("#request_code").textbox('setValue', requestCode);
+                            }
+                        });
+                    }
+                });
+            }
         });
     });
 

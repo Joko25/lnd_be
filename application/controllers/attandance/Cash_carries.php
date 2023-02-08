@@ -42,9 +42,10 @@ class Cash_carries extends CI_Controller
 
     public function readRequest()
     {
-        $this->db->select('created_by');
-        $this->db->from('cash_carries');
-        $this->db->group_by('created_by');
+        $this->db->select('a.created_by, b.name');
+        $this->db->from('cash_carries a');
+        $this->db->join('users b', 'a.created_by = b.username');
+        $this->db->group_by('a.created_by');
         $records = $this->db->get()->result_array();
         echo json_encode($records);
     }
@@ -74,18 +75,20 @@ class Cash_carries extends CI_Controller
 
     public function requestCode()
     {
-        $date = date("ymd");
+        $date = date("ym");
+        $post = $this->input->post();
+        $departement = $this->crud->read('departements', [], ["id" => $post['departement_id']]);
 
+        $template = "CC" . $departement->number . $date;
         $this->db->select('max(SUBSTRING(request_code, -4)) as code');
         $this->db->from('cash_carries');
         $this->db->where('deleted', 0);
-        $this->db->where('SUBSTRING(request_code, 4, 6)=', $date);
+        $this->db->like('request_code', $template);
         $records = $this->db->get()->result_array();
 
         $requestcode = (int) $records[0]['code'];
         $requestcode++;
 
-        $template = "CC/" . $date . "/";
         $templatefinal = $template . sprintf("%04s", $requestcode);
         echo $templatefinal;
     }
@@ -121,12 +124,8 @@ class Cash_carries extends CI_Controller
         return array("amount" => round($total), "convert" => $convert);
     }
 
-    public function convertHour()
+    public function convertHour($trans_date, $start, $end)
     {
-        $trans_date = $this->input->post('trans_date');
-        $start = $this->input->post('start');
-        $end = $this->input->post('end');
-
         //Set Duration
         $time_begin = strtotime($trans_date . " " . $start);
         $time_end = strtotime($trans_date . " " . $end);
@@ -136,7 +135,7 @@ class Cash_carries extends CI_Controller
         $duration = $hour . " Hour " . floor($minutes / 60) . " Minutes";
         $duration_hour = $hour = round($diff / (60 * 60), 2);;
         $arr = array("duration" => $duration, "duration_hour" => $duration_hour);
-        die(json_encode($arr));
+        return $arr;
     }
 
     //GET DATATABLES
@@ -216,6 +215,7 @@ class Cash_carries extends CI_Controller
             //Get Data Array
             $records = $this->db->get()->result_array();
 
+            $datas = [];
             foreach ($records as $record) {
                 $this->db->select('c.days');
                 $this->db->from('shift_employees a');
@@ -298,25 +298,27 @@ class Cash_carries extends CI_Controller
             $trans_date = $post['trans_date'];
             $employee_id = $post['employee_id'];
             $request_code = $post['request_code'];
+            $request_name = $post['request_name'];
             $start = $post['start'];
             $end = $post['end'];
-            $duration = $post['duration'];
-            $duration_hour = $post['duration_hour'];
             $type = $post['type'];
-            $meal = empty($post['meal']) ? 0 : 1;
+            $meal = $post['meal'];
             $remarks = $post['remarks'];
 
-            $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, $duration_hour);
+
+            $duration = $this->convertHour($trans_date, $start, $end);
+            $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, $duration['duration_hour']);
 
             $post_final = array(
                 "trans_date" =>  $trans_date,
                 "employee_id" =>  $employee_id,
                 "request_code" =>  $request_code,
+                "request_name" =>  $request_name,
                 "start" =>  $start,
                 "end" =>  $end,
                 "type" =>  $type,
-                "duration" =>  $duration,
-                "duration_hour" =>  $duration_hour,
+                "duration" =>  $duration['duration'],
+                "duration_hour" =>  $duration['duration_hour'],
                 "duration_convert" =>  $ot_amount['convert'],
                 "amount" =>  $ot_amount['amount'],
                 "meal" =>  $meal,
@@ -340,18 +342,25 @@ class Cash_carries extends CI_Controller
     {
         if ($this->input->post()) {
             $id   = base64_decode($this->input->get('id'));
+
             $post = $this->input->post();
+            $trans_date = $post['trans_date'];
+            $start = $post['start'];
+            $end = $post['end'];
+            $type = $post['type'];
+            $meal = $post['meal'];
+            $remarks = $post['remarks'];
+
+            $duration = $this->convertHour($trans_date, $start, $end);
 
             $post_final = array(
-                "trans_date" =>  $post['trans_date'],
-                "start" =>  $post['start'],
-                "end" =>  $post['end'],
-                "type" =>  $post['type'],
-                "duration" =>  $post['duration'],
-                "meal" =>  $post['meal'],
-                "remarks" =>  $post['remarks'],
-                "updated_by" => $this->session->username,
-                "updated_date" => date('Y-m-d H:i:s')
+                "start" =>  $start,
+                "end" =>  $end,
+                "type" =>  $type,
+                "duration" =>  $duration['duration'],
+                "duration_hour" =>  $duration['duration_hour'],
+                "meal" =>  $meal,
+                "remarks" =>  $remarks,
             );
 
             if ($this->crud->update('cash_carries', ["id" => $id], $post_final)) {
