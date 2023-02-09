@@ -53,8 +53,7 @@ class Attandance_days extends CI_Controller
             $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
             $this->db->where('b.deleted', 0);
             $this->db->where('b.status', 0);
-            $this->db->where('a.date_in >=', $filter_from);
-            $this->db->where('a.date_in <=', $filter_to);
+            $this->db->where("(a.date_in >= '$filter_from' and a.date_in <= '$filter_to' or a.date_out >= '$filter_from' and a.date_out <= '$filter_to')");
             $this->db->like('b.id', $filter_employee);
             $this->db->like('c.id', $filter_division);
             $this->db->like('d.id', $filter_departement);

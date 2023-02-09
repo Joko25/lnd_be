@@ -362,7 +362,7 @@ class Student_payrolls extends CI_Controller
                         $this->db->limit(20, ($i * 20));
                         $employees = $this->db->get()->result_array();
                         $total = 0;
-                        
+
                         foreach ($employees as $employee) {
                             $employee_id = $employee['id'];
                             $employee_number = $employee['number'];
@@ -396,14 +396,19 @@ class Student_payrolls extends CI_Controller
 
                                 $tidakabsen = @$permit->duration;
 
-                                $attandance = $this->crud->read("attandances", [], ["date_in" => $working_date, "number" => $employee_number]);
+                                $this->db->select("*");
+                                $this->db->from('attandances');
+                                $this->db->where('number', $employee_number);
+                                $this->db->where("(date_in = '$working_date' or date_out = '$working_date')");
+                                $attandance = $this->db->get()->row();
+
                                 if (date('w', $z) !== '0' && date('w', $z) !== '6') {
                                     if ($attandance) {
                                         $day = 1;
                                     } else {
                                         $day = $tidakabsen;
                                     }
-                                }else{
+                                } else {
                                     $day = 0;
                                 }
 

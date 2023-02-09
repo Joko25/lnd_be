@@ -321,7 +321,6 @@ class Payrolls extends CI_Controller
 
             $weekday = array();
             $weekend = array();
-            $masuk = 0;
 
             $final_total_ovetime_amount_weekday = 0;
             $final_total_ovetime_amount_holiday = 0;
@@ -350,7 +349,7 @@ class Payrolls extends CI_Controller
                 $this->db->select("*");
                 $this->db->from('attandances');
                 $this->db->where('number', $record['number']);
-                $this->db->where('date_in', $working_date);
+                $this->db->where("(date_in = '$working_date' or date_out = '$working_date')");
                 $attandance = $this->db->get()->row();
 
                 //Overtime Regular
@@ -400,6 +399,20 @@ class Payrolls extends CI_Controller
                 $this->db->where('trans_date', $working_date);
                 $this->db->where('correction_type', 'MINUS');
                 $correction_minus = $this->db->get()->row();
+
+                $queryPermit = $this->db->query("SELECT b.number, b.name, SUM(a.duration) as amount
+                    FROM permit_types b
+                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date = '$working_date'
+                    LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
+                    WHERE (c.users_id_to = '' or c.users_id_to is null)
+                    GROUP BY b.id ORDER BY b.name asc");
+                $rowPermit = $queryPermit->result_array();
+
+                if (@$rowPermit[0]->amount > 0) {
+                    $permitMasuk = 0;
+                } else {
+                    $permitMasuk = 1;
+                }
 
                 //Loan
                 @$r_loan_bank = $this->crud->read('loans', ['status' => 0, 'employee_id' => $record['id'], 'loan_type' => 'BANK', 'trans_date' => $working_date]);
@@ -488,7 +501,7 @@ class Payrolls extends CI_Controller
                                 $masuk += 0;
                                 $absen += 1;
                             } else {
-                                $masuk += 1;
+                                $masuk += $permitMasuk;
                                 $absen += 0;
                             }
                         }
@@ -499,7 +512,7 @@ class Payrolls extends CI_Controller
                             $masuk += 0;
                             $absen += 0;
                         } else {
-                            $masuk += 1;
+                            $masuk += $permitMasuk;
                             $absen += 0;
                         }
 
@@ -565,7 +578,7 @@ class Payrolls extends CI_Controller
                                 $masuk += 0;
                                 $absen += 1;
                             } else {
-                                $masuk += 1;
+                                $masuk += $permitMasuk;
                                 $absen += 0;
                             }
                         }
@@ -576,7 +589,7 @@ class Payrolls extends CI_Controller
                             $masuk += 0;
                             $absen += 0;
                         } else {
-                            $masuk += 1;
+                            $masuk += $permitMasuk;
                             $absen += 0;
                         }
 
@@ -611,6 +624,11 @@ class Payrolls extends CI_Controller
             //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
             $hkw = (@count($weekday) - @count($holiday));
+            if ($masuk >= $hkw) {
+                $working_day = $hkw;
+            } else {
+                $working_day = $masuk;
+            }
 
             //Allowance Amount
             //jika dia ada tunjuangan ambil field dan isinya
@@ -627,8 +645,8 @@ class Payrolls extends CI_Controller
             foreach ($r_allowance as $allowance_data) {
                 if ($allowance_data['calculate_days'] == "1") {
                     $arr_allowance_number .= strtolower($allowance_data['number']) . ",";
-                    $arr_allowance_amount .= ($allowance_data['amount'] * $masuk) . ",";
-                    $arr_allowance_amount_total += ($allowance_data['amount'] * $masuk);
+                    $arr_allowance_amount .= ($allowance_data['amount'] * $working_day) . ",";
+                    $arr_allowance_amount_total += ($allowance_data['amount'] * $working_day);
                 } else {
                     $arr_allowance_number .= strtolower($allowance_data['number']) . ",";
                     $arr_allowance_amount .= $allowance_data['amount'] . ",";
@@ -933,7 +951,7 @@ class Payrolls extends CI_Controller
                 "tax_id" => $record['tax_id'],
                 "shift_name" => $record['shift_name_2'],
                 "attandance" => json_encode($arr_permit_combine),
-                "attandance_wd" => ($masuk),
+                "attandance_wd" => ($working_day),
                 "working_day" => @count($weekday) - @count($holiday),
                 "salary" => $record['salary'],
                 "allowence" => json_encode($arr_allowance_combine),

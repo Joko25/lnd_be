@@ -160,7 +160,7 @@
                                 toastr.error(result.message, result.title);
                             }
 
-                            // $('#dlg_insert').dialog('close');
+                            $('#dlg_insert').dialog('close');
                             $('#dg').datagrid('reload');
                         }
                     });

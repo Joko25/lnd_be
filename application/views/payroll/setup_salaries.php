@@ -8,8 +8,17 @@
             <th rowspan="2" data-options="field:'division_name',width:200,halign:'center'">Division</th>
             <th rowspan="2" data-options="field:'departement_name',width:200,halign:'center'">Departement</th>
             <th rowspan="2" data-options="field:'departement_sub_name',width:200,halign:'center'">Departement Sub</th>
-            <th rowspan="2" data-options="field:'component_salary_name',width:200,halign:'center'">Component Salary</th>
-            <th rowspan="2" data-options="field:'amount',width:150,halign:'center', align:'right', formatter:numberformat">Total Salary</th>
+            <th rowspan="2" data-options="field:'component_salary_name',width:200,halign:'center', 
+            editor:{
+                type:'combobox',
+                options:{
+                    valueField:'name',
+                    textField:'name',
+                    url:'<?= base_url('payroll/components/reads') ?>',
+                    required:true
+                }
+            }">Component Salary</th>
+            <th rowspan="2" data-options="field:'amount',width:150,halign:'center', align:'right',editor:'numberbox', formatter:numberformat">Total Salary</th>
             <th colspan="2" data-options="field:'',width:150,halign:'center'"> Salary</th>
             <th rowspan="2" data-options="field:'other',width:150,halign:'center', align:'right', formatter:numberformat">Other (25%)</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Allowance</th>
@@ -32,7 +41,7 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 225px;">
+<div id="toolbar" style="height: 265px;">
     <fieldset style="width: 100%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
         <div style="width: 50%; float: left;">
@@ -49,15 +58,15 @@
                 <input style="width:60%;" id="filter_departement_sub" class="easyui-combobox">
             </div>
             <div class="fitem">
+                <span style="width:35%; display:inline-block;">Employee</span>
+                <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
+            </div>
+            <div class="fitem">
                 <span style="width:35%; display:inline-block;"></span>
                 <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
             </div>
         </div>
         <div style="width: 50%; float: left;">
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Employee</span>
-                <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
-            </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Salary Component</span>
                 <input style="width:60%;" id="filter_component_salary" class="easyui-combobox">
@@ -70,10 +79,18 @@
                 <span style="width:35%; display:inline-block;">Group</span>
                 <input style="width:60%;" id="filter_group" class="easyui-combobox">
             </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Status</span>
+                <select style="width:60%;" id="filter_status" class="easyui-combobox" panelHeight="auto">
+                    <option value="">Choose All</option>
+                    <option value="REGIST">REGISTERED</option>
+                    <option value="UNREGIST">UNREGISTERED</option>
+                </select>
+            </div>
         </div>
     </fieldset>
     <?= $button ?>
-    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="unregistered()"><i class="fa fa-users"></i> Unregistered Salary</a>
+    <!-- <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="unregistered()"><i class="fa fa-users"></i> Unregistered Salary</a> -->
 </div>
 
 <!-- DIALOG SAVE AND UPDATE -->
@@ -157,29 +174,32 @@
 
     //DELETE DATA
     function deleted() {
-        var rows = $('#dg').datagrid('getSelections');
+        var checked = $('#dg').datagrid('getChecked');
+        var rows = $('#dg').datagrid('getRows');
         if (rows.length > 0) {
             $.messager.confirm('Warning', 'Are you sure you want to delete this data?', function(r) {
                 if (r) {
                     for (var i = 0; i < rows.length; i++) {
                         var row = rows[i];
-                        $.ajax({
-                            method: 'post',
-                            url: '<?= base_url('payroll/setup_salaries/delete') ?>',
-                            data: {
-                                id: row.id
-                            },
-                            success: function(result) {
-                                var result = eval('(' + result + ')');
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                toastr.error(jqXHR.statusText);
-                                $.messager.alert("Error", jqXHR.statusText, 'error');
-                            },
-                            complete: function(data) {
-                                $('#dg').datagrid('reload');
-                            }
-                        });
+                        if ($.inArray(row, checked) >= 0) {
+                            $.ajax({
+                                method: 'post',
+                                url: '<?= base_url('payroll/setup_salaries/delete') ?>',
+                                data: {
+                                    id: row.id
+                                },
+                                success: function(result) {
+                                    var result = eval('(' + result + ')');
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    toastr.error(jqXHR.statusText);
+                                    $.messager.alert("Error", jqXHR.statusText, 'error');
+                                },
+                                complete: function(data) {
+                                    $('#dg').datagrid('reload');
+                                }
+                            });
+                        }
                     }
                 }
             });
@@ -205,6 +225,7 @@
         var filter_component_salary = $("#filter_component_salary").combobox('getValue');
         var filter_position = $("#filter_position").combobox('getValue');
         var filter_group = $("#filter_group").combobox('getValue');
+        var filter_status = $("#filter_status").combobox('getValue');
 
         var url = "?filter_division=" + filter_division +
             "&filter_departement=" + filter_departement +
@@ -212,7 +233,8 @@
             "&filter_employee=" + filter_employee +
             "&filter_component_salary=" + filter_component_salary +
             "&filter_position=" + filter_position +
-            "&filter_group=" + filter_group;
+            "&filter_group=" + filter_group +
+            "&filter_status=" + filter_status;
 
         $('#dg').datagrid({
             url: '<?= base_url('payroll/setup_salaries/datatables') ?>' + url
@@ -235,6 +257,7 @@
         var filter_component_salary = $("#filter_component_salary").combobox('getValue');
         var filter_position = $("#filter_position").combobox('getValue');
         var filter_group = $("#filter_group").combobox('getValue');
+        var filter_status = $("#filter_status").combobox('getValue');
 
         var url = "?filter_division=" + filter_division +
             "&filter_departement=" + filter_departement +
@@ -242,7 +265,8 @@
             "&filter_employee=" + filter_employee +
             "&filter_component_salary=" + filter_component_salary +
             "&filter_position=" + filter_position +
-            "&filter_group=" + filter_group;
+            "&filter_group=" + filter_group +
+            "&filter_status=" + filter_status;
 
         window.location.assign('<?= base_url('payroll/setup_salaries/print/excel') ?>' + url);
     }
@@ -262,11 +286,40 @@
     }
 
     $(function() {
-        //SETTING DATAGRID EASYUI
         $('#dg').datagrid({
             url: '<?= base_url('payroll/setup_salaries/datatables') ?>',
             pagination: true,
-            rownumbers: true
+            rownumbers: true,
+            onEndEdit: function(index, row) {
+                var employee_id = row.employee_id;
+                var salary_component_name = row.component_salary_name;
+                var amount = row.amount;
+
+                $.ajax({
+                    type: "post",
+                    url: "<?= base_url('payroll/setup_salaries/createOrUpdate') ?>",
+                    data: "employee_id=" + employee_id + "&salary_component_name=" + salary_component_name + "&amount=" + amount,
+                    dataType: "json",
+                    success: function(json) {
+                        if (json.theme == "success") {
+                            toastr.success(json.message, json.title);
+                            $('#dg').datagrid('reload');
+                        } else {
+                            toastr.error(json.message, json.title);
+                        }
+                    }
+                });
+
+                $('#dg').datagrid('reload');
+            },
+            rowStyler: function(index, row) {
+                if (row.amount == null) {
+                    return 'background-color:#FFDCDC;';
+                }
+            }
+        }).datagrid('enableCellEditing').datagrid('gotoCell', {
+            index: 0,
+            field: 'employee_number'
         });
 
         //SAVE DATA

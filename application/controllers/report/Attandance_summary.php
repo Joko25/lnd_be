@@ -143,7 +143,7 @@ class Attandance_summary extends CI_Controller
                     b.attandance_total,
                     h.days");
                 $this->db->from('employees a');
-                $this->db->join("(SELECT number, COUNT(date_in) as attandance_total FROM attandances WHERE date_in BETWEEN '$filter_from' and '$filter_to' GROUP BY number) b", 'a.number = b.number', 'left');
+                $this->db->join("(SELECT number, COUNT(number) as attandance_total FROM attandances WHERE (date_in BETWEEN '$filter_from' and '$filter_to' or date_out BETWEEN '$filter_from' and '$filter_to') GROUP BY number) b", 'a.number = b.number', 'left');
                 $this->db->join('divisions c', 'a.division_id = c.id');
                 $this->db->join('departements d', 'a.departement_id = d.id');
                 $this->db->join('departement_subs e', 'a.departement_sub_id = e.id');
@@ -174,7 +174,7 @@ class Attandance_summary extends CI_Controller
                         $this->db->select("*");
                         $this->db->from('attandances');
                         $this->db->where('number', $record['number']);
-                        $this->db->where('date_in', $working_date);
+                        $this->db->where("(date_in = '$working_date' or date_out = '$working_date')");
                         $attandance = $this->db->get()->row();
 
                         if (@$data['days'] == "5") {

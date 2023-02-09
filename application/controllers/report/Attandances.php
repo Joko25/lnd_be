@@ -63,8 +63,7 @@ class Attandances extends CI_Controller
             $this->db->where('a.deleted', 0);
             $this->db->where('a.status', 0);
             if ($filter_from != "" && $filter_to != "") {
-                $this->db->where('b.date_in >=', $filter_from);
-                $this->db->where('b.date_in <=', $filter_to);
+                $this->db->where("(b.date_in >= '$filter_from' and b.date_in <= '$filter_to' or b.date_out >= '$filter_from' and b.date_out <= '$filter_to')");
             }
             if ($filter_permit_type != "") {
                 $this->db->where('h.id', $filter_permit_type);
@@ -193,7 +192,7 @@ class Attandances extends CI_Controller
                     $this->db->from('employees a');
                     $this->db->join('attandances b', 'a.number = b.number');
                     $this->db->join('overtimes c', 'a.id = c.employee_id and b.date_in = c.trans_date', 'left');
-                    $this->db->where('b.date_in', $working_date);
+                    $this->db->where("(b.date_in = '$working_date' or b.date_out = '$working_date')");
                     $this->db->where('a.id', $record['id']);
                     $this->db->order_by('a.name', 'asc');
                     $this->db->order_by('b.date_in', 'asc');
@@ -252,15 +251,15 @@ class Attandances extends CI_Controller
                         if (@$cash_carry->start != null) {
                             $holiday = "Cash Carry " . $cash_carry->request_code;
                             $style = "style='background: #ffe9ad;'";
+                        } elseif (@$change_day->start != null) {
+                            $holiday = "Change Days to " . $change_day->end;
+                            $style = "style='background: #B0ADFF;'";
                         } elseif ($weekend == "Weekend") {
                             $holiday = $weekend;
                             $style = "style='background: #FFBEB0;'";
                         } elseif (@$permit->permit_name != null) {
                             $holiday = @$permit->note;
                             $style = "style='background: #FDFFB0;'";
-                        } elseif (@$change_day->start != null) {
-                            $holiday = "Change Days to " . $change_day->end;
-                            $style = "style='background: #B0ADFF;'";
                         } elseif (@$attandance->remarks != null) {
                             $holiday = @$attandance->remarks;
                             $style = "";

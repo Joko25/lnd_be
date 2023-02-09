@@ -40,28 +40,28 @@ class Setup_salaries extends CI_Controller
         echo json_encode($send);
     }
 
-    public function readUnregistered()
-    {
-        $filters = json_decode($this->input->post('filterRules'));
-        $this->db->select('a.number, a.name');
-        $this->db->from('employees a');
-        $this->db->join('setup_salaries b', 'a.id = b.employee_id', 'left');
-        $this->db->where('a.deleted', 0);
-        $this->db->where('a.status', 0);
-        $this->db->where("b.amount is null or b.amount = 0");
-        if (@count($filters) > 0) {
-            foreach ($filters as $filter) {
-                if ($filter->field == "number") {
-                    $this->db->like("a.number", $filter->value);
-                } elseif ($filter->field == "name") {
-                    $this->db->like("a.name", $filter->value);
-                }
-            }
-        }
-        $this->db->order_by('a.name', 'ASC');
-        $records = $this->db->get()->result_array();
-        echo json_encode($records);
-    }
+    // public function readUnregistered()
+    // {
+    //     $filters = json_decode($this->input->post('filterRules'));
+    //     $this->db->select('a.number, a.name');
+    //     $this->db->from('employees a');
+    //     $this->db->join('setup_salaries b', 'a.id = b.employee_id', 'left');
+    //     $this->db->where('a.deleted', 0);
+    //     $this->db->where('a.status', 0);
+    //     $this->db->where("b.amount is null or b.amount = 0");
+    //     if (@count($filters) > 0) {
+    //         foreach ($filters as $filter) {
+    //             if ($filter->field == "number") {
+    //                 $this->db->like("a.number", $filter->value);
+    //             } elseif ($filter->field == "name") {
+    //                 $this->db->like("a.name", $filter->value);
+    //             }
+    //         }
+    //     }
+    //     $this->db->order_by('a.name', 'ASC');
+    //     $records = $this->db->get()->result_array();
+    //     echo json_encode($records);
+    // }
 
     //GET DATATABLES
     public function datatables()
@@ -74,6 +74,7 @@ class Setup_salaries extends CI_Controller
             $filter_component_salary = $this->input->get('filter_component_salary');
             $filter_position = $this->input->get('filter_position');
             $filter_group = $this->input->get('filter_group');
+            $filter_status = $this->input->get('filter_status');
             $username = $this->session->username;
 
             $page = $this->input->post('page');
@@ -85,11 +86,13 @@ class Setup_salaries extends CI_Controller
             $result = array();
             //Select Query
             $this->db->select('a.*, 
+                c.id as employee_id,
                 c.number as employee_number, 
                 c.name as employee_name, 
                 d.name as division_name, 
                 e.name as departement_name,
                 f.name as departement_sub_name, 
+                g.id as component_salary_id,
                 g.name as component_salary_name,
                 ((a.amount * 75) / 100) as basic,
                 ((a.amount * 25) / 100) as allowance_fix,
@@ -97,21 +100,27 @@ class Setup_salaries extends CI_Controller
                 ((((a.amount * 25) / 100) * 40) / 100) as position,
                 ((((a.amount * 25) / 100) * 60) / 100) as skill
             ');
-            $this->db->from('setup_salaries a');
-            $this->db->join('employees c', 'a.employee_id = c.id');
+            $this->db->from('employees c');
+            $this->db->join('setup_salaries a', 'a.employee_id = c.id', 'left');
             $this->db->join('divisions d', 'c.division_id = d.id');
             $this->db->join('departements e', 'c.departement_id = e.id');
             $this->db->join('departement_subs f', 'c.departement_sub_id = f.id');
             $this->db->join('salary_components g', 'a.salary_component_id = g.id', 'left');
-            $this->db->join('privilege_groups h', "c.group_id = h.group_id and h.username = '$username' and h.status = '1'");
-            $this->db->where('a.deleted', 0);
+            $this->db->join('privilege_groups h', "c.group_id = h.group_id and h.username = '$username' and h.status = '1'", 'left');
             $this->db->where('c.deleted', 0);
             $this->db->where('c.status', 0);
             $this->db->like('c.id', $filter_employee);
             $this->db->like('d.id', $filter_division);
             $this->db->like('e.id', $filter_departement);
             $this->db->like('f.id', $filter_departement_sub);
-            $this->db->like('a.salary_component_id', $filter_component_salary);
+            if ($filter_component_salary != "") {
+                $this->db->like('a.salary_component_id', $filter_component_salary);
+            }
+            if ($filter_status == "REGIST") {
+                $this->db->where("a.amount is not null or a.amount != 0");
+            } elseif ($filter_status == "UNREGIST") {
+                $this->db->where("a.amount is null or a.amount = 0");
+            }
             $this->db->like('c.position_id', $filter_position);
             $this->db->like('h.group_id', $filter_group);
             $this->db->order_by('c.name', 'ASC');
@@ -144,6 +153,53 @@ class Setup_salaries extends CI_Controller
                 }
             } else {
                 show_error(validation_errors());
+            }
+        } else {
+            show_error("Cannot Process your request");
+        }
+    }
+
+    public function createOrUpdate()
+    {
+        if ($this->input->post()) {
+            $post = $this->input->post();
+            $component_name = $post['salary_component_name'];
+
+            $setup_salaries = $this->crud->read("setup_salaries", [], ["employee_id" => $post['employee_id']]);
+            $component_bf = $this->crud->read('salary_components', [], ["name" => $component_name]);
+            $component = $this->crud->read('salary_components', [], ["name" => $component_name]);
+
+            if (empty($setup_salaries)) {
+
+                if ($component) {
+                    $amount = $component->salary;
+                } else {
+                    $amount = $post['amount'];
+                }
+
+                $postFinal = array(
+                    "employee_id" => $post['employee_id'],
+                    "salary_component_id" => $component->id,
+                    "amount" => $amount,
+                );
+
+                $send   = $this->crud->create('setup_salaries', $postFinal);
+                echo $send;
+            } else {
+                if ($component_bf->id == $setup_salaries->salary_component_id) {
+                    $amount = $post['amount'];
+                } else {
+                    $amount = $component->salary;
+                }
+
+                $postFinal = array(
+                    "employee_id" => $post['employee_id'],
+                    "salary_component_id" => $component->id,
+                    "amount" => $amount,
+                );
+
+                $send = $this->crud->update('setup_salaries', ["employee_id" => $post['employee_id']], $postFinal);
+                echo $send;
             }
         } else {
             show_error("Cannot Process your request");
@@ -279,6 +335,7 @@ class Setup_salaries extends CI_Controller
         $filter_component_salary = $this->input->get('filter_component_salary');
         $filter_position = $this->input->get('filter_position');
         $filter_group = $this->input->get('filter_group');
+        $filter_status = $this->input->get('filter_status');
         $username = $this->session->username;
 
         //Config
@@ -287,11 +344,13 @@ class Setup_salaries extends CI_Controller
         $config = $this->db->get()->row();
 
         $this->db->select('a.*, 
+                c.id as employee_id,
                 c.number as employee_number, 
                 c.name as employee_name, 
                 d.name as division_name, 
                 e.name as departement_name,
                 f.name as departement_sub_name, 
+                g.id as component_salary_id,
                 g.name as component_salary_name,
                 ((a.amount * 75) / 100) as basic,
                 ((a.amount * 25) / 100) as allowance_fix,
@@ -299,21 +358,27 @@ class Setup_salaries extends CI_Controller
                 ((((a.amount * 25) / 100) * 40) / 100) as position,
                 ((((a.amount * 25) / 100) * 60) / 100) as skill
             ');
-        $this->db->from('setup_salaries a');
-        $this->db->join('employees c', 'a.employee_id = c.id');
+        $this->db->from('employees c');
+        $this->db->join('setup_salaries a', 'a.employee_id = c.id', 'left');
         $this->db->join('divisions d', 'c.division_id = d.id');
         $this->db->join('departements e', 'c.departement_id = e.id');
         $this->db->join('departement_subs f', 'c.departement_sub_id = f.id');
         $this->db->join('salary_components g', 'a.salary_component_id = g.id', 'left');
-        $this->db->join('privilege_groups h', "c.group_id = h.group_id and h.username = '$username'");
-        $this->db->where('a.deleted', 0);
+        $this->db->join('privilege_groups h', "c.group_id = h.group_id and h.username = '$username' and h.status = '1'", 'left');
         $this->db->where('c.deleted', 0);
         $this->db->where('c.status', 0);
         $this->db->like('c.id', $filter_employee);
         $this->db->like('d.id', $filter_division);
         $this->db->like('e.id', $filter_departement);
         $this->db->like('f.id', $filter_departement_sub);
-        $this->db->like('a.salary_component_id', $filter_component_salary);
+        if ($filter_component_salary != "") {
+            $this->db->like('a.salary_component_id', $filter_component_salary);
+        }
+        if ($filter_status == "REGIST") {
+            $this->db->where("a.amount is not null or a.amount != 0");
+        } elseif ($filter_status == "UNREGIST") {
+            $this->db->where("a.amount is null or a.amount = 0");
+        }
         $this->db->like('c.position_id', $filter_position);
         $this->db->like('h.group_id', $filter_group);
         $this->db->order_by('c.name', 'ASC');
