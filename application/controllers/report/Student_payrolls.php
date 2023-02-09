@@ -397,10 +397,14 @@ class Student_payrolls extends CI_Controller
                                 $tidakabsen = @$permit->duration;
 
                                 $attandance = $this->crud->read("attandances", [], ["date_in" => $working_date, "number" => $employee_number]);
-                                if ($attandance) {
-                                    $day = (1 + $tidakabsen);
-                                } else {
-                                    $day = $tidakabsen;
+                                if (date('w', $z) !== '0' && date('w', $z) !== '6') {
+                                    if ($attandance) {
+                                        $day = 1;
+                                    } else {
+                                        $day = $tidakabsen;
+                                    }
+                                }else{
+                                    $day = 0;
                                 }
 
                                 $payroll_end = date_create($working_date);
