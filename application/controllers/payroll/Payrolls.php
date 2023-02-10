@@ -404,7 +404,7 @@ class Payrolls extends CI_Controller
                     FROM permit_types b
                     LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date = '$working_date'
                     LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
-                    WHERE (c.users_id_to = '' or c.users_id_to is null)
+                    WHERE (c.users_id_to = '' or c.users_id_to is null) and b.absence = 'NO'
                     GROUP BY b.id ORDER BY b.name asc");
                 $rowPermit = $queryPermit->result_array();
 

@@ -385,13 +385,14 @@ class Student_payrolls extends CI_Controller
                             for ($z = $start; $z <= $finish; $z += (60 * 60 * 24)) {
                                 $working_date = date('Y-m-d', $z);
 
-                                $this->db->select("employee_id, SUM(duration) as duration");
-                                $this->db->from('permits');
-                                $this->db->where('status', 0);
-                                $this->db->where('permit_type_id', '20221207000001');
-                                $this->db->where('employee_id', $employee_id);
-                                $this->db->where('permit_date', $working_date);
-                                $this->db->group_by('employee_id');
+                                $this->db->select("a.employee_id, SUM(a.duration) as duration");
+                                $this->db->from('permits a');
+                                $this->db->join('permit_types b', 'a.permit_type_id = b.id');
+                                $this->db->where('a.status', 0);
+                                $this->db->where('b.absence', 'YES');
+                                $this->db->where('a.employee_id', $employee_id);
+                                $this->db->where('a.permit_date', $working_date);
+                                $this->db->group_by('a.employee_id');
                                 $permit = $this->db->get()->row();
 
                                 $tidakabsen = @$permit->duration;

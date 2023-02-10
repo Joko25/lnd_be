@@ -7,6 +7,7 @@
             <th rowspan="2" data-options="field:'name',width:200,halign:'center'">Name</th>
             <th rowspan="2" data-options="field:'payroll',width:150,halign:'center'">Payroll</th>
             <th rowspan="2" data-options="field:'cutoff',width:80,align:'center'">Cut Off</th>
+            <th rowspan="2" data-options="field:'absence',width:80,align:'center'">Absence</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
@@ -47,6 +48,13 @@
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Cut Off</span>
                 <select style="width:60%;" name="cutoff" required="" class="easyui-combobox" panelHeight="auto">
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                </select>
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Absence</span>
+                <select style="width:60%;" name="absence" required="" class="easyui-combobox" panelHeight="auto">
                     <option value="YES">YES</option>
                     <option value="NO">NO</option>
                 </select>
