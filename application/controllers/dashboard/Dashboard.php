@@ -184,14 +184,14 @@ class Dashboard extends CI_Controller
                 $holiday = @$holiday->description;
             }
 
-            if (@$attandance->time_in == null && $holiday != 'Weekend') {
-                if ($permit_name != null) {
-                    $permits += 1;
+            if (@$attandance->time_in == null) {
+                if ($holiday == "Weekend") {
+                    $permits += 0;
                     $working += 0;
                     $absence += 0;
                     $late += 0;
-                } elseif ($holiday != null) {
-                    $permits += 0;
+                } elseif ($permit_name != null) {
+                    $permits += 1;
                     $working += 0;
                     $absence += 0;
                     $late += 0;

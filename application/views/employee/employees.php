@@ -126,6 +126,7 @@
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Employee ID</span>
                     <input style="width:30%;" name="number" id="number" required="" class="easyui-textbox">
+                    <a class="easyui-linkbutton" onclick="generate_id()"><i class="fa fa-rotate-left"></i> Generate</a>
                 </div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Candidate ID</span>
@@ -348,7 +349,7 @@
                     <legend style="font-weight: bold;">Bank Information</legend>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Branch Name </span>
-                        <select style="width:60%;" name="bank_name" id="bank_name" class="easyui-combobox">
+                        <select style="width:60%;" name="bank_name" id="bank_name" required class="easyui-combobox">
                             <option value="-">Cash</option>
                             <option value="Bank Mandiri">Bank Mandiri</option>
                             <option value="Bank Syariah Indonesia">Bank Syariah Indonesia</option>
@@ -357,11 +358,11 @@
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Bank No</span>
-                        <input style="width:60%;" name="bank_no" id="bank_no" class="easyui-textbox">
+                        <input style="width:60%;" name="bank_no" id="bank_no" required class="easyui-textbox">
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Bank Branch </span>
-                        <input style="width:60%;" name="bank_branch" id="bank_branch" class="easyui-textbox">
+                        <input style="width:60%;" name="bank_branch" id="bank_branch" required class="easyui-textbox">
                     </div>
                 </fieldset>
             </div>
@@ -452,6 +453,27 @@
 <iframe id="printout" src="" style="width: 100%;" hidden></iframe>
 
 <script>
+    //GENERATE ID
+    function generate_id() {
+        var departement_id = $("#departement_id").combobox('getValue');
+        var contract_id = $("#contract_id").combobox('getValue');
+        var source_id = $("#source_id").combobox('getValue');
+        var date_sign = $("#date_sign").datebox('getValue');
+
+        if (departement_id == "" || contract_id == "" || date_sign == "") {
+            toastr.info("Please Choose Sign Date, Departement and Employee Type");
+        } else {
+            $.ajax({
+                type: "post",
+                url: "<?= base_url('employee/employees/readNumber') ?>",
+                data: "departement_id=" + departement_id + "&contract_id=" + contract_id + "&source_id=" + source_id + "&date_sign=" + btoa(date_sign),
+                dataType: "html",
+                success: function(number) {
+                    $("#number").textbox("setValue", number);
+                }
+            });
+        }
+    }
     //ADD DATA
     function add() {
         $('#dlg_insert').dialog('open');
@@ -482,10 +504,6 @@
         tableExperience();
         tableTraining();
         tableCarrer();
-
-        $.post('<?= base_url('employee/employees/employeeNumber') ?>', {}, function(e) {
-            $('#number').textbox('setValue', e);
-        });
     }
 
     //EDIT DATA

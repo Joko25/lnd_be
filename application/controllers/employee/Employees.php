@@ -189,17 +189,47 @@ class Employees extends CI_Controller
     }
 
     //GET EMPLOYEE NUMBER
-    public function employeeNumber()
+    public function readNumber()
     {
-        $sqlGetID = $this->db->query("SELECT max(`number`) as kode FROM employees");
-        $rowID = $sqlGetID->row();
-        $kode = $rowID->kode;
-        $date = date("Ym");
+        $departement_id = $this->input->post('departement_id');
+        $contract_id = $this->input->post('contract_id');
+        $source_id = $this->input->post('source_id');
+        $date_sign = base64_decode($this->input->post('date_sign'));
 
-        if ($kode == NULL) {
-            $autoID        = $date . sprintf("%04s", $kode + 1);
+        $departement = $this->crud->read("departements", [], ["id" => $departement_id]);
+        $contract = $this->crud->read("contracts", [], ["id" => $contract_id]);
+        $source = $this->crud->read("sources", [], ["id" => $source_id]);
+        $group = $this->crud->read("groups", [], ["id" => @$source->group_id]);
+
+        $date = date("my", strtotime($date_sign));
+        if (@$group->name != "PKL") {
+            if (@$group->name == "MAGANG") {
+                $numberFormat = $source->number_id . $contract->number . $date;
+            } else {
+                $numberFormat = $departement->number_id . $contract->number . $date;
+            }
+
+            $this->db->select("max(number) as kode");
+            $this->db->from("employees");
+            $this->db->like("number", $numberFormat);
+            $row = $this->db->get()->row();
+
+            $requestcode = (int) @substr($row->kode, -4);
+            $requestcode++;
+
+            $autoID = $numberFormat . sprintf("%04s", $requestcode);
         } else {
-            $autoID        = (int) $kode + 1;
+            $numberFormat = $source->number_id . $date;
+
+            $this->db->select("max(number) as kode");
+            $this->db->from("employees");
+            $this->db->like("number", $numberFormat);
+            $row = $this->db->get()->row();
+
+            $requestcode = (int) @substr($row->kode, -4);
+            $requestcode++;
+
+            $autoID = $numberFormat . sprintf("%04s", $requestcode);
         }
 
         echo $autoID;

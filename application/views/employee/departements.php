@@ -4,6 +4,7 @@
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
             <th rowspan="2" data-options="field:'number',width:80,align:'center'">Code</th>
+            <th rowspan="2" data-options="field:'number_id',width:80,align:'center'">Reff ID</th>
             <th rowspan="2" data-options="field:'division_name',width:200">Division</th>
             <th rowspan="2" data-options="field:'name',width:200,halign:'center'">Name</th>
             <th rowspan="2" data-options="field:'description',width:150,halign:'center'">Description</th>
@@ -53,6 +54,10 @@
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Code</span>
                 <input style="width:30%;" name="number" required="" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Reff ID</span>
+                <input style="width:30%;" name="number_id" required="" class="easyui-textbox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Name</span>
