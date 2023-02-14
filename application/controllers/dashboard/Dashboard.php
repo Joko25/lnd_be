@@ -135,7 +135,6 @@ class Dashboard extends CI_Controller
             $this->db->join('shifts c', 'c.id = b.shift_id');
             $this->db->join('shift_details d', 'd.shift_id = c.id');
             $this->db->where('a.number', $number);
-            $this->db->where('d.working', $status_working);
             $shift = $this->db->get()->row();
 
             $time_in = @$shift->start;
