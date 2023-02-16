@@ -182,7 +182,7 @@ class Attandance_summary extends CI_Controller
                             if (date('w', $i) !== '0' && date('w', $i) !== '6') {
                                 $weekend += 0;
 
-                                if (@$attandance->time_in == null) {
+                                if (@$attandance->time_in == null && @$attandance->time_out == null) {
                                     $masuk += 0;
                                     $absen += 1;
                                 } else {
@@ -191,7 +191,7 @@ class Attandance_summary extends CI_Controller
                                 }
                             } else {
                                 $weekend += 1;
-                                if (@$attandance->time_in == null) {
+                                if (@$attandance->time_in == null && @$attandance->time_out == null) {
                                     $masuk += 0;
                                     $absen += 0;
                                 } else {
@@ -203,7 +203,7 @@ class Attandance_summary extends CI_Controller
                             //sabtu doang libur
                             if (date('w', $i) !== '0') {
                                 $weekend += 0;
-                                if (@$attandance->time_in == null) {
+                                if (@$attandance->time_in == null && @$attandance->time_out == null) {
                                     $masuk += 0;
                                     $absen += 1;
                                 } else {
@@ -212,7 +212,7 @@ class Attandance_summary extends CI_Controller
                                 }
                             } else {
                                 $weekend += 1;
-                                if (@$attandance->time_in == null) {
+                                if (@$attandance->time_in == null && @$attandance->time_out == null) {
                                     $masuk += 0;
                                     $absen += 0;
                                 } else {

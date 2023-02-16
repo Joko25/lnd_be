@@ -49,34 +49,29 @@ class Attandances extends CI_Controller
             $filter_group = $this->input->get('filter_group');
             $username = $this->session->username;
 
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
-            $this->db->select("a.*, c.name as division_name, d.name as departement_name, e.name as departement_sub_name");
+            echo '<html>
+                <meta charset="UTF-8">
+                <meta http-equiv="cache-control" content="no-cache">
+                <meta http-equiv="expires" content="0">
+                <meta http-equiv="pragma" content="no-cache">
+            <head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
+            $this->db->select("a.id, a.number, a.name, c.name as division_name, d.name as departement_name, e.name as departement_sub_name");
             $this->db->from('employees a');
-            $this->db->join('attandances b', 'a.number = b.number');
             $this->db->join('divisions c', 'a.division_id = c.id');
             $this->db->join('departements d', 'a.departement_id = d.id');
             $this->db->join('departement_subs e', 'a.departement_sub_id = e.id');
-            $this->db->join('groups f', 'a.group_id = f.id');
-            $this->db->join('permits g', 'a.id = g.employee_id', 'left');
-            $this->db->join('permit_types h', 'h.id = g.permit_type_id', 'left');
             $this->db->join('privilege_groups i', "a.group_id = i.group_id and i.username = '$username'");
             $this->db->where('a.deleted', 0);
             $this->db->where('a.status', 0);
-            if ($filter_from != "" && $filter_to != "") {
-                $this->db->where("(b.date_in >= '$filter_from' and b.date_in <= '$filter_to' or b.date_out >= '$filter_from' and b.date_out <= '$filter_to')");
-            }
-            if ($filter_permit_type != "") {
-                $this->db->where('h.id', $filter_permit_type);
-            }
-            $this->db->like('a.division_id', $filter_division);
-            $this->db->like('a.departement_id', $filter_departement);
+            $this->db->where('a.division_id', $filter_division);
+            $this->db->where('a.departement_id', $filter_departement);
             $this->db->like('a.departement_sub_id', $filter_departement_sub);
+            $this->db->like('a.group_id', $filter_group);
             $this->db->like('a.id', $filter_employee);
-            $this->db->like('f.id', $filter_group);
             $this->db->group_by('a.id');
-            $this->db->order_by('c.name', 'asc');
             $this->db->order_by('d.name', 'asc');
             $this->db->order_by('e.name', 'asc');
+            $this->db->order_by('a.name', 'asc');
             $records = $this->db->get()->result_array();
 
             //Config
@@ -89,7 +84,7 @@ class Attandances extends CI_Controller
             $no = 1;
 
             foreach ($records as $record) {
-                $html .= '<div style="page-break-after:always;"><center>
+                $html = '<div style="page-break-after:always;"><center>
                     <div style="float: left; font-size: 12px; text-align: left;">
                         <table style="width: 100%;">
                             <tr>
@@ -280,6 +275,9 @@ class Attandances extends CI_Controller
                         } elseif ($holiday != null) {
                             $attandance_status = "";
                             $style_status = "style='color:red; font-weight:bold;'";
+                        } elseif (@$attandance->time_in == null && @$attandance->time_out != null) {
+                            $attandance_status = "UN CHECK IN";
+                            $style_status = "style='color:blue; font-weight:bold;'";
                         } else {
                             $attandance_status = "ABSENCE";
                             $style_status = "style='color:red; font-weight:bold;'";
@@ -353,9 +351,10 @@ class Attandances extends CI_Controller
                     $no++;
                 }
                 $html .= '</table></div><br><br>';
+                
+                echo $html;
             }
 
-            die($html);
         }
     }
 }

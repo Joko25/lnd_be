@@ -574,7 +574,7 @@ class Payrolls extends CI_Controller
                             }
 
                             //Jika dia tidak absen
-                            if (@$attandance->time_in == null) {
+                            if (@$attandance->time_in == null && @$attandance->time_out == null) {
                                 $masuk += 0;
                                 $absen += 1;
                             } else {
@@ -585,7 +585,7 @@ class Payrolls extends CI_Controller
                     } else {
                         $weekend[] = date('Y-m-d', $i);
                         //Jika dia tidak absen
-                        if (@$attandance->time_in == null) {
+                        if (@$attandance->time_in == null && @$attandance->time_out == null) {
                             $masuk += 0;
                             $absen += 0;
                         } else {

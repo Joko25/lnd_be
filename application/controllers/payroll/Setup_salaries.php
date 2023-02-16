@@ -113,6 +113,10 @@ class Setup_salaries extends CI_Controller
             $this->db->like('d.id', $filter_division);
             $this->db->like('e.id', $filter_departement);
             $this->db->like('f.id', $filter_departement_sub);
+            $this->db->like('c.position_id', $filter_position);
+            $this->db->like('h.group_id', $filter_group);
+            $this->db->not_like('c.number', 'P');
+            $this->db->not_like('c.number', 'HL');
             if ($filter_component_salary != "") {
                 $this->db->like('a.salary_component_id', $filter_component_salary);
             }
@@ -121,8 +125,6 @@ class Setup_salaries extends CI_Controller
             } elseif ($filter_status == "UNREGIST") {
                 $this->db->where("a.amount is null or a.amount = 0");
             }
-            $this->db->like('c.position_id', $filter_position);
-            $this->db->like('h.group_id', $filter_group);
             $this->db->order_by('c.name', 'ASC');
             //Total Data
             $totalRows = $this->db->count_all_results('', false);
@@ -371,6 +373,10 @@ class Setup_salaries extends CI_Controller
         $this->db->like('d.id', $filter_division);
         $this->db->like('e.id', $filter_departement);
         $this->db->like('f.id', $filter_departement_sub);
+        $this->db->like('c.position_id', $filter_position);
+        $this->db->like('h.group_id', $filter_group);
+        $this->db->not_like('c.number', 'P');
+        $this->db->not_like('c.number', 'HL');
         if ($filter_component_salary != "") {
             $this->db->like('a.salary_component_id', $filter_component_salary);
         }
@@ -379,8 +385,6 @@ class Setup_salaries extends CI_Controller
         } elseif ($filter_status == "UNREGIST") {
             $this->db->where("a.amount is null or a.amount = 0");
         }
-        $this->db->like('c.position_id', $filter_position);
-        $this->db->like('h.group_id', $filter_group);
         $this->db->order_by('c.name', 'ASC');
         $records = $this->db->get()->result_array();
 
