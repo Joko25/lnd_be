@@ -98,6 +98,10 @@ class Components extends CI_Controller
             $id   = base64_decode($this->input->get('id'));
             $post = $this->input->post();
             $send = $this->crud->update('salary_components', ["id" => $id], $post);
+            if($send){
+                $this->crud->update('setup_salaries', ["salary_component_id" => $id], ["amount" => $post['salary']]);
+            }
+
             echo $send;
         } else {
             show_error("Cannot Process your request");

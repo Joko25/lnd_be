@@ -121,9 +121,9 @@ class Setup_salaries extends CI_Controller
                 $this->db->like('a.salary_component_id', $filter_component_salary);
             }
             if ($filter_status == "REGIST") {
-                $this->db->where("a.amount is not null or a.amount != 0");
+                $this->db->where("(a.amount is not null or a.amount != 0)");
             } elseif ($filter_status == "UNREGIST") {
-                $this->db->where("a.amount is null or a.amount = 0");
+                $this->db->where("(a.amount is null or a.amount = 0)");
             }
             $this->db->order_by('c.name', 'ASC');
             //Total Data
@@ -181,7 +181,7 @@ class Setup_salaries extends CI_Controller
 
                 $postFinal = array(
                     "employee_id" => $post['employee_id'],
-                    "salary_component_id" => $component->id,
+                    "salary_component_id" => @$component->id,
                     "amount" => $amount,
                 );
 
@@ -196,7 +196,7 @@ class Setup_salaries extends CI_Controller
 
                 $postFinal = array(
                     "employee_id" => $post['employee_id'],
-                    "salary_component_id" => $component->id,
+                    "salary_component_id" => @$component->id,
                     "amount" => $amount,
                 );
 
@@ -381,9 +381,9 @@ class Setup_salaries extends CI_Controller
             $this->db->like('a.salary_component_id', $filter_component_salary);
         }
         if ($filter_status == "REGIST") {
-            $this->db->where("a.amount is not null or a.amount != 0");
+            $this->db->where("(a.amount is not null or a.amount != 0)");
         } elseif ($filter_status == "UNREGIST") {
-            $this->db->where("a.amount is null or a.amount = 0");
+            $this->db->where("(a.amount is null or a.amount = 0)");
         }
         $this->db->order_by('c.name', 'ASC');
         $records = $this->db->get()->result_array();
