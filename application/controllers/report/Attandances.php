@@ -208,6 +208,12 @@ class Attandances extends CI_Controller
                     $change_day = $this->db->get()->row();
 
                     $this->db->select("*");
+                    $this->db->from('change_days');
+                    $this->db->where('employee_id', $record['id']);
+                    $this->db->where('end', $working_date);
+                    $change_day_end = $this->db->get()->row();
+
+                    $this->db->select("*");
                     $this->db->from('cash_carries');
                     $this->db->where('employee_id', $record['id']);
                     $this->db->where('trans_date', $working_date);
@@ -248,6 +254,9 @@ class Attandances extends CI_Controller
                             $style = "style='background: #ffe9ad;'";
                         } elseif (@$change_day->start != null) {
                             $holiday = "Change Days to " . $change_day->end;
+                            $style = "style='background: #B0ADFF;'";
+                        } elseif (@$change_day_end->end != null) {
+                            $holiday = "Change Days from " . $change_day_end->start;
                             $style = "style='background: #B0ADFF;'";
                         } elseif ($weekend == "Weekend") {
                             $holiday = $weekend;
@@ -351,10 +360,9 @@ class Attandances extends CI_Controller
                     $no++;
                 }
                 $html .= '</table></div><br><br>';
-                
+
                 echo $html;
             }
-
         }
     }
 }

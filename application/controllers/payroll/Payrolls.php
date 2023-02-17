@@ -512,7 +512,7 @@ class Payrolls extends CI_Controller
                             $masuk += 0;
                             $absen += 0;
                         } else {
-                            $masuk += $permitMasuk;
+                            $masuk += 0;
                             $absen += 0;
                         }
 
@@ -589,7 +589,7 @@ class Payrolls extends CI_Controller
                             $masuk += 0;
                             $absen += 0;
                         } else {
-                            $masuk += $permitMasuk;
+                            $masuk += 0;
                             $absen += 0;
                         }
 
@@ -632,7 +632,7 @@ class Payrolls extends CI_Controller
 
             //Allowance Amount
             //jika dia ada tunjuangan ambil field dan isinya
-            $q_allowance = $this->db->query("SELECT b.number, b.name, a.amount, b.calculate_days, b.type
+            $q_allowance = $this->db->query("SELECT b.number, b.name, coalesce(a.amount, 0) as amount, b.calculate_days, b.type
                     FROM allowances b
                     LEFT JOIN setup_allowances a ON a.allowance_id = b.id and a.employee_id = '$record[id]'
                     GROUP BY b.id ORDER BY b.name asc");
@@ -642,7 +642,10 @@ class Payrolls extends CI_Controller
             $arr_allowance_amount = "";
             $arr_allowance_amount_total = 0;
             $arr_allowance_amount_total_bpjs = 0;
+            $arr_allowance_amount_number = 0;
+            $count_allowance_number = 0;
             foreach ($r_allowance as $allowance_data) {
+
                 if ($allowance_data['calculate_days'] == "1") {
                     $arr_allowance_number .= strtolower($allowance_data['number']) . ",";
                     $arr_allowance_amount .= ($allowance_data['amount'] * $working_day) . ",";
@@ -653,10 +656,14 @@ class Payrolls extends CI_Controller
                     $arr_allowance_amount_total += $allowance_data['amount'];
                 }
 
-                if ($allowance_data['type'] == "FIX") {
+                if ($allowance_data['type'] == "TEMPORARY" && $allowance_data['amount'] > 0) {
                     $arr_allowance_amount_total_bpjs += ($allowance_data['amount']);
+                    $count_allowance_number += 1;
+                    $arr_allowance_amount_number += ($allowance_data['amount']);
                 } else {
                     $arr_allowance_amount_total_bpjs += 0;
+                    $count_allowance_number += 0;
+                    $arr_allowance_amount_number += 0;
                 }
             }
 
@@ -846,6 +853,9 @@ class Payrolls extends CI_Controller
                 if ($record['group_name'] == "MAGANG") {
                     $arr_permit_type_amount .= round((($record['salary'] - $arr_deduction_amount_total) / $hkw) * $arr_permit_type_amount_qty) . ",";
                     @$arr_permit_type_amount_b_total += round((($record['salary'] - $arr_deduction_amount_total) / $hkw) * $arr_permit_type_amount_qty) . ",";
+                } elseif ($count_allowance_number > 0) {
+                    $arr_permit_type_amount .= round(($arr_allowance_amount_number / $hkw) * $arr_permit_type_amount_qty) . ",";
+                    @$arr_permit_type_amount_b_total += round(($arr_allowance_amount_number / $hkw) * $arr_permit_type_amount_qty) . ",";
                 } else {
                     $arr_permit_type_amount .= round((($record['salary'] + $arr_allowance_amount_total) / $hkw) * $arr_permit_type_amount_qty) . ",";
                     @$arr_permit_type_amount_b_total += round((($record['salary'] + $arr_allowance_amount_total) / $hkw) * $arr_permit_type_amount_qty) . ",";
@@ -876,6 +886,8 @@ class Payrolls extends CI_Controller
             //Harga Potong Gaji kalo dia ga masuk kerja
             if ($record['group_name'] == "MAGANG") {
                 $absence_amount = round((($record['salary'] - $arr_deduction_amount_total) / $hkw) * $absence_qty_final);
+            } elseif ($count_allowance_number > 0) {
+                $absence_amount = round(($arr_allowance_amount_number / $hkw) * $absence_qty_final);
             } else {
                 $absence_amount = round((($record['salary'] + $arr_allowance_amount_total) / $hkw) * $absence_qty_final);
             }
