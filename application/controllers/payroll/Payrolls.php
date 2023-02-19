@@ -657,10 +657,14 @@ class Payrolls extends CI_Controller
                 }
 
                 if ($allowance_data['type'] == "TEMPORARY" && $allowance_data['amount'] > 0) {
-                    $arr_allowance_amount_total_bpjs += ($allowance_data['amount']);
+                    $arr_allowance_amount_total_bpjs += 0;
                     $count_allowance_number += 1;
                     $arr_allowance_amount_number += ($allowance_data['amount']);
-                } else {
+                } elseif ($allowance_data['type'] == "FIX" && $allowance_data['amount'] > 0) {
+                    $arr_allowance_amount_total_bpjs += ($allowance_data['amount']);
+                    $count_allowance_number += 0;
+                    $arr_allowance_amount_number += 0;
+                }else{
                     $arr_allowance_amount_total_bpjs += 0;
                     $count_allowance_number += 0;
                     $arr_allowance_amount_number += 0;

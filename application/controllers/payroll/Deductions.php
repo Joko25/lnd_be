@@ -98,6 +98,11 @@ class Deductions extends CI_Controller
             $id   = base64_decode($this->input->get('id'));
             $post = $this->input->post();
             $send = $this->crud->update('deductions', ["id" => $id], $post);
+
+            if($send){
+                $this->crud->update('setup_deductions', ["deduction_id" => $id], ["amount" => $post['amount']]);
+            }
+
             echo $send;
         } else {
             show_error("Cannot Process your request");
