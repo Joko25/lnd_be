@@ -64,7 +64,7 @@ class Attandances extends CI_Controller
             $this->db->where('a.deleted', 0);
             $this->db->where('a.status', 0);
             $this->db->where('a.division_id', $filter_division);
-            $this->db->where('a.departement_id', $filter_departement);
+            $this->db->like('a.departement_id', $filter_departement);
             $this->db->like('a.departement_sub_id', $filter_departement_sub);
             $this->db->like('a.group_id', $filter_group);
             $this->db->like('a.id', $filter_employee);
