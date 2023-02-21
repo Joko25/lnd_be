@@ -18,19 +18,20 @@
                     required:true
                 }
             }">Component Salary</th>
-            <th rowspan="2" data-options="field:'amount',width:150,halign:'center', align:'right',editor:'numberbox', formatter:numberformat">Total Salary</th>
-            <th colspan="2" data-options="field:'',width:150,halign:'center'"> Salary</th>
+            <th rowspan="2" data-options="field:'amount',width:150,halign:'center', align:'right',editor:'numberbox', formatter:numberformat">Salary</th>
+            <th rowspan="2" data-options="field:'bpjs',width:150,halign:'center', align:'right',editor:'numberbox', formatter:numberformat">Salary BPJS</th>
+            <!-- <th colspan="2" data-options="field:'',width:150,halign:'center'"> Salary</th>
             <th rowspan="2" data-options="field:'other',width:150,halign:'center', align:'right', formatter:numberformat">Other (25%)</th>
-            <th colspan="2" data-options="field:'',width:100,halign:'center'"> Allowance</th>
+            <th colspan="2" data-options="field:'',width:100,halign:'center'"> Allowance</th> -->
             <th rowspan="2" data-options="field:'description',width:300,halign:'center'">Description</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
         <tr>
-            <th data-options="field:'basic',width:150,halign:'center', align:'right', formatter:numberformat"> Basic (75%)</th>
+            <!-- <th data-options="field:'basic',width:150,halign:'center', align:'right', formatter:numberformat"> Basic (75%)</th>
             <th data-options="field:'allowance_fix',width:150,halign:'center', align:'right', formatter:numberformat"> Fix Allowance (25%)</th>
             <th data-options="field:'position',width:150,halign:'center', align:'right', formatter:numberformat"> Position (40%)</th>
-            <th data-options="field:'skill',width:150,halign:'center', align:'right', formatter:numberformat"> Skill (60%)</th>
+            <th data-options="field:'skill',width:150,halign:'center', align:'right', formatter:numberformat"> Skill (60%)</th> -->
             <th data-options="field:'created_date',width:150,align:'center'"> Date</th>
             <th data-options="field:'created_by',width:100,align:'center'"> By</th>
             <th data-options="field:'created_date',width:150,align:'center'"> Date</th>
@@ -111,6 +112,10 @@
                 <input style="width:60%;" name="amount" id="amount" required="" data-options="buttonText:'Rp', buttonAlign:'left'" class="easyui-numberbox">
             </div>
             <div class="fitem">
+                <span style="width:35%; display:inline-block;">BPJS Fee</span>
+                <input style="width:60%;" name="bpjs" id="bpjs" required="" data-options="buttonText:'Rp', buttonAlign:'left'" class="easyui-numberbox">
+            </div>
+            <div class="fitem">
                 <span style="width:35%; display:inline-block;">Description</span>
                 <input style="width:60%; height: 60px;" name="description" class="easyui-textbox" data-options="multiline:true">
             </div>
@@ -158,15 +163,20 @@
         $('#dlg_insert').dialog('open');
         url_save = '<?= base_url('payroll/setup_salaries/create') ?>';
         $('#frm_insert').form('clear');
+        $('#employee_id').combogrid('enable');
     }
 
     //EDIT DATA
     function update() {
-        var row = $('#dg').datagrid('getSelected');
-        if (row) {
-            $('#dlg_insert').dialog('open');
-            $('#frm_insert').form('load', row);
-            url_save = '<?= base_url('payroll/setup_salaries/update') ?>?id=' + btoa(row.id);
+        var rows = $('#dg').datagrid('getChecked');
+        if (rows.length == 1) {
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                $('#dlg_insert').dialog('open');
+                $('#employee_id').combogrid('disable');
+                $('#frm_insert').form('load', row);
+                url_save = '<?= base_url('payroll/setup_salaries/update') ?>?id=' + btoa(row.id);
+            }
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
         }
@@ -294,11 +304,12 @@
                 var employee_id = row.employee_id;
                 var salary_component_name = row.component_salary_name;
                 var amount = row.amount;
+                var bpjs = row.bpjs;
 
                 $.ajax({
                     type: "post",
                     url: "<?= base_url('payroll/setup_salaries/createOrUpdate') ?>",
-                    data: "employee_id=" + employee_id + "&salary_component_name=" + salary_component_name + "&amount=" + amount,
+                    data: "employee_id=" + employee_id + "&salary_component_name=" + salary_component_name + "&amount=" + amount + "&bpjs=" + bpjs,
                     dataType: "json",
                     success: function(json) {
                         if (json.theme == "success") {

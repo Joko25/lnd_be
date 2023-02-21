@@ -226,6 +226,7 @@ class Payrolls extends CI_Controller
                     l.name as shift_name_2,
                     l.days,
                     p.amount as salary,
+                    p.bpjs,
                     q.number as marital,
                     a.tax_id
                 FROM employees a
@@ -341,6 +342,7 @@ class Payrolls extends CI_Controller
             //Looping berdasarkan cutoff periode per tanggal
             $masuk = 0;
             $absen = 0;
+            $change_day_qty = 0;
             for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
                 $working_date = date('Y-m-d', $i);
 
@@ -351,6 +353,13 @@ class Payrolls extends CI_Controller
                 $this->db->where('number', $record['number']);
                 $this->db->where("(date_in = '$working_date' or date_out = '$working_date')");
                 $attandance = $this->db->get()->row();
+
+                //Change Days
+                $this->db->select("*");
+                $this->db->from('change_days');
+                $this->db->where('employee_id', $record['id']);
+                $this->db->where('end', $working_date);
+                $changeDays = $this->db->get()->row();
 
                 //Overtime Regular
                 //cek apakah dia ada lembur atau tidak per tanggal dari looping
@@ -470,6 +479,7 @@ class Payrolls extends CI_Controller
                                 $total_ovetime_hour_correction++;
                             }
 
+                            $change_day_qty += 0;
                             $masuk += 0;
                             $absen += 0;
                         } else {
@@ -497,6 +507,12 @@ class Payrolls extends CI_Controller
                             }
 
                             //Jika dia tidak absen
+                            if (@$changeDays->end != null) {
+                                $change_day_qty += 1;
+                            } else {
+                                $change_day_qty += 0;
+                            }
+
                             if (@$attandance->time_in == null) {
                                 $masuk += 0;
                                 $absen += 1;
@@ -507,6 +523,13 @@ class Payrolls extends CI_Controller
                         }
                     } else {
                         $weekend[] = date('Y-m-d', $i);
+
+                        if (@$changeDays->end != null) {
+                            $change_day_qty += 1;
+                        } else {
+                            $change_day_qty += 0;
+                        }
+
                         //Jika dia tidak absen
                         if (@$attandance->time_in == null) {
                             $masuk += 0;
@@ -547,6 +570,7 @@ class Payrolls extends CI_Controller
                                 $total_ovetime_hour_correction++;
                             }
 
+                            $change_day_qty += 0;
                             $masuk += 0;
                             $absen += 0;
                         } else {
@@ -573,6 +597,12 @@ class Payrolls extends CI_Controller
                                 $total_ovetime_hour_correction++;
                             }
 
+                            if (@$changeDays->end != null) {
+                                $change_day_qty += 1;
+                            } else {
+                                $change_day_qty += 0;
+                            }
+
                             //Jika dia tidak absen
                             if (@$attandance->time_in == null && @$attandance->time_out == null) {
                                 $masuk += 0;
@@ -584,6 +614,9 @@ class Payrolls extends CI_Controller
                         }
                     } else {
                         $weekend[] = date('Y-m-d', $i);
+
+                        $change_day_qty += 0;
+
                         //Jika dia tidak absen
                         if (@$attandance->time_in == null && @$attandance->time_out == null) {
                             $masuk += 0;
@@ -664,7 +697,7 @@ class Payrolls extends CI_Controller
                     $arr_allowance_amount_total_bpjs += ($allowance_data['amount']);
                     $count_allowance_number += 0;
                     $arr_allowance_amount_number += 0;
-                }else{
+                } else {
                     $arr_allowance_amount_total_bpjs += 0;
                     $count_allowance_number += 0;
                     $arr_allowance_amount_number += 0;
@@ -711,8 +744,13 @@ class Payrolls extends CI_Controller
                     $arr_bpjs_emp_amount_total += 0;
                 } elseif ($record['jamsostek'] == "" && $record['jkn'] != "") {
                     if ($bpjs_emp_data->number == "BPJS") {
-                        $arr_bpjs_emp_amount .= round((($record['salary'] + $arr_allowance_amount_total_bpjs) * $bpjs_emp_data->employee) / 100) . ",";
-                        $arr_bpjs_emp_amount_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * $bpjs_emp_data->employee) / 100);
+                        if ($record['bpjs'] == "0") {
+                            $arr_bpjs_emp_amount .= round(((($record['salary'] + $arr_allowance_amount_total_bpjs) * $bpjs_emp_data->employee) * $record['jkn_family']) / 100) . ",";
+                            $arr_bpjs_emp_amount_total += round(((($record['salary'] + $arr_allowance_amount_total_bpjs) * $bpjs_emp_data->employee) * $record['jkn_family']) / 100);
+                        } else {
+                            $arr_bpjs_emp_amount .= round((($record['bpjs'] * $bpjs_emp_data->employee) * $record['jkn_family']) / 100) . ",";
+                            $arr_bpjs_emp_amount_total += round((($record['bpjs'] * $bpjs_emp_data->employee) * $record['jkn_family']) / 100);
+                        }
                     } else {
                         $arr_bpjs_emp_amount .= 0 . ",";
                         $arr_bpjs_emp_amount_total += 0;
@@ -726,8 +764,18 @@ class Payrolls extends CI_Controller
                         $arr_bpjs_emp_amount_total += 0;
                     }
                 } else {
-                    $arr_bpjs_emp_amount .= round((($record['salary'] + $arr_allowance_amount_total_bpjs) * $bpjs_emp_data->employee) / 100) . ",";
-                    $arr_bpjs_emp_amount_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * $bpjs_emp_data->employee) / 100);
+                    if ($bpjs_emp_data->number == "BPJS") {
+                        if ($record['bpjs'] == "0") {
+                            $arr_bpjs_emp_amount .= round(((($record['salary'] + $arr_allowance_amount_total_bpjs) * $bpjs_emp_data->employee) * $record['jkn_family']) / 100) . ",";
+                            $arr_bpjs_emp_amount_total += round(((($record['salary'] + $arr_allowance_amount_total_bpjs) * $bpjs_emp_data->employee) * $record['jkn_family']) / 100);
+                        } else {
+                            $arr_bpjs_emp_amount .= round((($record['bpjs'] * $bpjs_emp_data->employee) * $record['jkn_family']) / 100) . ",";
+                            $arr_bpjs_emp_amount_total += round((($record['bpjs'] * $bpjs_emp_data->employee) * $record['jkn_family']) / 100);
+                        }
+                    } else {
+                        $arr_bpjs_emp_amount .= round((($record['salary'] + $arr_allowance_amount_total_bpjs) * $bpjs_emp_data->employee) / 100) . ",";
+                        $arr_bpjs_emp_amount_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * $bpjs_emp_data->employee) / 100);
+                    }
                 }
             }
 
@@ -879,7 +927,7 @@ class Payrolls extends CI_Controller
             //Potong gaji jika dia ga masuk kerja
             //Rumus nya Gaji / 30 hari x jumlah dia ga absen
             //$absence_qty = (@count($weekday) - @count($holiday) - $masuk - $arr_total_permit);
-            $absence_qty = ($absen - $arr_total_permit);
+            $absence_qty = ($absen - $arr_total_permit - $change_day_qty);
 
             if ($absence_qty > 0) {
                 $absence_qty_final = $absence_qty;

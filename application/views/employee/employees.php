@@ -249,6 +249,17 @@
                         <input style="width:35%;" name="jkn" id="jkn" class="easyui-textbox">
                         <input style="width:20%;" name="jkn_date" id="jkn_date" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
                     </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Number of Family (JKN) </span>
+                        <select style="width:35%;" name="jkn_family" id="jkn_family" class="easyui-combobox" panelHeight="true">
+                            <option value="1">1 (One)</option>
+                            <option value="2">2 (Two)</option>
+                            <option value="3">3 (Three)</option>
+                            <option value="4">4 (Four)</option>
+                            <option value="5">5 (Five)</option>
+                            <option value="6">6 (Six)</option>
+                        </select>
+                    </div>
                 </fieldset>
                 <fieldset style="width:49%; border:1px solid #d0d0d0; border-radius:4px; float: left;">
                     <legend style="font-weight: bold;">Contact Information</legend>
@@ -498,6 +509,7 @@
         $(".status_active").radiobutton({
             checked: true
         });
+        $("#jkn_family").combobox("setValue", "1");
         $("#form_status_date").hide();
         tableFamily();
         tableEducation();

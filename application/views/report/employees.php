@@ -56,6 +56,7 @@
                         <option value="jamsostek_date">Jamsostek Date</option>
                         <option value="jkn">JKN</option>
                         <option value="jkn_date">JKN Date</option>
+                        <option value="jkn_family">JKN Family</option>
                         <option value="telphone">Telphone</option>
                         <option value="mobile_phone">Mobile Phone</option>
                         <option value="emergency_no">Emergency No</option>

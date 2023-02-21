@@ -166,6 +166,7 @@ class Setup_salaries extends CI_Controller
         if ($this->input->post()) {
             $post = $this->input->post();
             $component_name = $post['salary_component_name'];
+            $bpjs = $post['bpjs'];
 
             $setup_salaries = $this->crud->read("setup_salaries", [], ["employee_id" => $post['employee_id']]);
             $component_bf = $this->crud->read('salary_components', [], ["name" => $component_name]);
@@ -183,6 +184,7 @@ class Setup_salaries extends CI_Controller
                     "employee_id" => $post['employee_id'],
                     "salary_component_id" => @$component->id,
                     "amount" => $amount,
+                    "bpjs" => $bpjs,
                 );
 
                 $send   = $this->crud->create('setup_salaries', $postFinal);
@@ -198,6 +200,7 @@ class Setup_salaries extends CI_Controller
                     "employee_id" => $post['employee_id'],
                     "salary_component_id" => @$component->id,
                     "amount" => $amount,
+                    "bpjs" => $bpjs,
                 );
 
                 $send = $this->crud->update('setup_salaries', ["employee_id" => $post['employee_id']], $postFinal);
@@ -245,6 +248,7 @@ class Setup_salaries extends CI_Controller
                 'employee_number' => $data->val($i, 2),
                 'salary_component_number' => $data->val($i, 3),
                 'amount' => $data->val($i, 4),
+                'bpjs' => $data->val($i, 5),
             );
         }
 
@@ -288,6 +292,7 @@ class Setup_salaries extends CI_Controller
             $data = $this->input->post('data');
             $employees = $this->crud->read('employees', ["number" => $data['employee_number'], "status" => 0]);
             $salary_component = $this->crud->read('salary_components', [], ["number" => $data['salary_component_number']]);
+            $bpjs = $data['bpjs'];
 
             if (!empty($salary_component->id)) {
                 $salary_component_id = $salary_component->id;
@@ -309,7 +314,8 @@ class Setup_salaries extends CI_Controller
                     $post = array(
                         'employee_id' => $employees->id,
                         'salary_component_id' => $salary_component_id,
-                        'amount' => $amount
+                        'amount' => $amount,
+                        'bpjs' => $bpjs
                     );
 
                     $send = $this->crud->create('setup_salaries', $post);
@@ -414,24 +420,16 @@ class Setup_salaries extends CI_Controller
         
         <table id="customers" border="1">
             <tr>
-                <th rowspan="2" width="20">No</th>
-                <th rowspan="2">Employee ID</th>
-                <th rowspan="2">Employee Name</th>
-                <th rowspan="2">Division</th>
-                <th rowspan="2">Departement</th>
-                <th rowspan="2">Departement Sub</th>
-                <th rowspan="2">Component Salary</th>
-                <th rowspan="2">Total Salary</th>
-                <th colspan="2">Salary</th>
-                <th rowspan="2">Other</th>
-                <th colspan="2">Allowance</th>
-                <th rowspan="2">Description</th>
-            </tr>
-            <tr>
-                <th>Basic (75%)</th>
-                <th>Allowance (25%)</th>
-                <th>Position (40%)</th>
-                <th>Skill (60%)</th>
+                <th width="20">No</th>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Division</th>
+                <th>Departement</th>
+                <th>Departement Sub</th>
+                <th>Component Salary</th>
+                <th>Salary</th>
+                <th>Salary <br> BPJS</th>
+                <th>Description</th>
             </tr>';
         $no = 1;
         foreach ($records as $data) {
@@ -444,11 +442,7 @@ class Setup_salaries extends CI_Controller
                         <td>' . $data['departement_sub_name'] . '</td>
                         <td>' . $data['component_salary_name'] . '</td>
                         <td>' . number_format($data['amount']) . '</td>
-                        <td>' . number_format($data['basic']) . '</td>
-                        <td>' . number_format($data['allowance_fix']) . '</td>
-                        <td>' . number_format($data['other']) . '</td>
-                        <td>' . number_format($data['position']) . '</td>
-                        <td>' . number_format($data['skill']) . '</td>
+                        <td>' . number_format($data['bpjs']) . '</td>
                         <td>' . $data['description'] . '</td>
                     </tr>';
             $no++;

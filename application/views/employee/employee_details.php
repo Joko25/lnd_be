@@ -132,6 +132,10 @@ if ($employee->image_profile == "" || $employee->image_profile == null) {
                     <b style="width:60%;"><?= $employee->jkn_date ?></b>
                 </div>
                 <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Number of Family (JKN)</span>
+                    <b style="width:60%;"><?= $employee->jkn_family ?></b>
+                </div>
+                <div class="fitem">
                     <span style="width:35%; display:inline-block;">Emergency No</span>
                     <b style="width:60%;"><?= $employee->emergency_no ?></b>
                 </div>

@@ -54,7 +54,7 @@ class Attandances extends CI_Controller
             $result = array();
 
             //Employee
-            $this->db->select("a.id, a.number, a.name, a.division_id, a.departement_id, a.departement_sub_id,
+            $this->db->select("a.id, b.id as attandance_id, a.number, a.name, a.division_id, a.departement_id, a.departement_sub_id,
                 DAYNAME(b.date_in) as dayname,
                 b.date_in,
                 b.date_out,

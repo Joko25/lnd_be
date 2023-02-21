@@ -132,7 +132,7 @@
         if (row) {
             $('#dlg_insert').dialog('open');
             $('#frm_insert').form('load', row);
-            url_save = '<?= base_url('attandance/attandances/update') ?>?number=' + window.btoa(row.number) + '&date_in=' + window.btoa(row.date_in);
+            url_save = '<?= base_url('attandance/attandances/update') ?>?id=' + window.btoa(row.attandance_id);
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
         }
