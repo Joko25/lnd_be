@@ -415,22 +415,24 @@ class Student_payrolls extends CI_Controller
 
                                 $payroll_end = date_create($working_date);
                                 $dateThree = date_create(date('Y-m-d', strtotime('+1 month', strtotime($employee['date_sign']))));
+                                $dateFour = date_create(date('Y-m-d', strtotime('+2 month', strtotime($employee['date_sign']))));
                                 
                                 $interval = date_diff($date_sign, $payroll_end);
                                 $intervalThree = date_diff($date_sign, $dateThree);
+                                $intervalFour = date_diff($date_sign, $dateFour);
 
-                                if ($interval->days > $intervalThree->days) {
-                                    $payroll_3 += $day;
+                                if ($interval->days <= $intervalThree->days) {
+                                    $payroll_3 += 0;
                                     $payroll_2 += 0;
-                                    $payroll_1 += 0;
-                                } elseif ($interval->days > 31) {
+                                    $payroll_1 += $day;
+                                } elseif ($interval->days <= $intervalFour->days) {
                                     $payroll_3 += 0;
                                     $payroll_2 += $day;
                                     $payroll_1 += 0;
                                 } else {
-                                    $payroll_3 += 0;
+                                    $payroll_3 += $day;
                                     $payroll_2 += 0;
-                                    $payroll_1 += $day;
+                                    $payroll_1 += 0;
                                 }
 
                                 $attandance_count += @$day;

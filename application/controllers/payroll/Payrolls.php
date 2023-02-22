@@ -1098,13 +1098,25 @@ class Payrolls extends CI_Controller
     {
         $post = $this->input->post();
         $period_start = date("Y-m", strtotime($post['filter_from']));
+        $username = $this->session->username;
 
-        $payrolls = $this->crud->reads("payrolls", [], ["period_start" => $period_start]);
-        foreach ($payrolls as $payroll) {
-            $this->db->delete("notifications", ["table_id" => $payroll->id, "table_name" => "payrolls"]);
+        $privileges = $this->crud->reads('privilege_groups', [], ["username" => $username, "status" => "1"]);
+        
+        foreach ($privileges as $privilege) {
+            $group_id = $privilege->group_id;
+
+            $this->db->select('a.*');
+            $this->db->from('payrolls a');
+            $this->db->join('employees b', 'a.employee_id = b.id');
+            $this->db->where('a.period_start =', $period_start);
+            $this->db->where('b.group_id', $group_id);
+            $payrolls = $this->db->get()->result_object();
+
+            foreach ($payrolls as $payroll) {
+                $this->db->delete("notifications", ["table_id" => $payroll->id, "table_name" => "payrolls"]);
+                $this->db->delete("payrolls", ['id' => $payroll->id]);
+            }
         }
-
-        $this->db->delete("payrolls", ['period_start' => $period_start]);
     }
 
     //PRINT & EXCEL DATA

@@ -95,7 +95,8 @@ class Sourcing_fee extends CI_Controller
                             JOIN employees b ON a.employee_id = b.id
                             LEFT JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                             LEFT JOIN setup_allowances d ON a.employee_id = d.employee_id
-                            WHERE a.period_start = '$period_start' and a.period_end = '$period_end' and coalesce(d.amount, 0) = 0
+                            LEFT JOIN allowances e ON d.allowance_id = e.id
+                            WHERE a.period_start = '$period_start' and a.period_end = '$period_end' and e.type != 'TEMPORARY'
                             AND b.status = 0
                             AND b.group_id = '$record[group_id]'
                             AND b.source_id = '$record[source_id]'
