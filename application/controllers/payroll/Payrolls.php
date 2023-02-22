@@ -413,15 +413,9 @@ class Payrolls extends CI_Controller
                     FROM permit_types b
                     LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date = '$working_date'
                     LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
-                    WHERE (c.users_id_to = '' or c.users_id_to is null) and b.absence = 'NO'
+                    WHERE (c.users_id_to = '' or c.users_id_to is null) and b.absence = 'YES'
                     GROUP BY b.id ORDER BY b.name asc");
                 $rowPermit = $queryPermit->result_array();
-
-                if (@$rowPermit[0]->amount > 0) {
-                    $permitMasuk = 0;
-                } else {
-                    $permitMasuk = 1;
-                }
 
                 //Loan
                 @$r_loan_bank = $this->crud->read('loans', ['status' => 0, 'employee_id' => $record['id'], 'loan_type' => 'BANK', 'trans_date' => $working_date]);
@@ -513,11 +507,14 @@ class Payrolls extends CI_Controller
                                 $change_day_qty += 0;
                             }
 
-                            if (@$attandance->time_in == null) {
+                            if (@$rowPermit[0]['amount'] > 0) {
+                                $masuk += 1;
+                                $absen += 1;
+                            } elseif (@$attandance->time_in == null && @$attandance->time_out == null) {
                                 $masuk += 0;
                                 $absen += 1;
                             } else {
-                                $masuk += $permitMasuk;
+                                $masuk += 1;
                                 $absen += 0;
                             }
                         }
@@ -530,14 +527,8 @@ class Payrolls extends CI_Controller
                             $change_day_qty += 0;
                         }
 
-                        //Jika dia tidak absen
-                        if (@$attandance->time_in == null) {
-                            $masuk += 0;
-                            $absen += 0;
-                        } else {
-                            $masuk += 0;
-                            $absen += 0;
-                        }
+                        $masuk += 0;
+                        $absen += 0;
 
                         //Perhitungan Overtime
                         for ($o = 0; $o < $hour; $o++) {
@@ -604,11 +595,14 @@ class Payrolls extends CI_Controller
                             }
 
                             //Jika dia tidak absen
-                            if (@$attandance->time_in == null && @$attandance->time_out == null) {
+                            if (@$rowPermit[0]['amount'] > 0) {
+                                $masuk += 1;
+                                $absen += 1;
+                            } elseif (@$attandance->time_in == null && @$attandance->time_out == null) {
                                 $masuk += 0;
                                 $absen += 1;
                             } else {
-                                $masuk += $permitMasuk;
+                                $masuk += 1;
                                 $absen += 0;
                             }
                         }
@@ -616,15 +610,8 @@ class Payrolls extends CI_Controller
                         $weekend[] = date('Y-m-d', $i);
 
                         $change_day_qty += 0;
-
-                        //Jika dia tidak absen
-                        if (@$attandance->time_in == null && @$attandance->time_out == null) {
-                            $masuk += 0;
-                            $absen += 0;
-                        } else {
-                            $masuk += 0;
-                            $absen += 0;
-                        }
+                        $masuk += 0;
+                        $absen += 0;
 
                         //Perhitungan Overtime
                         for ($o = 0; $o < $hour; $o++) {
@@ -1101,7 +1088,7 @@ class Payrolls extends CI_Controller
         $username = $this->session->username;
 
         $privileges = $this->crud->reads('privilege_groups', [], ["username" => $username, "status" => "1"]);
-        
+
         foreach ($privileges as $privilege) {
             $group_id = $privilege->group_id;
 

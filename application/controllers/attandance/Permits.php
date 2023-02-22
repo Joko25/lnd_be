@@ -341,6 +341,15 @@ class Permits extends CI_Controller
                 if (!empty($permittype)) {
                     if (!empty($reason)) {
                         $send = "";
+
+                        $year = date("Y");
+                        $permitType = $this->crud->read('permit_types', ["id" => $permittype->id, "cutoff" => "YES"]);
+                        $permits = $this->crud->reads('permits', ["permit_date" => $year], ["employee_id" => $employee->id, "permit_type_id" => @$permitType->id]);
+                        $totalPermit = 0;
+                        foreach ($permits as $leave) {
+                            $totalPermit += $leave->duration;
+                        }
+
                         for ($i = $date_from; $i <= $date_to; $i += (60 * 60 * 24)) {
                             $permit_date = date('Y-m-d', $i);
                             $this->db->select('*');
@@ -353,17 +362,7 @@ class Permits extends CI_Controller
                                 echo json_encode(array("title" => "Available", "message" => "The permit requestion for this employee and permit date has been created", "theme" => "error"));
                                 exit;
                             } else {
-                                $year = date("Y");
-                                $permitType = $this->crud->read('permit_types', ["id" => $permittype->id, "cutoff" => "YES"]);
-                                $permits = $this->crud->reads('permits', ["permit_date" => $year], ["employee_id" => $employee->id, "permit_type_id" => @$permitType->id]);
-                                $totalPermit = 0;
-                                $duration = 0;
-                                foreach ($permits as $permit) {
-                                    $totalPermit += $permit->duration;
-                                    $duration = 1;
-                                }
-
-                                if ((12 - ($totalPermit + $duration)) < 0) {
+                                if (($totalPermit - 1) <= 0) {
                                     echo json_encode(array("title" => "Not Found", "message" => $employee->name . " This total permit is over", "theme" => "error"));
                                     exit;
                                 } else {
@@ -373,12 +372,13 @@ class Permits extends CI_Controller
                                         'reason_id' => $reason->id,
                                         'trans_date' => $post['trans_date'],
                                         'permit_date' => $permit_date,
-                                        'duration' => $duration,
-                                        'leave' => (12 - $totalPermit),
+                                        'duration' => "1",
+                                        'leave' => ($totalPermit - 1),
                                         'note' => $post['note']
                                     );
 
                                     $send = $this->crud->create('permits', $post_permit);
+                                    $totalPermit = ($totalPermit - 1);
                                 }
                             }
                         }
