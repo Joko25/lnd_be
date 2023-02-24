@@ -368,6 +368,9 @@ class Summary_payrolls extends CI_Controller
                 c.name as departement_name, 
                 d.name as departement_sub_name, 
                 e.name as group_name, 
+                h.users_id_from as status_check,
+                h.users_id_to as status_notification, 
+                h.updated_date as status_date,
                 COUNT(b.id) as employee, 
                 SUM(a.net_income) as income');
             $this->db->from('payrolls a');
@@ -375,7 +378,8 @@ class Summary_payrolls extends CI_Controller
             $this->db->join('departements c', "b.departement_id = c.id");
             $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
             $this->db->join('groups e', "b.group_id = e.id");
-            $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
+            $this->db->join('privilege_groups f', "b.group_id = f.group_id and f.username = '$username' and f.status = '1'");
+            $this->db->join('notifications h', "a.id = h.table_id and h.table_name = 'payrolls'", 'left');
             $this->db->where('a.deleted', 0);
             $this->db->where('a.period_start =', $period_start);
             $this->db->where('a.period_end =', $period_end);
@@ -411,6 +415,9 @@ class Summary_payrolls extends CI_Controller
                     c.name as departement_name, 
                     d.name as departement_sub_name, 
                     e.name as group_name, 
+                    h.users_id_from as status_check,
+                    h.users_id_to as status_notification, 
+                    h.updated_date as status_date,
                     COUNT(b.id) as employee, 
                     SUM(a.net_income) as income');
                 $this->db->from('payrolls a');
@@ -418,7 +425,8 @@ class Summary_payrolls extends CI_Controller
                 $this->db->join('departements c', "b.departement_id = c.id");
                 $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
                 $this->db->join('groups e', "b.group_id = e.id");
-                $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
+                $this->db->join('privilege_groups f', "b.group_id = f.group_id and f.username = '$username' and f.status = '1'");
+                $this->db->join('notifications h', "a.id = h.table_id and h.table_name = 'payrolls'", 'left');
                 $this->db->where('a.deleted', 0);
                 $this->db->where('a.period_start =', $period_start);
                 $this->db->where('a.period_end =', $period_end);
