@@ -10,7 +10,7 @@
                 <div class="col-lg-5">
                     <div class="fitem">
                         <span style="width:150px; display:inline-block;">Name</span>
-                        <input style="width:300px;" id="users_id" class="easyui-textbox">
+                        <input style="width:300px;" id="users_id" class="easyui-combogrid">
                     </div>
                 </div>
             </div>

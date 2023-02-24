@@ -143,6 +143,17 @@ fieldset {
 	font-size: 10px;
 }
 
+.approval .badge {
+	position: absolute;
+	top: 20px;
+	right: 298px;
+	padding: 5px 7px;
+	border-radius: 50%;
+	background: red;
+	color: white;
+	font-size: 10px;
+}
+
 /* User Online */
 .icon-container {
 	width: 30px;

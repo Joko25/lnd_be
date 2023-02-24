@@ -16,6 +16,10 @@
 			</div>
 		</div>
 		<div class="logo">
+			<a onclick="approval()" href="#" title="Approval" class="notification approval">
+				<i class="fa fa-check-square" style="font-size: 25px !important;"></i>
+				<div id="approvalCount"></div>
+			</a>
 			<a onclick="notification()" href="#" title="Notification" class="notification">
 				<i class="fa fa-bell" style="font-size: 25px !important;"></i>
 				<div id="notificationCount"></div>
@@ -95,6 +99,28 @@
 		</form>
 	</div>
 
+	<!-- APPROVAL -->
+	<div id="dlg_approval" class="easyui-dialog" title="Approvals" data-options="closed: true" style="width: 400px; height: 400px; top: 20px;">
+		<ul class="list-header" id="approvalList">
+
+		</ul>
+	</div>
+
+	<!-- APPROVAL DETAIL -->
+	<div id="toolbar_approval">
+		<a href="javascript:void(0)" id="approveall" class="easyui-linkbutton" data-options="plain:true" onclick="approveall()"><i class="fa fa-check"></i> Approve ALL</a>
+		<a href="javascript:void(0)" id="disapproveall" class="easyui-linkbutton" data-options="plain:true" onclick="disapproveall()"><i class="fa fa-times"></i> Disapprove ALL</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="export_excel()"><i class="fa fa-file"></i> Export Excel</a>
+	</div>
+
+	<div id="dlg_approval_detail" class="easyui-window" title="Approval Confirmation" data-options="closed: true,minimizable:false,collapsible:false" style="width: 1000px; height: 400px; top: 60px;">
+		<div hidden>
+			<input class="easyui-textbox" id="table_name" />
+			<input class="easyui-textbox" id="users_id_from" />
+		</div>
+		<table id="dg_approval" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar_approval" data-options="fitColumns: true, rownumbers: true"></table>
+	</div>
+
 	<!-- NOTIFICATIONS -->
 	<div id="dlg_notif" class="easyui-dialog" title="Notifications" data-options="closed: true" style="width: 400px; height: 400px; top: 20px;">
 		<ul class="list-header" id="notificationList">
@@ -102,11 +128,7 @@
 		</ul>
 	</div>
 
-	<!-- NOTIFICATION APPROVAL -->
-	<div id="dlg_notif_content" class="easyui-window" title="Approval Confirmation" data-options="closed: true,minimizable:false,collapsible:false" style="width: 1000px; height: 400px; top: 60px;">
-
-	</div>
-
+	<!-- CHATS -->
 	<div id="dlg_chats" class="easyui-dialog" title="Chats" data-options="closed: true, cls:'c2',border:'thin'" style="width: 300px; height: 400px; top: 60px;">
 		<div class="alert alert-danger" role="alert">
 			Chats No Active
@@ -141,33 +163,6 @@
 				}
 			}]
 		});
-
-		notificationList();
-		notificationCount();
-		setInterval(notificationList, 10000);
-		setInterval(notificationCount, 10000);
-
-		function notificationList() {
-			$.ajax({
-				type: "post",
-				url: "<?= base_url('home/notificationList') ?>",
-				dataType: "html",
-				success: function(response) {
-					$('#notificationList').html(response);
-				}
-			});
-		}
-
-		function notificationCount() {
-			$.ajax({
-				type: "post",
-				url: "<?= base_url('home/notificationCount') ?>",
-				dataType: "html",
-				success: function(response) {
-					$('#notificationCount').html(response);
-				}
-			});
-		}
 	});
 
 	$('#menu').tree({
@@ -270,86 +265,891 @@
 		return nodes;
 	}
 
+	function startChats() {
+		$("#dlg_chats").dialog('open');
+	}
+
 	function profile() {
 		$('#dlg_profile').dialog('open');
 	}
 
-	function notification() {
-		$('#dlg_notif').dialog('open');
+	function approval() {
+		$('#dlg_approval').dialog('open');
 	}
 
-	function notificationDetail(table = "") {
-		if (table == "") {
-			toastr.error("Notification Cannot get Data", "Error");
-		} else {
-			$('#dlg_notif_content').window('open');
-			$.ajax({
-				type: "get",
-				url: "<?= base_url('home/notificationDetail') ?>/" + table,
-				dataType: "html",
-				success: function(response) {
-					$('#dlg_notif_content').html(response);
-				}
-			});
-		}
-	}
+	approvalList();
+	approvalCount();
+	setInterval(approvalList, 10000);
+	setInterval(approvalCount, 10000);
 
-	function approveall(id_all, tablename) {
-		$.messager.confirm('Warning', 'Are you sure you want to approve all data?', function(r) {
-			if (r) {
-				requestData(id_all.length, id_all);
-
-				function requestData(total, json, number = 0, value = 0) {
-					if (value < 100) {
-						var id = json[number]['id'];
-						value = Math.floor((number / total) * 100);
-
-						$.post('<?= base_url('home/approve') ?>', {
-							id: id,
-							tablename: tablename,
-						}, function(result) {
-							var result = eval('(' + result + ')');
-							if (result.theme == "success") {
-								toastr.success(result.message, result.title);
-								$("#" + id).html("Approved");
-								requestData(total, json, number + 1, value);
-							} else {
-								toastr.error(result.message, result.title);
-							}
-						});
-
-					}
-				}
+	function approvalList() {
+		$.ajax({
+			type: "post",
+			url: "<?= base_url('approvals/approvalList') ?>",
+			dataType: "html",
+			success: function(response) {
+				$('#approvalList').html(response);
 			}
 		});
 	}
 
-	function disapproveall(id_all, tablename) {
+	function approvalCount() {
+		$.ajax({
+			type: "post",
+			url: "<?= base_url('approvals/approvalCount') ?>",
+			dataType: "html",
+			success: function(response) {
+				$('#approvalCount').html(response);
+			}
+		});
+	}
+
+	function approvalDetail(table = "", users_id_from = "") {
+		if (table == "" || users_id_from == "") {
+			toastr.error("Notification Cannot get Data", "Error");
+		} else {
+			$('#dlg_approval_detail').window('open');
+			$("#table_name").textbox('setValue', table);
+			$("#users_id_from").textbox('setValue', users_id_from);
+			$("#approveall").linkbutton('enable');
+			$("#disapproveall").linkbutton('enable');
+
+			if (table == "users") {
+				$('#dg_approval').datagrid({
+					singleSelect: true,
+					rownumbers: true,
+					url: '<?= base_url('approvals/approvalUsers/') ?>' + users_id_from,
+					columns: [
+						[{
+							field: 'number',
+							width: 120,
+							halign: 'center',
+							title: "User ID",
+						}, {
+							field: 'name',
+							width: 150,
+							halign: 'center',
+							title: "Name"
+						}, {
+							field: 'description',
+							width: 150,
+							halign: 'center',
+							title: "Description"
+						}, {
+							field: 'username',
+							width: 100,
+							halign: 'center',
+							title: "Username",
+						}, {
+							field: 'email',
+							width: 120,
+							halign: 'center',
+							title: "Email",
+						}, {
+							field: 'phone',
+							width: 100,
+							halign: 'center',
+							title: "Phone",
+						}, {
+							field: 'position',
+							width: 100,
+							halign: 'center',
+							title: "Position",
+						}, {
+							field: 'created_by',
+							width: 100,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'created_date',
+							width: 100,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'action',
+							width: 80,
+							align: 'center',
+							title: "Action",
+							formatter: function(val, row) {
+								if (val != "-") {
+									var approve = "approve('" + row.id + "','" + table + "')";
+									var disapprove = "disapprove('" + row.id + "','" + table + "')";
+									var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
+									var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
+									return a + " " + b;
+								}
+							}
+						}]
+					],
+				}).datagrid('enableFilter');
+			} else if (table == "employees") {
+				$('#dg_approval').datagrid({
+					singleSelect: true,
+					rownumbers: true,
+					url: '<?= base_url('approvals/approvalEmployees/') ?>' + users_id_from,
+					columns: [
+						[{
+							field: 'number',
+							width: 120,
+							halign: 'center',
+							title: "Employee ID",
+						}, {
+							field: 'name',
+							width: 150,
+							halign: 'center',
+							title: "Employee Name"
+						}, {
+							field: 'division_name',
+							width: 150,
+							halign: 'center',
+							title: "Division"
+						}, {
+							field: 'departement_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement",
+						}, {
+							field: 'departement_sub_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement Sub",
+						}, {
+							field: 'position_name',
+							width: 100,
+							halign: 'center',
+							title: "Position",
+						}, {
+							field: 'contract_name',
+							width: 100,
+							halign: 'center',
+							title: "Employee Type",
+						}, {
+							field: 'date_sign',
+							width: 100,
+							halign: 'center',
+							title: "Join Date",
+						}, {
+							field: 'date_expired',
+							width: 100,
+							halign: 'center',
+							title: "Contract Expired",
+						}, {
+							field: 'created_by',
+							width: 100,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'created_date',
+							width: 100,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'action',
+							width: 80,
+							align: 'center',
+							title: "Action",
+							formatter: function(val, row) {
+								if (val != "-") {
+									var approve = "approve('" + row.id + "','" + table + "')";
+									var disapprove = "disapprove('" + row.id + "','" + table + "')";
+									var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
+									var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
+									return a + " " + b;
+								}
+							}
+						}]
+					],
+				}).datagrid('enableFilter');
+			} else if (table == "agreements") {
+				$('#dg_approval').datagrid({
+					singleSelect: true,
+					rownumbers: true,
+					url: '<?= base_url('approvals/approvalAgreements/') ?>' + users_id_from,
+					columns: [
+						[{
+							field: 'number',
+							width: 120,
+							halign: 'center',
+							title: "Employee ID",
+						}, {
+							field: 'employee_name',
+							width: 150,
+							halign: 'center',
+							title: "Employee Name"
+						}, {
+							field: 'division_name',
+							width: 150,
+							halign: 'center',
+							title: "Division"
+						}, {
+							field: 'departement_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement",
+						}, {
+							field: 'departement_sub_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement Sub",
+						}, {
+							field: 'position_name',
+							width: 100,
+							halign: 'center',
+							title: "Position",
+						}, {
+							field: 'date_sign',
+							width: 100,
+							halign: 'center',
+							title: "Join Date",
+						}, {
+							field: 'date_expired',
+							width: 100,
+							halign: 'center',
+							title: "Contract Expired",
+						}, {
+							field: 'note',
+							width: 150,
+							halign: 'center',
+							title: "Note",
+						}, {
+							field: 'created_by',
+							width: 100,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'created_date',
+							width: 100,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'action',
+							width: 80,
+							align: 'center',
+							title: "Action",
+							formatter: function(val, row) {
+								if (val != "-") {
+									var approve = "approve('" + row.id + "','" + table + "')";
+									var disapprove = "disapprove('" + row.id + "','" + table + "')";
+									var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
+									var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
+									return a + " " + b;
+								}
+							}
+						}]
+					],
+				}).datagrid('enableFilter');
+			} else if (table == "mutations") {
+				$('#dg_approval').datagrid({
+					singleSelect: true,
+					rownumbers: true,
+					url: '<?= base_url('approvals/approvalMutations/') ?>' + users_id_from,
+					columns: [
+						[{
+							field: 'employee_number',
+							width: 120,
+							halign: 'center',
+							title: "Employee ID",
+						}, {
+							field: 'employee_name',
+							width: 150,
+							halign: 'center',
+							title: "Employee Name"
+						}, {
+							field: 'division_name',
+							width: 150,
+							halign: 'center',
+							title: "Division"
+						}, {
+							field: 'departement_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement",
+						}, {
+							field: 'departement_sub_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement Sub",
+						}, {
+							field: 'trans_date',
+							width: 100,
+							halign: 'center',
+							title: "Trans Date",
+						}, {
+							field: 'type',
+							width: 100,
+							halign: 'center',
+							title: "Type",
+						}, {
+							field: 'description',
+							width: 150,
+							halign: 'center',
+							title: "Note",
+						}, {
+							field: 'created_by',
+							width: 100,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'created_date',
+							width: 100,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'action',
+							width: 80,
+							align: 'center',
+							title: "Action",
+							formatter: function(val, row) {
+								if (val != "-") {
+									var approve = "approve('" + row.id + "','" + table + "')";
+									var disapprove = "disapprove('" + row.id + "','" + table + "')";
+									var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
+									var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
+									return a + " " + b;
+								}
+							}
+						}]
+					],
+				}).datagrid('enableFilter');
+			} else if (table == "employee_requests") {
+				$('#dg_approval').datagrid({
+					singleSelect: true,
+					rownumbers: true,
+					url: '<?= base_url('approvals/approvalEmployeeRequests/') ?>' + users_id_from,
+					columns: [
+						[{
+							field: 'request_by',
+							width: 120,
+							halign: 'center',
+							title: "Request By",
+						}, {
+							field: 'request_date',
+							width: 100,
+							halign: 'center',
+							title: "Request Date"
+						}, {
+							field: 'due_date',
+							width: 100,
+							halign: 'center',
+							title: "Due Date"
+						}, {
+							field: 'division_name',
+							width: 150,
+							halign: 'center',
+							title: "Division"
+						}, {
+							field: 'departement_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement",
+						}, {
+							field: 'departement_sub_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement Sub",
+						}, {
+							field: 'qty',
+							width: 100,
+							halign: 'center',
+							title: "Qty",
+						}, {
+							field: 'description',
+							width: 150,
+							halign: 'center',
+							title: "Note",
+						}, {
+							field: 'created_by',
+							width: 100,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'created_date',
+							width: 100,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'action',
+							width: 80,
+							align: 'center',
+							title: "Action",
+							formatter: function(val, row) {
+								if (val != "-") {
+									var approve = "approve('" + row.id + "','" + table + "')";
+									var disapprove = "disapprove('" + row.id + "','" + table + "')";
+									var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
+									var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
+									return a + " " + b;
+								}
+							}
+						}]
+					],
+				}).datagrid('enableFilter');
+			} else if (table == "permits") {
+				$('#dg_approval').datagrid({
+					singleSelect: true,
+					rownumbers: true,
+					url: '<?= base_url('approvals/approvalPermits/') ?>' + users_id_from,
+					columns: [
+						[{
+							field: 'employee_number',
+							width: 120,
+							halign: 'center',
+							title: "Employee ID",
+						}, {
+							field: 'employee_name',
+							width: 200,
+							halign: 'center',
+							title: "Employee Name",
+						}, {
+							field: 'division_name',
+							width: 150,
+							halign: 'center',
+							title: "Division",
+						}, {
+							field: 'departement_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement",
+						}, {
+							field: 'departement_sub_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement Sub",
+						}, {
+							field: 'permit_type_name',
+							width: 100,
+							halign: 'center',
+							title: "Permit Type",
+						}, {
+							field: 'permit_date',
+							width: 100,
+							align: 'center',
+							title: "Permit Date",
+						}, {
+							field: 'reason_name',
+							width: 100,
+							halign: 'center',
+							title: "Reason",
+						}, {
+							field: 'note',
+							width: 200,
+							halign: 'center',
+							title: "Note",
+						}, {
+							field: 'action',
+							width: 80,
+							align: 'center',
+							title: "Action",
+							formatter: function(val, row) {
+								var approve = "approve('" + row.id + "','" + table + "')";
+								var disapprove = "disapprove('" + row.id + "','" + table + "')";
+								var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
+								var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
+								return a + " " + b;
+							}
+						}]
+					],
+				}).datagrid('enableFilter');
+			} else if (table == "overtimes") {
+				$('#dg_approval').datagrid({
+					singleSelect: true,
+					rownumbers: true,
+					url: '<?= base_url('approvals/approvalOvertimes/') ?>' + users_id_from,
+					columns: [
+						[{
+							field: 'employee_id',
+							width: 120,
+							halign: 'center',
+							title: "Employee ID",
+						}, {
+							field: 'employee_name',
+							width: 200,
+							halign: 'center',
+							title: "Employee Name",
+						}, {
+							field: 'division_name',
+							width: 150,
+							halign: 'center',
+							title: "Division",
+						}, {
+							field: 'departement_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement",
+						}, {
+							field: 'departement_sub_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement Sub",
+						}, {
+							field: 'trans_date',
+							width: 100,
+							halign: 'center',
+							title: "Trans Date",
+						}, {
+							field: 'start',
+							width: 80,
+							align: 'center',
+							title: "Start",
+						}, {
+							field: 'end',
+							width: 80,
+							halign: 'center',
+							title: "End",
+						}, {
+							field: 'type',
+							width: 100,
+							halign: 'center',
+							title: "Type",
+						}, {
+							field: 'duration_hour',
+							width: 80,
+							halign: 'center',
+							title: "Duration",
+						}, {
+							field: 'duration_convert',
+							width: 100,
+							halign: 'center',
+							title: "Convert",
+						}, {
+							field: 'amount',
+							width: 100,
+							halign: 'center',
+							title: "Amount",
+						}, {
+							field: 'remarks',
+							width: 200,
+							halign: 'center',
+							title: "Note",
+						}, {
+							field: 'created_by',
+							width: 100,
+							halign: 'center',
+							title: "Created By",
+						}, {
+							field: 'created_date',
+							width: 200,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'action',
+							width: 80,
+							align: 'center',
+							title: "Action",
+							formatter: function(val, row) {
+								var approve = "approve('" + row.id + "','" + table + "')";
+								var disapprove = "disapprove('" + row.id + "','" + table + "')";
+								var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
+								var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
+								return a + " " + b;
+							}
+						}]
+					],
+				}).datagrid('enableFilter');
+			} else if (table == "cash_carries") {
+				$('#dg_approval').datagrid({
+					singleSelect: true,
+					rownumbers: true,
+					url: '<?= base_url('approvals/approvalCashCarries/') ?>' + users_id_from,
+					columns: [
+						[{
+							field: 'employee_id',
+							width: 120,
+							halign: 'center',
+							title: "Employee ID",
+						}, {
+							field: 'employee_name',
+							width: 200,
+							halign: 'center',
+							title: "Employee Name",
+						}, {
+							field: 'division_name',
+							width: 150,
+							halign: 'center',
+							title: "Division",
+						}, {
+							field: 'departement_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement",
+						}, {
+							field: 'departement_sub_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement Sub",
+						}, {
+							field: 'trans_date',
+							width: 100,
+							halign: 'center',
+							title: "Trans Date",
+						}, {
+							field: 'start',
+							width: 80,
+							align: 'center',
+							title: "Start",
+						}, {
+							field: 'end',
+							width: 80,
+							halign: 'center',
+							title: "End",
+						}, {
+							field: 'type',
+							width: 100,
+							halign: 'center',
+							title: "Type",
+						}, {
+							field: 'duration_hour',
+							width: 80,
+							halign: 'center',
+							title: "Duration",
+						}, {
+							field: 'remarks',
+							width: 200,
+							halign: 'center',
+							title: "Note",
+						}, {
+							field: 'created_by',
+							width: 100,
+							halign: 'center',
+							title: "Created By",
+						}, {
+							field: 'created_date',
+							width: 200,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'action',
+							width: 80,
+							align: 'center',
+							title: "Action",
+							formatter: function(val, row) {
+								var approve = "approve('" + row.id + "','" + table + "')";
+								var disapprove = "disapprove('" + row.id + "','" + table + "')";
+								var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
+								var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
+								return a + " " + b;
+							}
+						}]
+					],
+				}).datagrid('enableFilter');
+			} else if (table == "change_days") {
+				$('#dg_approval').datagrid({
+					singleSelect: true,
+					rownumbers: true,
+					url: '<?= base_url('approvals/approvalChangeDays/') ?>' + users_id_from,
+					columns: [
+						[{
+							field: 'employee_id',
+							width: 120,
+							halign: 'center',
+							title: "Employee ID",
+						}, {
+							field: 'employee_name',
+							width: 200,
+							halign: 'center',
+							title: "Employee Name",
+						}, {
+							field: 'division_name',
+							width: 150,
+							halign: 'center',
+							title: "Division",
+						}, {
+							field: 'departement_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement",
+						}, {
+							field: 'departement_sub_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement Sub",
+						}, {
+							field: 'start',
+							width: 100,
+							align: 'center',
+							title: "Date From",
+						}, {
+							field: 'end',
+							width: 100,
+							halign: 'center',
+							title: "Date To",
+						}, {
+							field: 'remarks',
+							width: 200,
+							halign: 'center',
+							title: "Note",
+						}, {
+							field: 'created_by',
+							width: 100,
+							halign: 'center',
+							title: "Created By",
+						}, {
+							field: 'created_date',
+							width: 200,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'action',
+							width: 80,
+							align: 'center',
+							title: "Action",
+							formatter: function(val, row) {
+								var approve = "approve('" + row.id + "','" + table + "')";
+								var disapprove = "disapprove('" + row.id + "','" + table + "')";
+								var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
+								var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
+								return a + " " + b;
+							}
+						}]
+					],
+				}).datagrid('enableFilter');
+			} else if (table == "payrolls") {
+				$("#approveall").linkbutton('disable');
+				$("#disapproveall").linkbutton('disable');
+
+				$('#dg_approval').datagrid({
+					singleSelect: true,
+					rownumbers: true,
+					showFooter: true,
+					url: '<?= base_url('approvals/approvalPayrolls') ?>',
+					columns: [
+						[{
+							field: 'group_name',
+							width: 150,
+							halign: 'center',
+							title: "Description",
+						}, {
+							field: 'employee',
+							width: 80,
+							halign: 'center',
+							align: 'right',
+							title: "Employee",
+							formatter: numberformat
+						}, {
+							field: 'amount',
+							width: 100,
+							halign: 'center',
+							align: 'right',
+							title: "Amount",
+							formatter: numberformat
+						}, {
+							field: 'name',
+							width: 100,
+							halign: 'center',
+							title: "Created By",
+						}, {
+							field: 'created_date',
+							width: 100,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'action',
+							width: 80,
+							align: 'center',
+							title: "Action",
+							formatter: function(val, row) {
+								if (val != "-") {
+									var approve = "approvePayrolls('" + row.group_id + "','" + table + "','" + btoa(row.period_start) + "','" + btoa(row.period_end) + "')";
+									var disapprove = "disapprovePayrolls('" + row.group_id + "','" + table + "','" + btoa(row.period_start) + "','" + btoa(row.period_end) + "')";
+									var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
+									var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
+									return a + " " + b;
+								}
+							}
+						}]
+					],
+				}).datagrid('enableFilter');
+			}
+		}
+	}
+
+	function export_excel() {
+		$('#dg_approval').datagrid('toExcel', 'approvals.xls');
+	}
+
+	// function notification() {
+	// 	$('#dlg_notif').dialog('open');
+	// }
+
+	// notificationList();
+	// notificationCount();
+	// setInterval(notificationList, 20000);
+	// setInterval(notificationCount, 20000);
+
+	// function notificationList() {
+	// 	$.ajax({
+	// 		type: "post",
+	// 		url: "<?= base_url('home/notificationList') ?>",
+	// 		dataType: "html",
+	// 		success: function(response) {
+	// 			$('#notificationList').html(response);
+	// 		}
+	// 	});
+	// }
+
+	// function notificationCount() {
+	// 	$.ajax({
+	// 		type: "post",
+	// 		url: "<?= base_url('home/notificationCount') ?>",
+	// 		dataType: "html",
+	// 		success: function(response) {
+	// 			$('#notificationCount').html(response);
+	// 		}
+	// 	});
+	// }
+
+	function approveall() {
+		var table_name = $("#table_name").textbox('getValue');
+		var users_id_from = $("#users_id_from").textbox('getValue');
+
+		$.messager.confirm('Warning', 'Are you sure you want to approve all data?', function(r) {
+			if (r) {
+				$.post('<?= base_url('approvals/approveall') ?>', {
+					table_name: table_name,
+					users_id_from: users_id_from,
+				}, function(result) {
+					var result = eval('(' + result + ')');
+					if (result.theme == "success") {
+						toastr.success(result.message, result.title);
+						$("#dg_approval").datagrid("reload");
+					} else {
+						toastr.error(result.message, result.title);
+					}
+				});
+			}
+		});
+	}
+
+	function disapproveall() {
+		var table_name = $("#table_name").textbox('getValue');
+		var users_id_from = $("#users_id_from").textbox('getValue');
+
 		$.messager.confirm('Warning', 'Are you sure you want to disapprove all data?', function(r) {
 			if (r) {
-				requestData(id_all.length, id_all);
+				Swal.fire({
+					title: 'Please Wait for Process Disapprove',
+					showConfirmButton: false,
+					allowOutsideClick: false,
+					allowEscapeKey: false,
+					didOpen: () => {
+						Swal.showLoading();
+					},
+				});
 
-				function requestData(total, json, number = 0, value = 0) {
-					if (value < 100) {
-						var id = json[number]['id'];
-						value = Math.floor((number / total) * 100);
+				$.post('<?= base_url('approvals/disapproveall') ?>', {
+					table_name: table_name,
+					users_id_from: users_id_from,
+				}, function(result) {
+					var result = eval('(' + result + ')');
+					Swal.close();
 
-						$.post('<?= base_url('home/disapprove') ?>', {
-							id: id,
-							tablename: tablename,
-						}, function(result) {
-							var result = eval('(' + result + ')');
-
-							if (result.theme == "success") {
-								toastr.success(result.message, result.title);
-								$("#" + id).html("Disapproved");
-								requestData(total, json, number + 1, value);
-							} else {
-								toastr.error(result.message, result.title);
-							}
-						});
+					if (result.theme == "success") {
+						toastr.success(result.message, result.title);
+						$("#dg_approval").datagrid("reload");
+					} else {
+						toastr.error(result.message, result.title);
 					}
-				}
+				});
 			}
 		});
 	}
@@ -357,14 +1157,14 @@
 	function approve(id, tablename) {
 		$.messager.confirm('Warning', 'Are you sure you want to approve this data?', function(r) {
 			if (r) {
-				$.post('<?= base_url('home/approve') ?>', {
+				$.post('<?= base_url('approvals/approve') ?>', {
 					id: id,
 					tablename: tablename
 				}, function(result) {
 					var result = eval('(' + result + ')');
 					if (result.theme == "success") {
 						toastr.success(result.message, result.title);
-						$("#" + id).html("Approved");
+						$("#dg_approval").datagrid("reload");
 					} else {
 						toastr.error(result.message, result.title);
 					}
@@ -376,7 +1176,7 @@
 	function disapprove(id, tablename) {
 		$.messager.confirm('Warning', 'Are you sure you want to disapprove this data?', function(r) {
 			if (r) {
-				$.post('<?= base_url('home/disapprove') ?>', {
+				$.post('<?= base_url('approvals/disapprove') ?>', {
 					id: id,
 					tablename: tablename
 				}, function(result) {
@@ -384,7 +1184,7 @@
 
 					if (result.theme == "success") {
 						toastr.success(result.message, result.title);
-						$("#" + id).html("Disapproved");
+						$("#dg_approval").datagrid("reload");
 					} else {
 						toastr.error(result.message, result.title);
 					}
@@ -393,7 +1193,7 @@
 		});
 	}
 
-	function approvePayrolls(id, tablename) {
+	function approvePayrolls(id, tablename, period_start, period_end) {
 		$.messager.confirm('Warning', 'Are you sure you want to approve this data?', function(r) {
 			if (r) {
 				Swal.fire({
@@ -406,14 +1206,16 @@
 					},
 				});
 
-				$.post('<?= base_url('home/approvePayrolls') ?>', {
+				$.post('<?= base_url('approvals/approvePayrolls') ?>', {
 					id: id,
-					tablename: tablename
+					tablename: tablename,
+					period_start: period_start,
+					period_end: period_end
 				}, function(result) {
 					var result = eval('(' + result + ')');
 					if (result.theme == "success") {
 						toastr.success(result.message, result.title);
-						$("#" + id).html("Approved");
+						$("#dg_approval").datagrid("reload");
 						Swal.close();
 					} else {
 						toastr.error(result.message, result.title);
@@ -424,7 +1226,7 @@
 		});
 	}
 
-	function disapprovePayrolls(id, tablename) {
+	function disapprovePayrolls(id, tablename, period_start, period_end) {
 		$.messager.confirm('Warning', 'Are you sure you want to disapprove this data?', function(r) {
 			if (r) {
 				Swal.fire({
@@ -437,15 +1239,17 @@
 					},
 				});
 
-				$.post('<?= base_url('home/disapprovePayrolls') ?>', {
+				$.post('<?= base_url('approvals/disapprovePayrolls') ?>', {
 					id: id,
-					tablename: tablename
+					tablename: tablename,
+					period_start: period_start,
+					period_end: period_end
 				}, function(result) {
 					var result = eval('(' + result + ')');
 
 					if (result.theme == "success") {
 						toastr.success(result.message, result.title);
-						$("#" + id).html("Disapproved");
+						$("#dg_approval").datagrid("reload");
 						Swal.close();
 					} else {
 						toastr.error(result.message, result.title);
@@ -487,8 +1291,10 @@
 		}
 	}
 
-	function startChats() {
-		$("#dlg_chats").dialog('open');
+	function numberformat(value, row) {
+		const formatter = new Intl.NumberFormat('id-ID');
+
+		return "<b>" + formatter.format(value) + "</b>";
 	}
 </script>
 
