@@ -17,8 +17,21 @@ class Home extends CI_Controller
     public function index()
     {
         if ($this->session->username != "") {
+            $username = $this->session->username;
+
+            $this->db->select('b.*');
+            $this->db->from('logins a');
+            $this->db->join('users b', 'a.username = b.username');
+            $this->db->where('b.deleted', 0);
+            $this->db->where('b.actived', 0);
+            $this->db->where('b.status', 0);
+            $this->db->where_not_in('b.username', $username);
+            $this->db->like('a.created_date', date('Y-m-d'));
+            $this->db->order_by('b.name', 'ASC');
+            $logins = $this->db->get()->result_object();
+
+            $data['users'] = $logins;
             $data['config'] = $this->crud->read('config');
-            $data['users'] = $this->crud->reads('users', [], ["actived" => 0, "deleted" => 0], "", "name", "asc");
 
             $this->load->view('template/header');
             $this->load->view('home', $data);

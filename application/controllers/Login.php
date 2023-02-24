@@ -42,20 +42,29 @@ class Login extends CI_Controller
         //Config
         $data['config'] = $this->crud->read('config');
 
+        //jika Session Username sudah Expired
         if ($this->session->username == "") {
+            //Jika Method Post di kirim
             if ($this->input->post()) {
                 $post = $this->input->post();
+                //Cek login username dan password
                 $user = $this->crud->read("users", [], [
                     "deleted" => 0,
                     "username" => $post['username'],
                     "password" => $post['password']
                 ]);
 
+                //Jika username dan password terdaftar di table users
                 if ($user) {
+                    //Jika status actived = 1
                     if ($user->actived == 1) {
                         $data['message'] = '<div padding: 10px; background-color: #B49651; color: white; margin: 10px; border-radius: 1rem;>Your account is not active</div>';
                         $this->load->view('login', $data);
                     } else {
+                        $ip_address = $this->input->ip_address();
+                        $login = $this->crud->read("logins", [], ["username" => $user->username]);
+
+                        //List data yang akan di create session
                         $session = array(
                             "id" => $user->id,
                             "departement_id" => $user->departement_id,
@@ -64,8 +73,25 @@ class Login extends CI_Controller
                             "username" => $user->username,
                             "position" => $user->position
                         );
+                        //List data yang akan di create Logins
+                        $dataLogins = array(
+                            "created_by" => $this->session->username,
+                            "created_date" => date('Y-m-d H:i:s'),
+                            "ip_address" => $ip_address,
+                            "mac_address" => $this->macAddress(),
+                            "username" => $user->username
+                        );
 
+                        //Jika table logins sudah ada
+                        if($login){
+                            $this->db->update("logins", $dataLogins, ["username" => $user->username]);
+                        }else{
+                            $this->db->insert("logins", $dataLogins);
+                        }
+
+                        //Create Log Historical
                         $this->crud->logs("Login", json_encode($session), "Login");
+                        //Create Sessions
                         $this->session->set_userdata($session);
                         redirect('home');
                     }
@@ -147,6 +173,9 @@ class Login extends CI_Controller
 
     public function logout()
     {
+        $username = $this->session->username;
+        $this->db->delete("logins", ["username" => $username]);
+
         $this->session->unset_userdata('id');
         $this->session->unset_userdata('departement_id');
         $this->session->unset_userdata('number');
