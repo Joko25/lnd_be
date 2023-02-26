@@ -833,7 +833,6 @@ class Payrolls extends CI_Controller
                                 $arr_bpjs_com_amount_salary_total += 0;
                                 $arr_bpjs_com_amount_jabatan_total += 0;
                             }
-
                         } else {
                             $arr_bpjs_com_amount .= round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']) . ",";
                             $arr_bpjs_com_amount_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
@@ -884,7 +883,6 @@ class Payrolls extends CI_Controller
                             $arr_bpjs_com_amount_salary_total += 0;
                             $arr_bpjs_com_amount_jabatan_total += 0;
                         }
-
                     } else {
                         $arr_bpjs_com_amount .= round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']) . ",";
                         $arr_bpjs_com_amount_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);

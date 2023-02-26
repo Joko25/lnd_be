@@ -42,6 +42,7 @@ class Official_payrolls extends CI_Controller
             $filter_to = $this->input->get('filter_to');
             $filter_division = $this->input->get('filter_division');
             $filter_departement = $this->input->get('filter_departement');
+            $username = $this->session->username;
 
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
@@ -52,6 +53,7 @@ class Official_payrolls extends CI_Controller
                 FROM departements a
                 LEFT JOIN employees b ON a.id = b.departement_id
                 LEFT JOIN payrolls c ON b.number = c.number
+                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
                 WHERE c.period_start = '$period_start' and c.period_end = '$period_end'
                 AND a.division_id LIKE '%$filter_division%'
                 AND a.id LIKE '%$filter_departement%'
@@ -126,6 +128,7 @@ class Official_payrolls extends CI_Controller
                 FROM departements a
                 LEFT JOIN employees b ON a.id = b.departement_id
                 LEFT JOIN payrolls c ON b.number = c.number
+                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
                 WHERE c.period_start = '$period_start' and c.period_end = '$period_end'
                 AND a.id = '$departement_id'
                 AND b.bank_name = '-'
@@ -139,6 +142,7 @@ class Official_payrolls extends CI_Controller
                 FROM departements a
                 LEFT JOIN employees b ON a.id = b.departement_id
                 LEFT JOIN payrolls c ON b.number = c.number
+                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
                 WHERE c.period_start = '$period_start' and c.period_end = '$period_end'
                 AND a.id = '$departement_id'
                 AND b.bank_name = 'Bank Syariah Indonesia'
@@ -152,6 +156,7 @@ class Official_payrolls extends CI_Controller
                 FROM departements a
                 LEFT JOIN employees b ON a.id = b.departement_id
                 LEFT JOIN payrolls c ON b.number = c.number
+                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
                 WHERE c.period_start = '$period_start' and c.period_end = '$period_end'
                 AND a.id = '$departement_id'
                 AND b.bank_name = 'Bank Mandiri'
@@ -195,6 +200,7 @@ class Official_payrolls extends CI_Controller
                 FROM departements a
                 LEFT JOIN employees b ON a.id = b.departement_id
                 LEFT JOIN payrolls c ON b.number = c.number
+                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
                 WHERE c.period_start = '$period_start_bf' and c.period_end = '$period_end_bf'
                 AND a.division_id LIKE '%$filter_division%'
                 AND a.id LIKE '%$filter_departement%'
@@ -208,6 +214,7 @@ class Official_payrolls extends CI_Controller
                 FROM departements a
                 LEFT JOIN employees b ON a.id = b.departement_id
                 LEFT JOIN payrolls c ON b.number = c.number
+                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
                 WHERE c.period_start = '$period_start_bf' and c.period_end = '$period_end_bf'
                 AND b.bank_name = 'Bank Syariah Indonesia'
                 AND a.division_id LIKE '%$filter_division%'
@@ -222,6 +229,7 @@ class Official_payrolls extends CI_Controller
                 FROM departements a
                 LEFT JOIN employees b ON a.id = b.departement_id
                 LEFT JOIN payrolls c ON b.number = c.number
+                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
                 WHERE c.period_start = '$period_start_bf' and c.period_end = '$period_end_bf'
                 AND b.bank_name = '-'
                 AND a.division_id LIKE '%$filter_division%'
@@ -236,6 +244,7 @@ class Official_payrolls extends CI_Controller
                 FROM departements a
                 LEFT JOIN employees b ON a.id = b.departement_id
                 LEFT JOIN payrolls c ON b.number = c.number
+                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
                 WHERE c.period_start = '$period_start_bf' and c.period_end = '$period_end_bf'
                 AND b.bank_name = 'Bank Mandiri'
                 AND a.division_id LIKE '%$filter_division%'

@@ -104,7 +104,7 @@ class Summary_payrolls extends CI_Controller
 
             $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, b.national_id FROM payrolls a
                 JOIN employees b ON a.employee_id = b.id
-                LEFT JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
+                JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                 WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
                 AND b.division_id LIKE '%$filter_division%'
                 AND b.departement_id LIKE '%$filter_departement%'
@@ -239,7 +239,7 @@ class Summary_payrolls extends CI_Controller
                 $offset = ($i * 20);
                 $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, b.national_id FROM payrolls a
                     JOIN employees b ON a.employee_id = b.id
-                    LEFT JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
+                    JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                     WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
                     AND b.division_id LIKE '%$filter_division%'
                     AND b.departement_id LIKE '%$filter_departement%'

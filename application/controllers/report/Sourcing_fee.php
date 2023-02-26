@@ -142,8 +142,22 @@ class Sourcing_fee extends CI_Controller
                     $start  = date_create($employee['date_sign']);
                     $end = date_create($filter_to);
                     $diff  = date_diff($start, $end);
-                    $services = $diff->y . ' Years, ' . $diff->m . ' Month, ' . $diff->d . ' Days ';
                     $selisih = date_diff(date_create($employee['date_sign']), date_create($filter_to));
+                    $d = $diff->d . ' Days ';
+
+                    if ($diff->y == 0) {
+                        $y = '';
+                    } else {
+                        $y = $diff->y . ' Years, ';
+                    }
+
+                    if ($diff->m == 0) {
+                        $m = '';
+                    } else {
+                        $m = $diff->m . ' Month, ';
+                    }
+
+                    $services = $y . $m . $d;
 
                     if ($selisih->format('%a') > 30) {
                         $wd = $hkw;
