@@ -196,6 +196,13 @@
                                         url: '<?= base_url('payroll/payrolls/delete') ?>',
                                         data: {
                                             filter_from: filter_from,
+                                            filter_to: filter_to,
+                                            filter_division: filter_division,
+                                            filter_departement: filter_departement,
+                                            filter_departement_sub: filter_departement_sub,
+                                            filter_employee: filter_employee,
+                                            filter_employee_type: filter_employee_type,
+                                            filter_group: filter_group
                                         },
                                         success: function(deleted) {
                                             Swal.fire({

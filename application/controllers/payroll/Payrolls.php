@@ -1142,6 +1142,7 @@ class Payrolls extends CI_Controller
     {
         $post = $this->input->post();
         $period_start = date("Y-m", strtotime($post['filter_from']));
+        $period_end = date("Y-m", strtotime($post['filter_to']));
         $username = $this->session->username;
 
         $privileges = $this->crud->reads('privilege_groups', [], ["username" => $username, "status" => "1"]);
@@ -1152,8 +1153,28 @@ class Payrolls extends CI_Controller
             $this->db->select('a.*');
             $this->db->from('payrolls a');
             $this->db->join('employees b', 'a.employee_id = b.id');
-            $this->db->where('a.period_start =', $period_start);
-            $this->db->where('b.group_id', $group_id);
+            $this->db->where('a.period_start', $period_start);
+            $this->db->where('a.period_end', $period_end);
+            if($post['filter_division'] != ""){
+                $this->db->where('b.division_id', $post['filter_division']);
+            }
+            if($post['filter_departement'] != ""){
+                $this->db->where('b.departement_id', $post['filter_departement']);
+            }
+            if($post['filter_departement_sub'] != ""){
+                $this->db->where('b.departement_sub_id', $post['filter_departement_sub']);
+            }
+            if($post['filter_employee'] != ""){
+                $this->db->where('b.id', $post['filter_employee']);
+            }
+            if($post['filter_employee_type'] != ""){
+                $this->db->where('b.contract_id', $post['filter_employee_type']);
+            }
+            if($post['filter_group'] != ""){
+                $this->db->where('b.group_id', $post['filter_group']);
+            }else{
+                $this->db->where('b.group_id', $group_id);
+            }
             $payrolls = $this->db->get()->result_object();
 
             foreach ($payrolls as $payroll) {
