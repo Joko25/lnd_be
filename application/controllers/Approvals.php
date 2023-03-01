@@ -102,7 +102,10 @@ class Approvals extends CI_Controller
                 "departement_id" => $mutations->departement_id,
                 "departement_sub_id" => $mutations->departement_sub_id
             );
-            $this->crud->update('employees', ["id" => $mutations->employee_id], $postEmployee);
+
+            if($mutations->type == "PERMANENT"){
+                $this->crud->update('employees', ["id" => $mutations->employee_id], $postEmployee);
+            }
         }
 
         //Approval Agreement

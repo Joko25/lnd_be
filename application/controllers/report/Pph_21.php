@@ -52,7 +52,7 @@ class Pph_21 extends CI_Controller
                 JOIN groups d ON b.group_id = d.id
                 WHERE a.period_start = '$period_start' and a.period_end = '$period_end' and d.name = 'MAGANG'
                 GROUP BY a.id
-                ORDER BY a.name ASC");
+                ORDER BY c.name, a.name ASC");
             $records = $query->result_array();
 
             //Config
@@ -70,7 +70,7 @@ class Pph_21 extends CI_Controller
                     <br><br>
                     <table id="customers" border="1">
                         <tr>
-                            <th width="50">No</th>
+                            <th width="30">No</th>
                             <th style="text-align:center;">No. Urut</th>
                             <th style="text-align:center;">No. Urut BP</th>
                             <th style="text-align:center;">No BP</th>
@@ -99,8 +99,8 @@ class Pph_21 extends CI_Controller
                             <td>PTT atau Pegawai Lepas</td>
                             <td>' . $record['name'] . '</td>
                             <td style="text-align:center;">' . $record['tax_id'] . '</td>
-                            <td style="text-align:center;">' . $record['national_id'] . '</td>
-                            <td style="text-align:center;">' . $record['alamat'] . '</td>
+                            <td style="text-align:center;" class="str">' . $record['national_id'] . '</td>
+                            <td>' . $record['alamat'] . '</td>
                             <td></td>
                             <td></td>
                             <td style="text-align:center;">' . $record['marital'] . '</td>

@@ -103,19 +103,23 @@ class Mutations extends CI_Controller
     {
         if ($this->input->post()) {
             if ($this->form_validation->run() == TRUE) {
-                $post   = $this->input->post();
-                $approval = $this->crud->read('approvals', [], ["table_name" => "mutations"]);
+                $post = $this->input->post();
+                $departement_id = $this->session->departement_id; 
+                $approval = $this->crud->read('approvals', [], ["table_name" => "mutations", "departement_id" => $departement_id]);
 
                 if ($approval) {
                     $send   = $this->crud->create('mutations', $post);
                 } else {
+                    if($post['type'] == "PERMANENT"){
+                        $this->crud->update('employees', ["id" => $post['employee_id']], $postEmployee);
+                    }
+
                     $send   = $this->crud->create('mutations', $post);
                     $postEmployee = array(
                         "division_id" => $post['division_id'],
                         "departement_id" => $post['departement_id'],
                         "departement_sub_id" => $post['departement_sub_id']
                     );
-                    $this->crud->update('employees', ["id" => $post['employee_id']], $postEmployee);
                 }
                 echo $send;
             } else {
