@@ -343,11 +343,11 @@ class Permits extends CI_Controller
                         $send = "";
 
                         $year = date("Y");
-                        $permitType = $this->crud->read('permit_types', ["id" => $permittype->id, "cutoff" => "YES"]);
-                        $permits = $this->crud->reads('permits', ["permit_date" => $year], ["employee_id" => $employee->id, "permit_type_id" => @$permitType->id]);
-                        $totalPermit = 0;
+                        $permitTypeCutoff = $this->crud->read('permit_types', ["id" => $permittype->id, "cutoff" => "YES"]);
+                        $permits = $this->crud->reads('permits', ["permit_date" => $year], ["employee_id" => $employee->id, "permit_type_id" => @$permitTypeCutoff->id]);
+                        $totalPermit = 12;
                         foreach ($permits as $leave) {
-                            $totalPermit += $leave->duration;
+                            $totalPermit -= $leave->duration;
                         }
 
                         for ($i = $date_from; $i <= $date_to; $i += (60 * 60 * 24)) {
@@ -362,7 +362,7 @@ class Permits extends CI_Controller
                                 echo json_encode(array("title" => "Available", "message" => "The permit requestion for this employee and permit date has been created", "theme" => "error"));
                                 exit;
                             } else {
-                                if (($totalPermit - 1) <= 0) {
+                                if ($totalPermit <= 0) {
                                     echo json_encode(array("title" => "Not Found", "message" => $employee->name . " This total permit is over", "theme" => "error"));
                                     exit;
                                 } else {
@@ -373,7 +373,7 @@ class Permits extends CI_Controller
                                         'trans_date' => $post['trans_date'],
                                         'permit_date' => $permit_date,
                                         'duration' => "1",
-                                        'leave' => ($totalPermit - 1),
+                                        'leave' => $totalPermit,
                                         'note' => $post['note']
                                     );
 
