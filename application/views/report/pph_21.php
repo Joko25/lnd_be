@@ -1,6 +1,6 @@
 <table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar"></table>
 
-<div id="toolbar" style="height: 160px;">
+<div id="toolbar" style="height: 190px;">
     <!-- <div style="width: 100%; display: grid; grid-template-columns: auto auto auto; grid-gap: 5px; display: flex;"> -->
     <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
@@ -9,6 +9,10 @@
                 <span style="width:30%; display:inline-block;">Period Date</span>
                 <input style="width:28%;" name="filter_from" id="filter_from" class="easyui-combogrid"> To
                 <input style="width:28%;" name="filter_to" id="filter_to" data-options="prompt:'Date To'" readonly class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <span style="width:30%; display:inline-block;">Group</span>
+                <input style="width:60%;" id="filter_group" name="filter_group" class="easyui-combobox">
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;"></span>
@@ -34,11 +38,12 @@
     function filter() {
         var filter_from = $("#filter_from").combogrid('getValue');
         var filter_to = $("#filter_to").textbox('getValue');
+        var filter_group = $("#filter_group").combobox('getValue');
 
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Choose Filter Date");
         } else {
-            var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to;
+            var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_group=" + filter_group;
 
             $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
             $("#printout").attr('src', '<?= base_url('report/pph_21/print') ?>' + url);
@@ -48,11 +53,12 @@
     function excel() {
         var filter_from = $("#filter_from").combogrid('getValue');
         var filter_to = $("#filter_to").textbox('getValue');
+        var filter_group = $("#filter_group").combobox('getValue');
 
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Choose Filter Date");
         } else {
-            var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to;
+            var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_group=" + filter_group;
 
             $.messager.alert('Please Wait', 'Export Excel Data..!', 'info');
             window.location.assign('<?= base_url('report/pph_21/print/excel') ?>' + url);
@@ -83,6 +89,19 @@
             onSelect: function(val, row) {
                 $("#filter_to").textbox('setValue', row.finish);
             }
+        });
+
+        $('#filter_group').combobox({
+            url: '<?= base_url('report/pph_21/groups') ?>',
+            valueField: 'id',
+            textField: 'name',
+            prompt: "Choose All",
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combobox('clear').combobox('textbox').focus();
+                }
+            }],
         });
     });
 

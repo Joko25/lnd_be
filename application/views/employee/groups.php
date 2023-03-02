@@ -6,6 +6,7 @@
             <th rowspan="2" data-options="field:'number',width:80,align:'center'">Code</th>
             <th rowspan="2" data-options="field:'name',width:200,halign:'center'">Name</th>
             <th rowspan="2" data-options="field:'description',width:150,halign:'center'">Description</th>
+            <th rowspan="2" data-options="field:'ppt',width:100,align:'center', styler:cellStyler, formatter:cellFormatter">PPT</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
@@ -39,6 +40,13 @@
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Description</span>
                 <input style="width:60%;" name="description" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">PPT</span>
+                <select style="width:60%;" name="ppt" id="ppt" required="" class="easyui-combobox" panelHeight="auto">
+                    <option value="1">YES</option>
+                    <option value="0">NO</option>
+                </select>
             </div>
         </fieldset>
     </form>
@@ -142,7 +150,7 @@
                                 toastr.error(result.message, result.title);
                             }
 
-                            // $('#dlg_insert').dialog('close');
+                            $('#dlg_insert').dialog('close');
                             $('#dg').datagrid('reload');
                         }
                     });
@@ -150,4 +158,22 @@
             }]
         });
     });
+
+    //CELLSTYLE STATUS
+    function cellStyler(value, row, index) {
+        if (value == 1) {
+            return 'background: #53D636; color:white;';
+        } else {
+            return 'background: #FF5F5F; color:white;';
+        }
+    }
+
+    //FORMATTER STATUS
+    function cellFormatter(value) {
+        if (value == 1) {
+            return 'YES';
+        } else {
+            return 'NO';
+        }
+    };
 </script>

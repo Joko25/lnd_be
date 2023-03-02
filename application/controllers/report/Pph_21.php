@@ -29,6 +29,14 @@ class Pph_21 extends CI_Controller
         }
     }
 
+    //GET DATA
+    public function groups()
+    {
+        $post = isset($_POST['q']) ? $_POST['q'] : "";
+        $send = $this->crud->reads('groups', ["name" => $post], ["ppt" => "1"]);
+        echo json_encode($send);
+    }
+
     public function print($option = "")
     {
         if ($option == "excel") {
@@ -40,6 +48,7 @@ class Pph_21 extends CI_Controller
         if ($this->input->get()) {
             $filter_from = $this->input->get('filter_from');
             $filter_to = $this->input->get('filter_to');
+            $filter_group = $this->input->get('filter_group');
 
             $tgl_bp = date("d-M-y", strtotime($filter_from));
             $period_start = date("Y-m", strtotime($filter_from));
@@ -48,9 +57,9 @@ class Pph_21 extends CI_Controller
             $query = $this->db->query("SELECT b.name, b.tax_id, b.national_id, c.name as alamat, a.attandance_wd, a.marital, a.net_income
                 FROM payrolls a
                 JOIN employees b ON a.employee_id = b.id
-                JOIN sources c ON b.source_id = c.id
                 JOIN groups d ON b.group_id = d.id
-                WHERE a.period_start = '$period_start' and a.period_end = '$period_end' and d.name = 'MAGANG'
+                LEFT JOIN sources c ON b.source_id = c.id
+                WHERE a.period_start = '$period_start' and a.period_end = '$period_end' and d.id like '%$filter_group%'
                 GROUP BY a.id
                 ORDER BY c.name, a.name ASC");
             $records = $query->result_array();
