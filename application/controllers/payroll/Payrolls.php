@@ -93,9 +93,10 @@ class Payrolls extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            $this->db->select('a.*');
+            $this->db->select('a.*, b.national_id, d.name as source_name');
             $this->db->from('payrolls a');
             $this->db->join('employees b', 'a.employee_id = b.id');
+            $this->db->join('sources d', 'b.source_id = d.id', 'left');
             $this->db->join('privilege_groups c', "b.group_id = c.group_id and c.username = '$username' and c.status = '1'");
             if ($filter_from != "" && $filter_to != "") {
                 $this->db->where('a.period_start =', $period_start);
@@ -130,9 +131,11 @@ class Payrolls extends CI_Controller
                     "position_name" => $record['position_name'],
                     "group_name" => $record['group_name'],
                     "job_type" => $record['job_type'],
+                    "source_name" => $record['source_name'],
                     "level" => $record['level'],
                     "marital" => $record['marital'],
                     "tax_id" => $record['tax_id'],
+                    "national_id" => $record['national_id'],
                     "shift_name" => $record['shift_name'],
                     //"attandance" => json_encode($arr_permit_combine),
                     "attandance_wd" => $record['attandance_wd'],
@@ -1212,8 +1215,9 @@ class Payrolls extends CI_Controller
         $period_start = date("Y-m", strtotime($filter_from));
         $period_end = date("Y-m", strtotime($filter_to));
 
-        $query = $this->db->query("SELECT a.* FROM payrolls a
+        $query = $this->db->query("SELECT a.*, b.national_id, d.name as source_name FROM payrolls a
                 JOIN employees b on a.employee_id = b.id
+                LEFT JOIN sources d on b.source_id = d.id
                 JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                 WHERE a.period_start = '$period_start' 
                 AND a.period_end = '$period_end'
@@ -1269,11 +1273,13 @@ class Payrolls extends CI_Controller
                 <th rowspan="2">Departement Sub</th>
                 <th rowspan="2">Job Type</th>
                 <th rowspan="2">Status</th>
+                <th rowspan="2">Source</th>
                 <th rowspan="2">Position</th>
                 <th rowspan="2">Shift</th>
                 <th rowspan="2">Level</th>
                 <th rowspan="2">Marital</th>
                 <th rowspan="2">Group</th>
+                <th rowspan="2">National ID</th>
                 <th rowspan="2">NPWP</th>
                 <th colspan="' . (count($permit_type) + 1) . '">Attandance</th>
                 <th rowspan="2">Working Calendar</th>
@@ -1350,11 +1356,13 @@ class Payrolls extends CI_Controller
                     <td>' . $record['departement_sub_name'] . '</td>
                     <td>' . $record['job_type'] . '</td>
                     <td>' . $record['contract_name'] . '</td>
+                    <td>' . $record['source_name'] . '</td>
                     <td>' . $record['position_name'] . '</td>
                     <td>' . $record['shift_name'] . '</td>
                     <td>' . $record['level'] . '</td>
                     <td>' . $record['marital'] . '</td>
                     <td>' . $record['group_name'] . '</td>
+                    <td class="str">' . $record['national_id'] . '</td>
                     <td>' . $record['tax_id'] . '</td>';
             foreach (json_decode($record['attandance'], true) as $attandance => $val_attandance) {
                 $html .= '<td>' . $val_attandance . '</td>';

@@ -13,11 +13,13 @@
             <th rowspan="2" data-options="field:'departement_sub_name',width:200,halign:'center'">Departement Sub</th>
             <th rowspan="2" data-options="field:'job_type',width:100,halign:'center'">Job Type</th>
             <th rowspan="2" data-options="field:'contract_name',width:100,halign:'center'">Status</th>
+            <th rowspan="2" data-options="field:'source_name',width:200,halign:'center'">Source</th>
             <th rowspan="2" data-options="field:'position_name',width:100,halign:'center'">Position</th>
             <th rowspan="2" data-options="field:'shift_name',width:100,halign:'center'">Shift</th>
             <th rowspan="2" data-options="field:'level',width:80,halign:'center'">Level</th>
             <th rowspan="2" data-options="field:'marital',width:80,halign:'center'">Marital</th>
             <th rowspan="2" data-options="field:'group_name',width:100,halign:'center'">Group</th>
+            <th rowspan="2" data-options="field:'national_id',width:150,halign:'center'">National ID</th>
             <th rowspan="2" data-options="field:'tax_id',width:150,halign:'center'">NPWP</th>
             <th colspan="<?= (count($permit_type) + 1) ?>">Attandance</th>
             <th rowspan="2" data-options="field:'working_day',width:80,align:'center'">Working<br>Calendar</th>
