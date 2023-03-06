@@ -246,7 +246,7 @@ class Attandance_summary extends CI_Controller
                     $html .= '<tr>
                                 <td>' . $no . '</td>
                                 <td>' . $data['departement_sub_name'] . '</td>
-                                <td class="str">' . $data['number'] . '</td>
+                                <td style="mso-number-format:\@;">' . $data['number'] . '</td>
                                 <td>' . $data['name'] . '</td>
                                 <td>' . $data['shift_name'] . '</td>';
                     $total_permit = 0;

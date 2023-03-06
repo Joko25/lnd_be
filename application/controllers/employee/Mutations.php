@@ -110,16 +110,18 @@ class Mutations extends CI_Controller
                 if ($approval) {
                     $send   = $this->crud->create('mutations', $post);
                 } else {
-                    if($post['type'] == "PERMANENT"){
-                        $this->crud->update('employees', ["id" => $post['employee_id']], $postEmployee);
-                    }
-
-                    $send   = $this->crud->create('mutations', $post);
                     $postEmployee = array(
                         "division_id" => $post['division_id'],
                         "departement_id" => $post['departement_id'],
                         "departement_sub_id" => $post['departement_sub_id']
                     );
+
+                    if($post['type'] == "PERMANENT"){
+                        $this->crud->update('employees', ["id" => $post['employee_id']], $postEmployee);
+                    }
+
+                    $send   = $this->crud->create('mutations', $post);
+                    
                 }
                 echo $send;
             } else {
@@ -136,19 +138,16 @@ class Mutations extends CI_Controller
         if ($this->input->post()) {
             $id   = base64_decode($this->input->get('id'));
             $post = $this->input->post();
-            $approval = $this->crud->read('approvals', [], ["table_name" => "mutations"]);
 
-            if ($approval) {
-                $this->crud->delete('agreements', ["id" => $id]);
-                $send   = $this->crud->create('mutations', $post);
-            } else {
-                $this->crud->delete('agreements', ["id" => $id]);
-                $send   = $this->crud->create('mutations', $post);
-                $postEmployee = array(
-                    "division_id" => $post['division_id'],
-                    "departement_id" => $post['departement_id'],
-                    "departement_sub_id" => $post['departement_sub_id']
-                );
+            $send = $this->crud->update('mutations', ['id' => $id], $post);
+
+            $postEmployee = array(
+                "division_id" => $post['division_id'],
+                "departement_id" => $post['departement_id'],
+                "departement_sub_id" => $post['departement_sub_id']
+            );
+
+            if($post['type'] == "PERMANENT"){
                 $this->crud->update('employees', ["id" => $post['employee_id']], $postEmployee);
             }
 
