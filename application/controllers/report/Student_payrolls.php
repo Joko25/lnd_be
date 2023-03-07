@@ -338,6 +338,7 @@ class Student_payrolls extends CI_Controller
                                             <th rowspan="2" style="text-align:center;">Join Date</th>
                                             <th rowspan="2" style="text-align:center;">Fit of Service</th>
                                             <th rowspan="2" style="text-align:center;">Departement</th>
+                                            <th rowspan="2" style="text-align:center;">Departement Sub</th>
                                             <th rowspan="2" width="50" style="text-align:center;">Attandance</th>
                                             <th colspan="3" style="text-align:center;">Allowence Amount Type</th>
                                             <th rowspan="2" style="text-align:center;">Allowence</th>
@@ -354,17 +355,20 @@ class Student_payrolls extends CI_Controller
                                             <th width="50" style="text-align:center;">MINUS</th>
                                         </tr>';
 
-                        $this->db->select("a.id, a.number, a.name, a.date_sign, b.name as division_name, c.name as departement_name, e.amount, e.boarding_fee");
+                        $this->db->select("a.id, a.number, a.name, a.date_sign, b.name as division_name, c.name as departement_name, f.name as departement_sub_name, e.amount, e.boarding_fee");
                         $this->db->from('employees a');
                         $this->db->join('divisions b', 'a.division_id = b.id');
                         $this->db->join('departements c', 'a.departement_id = c.id');
                         $this->db->join('groups d', 'a.group_id = d.id');
                         $this->db->join('sources e', 'a.source_id = e.id');
+                        $this->db->join('departement_subs f', 'a.departement_sub_id = f.id');
                         $this->db->where('a.status', 0);
                         $this->db->where('a.group_id', $record['group_id']);
                         $this->db->where('a.source_id', $record['source_id']);
                         $this->db->like('a.id', $filter_employee);
                         $this->db->group_by('a.number');
+                        $this->db->order_by('c.name', 'asc');
+                        $this->db->order_by('f.name', 'asc');
                         $this->db->order_by('a.name', 'asc');
                         $this->db->limit(20, ($i * 20));
                         $employees = $this->db->get()->result_array();
@@ -467,6 +471,7 @@ class Student_payrolls extends CI_Controller
                                             <td>' . date("d F Y", strtotime($employee['date_sign'])) . '</td>
                                             <td>' . $this->readService($employee['date_sign'], $filter_to) . '</td>
                                             <td>' . $employee['departement_name'] . '</td>
+                                            <td>' . $employee['departement_sub_name'] . '</td>
                                             <td style="text-align:center;">' . (@$attandance_count) . '</td>
                                             <td style="text-align:center;">' . $payroll_1 . '</td>
                                             <td style="text-align:center;">' . $payroll_2 . '</td>
