@@ -32,6 +32,16 @@
                 <span style="width:35%; display:inline-block;">Employee</span>
                 <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
             </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Status Attandance</span>
+                <select style="width:60%;" id="filter_status" panelHeight="auto" class="easyui-combobox">
+                    <!-- <option value="All">CHOOSE ALL</option> -->
+                    <option value="CHECK IN">CHECK IN</option>
+                    <option value="PERMIT">PERMIT</option>
+                    <option value="LATE">LATE</option>
+                    <option value="ABSENCE">ABSENCE</option>
+                </select>
+            </div>
         </div>
     </fieldset>
 
@@ -57,13 +67,15 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
+        var filter_status = $("#filter_status").combobox('getValue');
 
         var url = "?filter_from=" + filter_from +
             "&filter_to=" + filter_to +
             "&filter_division=" + filter_division +
             "&filter_departement=" + filter_departement +
             "&filter_departement_sub=" + filter_departement_sub +
-            "&filter_employee=" + filter_employee;
+            "&filter_employee=" + filter_employee +
+            "&filter_status=" + filter_status;
 
         var date1 = new Date(filter_from);
         var date2 = new Date(filter_to);
@@ -91,13 +103,15 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
+        var filter_status = $("#filter_status").combobox('getValue');
 
         var url = "?filter_from=" + filter_from +
             "&filter_to=" + filter_to +
             "&filter_division=" + filter_division +
             "&filter_departement=" + filter_departement +
             "&filter_departement_sub=" + filter_departement_sub +
-            "&filter_employee=" + filter_employee;
+            "&filter_employee=" + filter_employee +
+            "&filter_status=" + filter_status;
 
         var date1 = new Date(filter_from);
         var date2 = new Date(filter_to);

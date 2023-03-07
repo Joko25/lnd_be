@@ -104,7 +104,7 @@ class Mutations extends CI_Controller
         if ($this->input->post()) {
             if ($this->form_validation->run() == TRUE) {
                 $post = $this->input->post();
-                $departement_id = $this->session->departement_id; 
+                $departement_id = $this->session->departement_id;
                 $approval = $this->crud->read('approvals', [], ["table_name" => "mutations", "departement_id" => $departement_id]);
 
                 if ($approval) {
@@ -116,12 +116,11 @@ class Mutations extends CI_Controller
                         "departement_sub_id" => $post['departement_sub_id']
                     );
 
-                    if($post['type'] == "PERMANENT"){
+                    if ($post['type'] == "PERMANENT") {
                         $this->crud->update('employees', ["id" => $post['employee_id']], $postEmployee);
                     }
 
                     $send   = $this->crud->create('mutations', $post);
-                    
                 }
                 echo $send;
             } else {
@@ -147,7 +146,7 @@ class Mutations extends CI_Controller
                 "departement_sub_id" => $post['departement_sub_id']
             );
 
-            if($post['type'] == "PERMANENT"){
+            if ($post['type'] == "PERMANENT") {
                 $this->crud->update('employees', ["id" => $post['employee_id']], $postEmployee);
             }
 
@@ -163,6 +162,102 @@ class Mutations extends CI_Controller
         $data = $this->input->post();
         $send = $this->crud->delete('mutations', $data);
         echo $send;
+    }
+
+    //UPLOAD DATA
+    public function upload()
+    {
+        error_reporting(0);
+        require_once 'assets/vendors/excel_reader2.php';
+        $target = basename($_FILES['file_upload']['name']);
+        move_uploaded_file($_FILES['file_upload']['tmp_name'], $target);
+        chmod($_FILES['file_upload']['name'], 0777);
+        $file = $_FILES['file_upload']['name'];
+        $data = new Spreadsheet_Excel_Reader($file, false);
+        $total_row = $data->rowcount($sheet_index = 0);
+
+        for ($i = 3; $i <= $total_row; $i++) {
+            $datas[] = array(
+                'number' => $data->val($i, 2),
+                'departement_sub_number' => $data->val($i, 3),
+                'trans_date' => $data->val($i, 4),
+                'type' => $data->val($i, 5),
+                'description' => $data->val($i, 6),
+            );
+        }
+
+        $datas['total'] = count($datas);
+        echo json_encode($datas);
+
+        unlink($_FILES['file_upload']['name']);
+    }
+
+    public function uploadclearFailed()
+    {
+        @unlink('failed/mutations.txt');
+    }
+
+    public function uploadcreateFailed()
+    {
+        if ($this->input->post()) {
+            $message = $this->input->post('message');
+            $textFailed = fopen('failed/mutations.txt', 'a');
+            fwrite($textFailed, $message . "\n");
+            fclose($textFailed);
+        }
+    }
+
+    public function uploadDownloadFailed()
+    {
+        $file = "failed/mutations.txt";
+
+        header('Content-Description: File Failed');
+        header('Content-Disposition: attachment; filename=' . basename($file));
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . @filesize($file));
+        header("Content-Type: text/plain");
+        @readfile($file);
+    }
+
+    public function uploadcreate()
+    {
+        if ($this->input->post()) {
+            $data = $this->input->post('data');
+            //Cek Process Number
+            $employee = $this->crud->read('employees', [], ["number" => $data['number']]);
+            $departement_sub = $this->crud->read('departement_subs', [], ["number" => $data['departement_sub_number']]);
+
+            if (empty($employee)) {
+                echo json_encode(array("title" => "Not Found", "message" => "Employee ID " . $data['number'] . " Not Found", "theme" => "error"));
+            } elseif (empty($departement_sub)) {
+                echo json_encode(array("title" => "Not Found", "message" => "Departement Sub ID " . $data['departement_sub_number'] . " Not Found", "theme" => "error"));
+            } else {
+                $post = array(
+                    "division_id" => $departement_sub->division_id,
+                    "departement_id" => $departement_sub->departement_id,
+                    "departement_sub_id" => $departement_sub->id,
+                    "employee_id" => $employee->id,
+                    "trans_date" => $data['trans_date'],
+                    "type" => $data['type'],
+                    "description" => $data['description'],
+                );
+
+                $postEmployee = array(
+                    "division_id" => $departement_sub->division_id,
+                    "departement_id" => $departement_sub->departement_id,
+                    "departement_sub_id" => $departement_sub->id
+                );
+
+                if ($data['type'] == "PERMANENT") {
+                    $this->crud->update('employees', ["id" => $employee->id], $postEmployee);
+                }
+
+                $send   = $this->crud->create('mutations', $post);
+                echo $send;
+            }
+        }
     }
 
     //PRINT & EXCEL DATA
