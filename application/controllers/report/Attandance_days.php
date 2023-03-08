@@ -58,6 +58,8 @@ class Attandance_days extends CI_Controller
             $this->db->like('d.id', $filter_departement);
             $this->db->like('e.id', $filter_departement_sub);
             $this->db->group_by('b.number');
+            $this->db->order_by('d.name', 'ASC');
+            $this->db->order_by('e.name', 'ASC');
             $this->db->order_by('b.name', 'ASC');
             $records = $this->db->get()->result_array();
 
@@ -304,6 +306,7 @@ class Attandance_days extends CI_Controller
                                     </tr>';
                         $no++;
                     }
+                    
                     // } elseif ($filter_status == "All") {
                     //     $html .= $allFilter;
                     // }

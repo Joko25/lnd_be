@@ -70,6 +70,7 @@ class Employees extends CI_Controller
                 $this->db->join('maritals k', 'k.id = a.marital_id', 'left');
                 $this->db->join('religions l', 'l.id = a.religion_id', 'left');
                 $this->db->where('a.deleted', 0);
+                $this->db->where('a.status', 0);
                 $this->db->like("a.division_id", $form['filter_division']);
                 $this->db->like("a.departement_id", $form['filter_departement']);
                 $this->db->like("a.departement_sub_id", $form['filter_departement_sub']);
