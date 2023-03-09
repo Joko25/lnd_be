@@ -331,8 +331,8 @@
         if (departement_id != "") {
             if (endEditing()) {
                 $('#dg2').datagrid('appendRow', {
-                    start: '08:00:00',
-                    end: '16:00:00',
+                    start: '00:00:00',
+                    end: '00:00:00',
                 });
                 editIndex = $('#dg2').datagrid('getRows').length - 1;
                 $('#dg2').datagrid('selectRow', editIndex).datagrid('beginEdit', editIndex);
