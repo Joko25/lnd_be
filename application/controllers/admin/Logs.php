@@ -1,7 +1,6 @@
 <?php
 date_default_timezone_set("Asia/Bangkok");
 defined('BASEPATH') or exit('No direct script access allowed');
-
 class Logs extends CI_Controller
 {
     public function __construct()
@@ -20,14 +19,12 @@ class Logs extends CI_Controller
             redirect('error_session');
         } elseif ($this->checkuserAccess($this->id_menu()) > 0) {
             $data['button'] = $this->getbutton($this->id_menu());
-
             $this->load->view('template/header', $data);
             $this->load->view('admin/logs');
         } else {
             redirect('error_access');
         }
     }
-
     //GET DATATABLES
     public function datatables()
     {
@@ -70,6 +67,30 @@ class Logs extends CI_Controller
         echo $logs;
     }
 
+    //DETAIL DATA
+    public function details()
+    {
+        $id = $this->input->post('id');
+
+        $this->db->select('*');
+        $this->db->from('logs');
+        $this->db->where("id", $id);
+        $record = $this->db->get()->row();
+        $descriptions = json_decode($record->description);
+
+        $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+                <table id="customers" border="1" style="width: 100%;">';
+        foreach ($descriptions as $description => $value) {
+            $html .= '  <tr>
+                            <th>' . $description . '</th>
+                            <th>' . $value . '</th>
+                        </tr>';
+        }
+        $html .= '</table>';
+
+        die($html);
+    }
+
     //PRINT DATA
     public function print($option = "")
     {
@@ -78,17 +99,14 @@ class Logs extends CI_Controller
             header("Content-type: application/vnd-ms-excel");
             header("Content-Disposition: attachment; filename=log_$format.xls");
         }
-
         //CONFIG
         $config = $this->crud->read('config');
-
         $search = $this->input->get();
         $this->db->select('*');
         $this->db->from('logs');
         $this->db->like($search);
         $this->db->order_by('created_date', 'DESC');
         $records = $this->db->get()->result_array();
-
         $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
         <center>
             <div style="float: left; font-size: 12px; text-align: left;">
@@ -105,7 +123,7 @@ class Logs extends CI_Controller
                 </table>
             </div>
             <div style="float: right; font-size: 12px; text-align: right;">
-                Print Date ' . date("d M Y H:m:s") . ' <br>
+                Print Date ' . date("d M Y H:i:s") . ' <br>
                 Print By ' . $this->session->username . '  
             </div>
         </center>
@@ -133,7 +151,6 @@ class Logs extends CI_Controller
                     <td>' . $data['description'] . '</td>';
             $no++;
         }
-
         $html .= '</table></body></html>';
         echo $html;
     }

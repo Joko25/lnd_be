@@ -141,8 +141,10 @@ class Crud extends CI_Model
                 $this->db->delete('notifications', ["table_name" => $table, "table_id" => $read->id]);
             }
 
+            $dataBefore = $this->read($table, [], $data);
+
             if ($this->db->delete($table, $data)) {
-                $this->logs("Delete", json_encode($data), $table);
+                $this->logs("Delete", json_encode($dataBefore), $table);
                 return json_encode(array("title" => "Good Job", "message" => "Data Deleted Successfully", "theme" => "success"));
             } else {
                 return log_message('error', 'There is an error in your system or data');

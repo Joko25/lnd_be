@@ -9,18 +9,21 @@
             <th data-options="field:'action',width:100">Action</th>
             <th data-options="field:'menu',width:180">Module</th>
             <th data-options="field:'description',width:300">Description</th>
+            <th data-options="field:'detail',width:100,formatter:BtnDetail">Detail</th>
         </tr>
     </thead>
 </table>
+<div id="dlg_detail" class="easyui-dialog" title="Detail Description" data-options="closed: true,modal:true" style="width: 500px; padding:10px; top: 20px;">
+    <div id="remarks">
 
+    </div>
+</div>
 <!-- TOOLBAR DATAGRID -->
 <div id="toolbar" style="height: 35px;">
     <?= $button ?>
 </div>
-
 <!-- PDF -->
 <iframe id="printout" src="<?= base_url('admin/logs/print') ?>" style="width: 100%;" hidden></iframe>
-
 <script>
     //DELETE DATA
     function deleted() {
@@ -54,7 +57,6 @@
             toastr.info("Please select one of the data in the table first");
         }
     }
-
     $(function() {
         $('#dg').datagrid({
             url: '<?= base_url('admin/logs/datatables') ?>',
@@ -64,7 +66,6 @@
             rownumbers: true
         }).datagrid('enableFilter');
     });
-
     //PRINT PDF
     function pdf() {
         $("#printout").get(0).contentWindow.print();
@@ -76,5 +77,22 @@
     //RELOAD
     function reload() {
         window.location.reload();
+    }
+
+    function details(id) {
+        $("#dlg_detail").dialog('open');
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('admin/logs/details') ?>",
+            data: "id=" + id,
+            dataType: "html",
+            success: function(remarks) {
+                $("#remarks").html(remarks);
+            }
+        });
+    }
+
+    function BtnDetail(val, row) {
+        return '<a class="btn btn-primary w-100" style="pointer-events: visible; opacity:1;" onclick="details(' + row.id + ')"><i class="fa fa-eye"></i> Details</a>';
     }
 </script>
