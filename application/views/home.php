@@ -40,31 +40,40 @@
 
 	<!-- USERS ONLINE -->
 	<div data-options="region:'east',split:false, collapsed:true, hideCollapsedContent:false" title="Users Online" style="width:250px;">
-		<table class="user-header" style="width: 100%;">
-			<?php
-			foreach ($users as $user) {
-				if ($user->avatar == "") {
-					$avatar = base_url('assets/image/users/default.png');
-				} else {
-					$avatar = $user->avatar;
+		<div style="height: 75%; width: 100%; overflow: auto;">
+			<table class="user-header" style="width: 100%;">
+				<?php
+				foreach ($users as $user) {
+					if ($user->avatar == "") {
+						$avatar = base_url('assets/image/users/default.png');
+					} else {
+						$avatar = $user->avatar;
+					}
+					$startChats = "onclick='startChats(" . $user->id . ")'";
+					echo '	<tr>
+								<td style="padding:6px;" width="50">
+									<div class="icon-container">
+										<img src="' . $avatar . '" class="user-online" />
+										<div class="status-circle"></div>
+									</div>
+								</td>
+								<td>
+									<a href="#" ' . $startChats . ' style="text-decoration:none;">
+										<b style="font-size:12px; color:black;">' . $user->name . '</b><br>
+										<small style="color:black;">' . $user->position . '</small>
+									</a>
+								</td>
+							</tr>';
 				}
-				echo '	<tr>
-							<td style="padding:5px;">
-								<div class="icon-container">
-									<img src="' . $avatar . '" class="user-online" />
-									<div class="status-circle"></div>
-								</div>
-							</td>
-							<td>
-								<a href="#" onclick="startChats()" style="text-decoration:none;">
-									<b style="font-size:12px; color:black;">' . $user->name . '</b><br>
-									<small style="color:black;">' . $user->position . '</small>
-								</a>
-							</td>
-						</tr>';
-			}
-			?>
-		</table>
+				?>
+			</table>
+		</div>
+		<div style="height: 25%; width: 100%;">
+			<center>
+				<img src="<?= base_url('assets/image/helpdesk.png') ?>" width="240" />
+				<a class="btn btn-lg btn-primary w-75" style="pointer-events: visible; opacity: 1;">SUPPORT SYSTEM</a>
+			</center>
+		</div>
 	</div>
 
 	<!-- FOOTER -->
@@ -129,9 +138,45 @@
 	</div>
 
 	<!-- CHATS -->
-	<div id="dlg_chats" class="easyui-dialog" title="Chats" data-options="closed: true, cls:'c2',border:'thin'" style="width: 300px; height: 400px; top: 60px;">
-		<div class="alert alert-danger" role="alert">
-			Chats No Active
+	<div id="dlg_chats" class="easyui-dialog" title="Chats" data-options="closed: true, cls:'c2',border:'thin'" style="width: 400px; height: 600px; top: 60px;">
+		<div style="width: 100%;">
+			<div style="position: absolute; top: 35px; margin:5px; width: 100%;">
+				<table style="width: 100%;">
+					<tr>
+						<td style="padding:5px;" width="50">
+							<div class="icon-container">
+								<img src="<?= base_url('assets/image/users/default.png') ?>" class="user-online" width="100" />
+								<div class="status-circle"></div>
+							</div>
+						</td>
+						<td>
+							<a href="#" style="text-decoration:none;">
+								<b style="font-size:12px; color:black;" id="chatName">Name</b><br>
+								<small style="color:black;" id="chatPosition">Position</small>
+							</a>
+						</td>
+					</tr>
+				</table>
+				<hr>
+			</div>
+			<div style="margin-top: 60px; height: 450px; overflow: auto;" id="messageChats">
+				<div class="alert alert-warning p-2" role="alert">
+					Chats No Active
+				</div>
+				<div class="alert alert-info p-2" style="text-align: right;" role="alert">
+					Chats No Active
+				</div>
+				<div class="alert alert-warning p-2" role="alert">
+					Chats No Active
+				</div>
+				<div class="alert alert-warning p-2" role="alert">
+					Chats No Active Chats No Active Chats No Active Chats No Active Chats No Active Chats No Active Chats No Active
+				</div>
+			</div>
+			<div style="position: absolute; bottom: 0px; margin:10px; width: 93%;">
+				<input class="form-control w-100" id="to_users_id" />
+				<input class="form-control w-100" id="inputChats" autocomplete="false" autofocus placeholder="Type Message..." />
+			</div>
 		</div>
 	</div>
 </body>
@@ -265,9 +310,40 @@
 		return nodes;
 	}
 
-	function startChats() {
+	function startChats(user_id) {
+		$("#to_users_id").val(user_id);
 		$("#dlg_chats").dialog('open');
+		$("#messageChats").scrollTop($(document).height());
+		$('#inputChats').focus();
+
+		$.ajax({
+			type: "post",
+			url: "<?= base_url('admin/users/readId') ?>",
+			data: "id=" + user_id,
+			dataType: "json",
+			success: function(user) {
+				$("#chatName").html(user.name);
+				$("#chatPosition").html(user.position);
+			}
+		});
+
+		$.ajax({
+			type: "post",
+			url: "<?= base_url('home/chats') ?>",
+			data: "to_users_id=" + user_id,
+			dataType: "html",
+			success: function(chats) {
+
+			}
+		});
 	}
+
+	$('#inputChats').keypress(function(e) {
+		if (e.which == 13) {
+			var inputChats = $(this).val();
+			alert(inputChats);
+		}
+	});
 
 	function profile() {
 		$('#dlg_profile').dialog('open');

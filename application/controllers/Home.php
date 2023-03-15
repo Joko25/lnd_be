@@ -70,4 +70,17 @@ class Home extends CI_Controller
             show_error("Cannot Process your request");
         }
     }
+
+    public function chats()
+    {
+        if ($this->input->post()) {
+            $to_users_id = $this->input->post('to_users_id');
+            $from_users_id = $this->session->id;
+
+            $chats = $this->crud->reads("chats", [], ["to_users_id" => $to_users_id, "from_users_id" => $from_users_id], "", "created_date", "asc");
+            foreach ($chats as $chat) {
+                echo '';
+            }
+        }
+    }
 }
