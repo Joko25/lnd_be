@@ -77,10 +77,30 @@ class Home extends CI_Controller
             $to_users_id = $this->input->post('to_users_id');
             $from_users_id = $this->session->id;
 
-            $chats = $this->crud->reads("chats", [], ["to_users_id" => $to_users_id, "from_users_id" => $from_users_id], "", "created_date", "asc");
+            $chats = $this->crud->query("SELECT * FROM chats WHERE (to_users_id='$to_users_id' and from_users_id = '$from_users_id') or (to_users_id='$from_users_id' and from_users_id = '$to_users_id')");
             foreach ($chats as $chat) {
-                echo '';
+                if ($chat->to_users_id == $to_users_id) {
+                    echo '  <div class="alert alert-warning p-2" role="alert">
+                                ' . $chat->messages . '
+                            </div>';
+                } else {
+                    echo '  <div class="alert alert-info p-2" style="text-align: right;" role="alert">
+                                ' . $chat->messages . '
+                            </div>';
+                }
             }
+        }
+    }
+
+    public function createChats()
+    {
+        if ($this->input->post()) {
+            $from_users_id = $this->session->id;
+            $to_users_id = $this->input->post('to_users_id');
+            $messages = $this->input->post('messages');
+
+            $chats = $this->crud->create("chats", ["from_users_id" => $from_users_id, "to_users_id" => $to_users_id, "messages" => $messages]);
+            echo json_encode($chats);
         }
     }
 }

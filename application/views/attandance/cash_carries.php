@@ -99,7 +99,7 @@
 </div>
 
 <!-- DIALOG SAVE -->
-<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 900px; height: 500px; padding:10px; top: 20px;">
+<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 1100px; height: 500px; padding:10px; top: 20px;">
     <form id="frm_insert" method="post" novalidate>
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Form Data</b></legend>
@@ -287,6 +287,37 @@
                         }
                     }
                 }, {
+                    field: 'calculate',
+                    width: 80,
+                    align: 'center',
+                    title: "Calculate",
+                    formatter: function(value, row, index) {
+                        var s = '<a href="javascript:void(0)" class="btn btn-success btn-sm" style="pointer-events:auto; opacity:1;" onclick="calculate(this)">Calculate</a> ';
+                        return s;
+                    }
+                }, {
+                    field: 'plan',
+                    width: 80,
+                    halign: 'center',
+                    title: "Plan",
+                    editor: {
+                        type: 'numberbox',
+                        options: {
+                            required: true
+                        }
+                    }
+                }, {
+                    field: 'amount',
+                    width: 80,
+                    halign: 'center',
+                    title: "Actual",
+                    editor: {
+                        type: 'numberbox',
+                        options: {
+                            required: true
+                        }
+                    }
+                }, {
                     field: 'meal',
                     width: 80,
                     align: 'center',
@@ -331,8 +362,8 @@
         if (departement_id != "") {
             if (endEditing()) {
                 $('#dg2').datagrid('appendRow', {
-                    start: '00:00:00',
-                    end: '00:00:00',
+                    start: '00:00',
+                    end: '00:00',
                 });
                 editIndex = $('#dg2').datagrid('getRows').length - 1;
                 $('#dg2').datagrid('selectRow', editIndex).datagrid('beginEdit', editIndex);

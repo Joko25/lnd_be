@@ -160,21 +160,10 @@
 				<hr>
 			</div>
 			<div style="margin-top: 60px; height: 450px; overflow: auto;" id="messageChats">
-				<div class="alert alert-warning p-2" role="alert">
-					Chats No Active
-				</div>
-				<div class="alert alert-info p-2" style="text-align: right;" role="alert">
-					Chats No Active
-				</div>
-				<div class="alert alert-warning p-2" role="alert">
-					Chats No Active
-				</div>
-				<div class="alert alert-warning p-2" role="alert">
-					Chats No Active Chats No Active Chats No Active Chats No Active Chats No Active Chats No Active Chats No Active
-				</div>
+
 			</div>
 			<div style="position: absolute; bottom: 0px; margin:10px; width: 93%;">
-				<input class="form-control w-100" id="to_users_id" />
+				<input class="form-control w-100" id="to_users_id" hidden />
 				<input class="form-control w-100" id="inputChats" autocomplete="false" autofocus placeholder="Type Message..." />
 			</div>
 		</div>
@@ -316,6 +305,16 @@
 		$("#messageChats").scrollTop($(document).height());
 		$('#inputChats').focus();
 
+		Swal.fire({
+			title: 'Please Wait for Open Chats',
+			showConfirmButton: false,
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+			didOpen: () => {
+				Swal.showLoading();
+			},
+		});
+
 		$.ajax({
 			type: "post",
 			url: "<?= base_url('admin/users/readId') ?>",
@@ -333,7 +332,8 @@
 			data: "to_users_id=" + user_id,
 			dataType: "html",
 			success: function(chats) {
-
+				$("#messageChats").html(chats);
+				Swal.close();
 			}
 		});
 	}
@@ -341,7 +341,24 @@
 	$('#inputChats').keypress(function(e) {
 		if (e.which == 13) {
 			var inputChats = $(this).val();
-			alert(inputChats);
+			var to_users_id = $("#to_users_id").val();
+
+			if (inputChats == "") {
+				toastr.error("Message empty");
+			} else {
+				$.ajax({
+					type: "post",
+					url: "<?= base_url('home/createChats') ?>",
+					data: "to_users_id=" + to_users_id + "&messages=" + inputChats,
+					dataType: "json",
+					success: function(response) {
+						toastr.success("Message has been sent");
+						startChats(to_users_id);
+						$("#inputChats").val('');
+						$("#inputChats").focus();
+					}
+				});
+			}
 		}
 	});
 
