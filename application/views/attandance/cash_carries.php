@@ -13,7 +13,8 @@
             <th colspan="6" data-options="field:'',width:80,halign:'center'">Request</th>
             <th colspan="3" data-options="field:'',width:80,halign:'center'">Attandance</th>
             <th rowspan="2" data-options="field:'meal',width:80,halign:'center',align:'center',styler:cellStyler, formatter:cellFormatter">Meal</th>
-            <th rowspan="2" data-options="field:'amount',width:80,halign:'center',align:'right', formatter:numberformat">Amount</th>
+            <th rowspan="2" data-options="field:'amount',width:80,halign:'center',align:'right', formatter:numberformat">Plan</th>
+            <th rowspan="2" data-options="field:'actual',width:80,halign:'center',align:'right', formatter:numberformat">Actual</th>
             <th rowspan="2" data-options="field:'remarks',width:200,halign:'center'">Remarks</th>
             <th colspan="3" data-options="field:'',width:100,halign:'center'"> Approval</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
@@ -95,11 +96,10 @@
 
 <div id="toolbar2">
     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="append()"><i class="fa fa-plus"></i> Add</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="removeit()"><i class="fa fa-times"></i> Remove</a>
 </div>
 
 <!-- DIALOG SAVE -->
-<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 1100px; height: 500px; padding:10px; top: 20px;">
+<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 1200px; height: 500px; padding:10px; top: 20px;">
     <form id="frm_insert" method="post" novalidate>
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Form Data</b></legend>
@@ -287,37 +287,6 @@
                         }
                     }
                 }, {
-                    field: 'calculate',
-                    width: 80,
-                    align: 'center',
-                    title: "Calculate",
-                    formatter: function(value, row, index) {
-                        var s = '<a href="javascript:void(0)" class="btn btn-success btn-sm" style="pointer-events:auto; opacity:1;" onclick="calculate(this)">Calculate</a> ';
-                        return s;
-                    }
-                }, {
-                    field: 'plan',
-                    width: 80,
-                    halign: 'center',
-                    title: "Plan",
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            required: true
-                        }
-                    }
-                }, {
-                    field: 'amount',
-                    width: 80,
-                    halign: 'center',
-                    title: "Actual",
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            required: true
-                        }
-                    }
-                }, {
                     field: 'meal',
                     width: 80,
                     align: 'center',
@@ -330,6 +299,42 @@
                         }
                     }
                 }, {
+                    field: 'calculate',
+                    width: 80,
+                    align: 'center',
+                    title: "Calculate",
+                    formatter: function(value, row, index) {
+                        if (row.editing) {
+                            var s = '<a href="javascript:void(0)" class="btn btn-success btn-sm" style="pointer-events:auto; opacity:1;" onclick="calculate(' + index + ')">Calculate</a> ';
+                            return s;
+                        } else {
+                            //
+                        }
+                    }
+                }, {
+                    field: 'plan',
+                    width: 80,
+                    halign: 'center',
+                    title: "Plan",
+                    editor: {
+                        type: 'numberbox',
+                        options: {
+                            required: true,
+                            readonly: true,
+                        }
+                    }
+                }, {
+                    field: 'amount',
+                    width: 80,
+                    halign: 'center',
+                    title: "Actual",
+                    editor: {
+                        type: 'numberbox',
+                        options: {
+                            required: true,
+                        }
+                    }
+                }, {
                     field: 'remarks',
                     width: 200,
                     halign: 'center',
@@ -337,8 +342,42 @@
                     editor: {
                         type: 'textbox'
                     }
+                }, {
+                    field: 'action',
+                    title: 'Action',
+                    width: 120,
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        if (row.editing) {
+                            var s = '<a href="javascript:void(0)" class="btn btn-success btn-sm" style="pointer-events:auto; opacity:1;" onclick="saverow(this)">Save</a> ';
+                            var c = '<a href="javascript:void(0)" class="btn btn-danger btn-sm" style="pointer-events:auto; opacity:1;" onclick="cancelrow(this)">Cancel</a>';
+                            return s + c;
+                        } else {
+                            var e = '<a href="javascript:void(0)" class="btn btn-primary btn-sm" style="pointer-events:auto; opacity:1;" onclick="editrow(this)">Edit</a> ';
+                            var d = '<a href="javascript:void(0)" class="btn btn-danger btn-sm" style="pointer-events:auto; opacity:1;" onclick="deleterow(this)">Delete</a>';
+                            return e + d;
+                        }
+                    }
                 }]
             ],
+            onEndEdit: function(index, row) {
+                var ed = $(this).datagrid('getEditor', {
+                    index: index,
+                    field: 'employee_id'
+                });
+            },
+            onBeforeEdit: function(index, row) {
+                row.editing = true;
+                $(this).datagrid('refreshRow', index);
+            },
+            onAfterEdit: function(index, row) {
+                row.editing = false;
+                $(this).datagrid('refreshRow', index);
+            },
+            onCancelEdit: function(index, row) {
+                row.editing = false;
+                $(this).datagrid('refreshRow', index);
+            },
         });
     }
 
@@ -373,12 +412,78 @@
         }
     }
 
-    function removeit() {
-        if (editIndex == undefined) {
-            return
+    function getRowIndex(target) {
+        var tr = $(target).closest('tr.datagrid-row');
+        return parseInt(tr.attr('datagrid-row-index'));
+    }
+
+    function editrow(target) {
+        $('#dg2').datagrid('beginEdit', getRowIndex(target));
+    }
+
+    function deleterow(target) {
+        $.messager.confirm('Confirm', 'Are you sure?', function(r) {
+            if (r) {
+                $('#dg2').datagrid('deleteRow', getRowIndex(target));
+            }
+        });
+    }
+
+    function saverow(target) {
+        $('#dg2').datagrid('endEdit', getRowIndex(target));
+    }
+
+    function cancelrow(target) {
+        $('#dg2').datagrid('cancelEdit', getRowIndex(target));
+    }
+
+    function calculate(index) {
+        var trans_date = $('#trans_date').datebox('getValue');
+        var row_employee_id = $('#dg2').datagrid('getEditor', {
+            index: index,
+            field: 'employee_id'
+        });
+        var row_meal = $('#dg2').datagrid('getEditor', {
+            index: index,
+            field: 'meal'
+        });
+        var row_start = $('#dg2').datagrid('getEditor', {
+            index: index,
+            field: 'start'
+        });
+        var row_end = $('#dg2').datagrid('getEditor', {
+            index: index,
+            field: 'end'
+        });
+        var row_plan = $('#dg2').datagrid('getEditor', {
+            index: index,
+            field: 'plan'
+        });
+        var row_amount = $('#dg2').datagrid('getEditor', {
+            index: index,
+            field: 'amount'
+        });
+
+        var employee_id = $(row_employee_id.target).textbox('getValue');
+        var start = $(row_start.target).textbox('getValue');
+        var end = $(row_end.target).textbox('getValue');
+
+        if ($(row_meal.target).is(':checked')) {
+            var meal = "1";
+        } else {
+            var meal = "0";
         }
-        $('#dg2').datagrid('cancelEdit', editIndex).datagrid('deleteRow', editIndex);
-        editIndex = undefined;
+
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('attandance/cash_carries/readOvertimePriceTemp') ?>",
+            data: "trans_date=" + trans_date + "&employee_id=" + employee_id + "&start=" + start + "&end=" + end + "&meal=" + meal,
+            dataType: "html",
+            success: function(amount) {
+                $(row_plan.target).numberbox('setValue', amount);
+                $(row_amount.target).numberbox('setValue', amount);
+            }
+        });
     }
 
     //EDIT DATA
@@ -531,6 +636,7 @@
                                     start: rows[i].start,
                                     end: rows[i].end,
                                     meal: rows[i].meal,
+                                    amount: rows[i].amount,
                                     remarks: rows[i].remarks
                                 },
                                 dataType: "json",

@@ -5,6 +5,7 @@
             <th field="ck" checkbox="true"></th>
             <th data-options="field:'dayname',width:80">Day</th>
             <th data-options="field:'date_in',width:80">Date In</th>
+            <th data-options="field:'date_out',width:80">Date Out</th>
             <th data-options="field:'departement_name',width:200">Departement</th>
             <th data-options="field:'number',width:120">Employee ID</th>
             <th data-options="field:'name',width:200">Employee Name</th>

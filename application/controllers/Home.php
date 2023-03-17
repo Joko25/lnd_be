@@ -77,6 +77,8 @@ class Home extends CI_Controller
             $to_users_id = $this->input->post('to_users_id');
             $from_users_id = $this->session->id;
 
+            $this->crud->update("chats", ["from_users_id" => $to_users_id, "to_users_id" => $from_users_id], ["status" => 1]);
+
             $chats = $this->crud->query("SELECT * FROM chats WHERE (to_users_id='$to_users_id' and from_users_id = '$from_users_id') or (to_users_id='$from_users_id' and from_users_id = '$to_users_id')");
             foreach ($chats as $chat) {
                 if ($chat->to_users_id == $to_users_id) {

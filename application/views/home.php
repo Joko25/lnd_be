@@ -49,6 +49,14 @@
 					} else {
 						$avatar = $user->avatar;
 					}
+
+					$chats = $this->crud->reads("chats", [], ["from_users_id" => $user->id, "status" => 0]);
+					if (count($chats) > 0) {
+						$totalChats = '<div style="border-radius:50%;background:red; color:white; text-align:center;">' . count($chats) . '</div>';
+					} else {
+						$totalChats = '';
+					}
+
 					$startChats = "onclick='startChats(" . $user->id . ")'";
 					echo '	<tr>
 								<td style="padding:6px;" width="50">
@@ -62,6 +70,9 @@
 										<b style="font-size:12px; color:black;">' . $user->name . '</b><br>
 										<small style="color:black;">' . $user->position . '</small>
 									</a>
+								</td>
+								<td style="padding:6px; text-align:right;" width="30">
+									' . $totalChats . '
 								</td>
 							</tr>';
 				}
@@ -91,7 +102,7 @@
 		</div>
 	</div>
 
-	<!-- CHANGE PASSWORD -->
+	<!-- CHANGE PROFILE -->
 	<div id="dlg_profile" class="easyui-dialog" title="Profile" data-options="closed: true" style="width: 400px; padding:10px; top: 20px;">
 		<form id="frm_profile" method="post" enctype="multipart/form-data" novalidate>
 			<fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
@@ -302,17 +313,15 @@
 	function startChats(user_id) {
 		$("#to_users_id").val(user_id);
 		$("#dlg_chats").dialog('open');
-		$("#messageChats").scrollTop($(document).height());
+		var h = $("#messageChats").get(0).scrollHeight;
+		$("#messageChats").animate({
+			scrollTop: h
+		});
 		$('#inputChats').focus();
 
-		Swal.fire({
-			title: 'Please Wait for Open Chats',
-			showConfirmButton: false,
-			allowOutsideClick: false,
-			allowEscapeKey: false,
-			didOpen: () => {
-				Swal.showLoading();
-			},
+		$.messager.progress({
+			title: 'Please waiting',
+			msg: 'Open Chat...'
 		});
 
 		$.ajax({
@@ -333,7 +342,7 @@
 			dataType: "html",
 			success: function(chats) {
 				$("#messageChats").html(chats);
-				Swal.close();
+				$.messager.progress('close');
 			}
 		});
 	}

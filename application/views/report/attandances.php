@@ -96,7 +96,7 @@
         var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
         if (Difference_In_Days <= 31) {
-            if ((filter_division != "" && filter_departement != "") || filter_employee != "") {
+            if ((filter_division != "" && filter_departement != "" && filter_departement_sub != "") || filter_employee != "") {
                 $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
                 $("#printout").attr('src', '<?= base_url('report/attandances/print') ?>' + url);
             } else {
@@ -135,7 +135,7 @@
         var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
         if (Difference_In_Days <= 31) {
-            if ((filter_division != "" && filter_departement != "") || filter_employee != "") {
+            if ((filter_division != "" && filter_departement != "" && filter_departement_sub != "") || filter_employee != "") {
                 window.location.assign('<?= base_url('report/attandances/print/excel') ?>' + url);
             } else {
                 toastr.info("Please Select Division, Departement or Employee");

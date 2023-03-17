@@ -284,8 +284,15 @@ class Attandances extends CI_Controller
             $this->db->select('*');
             $this->db->from('attandances');
             $this->db->where('number', $data['number']);
-            $this->db->where("(date_in = '$date_in' or date_out = '$date_in')");
-            $attandance = $this->db->get()->row();
+            $this->db->where("date_in = '$date_in'");
+            $attandance_in = $this->db->get()->row();
+
+            //Attandance
+            $this->db->select('*');
+            $this->db->from('attandances');
+            $this->db->where('number', $data['number']);
+            $this->db->where("date_out = '$date_in'");
+            $attandance_out = $this->db->get()->row();
 
             //Employee
             $this->db->select('*');
@@ -296,30 +303,104 @@ class Attandances extends CI_Controller
             //Jika Terdaftar di master employee
             if (!empty($employee->number)) {
                 if ($data['lokasi'] == 1) {
-                    $data_attandance = array(
-                        'number' => $data['number'],
-                        'date_in' => $date_in,
-                        'time_in' => $time_in,
-                    );
+                    $yesterday = date("Y-m-d", strtotime('-1 days', strtotime($date_in)));
 
-                    if (!empty($attandance->number)) {
-                        $this->crud->update('attandances', ["id" => $attandance->id], $data_attandance);
+                    //Attandance
+                    $this->db->select('*');
+                    $this->db->from('attandances');
+                    $this->db->where('number', $data['number']);
+                    $this->db->where("date_out = '$yesterday'");
+                    $attandance_yesterday_in = $this->db->get()->row();
+
+                    if (!empty($attandance_in->number)) {
+                        $data_attandance = array(
+                            'number' => $data['number'],
+                            'date_in' => $date_in,
+                            'time_in' => $time_in,
+                        );
+                        $this->crud->update('attandances', ["id" => $attandance_in->id], $data_attandance);
                         echo json_encode(array("title" => "Updated", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Update data Check In", "theme" => "success"));
+                    } else if (!empty($attandance_yesterday_in->number)) {
+                        if ($attandance_yesterday_in->date_in == "") {
+                            $data_attandance = array(
+                                'number' => $data['number'],
+                                'date_in' => $date_in,
+                                'time_in' => $time_in,
+                            );
+                            $this->crud->update('attandances', ["id" => $attandance_yesterday_in->id], $data_attandance);
+                            echo json_encode(array("title" => "Updated", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Update data Check In", "theme" => "success"));
+                        } else {
+                            $data_attandance = array(
+                                'number' => $data['number'],
+                                'date_in' => $date_in,
+                                'time_in' => $time_in,
+                            );
+                            $this->crud->create('attandances', $data_attandance);
+                            echo json_encode(array("title" => "Created", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Create data Check In", "theme" => "success"));
+                        }
                     } else {
+                        $data_attandance = array(
+                            'number' => $data['number'],
+                            'date_in' => $date_in,
+                            'time_in' => $time_in,
+                        );
                         $this->crud->create('attandances', $data_attandance);
                         echo json_encode(array("title" => "Created", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Create data Check In", "theme" => "success"));
                     }
                 } else {
-                    $data_attandance = array(
-                        'number' => $data['number'],
-                        'date_out' => $date_in,
-                        'time_out' => $time_in,
-                    );
+                    $yesterday = date("Y-m-d", strtotime('-1 days', strtotime($date_in)));
 
-                    if (!empty($attandance->number)) {
-                        $this->crud->update('attandances', ["id" => $attandance->id], $data_attandance);
+                    //Attandance
+                    $this->db->select('*');
+                    $this->db->from('attandances');
+                    $this->db->where('number', $data['number']);
+                    $this->db->where("date_in = '$yesterday'");
+                    $attandance_yesterday_out = $this->db->get()->row();
+
+                    if (!empty($attandance_out->number)) {
+                        $data_attandance = array(
+                            'number' => $data['number'],
+                            'date_out' => $date_in,
+                            'time_out' => $time_in,
+                        );
+                        $this->crud->update('attandances', ["id" => $attandance_out->id], $data_attandance);
                         echo json_encode(array("title" => "Updated", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Update data Check Out", "theme" => "success"));
+                    } else if (!empty($attandance_yesterday_out->number)) {
+                        if ($attandance_yesterday_out->date_out == "") {
+                            $data_attandance = array(
+                                'number' => $data['number'],
+                                'date_out' => $date_in,
+                                'time_out' => $time_in,
+                            );
+                            $this->crud->update('attandances', ["id" => $attandance_yesterday_out->id], $data_attandance);
+                            echo json_encode(array("title" => "Updated", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Update data Check Out", "theme" => "success"));
+                        } elseif (!empty($attandance_in->number)) {
+                            $data_attandance = array(
+                                'number' => $data['number'],
+                                'date_out' => $date_in,
+                                'time_out' => $time_in,
+                            );
+                            $this->crud->update('attandances', ["id" => $attandance_in->id], $data_attandance);
+                            echo json_encode(array("title" => "Updated", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Update data Check Out", "theme" => "success"));
+                        } else {
+                            $data_attandance = array(
+                                'number' => $data['number'],
+                                'date_in' => $date_in,
+                                'time_in' => "00:00:00",
+                                'date_out' => $date_in,
+                                'time_out' => $time_in,
+                            );
+                            $this->crud->create('attandances', $data_attandance);
+                            echo json_encode(array("title" => "Created", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Create data Check Out", "theme" => "success"));
+                        }
                     } else {
+                        $data_attandance = array(
+                            'number' => $data['number'],
+                            'date_in' => $date_in,
+                            'time_in' => "00:00:00",
+                            'date_out' => $date_in,
+                            'time_out' => $time_in,
+                        );
                         $this->crud->create('attandances', $data_attandance);
                         echo json_encode(array("title" => "Created", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Create data Check Out", "theme" => "success"));
                     }

@@ -194,11 +194,14 @@ class Attandances extends CI_Controller
                     $attandance = $this->db->get()->row();
 
                     //Shift and Setting Group
-                    $this->db->select("d.start, d.end, d.days, d.working, d.tolerance, d.name as shift_name");
+                    $tolerance_hour_min = date("H:i:s", strtotime('-2 Hour', strtotime(@$attandance->time_in)));
+                    $tolerance_hour_plus = date("H:i:s", strtotime('+2 Hour', strtotime(@$attandance->time_in)));
+                    $this->db->select("d.start, d.end, d.days, d.working, d.tolerance, c.name, d.name as shift_name");
                     $this->db->from('shift_employees b');
                     $this->db->join('shifts c', 'c.id = b.shift_id');
                     $this->db->join('shift_details d', 'd.shift_id = c.id');
                     $this->db->where('b.employee_id', $record['id']);
+                    $this->db->where("d.start >=  '$tolerance_hour_min' and d.start <= '$tolerance_hour_plus'");
                     $shift = $this->db->get()->row();
 
                     $this->db->select("*");
@@ -294,10 +297,13 @@ class Attandances extends CI_Controller
                     } else {
                         if ($holiday == "Weekend") {
                             $attandance_status = "";
+                            $shiftName = "";
                         } elseif (@$permit->permit_name != null) {
                             $attandance_status = @strtoupper($permit->permit_name);
+                            $shiftName = "";
                         } else {
                             $attandance_status = @$status_masuk;
+                            $shiftName = @$shift->name . " - " . @$shift->shift_name;
                         }
 
                         if (@$status_masuk == "LATE") {
@@ -315,13 +321,13 @@ class Attandances extends CI_Controller
                                 $html .= '<tr ' . $style . '>
                                                     <td>' . $no . '</td>
                                                     <td>' . date('d F Y', strtotime($working_date)) . '</td>
-                                                    <td>' . @$shift->shift_name . '</td>
+                                                    <td>' . $shiftName . '</td>
                                                     <td>' . @$attandance->time_in . '</td>
                                                     <td>' . @$attandance->time_out . '</td>
                                                     <td>' . @$attandance->request_code . '</td>
                                                     <td>' . @$attandance->start . '</td>
                                                     <td>' . @$attandance->end . '
-                                                    <td>' . @$attandance->duration . '</td>
+                                                    <td></td>
                                                     <td ' . $style_status . '>' . $attandance_status . '</td>
                                                     <td>' . $holiday . '</td>
                                                 </tr>';
@@ -329,13 +335,13 @@ class Attandances extends CI_Controller
                                 $html .= '<tr ' . $style . '>
                                                     <td>' . $no . '</td>
                                                     <td>' . date('d F Y', strtotime($working_date)) . '</td>
-                                                    <td>' . @$shift->shift_name . '</td>
+                                                    <td>' . $shiftName . '</td>
                                                     <td>' . @$attandance->time_in . '</td>
                                                     <td>' . @$attandance->time_out . '</td>
                                                     <td>' . @$attandance->request_code . '</td>
                                                     <td>' . @$attandance->start . '</td>
                                                     <td>' . @$attandance->end . '
-                                                    <td>' . @$attandance->duration . '</td>
+                                                    <td></td>
                                                     <td ' . $style_status . '>' . $attandance_status . '</td>
                                                     <td>' . $holiday . '</td>
                                                 </tr>';
@@ -345,13 +351,13 @@ class Attandances extends CI_Controller
                         $html .= '<tr ' . $style . '>
                                     <td>' . $no . '</td>
                                     <td>' . date('d F Y', strtotime($working_date)) . '</td>
-                                    <td>' . @$shift->shift_name . '</td>
+                                    <td>' . $shiftName . '</td>
                                     <td>' . @$attandance->time_in . '</td>
                                     <td>' . @$attandance->time_out . '</td>
                                     <td>' . @$attandance->request_code . '</td>
                                     <td>' . @$attandance->start . '</td>
                                     <td>' . @$attandance->end . '
-                                    <td>' . @$attandance->duration . '</td>
+                                    <td></td>
                                     <td ' . $style_status . '>' . $attandance_status . '</td>
                                     <td>' . $holiday . '</td>
                                 </tr>';

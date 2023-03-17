@@ -92,6 +92,8 @@ class Cash_carries extends CI_Controller
                 b.departement_sub_id,
                 b.group_id,
                 b.contract_id,
+                g.date_in,
+                g.date_out,
                 g.time_in,
                 g.time_out,
                 c.name as departement_name, 
@@ -127,8 +129,8 @@ class Cash_carries extends CI_Controller
                 $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["contract_id" => $record['contract_id']]);
 
                 $start = strtotime($record['trans_date']);
-                $att_time_begin = strtotime(@$record['trans_date'] . " " . @$record['time_in']);
-                $att_time_end = strtotime(@$record['trans_date'] . " " . @$record['time_out']);
+                $att_time_begin = strtotime(@$record['date_in'] . " " . @$record['time_in']);
+                $att_time_end = strtotime(@$record['date_out'] . " " . @$record['time_out']);
                 $att_diff = $att_time_end - $att_time_begin;
                 $att_hour = floor($att_diff / (60 * 60));
 
