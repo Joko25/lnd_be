@@ -158,6 +158,7 @@ class Attandances extends CI_Controller
                 $working_date = "";
                 $description = "";
                 $style = "";
+                $shiftName = "";
                 for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
                     $working_date = date('Y-m-d', $i);
 
