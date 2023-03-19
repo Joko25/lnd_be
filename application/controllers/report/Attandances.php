@@ -291,23 +291,24 @@ class Attandances extends CI_Controller
                 <meta http-equiv="pragma" content="no-cache">
             <head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
 
-            $this->db->select("a.id, a.number, a.name, c.name as division_name, d.name as departement_name, e.name as departement_sub_name");
+            $this->db->select("b.id, b.number, b.name, c.name as division_name, d.name as departement_name, e.name as departement_sub_name");
             $this->db->from('attandance_generates a');
             $this->db->join('employees b', 'a.employee_id = b.id');
             $this->db->join('divisions c', 'b.division_id = c.id');
             $this->db->join('departements d', 'b.departement_id = d.id');
             $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
             $this->db->join('privilege_groups i', "b.group_id = i.group_id and i.username = '$username'");
-            $this->db->where("a.date_in between date_in '$filter_from' and '$filter_to'");
+            $this->db->where("a.date_in >= ", $filter_from);
+            $this->db->where("a.date_in <= ", $filter_to);
             $this->db->where('b.division_id', $filter_division);
             $this->db->like('b.departement_id', $filter_departement);
             $this->db->like('b.departement_sub_id', $filter_departement_sub);
             $this->db->like('b.group_id', $filter_group);
             $this->db->like('b.id', $filter_employee);
-            $this->db->group_by('a.id');
+            $this->db->group_by('a.employee_id');
             $this->db->order_by('d.name', 'asc');
             $this->db->order_by('e.name', 'asc');
-            $this->db->order_by('a.name', 'asc');
+            $this->db->order_by('b.name', 'asc');
             $records = $this->db->get()->result_array();
 
             //Config
@@ -317,6 +318,104 @@ class Attandances extends CI_Controller
 
             $no = 1;
             foreach ($records as $record) {
+                $this->db->select("*");
+                $this->db->from('attandance_generates');
+                $this->db->where("date_in >= ", $filter_from);
+                $this->db->where("date_in <= ", $filter_to);
+                $this->db->where('employee_id', $record['id']);
+                $this->db->order_by('date_in', 'asc');
+                $details = $this->db->get()->result_array();
+
+                $html = '<div style="page-break-after:always;"><center>
+                        <div style="float: left; font-size: 12px; text-align: left;">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+                                        <img src="' . $config->favicon . '" width="30">
+                                    </td>
+                                    <td style="font-size: 14px; text-align: left; margin:2px;">
+                                        <b>' . $config->name . '</b><br>
+                                        <small>' . $config->description . '</small>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="float: right; font-size: 12px; text-align: right;">
+                            Print Date ' . date("d M Y H:i:s") . ' <br>
+                            Print By ' . $this->session->username . '  
+                        </div>
+                    </center><br><br><br>
+                    <center>
+                        <h3 style="margin:0;">Report Attandance & Overtime</h3>
+                        <p style="margin:0;">Period ' . $filter_from . ' to ' . $filter_to . '</p>
+                        <br><br>
+                    </center>
+    
+                    <table style="font-size: 11px;">    
+                        <tr>
+                            <td>Employee ID</td>
+                            <td>:</td>
+                            <td><b>' . $record['number'] . '</b></td>
+                        </tr>
+                        <tr>
+                            <td>Employee Name</td>
+                            <td>:</td>
+                            <td><b>' . $record['name'] . '</b></td>
+                        </tr>
+                        <tr>
+                            <td width="100">Division</td>
+                            <td width="10">:</td>
+                            <td><b>' . $record['division_name'] . '</b></td>
+                        </tr>
+                        <tr>
+                            <td>Departement</td>
+                            <td>:</td>
+                            <td><b>' . $record['departement_name'] . '</b></td>
+                        </tr>
+                        <tr>
+                            <td>Sub Departement</td>
+                            <td>:</td>
+                            <td><b>' . $record['departement_sub_name'] . '</b></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <table id="customers" border="1">
+                        <tr>
+                            <th width="20" rowspan="2">No</th>
+                            <th rowspan="2" style="text-align:center;">Date</th>
+                            <th colspan="3" style="text-align:center;">Attandance</th>
+                            <th colspan="3" style="text-align:center;">Overtime</th>
+                            <th rowspan="2" style="text-align:center;">Duration</th>
+                            <th rowspan="2" style="text-align:center;">Status</th>
+                            <th rowspan="2" style="text-align:center;">Remarks</th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center;">Shift</th>
+                            <th style="text-align:center;">IN</th>
+                            <th style="text-align:center;">OUT</th>
+                            <th style="text-align:center;">Request No</th>
+                            <th style="text-align:center;">Start</th>
+                            <th style="text-align:center;">End</th>
+                        </tr>';
+
+                foreach ($details as $detail) {
+                    $html .= '<tr>
+                                    <td>' . $no . '</td>
+                                    <td>' . date('d F Y', strtotime($detail['date_in'])) . '</td>
+                                    <td>' . $detail['shift'] . '</td>
+                                    <td>' . $detail['time_in'] . '</td>
+                                    <td>' . $detail['time_out'] . '</td>
+                                    <td>' . $detail['overtime_request'] . '</td>
+                                    <td>' . $detail['overtime_start'] . '</td>
+                                    <td>' . $detail['overtime_end'] . '
+                                    <td>' . $detail['overtime_duration'] . '</td>
+                                    <td>' . $detail['status'] . '</td>
+                                    <td>' . $detail['remarks'] . '</td>
+                                </tr>';
+                    $no++;
+                }
+                $html .= "</table></div><br><br>";
+                echo $html;
             }
         }
     }
