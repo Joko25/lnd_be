@@ -13,9 +13,11 @@
             <th colspan="6" data-options="field:'',width:80,halign:'center'">Request</th>
             <th colspan="3" data-options="field:'',width:80,halign:'center'">Attandance</th>
             <th rowspan="2" data-options="field:'meal',width:80,halign:'center',align:'center',styler:cellStyler, formatter:cellFormatter">Meal</th>
-            <th rowspan="2" data-options="field:'amount',width:80,halign:'center',align:'right', formatter:numberformat">Plan</th>
-            <th rowspan="2" data-options="field:'actual',width:80,halign:'center',align:'right', formatter:numberformat">Actual</th>
-            <th rowspan="2" data-options="field:'remarks',width:200,halign:'center'">Remarks</th>
+            <th rowspan="2" data-options="field:'amount',width:80,halign:'center',align:'right', formatter:numberformat">Plan<br>Amount</th>
+            <th rowspan="2" data-options="field:'amount_actual',width:80,halign:'center',align:'right', formatter:numberformat">Actual<br>Amount</th>
+            <th rowspan="2" data-options="field:'plan',width:80,halign:'center',align:'right'">Plan<br>Output</th>
+            <th rowspan="2" data-options="field:'actual',width:80,halign:'center',align:'right'">Actual<br>Output</th>
+            <th rowspan="2" data-options="field:'remarks',width:250,halign:'center'">Remarks</th>
             <th colspan="3" data-options="field:'',width:100,halign:'center'"> Approval</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
@@ -42,7 +44,7 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 255px;">
+<div id="toolbar" style="height: 265px;">
     <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
         <div style="width: 50%; float: left;">
@@ -154,15 +156,23 @@
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Start <small style="color:red;">(time)</small></span>
-                <input style="width:30%;" name="start" mask="99:99:99" required id="start" class="easyui-maskedbox">
+                <input style="width:30%;" name="start" readonly mask="99:99:99" required id="start" class="easyui-maskedbox">
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">End <small style="color:red;">(time)</small></span>
-                <input style="width:30%;" name="end" mask="99:99:99" required id="end" class="easyui-maskedbox">
+                <input style="width:30%;" name="end" readonly mask="99:99:99" required id="end" class="easyui-maskedbox">
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Meal</span>
-                <input name="meal" id="meal" class="easyui-checkbox" value="1"> Checked if Yes get Meal
+                <input name="meal" id="meal" readonly class="easyui-checkbox" value="1"> Checked if Yes get Meal
+            </div>
+            <div class="fitem">
+                <span style="width:30%; display:inline-block;">Plan Output</span>
+                <input style="width:30%;" name="plan" class="easyui-numberbox">
+            </div>
+            <div class="fitem">
+                <span style="width:30%; display:inline-block;">Actual Output</span>
+                <input style="width:30%;" name="actual" class="easyui-numberbox">
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Remarks</span>
@@ -312,22 +322,22 @@
                         }
                     }
                 }, {
-                    field: 'plan',
+                    field: 'amount',
                     width: 80,
                     halign: 'center',
-                    title: "Plan",
+                    title: "Amount",
                     editor: {
                         type: 'numberbox',
                         options: {
                             required: true,
-                            readonly: true,
+                            readonly: true
                         }
                     }
                 }, {
-                    field: 'amount',
+                    field: 'plan',
                     width: 80,
                     halign: 'center',
-                    title: "Actual",
+                    title: "Plan Output",
                     editor: {
                         type: 'numberbox',
                         options: {
@@ -403,6 +413,7 @@
                 $('#dg2').datagrid('appendRow', {
                     start: '00:00',
                     end: '00:00',
+                    plan: '0',
                 });
                 editIndex = $('#dg2').datagrid('getRows').length - 1;
                 $('#dg2').datagrid('selectRow', editIndex).datagrid('beginEdit', editIndex);
@@ -480,7 +491,6 @@
             data: "trans_date=" + trans_date + "&employee_id=" + employee_id + "&start=" + start + "&end=" + end + "&meal=" + meal,
             dataType: "html",
             success: function(amount) {
-                $(row_plan.target).numberbox('setValue', amount);
                 $(row_amount.target).numberbox('setValue', amount);
             }
         });
@@ -637,6 +647,7 @@
                                     end: rows[i].end,
                                     meal: rows[i].meal,
                                     amount: rows[i].amount,
+                                    plan: rows[i].plan,
                                     remarks: rows[i].remarks
                                 },
                                 dataType: "json",

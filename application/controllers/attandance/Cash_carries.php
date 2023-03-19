@@ -260,6 +260,7 @@ class Cash_carries extends CI_Controller
             $records = $this->db->get()->result_array();
 
             $datas = [];
+            $total = 0;
             foreach ($records as $record) {
                 $this->db->select('c.days');
                 $this->db->from('shift_employees a');
@@ -323,7 +324,7 @@ class Cash_carries extends CI_Controller
                     }
                 }
 
-                $amount = ["actual" => $total, "duration_att" => number_format($att_hour, 2)];
+                $amount = ["amount_actual" => $total, "duration_att" => number_format($att_hour, 2)];
                 $datas[] = array_merge($record, $amount);
             }
 
@@ -383,24 +384,14 @@ class Cash_carries extends CI_Controller
     {
         if ($this->input->post()) {
             $id   = base64_decode($this->input->get('id'));
-
             $post = $this->input->post();
-            $trans_date = $post['trans_date'];
-            $start = $post['start'];
-            $end = $post['end'];
-            $type = $post['type'];
-            $meal = $post['meal'];
+            $plan = $post['plan'];
+            $actual = $post['actual'];
             $remarks = $post['remarks'];
 
-            $duration = $this->convertHour($trans_date, $start, $end);
-
             $post_final = array(
-                "start" =>  $start,
-                "end" =>  $end,
-                "type" =>  $type,
-                "duration" =>  $duration['duration'],
-                "duration_hour" =>  $duration['duration_hour'],
-                "meal" =>  $meal,
+                "plan" =>  $plan,
+                "actual" =>  $actual,
                 "remarks" =>  $remarks,
             );
 
@@ -484,7 +475,8 @@ class Cash_carries extends CI_Controller
                 'duration_hour' => $data->val($i, 6),
                 'type' => $data->val($i, 7),
                 'meal' => $data->val($i, 8),
-                'remarks' => $data->val($i, 9),
+                'plan' => $data->val($i, 9),
+                'remarks' => $data->val($i, 10),
                 'request_code' => $templatefinal
             );
         }
@@ -564,6 +556,7 @@ class Cash_carries extends CI_Controller
                             'end' => $data['end'],
                             'type' => $data['type'],
                             'meal' => $meal,
+                            'plan' => $data['plan'],
                             'duration' => $duration,
                             'duration_hour' => $data['duration_hour'],
                             'remarks' => $data['remarks'],
@@ -689,6 +682,8 @@ class Cash_carries extends CI_Controller
                 <th>Type</th>
                 <th>Duration</th>
                 <th>Amount</th>
+                <th>Plan</th>
+                <th>Actual</th>
                 <th>Remarks</th>
             </tr>';
         $no = 1;
@@ -709,6 +704,8 @@ class Cash_carries extends CI_Controller
                             <td>' . $data['type'] . '</td>
                             <td>' . $data['duration_hour'] . '</td>
                             <td>' . $data['amount'] . '</td>
+                            <td>' . $data['plan'] . '</td>
+                            <td>' . $data['actual'] . '</td>
                             <td>' . $data['remarks'] . '</td>
                         </tr>';
             $no++;
