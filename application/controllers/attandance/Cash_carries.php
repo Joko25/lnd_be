@@ -352,6 +352,10 @@ class Cash_carries extends CI_Controller
             $remarks = $post['remarks'];
             $duration = $this->convertHour($trans_date, $start, $end);
 
+            $attachment = $this->crud->upload('attachment', ['png', 'jpg', 'jpeg', 'pdf'], 'assets/image/cash_carries/');
+
+            die(json_encode($attachment));
+
             $post_final = array(
                 "trans_date" =>  $trans_date,
                 "employee_id" =>  $employee_id,

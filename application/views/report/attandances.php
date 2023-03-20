@@ -381,7 +381,7 @@
 
         $("#filter_permit_type").combobox({
             url: '<?= base_url('attandance/permit_types/reads') ?>',
-            valueField: 'id',
+            valueField: 'name',
             textField: 'name',
             prompt: "Choose All",
             icons: [{

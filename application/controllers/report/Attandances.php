@@ -166,22 +166,30 @@ class Attandances extends CI_Controller
                 //cek apakah harinya minggu jika iya maka default Weekend
                 if (@$cash_carry->start != null) {
                     $holiday = "Cash Carry " . $cash_carry->request_code;
+                    $type = "CASH CARRY";
                 } elseif (@$change_day->start != null) {
                     $holiday = "Change Days to " . $change_day->end;
+                    $type = "CHANGE DAY";
                 } elseif (@$change_day_end->end != null) {
                     $holiday = "Change Days from " . $change_day_end->start;
+                    $type = "CHANGE DAY";
                 } elseif ($weekend == "Weekend") {
                     $holiday = $weekend;
+                    $type = "HOLIDAY";
                 } elseif (@$permit->permit_name != null) {
                     $holiday = @$permit->note;
+                    $type = "PERMIT";
                 } elseif (@$attandance->remarks != null) {
                     $holiday = @$attandance->remarks;
+                    $type = "OVERTIME";
                 } else {
                     $holiday = @$holiday->description;
+                    $type = "";
                 }
                 //isi dengan tanggal merah
             } else {
                 $holiday = @$holiday->description;
+                $type = "HOLIDAY";
             }
 
             if (@$attandance->time_in == null && $holiday != 'Weekend') {
@@ -225,6 +233,7 @@ class Attandances extends CI_Controller
                 "overtime_start" => @$attandance->start,
                 "overtime_end" => @$attandance->end,
                 "overtime_duration" => @$attandance->duration,
+                "type" => @$type,
                 "status" => @$attandance_status,
                 "remarks" => @$holiday,
             );
@@ -323,6 +332,10 @@ class Attandances extends CI_Controller
                 $this->db->where("date_in >= ", $filter_from);
                 $this->db->where("date_in <= ", $filter_to);
                 $this->db->where('employee_id', $record['id']);
+                $this->db->group_start();
+                $this->db->like('status', $filter_permit_type);
+                $this->db->like('status', $filter_status);
+                $this->db->group_end();
                 $this->db->order_by('date_in', 'asc');
                 $details = $this->db->get()->result_array();
 
@@ -399,7 +412,35 @@ class Attandances extends CI_Controller
                         </tr>';
 
                 foreach ($details as $detail) {
-                    $html .= '<tr>
+                    if ($detail['status'] == "ON TIME") {
+                        $style = "style='background: #A6FF6C;'";
+                    } elseif ($detail['status'] == "LATE") {
+                        $style = "style='background: #FFCA6C;'";
+                    } elseif ($detail['status'] == "ABSENCE") {
+                        $style = "style='background: #FF6C6C;'";
+                    } elseif ($detail['status'] == "UN CHECK IN") {
+                        $style = "style='background: #6C89FF;'";
+                    } elseif ($detail['status'] == "") {
+                        $style = "";
+                    } else {
+                        $style = "";
+                    }
+
+                    if ($detail['type'] == "CASH CARRY") {
+                        $styleRow = "style='background: #6CF4FF;'";
+                    } elseif ($detail['type'] == "CHANGE DAY") {
+                        $styleRow = "style='background: #A16CFF;'";
+                    } elseif ($detail['type'] == "HOLIDAY") {
+                        $styleRow = "style='background: #FF6C6C;'";
+                    } elseif ($detail['type'] == "PERMIT") {
+                        $styleRow = "style='background: #FFE36C;'";
+                    } elseif ($detail['type'] == "OVERTIME") {
+                        $styleRow = "style='background: #6CF4FF;'";
+                    } else {
+                        $styleRow = "";
+                    }
+
+                    $html .= '<tr ' . $styleRow . '>
                                     <td>' . $no . '</td>
                                     <td>' . date('d F Y', strtotime($detail['date_in'])) . '</td>
                                     <td>' . $detail['shift'] . '</td>
@@ -409,7 +450,7 @@ class Attandances extends CI_Controller
                                     <td>' . $detail['overtime_start'] . '</td>
                                     <td>' . $detail['overtime_end'] . '
                                     <td>' . $detail['overtime_duration'] . '</td>
-                                    <td>' . $detail['status'] . '</td>
+                                    <td ' . $style . '><b>' . $detail['status'] . '</b></td>
                                     <td>' . $detail['remarks'] . '</td>
                                 </tr>';
                     $no++;

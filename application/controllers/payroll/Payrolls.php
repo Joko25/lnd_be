@@ -313,18 +313,11 @@ class Payrolls extends CI_Controller
             foreach ($r_permit2 as $permit_data2) {
                 $arr_total_permit += $permit_data2['amount'];
             }
+
             //-------------------------------------------------------------------------------------------------------------------------------------------------------
-
-            //Working Calendar
-            //Untuk mengambil jumlah hari libur nasional
-            $this->db->select('trans_date');
-            $this->db->from('calendars');
-            $this->db->where('trans_date >=', $filter_from);
-            $this->db->where('trans_date <=', $filter_to);
-            $holiday = $this->db->get()->row();
-
             $weekday = array();
             $weekend = array();
+            $holiday = 0;
 
             $final_total_ovetime_amount_weekday = 0;
             $final_total_ovetime_amount_holiday = 0;
@@ -460,6 +453,14 @@ class Payrolls extends CI_Controller
                     if (date('w', $i) !== '0' && date('w', $i) !== '6') {
                         $weekday[] = date('Y-m-d', $i);
 
+                        //Working Calendar
+                        //Untuk mengambil jumlah hari libur nasional
+                        $this->db->select('trans_date');
+                        $this->db->from('calendars');
+                        $this->db->where('trans_date', $working_date);
+                        $calendar = $this->db->get()->result_array();
+                        $holiday += count($calendar);
+
                         //Ini untuk menghitung overtime
                         //Kalo ada tanggal Merah
                         if (!empty($holiday_overtime->trans_date)) {
@@ -550,6 +551,14 @@ class Payrolls extends CI_Controller
                     if (date('w', $i) !== '0') {
                         $weekday[] = date('Y-m-d', $i);
 
+                        //Working Calendar
+                        //Untuk mengambil jumlah hari libur nasional
+                        $this->db->select('trans_date');
+                        $this->db->from('calendars');
+                        $this->db->where('trans_date', $working_date);
+                        $calendar = $this->db->get()->result_array();
+                        $holiday += count($calendar);
+
                         //Kalo ada tanggal Merah
                         if (!empty($holiday_overtime->trans_date)) {
                             for ($o = 0; $o < $hour; $o++) {
@@ -631,7 +640,6 @@ class Payrolls extends CI_Controller
                     }
                 }
 
-
                 $final_total_ovetime_hour_weekday += $total_ovetime_hour_weekday;
                 $final_total_ovetime_hour_holiday += $total_ovetime_hour_holiday;
                 $final_total_ovetime_hour_correction += $total_ovetime_hour_correction;
@@ -646,7 +654,7 @@ class Payrolls extends CI_Controller
             }
             //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
-            $hkw = (@count($weekday) - @count($holiday));
+            $hkw = (@count($weekday) - $holiday);
             if ($masuk >= $hkw) {
                 $working_day = $hkw;
             } else {
@@ -1063,7 +1071,7 @@ class Payrolls extends CI_Controller
                 "shift_name" => $record['shift_name_2'],
                 "attandance" => json_encode($arr_permit_combine),
                 "attandance_wd" => ($working_day),
-                "working_day" => @count($weekday) - @count($holiday),
+                "working_day" => @count($weekday) - $holiday,
                 "salary" => $record['salary'],
                 "allowence" => json_encode($arr_allowance_combine),
                 "bpjs_company" => json_encode($arr_bpjs_com_combine),
@@ -1158,24 +1166,24 @@ class Payrolls extends CI_Controller
             $this->db->join('employees b', 'a.employee_id = b.id');
             $this->db->where('a.period_start', $period_start);
             $this->db->where('a.period_end', $period_end);
-            if($post['filter_division'] != ""){
+            if ($post['filter_division'] != "") {
                 $this->db->where('b.division_id', $post['filter_division']);
             }
-            if($post['filter_departement'] != ""){
+            if ($post['filter_departement'] != "") {
                 $this->db->where('b.departement_id', $post['filter_departement']);
             }
-            if($post['filter_departement_sub'] != ""){
+            if ($post['filter_departement_sub'] != "") {
                 $this->db->where('b.departement_sub_id', $post['filter_departement_sub']);
             }
-            if($post['filter_employee'] != ""){
+            if ($post['filter_employee'] != "") {
                 $this->db->where('b.id', $post['filter_employee']);
             }
-            if($post['filter_employee_type'] != ""){
+            if ($post['filter_employee_type'] != "") {
                 $this->db->where('b.contract_id', $post['filter_employee_type']);
             }
-            if($post['filter_group'] != ""){
+            if ($post['filter_group'] != "") {
                 $this->db->where('b.group_id', $post['filter_group']);
-            }else{
+            } else {
                 $this->db->where('b.group_id', $group_id);
             }
             $payrolls = $this->db->get()->result_object();

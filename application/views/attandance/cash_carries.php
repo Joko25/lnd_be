@@ -101,7 +101,7 @@
 </div>
 
 <!-- DIALOG SAVE -->
-<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 1200px; height: 500px; padding:10px; top: 20px;">
+<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 1000px; height: 500px; padding:10px; top: 20px;">
     <form id="frm_insert" method="post" novalidate>
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Form Data</b></legend>
@@ -289,7 +289,7 @@
                     field: 'end',
                     width: 100,
                     halign: 'center',
-                    title: "Start",
+                    title: "End",
                     editor: {
                         type: 'textbox',
                         options: {
@@ -353,6 +353,14 @@
                         type: 'textbox'
                     }
                 }, {
+                    field: 'attachment',
+                    width: 200,
+                    halign: 'center',
+                    title: "Attachment",
+                    editor: {
+                        type: 'filebox'
+                    }
+                }, {
                     field: 'action',
                     title: 'Action',
                     width: 120,
@@ -370,11 +378,29 @@
                     }
                 }]
             ],
+            onBeginEdit: function(index, row) {
+                var ed = $(this).datagrid('getEditor', {
+                    index: index,
+                    field: 'attachment'
+                });
+
+                $(ed.target).filebox('setText', row.attachment);
+            },
             onEndEdit: function(index, row) {
                 var ed = $(this).datagrid('getEditor', {
                     index: index,
                     field: 'employee_id'
                 });
+
+                var ed2 = $(this).datagrid('getEditor', {
+                    index: index,
+                    field: 'attachment'
+                });
+
+                var files = $(ed2.target).filebox('files');
+                if (files.length) {
+                    return files[0].name;
+                }
             },
             onBeforeEdit: function(index, row) {
                 row.editing = true;
@@ -648,6 +674,7 @@
                                     meal: rows[i].meal,
                                     amount: rows[i].amount,
                                     plan: rows[i].plan,
+                                    attachment: rows[i].attachment,
                                     remarks: rows[i].remarks
                                 },
                                 dataType: "json",
@@ -658,16 +685,17 @@
                         }
                     }
 
-                    Swal.fire({
-                        title: "Save Cash Carries Success",
-                        icon: "success",
-                        confirmButtonText: 'Ok',
-                        allowOutsideClick: false,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.reload();
-                        }
-                    });
+                    // Swal.fire({
+                    //     title: "Save Cash Carries Success",
+                    //     icon: "success",
+                    //     confirmButtonText: 'Ok',
+                    //     allowOutsideClick: false,
+                    // }).then((result) => {
+                    //     if (result.isConfirmed) {
+                    //         window.location.reload();
+                    //     }
+                    // });
+
                     $('#dlg_insert').dialog('close');
                 }
             }]

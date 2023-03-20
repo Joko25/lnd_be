@@ -36,7 +36,7 @@
                 <span style="width:35%; display:inline-block;">Status Attandance</span>
                 <select style="width:60%;" id="filter_status" panelHeight="auto" class="easyui-combobox">
                     <!-- <option value="All">CHOOSE ALL</option> -->
-                    <option value="CHECK IN">CHECK IN</option>
+                    <option value="ON TIME">ON TIME</option>
                     <option value="PERMIT">PERMIT</option>
                     <option value="LATE">LATE</option>
                     <option value="ABSENCE">ABSENCE</option>

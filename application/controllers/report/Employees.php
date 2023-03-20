@@ -70,7 +70,6 @@ class Employees extends CI_Controller
                 $this->db->join('maritals k', 'k.id = a.marital_id', 'left');
                 $this->db->join('religions l', 'l.id = a.religion_id', 'left');
                 $this->db->where('a.deleted', 0);
-                $this->db->where('a.status', 0);
                 $this->db->like("a.division_id", $form['filter_division']);
                 $this->db->like("a.departement_id", $form['filter_departement']);
                 $this->db->like("a.departement_sub_id", $form['filter_departement_sub']);
@@ -82,6 +81,7 @@ class Employees extends CI_Controller
                 for ($i = 0; $i < count($form['filter_column']); $i++) {
                     $header .= "<th>" . strtoupper(strtr($form['filter_column'][$i], "_", " ")) . "</th>";
                 }
+                $header .= "<th width='80'>STATUS</th>";
                 $header .= "</tr>";
 
                 //Config
@@ -122,11 +122,22 @@ class Employees extends CI_Controller
                 $no = 1;
                 $content = "";
                 foreach ($records as $data) {
-                    $content = "<tr><td>" . $no . "</td>";
+                    if ($data['status'] == 0) {
+                        $status = "ACTIVE";
+                        $style = "style='background: #82FF6C; text-align:center;'";
+                    } else {
+                        $status = "NON ACTIVE";
+                        $style = "style='background: #FF796C; text-align:center;'";
+                    }
+
+                    $content = "<tr>
+                                    <td>" . $no . "</td>";
                     for ($z = 0; $z < count($form['filter_column']); $z++) {
                         $content .= "<td>" . $data[$form['filter_column'][$z]] . "</td>";
                     }
-                    $content .= "</tr>";
+
+                    $content .= "   <td " . $style . ">" . $status . "</td>
+                                </tr>";
 
                     $html .= $content;
                     $no++;

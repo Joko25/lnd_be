@@ -67,8 +67,6 @@ class Attandance_summary extends CI_Controller
             $this->db->from('config');
             $config = $this->db->get()->row();
 
-            $start = strtotime($filter_from);
-            $finish = strtotime($filter_to);
             $no = 1;
             foreach ($records as $record) {
                 //Permit
@@ -141,9 +139,13 @@ class Attandance_summary extends CI_Controller
                     e.name as departement_sub_name, 
                     g.name as shift_name,
                     b.attandance_total,
+                    ba.attandance_absence,
+                    bb.attandance_days,
                     h.days");
                 $this->db->from('employees a');
-                $this->db->join("(SELECT number, COUNT(number) as attandance_total FROM attandances WHERE (date_in BETWEEN '$filter_from' and '$filter_to' or date_out BETWEEN '$filter_from' and '$filter_to') GROUP BY number) b", 'a.number = b.number', 'left');
+                $this->db->join("(SELECT employee_id, COUNT(employee_id) as attandance_total FROM attandance_generates WHERE date_in BETWEEN '$filter_from' and '$filter_to' and status IN ('ON TIME','LATE') GROUP BY employee_id) b", 'a.id = b.employee_id', 'left');
+                $this->db->join("(SELECT employee_id, COUNT(employee_id) as attandance_absence FROM attandance_generates WHERE date_in BETWEEN '$filter_from' and '$filter_to' and status = 'ABSENCE' GROUP BY employee_id) ba", 'a.id = ba.employee_id', 'left');
+                $this->db->join("(SELECT employee_id, COUNT(employee_id) as attandance_days FROM attandance_generates WHERE date_in BETWEEN '$filter_from' and '$filter_to' GROUP BY employee_id) bb", 'a.id = bb.employee_id', 'left');
                 $this->db->join('divisions c', 'a.division_id = c.id');
                 $this->db->join('departements d', 'a.departement_id = d.id');
                 $this->db->join('departement_subs e', 'a.departement_sub_id = e.id');
@@ -158,84 +160,10 @@ class Attandance_summary extends CI_Controller
                 $this->db->order_by('e.name, a.name', 'asc');
                 $employees = $this->db->get()->result_array();
 
-                $total_absence = 0;
+                $attandance_absece = 0;
                 $attandance_total = 0;
-                $total_days_final = 0;
+                $attandance_days = 0;
                 foreach ($employees as $data) {
-                    $total_days = 0;
-                    $holiday = 0;
-                    $weekend = 0;
-                    $working_date = "";
-                    $masuk = 0;
-                    $absen = 0;
-                    for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
-                        $working_date = date('Y-m-d', $i);
-
-                        $this->db->select("*");
-                        $this->db->from('attandances');
-                        $this->db->where('number', $record['number']);
-                        $this->db->where("(date_in = '$working_date' or date_out = '$working_date')");
-                        $attandance = $this->db->get()->row();
-
-                        if (@$data['days'] == "5") {
-                            //sabtu dan minggu libur
-                            if (date('w', $i) !== '0' && date('w', $i) !== '6') {
-                                $weekend += 0;
-
-                                if (@$attandance->time_in == null && @$attandance->time_out == null) {
-                                    $masuk += 0;
-                                    $absen += 1;
-                                } else {
-                                    $masuk += 1;
-                                    $absen += 0;
-                                }
-                            } else {
-                                $weekend += 1;
-                                if (@$attandance->time_in == null && @$attandance->time_out == null) {
-                                    $masuk += 0;
-                                    $absen += 0;
-                                } else {
-                                    $masuk += 1;
-                                    $absen += 0;
-                                }
-                            }
-                        } else {
-                            //sabtu doang libur
-                            if (date('w', $i) !== '0') {
-                                $weekend += 0;
-                                if (@$attandance->time_in == null && @$attandance->time_out == null) {
-                                    $masuk += 0;
-                                    $absen += 1;
-                                } else {
-                                    $masuk += 1;
-                                    $absen += 0;
-                                }
-                            } else {
-                                $weekend += 1;
-                                if (@$attandance->time_in == null && @$attandance->time_out == null) {
-                                    $masuk += 0;
-                                    $absen += 0;
-                                } else {
-                                    $masuk += 1;
-                                    $absen += 0;
-                                }
-                            }
-                        }
-
-                        $this->db->select('description');
-                        $this->db->from('calendars');
-                        $this->db->where('trans_date', $working_date);
-                        $holidays = $this->db->get()->row();
-
-                        if (@$holidays->description == null) {
-                            $holiday += 0;
-                        } else {
-                            $holiday += 1;
-                        }
-
-                        $total_days++;
-                    }
-
                     //Permit
                     $q_permit = $this->db->query("SELECT b.name, COUNT(a.duration) as permit
                             FROM permit_types b
@@ -255,23 +183,14 @@ class Attandance_summary extends CI_Controller
                         $total_permit += $data_permit['permit'];
                     }
 
-                    //$absence = ($total_days - $data['attandance_total'] - $total_permit - $holiday - $weekend);
-                    $absence = ($absen - $total_permit);
-                    if ($absence >= 0) {
-                        $totalAbsence = $absence;
-                        $total_absence += $absence;
-                    } else {
-                        $total_absence += 0;
-                        $totalAbsence = 0;
-                    }
-
-                    $attandance_total += $data['attandance_total'];
-                    $total_days_final += $total_days;
-
-                    $html .= '  <td style="text-align:center;">' . $totalAbsence . '</td>
+                    $html .= '  <td style="text-align:center;">' . $data['attandance_absence'] . '</td>
                                 <td style="text-align:center;">' . $data['attandance_total'] . '</td>
-                                <td style="text-align:center;">' . $total_days . '</td>
+                                <td style="text-align:center;">' . $data['attandance_days'] . '</td>
                             </tr>';
+
+                    $attandance_absece += $data['attandance_absence'];
+                    $attandance_total += $data['attandance_total'];
+                    $attandance_days += $data['attandance_days'];
                     $no++;
                 }
 
@@ -293,9 +212,9 @@ class Attandance_summary extends CI_Controller
                     $html .= '<td style="text-align:center;">' . $row['permit'] . '</td>';
                     $row_total_permit += $row['permit'];
                 }
-                $html .= '  <th style="text-align:center;">' . $total_absence . '</th>
+                $html .= '  <th style="text-align:center;">' . $attandance_absece . '</th>
                             <th style="text-align:center;">' . $attandance_total . '</th>
-                            <th style="text-align:center;">' . $total_days_final . '</th>
+                            <th style="text-align:center;">' . $attandance_days . '</th>
                         </tr>
                         </table></div><br><br>';
             }
