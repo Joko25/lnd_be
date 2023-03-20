@@ -1,6 +1,6 @@
 <table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar"></table>
 
-<div id="toolbar" style="height: 190px;">
+<div id="toolbar" style="height: 220px;">
     <form id="frm_search" method="post" enctype="multipart/form-data" novalidate>
         <!-- <div style="width: 100%; display: grid; grid-template-columns: auto auto auto; grid-gap: 5px; display: flex;"> -->
         <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
@@ -15,18 +15,26 @@
                     <input style="width:60%;" name="filter_departement" id="filter_departement" class="easyui-combobox">
                 </div>
                 <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Departement Sub</span>
+                    <input style="width:60%;" name="filter_departement_sub" id="filter_departement_sub" class="easyui-combobox">
+                </div>
+                <div class="fitem">
                     <span style="width:35%; display:inline-block;"></span>
                     <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
                 </div>
             </div>
             <div style="width: 49%; float:left;">
                 <div class="fitem">
-                    <span style="width:35%; display:inline-block;">Departement Sub</span>
-                    <input style="width:60%;" name="filter_departement_sub" id="filter_departement_sub" class="easyui-combobox">
-                </div>
-                <div class="fitem">
                     <span style="width:35%; display:inline-block;">Employee</span>
                     <input style="width:60%;" name="filter_employee" id="filter_employee" class="easyui-combogrid">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Status</span>
+                    <select style="width:60%;" name="filter_status" id="filter_status" class="easyui-combobox" panelHeight="auto">
+                        <option value="">Choose All</option>
+                        <option value="0">ACTIVE</option>
+                        <option value="1">NOT ACTIVE</option>
+                    </select>
                 </div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Display Column</span>
@@ -69,14 +77,11 @@
                         <option value="bank_no">Bank No</option>
                         <option value="bank_name">Bank Name</option>
                         <option value="bank_branch">Bank Branch</option>
-                        <option value="status">Status</option>
                         <option value="status_date">Status Date</option>
                     </select>
                 </div>
             </div>
         </fieldset>
-
-
         <?= $button ?>
     </form>
 </div>

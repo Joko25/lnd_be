@@ -507,29 +507,29 @@
             }
         });
 
-        $("#start").datebox({
-            onChange: function(start) {
-                var end = $("#end").datebox("getValue");
-                if (end == "") {
-                    return true;
-                } else if (start > end) {
-                    toastr.warning("Please Select Day From >= Replace To");
-                    $("#start").datebox('clear');
-                }
-            }
-        });
+        // $("#start").datebox({
+        //     onChange: function(start) {
+        //         var end = $("#end").datebox("getValue");
+        //         if (end == "") {
+        //             return true;
+        //         } else if (start > end) {
+        //             toastr.warning("Please Select Day From >= Replace To");
+        //             $("#start").datebox('clear');
+        //         }
+        //     }
+        // });
 
-        $("#end").datebox({
-            onChange: function(end) {
-                var start = $("#start").datebox("getValue");
-                if (start == "") {
-                    return true;
-                } else if (start > end) {
-                    toastr.warning("Please Select Day From >= Replace To");
-                    $("#end").datebox('clear');
-                }
-            }
-        });
+        // $("#end").datebox({
+        //     onChange: function(end) {
+        //         var start = $("#start").datebox("getValue");
+        //         if (start == "") {
+        //             return true;
+        //         } else if (start > end) {
+        //             toastr.warning("Please Select Day From >= Replace To");
+        //             $("#end").datebox('clear');
+        //         }
+        //     }
+        // });
     });
 
     //CELLSTYLE STATUS

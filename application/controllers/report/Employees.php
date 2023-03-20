@@ -74,6 +74,7 @@ class Employees extends CI_Controller
                 $this->db->like("a.departement_id", $form['filter_departement']);
                 $this->db->like("a.departement_sub_id", $form['filter_departement_sub']);
                 $this->db->like("a.id", $form['filter_employee']);
+                $this->db->like("a.status", $form['filter_status']);
                 $this->db->order_by('a.name', 'ASC');
                 $records = $this->db->get()->result_array();
 

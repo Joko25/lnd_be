@@ -965,11 +965,6 @@
 							halign: 'center',
 							title: "Employee Name",
 						}, {
-							field: 'division_name',
-							width: 150,
-							halign: 'center',
-							title: "Division",
-						}, {
 							field: 'departement_name',
 							width: 150,
 							halign: 'center',
@@ -995,30 +990,31 @@
 							halign: 'center',
 							title: "End",
 						}, {
-							field: 'type',
-							width: 100,
-							halign: 'center',
-							title: "Type",
-						}, {
 							field: 'duration_hour',
 							width: 80,
 							halign: 'center',
 							title: "Duration",
 						}, {
+							field: 'amount',
+							width: 80,
+							halign: 'center',
+							align: 'right',
+							title: "Amount",
+						}, {
+							field: 'plan',
+							width: 100,
+							halign: 'center',
+							title: "Plan Output",
+						}, {
+							field: 'type',
+							width: 100,
+							halign: 'center',
+							title: "Type",
+						}, {
 							field: 'remarks',
 							width: 200,
 							halign: 'center',
 							title: "Note",
-						}, {
-							field: 'created_by',
-							width: 100,
-							halign: 'center',
-							title: "Created By",
-						}, {
-							field: 'created_date',
-							width: 200,
-							halign: 'center',
-							title: "Created Date",
 						}, {
 							field: 'action',
 							width: 80,

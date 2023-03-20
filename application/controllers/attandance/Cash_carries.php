@@ -93,21 +93,6 @@ class Cash_carries extends CI_Controller
         echo $templatefinal;
     }
 
-    public function readOvertimePriceTemp()
-    {
-        if ($this->input->post()) {
-            $trans_date = $this->input->post('trans_date');
-            $employee_id = $this->input->post('employee_id');
-            $start = $this->input->post('start');
-            $end = $this->input->post('end');
-            $meal = $this->input->post('meal');
-
-            $duration = $this->convertHour($trans_date, $start, $end);
-            $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, $duration['duration_hour'], $meal);
-            echo $ot_amount;
-        }
-    }
-
     public function readOvertimePrice($employee_id, $trans_date, $duration, $meal)
     {
         $employee = $this->crud->read("employees", [], ["id" => $employee_id]);
@@ -348,13 +333,11 @@ class Cash_carries extends CI_Controller
             $end = $post['end'];
             $type = $post['type'];
             $meal = $post['meal'];
-            $amount = $post['amount'];
+            $plan = $post['plan'];
+            $attachment = $post['attachment'];
             $remarks = $post['remarks'];
             $duration = $this->convertHour($trans_date, $start, $end);
-
-            $attachment = $this->crud->upload('attachment', ['png', 'jpg', 'jpeg', 'pdf'], 'assets/image/cash_carries/');
-
-            die(json_encode($attachment));
+            $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, $duration['duration_hour'], $meal);
 
             $post_final = array(
                 "trans_date" =>  $trans_date,
@@ -366,9 +349,11 @@ class Cash_carries extends CI_Controller
                 "type" =>  $type,
                 "duration" =>  $duration['duration'],
                 "duration_hour" =>  $duration['duration_hour'],
-                "amount" =>  $amount,
+                "amount" =>  $ot_amount,
                 "meal" =>  $meal,
+                "plan" =>  $plan,
                 "remarks" =>  $remarks,
+                "attachment" =>  $attachment,
             );
 
             $cash_carries = $this->crud->reads('cash_carries', [], ["employee_id" => $employee_id, "trans_date" => $trans_date, "type" => $type]);
@@ -414,7 +399,33 @@ class Cash_carries extends CI_Controller
     {
         $data = $this->input->post();
         $delete = $this->crud->delete("cash_carries", ['id' => $data['id']]);
+
+        @unlink(base_url("assets/image/cash_carry/" . $data['attachment']));
         echo $delete;
+    }
+
+    //UPLOAD FILE
+    public function uploadFile()
+    {
+        //Setting Upload Image
+        $file = $_FILES["attachment"]["name"];
+        $extension_explode = explode('.', $file);
+        $extension_final = strtolower(end($extension_explode));
+        $size = $_FILES["attachment"]['size'];
+        $temporary = $_FILES["attachment"]['tmp_name'];
+
+        if (in_array($extension_final, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file == "") {
+            if ($size < 2097152) {
+                @move_uploaded_file($temporary, "assets/image/cash_carry/" . $file);
+                echo $file;
+            } else {
+                show_error("Your file is too big a maximum of 2 mb", 200, "File Upload Error");
+                exit;
+            }
+        } else {
+            show_error("Your extension file is not recognized", 200, "File Upload Error");
+            exit;
+        }
     }
 
     function formatTanggal($date)
@@ -424,26 +435,26 @@ class Cash_carries extends CI_Controller
         return @$datetime->format('Y-m-d');
     }
 
-    public function create_temp($number, $date, $time)
-    {
-        $this->db->select('*');
-        $this->db->from('cash_carries_temp');
-        $this->db->where("number", $number);
-        $this->db->where("attandance_date", $date . " " . $time);
-        $records = $this->db->get()->result_array();
+    // public function create_temp($number, $date, $time)
+    // {
+    //     $this->db->select('*');
+    //     $this->db->from('cash_carries_temp');
+    //     $this->db->where("number", $number);
+    //     $this->db->where("attandance_date", $date . " " . $time);
+    //     $records = $this->db->get()->result_array();
 
-        $datas = array(
-            'number' => $number,
-            'attandance_date' => $date . " " . $time
-        );
+    //     $datas = array(
+    //         'number' => $number,
+    //         'attandance_date' => $date . " " . $time
+    //     );
 
-        if (count($records) > 0) {
-            return json_encode(array("title" => "Duplicated", "message" => "Data absence duplicate", "theme" => "error"));
-        } else {
-            $send = $this->crud->create('cash_carries_temp', $datas);
-            return $send;
-        }
-    }
+    //     if (count($records) > 0) {
+    //         return json_encode(array("title" => "Duplicated", "message" => "Data absence duplicate", "theme" => "error"));
+    //     } else {
+    //         $send = $this->crud->create('cash_carries_temp', $datas);
+    //         return $send;
+    //     }
+    // }
 
     //UPLOAD DATA
     public function upload()

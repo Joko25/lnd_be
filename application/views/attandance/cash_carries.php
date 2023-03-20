@@ -18,6 +18,7 @@
             <th rowspan="2" data-options="field:'plan',width:80,halign:'center',align:'right'">Plan<br>Output</th>
             <th rowspan="2" data-options="field:'actual',width:80,halign:'center',align:'right'">Actual<br>Output</th>
             <th rowspan="2" data-options="field:'remarks',width:250,halign:'center'">Remarks</th>
+            <th rowspan="2" data-options="field:'attachment',width:100,align:'center', formatter:fileFormatter">Attachment</th>
             <th colspan="3" data-options="field:'',width:100,halign:'center'"> Approval</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
@@ -102,7 +103,7 @@
 
 <!-- DIALOG SAVE -->
 <div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 1000px; height: 500px; padding:10px; top: 20px;">
-    <form id="frm_insert" method="post" novalidate>
+    <form id="frm_insert" method="post" enctype="multipart/form-data" novalidate>
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Form Data</b></legend>
             <div style="width: 50%; float: left;">
@@ -117,6 +118,10 @@
                 <div class="fitem">
                     <span style="width:30%; display:inline-block;">Departement</span>
                     <input style="width:60%;" id="departement_id" class="easyui-combobox" required>
+                </div>
+                <div class="fitem">
+                    <span style="width:30%; display:inline-block;">Attachment</span>
+                    <input style="width:60%;" name="attachment" id="attachment" accept=".jpg, .png, .jpeg, .pdf" class="easyui-filebox" data-options="prompt: 'Max 2 Mb'">
                 </div>
             </div>
             <div style="width: 50%; float: left;">
@@ -309,31 +314,6 @@
                         }
                     }
                 }, {
-                    field: 'calculate',
-                    width: 80,
-                    align: 'center',
-                    title: "Calculate",
-                    formatter: function(value, row, index) {
-                        if (row.editing) {
-                            var s = '<a href="javascript:void(0)" class="btn btn-success btn-sm" style="pointer-events:auto; opacity:1;" onclick="calculate(' + index + ')">Calculate</a> ';
-                            return s;
-                        } else {
-                            //
-                        }
-                    }
-                }, {
-                    field: 'amount',
-                    width: 80,
-                    halign: 'center',
-                    title: "Amount",
-                    editor: {
-                        type: 'numberbox',
-                        options: {
-                            required: true,
-                            readonly: true
-                        }
-                    }
-                }, {
                     field: 'plan',
                     width: 80,
                     halign: 'center',
@@ -353,14 +333,6 @@
                         type: 'textbox'
                     }
                 }, {
-                    field: 'attachment',
-                    width: 200,
-                    halign: 'center',
-                    title: "Attachment",
-                    editor: {
-                        type: 'filebox'
-                    }
-                }, {
                     field: 'action',
                     title: 'Action',
                     width: 120,
@@ -378,29 +350,11 @@
                     }
                 }]
             ],
-            onBeginEdit: function(index, row) {
-                var ed = $(this).datagrid('getEditor', {
-                    index: index,
-                    field: 'attachment'
-                });
-
-                $(ed.target).filebox('setText', row.attachment);
-            },
             onEndEdit: function(index, row) {
                 var ed = $(this).datagrid('getEditor', {
                     index: index,
                     field: 'employee_id'
                 });
-
-                var ed2 = $(this).datagrid('getEditor', {
-                    index: index,
-                    field: 'attachment'
-                });
-
-                var files = $(ed2.target).filebox('files');
-                if (files.length) {
-                    return files[0].name;
-                }
             },
             onBeforeEdit: function(index, row) {
                 row.editing = true;
@@ -474,54 +428,6 @@
         $('#dg2').datagrid('cancelEdit', getRowIndex(target));
     }
 
-    function calculate(index) {
-        var trans_date = $('#trans_date').datebox('getValue');
-        var row_employee_id = $('#dg2').datagrid('getEditor', {
-            index: index,
-            field: 'employee_id'
-        });
-        var row_meal = $('#dg2').datagrid('getEditor', {
-            index: index,
-            field: 'meal'
-        });
-        var row_start = $('#dg2').datagrid('getEditor', {
-            index: index,
-            field: 'start'
-        });
-        var row_end = $('#dg2').datagrid('getEditor', {
-            index: index,
-            field: 'end'
-        });
-        var row_plan = $('#dg2').datagrid('getEditor', {
-            index: index,
-            field: 'plan'
-        });
-        var row_amount = $('#dg2').datagrid('getEditor', {
-            index: index,
-            field: 'amount'
-        });
-
-        var employee_id = $(row_employee_id.target).textbox('getValue');
-        var start = $(row_start.target).textbox('getValue');
-        var end = $(row_end.target).textbox('getValue');
-
-        if ($(row_meal.target).is(':checked')) {
-            var meal = "1";
-        } else {
-            var meal = "0";
-        }
-
-        $.ajax({
-            type: "post",
-            url: "<?= base_url('attandance/cash_carries/readOvertimePriceTemp') ?>",
-            data: "trans_date=" + trans_date + "&employee_id=" + employee_id + "&start=" + start + "&end=" + end + "&meal=" + meal,
-            dataType: "html",
-            success: function(amount) {
-                $(row_amount.target).numberbox('setValue', amount);
-            }
-        });
-    }
-
     //EDIT DATA
     function update() {
         var row = $('#dg').datagrid('getSelected');
@@ -550,7 +456,8 @@
                             method: 'post',
                             url: '<?= base_url('attandance/cash_carries/delete') ?>',
                             data: {
-                                id: row.id
+                                id: row.id,
+                                attachment: row.attachment,
                             },
                             success: function(result) {
                                 var result = eval('(' + result + ')');
@@ -649,10 +556,19 @@
                 text: 'Save',
                 iconCls: 'icon-ok',
                 handler: function() {
+                    $('#frm_insert').form('submit', {
+                        url: '<?= base_url('attandance/cash_carries/uploadFile') ?>',
+                        method: 'POST',
+                        onSubmit: function() {
+                            return $(this).form('validate');
+                        },
+                    });
+
                     var trans_date = $("#trans_date").datebox('getValue');
                     var request_code = $("#request_code").textbox('getValue');
                     var request_name = $("#request_name").textbox('getValue');
                     var type = $("#type").combobox('getValue');
+                    var attachment = $("#attachment").filebox('files')[0];
 
                     var rows = $('#dg2').datagrid('getRows');
                     var totalrows = rows.length;
@@ -668,13 +584,12 @@
                                     request_code: request_code,
                                     request_name: request_name,
                                     type: type,
+                                    attachment: attachment['name'],
                                     employee_id: rows[i].employee_id,
                                     start: rows[i].start,
                                     end: rows[i].end,
                                     meal: rows[i].meal,
-                                    amount: rows[i].amount,
                                     plan: rows[i].plan,
-                                    attachment: rows[i].attachment,
                                     remarks: rows[i].remarks
                                 },
                                 dataType: "json",
@@ -685,16 +600,16 @@
                         }
                     }
 
-                    // Swal.fire({
-                    //     title: "Save Cash Carries Success",
-                    //     icon: "success",
-                    //     confirmButtonText: 'Ok',
-                    //     allowOutsideClick: false,
-                    // }).then((result) => {
-                    //     if (result.isConfirmed) {
-                    //         window.location.reload();
-                    //     }
-                    // });
+                    Swal.fire({
+                        title: "Save Cash Carries Success",
+                        icon: "success",
+                        confirmButtonText: 'Ok',
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload();
+                        }
+                    });
 
                     $('#dlg_insert').dialog('close');
                 }
@@ -1043,6 +958,14 @@
             return 'NO';
         } else {
             return 'YES';
+        }
+    };
+
+    function fileFormatter(value) {
+        if (value == "" || value == null) {
+            return '-';
+        } else {
+            return '<a href="<?= base_url('assets/image/cash_carry/') ?>' + value + '" target="_blank" class="btn btn-primary btn-sm" style="pointer-events:auto; opacity:1;"><i class="fa fa-eye"></i> View File</a>';
         }
     };
 </script>

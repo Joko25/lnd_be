@@ -276,7 +276,7 @@ class Attandances extends CI_Controller
     public function print($option = "")
     {
         if ($option == "excel") {
-            $format  = date("Ymd");
+            $format = date("Ymd");
             header("Content-type: application/vnd-ms-excel");
             header("Content-Disposition: attachment; filename=report_attandance_$format.xls");
         }
