@@ -72,6 +72,7 @@ class Setup_allowances extends CI_Controller
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
             $filter_allowance = $this->input->get('filter_allowance');
+            $filter_status = $this->input->get('filter_status');
             $username = $this->session->username;
 
             $page = $this->input->post('page');
@@ -83,9 +84,9 @@ class Setup_allowances extends CI_Controller
             $result = array();
             //Select Query
             $this->db->select('a.*, b.name as allowance_name, c.number as employee_number, c.name as employee_name, d.name as division_name, e.name as departement_name, f.name as departement_sub_name');
-            $this->db->from('setup_allowances a');
-            $this->db->join('allowances b', 'a.allowance_id = b.id');
-            $this->db->join('employees c', 'a.employee_id = c.id');
+            $this->db->from('employees c');
+            $this->db->join('setup_allowances a', 'a.employee_id = c.id', 'left');
+            $this->db->join('allowances b', 'a.allowance_id = b.id', 'left');
             $this->db->join('divisions d', 'c.division_id = d.id');
             $this->db->join('departements e', 'c.departement_id = e.id');
             $this->db->join('departement_subs f', 'c.departement_sub_id = f.id');
@@ -98,6 +99,11 @@ class Setup_allowances extends CI_Controller
             $this->db->like('d.id', $filter_division);
             $this->db->like('e.id', $filter_departement);
             $this->db->like('f.id', $filter_departement_sub);
+            if ($filter_status == "REGIST") {
+                $this->db->where("(a.amount is not null or a.amount != 0)");
+            } elseif ($filter_status == "UNREGIST") {
+                $this->db->where("(a.amount is null or a.amount = 0)");
+            }
             $this->db->order_by('c.name', 'ASC');
             //Total Data
             $totalRows = $this->db->count_all_results('', false);
@@ -109,6 +115,53 @@ class Setup_allowances extends CI_Controller
             $result['total'] = $totalRows;
             $result = array_merge($result, ['rows' => $records]);
             echo json_encode($result);
+        }
+    }
+
+    public function createOrUpdate()
+    {
+        if ($this->input->post()) {
+            $post = $this->input->post();
+            $employee_id = $post['employee_id'];
+            $allowance_name = $post['allowance_name'];
+            $amount = $post['amount'];
+
+            $setup_allowances = $this->crud->read("setup_allowances", [], ["employee_id" => $employee_id]);
+            $allowance = $this->crud->read('allowances', [], ["name" => $allowance_name]);
+
+            if (empty($setup_allowances)) {
+                if ($allowance) {
+                    $amount = $allowance->amount;
+                } else {
+                    $amount = $amount;
+                }
+
+                $postFinal = array(
+                    "employee_id" => $post['employee_id'],
+                    "allowance_id" => @$allowance->id,
+                    "amount" => $amount,
+                );
+
+                $send   = $this->crud->create('setup_allowances', $postFinal);
+                echo $send;
+            } else {
+                if ($allowance->id == $setup_allowances->allowance_id) {
+                    $amount = $amount;
+                } else {
+                    $amount = $allowance->amount;
+                }
+
+                $postFinal = array(
+                    "employee_id" => $employee_id,
+                    "allowance_id" => @$allowance->id,
+                    "amount" => $amount,
+                );
+
+                $send = $this->crud->update('setup_allowances', ["employee_id" => $post['employee_id']], $postFinal);
+                echo $send;
+            }
+        } else {
+            show_error("Cannot Process your request");
         }
     }
 
@@ -258,6 +311,7 @@ class Setup_allowances extends CI_Controller
         $filter_departement_sub = $this->input->get('filter_departement_sub');
         $filter_employee = $this->input->get('filter_employee');
         $filter_allowance = $this->input->get('filter_allowance');
+        $filter_status = $this->input->get('filter_status');
         $username = $this->session->username;
 
         //Config
@@ -266,9 +320,9 @@ class Setup_allowances extends CI_Controller
         $config = $this->db->get()->row();
 
         $this->db->select('a.*, b.name as allowance_name, c.number as employee_number, c.name as employee_name, d.name as division_name, e.name as departement_name, f.name as departement_sub_name');
-        $this->db->from('setup_allowances a');
-        $this->db->join('allowances b', 'a.allowance_id = b.id');
-        $this->db->join('employees c', 'a.employee_id = c.id');
+        $this->db->from('employees c');
+        $this->db->join('setup_allowances a', 'a.employee_id = c.id', 'left');
+        $this->db->join('allowances b', 'a.allowance_id = b.id', 'left');
         $this->db->join('divisions d', 'c.division_id = d.id');
         $this->db->join('departements e', 'c.departement_id = e.id');
         $this->db->join('departement_subs f', 'c.departement_sub_id = f.id');
@@ -281,6 +335,11 @@ class Setup_allowances extends CI_Controller
         $this->db->like('d.id', $filter_division);
         $this->db->like('e.id', $filter_departement);
         $this->db->like('f.id', $filter_departement_sub);
+        if ($filter_status == "REGIST") {
+            $this->db->where("(a.amount is not null or a.amount != 0)");
+        } elseif ($filter_status == "UNREGIST") {
+            $this->db->where("(a.amount is null or a.amount = 0)");
+        }
         $this->db->order_by('c.name', 'ASC');
         $records = $this->db->get()->result_array();
 

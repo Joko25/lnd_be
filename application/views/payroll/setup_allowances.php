@@ -8,8 +8,16 @@
             <th rowspan="2" data-options="field:'division_name',width:200,halign:'center'">Division</th>
             <th rowspan="2" data-options="field:'departement_name',width:200,halign:'center'">Departement</th>
             <th rowspan="2" data-options="field:'departement_sub_name',width:200,halign:'center'">Departement Sub</th>
-            <th rowspan="2" data-options="field:'allowance_name',width:200,halign:'center'">Allowance</th>
-            <th rowspan="2" data-options="field:'amount',width:100,halign:'center', align:'right', formatter:numberformat">Amount</th>
+            <th rowspan="2" data-options="field:'allowance_name',width:200,halign:'center', editor:{
+                type:'combobox',
+                options:{
+                    valueField:'name',
+                    textField:'name',
+                    url:'<?= base_url('payroll/allowances/reads') ?>',
+                    required:true
+                }
+            }">Allowance</th>
+            <th rowspan="2" data-options="field:'amount',width:100,halign:'center', align:'right',editor:'numberbox', formatter:numberformat">Amount</th>
             <th rowspan="2" data-options="field:'description',width:300,halign:'center'">Description</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
@@ -54,10 +62,17 @@
                 <span style="width:35%; display:inline-block;">Allowence</span>
                 <input style="width:60%;" id="filter_allowance" class="easyui-combobox">
             </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Status</span>
+                <select style="width:60%;" id="filter_status" class="easyui-combobox" panelHeight="auto">
+                    <option value="">Choose All</option>
+                    <option value="REGIST">REGISTERED</option>
+                    <option value="UNREGIST">UNREGISTERED</option>
+                </select>
+            </div>
         </div>
     </fieldset>
     <?= $button ?>
-    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="unregistered()"><i class="fa fa-users"></i> Unregistered Allowence</a>
 </div>
 
 <!-- DIALOG SAVE AND UPDATE -->
@@ -105,17 +120,6 @@
     </div>
 </div>
 
-<div id="dlg_unregistered" class="easyui-dialog" title="Unregistered Allowence" data-options="closed: true,modal:true" style="width: 500px; height: 500px; top: 20px;">
-    <table id="dg_unregistered" class="easyui-datagrid" style="width:100%;">
-        <thead>
-            <tr>
-                <th data-options="field:'number',width:150,halign:'center'">Employee ID</th>
-                <th data-options="field:'name',width:200,halign:'center'">Employee Name</th>
-            </tr>
-        </thead>
-    </table>
-</div>
-
 <!-- PDF -->
 <iframe id="printout" src="<?= base_url('payroll/setup_allowances/print') ?>" style="width: 100%;" hidden></iframe>
 
@@ -129,11 +133,14 @@
 
     //EDIT DATA
     function update() {
-        var row = $('#dg').datagrid('getSelected');
-        if (row) {
-            $('#dlg_insert').dialog('open');
-            $('#frm_insert').form('load', row);
-            url_save = '<?= base_url('payroll/setup_allowances/update') ?>?id=' + btoa(row.id);
+        var rows = $('#dg').datagrid('getChecked');
+        if (rows.length == 1) {
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                $('#dlg_insert').dialog('open');
+                $('#frm_insert').form('load', row);
+                url_save = '<?= base_url('payroll/setup_allowances/update') ?>?id=' + btoa(row.id);
+            }
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
         }
@@ -141,29 +148,32 @@
 
     //DELETE DATA
     function deleted() {
-        var rows = $('#dg').datagrid('getSelections');
+        var checked = $('#dg').datagrid('getChecked');
+        var rows = $('#dg').datagrid('getRows');
         if (rows.length > 0) {
             $.messager.confirm('Warning', 'Are you sure you want to delete this data?', function(r) {
                 if (r) {
                     for (var i = 0; i < rows.length; i++) {
                         var row = rows[i];
-                        $.ajax({
-                            method: 'post',
-                            url: '<?= base_url('payroll/setup_allowances/delete') ?>',
-                            data: {
-                                id: row.id
-                            },
-                            success: function(result) {
-                                var result = eval('(' + result + ')');
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                toastr.error(jqXHR.statusText);
-                                $.messager.alert("Error", jqXHR.statusText, 'error');
-                            },
-                            complete: function(data) {
-                                $('#dg').datagrid('reload');
-                            }
-                        });
+                        if ($.inArray(row, checked) >= 0) {
+                            $.ajax({
+                                method: 'post',
+                                url: '<?= base_url('payroll/setup_allowances/delete') ?>',
+                                data: {
+                                    id: row.id
+                                },
+                                success: function(result) {
+                                    var result = eval('(' + result + ')');
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    toastr.error(jqXHR.statusText);
+                                    $.messager.alert("Error", jqXHR.statusText, 'error');
+                                },
+                                complete: function(data) {
+                                    $('#dg').datagrid('reload');
+                                }
+                            });
+                        }
                     }
                 }
             });
@@ -187,12 +197,14 @@
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combobox('getValue');
         var filter_allowance = $("#filter_allowance").combobox('getValue');
+        var filter_status = $("#filter_status").combobox('getValue');
 
         var url = "?filter_division=" + filter_division +
             "&filter_departement=" + filter_departement +
             "&filter_departement_sub=" + filter_departement_sub +
             "&filter_employee=" + filter_employee +
-            "&filter_allowance=" + filter_allowance;
+            "&filter_allowance=" + filter_allowance +
+            "&filter_status=" + filter_status;
 
         $('#dg').datagrid({
             url: '<?= base_url('payroll/setup_allowances/datatables') ?>' + url
@@ -213,12 +225,14 @@
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combobox('getValue');
         var filter_allowance = $("#filter_allowance").combobox('getValue');
+        var filter_status = $("#filter_status").combobox('getValue');
 
         var url = "?filter_division=" + filter_division +
             "&filter_departement=" + filter_departement +
             "&filter_departement_sub=" + filter_departement_sub +
             "&filter_employee=" + filter_employee +
-            "&filter_allowance=" + filter_allowance;
+            "&filter_allowance=" + filter_allowance +
+            "&filter_status=" + filter_status;
 
         window.location.assign('<?= base_url('payroll/setup_allowances/print/excel') ?>' + url);
     }
@@ -226,23 +240,43 @@
     function reload() {
         window.location.reload();
     }
-    //UNREGISTERED
-    function unregistered() {
-        $('#dlg_unregistered').dialog('open');
-        $('#dg_unregistered').datagrid({
-            url: '<?= base_url('payroll/setup_allowances/readUnregistered') ?>',
-            clientPaging: false,
-            remoteFilter: true,
-            rownumbers: true
-        }).datagrid('enableFilter');
-    }
 
     $(function() {
         //SETTING DATAGRID EASYUI
         $('#dg').datagrid({
             url: '<?= base_url('payroll/setup_allowances/datatables') ?>',
             pagination: true,
-            rownumbers: true
+            rownumbers: true,
+            onEndEdit: function(index, row) {
+                var employee_id = row.employee_id;
+                var allowance_name = row.allowance_name;
+                var amount = row.amount;
+
+                $.ajax({
+                    type: "post",
+                    url: "<?= base_url('payroll/setup_allowances/createOrUpdate') ?>",
+                    data: "employee_id=" + employee_id + "&allowance_name=" + allowance_name + "&amount=" + amount,
+                    dataType: "json",
+                    success: function(json) {
+                        if (json.theme == "success") {
+                            toastr.success(json.message, json.title);
+                            $('#dg').datagrid('reload');
+                        } else {
+                            toastr.error(json.message, json.title);
+                        }
+                    }
+                });
+
+                $('#dg').datagrid('reload');
+            },
+            rowStyler: function(index, row) {
+                if (row.amount == null) {
+                    return 'background-color:#FFDCDC;';
+                }
+            }
+        }).datagrid('enableCellEditing').datagrid('gotoCell', {
+            index: 0,
+            field: 'employee_number'
         });
 
         //SAVE DATA

@@ -447,196 +447,102 @@ class Payrolls extends CI_Controller
                 $total_ovetime_convert_holiday = 0;
                 $total_ovetime_convert_correction = 0;
 
-                //Jika karyawan yg di looping masa kerja nya 5 hari dalam seminggu
-                if ($record['days'] == "5") {
-                    //Jika tanggal yg di looping bukan hari sabtu dan minggu
-                    if (date('w', $i) !== '0' && date('w', $i) !== '6') {
-                        $weekday[] = date('Y-m-d', $i);
+                //Jika tanggal yg di looping bukan hari sabtu dan minggu
+                if (date('w', $i) !== '0' && date('w', $i) !== '6') {
+                    $weekday[] = date('Y-m-d', $i);
 
-                        //Working Calendar
-                        //Untuk mengambil jumlah hari libur nasional
-                        $this->db->select('trans_date');
-                        $this->db->from('calendars');
-                        $this->db->where('trans_date', $working_date);
-                        $calendar = $this->db->get()->result_array();
-                        $holiday += count($calendar);
+                    //Working Calendar
+                    //Untuk mengambil jumlah hari libur nasional
+                    $this->db->select('trans_date');
+                    $this->db->from('calendars');
+                    $this->db->where('trans_date', $working_date);
+                    $calendar = $this->db->get()->result_array();
+                    $holiday += count($calendar);
 
-                        //Ini untuk menghitung overtime
-                        //Kalo ada tanggal Merah
-                        if (!empty($holiday_overtime->trans_date)) {
-                            //Looping dari durasi jam lembur
-                            for ($o = 0; $o < $hour; $o++) {
-                                $total_ovetime_amount_holiday += ($standard_overtime * 2);
-                                $total_ovetime_convert_holiday += (1 * 2);
-                                $total_ovetime_hour_holiday++;
+                    //Ini untuk menghitung overtime
+                    //Kalo ada tanggal Merah
+                    if (!empty($holiday_overtime->trans_date)) {
+                        //Looping dari durasi jam lembur
+                        for ($o = 0; $o < $hour; $o++) {
+                            $total_ovetime_amount_holiday += ($standard_overtime * 2);
+                            $total_ovetime_convert_holiday += (1 * 2);
+                            $total_ovetime_hour_holiday++;
+                        }
+
+                        for ($o = 0; $o < $hour_correction; $o++) {
+                            $total_ovetime_amount_correction += ($standard_overtime * 2);
+                            $total_ovetime_convert_correction += (1 * 2);
+                            $total_ovetime_hour_correction++;
+                        }
+
+                        $change_day_qty += 0;
+                        $masuk += 0;
+                        $absen += 0;
+                    } else {
+                        //Perhitungan Overtime
+                        for ($o = 0; $o < $hour; $o++) {
+                            if ($o == 0) {
+                                $total_ovetime_amount_weekday += ($standard_overtime * 1.5);
+                                $total_ovetime_convert_weekday += (1 * 1.5);
+                            } else {
+                                $total_ovetime_amount_weekday += ($standard_overtime * 2);
+                                $total_ovetime_convert_weekday += (1 * 2);
                             }
+                            $total_ovetime_hour_weekday++;
+                        }
 
-                            for ($o = 0; $o < $hour_correction; $o++) {
+                        for ($o = 0; $o < $hour_correction; $o++) {
+                            if ($o == 0) {
+                                $total_ovetime_amount_correction += ($standard_overtime * 1.5);
+                                $total_ovetime_convert_correction += (1 * 1.5);
+                            } else {
                                 $total_ovetime_amount_correction += ($standard_overtime * 2);
                                 $total_ovetime_convert_correction += (1 * 2);
-                                $total_ovetime_hour_correction++;
                             }
-
-                            $change_day_qty += 0;
-                            $masuk += 0;
-                            $absen += 0;
-                        } else {
-                            //Perhitungan Overtime
-                            for ($o = 0; $o < $hour; $o++) {
-                                if ($o == 0) {
-                                    $total_ovetime_amount_weekday += ($standard_overtime * 1.5);
-                                    $total_ovetime_convert_weekday += (1 * 1.5);
-                                } else {
-                                    $total_ovetime_amount_weekday += ($standard_overtime * 2);
-                                    $total_ovetime_convert_weekday += (1 * 2);
-                                }
-                                $total_ovetime_hour_weekday++;
-                            }
-
-                            for ($o = 0; $o < $hour_correction; $o++) {
-                                if ($o == 0) {
-                                    $total_ovetime_amount_correction += ($standard_overtime * 1.5);
-                                    $total_ovetime_convert_correction += (1 * 1.5);
-                                } else {
-                                    $total_ovetime_amount_correction += ($standard_overtime * 2);
-                                    $total_ovetime_convert_correction += (1 * 2);
-                                }
-                                $total_ovetime_hour_correction++;
-                            }
-
-                            //Jika dia tidak absen
-                            if (@$changeDays->end != null) {
-                                $change_day_qty += 1;
-                            } else {
-                                $change_day_qty += 0;
-                            }
-
-                            if (@$rowPermit[0]['amount'] > 0) {
-                                $masuk += 1;
-                                $absen += 1;
-                            } elseif (@$attandance->time_in == null && @$attandance->time_out == null) {
-                                $masuk += 0;
-                                $absen += 1;
-                            } else {
-                                $masuk += 1;
-                                $absen += 0;
-                            }
+                            $total_ovetime_hour_correction++;
                         }
-                    } else {
-                        $weekend[] = date('Y-m-d', $i);
 
+                        //Jika dia tidak absen
                         if (@$changeDays->end != null) {
                             $change_day_qty += 1;
                         } else {
                             $change_day_qty += 0;
                         }
 
-                        $masuk += 0;
-                        $absen += 0;
-
-                        //Perhitungan Overtime
-                        for ($o = 0; $o < $hour; $o++) {
-                            $total_ovetime_amount_holiday += ($standard_overtime * 2);
-                            $total_ovetime_convert_holiday += (1 * 2);
-                            $total_ovetime_hour_holiday++;
-                        }
-
-                        for ($o = 0; $o < $hour_correction; $o++) {
-                            $total_ovetime_amount_correction += ($standard_overtime * 2);
-                            $total_ovetime_convert_correction += (1 * 2);
-                            $total_ovetime_hour_correction++;
+                        if (@$rowPermit[0]['amount'] > 0) {
+                            $masuk += 1;
+                            $absen += 1;
+                        } elseif (@$attandance->time_in == null && @$attandance->time_out == null) {
+                            $masuk += 0;
+                            $absen += 1;
+                        } else {
+                            $masuk += 1;
+                            $absen += 0;
                         }
                     }
                 } else {
-                    if (date('w', $i) !== '0') {
-                        $weekday[] = date('Y-m-d', $i);
+                    $weekend[] = date('Y-m-d', $i);
 
-                        //Working Calendar
-                        //Untuk mengambil jumlah hari libur nasional
-                        $this->db->select('trans_date');
-                        $this->db->from('calendars');
-                        $this->db->where('trans_date', $working_date);
-                        $calendar = $this->db->get()->result_array();
-                        $holiday += count($calendar);
-
-                        //Kalo ada tanggal Merah
-                        if (!empty($holiday_overtime->trans_date)) {
-                            for ($o = 0; $o < $hour; $o++) {
-                                $total_ovetime_amount_holiday += ($standard_overtime * 2);
-                                $total_ovetime_convert_holiday += (1 * 2);
-                                $total_ovetime_hour_holiday++;
-                            }
-
-                            for ($o = 0; $o < $hour_correction; $o++) {
-                                $total_ovetime_amount_correction += ($standard_overtime * 2);
-                                $total_ovetime_convert_correction += (1 * 2);
-                                $total_ovetime_hour_correction++;
-                            }
-
-                            $change_day_qty += 0;
-                            $masuk += 0;
-                            $absen += 0;
-                        } else {
-                            //Perhitungan Overtime
-                            for ($o = 0; $o < $hour; $o++) {
-                                if ($o == 0) {
-                                    $total_ovetime_amount_weekday += ($standard_overtime * 1.5);
-                                    $total_ovetime_convert_weekday += (1 * 1.5);
-                                } else {
-                                    $total_ovetime_amount_weekday += ($standard_overtime * 2);
-                                    $total_ovetime_convert_weekday += (1 * 2);
-                                }
-                                $total_ovetime_hour_weekday++;
-                            }
-
-                            for ($o = 0; $o < $hour_correction; $o++) {
-                                if ($o == 0) {
-                                    $total_ovetime_amount_correction += ($standard_overtime * 1.5);
-                                    $total_ovetime_convert_correction += (1 * 1.5);
-                                } else {
-                                    $total_ovetime_amount_correction += ($standard_overtime * 2);
-                                    $total_ovetime_convert_correction += (1 * 2);
-                                }
-                                $total_ovetime_hour_correction++;
-                            }
-
-                            if (@$changeDays->end != null) {
-                                $change_day_qty += 1;
-                            } else {
-                                $change_day_qty += 0;
-                            }
-
-                            //Jika dia tidak absen
-                            if (@$rowPermit[0]['amount'] > 0) {
-                                $masuk += 1;
-                                $absen += 1;
-                            } elseif (@$attandance->time_in == null && @$attandance->time_out == null) {
-                                $masuk += 0;
-                                $absen += 1;
-                            } else {
-                                $masuk += 1;
-                                $absen += 0;
-                            }
-                        }
+                    if (@$changeDays->end != null) {
+                        $change_day_qty += 1;
                     } else {
-                        $weekend[] = date('Y-m-d', $i);
-
                         $change_day_qty += 0;
-                        $masuk += 0;
-                        $absen += 0;
+                    }
 
-                        //Perhitungan Overtime
-                        for ($o = 0; $o < $hour; $o++) {
-                            $total_ovetime_amount_holiday += ($standard_overtime * 2);
-                            $total_ovetime_convert_holiday += (1 * 2);
-                            $total_ovetime_hour_holiday++;
-                        }
+                    $masuk += 0;
+                    $absen += 0;
 
-                        for ($o = 0; $o < $hour_correction; $o++) {
-                            $total_ovetime_amount_correction += ($standard_overtime * 2);
-                            $total_ovetime_convert_correction += (1 * 2);
-                            $total_ovetime_hour_correction++;
-                        }
+                    //Perhitungan Overtime
+                    for ($o = 0; $o < $hour; $o++) {
+                        $total_ovetime_amount_holiday += ($standard_overtime * 2);
+                        $total_ovetime_convert_holiday += (1 * 2);
+                        $total_ovetime_hour_holiday++;
+                    }
+
+                    for ($o = 0; $o < $hour_correction; $o++) {
+                        $total_ovetime_amount_correction += ($standard_overtime * 2);
+                        $total_ovetime_convert_correction += (1 * 2);
+                        $total_ovetime_hour_correction++;
                     }
                 }
 
@@ -655,11 +561,6 @@ class Payrolls extends CI_Controller
             //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
             $hkw = (@count($weekday) - $holiday);
-            if ($masuk >= $hkw) {
-                $working_day = $hkw;
-            } else {
-                $working_day = $masuk;
-            }
 
             //Allowance Amount
             //jika dia ada tunjuangan ambil field dan isinya
@@ -679,8 +580,8 @@ class Payrolls extends CI_Controller
 
                 if ($allowance_data['calculate_days'] == "1") {
                     $arr_allowance_number .= strtolower($allowance_data['number']) . ",";
-                    $arr_allowance_amount .= ($allowance_data['amount'] * $working_day) . ",";
-                    $arr_allowance_amount_total += ($allowance_data['amount'] * $working_day);
+                    $arr_allowance_amount .= ($allowance_data['amount'] * $hkw) . ",";
+                    $arr_allowance_amount_total += ($allowance_data['amount'] * $hkw);
                 } else {
                     $arr_allowance_number .= strtolower($allowance_data['number']) . ",";
                     $arr_allowance_amount .= $allowance_data['amount'] . ",";
@@ -1070,7 +971,7 @@ class Payrolls extends CI_Controller
                 "tax_id" => $record['tax_id'],
                 "shift_name" => $record['shift_name_2'],
                 "attandance" => json_encode($arr_permit_combine),
-                "attandance_wd" => ($working_day),
+                "attandance_wd" => ($masuk),
                 "working_day" => @count($weekday) - $holiday,
                 "salary" => $record['salary'],
                 "allowence" => json_encode($arr_allowance_combine),

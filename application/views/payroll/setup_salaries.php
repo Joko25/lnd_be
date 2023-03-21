@@ -143,17 +143,6 @@
     </div>
 </div>
 
-<div id="dlg_unregistered" class="easyui-dialog" title="Unregistered Salary" data-options="closed: true,modal:true" style="width: 500px; height: 500px; top: 20px;">
-    <table id="dg_unregistered" class="easyui-datagrid" style="width:100%;">
-        <thead>
-            <tr>
-                <th data-options="field:'number',width:150,halign:'center'">Employee ID</th>
-                <th data-options="field:'name',width:200,halign:'center'">Employee Name</th>
-            </tr>
-        </thead>
-    </table>
-</div>
-
 <!-- PDF -->
 <iframe id="printout" src="<?= base_url('payroll/setup_salaries/print') ?>" style="width: 100%;" hidden></iframe>
 
@@ -283,16 +272,6 @@
     //RELOAD
     function reload() {
         window.location.reload();
-    }
-    //UNREGISTERED
-    function unregistered() {
-        $('#dlg_unregistered').dialog('open');
-        $('#dg_unregistered').datagrid({
-            url: '<?= base_url('payroll/setup_salaries/readUnregistered') ?>',
-            clientPaging: false,
-            remoteFilter: true,
-            rownumbers: true
-        }).datagrid('enableFilter');
     }
 
     $(function() {

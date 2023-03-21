@@ -72,6 +72,7 @@ class Setup_deductions extends CI_Controller
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
             $filter_deduction = $this->input->get('filter_deduction');
+            $filter_status = $this->input->get('filter_status');
 
             $page = $this->input->post('page');
             $rows = $this->input->post('rows');
@@ -82,9 +83,9 @@ class Setup_deductions extends CI_Controller
             $result = array();
             //Select Query
             $this->db->select('a.*, b.name as deduction_name, c.number as employee_number, c.name as employee_name, d.name as division_name, e.name as departement_name, f.name as departement_sub_name');
-            $this->db->from('setup_deductions a');
-            $this->db->join('deductions b', 'a.deduction_id = b.id');
-            $this->db->join('employees c', 'a.employee_id = c.id');
+            $this->db->from('employees c');
+            $this->db->join('setup_deductions a', 'a.employee_id = c.id', 'left');
+            $this->db->join('deductions b', 'a.deduction_id = b.id', 'left');
             $this->db->join('divisions d', 'c.division_id = d.id');
             $this->db->join('departements e', 'c.departement_id = e.id');
             $this->db->join('departement_subs f', 'c.departement_sub_id = f.id');
@@ -96,7 +97,13 @@ class Setup_deductions extends CI_Controller
             $this->db->like('d.id', $filter_division);
             $this->db->like('e.id', $filter_departement);
             $this->db->like('f.id', $filter_departement_sub);
+            if ($filter_status == "REGIST") {
+                $this->db->where("(a.amount is not null or a.amount != 0)");
+            } elseif ($filter_status == "UNREGIST") {
+                $this->db->where("(a.amount is null or a.amount = 0)");
+            }
             $this->db->order_by('c.name', 'ASC');
+
             //Total Data
             $totalRows = $this->db->count_all_results('', false);
             //Limit 1 - 10
@@ -107,6 +114,53 @@ class Setup_deductions extends CI_Controller
             $result['total'] = $totalRows;
             $result = array_merge($result, ['rows' => $records]);
             echo json_encode($result);
+        }
+    }
+
+    public function createOrUpdate()
+    {
+        if ($this->input->post()) {
+            $post = $this->input->post();
+            $employee_id = $post['employee_id'];
+            $deduction_name = $post['deduction_name'];
+            $amount = $post['amount'];
+
+            $setup_deductions = $this->crud->read("setup_deductions", [], ["employee_id" => $employee_id]);
+            $deduction = $this->crud->read('deductions', [], ["name" => $deduction_name]);
+
+            if (empty($setup_deductions)) {
+                if ($deduction) {
+                    $amount = $deduction->amount;
+                } else {
+                    $amount = $amount;
+                }
+
+                $postFinal = array(
+                    "employee_id" => $post['employee_id'],
+                    "deduction_id" => @$deduction->id,
+                    "amount" => $amount,
+                );
+
+                $send   = $this->crud->create('setup_deductions', $postFinal);
+                echo $send;
+            } else {
+                if ($deduction->id == $setup_deductions->deduction_id) {
+                    $amount = $amount;
+                } else {
+                    $amount = $deduction->amount;
+                }
+
+                $postFinal = array(
+                    "employee_id" => $employee_id,
+                    "deduction_id" => @$deduction->id,
+                    "amount" => $amount,
+                );
+
+                $send = $this->crud->update('setup_deductions', ["employee_id" => $post['employee_id']], $postFinal);
+                echo $send;
+            }
+        } else {
+            show_error("Cannot Process your request");
         }
     }
 
@@ -256,6 +310,7 @@ class Setup_deductions extends CI_Controller
         $filter_departement_sub = $this->input->get('filter_departement_sub');
         $filter_employee = $this->input->get('filter_employee');
         $filter_deduction = $this->input->get('filter_deduction');
+        $filter_status = $this->input->get('filter_status');
 
         //Config
         $this->db->select('*');
@@ -263,9 +318,9 @@ class Setup_deductions extends CI_Controller
         $config = $this->db->get()->row();
 
         $this->db->select('a.*, b.name as deduction_name, c.number as employee_number, c.name as employee_name, d.name as division_name, e.name as departement_name, f.name as departement_sub_name');
-        $this->db->from('setup_deductions a');
-        $this->db->join('deductions b', 'a.deduction_id = b.id');
-        $this->db->join('employees c', 'a.employee_id = c.id');
+        $this->db->from('employees c');
+        $this->db->join('setup_deductions a', 'a.employee_id = c.id', 'left');
+        $this->db->join('deductions b', 'a.deduction_id = b.id', 'left');
         $this->db->join('divisions d', 'c.division_id = d.id');
         $this->db->join('departements e', 'c.departement_id = e.id');
         $this->db->join('departement_subs f', 'c.departement_sub_id = f.id');
@@ -277,6 +332,11 @@ class Setup_deductions extends CI_Controller
         $this->db->like('d.id', $filter_division);
         $this->db->like('e.id', $filter_departement);
         $this->db->like('f.id', $filter_departement_sub);
+        if ($filter_status == "REGIST") {
+            $this->db->where("(a.amount is not null or a.amount != 0)");
+        } elseif ($filter_status == "UNREGIST") {
+            $this->db->where("(a.amount is null or a.amount = 0)");
+        }
         $this->db->order_by('c.name', 'ASC');
         $records = $this->db->get()->result_array();
 
