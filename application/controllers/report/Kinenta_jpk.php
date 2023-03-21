@@ -46,23 +46,34 @@ class Kinenta_jpk extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            if ($filter_group != "") {
-                $where_group = "and f.number = '$filter_group'";
+            if ($filter_group != "MAGANG") {
+                $this->db->select("a.number, a.name, a.date_sign, a.gender, c.name as departement_name, g.number as marital_number, g.name as marital_name, d.name as group_name, f.amount");
+                $this->db->from('employees a');
+                $this->db->join('divisions b', 'a.division_id = b.id');
+                $this->db->join('departements c', 'a.departement_id = c.id');
+                $this->db->join('groups d', 'a.group_id = d.id');
+                $this->db->join('sources e', 'a.source_id = e.id');
+                $this->db->join('kinenta_jpk f', 'f.number = d.name');
+                $this->db->join('maritals g', 'g.id = a.marital_id');
+                $this->db->where('a.status', 0);
+                $this->db->where('f.number', $filter_group);
+                $this->db->like('a.id', $filter_employee);
+                $this->db->group_by('a.number');
+                $this->db->order_by('a.name', 'asc');
+                $records = $this->db->get()->result_array();
             } else {
-                $where_group = "";
-            }
-
-            $query = $this->db->query("SELECT a.number, a.name, a.date_sign, a.gender, b.name as departement_name, c.number as marital_number, c.name as marital_name, d.name as group_name, f.amount
+                $query = $this->db->query("SELECT a.number, a.name, a.date_sign, a.gender, b.name as departement_name, c.number as marital_number, c.name as marital_name, d.name as group_name, f.amount
                 FROM employees a
                 JOIN departements b ON a.departement_id = b.id
                 JOIN maritals c ON a.marital_id = c.id
                 JOIN groups d ON a.group_id = d.id
                 LEFT JOIN payrolls e ON e.employee_id = a.id
                 JOIN kinenta_jpk f ON (f.number = d.name or f.number = c.number)
-                WHERE a.id like '%$filter_employee%' and e.period_start = '$period_start' and e.period_end = '$period_end' $where_group 
+                WHERE a.id like '%$filter_employee%' and e.period_start = '$period_start' and e.period_end = '$period_end' and f.number = '$filter_group' 
                 GROUP BY a.id
                 ORDER BY a.name ASC");
-            $records = $query->result_array();
+                $records = $query->result_array();
+            }
 
             //Config
             $this->db->select('*');

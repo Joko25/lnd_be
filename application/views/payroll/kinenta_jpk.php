@@ -32,6 +32,7 @@
                 <span style="width:35%; display:inline-block;">Name</span>
                 <select style="width:60%;" id="number" name="number" class="easyui-combobox" panelHeight="auto" required>
                     <option value="MAGANG">MAGANG</option>
+                    <option value="PKL">PKL</option>
                     <option value="TK/0">TK/0</option>
                     <option value="K/0">K/0</option>
                 </select>

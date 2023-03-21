@@ -12,6 +12,7 @@
             <th rowspan="2" data-options="field:'type',width:100,halign:'center'">Type</th>
             <th colspan="6" data-options="field:'',width:80,halign:'center'">Request</th>
             <th colspan="3" data-options="field:'',width:80,halign:'center'">Attandance</th>
+            <th rowspan="2" data-options="field:'break',width:80,halign:'center',align:'center'">Break</th>
             <th rowspan="2" data-options="field:'meal',width:80,halign:'center',align:'center',styler:cellStyler, formatter:cellFormatter">Meal</th>
             <th rowspan="2" data-options="field:'amount',width:80,halign:'center',align:'right', formatter:numberformat">Plan<br>Amount</th>
             <th rowspan="2" data-options="field:'amount_actual',width:80,halign:'center',align:'right', formatter:numberformat">Actual<br>Amount</th>
@@ -102,7 +103,7 @@
 </div>
 
 <!-- DIALOG SAVE -->
-<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 1000px; height: 500px; padding:10px; top: 20px;">
+<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 1100px; height: 500px; padding:10px; top: 20px;">
     <form id="frm_insert" method="post" enctype="multipart/form-data" novalidate>
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Form Data</b></legend>
@@ -166,6 +167,10 @@
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">End <small style="color:red;">(time)</small></span>
                 <input style="width:30%;" name="end" readonly mask="99:99:99" required id="end" class="easyui-maskedbox">
+            </div>
+            <div class="fitem">
+                <span style="width:30%; display:inline-block;">Break <small style="color:red;">(Minute)</small></span>
+                <input style="width:30%;" name="break" readonly id="break" class="easyui-numberbox">
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Meal</span>
@@ -302,6 +307,17 @@
                         }
                     }
                 }, {
+                    field: 'break',
+                    width: 80,
+                    halign: 'center',
+                    title: "Break<br>(Minutes)",
+                    editor: {
+                        type: 'numberbox',
+                        options: {
+                            required: true
+                        }
+                    }
+                }, {
                     field: 'meal',
                     width: 80,
                     align: 'center',
@@ -317,7 +333,7 @@
                     field: 'plan',
                     width: 80,
                     halign: 'center',
-                    title: "Plan Output",
+                    title: "Plan<br>Output",
                     editor: {
                         type: 'numberbox',
                         options: {
@@ -394,6 +410,7 @@
                     start: '00:00',
                     end: '00:00',
                     plan: '0',
+                    break: '0',
                 });
                 editIndex = $('#dg2').datagrid('getRows').length - 1;
                 $('#dg2').datagrid('selectRow', editIndex).datagrid('beginEdit', editIndex);
@@ -432,13 +449,9 @@
     function update() {
         var row = $('#dg').datagrid('getSelected');
         if (row) {
-            if (row.time_in != null) {
-                toastr.info("Cannot update the data because the time in is already filled!");
-            } else {
-                $('#dlg_update').dialog('open');
-                $('#frm_update').form('load', row);
-                url_update = '<?= base_url('attandance/cash_carries/update') ?>?id=' + window.btoa(row.id);
-            }
+            $('#dlg_update').dialog('open');
+            $('#frm_update').form('load', row);
+            url_update = '<?= base_url('attandance/cash_carries/update') ?>?id=' + window.btoa(row.id);
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
         }
@@ -568,7 +581,13 @@
                     var request_code = $("#request_code").textbox('getValue');
                     var request_name = $("#request_name").textbox('getValue');
                     var type = $("#type").combobox('getValue');
-                    var attachment = $("#attachment").filebox('files')[0];
+
+                    if ($("#attachment").filebox('getValue') == "") {
+                        var file_attachment = "";
+                    } else {
+                        var attachment = $("#attachment").filebox('files')[0];
+                        var file_attachment = attachment['name'];
+                    }
 
                     var rows = $('#dg2').datagrid('getRows');
                     var totalrows = rows.length;
@@ -584,12 +603,13 @@
                                     request_code: request_code,
                                     request_name: request_name,
                                     type: type,
-                                    attachment: attachment['name'],
+                                    attachment: file_attachment,
                                     employee_id: rows[i].employee_id,
                                     start: rows[i].start,
                                     end: rows[i].end,
                                     meal: rows[i].meal,
                                     plan: rows[i].plan,
+                                    break: rows[i].break,
                                     remarks: rows[i].remarks
                                 },
                                 dataType: "json",

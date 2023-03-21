@@ -331,6 +331,7 @@ class Cash_carries extends CI_Controller
             $request_name = $post['request_name'];
             $start = $post['start'];
             $end = $post['end'];
+            $break = $post['break'];
             $type = $post['type'];
             $meal = $post['meal'];
             $plan = $post['plan'];
@@ -352,6 +353,7 @@ class Cash_carries extends CI_Controller
                 "amount" =>  $ot_amount,
                 "meal" =>  $meal,
                 "plan" =>  $plan,
+                "break" =>  $break,
                 "remarks" =>  $remarks,
                 "attachment" =>  $attachment,
             );
@@ -407,24 +409,28 @@ class Cash_carries extends CI_Controller
     //UPLOAD FILE
     public function uploadFile()
     {
-        //Setting Upload Image
-        $file = $_FILES["attachment"]["name"];
-        $extension_explode = explode('.', $file);
-        $extension_final = strtolower(end($extension_explode));
-        $size = $_FILES["attachment"]['size'];
-        $temporary = $_FILES["attachment"]['tmp_name'];
+        if (!empty($_FILES["attachment"]["name"])) {
+            //Setting Upload Image
+            $file = $_FILES["attachment"]["name"];
+            $extension_explode = explode('.', $file);
+            $extension_final = strtolower(end($extension_explode));
+            $size = $_FILES["attachment"]['size'];
+            $temporary = $_FILES["attachment"]['tmp_name'];
 
-        if (in_array($extension_final, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file == "") {
-            if ($size < 2097152) {
-                @move_uploaded_file($temporary, "assets/image/cash_carry/" . $file);
-                echo $file;
+            if (in_array($extension_final, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file == "") {
+                if ($size < 2097152) {
+                    @move_uploaded_file($temporary, "assets/image/cash_carry/" . $file);
+                    echo $file;
+                } else {
+                    show_error("Your file is too big a maximum of 2 mb", 200, "File Upload Error");
+                    exit;
+                }
             } else {
-                show_error("Your file is too big a maximum of 2 mb", 200, "File Upload Error");
+                show_error("Your extension file is not recognized", 200, "File Upload Error");
                 exit;
             }
         } else {
-            show_error("Your extension file is not recognized", 200, "File Upload Error");
-            exit;
+            echo "Image No Upload";
         }
     }
 
@@ -694,6 +700,7 @@ class Cash_carries extends CI_Controller
                 <th>Trans Date</th>
                 <th>Start</th>
                 <th>End</th>
+                <th>Break</th>
                 <th>Type</th>
                 <th>Duration</th>
                 <th>Amount</th>
@@ -716,6 +723,7 @@ class Cash_carries extends CI_Controller
                             <td>' . date("d F Y", strtotime($data['trans_date'])) . '</td>
                             <td>' . $data['start'] . '</td>
                             <td>' . $data['end'] . '</td>
+                            <td>' . $data['break'] . '</td>
                             <td>' . $data['type'] . '</td>
                             <td>' . $data['duration_hour'] . '</td>
                             <td>' . $data['amount'] . '</td>

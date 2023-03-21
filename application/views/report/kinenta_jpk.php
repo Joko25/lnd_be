@@ -15,6 +15,7 @@
                 <select style="width:60%;" id="filter_group" name="filter_group" class="easyui-combobox" panelHeight="auto">
                     <option value="">Choose All</option>
                     <option value="MAGANG">MAGANG</option>
+                    <option value="PKL">PKL</option>
                     <option value="TK/0">TK/0</option>
                     <option value="K/0">K/0</option>
                 </select>
@@ -50,8 +51,8 @@
         var filter_group = $("#filter_group").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
 
-        if (filter_from == "" || filter_to == "") {
-            toastr.warning("Please Choose Filter Date");
+        if (filter_from == "" || filter_to == "" || filter_group == "") {
+            toastr.warning("Please Choose Filter Date and Group");
         } else {
             var url = "?filter_from=" + filter_from +
                 "&filter_to=" + filter_to +
@@ -69,8 +70,8 @@
         var filter_group = $("#filter_group").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
 
-        if (filter_from == "" || filter_to == "") {
-            toastr.warning("Please Choose Filter Date");
+        if (filter_from == "" || filter_to == "" || filter_group == "") {
+            toastr.warning("Please Choose Filter Date and Group");
         } else {
             var url = "?filter_from=" + filter_from +
                 "&filter_to=" + filter_to +
