@@ -335,10 +335,10 @@ class Cash_carries extends CI_Controller
             $type = $post['type'];
             $meal = $post['meal'];
             $plan = $post['plan'];
-            $attachment = $post['attachment'];
+            $attachment = trim($post['attachment']);
             $remarks = $post['remarks'];
             $duration = $this->convertHour($trans_date, $start, $end);
-            $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, $duration['duration_hour'], $meal);
+            $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, ($duration['duration_hour'] - ($break / 60)), $meal);
 
             $post_final = array(
                 "trans_date" =>  $trans_date,
@@ -349,7 +349,7 @@ class Cash_carries extends CI_Controller
                 "end" =>  $end,
                 "type" =>  $type,
                 "duration" =>  $duration['duration'],
-                "duration_hour" =>  $duration['duration_hour'],
+                "duration_hour" => ($duration['duration_hour'] - ($break / 60)),
                 "amount" =>  $ot_amount,
                 "meal" =>  $meal,
                 "plan" =>  $plan,
@@ -360,7 +360,7 @@ class Cash_carries extends CI_Controller
 
             $cash_carries = $this->crud->reads('cash_carries', [], ["employee_id" => $employee_id, "trans_date" => $trans_date, "type" => $type]);
             if (count($cash_carries) > 0) {
-                echo json_encode(array("title" => "Duplicate", "message" => "Overtime has been created", "theme" => "error"));
+                echo json_encode(array("title" => "Duplicate", "message" => "Cash Carry has been created", "theme" => "error"));
             } else {
                 $send = $this->crud->create('cash_carries', $post_final);
                 echo $send;
@@ -416,11 +416,12 @@ class Cash_carries extends CI_Controller
             $extension_final = strtolower(end($extension_explode));
             $size = $_FILES["attachment"]['size'];
             $temporary = $_FILES["attachment"]['tmp_name'];
+            $newName = $this->input->post('request_code') . "." . $extension_final;
 
             if (in_array($extension_final, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file == "") {
                 if ($size < 2097152) {
-                    @move_uploaded_file($temporary, "assets/image/cash_carry/" . $file);
-                    echo $file;
+                    @move_uploaded_file($temporary, "assets/image/cash_carry/" . $newName);
+                    echo $newName;
                 } else {
                     show_error("Your file is too big a maximum of 2 mb", 200, "File Upload Error");
                     exit;
@@ -494,10 +495,11 @@ class Cash_carries extends CI_Controller
                 'start' => $data->val($i, 4),
                 'end' => $data->val($i, 5),
                 'duration_hour' => $data->val($i, 6),
-                'type' => $data->val($i, 7),
-                'meal' => $data->val($i, 8),
-                'plan' => $data->val($i, 9),
-                'remarks' => $data->val($i, 10),
+                'break' => $data->val($i, 7),
+                'type' => $data->val($i, 8),
+                'meal' => $data->val($i, 9),
+                'plan' => $data->val($i, 10),
+                'remarks' => $data->val($i, 11),
                 'request_code' => $templatefinal
             );
         }
@@ -567,7 +569,7 @@ class Cash_carries extends CI_Controller
                         $duration = $hour . " Hour " . floor($minutes / 60) . " Minutes";
                         $duration_hour = $hour;
 
-                        $ot_amount = $this->readOvertimePrice($employee->id, $data['trans_date'], $duration_hour, $meal);
+                        $ot_amount = $this->readOvertimePrice($employee->id, $data['trans_date'], ($duration_hour - ($data['break'] / 60)), $meal);
 
                         $post_cash_carries = array(
                             'employee_id' => $employee->id,
@@ -575,11 +577,12 @@ class Cash_carries extends CI_Controller
                             'request_code' => $data['request_code'],
                             'start' => $data['start'],
                             'end' => $data['end'],
+                            'break' => $data['break'],
                             'type' => $data['type'],
                             'meal' => $meal,
                             'plan' => $data['plan'],
                             'duration' => $duration,
-                            'duration_hour' => $data['duration_hour'],
+                            'duration_hour' => ($duration_hour - ($data['break'] / 60)),
                             'remarks' => $data['remarks'],
                             'amount' =>  $ot_amount
                         );
@@ -701,8 +704,8 @@ class Cash_carries extends CI_Controller
                 <th>Start</th>
                 <th>End</th>
                 <th>Break</th>
-                <th>Type</th>
                 <th>Duration</th>
+                <th>Type</th>
                 <th>Amount</th>
                 <th>Plan</th>
                 <th>Actual</th>
@@ -724,8 +727,8 @@ class Cash_carries extends CI_Controller
                             <td>' . $data['start'] . '</td>
                             <td>' . $data['end'] . '</td>
                             <td>' . $data['break'] . '</td>
-                            <td>' . $data['type'] . '</td>
                             <td>' . $data['duration_hour'] . '</td>
+                            <td>' . $data['type'] . '</td>
                             <td>' . $data['amount'] . '</td>
                             <td>' . $data['plan'] . '</td>
                             <td>' . $data['actual'] . '</td>

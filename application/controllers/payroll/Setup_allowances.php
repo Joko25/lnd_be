@@ -105,6 +105,7 @@ class Setup_allowances extends CI_Controller
                 $this->db->where("(a.amount is null or a.amount = 0)");
             }
             $this->db->order_by('c.name', 'ASC');
+
             //Total Data
             $totalRows = $this->db->count_all_results('', false);
             //Limit 1 - 10

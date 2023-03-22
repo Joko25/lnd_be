@@ -46,7 +46,7 @@ class Kinenta_jpk extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            if ($filter_group != "MAGANG") {
+            if ($filter_group == "PKL" || $filter_group == "MAGANG") {
                 $this->db->select("a.number, a.name, a.date_sign, a.gender, c.name as departement_name, g.number as marital_number, g.name as marital_name, d.name as group_name, f.amount");
                 $this->db->from('employees a');
                 $this->db->join('divisions b', 'a.division_id = b.id');
@@ -143,7 +143,7 @@ class Kinenta_jpk extends CI_Controller
 
                 $services = $y . $m . $d;
 
-                if ($selisih->format('%a') <= 31) {
+                if ($filter_group == "PKL" || $filter_group == "MAGANG") {
                     $html .= '<tr>
                             <td>' . $no . '</td>
                             <td style="text-align:center;" class="str">' . $record['number'] . '</td>
@@ -156,6 +156,21 @@ class Kinenta_jpk extends CI_Controller
                             <td>' . number_format($record['amount']) . '</td>
                         </tr>';
                     $no++;
+                } else {
+                    if ($selisih->format('%a') <= 31) {
+                        $html .= '<tr>
+                            <td>' . $no . '</td>
+                            <td style="text-align:center;" class="str">' . $record['number'] . '</td>
+                            <td>' . $record['name'] . '</td>
+                            <td>' . $services . '</td>
+                            <td>' . $record['gender'] . '</td>
+                            <td>' . $record['marital_name'] . '</td>
+                            <td>' . $record['departement_name'] . '</td>
+                            <td>' . $record['group_name'] . '</td>
+                            <td>' . number_format($record['amount']) . '</td>
+                        </tr>';
+                        $no++;
+                    }
                 }
             }
             $html .= '</table>';
