@@ -411,12 +411,14 @@ class Cash_carries extends CI_Controller
     {
         if (!empty($_FILES["attachment"]["name"])) {
             //Setting Upload Image
+            $request_code = trim($this->input->post('request_code'));
+            
             $file = $_FILES["attachment"]["name"];
             $extension_explode = explode('.', $file);
             $extension_final = strtolower(end($extension_explode));
             $size = $_FILES["attachment"]['size'];
             $temporary = $_FILES["attachment"]['tmp_name'];
-            $newName = $this->input->post('request_code') . "." . $extension_final;
+            $newName =  $request_code . "." . $extension_final;
 
             if (in_array($extension_final, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file == "") {
                 if ($size < 2097152) {
