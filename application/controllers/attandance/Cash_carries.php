@@ -155,11 +155,20 @@ class Cash_carries extends CI_Controller
         //Set Duration
         $time_begin = strtotime($trans_date . " " . $start);
         $time_end = strtotime($trans_date . " " . $end);
+        $tomorrow = strtotime(date('Y-m-d', strtotime($trans_date . "+1 days")) . " " . $end);
+
         $diff = $time_end - $time_begin;
         $hour = floor($diff / (60 * 60));
         $minutes = ($diff - $hour * (60 * 60));
+
+        if ($hour < 0) {
+            $diff = $tomorrow - $time_begin;
+            $hour = floor($diff / (60 * 60));
+            $minutes = ($diff - $hour * (60 * 60));
+        }
+
         $duration = $hour . " Hour " . floor($minutes / 60) . " Minutes";
-        $duration_hour = $hour = round($diff / (60 * 60), 2);;
+        $duration_hour = round($diff / (60 * 60), 2);
         $arr = array("duration" => $duration, "duration_hour" => $duration_hour);
         return $arr;
     }
@@ -412,7 +421,7 @@ class Cash_carries extends CI_Controller
         if (!empty($_FILES["attachment"]["name"])) {
             //Setting Upload Image
             $request_code = trim($this->input->post('request_code'));
-            
+
             $file = $_FILES["attachment"]["name"];
             $extension_explode = explode('.', $file);
             $extension_final = strtolower(end($extension_explode));

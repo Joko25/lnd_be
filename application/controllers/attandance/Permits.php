@@ -210,6 +210,7 @@ class Permits extends CI_Controller
             $leave = $post['leave'];
             for ($i = $date_from; $i <= $date_to; $i += (60 * 60 * 24)) {
                 $permit_date = date('Y-m-d', $i);
+
                 $this->db->select('*');
                 $this->db->from('permits');
                 $this->db->where("employee_id", $post['employee_id']);
@@ -220,19 +221,21 @@ class Permits extends CI_Controller
                     echo json_encode(array("title" => "Available", "message" => "The permit requestion for this employee and permit date has been created", "theme" => "error"));
                     exit;
                 } else {
-                    $attachment = $this->crud->upload('attachment', ['pdf', 'png', 'jpg', 'jpeg'], 'assets/image/attandance/');
-                    $post_final = array(
-                        "employee_id" => $post['employee_id'],
-                        "permit_type_id" => $post['permit_type_id'],
-                        "reason_id" => $post['reason_id'],
-                        "trans_date" => $post['trans_date'],
-                        "permit_date" => $permit_date,
-                        "duration" => "1",
-                        "leave" => ($leave - 1),
-                        "note" => $post['note'],
-                        "attachment" => $attachment
-                    );
-                    $send = $this->crud->create('permits', $post_final);
+                    if (date('w', $i) !== '0' && date('w', $i) !== '6') {
+                        $attachment = $this->crud->upload('attachment', ['pdf', 'png', 'jpg', 'jpeg'], 'assets/image/attandance/');
+                        $post_final = array(
+                            "employee_id" => $post['employee_id'],
+                            "permit_type_id" => $post['permit_type_id'],
+                            "reason_id" => $post['reason_id'],
+                            "trans_date" => $post['trans_date'],
+                            "permit_date" => $permit_date,
+                            "duration" => "1",
+                            "leave" => ($leave - 1),
+                            "note" => $post['note'],
+                            "attachment" => $attachment
+                        );
+                        $send = $this->crud->create('permits', $post_final);
+                    }
                 }
 
                 $leave = ($leave - 1);

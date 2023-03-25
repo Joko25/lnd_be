@@ -44,6 +44,7 @@
                 <select style="width:60%;" name="type" required="" class="easyui-combobox" panelHeight="auto">
                     <option value="FIX">FIX</option>
                     <option value="TEMPORARY">TEMPORARY</option>
+                    <option value="NONE">NONE</option>
                 </select>
             </div>
             <div class="fitem">

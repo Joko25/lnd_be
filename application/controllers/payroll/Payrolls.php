@@ -577,7 +577,6 @@ class Payrolls extends CI_Controller
             $arr_allowance_amount_number = 0;
             $count_allowance_number = 0;
             foreach ($r_allowance as $allowance_data) {
-
                 if ($allowance_data['calculate_days'] == "1") {
                     $arr_allowance_number .= strtolower($allowance_data['number']) . ",";
                     $arr_allowance_amount .= ($allowance_data['amount'] * $hkw) . ",";
@@ -591,7 +590,12 @@ class Payrolls extends CI_Controller
                 if ($allowance_data['type'] == "TEMPORARY" && $allowance_data['amount'] > 0) {
                     $arr_allowance_amount_total_bpjs += 0;
                     $count_allowance_number += 1;
-                    $arr_allowance_amount_number += ($allowance_data['amount']);
+
+                    if ($allowance_data['calculate_days'] == "1") {
+                        $arr_allowance_amount_number += ($allowance_data['amount'] * $hkw);
+                    } else {
+                        $arr_allowance_amount_number += ($allowance_data['amount']);
+                    }
                 } elseif ($allowance_data['type'] == "FIX" && $allowance_data['amount'] > 0) {
                     $arr_allowance_amount_total_bpjs += ($allowance_data['amount']);
                     $count_allowance_number += 0;

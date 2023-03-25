@@ -40,6 +40,14 @@ class Sources extends CI_Controller
         echo json_encode($send);
     }
 
+    public function read($group_name)
+    {
+        $post = isset($_POST['q']) ? $_POST['q'] : "";
+        $group = $this->crud->read("groups", [], ["name" => $group_name]);
+        $send = $this->crud->reads('sources', ["name" => $post], ["group_id" => $group->id]);
+        echo json_encode($send);
+    }
+
     //GET DATATABLES
     public function datatables()
     {

@@ -271,9 +271,6 @@ class Student_payrolls extends CI_Controller
                 $html .= '</body></html>';
                 echo $html;
             } else {
-                $start = strtotime($filter_from);
-                $finish = strtotime($filter_to);
-
                 echo '  <html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
                         <style> .str{ mso-number-format:\@; } </style>
                         <body>';
@@ -282,24 +279,11 @@ class Student_payrolls extends CI_Controller
                     $allowance_1 = $this->crud->read("allowance_students", [], ["group_id" => $record['group_id'], "months" => "1"]);
                     $allowance_2 = $this->crud->read("allowance_students", [], ["group_id" => $record['group_id'], "months" => "2"]);
                     $allowance_3 = $this->crud->read("allowance_students", [], ["group_id" => $record['group_id'], "months" => "3"]);
-
-                    $this->db->select("a.id, a.number, a.name, a.date_sign, b.name as division_name, c.name as departement_name, e.amount, e.boarding_fee");
-                    $this->db->from('employees a');
-                    $this->db->join('divisions b', 'a.division_id = b.id');
-                    $this->db->join('departements c', 'a.departement_id = c.id');
-                    $this->db->join('groups d', 'a.group_id = d.id');
-                    $this->db->join('sources e', 'a.source_id = e.id');
-                    $this->db->where('a.status', 0);
-                    $this->db->where('a.group_id', $record['group_id']);
-                    $this->db->where('a.source_id', $record['source_id']);
-                    $this->db->like('a.id', $filter_employee);
-                    $this->db->group_by('a.number');
-                    $this->db->order_by('a.name', 'asc');
-                    $recordEmployees = $this->db->get()->result_array();
+                    $payrolls = $this->crud->reads("payroll_pkl", [], ["period_start" => $filter_from, "period_end" => $filter_to, "source_id" => $record['source_id']]);
 
                     //Config Page
                     $rows = 20;
-                    $page = ceil(count($recordEmployees) / $rows);
+                    $page = ceil(count($payrolls) / $rows);
 
                     echo '<div style="page-break-after:always;">';
                     $no = 1;
@@ -355,135 +339,40 @@ class Student_payrolls extends CI_Controller
                                             <th width="50" style="text-align:center;">MINUS</th>
                                         </tr>';
 
-                        $this->db->select("a.id, a.number, a.name, a.date_sign, b.name as division_name, c.name as departement_name, f.name as departement_sub_name, e.amount, e.boarding_fee");
-                        $this->db->from('employees a');
-                        $this->db->join('divisions b', 'a.division_id = b.id');
-                        $this->db->join('departements c', 'a.departement_id = c.id');
-                        $this->db->join('groups d', 'a.group_id = d.id');
-                        $this->db->join('sources e', 'a.source_id = e.id');
-                        $this->db->join('departement_subs f', 'a.departement_sub_id = f.id');
-                        $this->db->where('a.status', 0);
-                        $this->db->where('a.group_id', $record['group_id']);
-                        $this->db->where('a.source_id', $record['source_id']);
-                        $this->db->like('a.id', $filter_employee);
-                        $this->db->group_by('a.number');
-                        $this->db->order_by('c.name', 'asc');
-                        $this->db->order_by('f.name', 'asc');
-                        $this->db->order_by('a.name', 'asc');
+                        $this->db->select("*");
+                        $this->db->from("payroll_pkl");
+                        $this->db->where('source_id', $record['source_id']);
+                        $this->db->where('period_start', $filter_from);
+                        $this->db->where('period_end', $filter_to);
+                        $this->db->like('employee_id', $filter_employee);
+                        $this->db->order_by('departement_name', 'asc');
+                        $this->db->order_by('departement_sub_name', 'asc');
+                        $this->db->order_by('employee_name', 'asc');
                         $this->db->limit(20, ($i * 20));
                         $employees = $this->db->get()->result_array();
                         $total = 0;
 
                         foreach ($employees as $employee) {
-                            $employee_id = $employee['id'];
-                            $employee_number = $employee['number'];
-
-                            $correctionPlus = $this->crud->query("SELECT SUM(amount) as total FROM corrections WHERE trans_date BETWEEN '$filter_from' and '$filter_to' and employee_id = '$employee_id' and correction_type = 'PLUS' GROUP BY employee_id");
-                            $correctionMinus = $this->crud->query("SELECT SUM(amount) as total FROM corrections WHERE trans_date BETWEEN '$filter_from' and '$filter_to' and employee_id = '$employee_id' and correction_type = 'MINUS' GROUP BY employee_id");
-                            //$cashCarries = $this->crud->query("SELECT SUM(amount) as total FROM cash_carries WHERE trans_date BETWEEN '$filter_from' and '$filter_to' and employee_id = '$employee_id' GROUP BY employee_id");
-
-                            $date_sign = date_create($employee['date_sign']);
-                            // $payroll_end = date_create($filter_to);
-                            // $interval = date_diff($date_sign, $payroll_end);
-                            $internship = $employee['amount'];
-
-                            $payroll_3 = 0;
-                            $payroll_2 = 0;
-                            $payroll_1 = 0;
-                            $attandance_count = 0;
-                            $working_date = "";
-                            $tidakabsen = 0;
-                            for ($z = $start; $z <= $finish; $z += (60 * 60 * 24)) {
-                                $working_date = date('Y-m-d', $z);
-
-                                $this->db->select("a.employee_id, SUM(a.duration) as duration");
-                                $this->db->from('permits a');
-                                $this->db->join('permit_types b', 'a.permit_type_id = b.id');
-                                $this->db->where('a.status', 0);
-                                $this->db->where('b.absence', 'YES');
-                                $this->db->where('a.employee_id', $employee_id);
-                                $this->db->where('a.permit_date', $working_date);
-                                $this->db->group_by('a.employee_id');
-                                $permit = $this->db->get()->row();
-
-                                $tidakabsen = @$permit->duration;
-
-                                $this->db->select("*");
-                                $this->db->from('attandances');
-                                $this->db->where('number', $employee_number);
-                                $this->db->where("(date_in = '$working_date' or date_out = '$working_date')");
-                                $attandance = $this->db->get()->row();
-
-                                if (date('w', $z) !== '0' && date('w', $z) !== '6') {
-                                    if ($attandance) {
-                                        $day = 1;
-                                    } else {
-                                        $day = $tidakabsen;
-                                    }
-                                } else {
-                                    $day = 0;
-                                }
-
-                                $payroll_end = date_create($working_date);
-                                $dateThree = date_create(date('Y-m-d', strtotime('+1 month', strtotime($employee['date_sign']))));
-                                $dateFour = date_create(date('Y-m-d', strtotime('+2 month', strtotime($employee['date_sign']))));
-                                
-                                $interval = date_diff($date_sign, $payroll_end);
-                                $intervalThree = date_diff($date_sign, $dateThree);
-                                $intervalFour = date_diff($date_sign, $dateFour);
-
-                                if ($interval->days <= $intervalThree->days) {
-                                    $payroll_3 += 0;
-                                    $payroll_2 += 0;
-                                    $payroll_1 += $day;
-                                } elseif ($interval->days <= $intervalFour->days) {
-                                    $payroll_3 += 0;
-                                    $payroll_2 += $day;
-                                    $payroll_1 += 0;
-                                } else {
-                                    $payroll_3 += $day;
-                                    $payroll_2 += 0;
-                                    $payroll_1 += 0;
-                                }
-
-                                $attandance_count += @$day;
-                            }
-
-                            $allowence3 = ($payroll_3 * @$allowance_3->amount);
-                            $allowence2 = ($payroll_2 * @$allowance_2->amount);
-                            $allowence1 = ($payroll_1 * @$allowance_1->amount);
-                            $allowence = ($allowence1 + $allowence2 + $allowence3);
-
-                            if ($attandance_count == 0) {
-                                $total_income = 0;
-                                $intern_fee = 0;
-                                $boarding = 0;
-                            } else {
-                                $intern_fee = ($internship * @$attandance_count);
-                                $boarding = $employee['boarding_fee'];
-                                $total_income = @($allowence + ($correctionPlus[0]->total - $correctionMinus[0]->total) + ($internship * @$attandance_count) + $boarding);
-                            }
-
                             $html2 .= '  <tr>
                                             <td style="text-align:center;">' . $no . '</td>
-                                            <td class="str">' . $employee_number . '</td>
-                                            <td>' . $employee['name'] . '</td>
+                                            <td class="str">' . $employee['employee_number'] . '</td>
+                                            <td>' . $employee['employee_name'] . '</td>
                                             <td>' . date("d F Y", strtotime($employee['date_sign'])) . '</td>
-                                            <td>' . $this->readService($employee['date_sign'], $filter_to) . '</td>
+                                            <td>' . $employee['services'] . '</td>
                                             <td>' . $employee['departement_name'] . '</td>
                                             <td>' . $employee['departement_sub_name'] . '</td>
-                                            <td style="text-align:center;">' . (@$attandance_count) . '</td>
-                                            <td style="text-align:center;">' . $payroll_1 . '</td>
-                                            <td style="text-align:center;">' . $payroll_2 . '</td>
-                                            <td style="text-align:center;">' . $payroll_3 . '</td>
-                                            <td style="text-align:right;">' . number_format($allowence) . '</td>
-                                            <td style="text-align:right;">' . number_format($intern_fee) . '</td>
-                                            <td style="text-align:right;">' . number_format($boarding) . '</td>
-                                            <td style="text-align:right;">' . number_format(@$correctionPlus[0]->total) . '</td>
-                                            <td style="text-align:right;">' . number_format(@$correctionMinus[0]->total) . '</td>
-                                            <td style="text-align:right;">' . @number_format($total_income) . '</td>
+                                            <td style="text-align:center;">' . $employee['attandance'] . '</td>
+                                            <td style="text-align:center;">' . $employee['month_1'] . '</td>
+                                            <td style="text-align:center;">' . $employee['month_2'] . '</td>
+                                            <td style="text-align:center;">' . $employee['month_3'] . '</td>
+                                            <td style="text-align:right;">' . number_format($employee['allowence']) . '</td>
+                                            <td style="text-align:right;">' . number_format($employee['intern_fee']) . '</td>
+                                            <td style="text-align:right;">' . number_format($employee['boarding']) . '</td>
+                                            <td style="text-align:right;">' . number_format($employee['correction_plus']) . '</td>
+                                            <td style="text-align:right;">' . number_format($employee['correction_minus']) . '</td>
+                                            <td style="text-align:right;">' . @number_format($employee['total_income']) . '</td>
                                         </tr>';
-                            $total += $total_income;
+                            $total += $employee['total_income'];
                             $no++;
                         }
 

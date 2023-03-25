@@ -51,6 +51,7 @@ class Privilege_groups extends CI_Controller
             $this->db->from('privilege_groups a');
             $this->db->join('groups b', 'a.group_id = b.id');
             $this->db->like('a.username', $username);
+            $this->db->group_by('a.group_id');
             $this->db->order_by('b.name', 'ASC');
             $records = $this->db->get()->result_array();
             echo json_encode($records);

@@ -1006,6 +1006,11 @@
 							halign: 'center',
 							title: "Plan Output",
 						}, {
+							field: 'actual',
+							width: 100,
+							halign: 'center',
+							title: "Actual Output",
+						}, {
 							field: 'type',
 							width: 100,
 							halign: 'center',

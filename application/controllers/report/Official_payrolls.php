@@ -47,9 +47,7 @@ class Official_payrolls extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            $query = $this->db->query("SELECT a.id, a.name, 
-                    SUM(c.net_income) as total_payroll, 
-                    COUNT(c.number) as total_employee
+            $query = $this->db->query("SELECT a.id, a.name
                 FROM departements a
                 LEFT JOIN employees b ON a.id = b.departement_id
                 LEFT JOIN payrolls c ON b.number = c.number
@@ -98,6 +96,7 @@ class Official_payrolls extends CI_Controller
                             <tr>
                                 <th width="20">No</th>
                                 <th style="text-align:center;" width="200">Departement</th>
+                                <th style="text-align:center;" width="100">Group</th>
                                 <th style="text-align:center;" width="80">MP</th>
                                 <th style="text-align:center;" width="100">Total Payroll</th>
                                 <th style="text-align:center;" width="80">MP</th>
@@ -122,139 +121,403 @@ class Official_payrolls extends CI_Controller
             $total_bal_payroll = 0;
             foreach ($records as $record) {
                 $departement_id = $record['id'];
-                $qcash = $this->db->query("SELECT a.name, 
-                    SUM(c.net_income) as total_payroll, 
-                    COUNT(c.number) as total_employee
-                FROM departements a
-                LEFT JOIN employees b ON a.id = b.departement_id
-                LEFT JOIN payrolls c ON b.number = c.number
-                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
-                WHERE c.period_start = '$period_start' and c.period_end = '$period_end'
-                AND a.id = '$departement_id'
-                AND b.bank_name = '-'
-                GROUP BY a.id
-                ORDER BY a.`name` ASC");
-                $rcash = $qcash->row();
 
-                $qbsm = $this->db->query("SELECT a.name, 
-                    SUM(c.net_income) as total_payroll, 
-                    COUNT(c.number) as total_employee
-                FROM departements a
-                LEFT JOIN employees b ON a.id = b.departement_id
-                LEFT JOIN payrolls c ON b.number = c.number
-                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
-                WHERE c.period_start = '$period_start' and c.period_end = '$period_end'
-                AND a.id = '$departement_id'
-                AND b.bank_name = 'Bank Syariah Indonesia'
-                GROUP BY a.id
-                ORDER BY a.`name` ASC");
-                $rbsm = $qbsm->row();
+                //EMPLOYEE---------------------------------------------------------------------------------------------------------------
+                $qEmployee = $this->db->query("SELECT a.id, a.name,
+                        SUM(b.net_income) as total_payroll, 
+                        COUNT(b.number) as total_employee
+                    FROM employees a 
+                    JOIN payrolls b ON a.number = b.number
+                    JOIN groups c ON a.group_id = c.id
+                    JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                    WHERE b.period_start = '$period_start' and b.period_end = '$period_end'
+                    AND a.departement_id = '$departement_id'
+                    AND c.name NOT IN ('MAGANG','PKL')
+                    GROUP BY a.departement_id");
+                $rEmployee = $qEmployee->row();
 
-                $qmandiri = $this->db->query("SELECT a.name, 
-                    SUM(c.net_income) as total_payroll, 
-                    COUNT(c.number) as total_employee
-                FROM departements a
-                LEFT JOIN employees b ON a.id = b.departement_id
-                LEFT JOIN payrolls c ON b.number = c.number
-                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
-                WHERE c.period_start = '$period_start' and c.period_end = '$period_end'
-                AND a.id = '$departement_id'
-                AND b.bank_name = 'Bank Mandiri'
-                GROUP BY a.id
-                ORDER BY a.`name` ASC");
-                $rmandiri = $qmandiri->row();
+                $qEmployeeCash = $this->db->query("SELECT a.id, a.name,
+                        SUM(b.net_income) as total_payroll, 
+                        COUNT(b.number) as total_employee
+                    FROM employees a 
+                    JOIN payrolls b ON a.number = b.number
+                    JOIN groups c ON a.group_id = c.id
+                    JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                    WHERE b.period_start = '$period_start' and b.period_end = '$period_end'
+                    AND a.departement_id = '$departement_id'
+                    AND c.name NOT IN ('MAGANG','PKL')
+                    AND a.bank_name = '-'
+                    GROUP BY a.departement_id");
+                $rEmployeeCash = $qEmployeeCash->row();
+
+                $qEmployeeBsm = $this->db->query("SELECT a.id, a.name,
+                        SUM(b.net_income) as total_payroll, 
+                        COUNT(b.number) as total_employee
+                    FROM employees a 
+                    JOIN payrolls b ON a.number = b.number
+                    JOIN groups c ON a.group_id = c.id
+                    JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                    WHERE b.period_start = '$period_start' and b.period_end = '$period_end'
+                    AND a.departement_id = '$departement_id'
+                    AND c.name NOT IN ('MAGANG','PKL')
+                    AND a.bank_name = 'Bank Syariah Indonesia'
+                    GROUP BY a.departement_id");
+                $rEmployeeBsm = $qEmployeeBsm->row();
+
+                $qEmployeeMandiri = $this->db->query("SELECT a.id, a.name,
+                        SUM(b.net_income) as total_payroll, 
+                        COUNT(b.number) as total_employee
+                    FROM employees a 
+                    JOIN payrolls b ON a.number = b.number
+                    JOIN groups c ON a.group_id = c.id
+                    JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                    WHERE b.period_start = '$period_start' and b.period_end = '$period_end'
+                    AND a.departement_id = '$departement_id'
+                    AND c.name NOT IN ('MAGANG','PKL')
+                    AND a.bank_name = 'Bank Mandiri'
+                    GROUP BY a.departement_id");
+                $rEmployeeMandiri = $qEmployeeMandiri->row();
+
+                //MAGANG ---------------------------------------------------------------------------------------------------------------
+                $qMagang = $this->db->query("SELECT a.id, a.name,
+                        SUM(b.net_income) as total_payroll, 
+                        COUNT(b.number) as total_employee
+                    FROM employees a 
+                    JOIN payrolls b ON a.number = b.number
+                    JOIN groups c ON a.group_id = c.id
+                    JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                    WHERE b.period_start = '$period_start' and b.period_end = '$period_end'
+                    AND a.departement_id = '$departement_id'
+                    AND c.name = 'MAGANG'
+                    GROUP BY a.departement_id");
+                $rMagang = $qMagang->row();
+
+                $qMagangCash = $this->db->query("SELECT a.id, a.name,
+                        SUM(b.net_income) as total_payroll, 
+                        COUNT(b.number) as total_employee
+                    FROM employees a 
+                    JOIN payrolls b ON a.number = b.number
+                    JOIN groups c ON a.group_id = c.id
+                    JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                    WHERE b.period_start = '$period_start' and b.period_end = '$period_end'
+                    AND a.departement_id = '$departement_id'
+                    AND c.name = 'MAGANG'
+                    AND a.bank_name = '-'
+                    GROUP BY a.departement_id");
+                $rMagangCash = $qMagangCash->row();
+
+                $qMagangBsm = $this->db->query("SELECT a.id, a.name,
+                        SUM(b.net_income) as total_payroll, 
+                        COUNT(b.number) as total_employee
+                    FROM employees a 
+                    JOIN payrolls b ON a.number = b.number
+                    JOIN groups c ON a.group_id = c.id
+                    JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                    WHERE b.period_start = '$period_start' and b.period_end = '$period_end'
+                    AND a.departement_id = '$departement_id'
+                    AND c.name = 'MAGANG'
+                    AND a.bank_name = 'Bank Syariah Indonesia'
+                    GROUP BY a.departement_id");
+                $rMagangBsm = $qMagangBsm->row();
+
+                $qMagangMandiri = $this->db->query("SELECT a.id, a.name,
+                        SUM(b.net_income) as total_payroll, 
+                        COUNT(b.number) as total_employee
+                    FROM employees a 
+                    JOIN payrolls b ON a.number = b.number
+                    JOIN groups c ON a.group_id = c.id
+                    JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                    WHERE b.period_start = '$period_start' and b.period_end = '$period_end'
+                    AND a.departement_id = '$departement_id'
+                    AND c.name = 'MAGANG'
+                    AND a.bank_name = 'Bank Mandiri'
+                    GROUP BY a.departement_id");
+                $rMagangMandiri = $qMagangMandiri->row();
+
+                //PKL ---------------------------------------------------------------------------------------------------------------
+                $qPkl = $this->db->query("SELECT a.id, a.name,
+                        SUM(b.total_income) as total_payroll, 
+                        COUNT(b.employee_number) as total_employee
+                    FROM employees a 
+                    JOIN payroll_pkl b ON a.number = b.employee_number
+                    JOIN groups c ON a.group_id = c.id
+                    JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                    WHERE b.period_start = '$filter_from' and b.period_end = '$filter_to'
+                    AND a.departement_id = '$departement_id'
+                    GROUP BY a.departement_id");
+                $rPkl = $qPkl->row();
+
+                $qPklCash = $this->db->query("SELECT a.id, a.name,
+                        SUM(b.total_income) as total_payroll, 
+                        COUNT(b.employee_number) as total_employee
+                    FROM employees a 
+                    JOIN payroll_pkl b ON a.number = b.employee_number
+                    JOIN groups c ON a.group_id = c.id
+                    JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                    WHERE b.period_start = '$filter_from' and b.period_end = '$filter_to'
+                    AND a.departement_id = '$departement_id'
+                    AND a.bank_name = '-'
+                    GROUP BY a.departement_id");
+                $rPklCash = $qPklCash->row();
+
+                $qPklBsm = $this->db->query("SELECT a.id, a.name,
+                        SUM(b.total_income) as total_payroll, 
+                        COUNT(b.employee_number) as total_employee
+                    FROM employees a 
+                    JOIN payroll_pkl b ON a.number = b.employee_number
+                    JOIN groups c ON a.group_id = c.id
+                    JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                    WHERE b.period_start = '$filter_from' and b.period_end = '$filter_to'
+                    AND a.departement_id = '$departement_id'
+                    AND a.bank_name = 'Bank Syariah Indonesia'
+                    GROUP BY a.departement_id");
+                $rPklBsm = $qPklBsm->row();
+
+                $qPklMandiri = $this->db->query("SELECT a.id, a.name,
+                        SUM(b.total_income) as total_payroll, 
+                        COUNT(b.employee_number) as total_employee
+                    FROM employees a 
+                    JOIN payroll_pkl b ON a.number = b.employee_number
+                    JOIN groups c ON a.group_id = c.id
+                    JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                    WHERE b.period_start = '$filter_from' and b.period_end = '$filter_to'
+                    AND a.departement_id = '$departement_id'
+                    AND a.bank_name = 'Bank Mandiri'
+                    GROUP BY a.departement_id");
+                $rPklMandiri = $qPklMandiri->row();
+
+
+                $html .= '  <tr>
+                                <td rowspan="4">' . $no . '</td>
+                                <td rowspan="4">' . $record['name'] . '</td>
+                            </tr>';
 
                 $html .= '<tr>
-                            <td>' . $no . '</td>
-                            <td>' . $record['name'] . '</td>
-                            <td style="text-align:center;">' . number_format($record['total_employee']) . '</td>
-                            <td style="text-align:right;">' . number_format($record['total_payroll']) . '</td>
-                            <td style="text-align:center;">' . number_format(@$rcash->total_employee) . '</td>
-                            <td style="text-align:right;">' . number_format(@$rcash->total_payroll) . '</td>
-                            <td style="text-align:center;">' . number_format(@$rbsm->total_employee) . '</td>
-                            <td style="text-align:right;">' . number_format(@$rbsm->total_payroll) . '</td>
-                            <td style="text-align:center;">' . number_format(@$rmandiri->total_employee) . '</td>
-                            <td style="text-align:right;">' . number_format(@$rmandiri->total_payroll) . '</td>
-                            <td style="text-align:center;">' . number_format(($record['total_employee'] - (@$rcash->total_employee + @$rbsm->total_employee + @$rmandiri->total_employee))) . '</td>
-                            <td style="text-align:right;">' . number_format(($record['total_payroll'] - (@$rcash->total_payroll + @$rbsm->total_payroll + @$rmandiri->total_payroll))) . '</td>
+                            <td>EMPLOYEE</td>
+                            <td style="text-align:center;">' . number_format(@$rEmployee->total_employee) . '</td>
+                            <td style="text-align:right;">' . number_format(@$rEmployee->total_payroll) . '</td>
+                            <td style="text-align:center;">' . number_format(@$rEmployeeCash->total_employee) . '</td>
+                            <td style="text-align:right;">' . number_format(@$rEmployeeCash->total_payroll) . '</td>
+                            <td style="text-align:center;">' . number_format(@$rEmployeeBsm->total_employee) . '</td>
+                            <td style="text-align:right;">' . number_format(@$rEmployeeBsm->total_payroll) . '</td>
+                            <td style="text-align:center;">' . number_format(@$rEmployeeMandiri->total_employee) . '</td>
+                            <td style="text-align:right;">' . number_format(@$rEmployeeMandiri->total_payroll) . '</td>
+                            <td style="text-align:center;">' . number_format((@$rEmployee->total_employee - (@$rEmployeeCash->total_employee + @$rEmployeeBsm->total_employee + @$rEmployeeMandiri->total_employee))) . '</td>
+                            <td style="text-align:right;">' . number_format((@$rEmployee->total_payroll - (@$rEmployeeCash->total_payroll + @$rEmployeeBsm->total_payroll + @$rEmployeeMandiri->total_payroll))) . '</td>
                         </tr>';
-                $mp_payroll += $record['total_employee'];
-                $mp_cash += @$rcash->total_employee;
-                $mp_bsi += @$rbsm->total_employee;
-                $mp_mandiri += @$rmandiri->total_employee;
-                $total_payroll += $record['total_payroll'];
-                $total_cash += @$rcash->total_payroll;
-                $total_bsi += @$rbsm->total_payroll;
-                $total_mandiri += @$rmandiri->total_payroll;
-                $total_bal_mp += ($record['total_employee'] - (@$rcash->total_employee + @$rbsm->total_employee + @$rmandiri->total_employee));
-                $total_bal_payroll += ($record['total_payroll'] - (@$rcash->total_payroll + @$rbsm->total_payroll + @$rmandiri->total_payroll));
+
+                $html .= '<tr>
+                            <td>MAGANG</td>
+                            <td style="text-align:center;">' . number_format(@$rMagang->total_employee) . '</td>
+                            <td style="text-align:right;">' . number_format(@$rMagang->total_payroll) . '</td>
+                            <td style="text-align:center;">' . number_format(@$rMagangCash->total_employee) . '</td>
+                            <td style="text-align:right;">' . number_format(@$rMagangCash->total_payroll) . '</td>
+                            <td style="text-align:center;">' . number_format(@$rMagangBsm->total_employee) . '</td>
+                            <td style="text-align:right;">' . number_format(@$rMagangBsm->total_payroll) . '</td>
+                            <td style="text-align:center;">' . number_format(@$rMagangMandiri->total_employee) . '</td>
+                            <td style="text-align:right;">' . number_format(@$rMagangMandiri->total_payroll) . '</td>
+                            <td style="text-align:center;">' . number_format((@$rMagang->total_employee - (@$rMagangCash->total_employee + @$rMagangBsm->total_employee + @$rMagangMandiri->total_employee))) . '</td>
+                            <td style="text-align:right;">' . number_format((@$rMagang->total_payroll - (@$rMagangCash->total_payroll + @$rMagangBsm->total_payroll + @$rMagangMandiri->total_payroll))) . '</td>
+                        </tr>';
+
+                $html .= '<tr>
+                            <td>PKL</td>
+                            <td style="text-align:center;">' . number_format(@$rPkl->total_employee) . '</td>
+                            <td style="text-align:right;">' . number_format(@$rPkl->total_payroll) . '</td>
+                            <td style="text-align:center;">' . number_format(@$rPklCash->total_employee) . '</td>
+                            <td style="text-align:right;">' . number_format(@$rPklCash->total_payroll) . '</td>
+                            <td style="text-align:center;">' . number_format(@$rPklBsm->total_employee) . '</td>
+                            <td style="text-align:right;">' . number_format(@$rPklBsm->total_payroll) . '</td>
+                            <td style="text-align:center;">' . number_format(@$rPklMandiri->total_employee) . '</td>
+                            <td style="text-align:right;">' . number_format(@$rPklMandiri->total_payroll) . '</td>
+                            <td style="text-align:center;">' . number_format((@$rPkl->total_employee - (@$rPklCash->total_employee + @$rPklBsm->total_employee + @$rPklMandiri->total_employee))) . '</td>
+                            <td style="text-align:right;">' . number_format((@$rPkl->total_payroll - (@$rPklCash->total_payroll + @$rPklBsm->total_payroll + @$rPklMandiri->total_payroll))) . '</td>
+                        </tr>';
+
+                $mp_payroll += (@$rEmployee->total_employee + @$rMagang->total_employee + @$rPkl->total_employee);
+                $mp_cash += (@$rEmployeeCash->total_employee + @$rMagangCash->total_employee + @$rPklCash->total_employee);
+                $mp_bsi += (@$rEmployeeBsm->total_employee + @$rMagangBsm->total_employee + @$rPklBsm->total_employee);
+                $mp_mandiri += (@$rEmployeeMandiri->total_employee + @$rMagangMandiri->total_employee + @$rPklMandiri->total_employee);
+                $total_payroll += (@$rEmployee->total_payroll + @$rMagang->total_payroll + @$rPkl->total_payroll);
+                $total_cash += (@$rEmployeeCash->total_payroll + @$rMagangCash->total_payroll + @$rPklCash->total_payroll);
+                $total_bsi += (@$rEmployeeBsm->total_payroll + @$rMagangBsm->total_payroll + @$rPklBsm->total_payroll);
+                $total_mandiri += (@$rEmployeeMandiri->total_payroll + @$rMagangMandiri->total_payroll + @$rPklMandiri->total_payroll);
+                $total_bal_mp += ((@$rEmployee->total_employee + @$rMagang->total_employee + @$rPkl->total_employee) - ((@$rEmployeeCash->total_employee + @$rMagangCash->total_employee + @$rPklCash->total_employee) + (@$rEmployeeBsm->total_employee + @$rMagangBsm->total_employee + @$rPklBsm->total_employee) + (@$rEmployeeMandiri->total_employee + @$rMagangMandiri->total_employee + @$rPklMandiri->total_employee)));
+                $total_bal_payroll += ((@$rEmployee->total_payroll + @$rMagang->total_payroll + @$rPkl->total_payroll) - ((@$rEmployeeCash->total_payroll + @$rMagangCash->total_payroll + @$rPklCash->total_payroll) + (@$rEmployeeBsm->total_payroll + @$rMagangBsm->total_payroll + @$rPklBsm->total_payroll) + (@$rEmployeeMandiri->total_payroll + @$rMagangMandiri->total_payroll + @$rPklMandiri->total_payroll)));
                 $no++;
             }
 
             $period_start_bf = date('Y-m', strtotime('-1 month', strtotime($filter_from)));
             $period_end_bf = date('Y-m', strtotime('-1 month', strtotime($filter_to)));
+            $period_start_bf2 = date('Y-m-d', strtotime('-1 month', strtotime($filter_from)));
+            $period_end_bf2 = date('Y-m-d', strtotime('-1 month', strtotime($filter_to)));
 
-            $qbftotal = $this->db->query("SELECT a.name, 
-                    SUM(c.net_income) as total_payroll, 
-                    COUNT(c.number) as total_employee
-                FROM departements a
-                LEFT JOIN employees b ON a.id = b.departement_id
-                LEFT JOIN payrolls c ON b.number = c.number
-                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
-                WHERE c.period_start = '$period_start_bf' and c.period_end = '$period_end_bf'
-                AND a.division_id LIKE '%$filter_division%'
-                AND a.id LIKE '%$filter_departement%'
-                GROUP BY a.id
-                ORDER BY a.`name` ASC");
-            $rbftotal = $qbftotal->row();
+            //EMPLOYEE---------------------------------------------------------------------------------------------------------------
+            $qEmployeeBf = $this->db->query("SELECT a.id, a.name,
+                    SUM(b.net_income) as total_payroll, 
+                    COUNT(b.number) as total_employee
+                FROM employees a 
+                JOIN payrolls b ON a.number = b.number
+                JOIN groups c ON a.group_id = c.id
+                JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                WHERE b.period_start = '$period_start_bf' and b.period_end = '$period_end_bf'
+                AND a.departement_id = '$departement_id'
+                AND c.name NOT IN ('MAGANG','PKL')
+                GROUP BY a.departement_id");
+            $rEmployeeBf = $qEmployeeBf->row();
 
-            $qbfcash = $this->db->query("SELECT a.name, 
-                    SUM(c.net_income) as total_payroll, 
-                    COUNT(c.number) as total_employee
-                FROM departements a
-                LEFT JOIN employees b ON a.id = b.departement_id
-                LEFT JOIN payrolls c ON b.number = c.number
-                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
-                WHERE c.period_start = '$period_start_bf' and c.period_end = '$period_end_bf'
-                AND b.bank_name = 'Bank Syariah Indonesia'
-                AND a.division_id LIKE '%$filter_division%'
-                AND a.id LIKE '%$filter_departement%'
-                GROUP BY a.id
-                ORDER BY a.`name` ASC");
-            $rbfcash = $qbfcash->row();
+            $qEmployeeCashBf = $this->db->query("SELECT a.id, a.name,
+                    SUM(b.net_income) as total_payroll, 
+                    COUNT(b.number) as total_employee
+                FROM employees a 
+                JOIN payrolls b ON a.number = b.number
+                JOIN groups c ON a.group_id = c.id
+                JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                WHERE b.period_start = '$period_start_bf' and b.period_end = '$period_end_bf'
+                AND a.departement_id = '$departement_id'
+                AND c.name NOT IN ('MAGANG','PKL')
+                AND a.bank_name = '-'
+                GROUP BY a.departement_id");
+            $rEmployeeCashBf = $qEmployeeCashBf->row();
 
-            $qbfbsi = $this->db->query("SELECT a.name, 
-                    SUM(c.net_income) as total_payroll, 
-                    COUNT(c.number) as total_employee
-                FROM departements a
-                LEFT JOIN employees b ON a.id = b.departement_id
-                LEFT JOIN payrolls c ON b.number = c.number
-                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
-                WHERE c.period_start = '$period_start_bf' and c.period_end = '$period_end_bf'
-                AND b.bank_name = '-'
-                AND a.division_id LIKE '%$filter_division%'
-                AND a.id LIKE '%$filter_departement%'
-                GROUP BY a.id
-                ORDER BY a.`name` ASC");
-            $rbfbsi = $qbfbsi->row();
+            $qEmployeeBsmBf = $this->db->query("SELECT a.id, a.name,
+                    SUM(b.net_income) as total_payroll, 
+                    COUNT(b.number) as total_employee
+                FROM employees a 
+                JOIN payrolls b ON a.number = b.number
+                JOIN groups c ON a.group_id = c.id
+                JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                WHERE b.period_start = '$period_start_bf' and b.period_end = '$period_end_bf'
+                AND a.departement_id = '$departement_id'
+                AND c.name NOT IN ('MAGANG','PKL')
+                AND a.bank_name = 'Bank Syariah Indonesia'
+                GROUP BY a.departement_id");
+            $rEmployeeBsmBf = $qEmployeeBsmBf->row();
 
-            $qbfmandiri = $this->db->query("SELECT a.name, 
-                    SUM(c.net_income) as total_payroll, 
-                    COUNT(c.number) as total_employee
-                FROM departements a
-                LEFT JOIN employees b ON a.id = b.departement_id
-                LEFT JOIN payrolls c ON b.number = c.number
-                JOIN privilege_groups d ON b.group_id = d.group_id and d.username = '$username' and d.status = '1'
-                WHERE c.period_start = '$period_start_bf' and c.period_end = '$period_end_bf'
-                AND b.bank_name = 'Bank Mandiri'
-                AND a.division_id LIKE '%$filter_division%'
-                AND a.id LIKE '%$filter_departement%'
-                GROUP BY a.id
-                ORDER BY a.`name` ASC");
-            $rbfmandiri = $qbfmandiri->row();
+            $qEmployeeMandiriBf = $this->db->query("SELECT a.id, a.name,
+                    SUM(b.net_income) as total_payroll, 
+                    COUNT(b.number) as total_employee
+                FROM employees a 
+                JOIN payrolls b ON a.number = b.number
+                JOIN groups c ON a.group_id = c.id
+                JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                WHERE b.period_start = '$period_start_bf' and b.period_end = '$period_end_bf'
+                AND a.departement_id = '$departement_id'
+                AND c.name NOT IN ('MAGANG','PKL')
+                AND a.bank_name = 'Bank Mandiri'
+                GROUP BY a.departement_id");
+            $rEmployeeMandiriBf = $qEmployeeMandiriBf->row();
+
+            //MAGANG ---------------------------------------------------------------------------------------------------------------
+            $qMagangBf = $this->db->query("SELECT a.id, a.name,
+                    SUM(b.net_income) as total_payroll, 
+                    COUNT(b.number) as total_employee
+                FROM employees a 
+                JOIN payrolls b ON a.number = b.number
+                JOIN groups c ON a.group_id = c.id
+                JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                WHERE b.period_start = '$period_start_bf' and b.period_end = '$period_end_bf'
+                AND a.departement_id = '$departement_id'
+                AND c.name = 'MAGANG'
+                GROUP BY a.departement_id");
+            $rMagangBf = $qMagangBf->row();
+
+            $qMagangCashBf = $this->db->query("SELECT a.id, a.name,
+                    SUM(b.net_income) as total_payroll, 
+                    COUNT(b.number) as total_employee
+                FROM employees a 
+                JOIN payrolls b ON a.number = b.number
+                JOIN groups c ON a.group_id = c.id
+                JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                WHERE b.period_start = '$period_start_bf' and b.period_end = '$period_end_bf'
+                AND a.departement_id = '$departement_id'
+                AND c.name = 'MAGANG'
+                AND a.bank_name = '-'
+                GROUP BY a.departement_id");
+            $rMagangCashBf = $qMagangCashBf->row();
+
+            $qMagangBsmBf = $this->db->query("SELECT a.id, a.name,
+                    SUM(b.net_income) as total_payroll, 
+                    COUNT(b.number) as total_employee
+                FROM employees a 
+                JOIN payrolls b ON a.number = b.number
+                JOIN groups c ON a.group_id = c.id
+                JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                WHERE b.period_start = '$period_start_bf' and b.period_end = '$period_end_bf'
+                AND a.departement_id = '$departement_id'
+                AND c.name = 'MAGANG'
+                AND a.bank_name = 'Bank Syariah Indonesia'
+                GROUP BY a.departement_id");
+            $rMagangBsmBf = $qMagangBsmBf->row();
+
+            $qMagangMandiriBf = $this->db->query("SELECT a.id, a.name,
+                    SUM(b.net_income) as total_payroll, 
+                    COUNT(b.number) as total_employee
+                FROM employees a 
+                JOIN payrolls b ON a.number = b.number
+                JOIN groups c ON a.group_id = c.id
+                JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                WHERE b.period_start = '$period_start_bf' and b.period_end = '$period_end_bf'
+                AND a.departement_id = '$departement_id'
+                AND c.name = 'MAGANG'
+                AND a.bank_name = 'Bank Mandiri'
+                GROUP BY a.departement_id");
+            $rMagangMandiriBf = $qMagangMandiriBf->row();
+
+            //PKL ---------------------------------------------------------------------------------------------------------------
+            $qPklBf = $this->db->query("SELECT a.id, a.name,
+                    SUM(b.total_income) as total_payroll, 
+                    COUNT(b.employee_number) as total_employee
+                FROM employees a 
+                JOIN payroll_pkl b ON a.number = b.employee_number
+                JOIN groups c ON a.group_id = c.id
+                JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                WHERE b.period_start = '$period_start_bf2' and b.period_end = '$period_end_bf2'
+                AND a.departement_id = '$departement_id'
+                GROUP BY a.departement_id");
+            $rPklBf = $qPklBf->row();
+
+            $qPklCashBf = $this->db->query("SELECT a.id, a.name,
+                    SUM(b.total_income) as total_payroll, 
+                    COUNT(b.employee_number) as total_employee
+                FROM employees a 
+                JOIN payroll_pkl b ON a.number = b.employee_number
+                JOIN groups c ON a.group_id = c.id
+                JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                WHERE b.period_start = '$period_start_bf2' and b.period_end = '$period_end_bf2'
+                AND a.departement_id = '$departement_id'
+                AND a.bank_name = '-'
+                GROUP BY a.departement_id");
+            $rPklCashBf = $qPklCashBf->row();
+
+            $qPklBsmBf = $this->db->query("SELECT a.id, a.name,
+                    SUM(b.total_income) as total_payroll, 
+                    COUNT(b.employee_number) as total_employee
+                FROM employees a 
+                JOIN payroll_pkl b ON a.number = b.employee_number
+                JOIN groups c ON a.group_id = c.id
+                JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                WHERE b.period_start = '$period_start_bf2' and b.period_end = '$period_end_bf2'
+                AND a.departement_id = '$departement_id'
+                AND a.bank_name = 'Bank Syariah Indonesia'
+                GROUP BY a.departement_id");
+            $rPklBsmBf = $qPklBsmBf->row();
+
+            $qPklMandiriBf = $this->db->query("SELECT a.id, a.name,
+                    SUM(b.total_income) as total_payroll, 
+                    COUNT(b.employee_number) as total_employee
+                FROM employees a 
+                JOIN payroll_pkl b ON a.number = b.employee_number
+                JOIN groups c ON a.group_id = c.id
+                JOIN privilege_groups d ON a.group_id = d.group_id and d.username = '$username' and d.status = '1'
+                WHERE b.period_start = '$period_start_bf2' and b.period_end = '$period_end_bf2'
+                AND a.departement_id = '$departement_id'
+                AND a.bank_name = 'Bank Mandiri'
+                GROUP BY a.departement_id");
+            $rPklMandiriBf = $qPklMandiriBf->row();
 
             $html .= '<tr style="background: #BEFFAF;">
-                        <td colspan="2" style="text-align:right;"><b>TOTAL PAID (NOW)</b></td>
+                        <td colspan="3" style="text-align:right;"><b>TOTAL PAID (NOW)</b></td>
                         <td style="text-align:center;">' . number_format($mp_payroll) . '</td>
                         <td style="text-align:right;">' . number_format($total_payroll) . '</td>
                         <td style="text-align:center;">' . number_format($mp_cash) . '</td>
@@ -267,30 +530,30 @@ class Official_payrolls extends CI_Controller
                         <td style="text-align:right;">' . number_format($total_bal_payroll) . '</td>
                     </tr>
                     <tr style="background: #FFAFAF;">
-                        <td colspan="2" style="text-align:right;"><b>TOTAL PAID (BEFORE)</b></td>
-                        <td style="text-align:center;">' . number_format(@$rbftotal->total_employee) . '</td>
-                        <td style="text-align:right;">' . number_format(@$rbftotal->total_payroll) . '</td>
-                        <td style="text-align:center;">' . number_format(@$rbfcash->total_employee) . '</td>
-                        <td style="text-align:right;">' . number_format(@$rbfcash->total_payroll) . '</td>
-                        <td style="text-align:center;">' . number_format(@$rbfbsi->total_employee) . '</td>
-                        <td style="text-align:right;">' . number_format(@$rbfbsi->total_payroll) . '</td>
-                        <td style="text-align:center;">' . number_format(@$rbfmandiri->total_employee) . '</td>
-                        <td style="text-align:right;">' . number_format(@$rbfmandiri->total_payroll) . '</td>
-                        <td style="text-align:center;">' . number_format(@$rbftotal->total_employee - (@$rbfcash->total_employee + @$rbfbsi->total_employee + @$rbfmandiri->total_employee)) . '</td>
-                        <td style="text-align:right;">' . number_format(@$rbftotal->total_payroll - (@$rbfcash->total_payroll + @$rbfbsi->total_payroll + @$rbfmandiri->total_payroll)) . '</td>
+                        <td colspan="3" style="text-align:right;"><b>TOTAL PAID (BEFORE)</b></td>
+                        <td style="text-align:center;">' . number_format(@$rEmployeeBf->total_employee + @$rMagangBf->total_employee + @$rPklBf->total_employee) . '</td>
+                        <td style="text-align:right;">' . number_format(@$rEmployeeBf->total_payroll + @$rMagangBf->total_payroll + @$rPklBf->total_payroll) . '</td>
+                        <td style="text-align:center;">' . number_format(@$rEmployeeCashBf->total_employee + @$rMagangCashBf->total_employee + @$rPklCashBf->total_employee) . '</td>
+                        <td style="text-align:right;">' . number_format(@$rEmployeeCashBf->total_payroll + @$rMagangCashBf->total_payroll + @$rPklCashBf->total_payroll) . '</td>
+                        <td style="text-align:center;">' . number_format(@$rEmployeeBsmBf->total_employee + @$rMagangBsmBf->total_employee + @$rPklBsmBf->total_employee) . '</td>
+                        <td style="text-align:right;">' . number_format(@$rEmployeeBsmBf->total_payroll + @$rMagangBsmBf->total_payroll + @$rPklBsmBf->total_payroll) . '</td>
+                        <td style="text-align:center;">' . number_format(@$rEmployeeMandiriBf->total_employee + @$rMagangMandiriBf->total_employee + @$rPklMandiriBf->total_employee) . '</td>
+                        <td style="text-align:right;">' . number_format(@$rEmployeeMandiriBf->total_payroll + @$rMagangMandiriBf->total_payroll + @$rPklMandiriBf->total_payroll) . '</td>
+                        <td style="text-align:center;">' . number_format(((@$rEmployeeBf->total_employee + @$rMagangBf->total_employee + @$rPklBf->total_employee) - ((@$rEmployeeCashBf->total_employee + @$rMagangCashBf->total_employee + @$rPklCashBf->total_employee) + (@$rEmployeeBsmBf->total_employee + @$rMagangBsmBf->total_employee + @$rPklBsmBf->total_employee) + (@$rEmployeeMandiriBf->total_employee + @$rMagangMandiriBf->total_employee + @$rPklMandiriBf->total_employee)))) . '</td>
+                        <td style="text-align:right;">' . number_format(((@$rEmployeeBf->total_payroll + @$rMagangBf->total_payroll + @$rPklBf->total_payroll) - ((@$rEmployeeCashBf->total_payroll + @$rMagangCashBf->total_payroll + @$rPklCashBf->total_payroll) + (@$rEmployeeBsmBf->total_payroll + @$rMagangBsmBf->total_payroll + @$rPklBsmBf->total_payroll) + (@$rEmployeeMandiriBf->total_payroll + @$rMagangMandiriBf->total_payroll + @$rPklMandiriBf->total_payroll)))) . '</td>
                     </tr>
                     <tr style="background: #FFF1AF;">
-                        <td colspan="2" style="text-align:right;"><b>UP/DOWN</b></td>
-                        <td style="text-align:center;">' . number_format(($mp_payroll - @$rbftotal->total_employee)) . '</td>
-                        <td style="text-align:right;">' . number_format(($total_payroll - @$rbftotal->total_payroll)) . '</td>
-                        <td style="text-align:center;">' . number_format(($mp_cash - @$rbfcash->total_employee)) . '</td>
-                        <td style="text-align:right;">' . number_format(($total_cash - @$rbfcash->total_payroll)) . '</td>
-                        <td style="text-align:center;">' . number_format(($mp_bsi - @$rbfbsi->total_employee)) . '</td>
-                        <td style="text-align:right;">' . number_format(($total_bsi - @$rbfbsi->total_payroll)) . '</td>
-                        <td style="text-align:center;">' . number_format(($mp_mandiri - @$rbfmandiri->total_employee)) . '</td>
-                        <td style="text-align:right;">' . number_format(($total_mandiri - @$rbfmandiri->total_payroll)) . '</td>
-                        <td style="text-align:center;">' . number_format(($mp_payroll - @$rbftotal->total_employee) - (($mp_cash - @$rbfcash->total_employee) + ($mp_bsi - @$rbfbsi->total_employee) + ($mp_mandiri - @$rbfmandiri->total_employee))) . '</td>
-                        <td style="text-align:right;">' . number_format(($total_payroll - @$rbftotal->total_payroll) - (($total_cash - @$rbfcash->total_payroll) + ($total_bsi - @$rbfbsi->total_payroll) + ($total_mandiri - @$rbfmandiri->total_payroll))) . '</td>
+                        <td colspan="3" style="text-align:right;"><b>UP/DOWN</b></td>
+                        <td style="text-align:center;">' . number_format(($mp_payroll - (@$rEmployeeBf->total_employee + @$rMagangBf->total_employee + @$rPklBf->total_employee))) . '</td>
+                        <td style="text-align:right;">' . number_format(($total_payroll - (@$rEmployeeBf->total_payroll + @$rMagangBf->total_payroll + @$rPklBf->total_payroll))) . '</td>
+                        <td style="text-align:center;">' . number_format(($mp_cash - (@$rEmployeeCashBf->total_employee + @$rMagangCashBf->total_employee + @$rPklCashBf->total_employee))) . '</td>
+                        <td style="text-align:right;">' . number_format(($total_cash - (@$rEmployeeCashBf->total_payroll + @$rMagangCashBf->total_payroll + @$rPklCashBf->total_payroll))) . '</td>
+                        <td style="text-align:center;">' . number_format(($mp_bsi - (@$rEmployeeBsmBf->total_employee + @$rMagangBsmBf->total_employee + @$rPklBsmBf->total_employee))) . '</td>
+                        <td style="text-align:right;">' . number_format(($total_bsi - (@$rEmployeeBsmBf->total_payroll + @$rMagangBsmBf->total_payroll + @$rPklBsmBf->total_payroll))) . '</td>
+                        <td style="text-align:center;">' . number_format(($mp_mandiri - (@$rEmployeeMandiriBf->total_employee + @$rMagangMandiriBf->total_employee + @$rPklMandiriBf->total_employee))) . '</td>
+                        <td style="text-align:right;">' . number_format(($total_mandiri - (@$rEmployeeMandiriBf->total_payroll + @$rMagangMandiriBf->total_payroll + @$rPklMandiriBf->total_payroll))) . '</td>
+                        <td style="text-align:center;">' . number_format(($total_bal_mp - ((@$rEmployeeBf->total_employee + @$rMagangBf->total_employee + @$rPklBf->total_employee) - ((@$rEmployeeCashBf->total_employee + @$rMagangCashBf->total_employee + @$rPklCashBf->total_employee) + (@$rEmployeeBsmBf->total_employee + @$rMagangBsmBf->total_employee + @$rPklBsmBf->total_employee) + (@$rEmployeeMandiriBf->total_employee + @$rMagangMandiriBf->total_employee + @$rPklMandiriBf->total_employee))))) . '</td>
+                        <td style="text-align:right;">' . number_format(($total_bal_payroll - ((@$rEmployeeBf->total_payroll + @$rMagangBf->total_payroll + @$rPklBf->total_payroll) - ((@$rEmployeeCashBf->total_payroll + @$rMagangCashBf->total_payroll + @$rPklCashBf->total_payroll) + (@$rEmployeeBsmBf->total_payroll + @$rMagangBsmBf->total_payroll + @$rPklBsmBf->total_payroll) + (@$rEmployeeMandiriBf->total_payroll + @$rMagangMandiriBf->total_payroll + @$rPklMandiriBf->total_payroll))))) . '</td>
                     </tr>';
             $html .= '</table>
             <br>
