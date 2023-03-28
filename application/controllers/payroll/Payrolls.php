@@ -567,6 +567,7 @@ class Payrolls extends CI_Controller
             $q_allowance = $this->db->query("SELECT b.number, b.name, coalesce(a.amount, 0) as amount, b.calculate_days, b.type
                     FROM allowances b
                     LEFT JOIN setup_allowances a ON a.allowance_id = b.id and a.employee_id = '$record[id]'
+                    WHERE
                     GROUP BY b.id ORDER BY b.name asc");
             $r_allowance = $q_allowance->result_array();
 
