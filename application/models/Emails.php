@@ -20,8 +20,8 @@ class Emails extends CI_Model
             'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
             'smtp_host' => 'aeconsys.com',
             'smtp_port' => 465,
-            'smtp_user' => 'no-reply@aeconsys.com',
-            'smtp_pass' => 'R2U6h7AKKuhc',
+            'smtp_user' => 'kinenta@aeconsys.com',
+            'smtp_pass' => 'Angeska@123#',
             'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
             'mailtype' => 'html', //plaintext 'text' mails or 'html'
             'smtp_timeout' => '4', //in seconds
@@ -30,7 +30,7 @@ class Emails extends CI_Model
         );
 
         $this->email->initialize($config);
-        $this->email->from('no-reply@aeconsys.com', 'AECONSYS [Registration]');
+        $this->email->from('kinenta@aeconsys.com', 'AECONSYS [Registration]');
         $this->email->to($email);
         $this->email->subject('Registration New User');
         $this->email->message('<!doctype html>
@@ -93,8 +93,8 @@ class Emails extends CI_Model
             'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
             'smtp_host' => 'aeconsys.com',
             'smtp_port' => 465,
-            'smtp_user' => 'no-reply@aeconsys.com',
-            'smtp_pass' => 'R2U6h7AKKuhc',
+            'smtp_user' => 'kinenta@aeconsys.com',
+            'smtp_pass' => 'Angeska@123#',
             'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
             'mailtype' => 'html', //plaintext 'text' mails or 'html'
             'smtp_timeout' => '4', //in seconds
@@ -103,7 +103,7 @@ class Emails extends CI_Model
         );
 
         $this->email->initialize($config);
-        $this->email->from('no-reply@aeconsys.com', 'AECONSYS [Reset Password]');
+        $this->email->from('kinenta@aeconsys.com', 'AECONSYS [Reset Password]');
         $this->email->to($email);
         $this->email->subject('Reset Password');
         $this->email->message('<!doctype html>
@@ -150,8 +150,8 @@ class Emails extends CI_Model
             'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
             'smtp_host' => 'aeconsys.com',
             'smtp_port' => 465,
-            'smtp_user' => 'no-reply@aeconsys.com',
-            'smtp_pass' => 'R2U6h7AKKuhc',
+            'smtp_user' => 'kinenta@aeconsys.com',
+            'smtp_pass' => 'Angeska@123#',
             'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
             'mailtype' => 'html', //plaintext 'text' mails or 'html'
             'smtp_timeout' => '4', //in seconds
@@ -160,7 +160,7 @@ class Emails extends CI_Model
         );
 
         $this->email->initialize($config);
-        $this->email->from('no-reply@aeconsys.com', 'AECONSYS [Reset Password]');
+        $this->email->from('kinenta@aeconsys.com', 'AECONSYS [Reset Password]');
         $this->email->to($email);
         $this->email->subject('Reset Password');
         $this->email->message('<!doctype html>
@@ -206,8 +206,8 @@ class Emails extends CI_Model
             'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
             'smtp_host' => 'aeconsys.com',
             'smtp_port' => 465,
-            'smtp_user' => 'no-reply@aeconsys.com',
-            'smtp_pass' => 'R2U6h7AKKuhc',
+            'smtp_user' => 'kinenta@aeconsys.com',
+            'smtp_pass' => 'Angeska@123#',
             'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
             'mailtype' => 'html', //plaintext 'text' mails or 'html'
             'smtp_timeout' => '4', //in seconds
@@ -216,7 +216,7 @@ class Emails extends CI_Model
         );
 
         $this->email->initialize($config);
-        $this->email->from('no-reply@aeconsys.com', $company . ' [Salary Slip]');
+        $this->email->from('kinenta@aeconsys.com', $company . ' [Salary Slip]');
         $this->email->to($email);
         $this->email->subject('Salary Slip ' . $employee);
         $this->email->message(base64_decode($html));

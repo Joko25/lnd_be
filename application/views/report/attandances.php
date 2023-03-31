@@ -55,7 +55,7 @@
     <?= $button ?>
 </div>
 
-<div id="dlg_generate" class="easyui-dialog" title="Generating Data" data-options="closed: true,modal:true,closable: false" style="width: 500px; padding:10px; top: 20px;">
+<!-- <div id="dlg_generate" class="easyui-dialog" title="Generating Data" data-options="closed: true,modal:true,closable: false" style="width: 500px; padding:10px; top: 20px;">
     <div class="alert alert-warning" role="alert">
         Please wait until the generate process is complete
     </div>
@@ -70,129 +70,129 @@
 
         </ul>
     </div>
-</div>
+</div> -->
 
 <div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;">
     <iframe id="printout" src="" style="width: 100%; height:500px; border: 0;"></iframe>
 </div>
 <script>
-    function add() {
-        var filter_from = $("#filter_from").datebox('getValue');
-        var filter_to = $("#filter_to").datebox('getValue');
-        var filter_division = $("#filter_division").combobox('getValue');
-        var filter_departement = $("#filter_departement").combobox('getValue');
-        var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
-        var filter_employee = $("#filter_employee").combogrid('getValue');
-        var filter_group = $("#filter_group").combobox('getValue');
+    // function add() {
+    //     var filter_from = $("#filter_from").datebox('getValue');
+    //     var filter_to = $("#filter_to").datebox('getValue');
+    //     var filter_division = $("#filter_division").combobox('getValue');
+    //     var filter_departement = $("#filter_departement").combobox('getValue');
+    //     var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
+    //     var filter_employee = $("#filter_employee").combogrid('getValue');
+    //     var filter_group = $("#filter_group").combobox('getValue');
 
-        if (filter_from == "" || filter_to == "" || filter_division == "") {
-            toastr.warning("Please Enter Cut Off Period and Division", "Filter Date");
-        } else {
-            Swal.fire({
-                title: 'Please Wait for Check Data Employee',
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                },
-            });
+    //     if (filter_from == "" || filter_to == "" || filter_division == "") {
+    //         toastr.warning("Please Enter Cut Off Period and Division", "Filter Date");
+    //     } else {
+    //         Swal.fire({
+    //             title: 'Please Wait for Check Data Employee',
+    //             showConfirmButton: false,
+    //             allowOutsideClick: false,
+    //             allowEscapeKey: false,
+    //             didOpen: () => {
+    //                 Swal.showLoading();
+    //             },
+    //         });
 
-            $.ajax({
-                url: "<?= base_url('report/attandances/reads') ?>",
-                type: 'post',
-                data: 'filter_from=' + filter_from +
-                    "&filter_to=" + filter_to +
-                    "&filter_division=" + filter_division +
-                    "&filter_departement=" + filter_departement +
-                    "&filter_departement_sub=" + filter_departement_sub +
-                    "&filter_employee=" + filter_employee +
-                    "&filter_group=" + filter_group,
-                dataType: 'json',
-                success: function(employee) {
-                    $('#dlg_generate').dialog('open');
-                    Swal.close();
-                    requestData(employee.total, employee);
+    //         $.ajax({
+    //             url: "<?= base_url('report/attandances/reads') ?>",
+    //             type: 'post',
+    //             data: 'filter_from=' + filter_from +
+    //                 "&filter_to=" + filter_to +
+    //                 "&filter_division=" + filter_division +
+    //                 "&filter_departement=" + filter_departement +
+    //                 "&filter_departement_sub=" + filter_departement_sub +
+    //                 "&filter_employee=" + filter_employee +
+    //                 "&filter_group=" + filter_group,
+    //             dataType: 'json',
+    //             success: function(employee) {
+    //                 $('#dlg_generate').dialog('open');
+    //                 Swal.close();
+    //                 requestData(employee.total, employee);
 
-                    function requestData(total, employee, number = 1, value = 0) {
-                        if (value < 100) {
-                            value = Math.floor((number / total) * 100);
-                            $('#p_upload').progressbar('setValue', value);
-                            $('#p_start').html(number);
-                            $('#p_finish').html(total);
+    //                 function requestData(total, employee, number = 1, value = 0) {
+    //                     if (value < 100) {
+    //                         value = Math.floor((number / total) * 100);
+    //                         $('#p_upload').progressbar('setValue', value);
+    //                         $('#p_start').html(number);
+    //                         $('#p_finish').html(total);
 
-                            $.ajax({
-                                url: "<?= base_url('report/attandances/readCalendar') ?>?filter_from=" + btoa(filter_from) + "&filter_to=" + btoa(filter_to),
-                                type: 'post',
-                                data: employee['rows'][number - 1],
-                                dataType: 'json',
-                                success: function(calendar) {
-                                    requestDataCalendar(calendar.total, calendar);
+    //                         $.ajax({
+    //                             url: "<?= base_url('report/attandances/readCalendar') ?>?filter_from=" + btoa(filter_from) + "&filter_to=" + btoa(filter_to),
+    //                             type: 'post',
+    //                             data: employee['rows'][number - 1],
+    //                             dataType: 'json',
+    //                             success: function(calendar) {
+    //                                 requestDataCalendar(calendar.total, calendar);
 
-                                    function requestDataCalendar(totalCalendar, calendar, numberCalendar = 1, valueCalendar = 0) {
-                                        if (valueCalendar < 100) {
-                                            valueCalendar = Math.floor((numberCalendar / totalCalendar) * 100);
-                                            $('#p_upload_2').progressbar('setValue', valueCalendar);
-                                            $('#p_start_2').html(numberCalendar);
-                                            $('#p_finish_2').html(totalCalendar);
+    //                                 function requestDataCalendar(totalCalendar, calendar, numberCalendar = 1, valueCalendar = 0) {
+    //                                     if (valueCalendar < 100) {
+    //                                         valueCalendar = Math.floor((numberCalendar / totalCalendar) * 100);
+    //                                         $('#p_upload_2').progressbar('setValue', valueCalendar);
+    //                                         $('#p_start_2').html(numberCalendar);
+    //                                         $('#p_finish_2').html(totalCalendar);
 
-                                            $.ajax({
-                                                url: "<?= base_url('report/attandances/create') ?>",
-                                                type: 'post',
-                                                data: calendar['rows'][numberCalendar - 1],
-                                                success: function(note) {
-                                                    var result = eval('(' + note + ')');
+    //                                         $.ajax({
+    //                                             url: "<?= base_url('report/attandances/create') ?>",
+    //                                             type: 'post',
+    //                                             data: calendar['rows'][numberCalendar - 1],
+    //                                             success: function(note) {
+    //                                                 var result = eval('(' + note + ')');
 
-                                                    if (result.theme == "success") {
-                                                        var title = "<b style='color: green;'>" + result.title + "</b> | " + result.message;
-                                                    } else {
-                                                        var title = "<b style='color: red;'>" + result.title + "</b> | " + result.message;
-                                                    }
+    //                                                 if (result.theme == "success") {
+    //                                                     var title = "<b style='color: green;'>" + result.title + "</b> | " + result.message;
+    //                                                 } else {
+    //                                                     var title = "<b style='color: red;'>" + result.title + "</b> | " + result.message;
+    //                                                 }
 
-                                                    $("#p_remarks").append(title + "<br>");
-                                                    requestDataCalendar(totalCalendar, calendar, numberCalendar + 1, valueCalendar);
+    //                                                 $("#p_remarks").append(title + "<br>");
+    //                                                 requestDataCalendar(totalCalendar, calendar, numberCalendar + 1, valueCalendar);
 
-                                                    if (numberCalendar == totalCalendar) {
-                                                        requestData(total, employee, number + 1, value);
-                                                    }
-                                                },
-                                                fail: function(jqXHR, textStatus) {
-                                                    if (textStatus == "error") {
-                                                        Swal.fire({
-                                                            title: 'Connection Time Out, Check Your Connection',
-                                                            showConfirmButton: false,
-                                                            allowOutsideClick: false,
-                                                            allowEscapeKey: false,
-                                                            didOpen: () => {
-                                                                Swal.showLoading();
-                                                            },
-                                                        });
+    //                                                 if (numberCalendar == totalCalendar) {
+    //                                                     requestData(total, employee, number + 1, value);
+    //                                                 }
+    //                                             },
+    //                                             fail: function(jqXHR, textStatus) {
+    //                                                 if (textStatus == "error") {
+    //                                                     Swal.fire({
+    //                                                         title: 'Connection Time Out, Check Your Connection',
+    //                                                         showConfirmButton: false,
+    //                                                         allowOutsideClick: false,
+    //                                                         allowEscapeKey: false,
+    //                                                         didOpen: () => {
+    //                                                             Swal.showLoading();
+    //                                                         },
+    //                                                     });
 
-                                                        setTimeout(function() {
-                                                            requestDataCalendar(totalCalendar, calendar, numberCalendar, valueCalendar);
-                                                        }, 5000);
-                                                    }
-                                                }
-                                            });
-                                        }
-                                    }
+    //                                                     setTimeout(function() {
+    //                                                         requestDataCalendar(totalCalendar, calendar, numberCalendar, valueCalendar);
+    //                                                     }, 5000);
+    //                                                 }
+    //                                             }
+    //                                         });
+    //                                     }
+    //                                 }
 
-                                    if (number == total) {
-                                        $('#dlg_generate').dialog('close');
-                                        Swal.fire(
-                                            'Generate Completed',
-                                            'Generate attandances has been completed',
-                                            'success'
-                                        );
-                                    }
-                                },
-                            });
-                        }
-                    }
-                }
-            });
-        }
-    }
+    //                                 if (number == total) {
+    //                                     $('#dlg_generate').dialog('close');
+    //                                     Swal.fire(
+    //                                         'Generate Completed',
+    //                                         'Generate attandances has been completed',
+    //                                         'success'
+    //                                     );
+    //                                 }
+    //                             },
+    //                         });
+    //                     }
+    //                 }
+    //             }
+    //         });
+    //     }
+    // }
 
     function reload() {
         window.location.reload();
