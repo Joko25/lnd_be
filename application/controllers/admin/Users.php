@@ -124,7 +124,7 @@ class Users extends CI_Controller
             if ($post['access'] == "0") {
                 $postFinal = array_merge($post, ["avatar" => $avatar, "departement_id" => null]);
             } else {
-                $postFinal = array_merge($post, ["avatar" => $avatar, "departement_id" => $employee->departement_id]);
+                $postFinal = array_merge($post, ["avatar" => $avatar, "departement_id" => @$employee->departement_id]);
             }
             $users = $this->crud->update('users', ["id" => $id], $postFinal);
             echo $users;

@@ -199,10 +199,6 @@ class Cash_carries extends CI_Controller
             //Select Query
             $this->db->select('a.*, 
                 b.contract_id,
-                h.date_in,
-                h.date_out,
-                h.time_in,
-                h.time_out,
                 g.users_id_from as status_check,
                 g.users_id_to as status_notification, 
                 g.updated_date as status_date,
@@ -221,7 +217,6 @@ class Cash_carries extends CI_Controller
             $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
             $this->db->join('users f', "a.created_by = f.username");
             $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'cash_carries'", 'left');
-            $this->db->join('attandances h', "b.number = h.number and a.trans_date = h.date_in", 'left');
             $this->db->where('b.deleted', 0);
             $this->db->where('b.status', 0);
             $this->db->where('a.deleted', 0);
@@ -256,6 +251,12 @@ class Cash_carries extends CI_Controller
             $datas = [];
             $total = 0;
             foreach ($records as $record) {
+                $this->db->select('*');
+                $this->db->from('attandances');
+                $this->db->where('number', $record['employee_number']);
+                $this->db->where('date_in', $record['trans_date']);
+                $attandance = $this->db->get()->row();
+
                 $this->db->select('c.days');
                 $this->db->from('shift_employees a');
                 $this->db->join('shifts b', 'a.shift_id = b.id', 'left');
@@ -271,8 +272,8 @@ class Cash_carries extends CI_Controller
                 $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["contract_id" => $record['contract_id']]);
 
                 $start = strtotime($record['trans_date']);
-                $att_time_begin = strtotime(@$record['date_in'] . " " . @$record['time_in']);
-                $att_time_end = strtotime(@$record['date_out'] . " " . @$record['time_out']);
+                $att_time_begin = strtotime(@$attandance->date_in . " " . @$attandance->time_in);
+                $att_time_end = strtotime(@$attandance->date_out . " " . @$attandance->time_out);
                 $att_diff = $att_time_end - $att_time_begin;
                 $att_hour = floor($att_diff / (60 * 60));
 
@@ -286,7 +287,7 @@ class Cash_carries extends CI_Controller
                 }
 
                 //Validasi Uang makan
-                if ($record['meal'] == 0 or $record['time_in'] == "") {
+                if ($record['meal'] == 0 or @$attandance->time_in == "") {
                     $meal = 0;
                 } else {
                     $meal = @$allowance_cash_carry->meal;
@@ -318,7 +319,7 @@ class Cash_carries extends CI_Controller
                     }
                 }
 
-                $amount = ["amount_actual" => $total, "duration_att" => number_format($att_hour, 2)];
+                $amount = ["amount_actual" => $total, "duration_att" => number_format($att_hour, 2), "time_in" => @$attandance->time_in, "time_out" => @$attandance->time_out];
                 $datas[] = array_merge($record, $amount);
             }
 
