@@ -280,20 +280,6 @@ class Attandances extends CI_Controller
             $date_in = $this->formatTanggal($explode[0]);
             $time_in = $explode[1];
 
-            //Attandance
-            $this->db->select('*');
-            $this->db->from('attandances');
-            $this->db->where('number', $data['number']);
-            $this->db->where("date_in = '$date_in'");
-            $attandance_in = $this->db->get()->row();
-
-            //Attandance
-            $this->db->select('*');
-            $this->db->from('attandances');
-            $this->db->where('number', $data['number']);
-            $this->db->where("date_out = '$date_in'");
-            $attandance_out = $this->db->get()->row();
-
             //Employee
             $this->db->select('*');
             $this->db->from('employees');
@@ -303,14 +289,36 @@ class Attandances extends CI_Controller
             //Jika Terdaftar di master employee
             if (!empty($employee->number)) {
                 if ($data['lokasi'] == 1) {
-                    $yesterday = date("Y-m-d", strtotime('-1 days', strtotime($date_in)));
 
                     //Attandance
                     $this->db->select('*');
                     $this->db->from('attandances');
                     $this->db->where('number', $data['number']);
-                    $this->db->where("date_out = '$yesterday'");
-                    $attandance_yesterday_in = $this->db->get()->row();
+                    $this->db->where("date_in = '$date_in'");
+                    $attandance_in = $this->db->get()->row();
+
+                    $tolerance_hour_min = date("H:i:s", strtotime('-2 Hour', strtotime(@$time_in)));
+                    $tolerance_hour_plus = date("H:i:s", strtotime('+2 Hour', strtotime(@$time_in)));
+                    $this->db->select("d.start, d.end, d.days, d.working, d.tolerance, c.name, d.name as shift_name");
+                    $this->db->from('shift_employees b');
+                    $this->db->join('shifts c', 'c.id = b.shift_id');
+                    $this->db->join('shift_details d', 'd.shift_id = c.id');
+                    $this->db->where('b.employee_id', $employee->id);
+                    $this->db->where("d.start >=  '$tolerance_hour_min' || d.start <= '$tolerance_hour_plus'");
+                    $shift = $this->db->get()->row();
+
+                    $time_begin = strtotime($date_in . " " . $time_in);
+                    $time_end = strtotime($date_in . " " . @$shift->end);
+                    $tomorrow = date("Y-m-d", strtotime('+1 days', strtotime($date_in)));
+
+                    $diff = $time_end - $time_begin;
+                    $hour = floor($diff / (60 * 60));
+
+                    if ($hour < 0) {
+                        $date_out = $tomorrow;
+                    } else {
+                        $date_out = $date_in;
+                    }
 
                     if (!empty($attandance_in->number)) {
                         $data_attandance = array(
@@ -318,35 +326,21 @@ class Attandances extends CI_Controller
                             'date_in' => $date_in,
                             'time_in' => $time_in,
                         );
+
                         $this->crud->update('attandances', ["id" => $attandance_in->id], $data_attandance);
                         echo json_encode(array("title" => "Updated", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Update data Check In", "theme" => "success"));
-                    } else if (!empty($attandance_yesterday_in->number)) {
-                        if ($attandance_yesterday_in->date_in == "") {
-                            $data_attandance = array(
-                                'number' => $data['number'],
-                                'date_in' => $date_in,
-                                'time_in' => $time_in,
-                            );
-                            $this->crud->update('attandances', ["id" => $attandance_yesterday_in->id], $data_attandance);
-                            echo json_encode(array("title" => "Updated", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Update data Check In", "theme" => "success"));
-                        } else {
-                            $data_attandance = array(
-                                'number' => $data['number'],
-                                'date_in' => $date_in,
-                                'time_in' => $time_in,
-                            );
-                            $this->crud->create('attandances', $data_attandance);
-                            echo json_encode(array("title" => "Created", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Create data Check In", "theme" => "success"));
-                        }
                     } else {
                         $data_attandance = array(
                             'number' => $data['number'],
                             'date_in' => $date_in,
                             'time_in' => $time_in,
+                            'date_out' => $date_out,
+                            'time_out' => @$shift->end,
                         );
                         $this->crud->create('attandances', $data_attandance);
                         echo json_encode(array("title" => "Created", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Create data Check In", "theme" => "success"));
                     }
+                    //echo json_encode(array("title" => "Warning", "message" => $data['number'] . " Next", "theme" => "error"));
                 } else {
                     $yesterday = date("Y-m-d", strtotime('-1 days', strtotime($date_in)));
 
@@ -354,8 +348,30 @@ class Attandances extends CI_Controller
                     $this->db->select('*');
                     $this->db->from('attandances');
                     $this->db->where('number', $data['number']);
-                    $this->db->where("date_in = '$yesterday'");
-                    $attandance_yesterday_out = $this->db->get()->row();
+                    $this->db->where("date_out = '$date_in'");
+                    $attandance_out = $this->db->get()->row();
+
+                    $tolerance_hour_min = date("H:i:s", strtotime('-2 Hour', strtotime(@$time_in)));
+                    $tolerance_hour_plus = date("H:i:s", strtotime('+2 Hour', strtotime(@$time_in)));
+                    $this->db->select("d.start, d.end, d.days, d.working, d.tolerance, c.name, d.name as shift_name");
+                    $this->db->from('shift_employees b');
+                    $this->db->join('shifts c', 'c.id = b.shift_id');
+                    $this->db->join('shift_details d', 'd.shift_id = c.id');
+                    $this->db->where('b.employee_id', $employee->id);
+                    $this->db->where("d.end >=  '$tolerance_hour_min' || d.end <= '$tolerance_hour_plus'");
+                    $shift = $this->db->get()->row();
+
+                    $time_begin = strtotime($date_in . " " . @$shift->start);
+                    $time_end = strtotime($date_in . " " . $time_in);
+
+                    $diff = $time_end - $time_begin;
+                    $hour = floor($diff / (60 * 60));
+
+                    if ($hour < 0) {
+                        $date_out = $yesterday;
+                    } else {
+                        $date_out = $date_in;
+                    }
 
                     if (!empty($attandance_out->number)) {
                         $data_attandance = array(
@@ -365,45 +381,18 @@ class Attandances extends CI_Controller
                         );
                         $this->crud->update('attandances', ["id" => $attandance_out->id], $data_attandance);
                         echo json_encode(array("title" => "Updated", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Update data Check Out", "theme" => "success"));
-                    } else if (!empty($attandance_yesterday_out->number)) {
-                        if ($attandance_yesterday_out->date_out == "") {
-                            $data_attandance = array(
-                                'number' => $data['number'],
-                                'date_out' => $date_in,
-                                'time_out' => $time_in,
-                            );
-                            $this->crud->update('attandances', ["id" => $attandance_yesterday_out->id], $data_attandance);
-                            echo json_encode(array("title" => "Updated", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Update data Check Out", "theme" => "success"));
-                        } elseif (!empty($attandance_in->number)) {
-                            $data_attandance = array(
-                                'number' => $data['number'],
-                                'date_out' => $date_in,
-                                'time_out' => $time_in,
-                            );
-                            $this->crud->update('attandances', ["id" => $attandance_in->id], $data_attandance);
-                            echo json_encode(array("title" => "Updated", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Update data Check Out", "theme" => "success"));
-                        } else {
-                            $data_attandance = array(
-                                'number' => $data['number'],
-                                'date_in' => $date_in,
-                                'time_in' => "00:00:00",
-                                'date_out' => $date_in,
-                                'time_out' => $time_in,
-                            );
-                            $this->crud->create('attandances', $data_attandance);
-                            echo json_encode(array("title" => "Created", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Create data Check Out", "theme" => "success"));
-                        }
                     } else {
                         $data_attandance = array(
                             'number' => $data['number'],
-                            'date_in' => $date_in,
-                            'time_in' => "00:00:00",
+                            'date_in' => $date_out,
+                            'time_in' => @$shift->start,
                             'date_out' => $date_in,
                             'time_out' => $time_in,
                         );
                         $this->crud->create('attandances', $data_attandance);
                         echo json_encode(array("title" => "Created", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Create data Check Out", "theme" => "success"));
                     }
+                    //echo json_encode(array("title" => "Warning", "message" => $data['number'] . " Next", "theme" => "error"));
                 }
             } else {
                 echo json_encode(array("title" => "Warning", "message" => $data['number'] . " Empoyee ID Un Registered", "theme" => "error"));
