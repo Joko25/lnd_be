@@ -304,20 +304,21 @@ class Attandances extends CI_Controller
                     $this->db->join('shifts c', 'c.id = b.shift_id');
                     $this->db->join('shift_details d', 'd.shift_id = c.id');
                     $this->db->where('b.employee_id', $employee->id);
-                    $this->db->where("d.start >=  '$tolerance_hour_min' || d.start <= '$tolerance_hour_plus'");
+                    $this->db->where("TIME(d.start) >=  TIME('$tolerance_hour_min') && TIME(d.start) <= TIME('$tolerance_hour_plus')");
                     $shift = $this->db->get()->row();
 
                     $time_begin = strtotime($date_in . " " . $time_in);
                     $time_end = strtotime($date_in . " " . @$shift->end);
                     $tomorrow = date("Y-m-d", strtotime('+1 days', strtotime($date_in)));
 
-                    $diff = $time_end - $time_begin;
+                    $diff = $time_begin - $time_end;
                     $hour = floor($diff / (60 * 60));
 
+                    //die($date_in . " " . $tolerance_hour_plus . " - " . $date_in . " " . @$shift->end . " | " . $hour);
                     if ($hour < 0) {
-                        $date_out = $tomorrow;
-                    } else {
                         $date_out = $date_in;
+                    } else {
+                        $date_out = $tomorrow;
                     }
 
                     if (!empty($attandance_in->number)) {
@@ -358,19 +359,21 @@ class Attandances extends CI_Controller
                     $this->db->join('shifts c', 'c.id = b.shift_id');
                     $this->db->join('shift_details d', 'd.shift_id = c.id');
                     $this->db->where('b.employee_id', $employee->id);
-                    $this->db->where("d.end >=  '$tolerance_hour_min' || d.end <= '$tolerance_hour_plus'");
+                    $this->db->where("TIME(d.end) >=  TIME('$tolerance_hour_min') && TIME(d.end) <= TIME('$tolerance_hour_plus')");
                     $shift = $this->db->get()->row();
 
                     $time_begin = strtotime($date_in . " " . @$shift->start);
                     $time_end = strtotime($date_in . " " . $time_in);
 
-                    $diff = $time_end - $time_begin;
+                    $diff = $time_begin - $time_end;
                     $hour = floor($diff / (60 * 60));
 
+                    // die($date_in . " " . @$shift->start . " - " . $date_in . " " . @$time_in . " | " . $hour);
+                    // die($hour);
                     if ($hour < 0) {
-                        $date_out = $yesterday;
-                    } else {
                         $date_out = $date_in;
+                    } else {
+                        $date_out = $yesterday;
                     }
 
                     if (!empty($attandance_out->number)) {
