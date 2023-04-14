@@ -203,7 +203,12 @@ class Attandance_summary extends CI_Controller
                         $rowPermit = $queryPermit->row();
 
                         if (date('w', $i) !== '0' && date('w', $i) !== '6') {
-                            $weekday[] = date('Y-m-d', $i);
+                            if (@$holiday->description != "") {
+                                //
+                            } else {
+                                $weekday[] = date('Y-m-d', $i);
+                            }
+
 
                             if (!empty($holiday->description)) {
                                 $working += 0;

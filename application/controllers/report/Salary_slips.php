@@ -146,20 +146,20 @@ class Salary_slips extends CI_Controller
 
         //Allowance Amount
         //jika dia ada tunjuangan ambil field dan isinya
-        $q_allowance = $this->db->query("SELECT b.number, b.name, a.amount
-                    FROM allowances b
-                    LEFT JOIN setup_allowances a ON a.allowance_id = b.id and a.employee_id = '$record[employee_id]'
-                    GROUP BY b.id ORDER BY b.name asc");
+        $q_allowance = $this->db->query("SELECT b.type, SUM(a.amount) as amount
+            FROM allowances b
+            LEFT JOIN setup_allowances a ON a.allowance_id = b.id and a.employee_id = '$record[employee_id]'
+            GROUP BY b.type ORDER BY b.type asc");
         $r_allowance = $q_allowance->result_array();
 
         $arr_allowance_amount_total = 0;
         $html_allowance = "";
         foreach ($r_allowance as $allowance_data) {
             $arr_allowance_amount_total += $allowance_data['amount'];
-            $html_allowance .= ' <tr>
-                                    <td style="text-align:left;">' . $allowance_data['name'] . '</td>
-                                    <td style="text-align:right;"><b>' . number_format($allowance_data['amount']) . '</b></td>
-                                </tr>';
+            // $html_allowance .= ' <tr>
+            //                         <td style="text-align:left;">' . $allowance_data['name'] . '</td>
+            //                         <td style="text-align:right;"><b>' . number_format($allowance_data['amount']) . '</b></td>
+            //                     </tr>';
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -258,8 +258,12 @@ class Salary_slips extends CI_Controller
                                         <td style="text-align:right;" width="150"><b>' . number_format($record['salary']) . '</b></td>
                                     </tr>
                                     <tr>
-                                        <td style="text-align:left;">Allowences</td>
-                                        <td style="text-align:right;"><b>' . number_format($arr_allowance_amount_total) . '</b></td>
+                                        <td style="text-align:left;">Allowences (Tetap)</td>
+                                        <td style="text-align:right;"><b>' . number_format(@$r_allowance[0]['amount']) . '</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left;">Allowences (Tidak Tetap)</td>
+                                        <td style="text-align:right;"><b>' . number_format(@$r_allowance[1]['amount'] + @$r_allowance[2]['amount']) . '</b></td>
                                     </tr>
                                     <tr>
                                         <td style="text-align:left;">Overtime</td>
@@ -420,20 +424,20 @@ class Salary_slips extends CI_Controller
 
                 //Allowance Amount
                 //jika dia ada tunjuangan ambil field dan isinya
-                $q_allowance = $this->db->query("SELECT b.number, b.name, a.amount
+                $q_allowance = $this->db->query("SELECT b.type, SUM(a.amount) as amount
                     FROM allowances b
                     LEFT JOIN setup_allowances a ON a.allowance_id = b.id and a.employee_id = '$record[employee_id]'
-                    GROUP BY b.id ORDER BY b.name asc");
+                    GROUP BY b.type ORDER BY b.type asc");
                 $r_allowance = $q_allowance->result_array();
 
                 $arr_allowance_amount_total = 0;
                 $html_allowance = "";
                 foreach ($r_allowance as $allowance_data) {
                     $arr_allowance_amount_total += $allowance_data['amount'];
-                    $html_allowance .= ' <tr>
-                                                <td style="text-align:left;">' . $allowance_data['name'] . '</td>
-                                                <td style="text-align:right;"><b>' . number_format($allowance_data['amount']) . '</b></td>
-                                            </tr>';
+                    // $html_allowance .= ' <tr>
+                    //                         <td style="text-align:left;">' . $allowance_data['name'] . '</td>
+                    //                         <td style="text-align:right;"><b>' . number_format($allowance_data['amount']) . '</b></td>
+                    //                     </tr>';
                 }
                 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -533,8 +537,12 @@ class Salary_slips extends CI_Controller
                                                     <td style="text-align:right;" width="150"><b>' . number_format($record['salary']) . '</b></td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="text-align:left;">Allowences</td>
-                                                    <td style="text-align:right;"><b>' . number_format($arr_allowance_amount_total) . '</b></td>
+                                                    <td style="text-align:left;">Allowences (Tetap)</td>
+                                                    <td style="text-align:right;"><b>' . number_format(@$r_allowance[0]['amount']) . '</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:left;">Allowences (Tidak Tetap)</td>
+                                                    <td style="text-align:right;"><b>' . number_format(@$r_allowance[1]['amount'] + @$r_allowance[2]['amount']) . '</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align:left;">Overtime</td>
