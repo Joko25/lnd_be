@@ -131,7 +131,7 @@ class Attandance_days extends CI_Controller
                     $this->db->from('employees a');
                     $this->db->join('attandances b', 'a.number = b.number');
                     $this->db->join('overtimes c', 'a.id = c.employee_id and b.date_in = c.trans_date', 'left');
-                    $this->db->where("(b.date_in = '$working_date' or b.date_out = '$working_date')");
+                    $this->db->where("b.date_in = '$working_date'");
                     $this->db->where('a.id', $data['employee_id']);
                     $this->db->order_by('a.name', 'asc');
                     $this->db->order_by('b.date_in', 'asc');

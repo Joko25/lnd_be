@@ -163,6 +163,7 @@ class Attandance_summary extends CI_Controller
                     $finish = strtotime($filter_to);
                     $working = 0;
                     $absence = 0;
+                    $libur = 0;
                     $weekday = [];
                     for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
                         $working_date = date('Y-m-d', $i);
@@ -176,7 +177,7 @@ class Attandance_summary extends CI_Controller
                         $this->db->from('employees a');
                         $this->db->join('attandances b', 'a.number = b.number');
                         $this->db->join('overtimes c', 'a.id = c.employee_id and b.date_in = c.trans_date', 'left');
-                        $this->db->where("(b.date_in = '$working_date' or b.date_out = '$working_date')");
+                        $this->db->where("b.date_in = '$working_date'");
                         $this->db->where('a.id', $data['employee_id']);
                         $this->db->order_by('a.name', 'asc');
                         $this->db->order_by('b.date_in', 'asc');
@@ -203,16 +204,12 @@ class Attandance_summary extends CI_Controller
                         $rowPermit = $queryPermit->row();
 
                         if (date('w', $i) !== '0' && date('w', $i) !== '6') {
-                            if (@$holiday->description != "") {
-                                //
-                            } else {
-                                $weekday[] = date('Y-m-d', $i);
-                            }
-
+                            $weekday[] = date('Y-m-d', $i);
 
                             if (!empty($holiday->description)) {
                                 $working += 0;
                                 $absence += 0;
+                                $libur += 1;
                             } else {
                                 if (@$rowPermit->absence == "YES") {
                                     $working += 1;
@@ -233,11 +230,14 @@ class Attandance_summary extends CI_Controller
                                     $working += 1;
                                     $absence += 0;
                                 }
+
+                                $libur += 0;
                             }
                         } else {
                             $weekend[] = date('Y-m-d', $i);
                             $working += 0;
                             $absence += 0;
+                            $libur += 0;
                         }
                     }
                     //Permit
@@ -261,7 +261,7 @@ class Attandance_summary extends CI_Controller
 
                     $html .= '  <td style="text-align:center;">' . $absence . '</td>
                                 <td style="text-align:center;">' . $working . '</td>
-                                <td style="text-align:center;">' . count($weekday) . '</td>
+                                <td style="text-align:center;">' . (count($weekday) - $libur) . '</td>
                             </tr>';
 
                     $attandance_absece += $absence;
