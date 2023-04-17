@@ -279,131 +279,288 @@ class Payrolls extends CI_Controller
             $start = strtotime($filter_from);
             $finish = strtotime($filter_to);
 
-            for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
-                //Jika tanggal yg di looping bukan hari sabtu dan minggu
-                if (date('w', $i) !== '0' && date('w', $i) !== '6') {
-                    $weekday[] = date('Y-m-d', $i);
-                } else {
-                    $weekend[] = date('Y-m-d', $i);
-                }
-            }
-
             //Setting Payroll
             $config = $this->db->get('payroll_config')->result();
 
             //Permit_allowance
             //Mengambil field dan isinya dari permit allowance
-            $permit_date = "'" . implode( "', '" , $weekend ) . "'";
             $q_permit = $this->db->query("SELECT b.number, b.name, SUM(a.duration) as amount
                     FROM permit_types b
-                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date)
+                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to'
                     LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
                     WHERE b.payroll = 'NON DEDUCTION' and (c.users_id_to = '' or c.users_id_to is null)
                     GROUP BY b.id");
             $r_permit = $q_permit->result_array();
             $arr_permit_number = "";
             $arr_permit_amount = "";
-            $arr_total_permit = 0;
             foreach ($r_permit as $permit_data) {
                 $arr_permit_number .= strtolower($permit_data['number']) . "a,";
                 $arr_permit_amount .= $permit_data['amount'] . ",";
-                $arr_total_permit += $permit_data['amount'];
             }
 
             $arr_permit_number_ex = explode(",", substr($arr_permit_number, 0, -1));
             $arr_permit_amount_ex = explode(",", substr($arr_permit_amount, 0, -1));
             $arr_permit_combine = array_combine($arr_permit_number_ex, $arr_permit_amount_ex);
 
-            //Permits
-            // $qpermits = $this->db->query("SELECT b.number, b.name, SUM(a.duration) as amount
-            //     FROM permit_types b
-            //     LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date between '$filter_from' and '$filter_to'
-            //     LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
-            //     WHERE (c.users_id_to = '' or c.users_id_to is null) and b.absence = 'YES'
-            //     GROUP BY b.id ORDER BY b.name asc");
-            // $permits = $qpermits->result_array();
+            $q_permit2 = $this->db->query("SELECT b.number, b.name, SUM(a.duration) as amount
+                    FROM permit_types b
+                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to'
+                    LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
+                    WHERE (c.users_id_to = '' or c.users_id_to is null)
+                    GROUP BY b.id ORDER BY b.name asc");
+            $r_permit2 = $q_permit2->result_array();
+            $arr_total_permit = 0;
+            foreach ($r_permit2 as $permit_data2) {
+                $arr_total_permit += $permit_data2['amount'];
+            }
 
-            //Change Days
-            $this->db->select("COUNT(*) as days");
-            $this->db->from('change_days');
-            $this->db->where('employee_id', $record['id']);
-            $this->db->where('start >=', $filter_from);
-            $this->db->where('end <=', $filter_to);
-            $changeDays = $this->db->get()->row();
-            $changeDays_amount = empty($changeDays->days) ? 0 : $changeDays->days;
+            //-------------------------------------------------------------------------------------------------------------------------------------------------------
+            $weekday = array();
+            $weekend = array();
+            $holiday = 0;
 
-            //Correction PLUS
-            $this->db->select("SUM(amount) as amount");
-            $this->db->from('corrections');
-            $this->db->where('employee_id', $record['id']);
-            $this->db->where('trans_date >=', $filter_from);
-            $this->db->where('trans_date <=', $filter_to);
-            $this->db->where('correction_type', 'PLUS');
-            $correction_plus = $this->db->get()->row();
-            $correction_plus_amount = empty($correction_plus->amount) ? 0 : $correction_plus->amount;
+            $final_total_ovetime_amount_weekday = 0;
+            $final_total_ovetime_amount_holiday = 0;
+            $final_total_ovetime_amount_correction = 0;
+            $final_total_ovetime_hour_weekday = 0;
+            $final_total_ovetime_hour_holiday = 0;
+            $final_total_ovetime_hour_correction = 0;
+            $final_total_ovetime_convert_weekday = 0;
+            $final_total_ovetime_convert_holiday = 0;
+            $final_total_ovetime_convert_correction = 0;
+            $total_bank = 0;
+            $total_coorperative = 0;
+            $total_other = 0;
+            $total_correction_plus = 0;
+            $total_correction_minus = 0;
 
-            //Correction MINUS
-            $this->db->select("SUM(amount) as amount");
-            $this->db->from('corrections');
-            $this->db->where('employee_id', $record['id']);
-            $this->db->where('trans_date >=', $filter_from);
-            $this->db->where('trans_date <=', $filter_to);
-            $this->db->where('correction_type', 'MINUS');
-            $correction_minus = $this->db->get()->row();
-            $correction_minus_amount = empty($correction_minus->amount) ? 0 : $correction_minus->amount;
+            //Menentukan Masuk kerja dan libur
+            //Looping berdasarkan cutoff periode per tanggal
+            $masuk = 0;
+            $absen = 0;
+            $change_day_qty = 0;
+            for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
+                $working_date = date('Y-m-d', $i);
 
-            //Loan Bank
-            $this->db->select("SUM(amount) as amount");
-            $this->db->from('loans');
-            $this->db->where('employee_id', $record['id']);
-            $this->db->where('trans_date >=', $filter_from);
-            $this->db->where('trans_date <=', $filter_to);
-            $this->db->where('loan_type', 'BANK');
-            $loan_bank = $this->db->get()->row();
-            $loan_bank_amount = empty($loan_bank->amount) ? 0 : $loan_bank->amount;
+                //Attandance
+                //cek apakah dia absen atau tidak per tanggal dari looping
+                $this->db->select("*");
+                $this->db->from('attandances');
+                $this->db->where('number', $record['number']);
+                $this->db->where("(date_in = '$working_date' or date_out = '$working_date')");
+                $attandance = $this->db->get()->row();
 
-            //Loan Cooperative
-            $this->db->select("SUM(amount) as amount");
-            $this->db->from('loans');
-            $this->db->where('employee_id', $record['id']);
-            $this->db->where('trans_date >=', $filter_from);
-            $this->db->where('trans_date <=', $filter_to);
-            $this->db->where('loan_type', 'COOPERATIVE');
-            $loan_cooperative = $this->db->get()->row();
-            $loan_cooperative_amount = empty($loan_cooperative->amount) ? 0 : $loan_cooperative->amount;
+                //Change Days
+                $this->db->select("*");
+                $this->db->from('change_days');
+                $this->db->where('employee_id', $record['id']);
+                $this->db->where('end', $working_date);
+                $changeDays = $this->db->get()->row();
 
-            //Loan Other
-            $this->db->select("SUM(amount) as amount");
-            $this->db->from('loans');
-            $this->db->where('employee_id', $record['id']);
-            $this->db->where('trans_date >=', $filter_from);
-            $this->db->where('trans_date <=', $filter_to);
-            $this->db->where('loan_type', 'OTHER');
-            $loan_other = $this->db->get()->row();
-            $loan_other_amount = empty($loan_other->amount) ? 0 : $loan_other->amount;
+                //Overtime Regular
+                //cek apakah dia ada lembur atau tidak per tanggal dari looping
+                $this->db->select("a.*");
+                $this->db->from('overtimes a');
+                $this->db->join('notifications b', "a.id = b.table_id and b.table_name = 'overtimes'", 'left');
+                $this->db->where('a.employee_id', $record['id']);
+                $this->db->where('a.trans_date', $working_date);
+                $this->db->where('a.type', 'REGULAR');
+                $this->db->where("(b.users_id_to = '' or b.users_id_to is null)");
+                $this->db->group_by('a.employee_id');
+                $overtime = $this->db->get()->row();
 
-            //Holiday
-            $this->db->select('COUNT(*) as amount');
-            $this->db->from('calendars');
-            $this->db->where('trans_date >=', $filter_from);
-            $this->db->where('trans_date <=', $filter_to);
-            $this->db->where_not_in('trans_date', $weekend);
-            $calendar = $this->db->get()->row();
-            $calendar_amount = empty($calendar->amount) ? 0 : $calendar->amount;
+                //Overtime Correction
+                //cek apakah dia ada lembur atau tidak per tanggal dari looping
+                $this->db->select("a.*");
+                $this->db->from('overtimes a');
+                $this->db->join('notifications b', "a.id = b.table_id and b.table_name = 'overtimes'", 'left');
+                $this->db->where('a.employee_id', $record['id']);
+                $this->db->where('a.trans_date', $working_date);
+                $this->db->where('a.type', 'CORRECTION');
+                $this->db->where("(b.users_id_to = '' or b.users_id_to is null)");
+                $this->db->group_by('a.employee_id');
+                $overtime_correction = $this->db->get()->row();
 
-            //Attandances
-            $this->db->select("COUNT(*) as amount");
-            $this->db->from('attandances');
-            $this->db->where('number', $record['number']);
-            $this->db->where('date_in >=', $filter_from);
-            $this->db->where('date_in <=', $filter_to);
-            $this->db->where_not_in('date_in', $weekend);
-            $attandance = $this->db->get()->row();
-            $attandance_amount = empty($attandance->amount) ? 0 : $attandance->amount;
+                //cek apakah ada hari libur nasional per tanggal dari looping
+                $this->db->select('trans_date');
+                $this->db->from('calendars');
+                $this->db->where('trans_date', $working_date);
+                $holiday_overtime = $this->db->get()->row();
 
-            $hkw = (@count($weekday) - @$calendar_amount);
-            $absen = (@count($weekday) - @$calendar_amount - @$attandance_amount - @$changeDays_amount - $arr_total_permit);
-            $masuk = @$attandance_amount;
+                //Correction PLUS
+                $this->db->select("SUM(amount) as amount");
+                $this->db->from('corrections');
+                $this->db->group_by('trans_date');
+                $this->db->where('employee_id', $record['id']);
+                $this->db->where('trans_date', $working_date);
+                $this->db->where('correction_type', 'PLUS');
+                $correction_plus = $this->db->get()->row();
+
+                //Correction MINUS
+                $this->db->select("SUM(amount) as amount");
+                $this->db->from('corrections');
+                $this->db->group_by('trans_date');
+                $this->db->where('employee_id', $record['id']);
+                $this->db->where('trans_date', $working_date);
+                $this->db->where('correction_type', 'MINUS');
+                $correction_minus = $this->db->get()->row();
+
+                $queryPermit = $this->db->query("SELECT b.number, b.name, SUM(a.duration) as amount
+                    FROM permit_types b
+                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date = '$working_date'
+                    LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
+                    WHERE (c.users_id_to = '' or c.users_id_to is null) and b.absence = 'YES'
+                    GROUP BY b.id ORDER BY b.name asc");
+                $rowPermit = $queryPermit->result_array();
+
+                //Loan
+                @$r_loan_bank = $this->crud->read('loans', ['status' => 0, 'employee_id' => $record['id'], 'loan_type' => 'BANK', 'trans_date' => $working_date]);
+                @$r_loan_cooperative = $this->crud->read('loans', ['status' => 0, 'employee_id' => $record['id'], 'loan_type' => 'COOPERATIVE', 'trans_date' => $working_date]);
+                @$r_loan_other = $this->crud->read('loans', ['status' => 0, 'employee_id' => $record['id'], 'loan_type' => 'OTHER', 'trans_date' => $working_date]);
+
+                $total_bank += @$r_loan_bank->amount;
+                $total_coorperative += @$r_loan_cooperative->amount;
+                $total_other += @$r_loan_other->amount;
+                //-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                //ambil durasi berapa jam jika ada lemburan
+                $time_begin = strtotime(@$overtime->trans_date . " " . @$overtime->start);
+                $time_end = strtotime(@$overtime->trans_date . " " . @$overtime->end);
+                $diff = $time_end - $time_begin;
+                $hour = floor($diff / (60 * 60));
+
+                //ambil durasi berapa jam jika ada lemburan
+                $time_begin_correction = strtotime(@$overtime_correction->trans_date . " " . @$overtime_correction->start);
+                $time_end_correction = strtotime(@$overtime_correction->trans_date . " " . @$overtime_correction->end);
+                $diff_correction = $time_end_correction - $time_begin_correction;
+                $hour_correction = floor($diff_correction / (60 * 60));
+
+                //Rumus untuk mengambil upah lembur adalah Gaji / 173
+                $standard_overtime = round($record['salary'] / 173);
+                $total_ovetime_amount_weekday = 0;
+                $total_ovetime_amount_holiday = 0;
+                $total_ovetime_amount_correction = 0;
+                $total_ovetime_hour_weekday = 0;
+                $total_ovetime_hour_holiday = 0;
+                $total_ovetime_hour_correction = 0;
+                $total_ovetime_convert_weekday = 0;
+                $total_ovetime_convert_holiday = 0;
+                $total_ovetime_convert_correction = 0;
+
+                //Jika tanggal yg di looping bukan hari sabtu dan minggu
+                if (date('w', $i) !== '0' && date('w', $i) !== '6') {
+                    $weekday[] = date('Y-m-d', $i);
+
+                    //Working Calendar
+                    //Untuk mengambil jumlah hari libur nasional
+                    $this->db->select('trans_date');
+                    $this->db->from('calendars');
+                    $this->db->where('trans_date', $working_date);
+                    $calendar = $this->db->get()->result_array();
+                    $holiday += count($calendar);
+
+                    //Ini untuk menghitung overtime
+                    //Kalo ada tanggal Merah
+                    if (!empty($holiday_overtime->trans_date)) {
+                        //Looping dari durasi jam lembur
+                        for ($o = 0; $o < $hour; $o++) {
+                            $total_ovetime_amount_holiday += ($standard_overtime * 2);
+                            $total_ovetime_convert_holiday += (1 * 2);
+                            $total_ovetime_hour_holiday++;
+                        }
+
+                        for ($o = 0; $o < $hour_correction; $o++) {
+                            $total_ovetime_amount_correction += ($standard_overtime * 2);
+                            $total_ovetime_convert_correction += (1 * 2);
+                            $total_ovetime_hour_correction++;
+                        }
+
+                        $change_day_qty += 0;
+                        $masuk += 0;
+                        $absen += 0;
+                    } else {
+                        //Perhitungan Overtime
+                        for ($o = 0; $o < $hour; $o++) {
+                            if ($o == 0) {
+                                $total_ovetime_amount_weekday += ($standard_overtime * 1.5);
+                                $total_ovetime_convert_weekday += (1 * 1.5);
+                            } else {
+                                $total_ovetime_amount_weekday += ($standard_overtime * 2);
+                                $total_ovetime_convert_weekday += (1 * 2);
+                            }
+                            $total_ovetime_hour_weekday++;
+                        }
+
+                        for ($o = 0; $o < $hour_correction; $o++) {
+                            if ($o == 0) {
+                                $total_ovetime_amount_correction += ($standard_overtime * 1.5);
+                                $total_ovetime_convert_correction += (1 * 1.5);
+                            } else {
+                                $total_ovetime_amount_correction += ($standard_overtime * 2);
+                                $total_ovetime_convert_correction += (1 * 2);
+                            }
+                            $total_ovetime_hour_correction++;
+                        }
+
+                        //Jika dia tidak absen
+                        if (@$changeDays->end != null) {
+                            $change_day_qty += 1;
+                        } else {
+                            $change_day_qty += 0;
+                        }
+
+                        if (@$rowPermit[0]['amount'] > 0) {
+                            $masuk += 1;
+                            $absen += 1;
+                        } elseif (@$attandance->time_in == null && @$attandance->time_out == null) {
+                            $masuk += 0;
+                            $absen += 1;
+                        } else {
+                            $masuk += 1;
+                            $absen += 0;
+                        }
+                    }
+                } else {
+                    $weekend[] = date('Y-m-d', $i);
+
+                    if (@$changeDays->end != null) {
+                        $change_day_qty += 1;
+                    } else {
+                        $change_day_qty += 0;
+                    }
+
+                    $masuk += 0;
+                    $absen += 0;
+
+                    //Perhitungan Overtime
+                    for ($o = 0; $o < $hour; $o++) {
+                        $total_ovetime_amount_holiday += ($standard_overtime * 2);
+                        $total_ovetime_convert_holiday += (1 * 2);
+                        $total_ovetime_hour_holiday++;
+                    }
+
+                    for ($o = 0; $o < $hour_correction; $o++) {
+                        $total_ovetime_amount_correction += ($standard_overtime * 2);
+                        $total_ovetime_convert_correction += (1 * 2);
+                        $total_ovetime_hour_correction++;
+                    }
+                }
+
+                $final_total_ovetime_hour_weekday += $total_ovetime_hour_weekday;
+                $final_total_ovetime_hour_holiday += $total_ovetime_hour_holiday;
+                $final_total_ovetime_hour_correction += $total_ovetime_hour_correction;
+                $final_total_ovetime_amount_weekday += round($total_ovetime_amount_weekday);
+                $final_total_ovetime_amount_holiday += round($total_ovetime_amount_holiday);
+                $final_total_ovetime_amount_correction += round($total_ovetime_amount_correction);
+                $final_total_ovetime_convert_weekday += $total_ovetime_convert_weekday;
+                $final_total_ovetime_convert_holiday += $total_ovetime_convert_holiday;
+                $final_total_ovetime_convert_correction += $total_ovetime_convert_correction;
+                $total_correction_plus += @$correction_plus->amount;
+                $total_correction_minus += @$correction_minus->amount;
+            }
+            //-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            $hkw = (@count($weekday) - $holiday);
 
             //Allowance Amount
             //jika dia ada tunjuangan ambil field dan isinya
@@ -728,7 +885,7 @@ class Payrolls extends CI_Controller
             //Potong gaji jika dia ga masuk kerja
             //Rumus nya Gaji / 30 hari x jumlah dia ga absen
             //$absence_qty = (@count($weekday) - @count($holiday) - $masuk - $arr_total_permit);
-            $absence_qty = $absen;
+            $absence_qty = ($absen - $arr_total_permit - $change_day_qty);
 
             if ($absence_qty > 0) {
                 $absence_qty_final = $absence_qty;
@@ -746,12 +903,12 @@ class Payrolls extends CI_Controller
             }
 
             //Total Pendapatan Gaji (Gaji + Tunjangan + BPJS dari perusahaan + Koreksi plus + lembur hari biasa + lembur hari libur)
-            $total_all_allowance = ($record['salary'] + $arr_allowance_amount_total + $arr_bpjs_com_amount_total + @$correction_plus_amount);
+            $total_all_allowance = ($record['salary'] + $arr_allowance_amount_total + $arr_bpjs_com_amount_total + $total_correction_plus + $final_total_ovetime_amount_weekday + $final_total_ovetime_amount_holiday + $final_total_ovetime_amount_correction);
 
             //Total Potongan Gaji (Ijin/Sakit + Koreksi Minus + alpha)
-            $total_all_deduction = ($arr_permit_type_amount_b_total + @$correction_minus_amount + $absence_amount);
+            $total_all_deduction = ($arr_permit_type_amount_b_total + $total_correction_minus + $absence_amount);
             $income = ($total_all_allowance - $total_all_deduction - $arr_bpjs_com_amount_total);
-            $income_pajak = ($record['salary'] + $arr_allowance_amount_total);
+            $income_pajak = ($record['salary'] + $arr_allowance_amount_total + $final_total_ovetime_amount_weekday + $final_total_ovetime_amount_holiday + $final_total_ovetime_amount_correction);
 
             //Menghitung PPH Jabatan (Income + JKK + JKM + KES x 5%)
             $pph_position = ((($income_pajak + $arr_bpjs_com_amount_salary_total) * $config[0]->payroll_pph_position) / 100);
@@ -794,7 +951,7 @@ class Payrolls extends CI_Controller
             }
 
             //Total keseluruhan
-            $netincome = ($income - $pph_final - $arr_deduction_amount_total - $arr_bpjs_emp_amount_total - @$loan_cooperative->amount - @$loan_bank->amount - @$loan_other->amount);
+            $netincome = ($income - $pph_final - $arr_deduction_amount_total - $arr_bpjs_emp_amount_total - @$total_coorperative - @$total_bank - @$total_other);
             $roundup = 500; // digit pembulatan, dalam hal ini ratusan
             $roundupIncome = ceil($netincome / $roundup) * $roundup;
             //-------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -819,36 +976,36 @@ class Payrolls extends CI_Controller
                 "shift_name" => $record['shift_name_2'],
                 "attandance" => json_encode($arr_permit_combine),
                 "attandance_wd" => ($masuk),
-                "working_day" => @count($weekday) - @$calendar_amount,
+                "working_day" => @count($weekday) - $holiday,
                 "salary" => $record['salary'],
                 "allowence" => json_encode($arr_allowance_combine),
                 "bpjs_company" => json_encode($arr_bpjs_com_combine),
                 "bpjs_company_total" => $arr_bpjs_com_amount_total,
-                "correction_plus" => @$correction_plus_amount,
-                "overtime_weekday" => 0,
-                "overtime_convert_weekday" => 0,
-                "overtime_amount_weekday" => 0,
-                "overtime_holiday" => 0,
-                "overtime_convert_holiday" => 0,
-                "overtime_amount_holiday" => 0,
-                "overtime_correction" => 0,
-                "overtime_convert_correction" => 0,
-                "overtime_amount_correction" => 0,
-                "total_overtime" => 0,
-                "total_overtime_convert" => 0,
-                "total_overtime_amount" => 0,
+                "correction_plus" => $total_correction_plus,
+                "overtime_weekday" => ($final_total_ovetime_hour_weekday),
+                "overtime_convert_weekday" => ($final_total_ovetime_convert_weekday),
+                "overtime_amount_weekday" => $final_total_ovetime_amount_weekday,
+                "overtime_holiday" => ($final_total_ovetime_hour_holiday),
+                "overtime_convert_holiday" => ($final_total_ovetime_convert_holiday),
+                "overtime_amount_holiday" => $final_total_ovetime_amount_holiday,
+                "overtime_correction" => ($final_total_ovetime_hour_correction),
+                "overtime_convert_correction" => ($final_total_ovetime_convert_correction),
+                "overtime_amount_correction" => $final_total_ovetime_amount_correction,
+                "total_overtime" => ($final_total_ovetime_hour_weekday + $final_total_ovetime_hour_holiday + $final_total_ovetime_hour_correction),
+                "total_overtime_convert" => ($final_total_ovetime_convert_weekday + $final_total_ovetime_convert_holiday + $final_total_ovetime_convert_correction),
+                "total_overtime_amount" => ($final_total_ovetime_amount_weekday + $final_total_ovetime_amount_holiday + $final_total_ovetime_amount_correction),
                 "total_all_allowance" => $total_all_allowance,
                 "deduction_number" => json_encode($arr_permit_type_combine_b),
                 "deduction_amount" => json_encode($arr_permit_type_combine),
                 "deduction_absence" => ($absence_qty_final),
                 "deduction_absence_amount" => $absence_amount,
-                "correction_minus" => @$correction_minus_amount,
+                "correction_minus" => $total_correction_minus,
                 "total_all_deduction" => $total_all_deduction,
                 "income" => ($income),
                 "deduction" => json_encode($arr_deduction_combine),
-                "loan_cooperative" => @$loan_cooperative_amount,
-                "loan_bank" => @$loan_bank_amount,
-                "loan_other" => @$loan_other_amount,
+                "loan_cooperative" => @$total_coorperative,
+                "loan_bank" => @$total_bank,
+                "loan_other" => @$total_other,
                 "bpjs_employee" => json_encode($arr_bpjs_emp_combine),
                 "bpjs_employee_total" => $arr_bpjs_emp_amount_total,
                 "pph" => ($pph_final),

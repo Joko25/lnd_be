@@ -28,10 +28,10 @@
             <th colspan="<?= count($bpjs) ?>">BPJS Company</th>
             <th rowspan="2" data-options="field:'bpjs_company_total',width:100,align:'center', formatter:numberformat">Total BPJS<br>Company</th>
             <th rowspan="2" data-options="field:'correction_plus',width:100,align:'center', formatter:numberformat">Correction<br>Plus</th>
-            <th colspan="3">OT (Working Day)</th>
+            <!-- <th colspan="3">OT (Working Day)</th>
             <th colspan="3">OT (Holiday)</th>
             <th colspan="3">OT (Correction)</th>
-            <th colspan="3">Total Overtime</th>
+            <th colspan="3">Total Overtime</th> -->
             <th rowspan="2" data-options="field:'total_all_allowance',width:100,align:'center', formatter:numberformat">Bruto Income</th>
             <th colspan="<?= (count($permit_type_d) + count($permit_type_d) + 2) ?>">Deduction</th>
             <th rowspan="2" data-options="field:'correction_minus',width:100,align:'center', formatter:numberformat">Correction<br>Minus</th>
@@ -65,7 +65,7 @@
                 echo '<th data-options="' . $bpjs_field . ', formatter:numberformat">' . $bpjs_data->number . '</th>';
             }
             ?>
-            <th data-options="field:'overtime_weekday',width:80,align:'center', formatter:numberformat">Hour</th>
+            <!-- <th data-options="field:'overtime_weekday',width:80,align:'center', formatter:numberformat">Hour</th>
             <th data-options="field:'overtime_convert_weekday',width:80,align:'center', formatter:numberformat">Conversion</th>
             <th data-options="field:'overtime_amount_weekday',width:120,align:'center', formatter:numberformat">Amount</th>
             <th data-options="field:'overtime_holiday',width:80,align:'center', formatter:numberformat">Hour</th>
@@ -76,7 +76,7 @@
             <th data-options="field:'overtime_amount_correction',width:120,align:'center', formatter:numberformat">Amount</th>
             <th data-options="field:'total_overtime',width:80,align:'center', formatter:numberformat">Hour</th>
             <th data-options="field:'total_overtime_convert',width:80,align:'center', formatter:numberformat">Conversion</th>
-            <th data-options="field:'total_overtime_amount',width:120,align:'center', formatter:numberformat">Amount</th>
+            <th data-options="field:'total_overtime_amount',width:120,align:'center', formatter:numberformat">Amount</th> -->
             <?php
             foreach ($permit_type_d as $permit_type_d_data) {
                 $permit_type_d_field = "field:'" . strtolower($permit_type_d_data->number) . "b',width:50,align:'center'";
