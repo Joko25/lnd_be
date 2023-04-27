@@ -131,8 +131,16 @@ class Cash_carries extends CI_Controller
                 $start = strtotime($record['trans_date']);
                 $att_time_begin = strtotime(@$record['date_in'] . " " . @$record['time_in']);
                 $att_time_end = strtotime(@$record['date_out'] . " " . @$record['time_out']);
+                
+                $tomorrow = strtotime(date('Y-m-d', strtotime(@$record['date_out'] . "+1 days")) . " " . @$record['time_out']);
+
                 $att_diff = $att_time_end - $att_time_begin;
                 $att_hour = floor($att_diff / (60 * 60));
+
+                if ($att_hour < 0) {
+                    $att_diff = $tomorrow - $att_time_begin;
+                    $att_hour = floor($att_diff / (60 * 60));
+                }
 
                 $cc_hour = $record['duration_hour'];
 
