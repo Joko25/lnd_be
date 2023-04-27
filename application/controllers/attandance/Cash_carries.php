@@ -394,13 +394,32 @@ class Cash_carries extends CI_Controller
         if ($this->input->post()) {
             $id   = base64_decode($this->input->get('id'));
             $post = $this->input->post();
+            $trans_date = $post['trans_date'];
+            $employee_id = $post['employee_id'];
+            $start = $post['start'];
+            $end = $post['end'];
+            $break = $post['break'];
+            $type = $post['type'];
+            $meal = $post['meal'];
+            $plan = $post['plan'];
+            $remarks = $post['remarks'];
+            $duration = $this->convertHour($trans_date, $start, $end);
+            $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, ($duration['duration_hour'] - ($break / 60)), $meal);
             $plan = $post['plan'];
             $actual = $post['actual'];
             $remarks = $post['remarks'];
 
             $post_final = array(
+                "start" =>  $start,
+                "end" =>  $end,
+                "type" =>  $type,
+                "duration" =>  $duration['duration'],
+                "duration_hour" => ($duration['duration_hour'] - ($break / 60)),
+                "amount" =>  $ot_amount,
+                "meal" =>  $meal,
                 "plan" =>  $plan,
                 "actual" =>  $actual,
+                "break" =>  $break,
                 "remarks" =>  $remarks,
             );
 

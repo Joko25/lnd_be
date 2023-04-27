@@ -161,20 +161,24 @@
                 <input style="width:60%;" name="request_code" readonly data-options="prompt:'Automatic'" id="request_code" class="easyui-textbox" required>
             </div>
             <div class="fitem">
+                <span style="width:30%; display:inline-block;">Employee Id</span>
+                <input style="width:60%;" name="employee_id" readonly class="easyui-textbox" required>
+            </div>
+            <div class="fitem">
                 <span style="width:30%; display:inline-block;">Start <small style="color:red;">(time)</small></span>
-                <input style="width:30%;" name="start" readonly mask="99:99:99" required id="start" class="easyui-maskedbox">
+                <input style="width:30%;" name="start" mask="99:99:99" required id="start" class="easyui-maskedbox">
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">End <small style="color:red;">(time)</small></span>
-                <input style="width:30%;" name="end" readonly mask="99:99:99" required id="end" class="easyui-maskedbox">
+                <input style="width:30%;" name="end" mask="99:99:99" required id="end" class="easyui-maskedbox">
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Break <small style="color:red;">(Minute)</small></span>
-                <input style="width:30%;" name="break" readonly id="break" class="easyui-numberbox">
+                <input style="width:30%;" name="break" id="break" class="easyui-numberbox">
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Meal</span>
-                <input name="meal" id="meal" readonly class="easyui-checkbox" value="1"> Checked if Yes get Meal
+                <input name="meal" id="meal" class="easyui-checkbox" value="1"> Checked if Yes get Meal
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Plan Output</span>

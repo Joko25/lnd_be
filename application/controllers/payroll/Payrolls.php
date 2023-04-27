@@ -97,7 +97,7 @@ class Payrolls extends CI_Controller
             $this->db->from('payrolls a');
             $this->db->join('employees b', 'a.employee_id = b.id');
             $this->db->join('sources d', 'b.source_id = d.id', 'left');
-            $this->db->join('privilege_groups c', "b.group_id = c.group_id and c.username = '$username' and c.status = '1'");
+            $this->db->join('privilege_groups c', "(b.group_id = c.group_id or b.group_id is null or b.group_id = '') and c.username = '$username' and c.status = '1'");
             if ($filter_from != "" && $filter_to != "") {
                 $this->db->where('a.period_start =', $period_start);
                 $this->db->where('a.period_end =', $period_end);
@@ -109,7 +109,7 @@ class Payrolls extends CI_Controller
             $this->db->like('b.contract_id', $filter_employee_type);
             $this->db->like('c.group_id', $filter_group);
             $this->db->order_by('a.name', 'ASC');
-
+            $this->db->group_by('a.employee_id');
             //Total Data
             $totalRows = $this->db->count_all_results('', false);
             //Limit 1 - 10
