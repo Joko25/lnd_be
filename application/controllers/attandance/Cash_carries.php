@@ -400,7 +400,7 @@ class Cash_carries extends CI_Controller
             $end = $post['end'];
             $break = $post['break'];
             $type = $post['type'];
-            $meal = $post['meal'];
+            $meal = @$post['meal'];
             $plan = $post['plan'];
             $remarks = $post['remarks'];
             $duration = $this->convertHour($trans_date, $start, $end);

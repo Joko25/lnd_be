@@ -144,7 +144,7 @@
                     toastr.error("Approval still Checked");
                 }
             } else {
-                toastr.error("You can't edit this data because the status is not active!");
+                toastr.error("You can't edit this data, klik add to change employee position, group or another!");
             }
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
