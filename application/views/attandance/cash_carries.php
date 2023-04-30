@@ -10,7 +10,7 @@
     <thead>
         <tr>
             <th rowspan="2" data-options="field:'type',width:100,halign:'center'">Type</th>
-            <th colspan="7" data-options="field:'',width:80,halign:'center'">Request</th>
+            <th colspan="8" data-options="field:'',width:80,halign:'center'">Request</th>
             <th colspan="3" data-options="field:'',width:80,halign:'center'">Attandance</th>
             <th rowspan="2" data-options="field:'meal',width:80,halign:'center',align:'center',styler:cellStyler, formatter:cellFormatter">Meal</th>
             <th rowspan="2" data-options="field:'amount',width:80,halign:'center',align:'right', formatter:numberformat">Plan<br>Amount</th>
@@ -19,6 +19,7 @@
             <th rowspan="2" data-options="field:'actual',width:80,halign:'center',align:'right'">Actual<br>Output</th>
             <th rowspan="2" data-options="field:'remarks',width:250,halign:'center'">Remarks</th>
             <th rowspan="2" data-options="field:'attachment',width:100,align:'center', formatter:fileFormatter">Attachment</th>
+            <th rowspan="2" data-options="field:'attachment_idm',width:100,align:'center', formatter:fileFormatter2">Attachment<br>IDM</th>
             <th colspan="3" data-options="field:'',width:100,halign:'center'"> Approval</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
@@ -26,6 +27,7 @@
         <tr>
             <th data-options="field:'trans_date',width:100,halign:'center'">Request Date</th>
             <th data-options="field:'request_code',width:150,halign:'center'">Request No</th>
+            <th data-options="field:'idm_no',width:120,halign:'center'">IDM No</th>
             <th data-options="field:'fullname',width:120,halign:'center'">Request Name</th>
             <th data-options="field:'start',width:80,align:'center'">Start</th>
             <th data-options="field:'end',width:80,align:'center'">End</th>
@@ -121,18 +123,26 @@
                     <input style="width:60%;" id="departement_id" class="easyui-combobox" required>
                 </div>
                 <div class="fitem">
-                    <span style="width:30%; display:inline-block;">Attachment</span>
-                    <input style="width:60%;" name="attachment" id="attachment" accept=".jpg, .png, .jpeg, .pdf" class="easyui-filebox" data-options="prompt: 'Max 2 Mb'">
-                </div>
-            </div>
-            <div style="width: 50%; float: left;">
-                <div class="fitem">
                     <span style="width:30%; display:inline-block;">Request Code</span>
                     <input style="width:60%;" name="request_code" readonly data-options="prompt:'Automatic'" id="request_code" class="easyui-textbox" required>
                 </div>
                 <div class="fitem">
                     <span style="width:30%; display:inline-block;">Request Name</span>
                     <input style="width:60%;" name="request_name" readonly data-options="prompt:'Automatic'" id="request_name" class="easyui-textbox" required>
+                </div>
+            </div>
+            <div style="width: 50%; float: left;">
+                <div class="fitem">
+                    <span style="width:30%; display:inline-block;">IDM No</span>
+                    <input style="width:60%;" name="idm_no" id="idm_no" class="easyui-textbox" required>
+                </div>
+                <div class="fitem">
+                    <span style="width:30%; display:inline-block;">Attachment IDM</span>
+                    <input style="width:60%;" name="attachment_idm" id="attachment_idm" accept=".jpg, .png, .jpeg, .pdf" class="easyui-filebox" data-options="prompt: 'Max 2 Mb'">
+                </div>
+                <div class="fitem">
+                    <span style="width:30%; display:inline-block;">Attachment</span>
+                    <input style="width:60%;" name="attachment" id="attachment" accept=".jpg, .png, .jpeg, .pdf" class="easyui-filebox" data-options="prompt: 'Max 2 Mb'">
                 </div>
                 <div class="fitem">
                     <span style="width:30%; display:inline-block;">Type</span>
@@ -573,70 +583,85 @@
                 text: 'Save',
                 iconCls: 'icon-ok',
                 handler: function() {
-                    $('#frm_insert').form('submit', {
-                        url: '<?= base_url('attandance/cash_carries/uploadFile') ?>',
-                        method: 'POST',
-                        onSubmit: function() {
-                            return $(this).form('validate');
-                        },
-                    });
-
                     var trans_date = $("#trans_date").datebox('getValue');
                     var request_code = $("#request_code").textbox('getValue');
                     var request_name = $("#request_name").textbox('getValue');
+                    var idm_no = $("#idm_no").textbox('getValue');
                     var type = $("#type").combobox('getValue');
-
-                    if ($("#attachment").filebox('getValue') == "") {
-                        var file_attachment = "";
-                    } else {
-                        var attachment = $("#attachment").filebox('files')[0];
-                        var explode = attachment['name'].split('.');
-                        var file_attachment = request_code + "." + explode[1];
-                    }
 
                     var rows = $('#dg2').datagrid('getRows');
                     var totalrows = rows.length;
                     endEditing();
 
-                    for (let i = 0; i < totalrows; i++) {
-                        if (rows[i].employee_id) {
-                            $.ajax({
-                                type: "post",
-                                url: '<?= base_url('attandance/cash_carries/create') ?>',
-                                data: {
-                                    trans_date: trans_date,
-                                    request_code: request_code,
-                                    request_name: request_name,
-                                    type: type,
-                                    attachment: file_attachment,
-                                    employee_id: rows[i].employee_id,
-                                    start: rows[i].start,
-                                    end: rows[i].end,
-                                    meal: rows[i].meal,
-                                    plan: rows[i].plan,
-                                    break: rows[i].break,
-                                    remarks: rows[i].remarks
-                                },
-                                dataType: "json",
-                                success: function(result) {
-                                    //
-                                }
-                            });
+                    if(idm_no != "" && request_code != "" && totalrows > 0){
+                        $('#frm_insert').form('submit', {
+                            url: '<?= base_url('attandance/cash_carries/uploadFile') ?>',
+                            method: 'POST',
+                            onSubmit: function() {
+                                return $(this).form('validate');
+                            },
+                        });
+
+                        if ($("#attachment").filebox('getValue') == "") {
+                            var file_attachment = "";
+                        } else {
+                            var attachment = $("#attachment").filebox('files')[0];
+                            var explode = attachment['name'].split('.');
+                            var file_attachment = request_code + "." + explode[1];
                         }
+
+                        if ($("#attachment_idm").filebox('getValue') == "") {
+                            var file_attachment_idm = "";
+                        } else {
+                            var attachment_idm = $("#attachment_idm").filebox('files')[0];
+                            var explode_idm = attachment_idm['name'].split('.');
+                            var file_attachment_idm = idm_no + "." + explode_idm[1];
+                        }
+
+                        for (let i = 0; i < totalrows; i++) {
+                            if (rows[i].employee_id) {
+                                $.ajax({
+                                    type: "post",
+                                    url: '<?= base_url('attandance/cash_carries/create') ?>',
+                                    data: {
+                                        trans_date: trans_date,
+                                        request_code: request_code,
+                                        request_name: request_name,
+                                        idm_no: idm_no,
+                                        type: type,
+                                        attachment: file_attachment,
+                                        attachment_idm: file_attachment_idm,
+                                        employee_id: rows[i].employee_id,
+                                        start: rows[i].start,
+                                        end: rows[i].end,
+                                        meal: rows[i].meal,
+                                        plan: rows[i].plan,
+                                        break: rows[i].break,
+                                        remarks: rows[i].remarks
+                                    },
+                                    dataType: "json",
+                                    success: function(result) {
+                                        //
+                                    }
+                                });
+                            }
+                        }
+
+                        Swal.fire({
+                            title: "Save Cash Carries Success",
+                            icon: "success",
+                            confirmButtonText: 'Ok',
+                            allowOutsideClick: false,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.reload();
+                            }
+                        });
+
+                        $('#dlg_insert').dialog('close');
+                    }else{
+                        toastr.info("Please complete your cash carry data");
                     }
-
-                    Swal.fire({
-                        title: "Save Cash Carries Success",
-                        icon: "success",
-                        confirmButtonText: 'Ok',
-                        allowOutsideClick: false,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.reload();
-                        }
-                    });
-
-                    $('#dlg_insert').dialog('close');
                 }
             }]
         });
@@ -987,6 +1012,14 @@
     };
 
     function fileFormatter(value) {
+        if (value == "" || value == null) {
+            return '-';
+        } else {
+            return '<a href="<?= base_url('assets/image/cash_carry/') ?>' + value + '" target="_blank" class="btn btn-primary btn-sm" style="pointer-events:auto; opacity:1;"><i class="fa fa-eye"></i> View File</a>';
+        }
+    };
+
+    function fileFormatter2(value) {
         if (value == "" || value == null) {
             return '-';
         } else {

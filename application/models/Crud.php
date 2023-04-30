@@ -124,6 +124,12 @@ class Crud extends CI_Model
             $this->db->where($where);
             if ($this->db->update($table, $data)) {
                 $this->logs("Update", json_encode($data), $table);
+                $reads = $this->reads($table, [], $data);
+
+                foreach ($reads as $read) {
+                    $this->approvals($table, $read->id);
+                }
+
                 return json_encode(array("title" => "Good Job", "message" => "Data Updated Successfully", "theme" => "success"));
             } else {
                 return log_message('error', 'There is an error in your system or data');
@@ -217,21 +223,41 @@ class Crud extends CI_Model
         $user = $this->read('users', [], ["username" => $this->session->username]);
         //Approval
         $approval = $this->read('approvals', [], ["table_name" => $table, "departement_id" => @$user->departement_id]);
+        $notifications = $this->read('notifications', [], ["table_name" => $table, "table_id" => $table_id]);
+        
         if (!empty($approval)) {
-            $this->db->insert("notifications", [
-                "id" => $id,
-                "approvals_id" => $approval->id,
-                "users_id_from" => $this->session->username,
-                "users_id_to" => $approval->user_approval_1,
-                "table_id" => $table_id,
-                "table_name" => $table,
-                "name" => "CREATED APPROVAL",
-                "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $table)) . "</b>",
-                "status" => 1,
-                "created_by" => $this->session->username,
-                "created_date" => date('Y-m-d H:i:s'),
-                "deleted" => 0
-            ]);
+            if(empty($notifications->table_id)){
+                $this->db->insert("notifications", [
+                    "id" => $id,
+                    "approvals_id" => $approval->id,
+                    "users_id_from" => $this->session->username,
+                    "users_id_to" => $approval->user_approval_1,
+                    "table_id" => $table_id,
+                    "table_name" => $table,
+                    "name" => "CREATED APPROVAL",
+                    "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $table)) . "</b>",
+                    "status" => 1,
+                    "created_by" => $this->session->username,
+                    "created_date" => date('Y-m-d H:i:s'),
+                    "deleted" => 0
+                ]);
+            }else{
+                $this->db->delete("notifications", ["table_id" => $table_id, "table_name" => $table]);
+                $this->db->insert("notifications", [
+                    "id" => $id,
+                    "approvals_id" => $approval->id,
+                    "users_id_from" => $this->session->username,
+                    "users_id_to" => $approval->user_approval_1,
+                    "table_id" => $table_id,
+                    "table_name" => $table,
+                    "name" => "CREATED APPROVAL",
+                    "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $table)) . "</b>",
+                    "status" => 1,
+                    "created_by" => $this->session->username,
+                    "created_date" => date('Y-m-d H:i:s'),
+                    "deleted" => 0
+                ]);
+            }
         }
     }
 

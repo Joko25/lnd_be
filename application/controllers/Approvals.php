@@ -587,4 +587,103 @@ class Approvals extends CI_Controller
 
         die(json_encode($data));
     }
+
+    public function approvalSetupSalary($users_id_from)
+    {
+        $this->db->select('a.*, 
+                g.users_id_from as status_check,
+                g.users_id_to as status_notification, 
+                g.updated_date as status_date,
+                c.name as division_name,
+                d.name as departement_name,
+                e.name as departement_sub_name,
+                b.number as employee_number,
+                b.name as employee_name,
+                f.name as fullname,
+                h.name as salary_component_name
+            ');
+        $this->db->from('setup_salaries a');
+        $this->db->join('employees b', 'a.employee_id = b.id');
+        $this->db->join('divisions c', 'b.division_id = c.id');
+        $this->db->join('departements d', 'b.departement_id = d.id');
+        $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
+        $this->db->join('users f', "a.created_by = f.username");
+        $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'setup_salaries'", 'left');
+        $this->db->join('salary_components h', 'a.salary_component_id = h.id', 'left');
+        $this->db->where('b.deleted', 0);
+        $this->db->where('b.status', 0);
+        $this->db->where('g.users_id_from', $users_id_from);
+        $this->db->where('g.users_id_to', $this->session->username);
+        $this->db->group_by('a.employee_id');
+        $this->db->order_by('b.name', 'ASC');
+        $records = $this->db->get()->result_array();
+
+        die(json_encode($records));
+    }
+
+    public function approvalWarningLetters($users_id_from)
+    {
+        $this->db->select('a.*, 
+                g.users_id_from as status_check,
+                g.users_id_to as status_notification, 
+                g.updated_date as status_date,
+                c.name as division_name,
+                d.name as departement_name,
+                e.name as departement_sub_name,
+                b.number as employee_number,
+                b.name as employee_name,
+                f.name as fullname,
+                h.name as violation_name
+            ');
+        $this->db->from('warning_letters a');
+        $this->db->join('employees b', 'a.employee_id = b.id');
+        $this->db->join('divisions c', 'b.division_id = c.id');
+        $this->db->join('departements d', 'b.departement_id = d.id');
+        $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
+        $this->db->join('users f', "a.created_by = f.username");
+        $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'warning_letters'", 'left');
+        $this->db->join('violations h', 'a.violation_id = h.id', 'left');
+        $this->db->where('b.deleted', 0);
+        $this->db->where('b.status', 0);
+        $this->db->where('g.users_id_from', $users_id_from);
+        $this->db->where('g.users_id_to', $this->session->username);
+        $this->db->group_by('a.employee_id');
+        $this->db->order_by('b.name', 'ASC');
+        $records = $this->db->get()->result_array();
+
+        die(json_encode($records));
+    }
+
+    public function approvalResignations($users_id_from)
+    {
+        $this->db->select('a.*, 
+                g.users_id_from as status_check,
+                g.users_id_to as status_notification, 
+                g.updated_date as status_date,
+                c.name as division_name,
+                d.name as departement_name,
+                e.name as departement_sub_name,
+                b.number as employee_number,
+                b.name as employee_name,
+                f.name as fullname,
+                h.name as reason_name
+            ');
+        $this->db->from('resignations a');
+        $this->db->join('employees b', 'a.employee_id = b.id');
+        $this->db->join('divisions c', 'b.division_id = c.id');
+        $this->db->join('departements d', 'b.departement_id = d.id');
+        $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
+        $this->db->join('users f', "a.created_by = f.username");
+        $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'resignations'", 'left');
+        $this->db->join('reason_resignations h', 'a.reason_resignation_id = h.id', 'left');
+        $this->db->where('b.deleted', 0);
+        $this->db->where('b.status', 0);
+        $this->db->where('g.users_id_from', $users_id_from);
+        $this->db->where('g.users_id_to', $this->session->username);
+        $this->db->group_by('a.employee_id');
+        $this->db->order_by('b.name', 'ASC');
+        $records = $this->db->get()->result_array();
+
+        die(json_encode($records));
+    }
 }

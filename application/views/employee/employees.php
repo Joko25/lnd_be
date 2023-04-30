@@ -182,7 +182,7 @@
                     <span style="width:35%; display:inline-block;">Source</span>
                     <input style="width:60%;" name="source_id" id="source_id" class="easyui-combobox">
                 </div>
-                <div class="fitem" style="margin-bottom: 5px;">
+                <!-- <div class="fitem" style="margin-bottom: 5px;">
                     <span style="width:35%; display:inline-block;">Employee Status</span>
                     <input class="easyui-radiobutton status_active" name="status" checked="true" value="0"> Active &nbsp;
                     <input class="easyui-radiobutton status_notactive" name="status" value="1"> Not Active
@@ -190,7 +190,7 @@
                 <div class="fitem" id="form_status_date">
                     <span style="width:35%; display:inline-block;">Inactive Date</span>
                     <input style="width:60%;" name="status_date" id="status_date" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
-                </div>
+                </div> -->
             </div>
         </fieldset>
 

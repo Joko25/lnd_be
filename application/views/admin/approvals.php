@@ -46,6 +46,8 @@
                 <select style="width:60%;" name="table_name" id="table_name" required="true" data-options="prompt:'Select Module'" class="easyui-combobox">
                     <option value="users">Users</option>
                     <option value="employees">Employees</option>
+                    <option value="warning_letters">Warning Letters</option>
+                    <option value="resignations">Resignations</option>
                     <option value="agreements">Agreements</option>
                     <option value="mutations">Mutations</option>
                     <option value="employee_requests">Employee Requests</option>
@@ -53,6 +55,7 @@
                     <option value="cash_carries">Cash Carries</option>
                     <option value="permits">Permits</option>
                     <option value="change_days">Change Days</option>
+                    <option value="setup_salaries">Setup Salary</option>
                     <option value="payrolls">Payrolls</option>
                 </select>
             </div>

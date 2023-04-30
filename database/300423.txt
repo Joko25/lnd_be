@@ -1,0 +1,89 @@
+ALTER TABLE `cash_carries` ADD `idm_no` VARCHAR(30) NULL DEFAULT NULL AFTER `remarks`, ADD `attachment_idm` TEXT NULL DEFAULT NULL AFTER `idm_no`;
+
+CREATE TABLE `violations` (
+  `id` varchar(30) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` varchar(50) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT 0,
+  `number` varchar(30) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `number` (`number`),
+  KEY `created_by` (`created_by`),
+  KEY `updated_by` (`updated_by`),
+  CONSTRAINT `violations_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `violations_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+CREATE TABLE `reason_resignations` (
+  `id` varchar(30) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` varchar(50) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT 0,
+  `number` varchar(30) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `number` (`number`),
+  KEY `created_by` (`created_by`),
+  KEY `updated_by` (`updated_by`),
+  CONSTRAINT `reason_resignations_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `reason_resignations_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+CREATE TABLE `resignations` (
+  `id` varchar(30) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` varchar(50) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT 0,
+  `employee_id` varchar(30) DEFAULT NULL,
+  `reason_resignation_id` varchar(30) DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `resign_type` varchar(30) DEFAULT NULL,
+  `resign_date` date DEFAULT NULL,
+  `remarks` text DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `created_by` (`created_by`),
+  KEY `updated_by` (`updated_by`),
+  KEY `employee_id` (`employee_id`),
+  KEY `reason_resignation_id` (`reason_resignation_id`),
+  CONSTRAINT `resignations_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `resignations_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `resignations_ibfk_3` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `resignations_ibfk_4` FOREIGN KEY (`reason_resignation_id`) REFERENCES `reason_resignations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+CREATE TABLE `warning_letters` (
+  `id` varchar(30) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` varchar(50) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT 0,
+  `employee_id` varchar(30) DEFAULT NULL,
+  `violation_id` varchar(30) DEFAULT NULL,
+  `trans_date` date DEFAULT NULL,
+  `warning_letter` varchar(30) DEFAULT NULL,
+  `issue_date` date DEFAULT NULL,
+  `remarks` text DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `created_by` (`created_by`),
+  KEY `updated_by` (`updated_by`),
+  KEY `employee_id` (`employee_id`),
+  KEY `violation_id` (`violation_id`),
+  CONSTRAINT `warning_letters_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `warning_letters_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `warning_letters_ibfk_3` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `warning_letters_ibfk_4` FOREIGN KEY (`violation_id`) REFERENCES `violations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci

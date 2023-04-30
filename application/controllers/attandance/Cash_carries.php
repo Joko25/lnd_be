@@ -347,6 +347,7 @@ class Cash_carries extends CI_Controller
             $employee_id = $post['employee_id'];
             $request_code = $post['request_code'];
             $request_name = $post['request_name'];
+            $idm_no = $post['idm_no'];
             $start = $post['start'];
             $end = $post['end'];
             $break = $post['break'];
@@ -354,6 +355,7 @@ class Cash_carries extends CI_Controller
             $meal = $post['meal'];
             $plan = $post['plan'];
             $attachment = trim($post['attachment']);
+            $attachment_idm = trim($post['attachment_idm']);
             $remarks = $post['remarks'];
             $duration = $this->convertHour($trans_date, $start, $end);
             $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, ($duration['duration_hour'] - ($break / 60)), $meal);
@@ -373,6 +375,8 @@ class Cash_carries extends CI_Controller
                 "plan" =>  $plan,
                 "break" =>  $break,
                 "remarks" =>  $remarks,
+                "idm_no" =>  $idm_no,
+                "attachment_idm" =>  $attachment_idm,
                 "attachment" =>  $attachment,
             );
 
@@ -461,17 +465,28 @@ class Cash_carries extends CI_Controller
                 if ($size < 2097152) {
                     @move_uploaded_file($temporary, "assets/image/cash_carry/" . $newName);
                     echo $newName;
-                } else {
-                    show_error("Your file is too big a maximum of 2 mb", 200, "File Upload Error");
-                    exit;
                 }
-            } else {
-                show_error("Your extension file is not recognized", 200, "File Upload Error");
-                exit;
             }
-        } else {
-            echo "Image No Upload";
         }
+
+        if (!empty($_FILES["attachment_idm"]["name"])) {
+            //Setting Upload Image
+            $idm_no = trim($this->input->post('idm_no'));
+
+            $file2 = $_FILES["attachment_idm"]["name"];
+            $extension_explode2 = explode('.', $file2);
+            $extension_final2 = strtolower(end($extension_explode2));
+            $size2 = $_FILES["attachment_idm"]['size'];
+            $temporary2 = $_FILES["attachment_idm"]['tmp_name'];
+            $newName2 =  $idm_no . "." . $extension_final2;
+
+            if (in_array($extension_final2, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file2 == "") {
+                if ($size2 < 2097152) {
+                    @move_uploaded_file($temporary2, "assets/image/cash_carry/" . $newName2);
+                }
+            }
+        }
+
     }
 
     function formatTanggal($date)

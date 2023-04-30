@@ -381,6 +381,7 @@
 
 	approvalList();
 	approvalCount();
+	resignations();
 	setInterval(approvalList, 10000);
 	setInterval(approvalCount, 10000);
 
@@ -1162,6 +1163,249 @@
 						}]
 					],
 				}).datagrid('enableFilter');
+			} else if (table == "setup_salaries") {
+				$('#dg_approval').datagrid({
+					singleSelect: true,
+					rownumbers: true,
+					url: '<?= base_url('approvals/approvalSetupSalary/') ?>' + users_id_from,
+					columns: [
+						[{
+							field: 'employee_id',
+							width: 120,
+							halign: 'center',
+							title: "Employee ID",
+						}, {
+							field: 'employee_name',
+							width: 200,
+							halign: 'center',
+							title: "Employee Name",
+						}, {
+							field: 'division_name',
+							width: 150,
+							halign: 'center',
+							title: "Division",
+						}, {
+							field: 'departement_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement",
+						}, {
+							field: 'departement_sub_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement Sub",
+						}, {
+							field: 'salary_component_name',
+							width: 150,
+							halign: 'center',
+							title: "Salary Component",
+						}, {
+							field: 'amount',
+							width: 150,
+							halign: 'center',
+							title: "Amount",
+						}, {
+							field: 'bpjs',
+							width: 100,
+							halign: 'center',
+							title: "BPJS",
+						}, {
+							field: 'created_by',
+							width: 100,
+							halign: 'center',
+							title: "Created By",
+						}, {
+							field: 'created_date',
+							width: 200,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'updated_by',
+							width: 100,
+							halign: 'center',
+							title: "Updated By",
+						}, {
+							field: 'updated_date',
+							width: 200,
+							halign: 'center',
+							title: "Updated Date",
+						}, {
+							field: 'action',
+							width: 80,
+							align: 'center',
+							title: "Action",
+							formatter: function(val, row) {
+								var approve = "approve('" + row.id + "','" + table + "')";
+								var disapprove = "disapprove('" + row.id + "','" + table + "')";
+								var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
+								var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
+								return a + " " + b;
+							}
+						}]
+					],
+				}).datagrid('enableFilter');
+			} else if (table == "warning_letters") {
+				$('#dg_approval').datagrid({
+					singleSelect: true,
+					rownumbers: true,
+					url: '<?= base_url('approvals/approvalWarningLetters/') ?>' + users_id_from,
+					columns: [
+						[{
+							field: 'employee_id',
+							width: 120,
+							halign: 'center',
+							title: "Employee ID",
+						}, {
+							field: 'employee_name',
+							width: 200,
+							halign: 'center',
+							title: "Employee Name",
+						}, {
+							field: 'division_name',
+							width: 150,
+							halign: 'center',
+							title: "Division",
+						}, {
+							field: 'departement_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement",
+						}, {
+							field: 'departement_sub_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement Sub",
+						}, {
+							field: 'warning_letter',
+							width: 100,
+							align: 'center',
+							title: "Warning Letter",
+						}, {
+							field: 'trans_date',
+							width: 100,
+							halign: 'center',
+							title: "Trans Date",
+						}, {
+							field: 'issue_date',
+							width: 100,
+							halign: 'center',
+							title: "Issue Date",
+						}, {
+							field: 'violation_name',
+							width: 150,
+							halign: 'center',
+							title: "Violation",
+						}, {
+							field: 'remarks',
+							width: 150,
+							halign: 'center',
+							title: "Remarks",
+						}, {
+							field: 'created_by',
+							width: 100,
+							halign: 'center',
+							title: "Created By",
+						}, {
+							field: 'created_date',
+							width: 200,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'action',
+							width: 80,
+							align: 'center',
+							title: "Action",
+							formatter: function(val, row) {
+								var approve = "approve('" + row.id + "','" + table + "')";
+								var disapprove = "disapprove('" + row.id + "','" + table + "')";
+								var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
+								var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
+								return a + " " + b;
+							}
+						}]
+					],
+				}).datagrid('enableFilter');
+			} else if (table == "resignations") {
+				$('#dg_approval').datagrid({
+					singleSelect: true,
+					rownumbers: true,
+					url: '<?= base_url('approvals/approvalResignations/') ?>' + users_id_from,
+					columns: [
+						[{
+							field: 'employee_id',
+							width: 120,
+							halign: 'center',
+							title: "Employee ID",
+						}, {
+							field: 'employee_name',
+							width: 200,
+							halign: 'center',
+							title: "Employee Name",
+						}, {
+							field: 'division_name',
+							width: 150,
+							halign: 'center',
+							title: "Division",
+						}, {
+							field: 'departement_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement",
+						}, {
+							field: 'departement_sub_name',
+							width: 150,
+							halign: 'center',
+							title: "Departement Sub",
+						}, {
+							field: 'resign_type',
+							width: 100,
+							align: 'center',
+							title: "Resign Type",
+						}, {
+							field: 'trans_date',
+							width: 100,
+							halign: 'center',
+							title: "Trans Date",
+						}, {
+							field: 'resign_date',
+							width: 100,
+							halign: 'center',
+							title: "Resign Date",
+						}, {
+							field: 'reason_name',
+							width: 150,
+							halign: 'center',
+							title: "Reason",
+						}, {
+							field: 'remarks',
+							width: 150,
+							halign: 'center',
+							title: "Remarks",
+						}, {
+							field: 'created_by',
+							width: 100,
+							halign: 'center',
+							title: "Created By",
+						}, {
+							field: 'created_date',
+							width: 200,
+							halign: 'center',
+							title: "Created Date",
+						}, {
+							field: 'action',
+							width: 80,
+							align: 'center',
+							title: "Action",
+							formatter: function(val, row) {
+								var approve = "approve('" + row.id + "','" + table + "')";
+								var disapprove = "disapprove('" + row.id + "','" + table + "')";
+								var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
+								var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
+								return a + " " + b;
+							}
+						}]
+					],
+				}).datagrid('enableFilter');
 			}
 		}
 	}
@@ -1359,6 +1603,17 @@
 						Swal.close();
 					}
 				});
+			}
+		});
+	}
+
+	//Resign Employee
+	function resignations(){
+		$.ajax({
+			type: "post",
+			url: "<?= base_url('relation/resignations/readEmployeeResign') ?>",
+			success: function(response) {
+				//
 			}
 		});
 	}
