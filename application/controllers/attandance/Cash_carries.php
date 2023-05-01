@@ -536,6 +536,24 @@ class Cash_carries extends CI_Controller
         $this->db->where('SUBSTRING(request_code, 4, 6)=', $date);
         $records = $this->db->get()->row();
 
+        if (!empty($_FILES["attachment_idm"]["name"])) {
+            //Setting Upload Image
+            $idm_no = trim($this->input->post('idm_no'));
+
+            $file2 = $_FILES["attachment_idm"]["name"];
+            $extension_explode2 = explode('.', $file2);
+            $extension_final2 = strtolower(end($extension_explode2));
+            $size2 = $_FILES["attachment_idm"]['size'];
+            $temporary2 = $_FILES["attachment_idm"]['tmp_name'];
+            $newName2 =  $idm_no . "." . $extension_final2;
+
+            if (in_array($extension_final2, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file2 == "") {
+                if ($size2 < 2097152) {
+                    @move_uploaded_file($temporary2, "assets/image/cash_carry/" . $newName2);
+                }
+            }
+        }
+
         $requestcode = (int) $records->code;
         $requestcode++;
 
@@ -554,7 +572,9 @@ class Cash_carries extends CI_Controller
                 'meal' => $data->val($i, 9),
                 'plan' => $data->val($i, 10),
                 'remarks' => $data->val($i, 11),
-                'request_code' => $templatefinal
+                'request_code' => $templatefinal,
+                'idm_no' => $idm_no,
+                'attachment_idm' => $newName2
             );
         }
 
@@ -638,7 +658,9 @@ class Cash_carries extends CI_Controller
                             'duration' => $duration,
                             'duration_hour' => ($duration_hour - ($data['break'] / 60)),
                             'remarks' => $data['remarks'],
-                            'amount' =>  $ot_amount
+                            'amount' =>  $ot_amount,
+                            'idm_no' => $data['idm_no'],
+                            'attachment_idm' => $data['attachment_idm']
                         );
 
                         $send = $this->crud->create('cash_carries', $post_cash_carries);

@@ -221,6 +221,14 @@
                 <span style="width:30%; display:inline-block;">File Upload</span>
                 <input name="file_upload" style="width: 60%;" required="" accept=".xls" id="file_excel" class="easyui-filebox">
             </div>
+            <div class="fitem">
+                <span style="width:30%; display:inline-block;">IDM No</span>
+                <input style="width:60%;" name="idm_no" id="idm_no" class="easyui-textbox" required>
+            </div>
+            <div class="fitem">
+                <span style="width:30%; display:inline-block;">Attachment IDM</span>
+                <input style="width:60%;" name="attachment_idm" id="attachment_idm" accept=".jpg, .png, .jpeg, .pdf" class="easyui-filebox" data-options="prompt: 'Max 2 Mb'">
+            </div>
         </fieldset>
     </form>
     <span style="float: left; color:green;">SUCCESS : <b id="p_success">0</b></span><span style="float: right; color:red;"> FAILED : <b id="p_failed">0</b></span>
