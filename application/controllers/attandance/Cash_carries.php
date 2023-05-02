@@ -40,12 +40,11 @@ class Cash_carries extends CI_Controller
         echo json_encode($send);
     }
 
-    public function readRequest()
+    public function readIdm()
     {
-        $this->db->select('a.created_by, b.name');
-        $this->db->from('cash_carries a');
-        $this->db->join('users b', 'a.created_by = b.username');
-        $this->db->group_by('a.created_by');
+        $this->db->select('idm_no');
+        $this->db->from('cash_carries');
+        $this->db->group_by('idm_no');
         $records = $this->db->get()->result_array();
         echo json_encode($records);
     }
@@ -183,8 +182,8 @@ class Cash_carries extends CI_Controller
             $filter_departement = $this->input->get('filter_departement');
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
-            $filter_request_code = $this->input->get('filter_request_code');
-            $filter_request = $this->input->get('filter_request');
+            $filter_request_code = base64_decode($this->input->get('filter_request_code'));
+            $filter_idm = base64_decode($this->input->get('filter_idm'));
             $filter_approval = $this->input->get('filter_approval');
             $aprvDepartement = $this->checkApprovalAccess('cash_carries');
 
@@ -229,8 +228,12 @@ class Cash_carries extends CI_Controller
             $this->db->like('b.departement_id', $filter_departement);
             $this->db->like('b.departement_sub_id', $filter_departement_sub);
             $this->db->like('b.id', $filter_employee);
-            $this->db->like('a.request_code', $filter_request_code);
-            $this->db->like('a.created_by', $filter_request);
+            if($filter_request_code != ""){
+                $this->db->where('a.request_code', $filter_request_code);
+            }
+            if($filter_idm != ""){
+                $this->db->where('a.idm_no', $filter_idm);
+            }
             if ($filter_approval == "0") {
                 $this->db->where("(g.users_id_to = '' or g.users_id_to is null)");
             } elseif ($filter_approval == "1") {
@@ -571,7 +574,8 @@ class Cash_carries extends CI_Controller
                 'type' => $data->val($i, 8),
                 'meal' => $data->val($i, 9),
                 'plan' => $data->val($i, 10),
-                'remarks' => $data->val($i, 11),
+                'actual' => $data->val($i, 11),
+                'remarks' => $data->val($i, 12),
                 'request_code' => $templatefinal,
                 'idm_no' => $idm_no,
                 'attachment_idm' => $newName2
@@ -655,6 +659,7 @@ class Cash_carries extends CI_Controller
                             'type' => $data['type'],
                             'meal' => $meal,
                             'plan' => $data['plan'],
+                            'actual' => $data['actual'],
                             'duration' => $duration,
                             'duration_hour' => ($duration_hour - ($data['break'] / 60)),
                             'remarks' => $data['remarks'],
@@ -689,7 +694,7 @@ class Cash_carries extends CI_Controller
         $filter_departement_sub = $this->input->get('filter_departement_sub');
         $filter_employee = $this->input->get('filter_employee');
         $filter_request_code = $this->input->get('filter_request_code');
-        $filter_request = $this->input->get('filter_request');
+        $filter_idm = $this->input->get('filter_idm');
         $filter_approval = $this->input->get('filter_approval');
         $aprvDepartement = $this->checkApprovalAccess('cash_carries');
 
@@ -730,8 +735,12 @@ class Cash_carries extends CI_Controller
         $this->db->like('b.departement_id', $filter_departement);
         $this->db->like('b.departement_sub_id', $filter_departement_sub);
         $this->db->like('b.id', $filter_employee);
-        $this->db->like('a.request_code', $filter_request_code);
-        $this->db->like('a.created_by', $filter_request);
+        if($filter_request_code != ""){
+            $this->db->where('a.request_code', $filter_request_code);
+        }
+        if($filter_idm != ""){
+            $this->db->where('a.idm_no', $filter_idm);
+        }
         if ($filter_approval == "0") {
             $this->db->where("(g.users_id_to = '' or g.users_id_to is null)");
         } elseif ($filter_approval == "1") {

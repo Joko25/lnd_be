@@ -84,8 +84,8 @@
                 <input style="width:60%;" id="filter_request_code" class="easyui-combobox">
             </div>
             <div class="fitem">
-                <span style="width:30%; display:inline-block;">Request By</span>
-                <input style="width:60%;" id="filter_request" class="easyui-combobox">
+                <span style="width:30%; display:inline-block;">IDM No</span>
+                <input style="width:60%;" id="filter_idm" class="easyui-combobox">
             </div>
             <div class="fitem">
                 <span style="width:30%; display:inline-block;">Approval</span>
@@ -529,15 +529,18 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combobox('getValue');
-        var filter_request = $("#filter_request").combobox('getValue');
+        var filter_request_code = window.btoa($("#filter_request_code").combobox('getValue'));
+        var filter_idm = window.btoa($("#filter_idm").combobox('getValue'));
         var filter_approval = $("#filter_approval").combobox('getValue');
+
         var url = "?filter_from=" + filter_from +
             "&filter_to=" + filter_to +
             "&filter_division=" + filter_division +
             "&filter_departement=" + filter_departement +
             "&filter_departement_sub=" + filter_departement_sub +
             "&filter_employee=" + filter_employee +
-            "&filter_request=" + filter_request +
+            "&filter_request_code=" + filter_request_code +
+            "&filter_idm=" + filter_idm +
             "&filter_approval=" + filter_approval;
 
         $('#dg').datagrid({
@@ -560,15 +563,18 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combobox('getValue');
-        var filter_request = $("#filter_request").combobox('getValue');
+        var filter_request_code = window.btoa($("#filter_request_code").combobox('getValue'));
+        var filter_idm = window.btoa($("#filter_idm").combobox('getValue'));
         var filter_approval = $("#filter_approval").combobox('getValue');
+
         var url = "?filter_from=" + filter_from +
             "&filter_to=" + filter_to +
             "&filter_division=" + filter_division +
             "&filter_departement=" + filter_departement +
             "&filter_departement_sub=" + filter_departement_sub +
             "&filter_employee=" + filter_employee +
-            "&filter_request=" + filter_request +
+            "&filter_request_code=" + filter_request_code +
+            "&filter_idm=" + filter_idm +
             "&filter_approval=" + filter_approval;
 
         window.location.assign('<?= base_url('attandance/cash_carries/print/excel') ?>' + url);
@@ -912,10 +918,10 @@
             }]
         });
 
-        $('#filter_request').combobox({
-            url: '<?= base_url('attandance/cash_carries/readRequest') ?>',
-            valueField: 'created_by',
-            textField: 'name',
+        $('#filter_idm').combobox({
+            url: '<?= base_url('attandance/cash_carries/readIdm') ?>',
+            valueField: 'idm_no',
+            textField: 'idm_no',
             prompt: "Choose All",
             icons: [{
                 iconCls: 'icon-clear',
