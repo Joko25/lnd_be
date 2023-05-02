@@ -181,6 +181,7 @@ class Resignations extends CI_Controller
     {
         $data = $this->input->post();
         $send = $this->crud->delete('resignations', $data);
+        $this->crud->update('employees', ["id" => $data['employee_id']], ["status" => 0, "status_date" => date("Y-m-d")]);
         echo $send;
     }
 

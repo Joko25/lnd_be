@@ -1,8 +1,37 @@
+<style>
+    .button-gray {
+        display: inline-block;
+        padding: 5px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #C2C2C2;
+        border: none;
+        border-radius: 5px;
+    }
+
+    .button-gray:hover {
+        background-color: #B9B9B9;
+    }
+</style>
+
 <?php
 if ($employee->status == 0) {
     $status = '<span class="button-green" style="width: 100%; font-size: 20px !important;">ACTIVE</span>';
 } else {
     $status = '<span class="button-red" style="width: 100%; font-size: 20px !important;">NOT ACTIVE</span>';
+}
+
+if(!empty($resignation->employee_id)){
+    if($resignation->status_resign == "ON PROCEDURE"){
+        $status_resign = '<span class="button-green" style="width: 100%; font-size: 20px !important;">'.$resignation->status_resign.'</span>';
+    } else {
+        $status_resign = '<span class="button-red" style="width: 100%; font-size: 20px !important;">'.$resignation->status_resign.'</span>';
+    }
+}else{
+    $status_resign = '<span class="button-gray" style="width: 100%; font-size: 20px !important;">NO DATA RESIGN</span>';
 }
 
 if ($employee->image_profile == "" || $employee->image_profile == null) {
@@ -20,7 +49,9 @@ if ($employee->image_profile == "" || $employee->image_profile == null) {
             <legend><b>Foto Profile</b></legend>
             <?= $image ?>
             <?= $status ?>
-            <br><br>
+            <br>
+            <?= $status_resign ?>
+            <br>
             <a class="button-red" href="<?= base_url('employee/employees/index/' . $id_menu) ?>" style="width: 100%; font-size: 20px !important;">BACK</a>
         </fieldset>
         <fieldset style="width:75%; padding:11px; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">

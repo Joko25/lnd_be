@@ -107,7 +107,6 @@
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Status</span>
                 <select style="width:60%;" id="filter_status" class="easyui-combobox" data-options="panelHeight:'auto'">
-                    <option value="">Choose All</option>
                     <option value="0">Active</option>
                     <option value="1">Not Active</option>
                 </select>

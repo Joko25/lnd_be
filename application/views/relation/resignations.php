@@ -10,7 +10,9 @@
             <th rowspan="2" data-options="field:'departement_sub_name',width:150,halign:'center'">Departement Name</th>
             <th rowspan="2" data-options="field:'resign_type',width:100,align:'center'">Resign Type</th>
             <th rowspan="2" data-options="field:'date_sign',width:120,align:'center'">Join Date</th>
+            <th rowspan="2" data-options="field:'request_date',width:100,align:'center'">Request Date</th>
             <th rowspan="2" data-options="field:'resign_date',width:100,align:'center'">Resign Date</th>
+            <th rowspan="2" data-options="field:'status_resign',width:100,align:'center'">Status</th>
             <th rowspan="2" data-options="field:'service',width:200,halign:'center'">Fit For Service</th>
             <th rowspan="2" data-options="field:'reason_name',width:150,halign:'center'">Reason</th>
             <th rowspan="2" data-options="field:'remarks',width:200,halign:'center'">Remarks</th>
@@ -86,11 +88,15 @@
             <legend><b>Form Data</b></legend>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Trans Date</span>
-                <input style="width:60%;" name="trans_date" id="trans_date" required="" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
+                <input style="width:60%;" name="trans_date" id="trans_date" readonly data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Resign Type</span>
                 <input style="width:60%;" name="resign_type" id="resign_type" required="" panelHeight="auto" class="easyui-combobox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Request Date</span>
+                <input style="width:60%;" name="request_date" id="request_date" required="" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Resign Date</span>
@@ -107,6 +113,10 @@
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Remarks</span>
                 <input style="width:60%; height: 50px;" name="remarks" class="easyui-textbox" multiline="true">
+            </div>
+            <div>
+                <span style="width:35%; display:inline-block;">Status</span>
+                <input style="width:60%;" name="status_resign" id="status_resign" readonly class="easyui-textbox">
             </div>
         </fieldset>
     </form>
@@ -386,7 +396,62 @@
                 }]
             ],
         });
+
+        $("#request_date").datebox({
+            onSelect: function(date){
+                var request_date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+                var resign_date = $("#resign_date").datebox('getValue');
+
+                if(resign_date == ""){
+                    toastr.info("Please Select Resign Date");
+                }else{
+                    var endDate = daysBetween(request_date, resign_date);
+                    if(endDate > 0){
+                        if(endDate >= 30){
+                            $("#status_resign").textbox('setValue', 'ON PROCEDURE');
+                        }else{
+                            $("#status_resign").textbox('setValue', 'UN PROCEDURE');
+                        }
+                    }else{
+                        toastr.warning("Request Date < Resign Date");
+                    }
+                }
+            }
+        });
+
+        $("#resign_date").datebox({
+            onSelect: function(date2){
+                var request_date = $("#request_date").datebox('getValue');
+                var resign_date = date2.getFullYear()+"-"+(date2.getMonth()+1)+"-"+date2.getDate();
+
+                if(request_date == ""){
+                    toastr.info("Please Select Request Date");
+                }else{
+                    var endDate = daysBetween(request_date, resign_date);
+                    if(endDate > 0){
+                        if(endDate >= 30){
+                            $("#status_resign").textbox('setValue', 'On Procedure');
+                        }else{
+                            $("#status_resign").textbox('setValue', 'Un Procedure');
+                        }
+                    }else{
+                        toastr.warning("Request Date < Resign Date");
+                    }
+                }
+            }
+        });
     });
+
+    function daysBetween(first, second) {
+        var one = new Date(second);
+        var two = new Date(first);
+
+        var Difference_In_Time = one.getTime() - two.getTime();
+	    var Difference_In_Days = (Difference_In_Time / (1000 * 60 * 60 * 24) + 2);
+
+        // Round down.
+        return Math.floor(Difference_In_Days);
+    }
 
     //CELLSTYLE STATUS
     function statusStyler(value, row, index) {

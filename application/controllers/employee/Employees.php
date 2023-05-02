@@ -48,6 +48,7 @@ class Employees extends CI_Controller
             $data['group'] = $this->crud->read('groups', [], ["id" => $data['employee']->group_id]);
             $data['marital'] = $this->crud->read('maritals', [], ["id" => $data['employee']->marital_id]);
             $data['religion'] = $this->crud->read('religions', [], ["id" => $data['employee']->religion_id]);
+            $data['resignation'] = $this->crud->read('resignations', [], ["employee_id" => $number]);
             $data['service'] = $this->readService($data['employee']->date_sign);
             $data['id_menu'] = $id_menu;
 
@@ -319,7 +320,11 @@ class Employees extends CI_Controller
         $this->db->join('positions g', 'g.id = a.position_id', 'left');
         $this->db->join('contracts h', 'h.id = a.contract_id', 'left');
         $this->db->where('a.deleted', 0);
-        $this->db->like('a.status', $filter_status);
+        if($filter_status == ""){
+            $this->db->where('a.status', 0);
+        }else{
+            $this->db->like('a.status', $filter_status);
+        }
         $this->db->like('a.departement_id', $aprvDepartement);
         $whereService1;
         $whereService2;
