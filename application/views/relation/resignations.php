@@ -430,9 +430,9 @@
                     var endDate = daysBetween(request_date, resign_date);
                     if(endDate > 0){
                         if(endDate >= 30){
-                            $("#status_resign").textbox('setValue', 'On Procedure');
+                            $("#status_resign").textbox('setValue', 'ON PROCEDURE');
                         }else{
-                            $("#status_resign").textbox('setValue', 'Un Procedure');
+                            $("#status_resign").textbox('setValue', 'UN PROCEDURE');
                         }
                     }else{
                         toastr.warning("Request Date < Resign Date");
