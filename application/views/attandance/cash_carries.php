@@ -363,6 +363,17 @@
                         }
                     }
                 }, {
+                    field: 'actual',
+                    width: 80,
+                    halign: 'center',
+                    title: "Actual<br>Output",
+                    editor: {
+                        type: 'numberbox',
+                        options: {
+                            required: true,
+                        }
+                    }
+                }, {
                     field: 'remarks',
                     width: 200,
                     halign: 'center',
@@ -650,6 +661,7 @@
                                         end: rows[i].end,
                                         meal: rows[i].meal,
                                         plan: rows[i].plan,
+                                        actual: rows[i].actual,
                                         break: rows[i].break,
                                         remarks: rows[i].remarks
                                     },

@@ -60,14 +60,18 @@ class Bpjs extends CI_Controller
                 a.birthday,
                 a.jamsostek,
                 a.jamsostek_date,
-                a.bank_no
+                a.bank_no,
+                f.bpjs_company,
+                f.bpjs_employee
                 FROM employees a
                 JOIN divisions b ON a.division_id = b.id
                 JOIN departements c ON a.departement_id = c.id
                 JOIN departement_subs d ON a.departement_sub_id = d.id
                 JOIN maritals e ON a.marital_id = e.id
+                JOIN payrolls f ON a.id = f.employee_id
                 JOIN setup_salaries p ON p.employee_id = a.id
                 WHERE a.deleted = 0 and a.jamsostek != '' and a.jamsostek != '-'
+                AND f.period_start = '$period_start'
                 AND a.division_id LIKE '%$filter_division%'
                 AND a.departement_id LIKE '%$filter_departement%'
                 AND a.departement_sub_id LIKE '%$filter_departement_sub%'
@@ -121,6 +125,7 @@ class Bpjs extends CI_Controller
                             <th rowspan="2" style="text-align:center;">Jumlah Rapel (Rp.)</th>
                             <th rowspan="2" style="text-align:center;">Iuran JKK (Rp.)</th>
                             <th rowspan="2" style="text-align:center;">Iuran JKM (Rp.)</th>
+                            <th colspan="2" style="text-align:center;">Iuran Kes</th>
                             <th colspan="2" style="text-align:center;">Iuran JHT TK</th>
                             <th colspan="2" style="text-align:center;">Iuran JP</th>
                             <th colspan="2" style="text-align:center;">Iuran JKP</th>
@@ -134,49 +139,50 @@ class Bpjs extends CI_Controller
                             <th style="text-align:center;">Pemberi Kerja (Rp.)</th>
                             <th style="text-align:center;">Tenaga Kerja (Rp.)</th>
                             <th style="text-align:center;">Pemberi Kerja (Rp.)</th>
+                            <th style="text-align:center;">Tenaga Kerja (Rp.)</th>
+                            <th style="text-align:center;">Pemberi Kerja (Rp.)</th>
                             <th style="text-align:center;">Pemerintah (Rp.)</th>
                         </tr>';
             $no = 1;
             foreach ($records as $record) {
                 //BPJS Employee JKK
-                $bpjs_jkk = $this->crud->reads('bpjs', [], ['status' => 0, 'number' => 'JKK']);
-                foreach ($bpjs_jkk as $bpjs_jkk_data) {
-                    $total_bpjs_jkk = (($record['amount'] * $bpjs_jkk_data->employee) / 100);
-                }
+                $bpjs_jkk = json_decode($record['bpjs_company']);
+                $total_bpjs_jkk = $bpjs_jkk->jkk_company;
                 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
                 //BPJS Employee JKM
-                $bpjs_jkm = $this->crud->reads('bpjs', [], ['status' => 0, 'number' => 'JKM']);
-                foreach ($bpjs_jkm as $bpjs_jkm_data) {
-                    $total_bpjs_jkm = (($record['amount'] * $bpjs_jkm_data->employee) / 100);
-                }
+                $bpjs_jkm = json_decode($record['bpjs_company']);
+                $total_bpjs_jkm = $bpjs_jkm->jkm_company;
                 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
+                //BPJS Employee KES
+                $bpjs_kes_emp = json_decode($record['bpjs_employee']);
+                $bpjs_kes_com = json_decode($record['bpjs_company']);
+                $total_bpjs_kes_emp = $bpjs_kes_emp->bpjs_employee;
+                $total_bpjs_kes_com = $bpjs_kes_com->bpjs_company;
+
                 //BPJS Employee JHT
-                $bpjs_jht = $this->crud->reads('bpjs', [], ['status' => 0, 'number' => 'JHT']);
-                foreach ($bpjs_jht as $bpjs_jht_data) {
-                    $total_bpjs_jht_emp = (($record['amount'] * $bpjs_jht_data->employee) / 100);
-                    $total_bpjs_jht_com = (($record['amount'] * $bpjs_jht_data->company) / 100);
-                }
+                $bpjs_jht_emp = json_decode($record['bpjs_employee']);
+                $bpjs_jht_com = json_decode($record['bpjs_company']);
+                $total_bpjs_jht_emp = $bpjs_jht_emp->jht_employee;
+                $total_bpjs_jht_com = $bpjs_jht_com->jht_company;
 
                 //BPJS Employee JP
-                $bpjs_jp = $this->crud->reads('bpjs', [], ['status' => 0, 'number' => 'JP']);
-                foreach ($bpjs_jp as $bpjs_jp_data) {
-                    $total_bpjs_jp_emp = (($record['amount'] * $bpjs_jp_data->employee) / 100);
-                    $total_bpjs_jp_com = (($record['amount'] * $bpjs_jp_data->company) / 100);
-                }
+                $bpjs_jp_emp = json_decode($record['bpjs_employee']);
+                $bpjs_jp_com = json_decode($record['bpjs_company']);
+                $total_bpjs_jp_emp = $bpjs_jp_emp->jp_employee;
+                $total_bpjs_jp_com = $bpjs_jp_com->jp_company;
 
                 //BPJS Employee JKP
-                $bpjs_jkp = $this->crud->reads('bpjs', [], ['status' => 0, 'number' => 'JKP']);
-                foreach ($bpjs_jkp as $bpjs_jkp_data) {
-                    $total_bpjs_jkp_emp = (($record['amount'] * $bpjs_jkp_data->employee) / 100);
-                    $total_bpjs_jkp_com = (($record['amount'] * $bpjs_jkp_data->company) / 100);
-                }
+                $bpjs_jkp_emp = json_decode($record['bpjs_employee']);
+                $bpjs_jkp_com = json_decode($record['bpjs_company']);
+                $total_bpjs_jkp_emp = @$bpjs_jkp_emp->jkp_employee;
+                $total_bpjs_jkp_com = @$bpjs_jkp_com->jkp_company;
 
                 //BPJS TOTAL Iuran
-                $total_bpjs = (@$total_bpjs_jkk + @$total_bpjs_jkm + @$total_bpjs_jht_com + @$total_bpjs_jht_emp + @$total_bpjs_jp_com + @$total_bpjs_jp_emp + @$total_bpjs_jkp_com + @$total_bpjs_jkp_emp);
-                $total_company = (@$total_bpjs_jht_com + @$total_bpjs_jp_com + @$total_bpjs_jkp_com);
-                $total_employee = (@$total_bpjs_jkk + @$total_bpjs_jkm  + @$total_bpjs_jht_emp + @$total_bpjs_jp_emp + @$total_bpjs_jkp_emp);
+                $total_bpjs = (@$total_bpjs_jkk + @$total_bpjs_jkm + @$total_bpjs_jht_com + @$total_bpjs_jht_emp + @$total_bpjs_jp_com + @$total_bpjs_jp_emp + @$total_bpjs_jkp_com + @$total_bpjs_jkp_emp + @$total_bpjs_kes_com);
+                $total_company = (@$total_bpjs_jkk + @$total_bpjs_jkm + @$total_bpjs_jht_com + @$total_bpjs_jp_com + @$total_bpjs_jkp_com + @$total_bpjs_kes_com);
+                $total_employee = (@$total_bpjs_jht_emp + @$total_bpjs_jp_emp + @$total_bpjs_jkp_emp + @$total_bpjs_kes_emp);
                 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
                 if ($record['jamsostek_date'] != "0000-00-00") {
@@ -197,6 +203,8 @@ class Bpjs extends CI_Controller
                             <td style="text-align:center;">0,00</td>
                             <td style="text-align:center;">' . number_format(@$total_bpjs_jkk, 2, ',', '.') . '</td>
                             <td style="text-align:center;">' . number_format(@$total_bpjs_jkm, 2, ',', '.') . '</td>
+                            <td style="text-align:center;">' . number_format(@$total_bpjs_kes_com, 2, ',', '.') . '</td>
+                            <td style="text-align:center;">' . number_format(@$total_bpjs_kes_emp, 2, ',', '.') . '</td>
                             <td style="text-align:center;">' . number_format(@$total_bpjs_jht_com, 2, ',', '.') . '</td>
                             <td style="text-align:center;">' . number_format(@$total_bpjs_jht_emp, 2, ',', '.') . '</td>
                             <td style="text-align:center;">' . number_format(@$total_bpjs_jp_com, 2, ',', '.') . '</td>

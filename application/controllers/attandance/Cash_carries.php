@@ -357,6 +357,7 @@ class Cash_carries extends CI_Controller
             $type = $post['type'];
             $meal = $post['meal'];
             $plan = $post['plan'];
+            $actual = $post['actual'];
             $attachment = trim($post['attachment']);
             $attachment_idm = trim($post['attachment_idm']);
             $remarks = $post['remarks'];
@@ -376,6 +377,7 @@ class Cash_carries extends CI_Controller
                 "amount" =>  $ot_amount,
                 "meal" =>  $meal,
                 "plan" =>  $plan,
+                "actual" =>  $actual,
                 "break" =>  $break,
                 "remarks" =>  $remarks,
                 "idm_no" =>  $idm_no,
@@ -408,8 +410,6 @@ class Cash_carries extends CI_Controller
             $break = $post['break'];
             $type = $post['type'];
             $meal = @$post['meal'];
-            $plan = $post['plan'];
-            $remarks = $post['remarks'];
             $duration = $this->convertHour($trans_date, $start, $end);
             $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, ($duration['duration_hour'] - ($break / 60)), $meal);
             $plan = $post['plan'];
@@ -643,11 +643,17 @@ class Cash_carries extends CI_Controller
                             $meal = "0";
                         }
 
+                        if($data['break'] == "" || $data['break'] == "0"){
+                            $break = 0;
+                        }else{
+                            $break = ($data['break'] / 60);
+                        }
+
                         $minutes = $diff - $hour * (60 * 60);
                         $duration = $hour . " Hour " . floor($minutes / 60) . " Minutes";
                         $duration_hour = $hour;
 
-                        $ot_amount = $this->readOvertimePrice($employee->id, $data['trans_date'], ($duration_hour - ($data['break'] / 60)), $meal);
+                        $ot_amount = $this->readOvertimePrice($employee->id, $data['trans_date'], ($duration_hour - $break), $meal);
 
                         $post_cash_carries = array(
                             'employee_id' => $employee->id,
@@ -655,7 +661,7 @@ class Cash_carries extends CI_Controller
                             'request_code' => $data['request_code'],
                             'start' => $data['start'],
                             'end' => $data['end'],
-                            'break' => $data['break'],
+                            'break' => $break,
                             'type' => $data['type'],
                             'meal' => $meal,
                             'plan' => $data['plan'],
