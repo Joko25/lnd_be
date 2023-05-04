@@ -667,7 +667,7 @@ class Cash_carries extends CI_Controller
                             'plan' => $data['plan'],
                             'actual' => $data['actual'],
                             'duration' => $duration,
-                            'duration_hour' => ($duration_hour - ($data['break'] / 60)),
+                            'duration_hour' => ($duration_hour - ($break / 60)),
                             'remarks' => $data['remarks'],
                             'amount' =>  $ot_amount,
                             'idm_no' => $data['idm_no'],
