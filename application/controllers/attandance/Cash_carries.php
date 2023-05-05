@@ -699,8 +699,8 @@ class Cash_carries extends CI_Controller
         $filter_departement = $this->input->get('filter_departement');
         $filter_departement_sub = $this->input->get('filter_departement_sub');
         $filter_employee = $this->input->get('filter_employee');
-        $filter_request_code = $this->input->get('filter_request_code');
-        $filter_idm = $this->input->get('filter_idm');
+        $filter_request_code = base64_decode($this->input->get('filter_request_code'));
+        $filter_idm = base64_decode($this->input->get('filter_idm'));
         $filter_approval = $this->input->get('filter_approval');
         $aprvDepartement = $this->checkApprovalAccess('cash_carries');
 
@@ -711,6 +711,7 @@ class Cash_carries extends CI_Controller
 
         //Select Query
         $this->db->select('a.*, 
+                b.contract_id,
                 g.users_id_from as status_check,
                 g.users_id_to as status_notification, 
                 g.updated_date as status_date,
@@ -785,6 +786,7 @@ class Cash_carries extends CI_Controller
                 <th width="20">No</th>
                 <th>Request Date</th>
                 <th>Request No</th>
+                <th>IDM No</th>
                 <th>Request Name</th>
                 <th>Employee ID</th>
                 <th>Employee Name</th>
@@ -808,6 +810,7 @@ class Cash_carries extends CI_Controller
                             <td>' . $no . '</td>
                             <td>' . $data['trans_date'] . '</td>
                             <td>' . $data['request_code'] . '</td>
+                            <td>' . $data['idm_no'] . '</td>
                             <td>' . $data['fullname'] . '</td>
                             <td>' . $data['employee_id'] . '</td>
                             <td>' . $data['employee_name'] . '</td>

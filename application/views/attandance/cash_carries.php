@@ -53,7 +53,7 @@
         <legend><b>Form Filter Data</b></legend>
         <div style="width: 50%; float: left;">
             <div class="fitem">
-                <span style="width:30%; display:inline-block;">Period Date</span>
+                <span style="width:30%; display:inline-block;">Request Date</span>
                 <input style="width:28%;" name="filter_from" id="filter_from" value="<?= date("Y-m-01") ?>" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox"> To
                 <input style="width:28%;" name="filter_to" id="filter_to" value="<?= date("Y-m-t") ?>" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
             </div>
@@ -111,7 +111,7 @@
             <legend><b>Form Data</b></legend>
             <div style="width: 50%; float: left;">
                 <div class="fitem">
-                    <span style="width:30%; display:inline-block;">Trans Date</span>
+                    <span style="width:30%; display:inline-block;">Request Date</span>
                     <input style="width:60%;" name="trans_date" id="trans_date" required class="easyui-datebox" data-options="formatter:myformatter,parser:myparser,editable:false" value="<?= date("Y-m-d") ?>">
                 </div>
                 <div class="fitem">
