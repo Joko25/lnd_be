@@ -37,7 +37,7 @@ class Resignations extends CI_Controller
 
         $this->db->select('*');
         $this->db->from('resignations');
-        $this->db->where('resign_date <', $date);
+        $this->db->where('resign_date <=', $date);
         $this->db->where('status', '0');
         $records = $this->db->get()->result_array();
 
@@ -155,6 +155,8 @@ class Resignations extends CI_Controller
                 $post   = $this->input->post();
                 $send   = $this->crud->create('resignations', $post);
                 echo $send;
+
+                $this->readEmployeeResign();
             } else {
                 show_error(validation_errors());
             }
