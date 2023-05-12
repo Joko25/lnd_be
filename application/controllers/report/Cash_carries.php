@@ -52,7 +52,7 @@ class Cash_carries extends CI_Controller
             b.departement_id,
             b.departement_sub_id,
             b.group_id,
-            b.contract_id,
+            b.position_id,
             c.name as departement_name, 
             d.name as departement_sub_name, 
             e.name as group_name');
@@ -91,7 +91,7 @@ class Cash_carries extends CI_Controller
                 b.departement_id,
                 b.departement_sub_id,
                 b.group_id,
-                b.contract_id,
+                b.position_id,
                 g.date_in,
                 g.date_out,
                 g.time_in,
@@ -126,7 +126,7 @@ class Cash_carries extends CI_Controller
                 $this->db->where('trans_date', $record['trans_date']);
                 $calendars = $this->db->get()->result_array();
 
-                $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["contract_id" => $record['contract_id']]);
+                $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["position_id" => $record['position_id']]);
 
                 $start = strtotime($record['trans_date']);
                 $att_time_begin = strtotime(@$record['date_in'] . " " . @$record['time_in']);
@@ -215,7 +215,7 @@ class Cash_carries extends CI_Controller
                 b.departement_id,
                 b.departement_sub_id,
                 b.group_id,
-                b.contract_id,
+                b.position_id,
                 g.time_in,
                 g.time_out,
                 c.name as departement_name, 
@@ -336,7 +336,7 @@ class Cash_carries extends CI_Controller
                 $this->db->where('trans_date', $record['trans_date']);
                 $calendars = $this->db->get()->result_array();
 
-                $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["contract_id" => $record['contract_id']]);
+                $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["position_id" => $record['position_id']]);
 
                 $start = strtotime($record['trans_date']);
                 $att_time_begin = strtotime(@$record['trans_date'] . " " . @$record['time_in']);
@@ -549,7 +549,7 @@ class Cash_carries extends CI_Controller
                     b.departement_id,
                     b.departement_sub_id,
                     b.group_id,
-                    b.contract_id,
+                    b.position_id,
                     c.name as departement_name, 
                     d.name as departement_sub_name, 
                     e.name as group_name');
@@ -587,7 +587,7 @@ class Cash_carries extends CI_Controller
                         b.departement_id,
                         b.departement_sub_id,
                         b.group_id,
-                        b.contract_id,
+                        b.position_id,
                         g.time_in,
                         g.time_out,
                         c.name as departement_name, 
@@ -620,7 +620,7 @@ class Cash_carries extends CI_Controller
                         $this->db->where('trans_date', $record['trans_date']);
                         $calendars = $this->db->get()->result_array();
 
-                        $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["contract_id" => $record['contract_id']]);
+                        $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["position_id" => $record['position_id']]);
 
                         $start = strtotime($record['trans_date']);
                         $att_time_begin = strtotime(@$record['trans_date'] . " " . @$record['time_in']);

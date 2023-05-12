@@ -114,13 +114,13 @@
                     <span style="width:30%; display:inline-block;">Request Date</span>
                     <input style="width:60%;" name="trans_date" id="trans_date" required class="easyui-datebox" data-options="formatter:myformatter,parser:myparser,editable:false" value="<?= date("Y-m-d") ?>">
                 </div>
-                <div class="fitem">
+                <div class="fitem" id="u_division">
                     <span style="width:30%; display:inline-block;">Division</span>
-                    <input style="width:60%;" id="division_id" class="easyui-combobox" required>
+                    <input style="width:60%;" id="division_id" class="easyui-combobox">
                 </div>
-                <div class="fitem">
+                <div class="fitem" id="u_departement">
                     <span style="width:30%; display:inline-block;">Departement</span>
-                    <input style="width:60%;" id="departement_id" class="easyui-combobox" required>
+                    <input style="width:60%;" id="departement_id" class="easyui-combobox">
                 </div>
                 <div class="fitem">
                     <span style="width:30%; display:inline-block;">Request Code</span>
@@ -136,11 +136,11 @@
                     <span style="width:30%; display:inline-block;">IDM No</span>
                     <input style="width:60%;" name="idm_no" id="idm_no" class="easyui-textbox" required>
                 </div>
-                <div class="fitem">
+                <div class="fitem" id="u_idm">
                     <span style="width:30%; display:inline-block;">Attachment IDM</span>
                     <input style="width:60%;" name="attachment_idm" id="attachment_idm" accept=".jpg, .png, .jpeg, .pdf" class="easyui-filebox" data-options="prompt: 'Max 2 Mb'">
                 </div>
-                <div class="fitem">
+                <div class="fitem" id="u_attachment">
                     <span style="width:30%; display:inline-block;">Attachment</span>
                     <input style="width:60%;" name="attachment" id="attachment" accept=".jpg, .png, .jpeg, .pdf" class="easyui-filebox" data-options="prompt: 'Max 2 Mb'">
                 </div>
@@ -154,62 +154,6 @@
             </div>
         </fieldset>
         <table id="dg2" class="easyui-datagrid" style="width:100%;" title="Employee Lists" toolbar="#toolbar2"></table>
-    </form>
-</div>
-
-<!-- DIALOG UPDATE -->
-<div id="dlg_update" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 400px; padding:10px; top: 20px;">
-    <form id="frm_update" method="post" novalidate>
-        <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
-            <legend><b>Form Data</b></legend>
-            <div class="fitem">
-                <span style="width:30%; display:inline-block;">Trans Date</span>
-                <input style="width:60%;" name="trans_date" id="trans_date" readonly class="easyui-datebox" data-options="formatter:myformatter,parser:myparser,editable:false" value="<?= date("Y-m-d") ?>">
-            </div>
-            <div class="fitem">
-                <span style="width:30%; display:inline-block;">Request Code</span>
-                <input style="width:60%;" name="request_code" readonly data-options="prompt:'Automatic'" id="request_code" class="easyui-textbox" required>
-            </div>
-            <div class="fitem">
-                <span style="width:30%; display:inline-block;">Employee Id</span>
-                <input style="width:60%;" name="employee_id" readonly class="easyui-textbox" required>
-            </div>
-            <div class="fitem">
-                <span style="width:30%; display:inline-block;">Start <small style="color:red;">(time)</small></span>
-                <input style="width:30%;" name="start" mask="99:99:99" required id="start" class="easyui-maskedbox">
-            </div>
-            <div class="fitem">
-                <span style="width:30%; display:inline-block;">End <small style="color:red;">(time)</small></span>
-                <input style="width:30%;" name="end" mask="99:99:99" required id="end" class="easyui-maskedbox">
-            </div>
-            <div class="fitem">
-                <span style="width:30%; display:inline-block;">Break <small style="color:red;">(Minute)</small></span>
-                <input style="width:30%;" name="break" id="break" class="easyui-numberbox">
-            </div>
-            <div class="fitem">
-                <span style="width:30%; display:inline-block;">Meal</span>
-                <input name="meal" id="meal" class="easyui-checkbox" value="1"> Checked if Yes get Meal
-            </div>
-            <div class="fitem">
-                <span style="width:30%; display:inline-block;">Plan Output</span>
-                <input style="width:30%;" name="plan" class="easyui-numberbox">
-            </div>
-            <div class="fitem">
-                <span style="width:30%; display:inline-block;">Actual Output</span>
-                <input style="width:30%;" name="actual" class="easyui-numberbox">
-            </div>
-            <div class="fitem">
-                <span style="width:30%; display:inline-block;">Remarks</span>
-                <input style="width:60%; height:50px;" multiline="true" name="remarks" id="remarks" class="easyui-textbox">
-            </div>
-            <div class="fitem">
-                <span style="width:30%; display:inline-block;">Type</span>
-                <select style="width:60%;" id="type" panelHeight="auto" data-options="prompt:'Choose Type Cash Carry'" required name="type" class="easyui-combobox">
-                    <option value="REGULAR">REGULAR</option>
-                    <option value="CORRECTION">CORRECTION</option>
-                </select>
-            </div>
-        </fieldset>
     </form>
 </div>
 
@@ -251,6 +195,139 @@
         $('#dg2').datagrid('loadData', []);
         $('#trans_date').datebox('setValue', '<?= date("Y-m-d") ?>');
         $('#request_name').textbox('setValue', '<?= $this->session->name ?>');
+        $("#u_division").show();
+        $("#u_departement").show();
+        $("#u_idm").show();
+        $("#u_attachment").show();
+        $("#toolbar2").show();
+    }
+
+    //EDIT DATA
+    function update() {
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+            $('#dlg_insert').dialog('open');
+            $('#frm_insert').form('load', row);
+
+            $("#u_division").hide();
+            $("#u_departement").hide();
+            $("#u_idm").hide();
+            $("#u_attachment").hide();
+            $("#toolbar2").hide();
+
+            var lastIndex;
+            $('#dg2').datagrid({
+                singleSelect: true,
+                url: '<?= base_url('attandance/cash_carries/datatable_updates?request_code=') ?>' + window.btoa(row.request_code),
+                columns: [
+                    [{
+                        field: 'employee_name',
+                        width: 200,
+                        readonly: true,
+                        halign: 'center',
+                        title: "Employee Name"
+                    }, {
+                        field: 'employee_id',
+                        hidden: true,
+                        width: 100,
+                        halign: 'center',
+                        title: "ID",
+                    }, {
+                        field: 'start',
+                        width: 100,
+                        halign: 'center',
+                        title: "Start",
+                        editor: {
+                            type: 'textbox',
+                            options: {
+                                required: true
+                            }
+                        }
+                    }, {
+                        field: 'end',
+                        width: 100,
+                        halign: 'center',
+                        title: "End",
+                        editor: {
+                            type: 'textbox',
+                            options: {
+                                required: true
+                            }
+                        }
+                    }, {
+                        field: 'break',
+                        width: 80,
+                        halign: 'center',
+                        title: "Break<br>(Minutes)",
+                        editor: {
+                            type: 'numberbox',
+                            options: {
+                                required: true
+                            }
+                        }
+                    }, {
+                        field: 'meal',
+                        width: 80,
+                        align: 'center',
+                        title: "Meal",
+                        editor: {
+                            type: 'checkbox',
+                            options: {
+                                on: '1',
+                                off: '0'
+                            }
+                        }
+                    }, {
+                        field: 'plan',
+                        width: 80,
+                        halign: 'center',
+                        title: "Plan<br>Output",
+                        editor: {
+                            type: 'numberbox',
+                            options: {
+                                required: true,
+                            }
+                        }
+                    }, {
+                        field: 'actual',
+                        width: 80,
+                        halign: 'center',
+                        title: "Actual<br>Output",
+                        editor: {
+                            type: 'numberbox',
+                            options: {
+                                required: true,
+                            }
+                        }
+                    }, {
+                        field: 'remarks',
+                        width: 250,
+                        halign: 'center',
+                        title: "Remarks",
+                        editor: {
+                            type: 'textbox'
+                        }
+                    }]
+                ],
+                onClickRow: function(rowIndex) {
+                    $(this).datagrid('beginEdit', rowIndex);
+                },
+                onBeforeEdit: function(index, row) {
+                    row.editing = true;
+                    $(this).datagrid('refreshRow', index);
+                },
+                onAfterEdit: function(index, row) {
+                    row.editing = false;
+                    $(this).datagrid('refreshRow', index);
+                },
+                onCancelEdit: function(index, row) {
+                    row.editing = false;
+                    $(this).datagrid('refreshRow', index);
+                },
+            });
+        } else {
+            toastr.warning("Please select one of the data in the table first!", "Information");
+        }
     }
 
     function addTable(departement_id) {
@@ -479,16 +556,16 @@
     }
 
     //EDIT DATA
-    function update() {
-        var row = $('#dg').datagrid('getSelected');
-        if (row) {
-            $('#dlg_update').dialog('open');
-            $('#frm_update').form('load', row);
-            url_update = '<?= base_url('attandance/cash_carries/update') ?>?id=' + window.btoa(row.id);
-        } else {
-            toastr.warning("Please select one of the data in the table first!", "Information");
-        }
-    }
+    // function update() {
+    //     var row = $('#dg').datagrid('getSelected');
+    //     if (row) {
+    //         $('#dlg_update').dialog('open');
+    //         $('#frm_update').form('load', row);
+    //         url_update = '<?= base_url('attandance/cash_carries/update') ?>?id=' + window.btoa(row.id);
+    //     } else {
+    //         toastr.warning("Please select one of the data in the table first!", "Information");
+    //     }
+    // }
 
     //DELETE DATA
     function deleted() {
@@ -613,11 +690,13 @@
                     var request_name = $("#request_name").textbox('getValue');
                     var idm_no = $("#idm_no").textbox('getValue');
                     var type = $("#type").combobox('getValue');
+                    var file_attachment = "";
+                    var file_attachment_idm = "";
 
                     var rows = $('#dg2').datagrid('getRows');
                     var totalrows = rows.length;
                     endEditing();
-
+                    
                     if(idm_no != "" && request_code != "" && totalrows > 0){
                         $('#frm_insert').form('submit', {
                             url: '<?= base_url('attandance/cash_carries/uploadFile') ?>',
@@ -625,23 +704,28 @@
                             onSubmit: function() {
                                 return $(this).form('validate');
                             },
+                            success:function(data){
+                                var data = eval('(' + data + ')');
+                                var file_attachment = data.attachment;
+                                var file_attachment_idm = data.attachment_idm;
+                            }
                         });
 
-                        if ($("#attachment").filebox('getValue') == "") {
-                            var file_attachment = "";
-                        } else {
-                            var attachment = $("#attachment").filebox('files')[0];
-                            var explode = attachment['name'].split('.');
-                            var file_attachment = request_code + "." + explode[1];
-                        }
+                        // if ($("#attachment").filebox('getValue') == "") {
+                        //     var file_attachment = "";
+                        // } else {
+                        //     var attachment = $("#attachment").filebox('files')[0];
+                        //     var explode = attachment['name'].split('.');
+                        //     var file_attachment = request_code + "." + explode[1];
+                        // }
 
-                        if ($("#attachment_idm").filebox('getValue') == "") {
-                            var file_attachment_idm = "";
-                        } else {
-                            var attachment_idm = $("#attachment_idm").filebox('files')[0];
-                            var explode_idm = attachment_idm['name'].split('.');
-                            var file_attachment_idm = idm_no + "." + explode_idm[1];
-                        }
+                        // if ($("#attachment_idm").filebox('getValue') == "") {
+                        //     var file_attachment_idm = "";
+                        // } else {
+                        //     var attachment_idm = $("#attachment_idm").filebox('files')[0];
+                        //     var explode_idm = attachment_idm['name'].split('.');
+                        //     var file_attachment_idm = idm_no + "." + explode_idm[1];
+                        // }
 
                         for (let i = 0; i < totalrows; i++) {
                             if (rows[i].employee_id) {

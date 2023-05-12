@@ -158,7 +158,9 @@ class Attandance_summary extends CI_Controller
                 $attandance_absece = 0;
                 $attandance_total = 0;
                 $attandance_days = 0;
+                $attadance_libur = 0;
                 foreach ($employees as $data) {
+                    $employee_id = $data['employee_id'];
                     $start = strtotime($filter_from);
                     $finish = strtotime($filter_to);
                     $working = 0;
@@ -183,17 +185,11 @@ class Attandance_summary extends CI_Controller
                         $this->db->order_by('b.date_in', 'asc');
                         $attandance = $this->db->get()->row();
 
-                        $this->db->select("*");
-                        $this->db->from('change_days');
-                        $this->db->where('employee_id', $data['employee_id']);
-                        $this->db->where('start', $working_date);
-                        $change_day = $this->db->get()->row();
-
-                        $this->db->select("*");
-                        $this->db->from('change_days');
-                        $this->db->where('employee_id', $data['employee_id']);
-                        $this->db->where('end', $working_date);
-                        $change_day_end = $this->db->get()->row();
+                        $queryChangeDays = $this->db->query("SELECT a.start, a.end, c.date_in, c.date_out FROM change_days a
+                        JOIN employees b ON a.employee_id = b.id
+                        LEFT JOIN attandances c ON b.number = c.number and a.start = c.date_in
+                        WHERE b.id = '$employee_id' and (a.start = '$working_date' or a.end = '$working_date')");
+                        $rowChangeDays = $queryChangeDays->row();
 
                         $queryPermit = $this->db->query("SELECT SUM(a.duration) as amount, b.absence
                             FROM permits a
@@ -217,10 +213,7 @@ class Attandance_summary extends CI_Controller
                                 } elseif (@$rowPermit->absence == "NO") {
                                     $working += 0;
                                     $absence += 0;
-                                } elseif (@$change_day->start != null) {
-                                    $working += 1;
-                                    $absence += 0;
-                                } elseif (@$change_day_end->end != null) {
+                                } elseif (@$rowChangeDays->date_in != null) {
                                     $working += 1;
                                     $absence += 0;
                                 } elseif (@$attandance->time_in == null && @$attandance->time_out == null) {
@@ -266,6 +259,7 @@ class Attandance_summary extends CI_Controller
 
                     $attandance_absece += $absence;
                     $attandance_total += $working;
+                    $attadance_libur += $libur;
                     $attandance_days += count($weekday);
                     $no++;
                 }
@@ -290,7 +284,7 @@ class Attandance_summary extends CI_Controller
                 }
                 $html .= '  <th style="text-align:center;">' . $attandance_absece . '</th>
                             <th style="text-align:center;">' . $attandance_total . '</th>
-                            <th style="text-align:center;">' . $attandance_days . '</th>
+                            <th style="text-align:center;">' . ($attandance_days - $attadance_libur) . '</th>
                         </tr>
                         </table></div><br><br>';
             }

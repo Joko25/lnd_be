@@ -164,7 +164,8 @@
                             method: 'post',
                             url: '<?= base_url('relation/resignations/delete') ?>',
                             data: {
-                                id: row.id
+                                id: row.id,
+                                employee_id: row.employee_id
                             },
                             success: function(result) {
                                 var result = eval('(' + result + ')');

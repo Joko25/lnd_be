@@ -14,7 +14,7 @@ class Allowance_cash_carries extends CI_Controller
         $this->load->model('crud');
 
         //VALIDASI FORM
-        $this->form_validation->set_rules('contract_id', 'Employee Type', 'required|min_length[1]|max_length[20]|is_unique[allowance_cash_carries.contract_id]');
+        $this->form_validation->set_rules('position_id', 'Position', 'required|min_length[1]|max_length[20]|is_unique[allowance_cash_carries.position_id]');
     }
 
     //HALAMAN UTAMA
@@ -53,13 +53,13 @@ class Allowance_cash_carries extends CI_Controller
             $offset = ($page - 1) * $rows;
             $result = array();
             //Select Query
-            $this->db->select('a.*, b.name as contract_name');
+            $this->db->select('a.*, b.name as position_name');
             $this->db->from('allowance_cash_carries a');
-            $this->db->join('contracts b', 'a.contract_id = b.id');
+            $this->db->join('positions b', 'a.position_id = b.id');
             $this->db->where('a.deleted', 0);
             if (@count($filters) > 0) {
                 foreach ($filters as $filter) {
-                    if ($filter->field == "contract_name") {
+                    if ($filter->field == "position_name") {
                         $this->db->like("b.name", $filter->value);
                     } elseif ($filter->field == "weekday") {
                         $this->db->like("a.weekday", $filter->value);
@@ -139,9 +139,9 @@ class Allowance_cash_carries extends CI_Controller
         $this->db->from('config');
         $config = $this->db->get()->row();
 
-        $this->db->select('a.*, b.name as contract_name');
+        $this->db->select('a.*, b.name as position_name');
         $this->db->from('allowance_cash_carries a');
-        $this->db->join('contracts b', 'a.contract_id = b.id');
+        $this->db->join('positions b', 'a.position_id = b.id');
         $this->db->where('a.deleted', 0);
         $records = $this->db->get()->result_array();
 
@@ -170,7 +170,7 @@ class Allowance_cash_carries extends CI_Controller
         <table id="customers" border="1">
             <tr>
                 <th width="20">No</th>
-                <th>Employee Type</th>
+                <th>Position</th>
                 <th>Weekday</th>
                 <th>Weekend</th>
                 <th>Holiday</th>
@@ -181,7 +181,7 @@ class Allowance_cash_carries extends CI_Controller
         foreach ($records as $data) {
             $html .= '<tr>
                         <td>' . $no . '</td>
-                        <td>' . $data['contract_name'] . '</td>
+                        <td>' . $data['position_name'] . '</td>
                         <td>' . number_format($data['weekday']) . '</td>
                         <td>' . number_format($data['weekend']) . '</td>
                         <td>' . number_format($data['holiday']) . '</td>

@@ -102,7 +102,7 @@ class Cash_carries extends CI_Controller
         $this->db->where('a.employee_id', $employee_id);
         $shift_employee = $this->db->get()->row();
 
-        $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["contract_id" => $employee->contract_id]);
+        $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["position_id" => $employee->position_id]);
 
         //ambil durasi berapa jam jika ada lemburan
         $hourTrans = strtotime($trans_date);
@@ -197,7 +197,7 @@ class Cash_carries extends CI_Controller
             $result = array();
             //Select Query
             $this->db->select('a.*, 
-                b.contract_id,
+                b.position_id,
                 g.users_id_from as status_check,
                 g.users_id_to as status_notification, 
                 g.updated_date as status_date,
@@ -272,7 +272,7 @@ class Cash_carries extends CI_Controller
                 $this->db->where('trans_date', $record['trans_date']);
                 $calendars = $this->db->get()->result_array();
 
-                $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["contract_id" => $record['contract_id']]);
+                $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["position_id" => $record['position_id']]);
 
                 $start = strtotime($record['trans_date']);
                 $att_time_begin = strtotime(@$attandance->date_in . " " . @$attandance->time_in);
@@ -339,6 +339,18 @@ class Cash_carries extends CI_Controller
             $result = array_merge($result, ['rows' => @$datas]);
             echo json_encode($result);
         }
+    }
+
+    public function datatable_updates()
+    {
+        $request_code = base64_decode($this->input->get('request_code'));
+        $this->db->select('a.*, b.name as employee_name');
+        $this->db->from('cash_carries a');
+        $this->db->join('employees b', 'a.employee_id = b.id');
+        $this->db->where('a.request_code', $request_code);
+        $this->db->order_by('b.name', 'ASC');
+        $records = $this->db->get()->result_array();
+        echo json_encode($records);
     }
 
     //CREATE DATA
@@ -453,6 +465,10 @@ class Cash_carries extends CI_Controller
     //UPLOAD FILE
     public function uploadFile()
     {
+
+        $newName = "";
+        $newName2 = "";
+
         if (!empty($_FILES["attachment"]["name"])) {
             //Setting Upload Image
             $request_code = trim($this->input->post('request_code'));
@@ -462,12 +478,11 @@ class Cash_carries extends CI_Controller
             $extension_final = strtolower(end($extension_explode));
             $size = $_FILES["attachment"]['size'];
             $temporary = $_FILES["attachment"]['tmp_name'];
-            $newName =  $request_code . "." . $extension_final;
+            $newName =  "ATT_".time() . "." . $extension_final;
 
             if (in_array($extension_final, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file == "") {
                 if ($size < 2097152) {
                     @move_uploaded_file($temporary, "assets/image/cash_carry/" . $newName);
-                    echo $newName;
                 }
             }
         }
@@ -481,7 +496,7 @@ class Cash_carries extends CI_Controller
             $extension_final2 = strtolower(end($extension_explode2));
             $size2 = $_FILES["attachment_idm"]['size'];
             $temporary2 = $_FILES["attachment_idm"]['tmp_name'];
-            $newName2 =  $idm_no . "." . $extension_final2;
+            $newName2 =  "IDM_".time() . "." . $extension_final2;
 
             if (in_array($extension_final2, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file2 == "") {
                 if ($size2 < 2097152) {
@@ -490,6 +505,7 @@ class Cash_carries extends CI_Controller
             }
         }
 
+        echo json_encode(array("attachment" => $newName, "attachment_idm" => $newName2));
     }
 
     function formatTanggal($date)
@@ -548,7 +564,7 @@ class Cash_carries extends CI_Controller
             $extension_final2 = strtolower(end($extension_explode2));
             $size2 = $_FILES["attachment_idm"]['size'];
             $temporary2 = $_FILES["attachment_idm"]['tmp_name'];
-            $newName2 =  $idm_no . "." . $extension_final2;
+            $newName2 =  "IDM_" .time(). "." . $extension_final2;
 
             if (in_array($extension_final2, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file2 == "") {
                 if ($size2 < 2097152) {
@@ -711,7 +727,7 @@ class Cash_carries extends CI_Controller
 
         //Select Query
         $this->db->select('a.*, 
-                b.contract_id,
+                b.position_id,
                 g.users_id_from as status_check,
                 g.users_id_to as status_notification, 
                 g.updated_date as status_date,

@@ -3,7 +3,7 @@
     <thead>
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
-            <th rowspan="2" data-options="field:'contract_name',width:150,halign:'center'">Employee Type</th>
+            <th rowspan="2" data-options="field:'position_name',width:150,halign:'center'">Position</th>
             <th rowspan="2" data-options="field:'weekday',width:100,halign:'center', align:'right', formatter:numberformat">Weekday</th>
             <th rowspan="2" data-options="field:'weekend',width:100,halign:'center', align:'right', formatter:numberformat">Weekend</th>
             <th rowspan="2" data-options="field:'holiday',width:100,halign:'center', align:'right', formatter:numberformat">Holiday</th>
@@ -32,8 +32,8 @@
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Form Data</b></legend>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Employee Type</span>
-                <input style="width:60%;" name="contract_id" id="contract_id" required="" class="easyui-combobox">
+                <span style="width:35%; display:inline-block;">Position</span>
+                <input style="width:60%;" name="position_id" id="position_id" required="" class="easyui-combobox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Weekday</span>
@@ -165,11 +165,11 @@
             }]
         });
 
-        $('#contract_id').combobox({
-            url: '<?php echo base_url('employee/contracts/reads'); ?>',
+        $('#position_id').combobox({
+            url: '<?php echo base_url('employee/positions/reads'); ?>',
             valueField: 'id',
             textField: 'name',
-            prompt: 'Choose Emplyee Type'
+            prompt: 'Choose Positions'
         });
     });
 
