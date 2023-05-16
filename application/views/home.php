@@ -183,6 +183,31 @@
 
 <script>
 	$(function() {
+		window.addEventListener('load', function(event){
+			detectInternet();
+		});
+		window.addEventListener('online', function(event){
+			detectInternet();
+		});
+		window.addEventListener('offline', function(event){
+			detectInternet();
+		});
+		function detectInternet(){
+			if(navigator.onLine){
+				Swal.close();
+			}else{
+				Swal.fire({
+					title: 'Connection Time Out, Check Your Connection',
+					showConfirmButton: false,
+					allowOutsideClick: false,
+					allowEscapeKey: false,
+					didOpen: () => {
+						Swal.showLoading();
+					},
+				});
+			}
+		}
+		
 		$('#dlg_profile').dialog({
 			buttons: [{
 				text: 'Save Changes',
