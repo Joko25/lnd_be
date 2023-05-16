@@ -187,6 +187,107 @@ class Resignations extends CI_Controller
         echo $send;
     }
 
+    public function upload()
+    {
+        error_reporting(0);
+        require_once 'assets/vendors/excel_reader2.php';
+        $target = basename($_FILES['file_upload']['name']);
+        move_uploaded_file($_FILES['file_upload']['tmp_name'], $target);
+        chmod($_FILES['file_upload']['name'], 0777);
+        $file = $_FILES['file_upload']['name'];
+        $data = new Spreadsheet_Excel_Reader($file, false);
+        $total_row = $data->rowcount($sheet_index = 0);
+
+        for ($i = 3; $i <= $total_row; $i++) {
+            $datas[] = array(
+                'employee_number' => $data->val($i, 2),
+                'request_date' => $data->val($i, 3),
+                'resign_type' => $data->val($i, 4),
+                'resign_date' => $data->val($i, 5),
+                'reason_code' => $data->val($i, 6),
+                'remarks' => $data->val($i, 7)
+            );
+        }
+
+        $datas['total'] = count($datas);
+        echo json_encode($datas);
+        unlink($_FILES['file_upload']['name']);
+    }
+
+    public function uploadclearFailed()
+    {
+        @unlink('failed/resignations.txt');
+    }
+
+    public function uploadcreateFailed()
+    {
+        if ($this->input->post()) {
+            $message = $this->input->post('message');
+            $textFailed = fopen('failed/resignations.txt', 'a');
+            fwrite($textFailed, $message . "\n");
+            fclose($textFailed);
+        }
+    }
+
+    public function uploadDownloadFailed()
+    {
+        $file = "failed/resignations.txt";
+
+        header('Content-Description: File Failed');
+        header('Content-Disposition: attachment; filename=' . basename($file));
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . @filesize($file));
+        header("Content-Type: text/plain");
+        @readfile($file);
+    }
+
+    public function uploadcreate()
+    {
+        if ($this->input->post()) {
+            $data = $this->input->post('data');
+            $employees = $this->crud->read('employees', ["number" => $data['employee_number'], "status" => 0]);
+            $reasons = $this->crud->read('reason_resignations', ["number" => $data['reason_code']]);
+
+            if (!empty($employees)) {
+                if (!empty($reasons)) {
+                    $date_1 = new DateTime($data['request_date']);
+                    $date_2 = new DateTime($data['resign_date']);
+                    $day = $date_2->diff($date_1)->days + 1;
+
+                    if($day > 0){
+                        if($day >= 30){
+                            $status_resign = "ON PROCEDURE";
+                        }else{
+                            $status_resign = "UN PROCEDURE";
+                        }
+
+                        $post = array(
+                            'employee_id' => $employees->id,
+                            'reason_resignation_id' => $reasons->id,
+                            'trans_date' => date("Y-m-d"),
+                            'resign_type' => $data['resign_type'],
+                            'request_date' => $data['request_date'],
+                            'resign_date' => $data['resign_date'],
+                            'remarks' => $data['remarks'],
+                            'status_resign' => $status_resign,
+                        );
+    
+                        $send = $this->crud->create('resignations', $post);
+                        echo $send;
+                    }else{
+                        echo json_encode(array("title" => "Date", "message" => "Request Date < Resign Date", "theme" => "error"));
+                    }
+                } else {
+                    echo json_encode(array("title" => "Not Found", "message" => $data['reason_code'] . " Reason ID Not Found", "theme" => "error"));
+                }
+            } else {
+                echo json_encode(array("title" => "Not Found", "message" => $data['employee_number'] . " Employee ID Not Found", "theme" => "error"));
+            }
+        }
+    }
+
     //PRINT & EXCEL DATA
     public function print($option = "")
     {
