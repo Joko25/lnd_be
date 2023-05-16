@@ -101,7 +101,7 @@
 </div>
 
 <div id="toolbar2">
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="append()"><i class="fa fa-plus"></i> Add</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" id="addrow" onclick="append()"><i class="fa fa-plus"></i> Add</a>
 </div>
 
 <!-- DIALOG SAVE -->
@@ -193,13 +193,14 @@
     function add() {
         $('#dlg_insert').dialog('open');
         $('#dg2').datagrid('loadData', []);
+        url_save = '<?= base_url('attandance/cash_carries/create') ?>';
         $('#trans_date').datebox('setValue', '<?= date("Y-m-d") ?>');
         $('#request_name').textbox('setValue', '<?= $this->session->name ?>');
         $("#u_division").show();
         $("#u_departement").show();
         $("#u_idm").show();
         $("#u_attachment").show();
-        $("#toolbar2").show();
+        $("#addrow").show();
     }
 
     //EDIT DATA
@@ -208,12 +209,12 @@
         if (row) {
             $('#dlg_insert').dialog('open');
             $('#frm_insert').form('load', row);
-
+            url_save = '<?= base_url('attandance/cash_carries/update') ?>';
             $("#u_division").hide();
             $("#u_departement").hide();
             $("#u_idm").hide();
             $("#u_attachment").hide();
-            $("#toolbar2").hide();
+            $("#addrow").hide();
 
             var lastIndex;
             $('#dg2').datagrid({
@@ -307,10 +308,29 @@
                         editor: {
                             type: 'textbox'
                         }
+                    }, {
+                        field: 'action',
+                        title: 'Action',
+                        width: 120,
+                        align: 'center',
+                        formatter: function(value, row, index) {
+                            if (row.editing) {
+                                var s = '<a href="javascript:void(0)" class="btn btn-success btn-sm" style="pointer-events:auto; opacity:1;" onclick="saverow(this)">Save</a> ';
+                                var c = '<a href="javascript:void(0)" class="btn btn-danger btn-sm" style="pointer-events:auto; opacity:1;" onclick="cancelrow(this)">Cancel</a>';
+                                return s + c;
+                            } else {
+                                var e = '<a href="javascript:void(0)" class="btn btn-primary btn-sm" style="pointer-events:auto; opacity:1;" onclick="editrow(this)">Edit</a> ';
+                                var d = '<a href="javascript:void(0)" class="btn btn-danger btn-sm" style="pointer-events:auto; opacity:1;" onclick="deleterow(this)">Delete</a>';
+                                return e + d;
+                            }
+                        }
                     }]
                 ],
-                onClickRow: function(rowIndex) {
-                    $(this).datagrid('beginEdit', rowIndex);
+                onEndEdit: function(index, row) {
+                    var ed = $(this).datagrid('getEditor', {
+                        index: index,
+                        field: 'employee_id'
+                    });
                 },
                 onBeforeEdit: function(index, row) {
                     row.editing = true;
@@ -731,7 +751,7 @@
                             if (rows[i].employee_id) {
                                 $.ajax({
                                     type: "post",
-                                    url: '<?= base_url('attandance/cash_carries/create') ?>',
+                                    url: url_save,
                                     data: {
                                         trans_date: trans_date,
                                         request_code: request_code,
@@ -772,32 +792,6 @@
                     }else{
                         toastr.info("Please complete your cash carry data");
                     }
-                }
-            }]
-        });
-
-        //Update Data
-        $('#dlg_update').dialog({
-            buttons: [{
-                text: 'Update Data',
-                iconCls: 'icon-ok',
-                handler: function() {
-                    $('#frm_update').form('submit', {
-                        url: url_update,
-                        onSubmit: function() {
-                            return $(this).form('validate');
-                        },
-                        success: function(result) {
-                            var result = eval('(' + result + ')');
-                            if (result.theme == "success") {
-                                toastr.success(result.message, result.title);
-                            } else {
-                                toastr.error(result.message, result.title);
-                            }
-                            $('#dlg_update').dialog('close');
-                            $('#dg').datagrid('reload');
-                        }
-                    });
                 }
             }]
         });

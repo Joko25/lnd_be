@@ -413,22 +413,28 @@ class Cash_carries extends CI_Controller
     public function update()
     {
         if ($this->input->post()) {
-            $id   = base64_decode($this->input->get('id'));
             $post = $this->input->post();
             $trans_date = $post['trans_date'];
             $employee_id = $post['employee_id'];
+            $request_code = $post['request_code'];
+            $request_name = $post['request_name'];
+            $idm_no = $post['idm_no'];
             $start = $post['start'];
             $end = $post['end'];
             $break = $post['break'];
             $type = $post['type'];
-            $meal = @$post['meal'];
-            $duration = $this->convertHour($trans_date, $start, $end);
-            $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, ($duration['duration_hour'] - ($break / 60)), $meal);
+            $meal = $post['meal'];
             $plan = $post['plan'];
             $actual = $post['actual'];
             $remarks = $post['remarks'];
+            $duration = $this->convertHour($trans_date, $start, $end);
+            $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, ($duration['duration_hour'] - ($break / 60)), $meal);
 
             $post_final = array(
+                "trans_date" =>  $trans_date,
+                "employee_id" =>  $employee_id,
+                "request_code" =>  $request_code,
+                "request_name" =>  $request_name,
                 "start" =>  $start,
                 "end" =>  $end,
                 "type" =>  $type,
@@ -440,9 +446,10 @@ class Cash_carries extends CI_Controller
                 "actual" =>  $actual,
                 "break" =>  $break,
                 "remarks" =>  $remarks,
+                "idm_no" =>  $idm_no
             );
 
-            if ($this->crud->update('cash_carries', ["id" => $id], $post_final)) {
+            if ($this->crud->update('cash_carries', ["request_code" => $request_code, "employee_id" => $employee_id], $post_final)) {
                 echo json_encode(array("title" => "Good Job", "message" => "Data Updated Successfully", "theme" => "success"));
             } else {
                 echo log_message('error', 'There is an error in your system or data');
