@@ -68,7 +68,7 @@ class Approvals extends CI_Controller
             "users_id_from" => $this->session->username,
             "users_id_to" => $users_id,
             "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $table_name)) . "</b>",
-            "status" => $notifications[0]->status + 1,
+            "status" => ($notifications[0]->status + 1),
         );
 
         $send = $this->crud->update('notifications', ["users_id_from" => $users_id_from, "table_name" => $table_name], $values);
@@ -127,7 +127,7 @@ class Approvals extends CI_Controller
             "users_id_from" => $this->session->username,
             "users_id_to" => $users_id,
             "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $tablename)) . "</b>",
-            "status" => $notifications->status + 1,
+            "status" => ($notifications->status + 1),
         );
 
         $send = $this->crud->update('notifications', ["table_id" => $id, "table_name" => $tablename], $values);
@@ -177,7 +177,7 @@ class Approvals extends CI_Controller
                 "users_id_from" => $this->session->username,
                 "users_id_to" => $users_id,
                 "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $tablename)) . "</b>",
-                "status" => @$notifications->status + 1,
+                "status" => (@$notifications->status + 1),
             );
 
             if ($users_id == "") {
