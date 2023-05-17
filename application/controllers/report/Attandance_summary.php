@@ -191,6 +191,16 @@ class Attandance_summary extends CI_Controller
                         WHERE b.id = '$employee_id' and (a.start = '$working_date' or a.end = '$working_date')");
                         $rowChangeDays = $queryChangeDays->row();
 
+                        $tolerance_hour_min = date("H:i:s", strtotime('-2 Hour', strtotime(@$attandance->time_in)));
+                        $tolerance_hour_plus = date("H:i:s", strtotime('+2 Hour', strtotime(@$attandance->time_in)));
+                        $this->db->select("d.start, d.end, d.days, d.working, d.tolerance, c.name, d.name as shift_name");
+                        $this->db->from('shift_employees b');
+                        $this->db->join('shifts c', 'c.id = b.shift_id');
+                        $this->db->join('shift_details d', 'd.shift_id = c.id');
+                        $this->db->where('b.employee_id', $employee_id);
+                        $this->db->where("d.start >=  '$tolerance_hour_min' and d.start <= '$tolerance_hour_plus'");
+                        $shift = $this->db->get()->row();
+
                         $queryPermit = $this->db->query("SELECT SUM(a.duration) as amount, b.absence
                             FROM permits a
                             JOIN permit_types b ON a.permit_type_id = b.id
@@ -199,38 +209,75 @@ class Attandance_summary extends CI_Controller
                             GROUP BY a.employee_id");
                         $rowPermit = $queryPermit->row();
 
-                        if (date('w', $i) !== '0' && date('w', $i) !== '6') {
-                            $weekday[] = date('Y-m-d', $i);
+                        //Jika hari kerja nya adalah 5 hari
+                        if (@$shift->days == "5") {
+                            if (date('w', $i) !== '0' && date('w', $i) !== '6') {
+                                $weekday[] = date('Y-m-d', $i);
 
-                            if (!empty($holiday->description)) {
+                                if (!empty($holiday->description)) {
+                                    $working += 0;
+                                    $absence += 0;
+                                    $libur += 1;
+                                } else {
+                                    if (@$rowPermit->absence == "YES") {
+                                        $working += 1;
+                                        $absence += 0;
+                                    } elseif (@$rowPermit->absence == "NO") {
+                                        $working += 0;
+                                        $absence += 0;
+                                    } elseif (@$rowChangeDays->date_in != null) {
+                                        $working += 1;
+                                        $absence += 0;
+                                    } elseif (@$attandance->time_in == null && @$attandance->time_out == null) {
+                                        $working += 0;
+                                        $absence += 1;
+                                    } else {
+                                        $working += 1;
+                                        $absence += 0;
+                                    }
+
+                                    $libur += 0;
+                                }
+                            } else {
+                                $weekend[] = date('Y-m-d', $i);
                                 $working += 0;
                                 $absence += 0;
-                                $libur += 1;
-                            } else {
-                                if (@$rowPermit->absence == "YES") {
-                                    $working += 1;
-                                    $absence += 0;
-                                } elseif (@$rowPermit->absence == "NO") {
-                                    $working += 0;
-                                    $absence += 0;
-                                } elseif (@$rowChangeDays->date_in != null) {
-                                    $working += 1;
-                                    $absence += 0;
-                                } elseif (@$attandance->time_in == null && @$attandance->time_out == null) {
-                                    $working += 0;
-                                    $absence += 1;
-                                } else {
-                                    $working += 1;
-                                    $absence += 0;
-                                }
-
                                 $libur += 0;
                             }
-                        } else {
-                            $weekend[] = date('Y-m-d', $i);
-                            $working += 0;
-                            $absence += 0;
-                            $libur += 0;
+                        }else{
+                            if (date('w', $i) !== '0') {
+                                $weekday[] = date('Y-m-d', $i);
+
+                                if (!empty($holiday->description)) {
+                                    $working += 0;
+                                    $absence += 0;
+                                    $libur += 1;
+                                } else {
+                                    if (@$rowPermit->absence == "YES") {
+                                        $working += 1;
+                                        $absence += 0;
+                                    } elseif (@$rowPermit->absence == "NO") {
+                                        $working += 0;
+                                        $absence += 0;
+                                    } elseif (@$rowChangeDays->date_in != null) {
+                                        $working += 1;
+                                        $absence += 0;
+                                    } elseif (@$attandance->time_in == null && @$attandance->time_out == null) {
+                                        $working += 0;
+                                        $absence += 1;
+                                    } else {
+                                        $working += 1;
+                                        $absence += 0;
+                                    }
+
+                                    $libur += 0;
+                                }
+                            }else {
+                                $weekend[] = date('Y-m-d', $i);
+                                $working += 0;
+                                $absence += 0;
+                                $libur += 0;
+                            }
                         }
                     }
                     //Permit
