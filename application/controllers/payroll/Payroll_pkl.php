@@ -144,6 +144,7 @@ class Payroll_pkl extends CI_Controller
                 JOIN sources b ON a.source_id = b.id
                 JOIN departements c ON a.departement_id = c.id
                 JOIN departement_subs d ON a.departement_sub_id = d.id
+                JOIN groups e ON a.group_id = e.id and e.name = 'PKL'
                 WHERE a.deleted = 0 and a.status = 0
                 AND a.source_id LIKE '%$filter_source%'
                 AND a.id LIKE '%$filter_employee%'
