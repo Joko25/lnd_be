@@ -185,10 +185,13 @@ class Attandance_summary extends CI_Controller
                         $this->db->order_by('b.date_in', 'asc');
                         $attandance = $this->db->get()->row();
 
-                        $queryChangeDays = $this->db->query("SELECT a.start, a.end, c.date_in, c.date_out FROM change_days a
+                        $queryChangeDays = $this->db->query("SELECT a.start, a.end, c.date_in, c.date_out, e.name, e.absence FROM change_days a
                         JOIN employees b ON a.employee_id = b.id
                         LEFT JOIN attandances c ON b.number = c.number and a.start = c.date_in
-                        WHERE b.id = '$employee_id' and (a.start = '$working_date' or a.end = '$working_date')");
+                        LEFT JOIN permits d ON b.id = d.employee_id and (d.permit_date = a.start or d.permit_date = a.end)
+                        LEFT JOIN permit_types e ON d.permit_type_id = e.id
+                        WHERE b.id = '$employee_id' and (a.start = '$working_date' or a.end = '$working_date')
+                        GROUP BY a.start");
                         $rowChangeDays = $queryChangeDays->row();
 
                         $tolerance_hour_min = date("H:i:s", strtotime('-2 Hour', strtotime(@$attandance->time_in)));
@@ -219,7 +222,7 @@ class Attandance_summary extends CI_Controller
                                     $absence += 0;
                                     $libur += 1;
                                 } else {
-                                    if (@$rowPermit->absence == "YES") {
+                                    if (@$rowPermit->absence == "YES" || @$rowChangeDays->absence == "YES") {
                                         $working += 1;
                                         $absence += 0;
                                     } elseif (@$rowPermit->absence == "NO") {
@@ -253,7 +256,7 @@ class Attandance_summary extends CI_Controller
                                     $absence += 0;
                                     $libur += 1;
                                 } else {
-                                    if (@$rowPermit->absence == "YES") {
+                                    if (@$rowPermit->absence == "YES" || @$rowChangeDays->absence == "YES") {
                                         $working += 1;
                                         $absence += 0;
                                     } elseif (@$rowPermit->absence == "NO") {

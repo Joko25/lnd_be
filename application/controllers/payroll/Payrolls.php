@@ -327,8 +327,7 @@ class Payrolls extends CI_Controller
             $this->db->select("COUNT(*) as days");
             $this->db->from('change_days');
             $this->db->where('employee_id', $record['id']);
-            $this->db->where('start >=', $filter_from);
-            $this->db->where('end <=', $filter_to);
+            $this->db->where("(start between '$filter_from' and '$filter_to' or end between '$filter_from' and '$filter_to')");
             $changeDays = $this->db->get()->row();
             $changeDays_amount = empty($changeDays->days) ? 0 : $changeDays->days;
 
@@ -504,11 +503,11 @@ class Payrolls extends CI_Controller
                 } elseif ($record['jamsostek'] != "" && $record['jkn'] == "") {
                     if ($bpjs_emp_data->number != "BPJS") {
                         if ($record['bpjs'] == "0") {
-                            $arr_bpjs_emp_amount .= round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_emp_data->employee / 100)) * $record['jkn_family']) . ",";
-                            $arr_bpjs_emp_amount_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_emp_data->employee / 100)) * $record['jkn_family']);
+                            $arr_bpjs_emp_amount .= round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_emp_data->employee / 100))) . ",";
+                            $arr_bpjs_emp_amount_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_emp_data->employee / 100)));
                         } else {
-                            $arr_bpjs_emp_amount .= round(($record['bpjs'] * ($bpjs_emp_data->employee / 100)) * $record['jkn_family']) . ",";
-                            $arr_bpjs_emp_amount_total += round(($record['bpjs'] * ($bpjs_emp_data->employee / 100)) * $record['jkn_family']);
+                            $arr_bpjs_emp_amount .= round(($record['bpjs'] * ($bpjs_emp_data->employee / 100))) . ",";
+                            $arr_bpjs_emp_amount_total += round(($record['bpjs'] * ($bpjs_emp_data->employee / 100)));
                         }
                     } else {
                         $arr_bpjs_emp_amount .= 0 . ",";
@@ -524,8 +523,8 @@ class Payrolls extends CI_Controller
                             $arr_bpjs_emp_amount_total += round(($record['bpjs'] * ($bpjs_emp_data->employee / 100)) * $record['jkn_family']);
                         }
                     } else {
-                        $arr_bpjs_emp_amount .= round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_emp_data->employee / 100)) * $record['jkn_family']) . ",";
-                        $arr_bpjs_emp_amount_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_emp_data->employee / 100)) * $record['jkn_family']);
+                        $arr_bpjs_emp_amount .= round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_emp_data->employee / 100))) . ",";
+                        $arr_bpjs_emp_amount_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_emp_data->employee / 100)));
                     }
                 }
             }
@@ -558,9 +557,9 @@ class Payrolls extends CI_Controller
                             $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
                             $arr_bpjs_com_amount_jabatan_total += 0;
                         } else {
-                            $arr_bpjs_com_amount .= round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']) . ",";
-                            $arr_bpjs_com_amount_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
-                            $arr_bpjs_com_amount_salary_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                            $arr_bpjs_com_amount .= round((($record['bpjs']) * ($bpjs_com_data->company / 100))) . ",";
+                            $arr_bpjs_com_amount_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)));
+                            $arr_bpjs_com_amount_salary_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)));
                             $arr_bpjs_com_amount_jabatan_total += 0;
                         }
                     } else {
@@ -572,43 +571,43 @@ class Payrolls extends CI_Controller
                 } elseif ($record['jamsostek'] != "" && $record['jkn'] == "") {
                     if ($bpjs_com_data->number != "BPJS") {
                         if ($record['bpjs'] == "0") {
-                            $arr_bpjs_com_amount .= round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)) * $record['jkn_family']) . ",";
-                            $arr_bpjs_com_amount_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                            $arr_bpjs_com_amount .= round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100))) . ",";
+                            $arr_bpjs_com_amount_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)));
 
                             //Perhitungan PPH Salary - Jabatan
                             if ($bpjs_com_data->number == "JKK") {
-                                $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                                $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)));
                                 $arr_bpjs_com_amount_jabatan_total += 0;
                             } elseif ($bpjs_com_data->number == "JKM") {
-                                $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                                $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)));
                                 $arr_bpjs_com_amount_jabatan_total += 0;
                             } elseif ($bpjs_com_data->number == "JHT") {
                                 $arr_bpjs_com_amount_salary_total += 0;
-                                $arr_bpjs_com_amount_jabatan_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                                $arr_bpjs_com_amount_jabatan_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)));
                             } elseif ($bpjs_com_data->number == "JP") {
                                 $arr_bpjs_com_amount_salary_total += 0;
-                                $arr_bpjs_com_amount_jabatan_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                                $arr_bpjs_com_amount_jabatan_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)));
                             } else {
                                 $arr_bpjs_com_amount_salary_total += 0;
                                 $arr_bpjs_com_amount_jabatan_total += 0;
                             }
                         } else {
-                            $arr_bpjs_com_amount .= round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']) . ",";
-                            $arr_bpjs_com_amount_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                            $arr_bpjs_com_amount .= round((($record['bpjs']) * ($bpjs_com_data->company / 100))) . ",";
+                            $arr_bpjs_com_amount_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)));
 
                             //Perhitungan PPH Salary - Jabatan
                             if ($bpjs_com_data->number == "JKK") {
-                                $arr_bpjs_com_amount_salary_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                                $arr_bpjs_com_amount_salary_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)));
                                 $arr_bpjs_com_amount_jabatan_total += 0;
                             } elseif ($bpjs_com_data->number == "JKM") {
-                                $arr_bpjs_com_amount_salary_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                                $arr_bpjs_com_amount_salary_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)));
                                 $arr_bpjs_com_amount_jabatan_total += 0;
                             } elseif ($bpjs_com_data->number == "JHT") {
                                 $arr_bpjs_com_amount_salary_total += 0;
-                                $arr_bpjs_com_amount_jabatan_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                                $arr_bpjs_com_amount_jabatan_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)));
                             } elseif ($bpjs_com_data->number == "JP") {
                                 $arr_bpjs_com_amount_salary_total += 0;
-                                $arr_bpjs_com_amount_jabatan_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                                $arr_bpjs_com_amount_jabatan_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)));
                             } else {
                                 $arr_bpjs_com_amount_salary_total += 0;
                                 $arr_bpjs_com_amount_jabatan_total += 0;
@@ -622,43 +621,43 @@ class Payrolls extends CI_Controller
                     }
                 } else {
                     if ($record['bpjs'] == "0") {
-                        $arr_bpjs_com_amount .= round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)) * $record['jkn_family']) . ",";
-                        $arr_bpjs_com_amount_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                        $arr_bpjs_com_amount .= round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100))) . ",";
+                        $arr_bpjs_com_amount_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)));
 
                         //Perhitungan PPH Salary - Jabatan
                         if ($bpjs_com_data->number == "JKK") {
-                            $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                            $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)));
                             $arr_bpjs_com_amount_jabatan_total += 0;
                         } elseif ($bpjs_com_data->number == "JKM") {
-                            $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                            $arr_bpjs_com_amount_salary_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)));
                             $arr_bpjs_com_amount_jabatan_total += 0;
                         } elseif ($bpjs_com_data->number == "JHT") {
                             $arr_bpjs_com_amount_salary_total += 0;
-                            $arr_bpjs_com_amount_jabatan_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                            $arr_bpjs_com_amount_jabatan_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)));
                         } elseif ($bpjs_com_data->number == "JP") {
                             $arr_bpjs_com_amount_salary_total += 0;
-                            $arr_bpjs_com_amount_jabatan_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                            $arr_bpjs_com_amount_jabatan_total += round((($record['salary'] + $arr_allowance_amount_total_bpjs) * ($bpjs_com_data->company / 100)));
                         } else {
                             $arr_bpjs_com_amount_salary_total += 0;
                             $arr_bpjs_com_amount_jabatan_total += 0;
                         }
                     } else {
-                        $arr_bpjs_com_amount .= round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']) . ",";
-                        $arr_bpjs_com_amount_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                        $arr_bpjs_com_amount .= round((($record['bpjs']) * ($bpjs_com_data->company / 100))) . ",";
+                        $arr_bpjs_com_amount_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)));
 
                         //Perhitungan PPH Salary - Jabatan
                         if ($bpjs_com_data->number == "JKK") {
-                            $arr_bpjs_com_amount_salary_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                            $arr_bpjs_com_amount_salary_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)));
                             $arr_bpjs_com_amount_jabatan_total += 0;
                         } elseif ($bpjs_com_data->number == "JKM") {
-                            $arr_bpjs_com_amount_salary_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                            $arr_bpjs_com_amount_salary_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)));
                             $arr_bpjs_com_amount_jabatan_total += 0;
                         } elseif ($bpjs_com_data->number == "JHT") {
                             $arr_bpjs_com_amount_salary_total += 0;
-                            $arr_bpjs_com_amount_jabatan_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                            $arr_bpjs_com_amount_jabatan_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)));
                         } elseif ($bpjs_com_data->number == "JP") {
                             $arr_bpjs_com_amount_salary_total += 0;
-                            $arr_bpjs_com_amount_jabatan_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)) * $record['jkn_family']);
+                            $arr_bpjs_com_amount_jabatan_total += round((($record['bpjs']) * ($bpjs_com_data->company / 100)));
                         } else {
                             $arr_bpjs_com_amount_salary_total += 0;
                             $arr_bpjs_com_amount_jabatan_total += 0;
