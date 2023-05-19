@@ -206,7 +206,11 @@ class Cash_carries extends CI_Controller
                 e.name as departement_sub_name,
                 b.number as employee_number,
                 b.name as employee_name,
-                f.name as fullname
+                f.name as fullname,
+                COALESCE(i.weekday, 0) as total_weekday,
+                COALESCE(i.weekend, 0) as total_weekend,
+                COALESCE(i.holiday, 0) as total_holiday,
+                COALESCE(i.meal, 0) as total_meal
             ');
 
             $this->db->from('cash_carries a');
@@ -216,6 +220,8 @@ class Cash_carries extends CI_Controller
             $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
             $this->db->join('users f', "a.created_by = f.username");
             $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'cash_carries'", 'left');
+            $this->db->join('setup_cash_carries h', 'a.employee_id = h.employee_id', 'left');
+            $this->db->join('allowance_cash_carries i', 'h.allowance_id = i.id', 'left');
             $this->db->where('b.deleted', 0);
             $this->db->where('b.status', 0);
             $this->db->where('a.deleted', 0);
@@ -272,8 +278,6 @@ class Cash_carries extends CI_Controller
                 $this->db->where('trans_date', $record['trans_date']);
                 $calendars = $this->db->get()->result_array();
 
-                $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["position_id" => $record['position_id']]);
-
                 $start = strtotime($record['trans_date']);
                 $att_time_begin = strtotime(@$attandance->date_in . " " . @$attandance->time_in);
                 $att_time_end = strtotime(@$attandance->date_out . " " . @$attandance->time_out);
@@ -301,7 +305,7 @@ class Cash_carries extends CI_Controller
                 if ($record['meal'] == 0 or @$attandance->time_in == "") {
                     $meal = 0;
                 } else {
-                    $meal = @$allowance_cash_carry->meal;
+                    $meal = @$record['total_meal'];
                 }
 
                 if (@$shift_employee->days == "5") {
@@ -309,24 +313,24 @@ class Cash_carries extends CI_Controller
 
                         //Kalo ada tanggal Merah
                         if (count($calendars) > 0) {
-                            $total = ((@$allowance_cash_carry->holiday * $hour) + $meal);
+                            $total = ((@$record['total_holiday'] * $hour) + $meal);
                         } else {
-                            $total = ((@$allowance_cash_carry->weekday * $hour) + $meal);
+                            $total = ((@$record['total_weekday'] * $hour) + $meal);
                         }
                     } else {
-                        $total = ((@$allowance_cash_carry->weekend * $hour) + $meal);
+                        $total = ((@$record['total_weekend'] * $hour) + $meal);
                     }
                 } else {
                     if (date('w', $start) !== '0') {
 
                         //Kalo ada tanggal Merah
                         if (count($calendars) > 0) {
-                            $total = ((@$allowance_cash_carry->holiday * $hour) + $meal);
+                            $total = ((@$record['total_holiday'] * $hour) + $meal);
                         } else {
-                            $total = ((@$allowance_cash_carry->weekday * $hour) + $meal);
+                            $total = ((@$record['total_weekday'] * $hour) + $meal);
                         }
                     } else {
-                        $total = ((@$allowance_cash_carry->weekend * $hour) + $meal);
+                        $total = ((@$record['total_weekend'] * $hour) + $meal);
                     }
                 }
 
@@ -521,27 +525,6 @@ class Cash_carries extends CI_Controller
         $datetime = DateTime::createFromFormat('d/m/Y', $date);
         return @$datetime->format('Y-m-d');
     }
-
-    // public function create_temp($number, $date, $time)
-    // {
-    //     $this->db->select('*');
-    //     $this->db->from('cash_carries_temp');
-    //     $this->db->where("number", $number);
-    //     $this->db->where("attandance_date", $date . " " . $time);
-    //     $records = $this->db->get()->result_array();
-
-    //     $datas = array(
-    //         'number' => $number,
-    //         'attandance_date' => $date . " " . $time
-    //     );
-
-    //     if (count($records) > 0) {
-    //         return json_encode(array("title" => "Duplicated", "message" => "Data absence duplicate", "theme" => "error"));
-    //     } else {
-    //         $send = $this->crud->create('cash_carries_temp', $datas);
-    //         return $send;
-    //     }
-    // }
 
     //UPLOAD DATA
     public function upload()

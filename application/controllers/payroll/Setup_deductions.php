@@ -82,17 +82,18 @@ class Setup_deductions extends CI_Controller
             $offset = ($page - 1) * $rows;
             $result = array();
             //Select Query
-            $this->db->select('a.*, b.name as deduction_name, c.number as employee_number, c.name as employee_name, d.name as division_name, e.name as departement_name, f.name as departement_sub_name');
+            $this->db->select('a.*, b.name as deduction_name, c.id as employee_id, c.number as employee_number, c.name as employee_name, d.name as division_name, e.name as departement_name, f.name as departement_sub_name');
             $this->db->from('employees c');
             $this->db->join('setup_deductions a', 'a.employee_id = c.id', 'left');
             $this->db->join('deductions b', 'a.deduction_id = b.id', 'left');
             $this->db->join('divisions d', 'c.division_id = d.id');
             $this->db->join('departements e', 'c.departement_id = e.id');
             $this->db->join('departement_subs f', 'c.departement_sub_id = f.id');
-            $this->db->where('a.deleted', 0);
             $this->db->where('c.deleted', 0);
             $this->db->where('c.status', 0);
-            $this->db->like('b.id', $filter_deduction);
+            if($filter_deduction != ""){
+                $this->db->like('b.id', $filter_deduction);
+            }
             $this->db->like('c.id', $filter_employee);
             $this->db->like('d.id', $filter_division);
             $this->db->like('e.id', $filter_departement);
@@ -317,17 +318,18 @@ class Setup_deductions extends CI_Controller
         $this->db->from('config');
         $config = $this->db->get()->row();
 
-        $this->db->select('a.*, b.name as deduction_name, c.number as employee_number, c.name as employee_name, d.name as division_name, e.name as departement_name, f.name as departement_sub_name');
+        $this->db->select('a.*, b.name as deduction_name, c.id as employee_id, c.number as employee_number, c.name as employee_name, d.name as division_name, e.name as departement_name, f.name as departement_sub_name');
         $this->db->from('employees c');
         $this->db->join('setup_deductions a', 'a.employee_id = c.id', 'left');
         $this->db->join('deductions b', 'a.deduction_id = b.id', 'left');
         $this->db->join('divisions d', 'c.division_id = d.id');
         $this->db->join('departements e', 'c.departement_id = e.id');
         $this->db->join('departement_subs f', 'c.departement_sub_id = f.id');
-        $this->db->where('a.deleted', 0);
         $this->db->where('c.deleted', 0);
         $this->db->where('c.status', 0);
-        $this->db->like('b.id', $filter_deduction);
+        if($filter_deduction != ""){
+            $this->db->like('b.id', $filter_deduction);
+        }
         $this->db->like('c.id', $filter_employee);
         $this->db->like('d.id', $filter_division);
         $this->db->like('e.id', $filter_departement);

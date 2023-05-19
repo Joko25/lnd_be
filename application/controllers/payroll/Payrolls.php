@@ -244,8 +244,9 @@ class Payrolls extends CI_Controller
                 LEFT JOIN shift_details l ON n.id = l.shift_id
                 JOIN setup_salaries p ON p.employee_id = a.id
                 LEFT JOIN maritals q ON a.marital_id = q.id
+                LEFT JOIN resignations r ON a.id = r.employee_id and r.resign_date between '$filter_from' and '$filter_to'
                 JOIN privilege_groups m ON (i.id = m.group_id or m.group_id is null or m.group_id = '') and m.username = '$username' and m.status = '1'
-                WHERE a.deleted = 0 and a.status = 0
+                WHERE a.deleted = 0 and (r.employee_id != '' or a.status = 0)
                 AND a.division_id LIKE '%$filter_division%'
                 AND a.departement_id LIKE '%$filter_departement%'
                 AND a.departement_sub_id LIKE '%$filter_departement_sub%'
@@ -291,10 +292,24 @@ class Payrolls extends CI_Controller
             //Setting Payroll
             $config = $this->db->get('payroll_config')->result();
 
+            //Holiday
+            $this->db->select('trans_date');
+            $this->db->from('calendars');
+            $this->db->where('trans_date >=', $filter_from);
+            $this->db->where('trans_date <=', $filter_to);
+            $this->db->where_not_in('trans_date', $weekend);
+            $calendar = $this->db->get()->result_array();
+            $calendar_amount = empty($calendar) ? 0 : count($calendar);
+
+            foreach ($calendar as $cal) {
+                $w_calendars[] = $cal['trans_date'];
+            }
+
             //Permit_allowance
             //Mengambil field dan isinya dari permit allowance
             $permit_date = "'" . implode( "', '" , $weekend ) . "'";
-            $q_permit = $this->db->query("SELECT b.number, b.name, SUM(a.duration) as amount
+            $calendar_date = "'" . implode( "', '" , $w_calendars ) . "'";
+            $q_permit = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                     FROM permit_types b
                     LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date)
                     LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
@@ -314,14 +329,20 @@ class Payrolls extends CI_Controller
             $arr_permit_amount_ex = explode(",", substr($arr_permit_amount, 0, -1));
             $arr_permit_combine = array_combine($arr_permit_number_ex, $arr_permit_amount_ex);
 
-            //Permits
-            // $qpermits = $this->db->query("SELECT b.number, b.name, SUM(a.duration) as amount
-            //     FROM permit_types b
-            //     LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date between '$filter_from' and '$filter_to'
-            //     LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
-            //     WHERE (c.users_id_to = '' or c.users_id_to is null) and b.absence = 'YES'
-            //     GROUP BY b.id ORDER BY b.name asc");
-            // $permits = $qpermits->result_array();
+            //Permit Deduction
+            //Mengambil field dan isinya dari permit allowance
+            $q_permit_deduction = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
+                    FROM permit_types b
+                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) and a.permit_date not in ($calendar_date)
+                    LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
+                    WHERE b.payroll = 'DEDUCTION' and (c.users_id_to = '' or c.users_id_to is null)
+                    GROUP BY b.id");
+
+            $r_permit_deduction = $q_permit_deduction->result_array();
+            $arr_total_permit_deduction = 0;
+            foreach ($r_permit_deduction as $permit_data_deduction) {
+                $arr_total_permit_deduction += $permit_data_deduction['amount'];
+            }
 
             //Change Days
             $this->db->select("COUNT(*) as days");
@@ -381,15 +402,6 @@ class Payrolls extends CI_Controller
             $loan_other = $this->db->get()->row();
             $loan_other_amount = empty($loan_other->amount) ? 0 : $loan_other->amount;
 
-            //Holiday
-            $this->db->select('COUNT(*) as amount');
-            $this->db->from('calendars');
-            $this->db->where('trans_date >=', $filter_from);
-            $this->db->where('trans_date <=', $filter_to);
-            $this->db->where_not_in('trans_date', $weekend);
-            $calendar = $this->db->get()->row();
-            $calendar_amount = empty($calendar->amount) ? 0 : $calendar->amount;
-
             //Attandances
             $this->db->select("COUNT(*) as amount");
             $this->db->from('attandances');
@@ -397,11 +409,12 @@ class Payrolls extends CI_Controller
             $this->db->where('date_in >=', $filter_from);
             $this->db->where('date_in <=', $filter_to);
             $this->db->where_not_in('date_in', $weekend);
+            $this->db->where_not_in('date_in', $w_calendars);
             $attandance = $this->db->get()->row();
             $attandance_amount = empty($attandance->amount) ? 0 : $attandance->amount;
 
             $hkw = (@count($weekday) - @$calendar_amount);
-            $absen = (@count($weekday) - @$calendar_amount - @$attandance_amount - @$changeDays_amount - $arr_total_permit);
+            $absen = (@count($weekday) - @$calendar_amount - @$attandance_amount - @$changeDays_amount - $arr_total_permit - $arr_total_permit_deduction);
             $masuk = @$attandance_amount;
 
             //Allowance Amount

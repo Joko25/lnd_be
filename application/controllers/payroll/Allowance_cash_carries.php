@@ -14,7 +14,7 @@ class Allowance_cash_carries extends CI_Controller
         $this->load->model('crud');
 
         //VALIDASI FORM
-        $this->form_validation->set_rules('position_id', 'Position', 'required|min_length[1]|max_length[20]|is_unique[allowance_cash_carries.position_id]');
+        $this->form_validation->set_rules('number', 'Code', 'required|min_length[1]|max_length[10]|is_unique[allowance_cash_carries.number]');
     }
 
     //HALAMAN UTAMA
@@ -53,28 +53,15 @@ class Allowance_cash_carries extends CI_Controller
             $offset = ($page - 1) * $rows;
             $result = array();
             //Select Query
-            $this->db->select('a.*, b.name as position_name');
-            $this->db->from('allowance_cash_carries a');
-            $this->db->join('positions b', 'a.position_id = b.id');
-            $this->db->where('a.deleted', 0);
+            $this->db->select('*');
+            $this->db->from('allowance_cash_carries');
+            $this->db->where('deleted', 0);
             if (@count($filters) > 0) {
                 foreach ($filters as $filter) {
-                    if ($filter->field == "position_name") {
-                        $this->db->like("b.name", $filter->value);
-                    } elseif ($filter->field == "weekday") {
-                        $this->db->like("a.weekday", $filter->value);
-                    } elseif ($filter->field == "weekend") {
-                        $this->db->like("a.weekend", $filter->value);
-                    } elseif ($filter->field == "holiday") {
-                        $this->db->like("a.holiday", $filter->value);
-                    } elseif ($filter->field == "meal") {
-                        $this->db->like("a.meal", $filter->value);
-                    } elseif ($filter->field == "remarks") {
-                        $this->db->like("a.remarks", $filter->value);
-                    }
+                    $this->db->like($filter->field, $filter->value);
                 }
             }
-            $this->db->order_by('b.name', 'ASC');
+            $this->db->order_by('name', 'ASC');
             //Total Data
             $totalRows = $this->db->count_all_results('', false);
             //Limit 1 - 10
@@ -139,10 +126,9 @@ class Allowance_cash_carries extends CI_Controller
         $this->db->from('config');
         $config = $this->db->get()->row();
 
-        $this->db->select('a.*, b.name as position_name');
-        $this->db->from('allowance_cash_carries a');
-        $this->db->join('positions b', 'a.position_id = b.id');
-        $this->db->where('a.deleted', 0);
+        $this->db->select('*');
+        $this->db->from('allowance_cash_carries');
+        $this->db->where('deleted', 0);
         $records = $this->db->get()->result_array();
 
         $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
@@ -170,7 +156,8 @@ class Allowance_cash_carries extends CI_Controller
         <table id="customers" border="1">
             <tr>
                 <th width="20">No</th>
-                <th>Position</th>
+                <th>Code</th>
+                <th>Name</th>
                 <th>Weekday</th>
                 <th>Weekend</th>
                 <th>Holiday</th>
@@ -181,6 +168,8 @@ class Allowance_cash_carries extends CI_Controller
         foreach ($records as $data) {
             $html .= '<tr>
                         <td>' . $no . '</td>
+                        <td>' . $data['number'] . '</td>
+                        <td>' . $data['name'] . '</td>
                         <td>' . $data['position_name'] . '</td>
                         <td>' . number_format($data['weekday']) . '</td>
                         <td>' . number_format($data['weekend']) . '</td>

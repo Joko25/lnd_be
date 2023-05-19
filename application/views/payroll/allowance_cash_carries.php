@@ -3,7 +3,8 @@
     <thead>
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
-            <th rowspan="2" data-options="field:'position_name',width:150,halign:'center'">Position</th>
+            <th rowspan="2" data-options="field:'number',width:100,align:'center'">Code</th>
+            <th rowspan="2" data-options="field:'name',width:150,halign:'center'">Name</th>
             <th rowspan="2" data-options="field:'weekday',width:100,halign:'center', align:'right', formatter:numberformat">Weekday</th>
             <th rowspan="2" data-options="field:'weekend',width:100,halign:'center', align:'right', formatter:numberformat">Weekend</th>
             <th rowspan="2" data-options="field:'holiday',width:100,halign:'center', align:'right', formatter:numberformat">Holiday</th>
@@ -32,8 +33,12 @@
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Form Data</b></legend>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Position</span>
-                <input style="width:60%;" name="position_id" id="position_id" required="" class="easyui-combobox">
+                <span style="width:35%; display:inline-block;">Code</span>
+                <input style="width:30%;" name="number" id="number" required="" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Name</span>
+                <input style="width:60%;" name="name" id="name" required="" class="easyui-textbox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Weekday</span>
@@ -163,13 +168,6 @@
                     });
                 }
             }]
-        });
-
-        $('#position_id').combobox({
-            url: '<?php echo base_url('employee/positions/reads'); ?>',
-            valueField: 'id',
-            textField: 'name',
-            prompt: 'Choose Positions'
         });
     });
 
