@@ -244,9 +244,8 @@ class Payrolls extends CI_Controller
                 LEFT JOIN shift_details l ON n.id = l.shift_id
                 JOIN setup_salaries p ON p.employee_id = a.id
                 LEFT JOIN maritals q ON a.marital_id = q.id
-                LEFT JOIN resignations r ON a.id = r.employee_id and r.resign_date between '$filter_from' and '$filter_to'
                 JOIN privilege_groups m ON (i.id = m.group_id or m.group_id is null or m.group_id = '') and m.username = '$username' and m.status = '1'
-                WHERE a.deleted = 0 and (r.employee_id != '' or a.status = 0)
+                WHERE a.deleted = 0 and a.status = 0
                 AND a.division_id LIKE '%$filter_division%'
                 AND a.departement_id LIKE '%$filter_departement%'
                 AND a.departement_sub_id LIKE '%$filter_departement_sub%'
