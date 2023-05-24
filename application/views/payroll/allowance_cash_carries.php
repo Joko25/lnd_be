@@ -6,7 +6,7 @@
             <th rowspan="2" data-options="field:'number',width:100,align:'center'">Code</th>
             <th rowspan="2" data-options="field:'name',width:150,halign:'center'">Name</th>
             <th rowspan="2" data-options="field:'weekday',width:100,halign:'center', align:'right', formatter:numberformat">Weekday</th>
-            <th rowspan="2" data-options="field:'weekend',width:100,halign:'center', align:'right', formatter:numberformat">Weekend</th>
+            <th colspan="2" data-options="field:'',width:100,align:'center'">Weekend</th>
             <th rowspan="2" data-options="field:'holiday',width:100,halign:'center', align:'right', formatter:numberformat">Holiday</th>
             <th rowspan="2" data-options="field:'meal',width:100,halign:'center', align:'right', formatter:numberformat">Meal</th>
             <th rowspan="2" data-options="field:'remarks',width:300,halign:'center'">Remarks</th>
@@ -14,6 +14,8 @@
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
         <tr>
+            <th data-options="field:'saturday',width:100,halign:'center', align:'right', formatter:numberformat"> Saturday</th>
+            <th data-options="field:'sunday',width:100,halign:'center', align:'right', formatter:numberformat"> Sunday</th>
             <th data-options="field:'created_by',width:100,align:'center'"> By</th>
             <th data-options="field:'created_date',width:150,align:'center'"> Date</th>
             <th data-options="field:'updated_by',width:100,align:'center'"> By</th>
@@ -45,8 +47,12 @@
                 <input style="width:60%;" name="weekday" required="" data-options="buttonText:'Rp', buttonAlign:'left'" class="easyui-numberbox">
             </div>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Weekend</span>
-                <input style="width:60%;" name="weekend" required="" data-options="buttonText:'Rp', buttonAlign:'left'" class="easyui-numberbox">
+                <span style="width:35%; display:inline-block;">Saturday</span>
+                <input style="width:60%;" name="saturday" required="" data-options="buttonText:'Rp', buttonAlign:'left'" class="easyui-numberbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Sunday</span>
+                <input style="width:60%;" name="sunday" required="" data-options="buttonText:'Rp', buttonAlign:'left'" class="easyui-numberbox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Holiday</span>

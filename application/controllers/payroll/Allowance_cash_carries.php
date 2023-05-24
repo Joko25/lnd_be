@@ -159,7 +159,8 @@ class Allowance_cash_carries extends CI_Controller
                 <th>Code</th>
                 <th>Name</th>
                 <th>Weekday</th>
-                <th>Weekend</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
                 <th>Holiday</th>
                 <th>Meal</th>
                 <th>Remarks</th>
@@ -172,7 +173,8 @@ class Allowance_cash_carries extends CI_Controller
                         <td>' . $data['name'] . '</td>
                         <td>' . $data['position_name'] . '</td>
                         <td>' . number_format($data['weekday']) . '</td>
-                        <td>' . number_format($data['weekend']) . '</td>
+                        <td>' . number_format($data['saturday']) . '</td>
+                        <td>' . number_format($data['sunday']) . '</td>
                         <td>' . number_format($data['holiday']) . '</td>
                         <td>' . number_format($data['meal']) . '</td>
                         <td>' . $data['remarks'] . '</td>

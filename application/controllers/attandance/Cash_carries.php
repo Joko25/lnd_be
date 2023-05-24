@@ -102,7 +102,8 @@ class Cash_carries extends CI_Controller
         $this->db->where('a.employee_id', $employee_id);
         $shift_employee = $this->db->get()->row();
 
-        $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["position_id" => $employee->position_id]);
+        $setup_cash_carry = $this->crud->read("setup_cash_carries", [], ["employee_id" => $employee_id]);
+        $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["id" => @$setup_cash_carry->allowance_id]);
 
         //ambil durasi berapa jam jika ada lemburan
         $hourTrans = strtotime($trans_date);
@@ -130,7 +131,11 @@ class Cash_carries extends CI_Controller
                     $total = ((@$allowance_cash_carry->weekday * $duration) + $meal);
                 }
             } else {
-                $total = ((@$allowance_cash_carry->weekend * $duration) + $meal);
+                if (date('w', $hourTrans) === '0'){
+                    $total = ((@$allowance_cash_carry->sunday * $duration) + $meal);
+                }else{
+                    $total = ((@$allowance_cash_carry->saturday * $duration) + $meal);
+                }
             }
         } else {
             if (date('w', $hourTrans) !== '0') {
@@ -142,7 +147,11 @@ class Cash_carries extends CI_Controller
                     $total = ((@$allowance_cash_carry->weekday * $duration) + $meal);
                 }
             } else {
-                $total = ((@$allowance_cash_carry->weekend * $duration) + $meal);
+                if (date('w', $hourTrans) === '0'){
+                    $total = ((@$allowance_cash_carry->sunday * $duration) + $meal);
+                }else{
+                    $total = ((@$allowance_cash_carry->saturday * $duration) + $meal);
+                }
             }
         }
 
@@ -208,7 +217,8 @@ class Cash_carries extends CI_Controller
                 b.name as employee_name,
                 f.name as fullname,
                 COALESCE(i.weekday, 0) as total_weekday,
-                COALESCE(i.weekend, 0) as total_weekend,
+                COALESCE(i.sunday, 0) as total_sunday,
+                COALESCE(i.saturday, 0) as total_saturday,
                 COALESCE(i.holiday, 0) as total_holiday,
                 COALESCE(i.meal, 0) as total_meal
             ');
@@ -318,7 +328,11 @@ class Cash_carries extends CI_Controller
                             $total = ((@$record['total_weekday'] * $hour) + $meal);
                         }
                     } else {
-                        $total = ((@$record['total_weekend'] * $hour) + $meal);
+                        if (date('w', $start) === '0'){
+                            $total = ((@$record['total_sunday'] * $hour) + $meal);
+                        }else{
+                            $total = ((@$record['total_saturday'] * $hour) + $meal);
+                        }
                     }
                 } else {
                     if (date('w', $start) !== '0') {
@@ -330,7 +344,11 @@ class Cash_carries extends CI_Controller
                             $total = ((@$record['total_weekday'] * $hour) + $meal);
                         }
                     } else {
-                        $total = ((@$record['total_weekend'] * $hour) + $meal);
+                        if (date('w', $start) === '0'){
+                            $total = ((@$record['total_sunday'] * $hour) + $meal);
+                        }else{
+                            $total = ((@$record['total_saturday'] * $hour) + $meal);
+                        }
                     }
                 }
 

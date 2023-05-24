@@ -121,9 +121,12 @@ class Crud extends CI_Model
                 "updated_date" => date('Y-m-d H:i:s')
             ]);
 
+            $dataBefore = $this->read($table, [], $where);
+
             $this->db->where($where);
             if ($this->db->update($table, $data)) {
-                $this->logs("Update", json_encode($data), $table);
+                $this->logs("Update Before", json_encode($dataBefore), $table);
+                $this->logs("Update New", json_encode($data), $table);
                 $reads = $this->reads($table, [], $data);
 
                 foreach ($reads as $read) {

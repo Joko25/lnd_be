@@ -83,7 +83,7 @@ class Setup_cash_carries extends CI_Controller
             $offset = ($page - 1) * $rows;
             $result = array();
             //Select Query
-            $this->db->select('a.*, b.name as allowance_name, b.weekday, b.weekend, b.holiday, b.meal, c.id as employee_id, c.number as employee_number, c.name as employee_name, d.name as division_name, e.name as departement_name, f.name as departement_sub_name');
+            $this->db->select('a.*, b.name as allowance_name, b.weekday, b.saturday, b.sunday, b.holiday, b.meal, c.id as employee_id, c.number as employee_number, c.name as employee_name, d.name as division_name, e.name as departement_name, f.name as departement_sub_name');
             $this->db->from('employees c');
             $this->db->join('setup_cash_carries a', 'a.employee_id = c.id', 'left');
             $this->db->join('allowance_cash_carries b', 'a.allowance_id = b.id', 'left');
@@ -304,7 +304,7 @@ class Setup_cash_carries extends CI_Controller
         $this->db->from('config');
         $config = $this->db->get()->row();
 
-        $this->db->select('a.*, b.name as allowance_name, b.weekday, b.weekend, b.holiday, b.meal, c.id as employee_id, c.number as employee_number, c.name as employee_name, d.name as division_name, e.name as departement_name, f.name as departement_sub_name');
+        $this->db->select('a.*, b.name as allowance_name, b.weekday, b.saturday, b.sunday, b.holiday, b.meal, c.id as employee_id, c.number as employee_number, c.name as employee_name, d.name as division_name, e.name as departement_name, f.name as departement_sub_name');
         $this->db->from('employees c');
         $this->db->join('setup_cash_carries a', 'a.employee_id = c.id', 'left');
         $this->db->join('allowance_cash_carries b', 'a.allowance_id = b.id', 'left');
@@ -363,7 +363,8 @@ class Setup_cash_carries extends CI_Controller
                 <th>Departement Sub</th>
                 <th>Allowance</th>
                 <th>Weekday</th>
-                <th>Weekend</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
                 <th>Holiday</th>
                 <th>Meal</th>
                 <th>Description</th>
@@ -379,7 +380,8 @@ class Setup_cash_carries extends CI_Controller
                             <td>' . $data['departement_sub_name'] . '</td>
                             <td>' . $data['allowance_name'] . '</td>
                             <td>' . $data['weekday'] . '</td>
-                            <td>' . $data['weekend'] . '</td>
+                            <td>' . $data['saturday'] . '</td>
+                            <td>' . $data['sunday'] . '</td>
                             <td>' . $data['holiday'] . '</td>
                             <td>' . $data['meal'] . '</td>
                             <td>' . $data['description'] . '</td>

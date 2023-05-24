@@ -165,8 +165,7 @@
             }
         } else {
             if (filter_employee != "") {
-                $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
-                $("#printout").attr('src', '<?= base_url('report/attandances/print') ?>' + url);
+                window.location.assign('<?= base_url('report/attandances/print/excel') ?>' + url);
             } else {
                 toastr.info("Please Select Employee");
             }

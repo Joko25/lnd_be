@@ -18,7 +18,7 @@
                 }
             }">Allowance</th>
             <th rowspan="2" data-options="field:'weekday',width:100,halign:'center', align:'right', formatter:numberformat">Weekday</th>
-            <th rowspan="2" data-options="field:'weekend',width:100,halign:'center', align:'right', formatter:numberformat">Weekend</th>
+            <th colspan="2" data-options="field:'',width:100,align:'center'">Weekend</th>
             <th rowspan="2" data-options="field:'holiday',width:100,halign:'center', align:'right', formatter:numberformat">Holiday</th>
             <th rowspan="2" data-options="field:'meal',width:100,halign:'center', align:'right', formatter:numberformat">Meal</th>
             <th rowspan="2" data-options="field:'description',width:300,halign:'center'">Description</th>
@@ -26,6 +26,8 @@
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
         <tr>
+            <th data-options="field:'saturday',width:100,halign:'center', align:'right', formatter:numberformat"> Saturday</th>
+            <th data-options="field:'sunday',width:100,halign:'center', align:'right', formatter:numberformat"> Sunday</th>
             <th data-options="field:'created_by',width:100,align:'center'"> By</th>
             <th data-options="field:'created_date',width:150,align:'center'"> Date</th>
             <th data-options="field:'updated_by',width:100,align:'center'"> By</th>
