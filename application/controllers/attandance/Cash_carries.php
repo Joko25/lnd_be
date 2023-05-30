@@ -655,29 +655,20 @@ class Cash_carries extends CI_Controller
                     if (!empty($cash_carries)) {
                         echo json_encode(array("title" => "Available", "message" => $employee->name . " has been created", "theme" => "error"));
                     } else {
-                        //Set Duration
-                        $time_begin = strtotime($data['trans_date'] . " " . $data['start']);
-                        $time_end = strtotime($data['trans_date'] . " " . $data['end']);
-                        $diff = $time_end - $time_begin;
-                        $hour = floor($diff / (60 * 60));
-
                         if ($data['meal'] == "YES") {
                             $meal = "1";
                         } else {
                             $meal = "0";
                         }
-
+                        
                         if($data['break'] == "" || $data['break'] == "0"){
                             $break = 0;
                         }else{
-                            $break = ($data['break'] / 60);
+                            $break = $data['break'];
                         }
 
-                        $minutes = $diff - $hour * (60 * 60);
-                        $duration = $hour . " Hour " . floor($minutes / 60) . " Minutes";
-                        $duration_hour = $hour;
-
-                        $ot_amount = $this->readOvertimePrice($employee->id, $data['trans_date'], ($duration_hour - $break), $meal);
+                        $duration = $this->convertHour($data['trans_date'], $data['start'], $data['end']);
+                        $ot_amount = $this->readOvertimePrice($employee->id, $data['trans_date'], ($duration['duration_hour'] - ($break / 60)), $meal);
 
                         $post_cash_carries = array(
                             'employee_id' => $employee->id,
@@ -690,8 +681,8 @@ class Cash_carries extends CI_Controller
                             'meal' => $meal,
                             'plan' => $data['plan'],
                             'actual' => $data['actual'],
-                            'duration' => $duration,
-                            'duration_hour' => ($duration_hour - ($break / 60)),
+                            "duration" =>  $duration['duration'],
+                            "duration_hour" => ($duration['duration_hour'] - ($break / 60)),
                             'remarks' => $data['remarks'],
                             'amount' =>  $ot_amount,
                             'idm_no' => $data['idm_no'],

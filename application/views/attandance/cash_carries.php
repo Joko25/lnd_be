@@ -3,7 +3,7 @@
     <thead frozen="true">
         <tr>
             <th field="ck" checkbox="true"></th>
-            <th data-options="field:'employee_id',width:100,halign:'center'">Employee ID</th>
+            <th data-options="field:'employee_number',width:100,halign:'center'">Employee ID</th>
             <th data-options="field:'employee_name',width:250,halign:'center'">Employee Name</th>
         </tr>
     </thead>

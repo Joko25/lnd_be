@@ -33,7 +33,8 @@ class Resignations extends CI_Controller
     }
 
     public function readEmployeeResign(){
-        $date = date("Y-m-d");
+        $dateNow = date("Y-m-d");
+        $date = date("Y-m-d", strtotime('-10 days', strtotime($dateNow)));
 
         $this->db->select('*');
         $this->db->from('cutoff');
@@ -49,17 +50,17 @@ class Resignations extends CI_Controller
 
         $this->db->select('*');
         $this->db->from('resignations');
-        $this->db->where('resign_date <', $date);
+        $this->db->where('resign_date <', $dateNow);
         $this->db->where('status_resign', "UN PROCEDURE");
         $this->db->where('status', '0');
         $unprocedure = $this->db->get()->result_array();
 
-        if($cutoff){
-            foreach($unprocedure as $record){
-                $this->crud->update('employees', ["id" => $record['employee_id']], ["status" => 1, "status_date" => $cutoff->finish]);
-                $this->crud->update('resignations', ["employee_id" => $record['employee_id']], ["status" => 1]);
-            }
+        foreach($unprocedure as $record){
+            $this->crud->update('employees', ["id" => $record['employee_id']], ["status" => 1, "status_date" => $cutoff->finish]);
+            $this->crud->update('resignations', ["employee_id" => $record['employee_id']], ["status" => 1]);
+        }
 
+        if($cutoff){
             foreach($onprocedure as $record){
                 $this->crud->update('employees', ["id" => $record['employee_id']], ["status" => 1, "status_date" => $cutoff->finish]);
                 $this->crud->update('resignations', ["employee_id" => $record['employee_id']], ["status" => 1]);
