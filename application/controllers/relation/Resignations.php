@@ -38,7 +38,7 @@ class Resignations extends CI_Controller
 
         $this->db->select('*');
         $this->db->from('cutoff');
-        $this->db->where('finish <', $date);
+        $this->db->where('finish <', $dateNow);
         $cutoff = $this->db->get()->row();
 
         $this->db->select('*');
@@ -297,6 +297,8 @@ class Resignations extends CI_Controller
     
                         $send = $this->crud->create('resignations', $post);
                         echo $send;
+
+                        $this->readEmployeeResign();
                     }else{
                         echo json_encode(array("title" => "Date", "message" => "Request Date < Resign Date", "theme" => "error"));
                     }
