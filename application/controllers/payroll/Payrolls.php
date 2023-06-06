@@ -414,7 +414,14 @@ class Payrolls extends CI_Controller
 
             $hkw = (@count($weekday) - @$calendar_amount);
             $absen = (@count($weekday) - @$calendar_amount - @$attandance_amount - @$changeDays_amount - $arr_total_permit - $arr_total_permit_deduction);
-            $masuk = @$attandance_amount;
+
+            if($attandance_amount >= $hkw){
+                $wd = $hkw;
+            }else{
+                $wd = $attandance_amount;
+            }
+
+            $masuk = @$wd;
 
             //Allowance Amount
             //jika dia ada tunjuangan ambil field dan isinya
