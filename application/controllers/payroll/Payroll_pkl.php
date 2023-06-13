@@ -296,14 +296,11 @@ class Payroll_pkl extends CI_Controller
 
             $checkPayroll = $this->crud->read("payroll_pkl", [], ["employee_id" => $record['id'], "period_start" => $filter_from]);
             if (!empty($checkPayroll->employee_id)) {
-                echo json_encode(array("title" => "Duplicate", "message" => "Duplicate Employee", "theme" => "error"));
+                $send = $this->crud->update('payroll_pkl', ["employee_id" => $record['id'], "period_start" => $filter_from], $result);
+                echo $send;
             } else {
                 $send = $this->crud->create('payroll_pkl', $result);
-                if ($send) {
-                    echo json_encode(array("title" => "Saved", "message" => $record['name'] . " Data has been created", "theme" => "success"));
-                } else {
-                    echo json_encode(array("title" => "Error", "message" => $record['name'] . " Failed to created", "theme" => "error"));
-                }
+                echo $send;
             }
         } else {
             echo json_encode(array("title" => "Error", "message" => "Cannot Process your request", "theme" => "error"));
@@ -418,7 +415,7 @@ class Payroll_pkl extends CI_Controller
         foreach ($records as $data) {
             $html .= '  <tr>
                             <td>' . $no . '</td>
-                            <td>' . $data['employee_id'] . '</td>
+                            <td style="mso-number-format:\@;">' . $data['employee_number'] . '</td>
                             <td>' . $data['employee_name'] . '</td>
                             <td>' . date("d F Y", strtotime($data['date_sign'])) . '</td>
                             <td>' . $data['services'] . '</td>

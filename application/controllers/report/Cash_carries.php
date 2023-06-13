@@ -528,7 +528,8 @@ class Cash_carries extends CI_Controller
             $departements = $this->db->get()->result_array();
 
             foreach ($departements as $departement) {
-                $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
+                $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+                <style> .str{ mso-number-format:\@; } </style><body>';
                 $html .= '  <center>
                             <div style="float: left; font-size: 12px; text-align: left;">
                                 <table style="width: 100%;">
@@ -742,7 +743,7 @@ class Cash_carries extends CI_Controller
 
                     $html .= '  <tr>
                                     <td style="text-align:center;">' . $no . '</td>
-                                    <td>' . $cash_carry['employee_number'] . '</td>
+                                    <td style="mso-number-format:\@;">' . $cash_carry['employee_number'] . '</td>
                                     <td>' . $cash_carry['employee_name'] . '</td>
                                     <td>' . $cash_carry['departement_sub_name'] . '</td>
                                     <td>' . $cash_carry['group_name'] . '</td>
