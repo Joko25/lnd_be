@@ -79,10 +79,7 @@ class Change_days extends CI_Controller
             $offset = ($page - 1) * $rows;
             $result = array();
             //Select Query
-            $this->db->select('a.*, 
-                g.users_id_from as status_check,
-                g.users_id_to as status_notification, 
-                g.updated_date as status_date,
+            $this->db->select('a.*,
                 c.name as division_name,
                 d.name as departement_name,
                 e.name as departement_sub_name,
@@ -97,7 +94,6 @@ class Change_days extends CI_Controller
             $this->db->join('departements d', 'b.departement_id = d.id');
             $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
             $this->db->join('users f', "a.created_by = f.username");
-            $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'change_days'", 'left');
             $this->db->where('b.deleted', 0);
             $this->db->where('b.status', 0);
             $this->db->where('a.deleted', 0);
@@ -111,9 +107,9 @@ class Change_days extends CI_Controller
             $this->db->like('b.departement_sub_id', $filter_departement_sub);
             $this->db->like('b.id', $filter_employee);
             if ($filter_approval == "0") {
-                $this->db->where("(g.users_id_to = '' or g.users_id_to is null)");
+                $this->db->where("(a.approved_to = '' or a.approved_to is null)");
             } elseif ($filter_approval == "1") {
-                $this->db->where("(g.users_id_to != '')");
+                $this->db->where("(a.approved_to != '' and a.approved_to is not null)");
             }
             $this->db->group_by('a.start');
             $this->db->group_by('a.employee_id');
@@ -297,10 +293,7 @@ class Change_days extends CI_Controller
         $config = $this->db->get()->row();
 
         //Select Query
-        $this->db->select('a.*, 
-                g.users_id_from as status_check,
-                g.users_id_to as status_notification, 
-                g.updated_date as status_date,
+        $this->db->select('a.*,
                 c.name as division_name,
                 d.name as departement_name,
                 e.name as departement_sub_name,
@@ -315,7 +308,6 @@ class Change_days extends CI_Controller
         $this->db->join('departements d', 'b.departement_id = d.id');
         $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
         $this->db->join('users f', "a.created_by = f.username");
-        $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'change_days'", 'left');
         $this->db->where('b.deleted', 0);
         $this->db->where('b.status', 0);
         $this->db->where('a.deleted', 0);
@@ -329,9 +321,9 @@ class Change_days extends CI_Controller
         $this->db->like('b.departement_sub_id', $filter_departement_sub);
         $this->db->like('b.id', $filter_employee);
         if ($filter_approval == "0") {
-            $this->db->where("(g.users_id_to = '' or g.users_id_to is null)");
+            $this->db->where("(a.approved_to = '' or a.approved_to is null)");
         } elseif ($filter_approval == "1") {
-            $this->db->where("(g.users_id_to != '')");
+            $this->db->where("(a.approved_to != '' and a.approved_to is not null)");
         }
         $this->db->group_by('a.start');
         $this->db->group_by('a.employee_id');

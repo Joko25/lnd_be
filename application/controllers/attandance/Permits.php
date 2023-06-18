@@ -141,10 +141,7 @@ class Permits extends CI_Controller
             $offset = ($page - 1) * $rows;
             $result = array();
             //Select Query
-            $this->db->select('a.*, 
-                b.users_id_from as status_check,
-                b.users_id_to as status_notification, 
-                b.updated_date as status_date,
+            $this->db->select('a.*,
                 c.number as employee_number,
                 c.name as employee_name,
                 d.name as division_name,
@@ -155,7 +152,6 @@ class Permits extends CI_Controller
                 i.name as request_name
             ');
             $this->db->from('permits a');
-            $this->db->join('notifications b', "a.id = b.table_id and b.table_name = 'permits'", 'left');
             $this->db->join('employees c', 'a.employee_id = c.id');
             $this->db->join('divisions d', 'c.division_id = d.id');
             $this->db->join('departements e', 'c.departement_id = e.id');
@@ -178,9 +174,9 @@ class Permits extends CI_Controller
             $this->db->like('a.permit_type_id', $filter_permit_type);
             $this->db->like('a.created_by', $filter_request);
             if ($filter_approval == "0") {
-                $this->db->where("(b.users_id_to = '' or b.users_id_to is null)");
+                $this->db->where("(a.approved_to = '' or a.approved_to is null)");
             } elseif ($filter_approval == "1") {
-                $this->db->where("(b.users_id_to != '' or b.users_id_to is not null)");
+                $this->db->where("(a.approved_to != '' and a.approved_to is not null)");
             }
             $this->db->order_by('a.permit_date', 'DESC');
 
@@ -430,10 +426,7 @@ class Permits extends CI_Controller
         $this->db->from('config');
         $config = $this->db->get()->row();
 
-        $this->db->select('a.*, 
-                b.users_id_from as status_check,
-                b.users_id_to as status_notification, 
-                b.updated_date as status_date,
+        $this->db->select('a.*,
                 c.number as employee_number,
                 c.name as employee_name,
                 d.name as division_name,
@@ -444,7 +437,6 @@ class Permits extends CI_Controller
                 i.name as request_name
             ');
         $this->db->from('permits a');
-        $this->db->join('notifications b', "a.id = b.table_id and b.table_name = 'permits'", 'left');
         $this->db->join('employees c', 'a.employee_id = c.id');
         $this->db->join('divisions d', 'c.division_id = d.id');
         $this->db->join('departements e', 'c.departement_id = e.id');
@@ -467,9 +459,9 @@ class Permits extends CI_Controller
         $this->db->like('a.permit_type_id', $filter_permit_type);
         $this->db->like('a.created_by', $filter_request);
         if ($filter_approval == "0") {
-            $this->db->where("(b.users_id_to = '' or b.users_id_to is null)");
+            $this->db->where("(a.approved_to = '' or a.approved_to is null)");
         } elseif ($filter_approval == "1") {
-            $this->db->where("(b.users_id_to != '' or b.users_id_to is not null)");
+            $this->db->where("(a.approved_to != '' and a.approved_to is not null)");
         }
         $this->db->order_by('a.permit_date', 'DESC');
         $records = $this->db->get()->result_array();

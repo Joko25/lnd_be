@@ -77,9 +77,7 @@ class Agreements extends CI_Controller
         $offset = ($page - 1) * $rows;
         $result = array();
         //Select Query
-        $this->db->select('a.*, 
-            i.users_id_from as status_check,
-            i.users_id_to as status_notification, 
+        $this->db->select('a.*,
             b.name as employee_name, 
             c.name as division_name, 
             d.name as departement_name, 
@@ -95,7 +93,6 @@ class Agreements extends CI_Controller
         $this->db->join('positions f', 'f.id = a.position_id');
         $this->db->join('contracts g', 'g.id = a.contract_id');
         $this->db->join('groups h', 'h.id = a.group_id');
-        $this->db->join('notifications i', "a.id = i.table_id and i.table_name = 'agreements'", 'left');
         $this->db->where('a.deleted', 0);
         $this->db->like('b.departement_id', $aprvDepartement);
         $whereExpired;
@@ -232,9 +229,7 @@ class Agreements extends CI_Controller
         $this->db->from('config');
         $config = $this->db->get()->row();
 
-        $this->db->select('a.*, 
-            i.users_id_from as status_check,
-            i.users_id_to as status_notification, 
+        $this->db->select('a.*,
             b.name as employee_name, 
             c.name as division_name, 
             d.name as departement_name, 
@@ -250,7 +245,6 @@ class Agreements extends CI_Controller
         $this->db->join('positions f', 'f.id = a.position_id');
         $this->db->join('contracts g', 'g.id = a.contract_id');
         $this->db->join('groups h', 'h.id = a.group_id');
-        $this->db->join('notifications i', "a.id = i.table_id and i.table_name = 'agreements'", 'left');
         $this->db->where('a.deleted', 0);
         $this->db->like('b.departement_id', $aprvDepartement);
         $whereExpired;

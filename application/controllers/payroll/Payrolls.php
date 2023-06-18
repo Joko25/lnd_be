@@ -58,9 +58,8 @@ class Payrolls extends CI_Controller
         $period_start = date("Y-m", strtotime($filter_from));
         $period_end = date("Y-m", strtotime($filter_to));
         $readPayroll = $this->crud->read('payrolls', [], ["period_start" => $period_start, "period_end" => $period_end]);
-        $readNotification = $this->crud->read('notifications', [], ["table_id" => $readPayroll->id, "table_name" => "payrolls", "users_id_to" => ""]);
 
-        if (!empty($readNotification->id)) {
+        if (empty($readPayroll->approved_to)) {
             echo json_encode(["status" => "APPROVE"]);
         } else {
             echo json_encode(["status" => "CHECKED"]);
@@ -311,8 +310,7 @@ class Payrolls extends CI_Controller
             $q_permit = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                     FROM permit_types b
                     LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date)
-                    LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
-                    WHERE b.payroll = 'NON DEDUCTION' and (c.users_id_to = '' or c.users_id_to is null)
+                    WHERE b.payroll = 'NON DEDUCTION' and (a.approved_to = '' or a.approved_to is null)
                     GROUP BY b.id");
             $r_permit = $q_permit->result_array();
             $arr_permit_number = "";
@@ -333,8 +331,7 @@ class Payrolls extends CI_Controller
             $q_permit_deduction = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                     FROM permit_types b
                     LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) and a.permit_date not in ($calendar_date)
-                    LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
-                    WHERE b.payroll = 'DEDUCTION' and (c.users_id_to = '' or c.users_id_to is null)
+                    WHERE b.payroll = 'DEDUCTION' and (a.approved_to = '' or a.approved_to is null)
                     GROUP BY b.id");
 
             $r_permit_deduction = $q_permit_deduction->result_array();
@@ -695,8 +692,7 @@ class Payrolls extends CI_Controller
             $q_permit_type = $this->db->query("SELECT b.number, b.name, SUM(a.duration) as amount, a.reason_id, b.cutoff
                     FROM permit_types b
                     LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to'
-                    LEFT JOIN `notifications` c ON a.id = c.table_id and c.table_name = 'permits'
-                    WHERE b.payroll = 'DEDUCTION' and (c.users_id_to = '' or c.users_id_to is null)
+                    WHERE b.payroll = 'DEDUCTION' and (a.approved_to = '' or a.approved_to is null)
                     GROUP BY b.id ORDER BY b.name desc");
             $r_permit_type = $q_permit_type->result_array();
             $arr_permit_type_number = "";
@@ -955,7 +951,6 @@ class Payrolls extends CI_Controller
             $payrolls = $this->db->get()->result_object();
 
             foreach ($payrolls as $payroll) {
-                $this->db->delete("notifications", ["table_id" => $payroll->id, "table_name" => "payrolls"]);
                 $this->db->delete("payrolls", ['id' => $payroll->id]);
             }
         }

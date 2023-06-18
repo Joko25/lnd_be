@@ -36,9 +36,9 @@
             <th data-options="field:'time_in',width:80,align:'center'">Time In</th>
             <th data-options="field:'time_out',width:80,align:'center'">Time Out</th>
             <th data-options="field:'duration_att',width:120,align:'center'">Duration</th>
-            <th data-options="field:'status_notification',width:100,align:'center',styler:statusStyler, formatter:statusFormatter"> Status</th>
-            <th data-options="field:'status_check',width:120,align:'center'"> By</th>
-            <th data-options="field:'status_date',width:150,align:'center'"> Date</th>
+            <th data-options="field:'approved',width:100,align:'center',styler:statusStyler, formatter:statusFormatter"> Status</th>
+            <th data-options="field:'approved_by',width:120,align:'center'"> By</th>
+            <th data-options="field:'approved_date',width:150,align:'center'"> Date</th>
             <th data-options="field:'created_by',width:100,align:'center'"> By</th>
             <th data-options="field:'created_date',width:150,align:'center'"> Date</th>
             <th data-options="field:'updated_by',width:100,align:'center'"> By</th>
@@ -91,7 +91,7 @@
                 <span style="width:30%; display:inline-block;">Approval</span>
                 <select style="width:60%;" id="filter_approval" class="easyui-combobox" data-options="panelHeight:'auto'">
                     <option value="">Choose All</option>
-                    <option value="0">Approve</option>
+                    <option value="0">Approved</option>
                     <option value="1">Checked</option>
                 </select>
             </div>
@@ -1050,15 +1050,15 @@
 
     //CELLSTYLE STATUS
     function statusStyler(value, row, index) {
-        if (value == "" || value == null) {
+        if (row.approved_to == "" || row.approved_to == null) {
             return 'background: #53D636; color:white;';
         } else {
             return 'background: #FF5F5F; color:white;';
         }
     }
     //FORMATTER STATUS
-    function statusFormatter(value) {
-        if (value == "" || value == null) {
+    function statusFormatter(value, row) {
+        if (row.approved_to == "" || row.approved_to == null) {
             return 'Approved';
         } else {
             return 'Checked';

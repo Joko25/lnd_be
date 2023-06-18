@@ -207,9 +207,6 @@ class Cash_carries extends CI_Controller
             //Select Query
             $this->db->select('a.*, 
                 b.position_id,
-                g.users_id_from as status_check,
-                g.users_id_to as status_notification, 
-                g.updated_date as status_date,
                 c.name as division_name,
                 d.name as departement_name,
                 e.name as departement_sub_name,
@@ -229,7 +226,7 @@ class Cash_carries extends CI_Controller
             $this->db->join('departements d', 'b.departement_id = d.id');
             $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
             $this->db->join('users f', "a.created_by = f.username");
-            $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'cash_carries'", 'left');
+            // $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'cash_carries'", 'left');
             $this->db->join('setup_cash_carries h', 'a.employee_id = h.employee_id', 'left');
             $this->db->join('allowance_cash_carries i', 'h.allowance_id = i.id', 'left');
             $this->db->where('b.deleted', 0);
@@ -254,9 +251,9 @@ class Cash_carries extends CI_Controller
                 $this->db->where('a.idm_no', $filter_idm);
             }
             if ($filter_approval == "0") {
-                $this->db->where("(g.users_id_to = '' or g.users_id_to is null)");
+                $this->db->where("(a.approved_to = '' or a.approved_to is null)");
             } elseif ($filter_approval == "1") {
-                $this->db->where("(g.users_id_to != '')");
+                $this->db->where("(a.approved_to != '' and a.approved_to is not null)");
             }
             $this->db->group_by('a.trans_date');
             $this->db->group_by('a.employee_id');
@@ -730,24 +727,20 @@ class Cash_carries extends CI_Controller
         //Select Query
         $this->db->select('a.*, 
                 b.position_id,
-                g.users_id_from as status_check,
-                g.users_id_to as status_notification, 
-                g.updated_date as status_date,
                 c.name as division_name,
                 d.name as departement_name,
                 e.name as departement_sub_name,
                 b.number as employee_number,
                 b.name as employee_name,
                 f.name as fullname
-            ');
-
+        ');
         $this->db->from('cash_carries a');
         $this->db->join('employees b', 'a.employee_id = b.id');
         $this->db->join('divisions c', 'b.division_id = c.id');
         $this->db->join('departements d', 'b.departement_id = d.id');
         $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
         $this->db->join('users f', "a.created_by = f.username");
-        $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'cash_carries'", 'left');
+        // $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'cash_carries'", 'left');
         $this->db->where('b.deleted', 0);
         $this->db->where('b.status', 0);
         $this->db->where('a.deleted', 0);
@@ -770,9 +763,9 @@ class Cash_carries extends CI_Controller
             $this->db->where('a.idm_no', $filter_idm);
         }
         if ($filter_approval == "0") {
-            $this->db->where("(g.users_id_to = '' or g.users_id_to is null)");
+            $this->db->where("(a.approved_to = '' or a.approved_to is null)");
         } elseif ($filter_approval == "1") {
-            $this->db->where("(g.users_id_to != '')");
+            $this->db->where("(a.approved_to != '' and a.approved_to is not null)");
         }
         $this->db->group_by('a.trans_date');
         $this->db->group_by('a.employee_id');

@@ -62,10 +62,9 @@ class Cash_carries extends CI_Controller
         $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
         $this->db->join('groups e', "b.group_id = e.id");
         $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
-        $this->db->join('notifications h', "a.id = h.table_id and h.table_name = 'cash_carries'", 'left');
         $this->db->where('a.deleted', 0);
         $this->db->where('a.status', 0);
-        $this->db->where("(h.users_id_to = '' or h.users_id_to is null)");
+        $this->db->where("(a.approved_to = '' or a.approved_to is null)");
         if ($filter_from != "" && $filter_to != "") {
             $this->db->where('a.trans_date >=', $filter_from);
             $this->db->where('a.trans_date <=', $filter_to);
@@ -114,10 +113,9 @@ class Cash_carries extends CI_Controller
             $this->db->join('attandances g', "b.number = g.number and a.trans_date = g.date_in");
             $this->db->join('setup_cash_carries j', 'a.employee_id = j.employee_id', 'left');
             $this->db->join('allowance_cash_carries i', 'j.allowance_id = i.id', 'left');
-            $this->db->join('notifications k', "a.id = k.table_id and k.table_name = 'cash_carries'", 'left');
             $this->db->where('a.deleted', 0);
             $this->db->where('a.status', 0);
-            $this->db->where("(k.users_id_to = '' or k.users_id_to is null)");
+            $this->db->where("(a.approved_to = '' or a.approved_to is null)");
             if ($filter_from != "" && $filter_to != "") {
                 $this->db->where('a.trans_date >=', $filter_from);
                 $this->db->where('a.trans_date <=', $filter_to);
@@ -257,10 +255,9 @@ class Cash_carries extends CI_Controller
             $this->db->join('attandances g', "b.number = g.number and a.trans_date = g.date_in");
             $this->db->join('setup_cash_carries j', 'a.employee_id = j.employee_id', 'left');
             $this->db->join('allowance_cash_carries i', 'j.allowance_id = i.id', 'left');
-            $this->db->join('notifications k', "a.id = k.table_id and k.table_name = 'cash_carries'", 'left');
             $this->db->where('a.deleted', 0);
             $this->db->where('a.status', 0);
-            $this->db->where("(k.users_id_to = '' or k.users_id_to is null)");
+            $this->db->where("(a.approved_to = '' or a.approved_to is null)");
             if ($filter_from != "" && $filter_to != "") {
                 $this->db->where('a.trans_date >=', $filter_from);
                 $this->db->where('a.trans_date <=', $filter_to);
@@ -270,207 +267,212 @@ class Cash_carries extends CI_Controller
             //Get Data Array
             $cash_carries = $this->db->get()->result_array();
 
-            //Config
-            $this->db->select('*');
-            $this->db->from('config');
-            $config = $this->db->get()->row();
+            if($cash_carries){
 
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
-                    <body>
-                        <center>
-                            <div style="float: left; font-size: 12px; text-align: left;">
-                                <table style="width: 100%;">
+                //Config
+                $this->db->select('*');
+                $this->db->from('config');
+                $config = $this->db->get()->row();
+
+                $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+                        <body>
+                            <center>
+                                <div style="float: left; font-size: 12px; text-align: left;">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+                                                <img src="' . $config->favicon . '" width="30">
+                                            </td>
+                                            <td style="font-size: 14px; text-align: left; margin:2px;">
+                                                <b>' . $config->name . '</b><br>
+                                                <small>' . $config->description . '</small>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="float: right; font-size: 12px; text-align: right;">
+                                    Print Date ' . date("d M Y H:i:s") . ' <br>
+                                    Print By ' . $this->session->username . ' <br>
+                                </div>
+                            </center><br><br><br>
+                            <center>
+                                <h3 style="margin:0;">REPORT DETAIL CASH CARRY</h3>
+                                <span style="font-size:12px;">' . date("d F Y", strtotime($filter_from)) . ' to ' . date("d F Y", strtotime($filter_to)) . '</span>
+                            </center>
+                            <br>
+                            <div style="width:100%;">
+                                <table style="font-size:12px; width:50%; float:left; margin-bottom:20px;">
                                     <tr>
-                                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
-                                            <img src="' . $config->favicon . '" width="30">
-                                        </td>
-                                        <td style="font-size: 14px; text-align: left; margin:2px;">
-                                            <b>' . $config->name . '</b><br>
-                                            <small>' . $config->description . '</small>
-                                        </td>
+                                        <td>Employee ID</td>
+                                        <td>:</td>
+                                        <td><b>' . $cash_carries[0]['employee_number'] . '</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Employee Name</td>
+                                        <td>:</td>
+                                        <td><b>' . $cash_carries[0]['employee_name'] . '</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Plant</td>
+                                        <td>:</td>
+                                        <td><b>' . $cash_carries[0]['division_name'] . '</b></td>
+                                    </tr>
+                                </table>
+                                <table style="font-size:12px; width:50%; float:left;">
+                                    <tr>
+                                        <td>Departement</td>
+                                        <td>:</td>
+                                        <td><b>' . $cash_carries[0]['departement_name'] . '</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Departement Sub</td>
+                                        <td>:</td>
+                                        <td><b>' . $cash_carries[0]['departement_sub_name'] . '</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Group</td>
+                                        <td>:</td>
+                                        <td><b>' . $cash_carries[0]['group_name'] . '</b></td>
                                     </tr>
                                 </table>
                             </div>
-                            <div style="float: right; font-size: 12px; text-align: right;">
-                                Print Date ' . date("d M Y H:i:s") . ' <br>
-                                Print By ' . $this->session->username . ' <br>
-                            </div>
-                        </center><br><br><br>
-                        <center>
-                            <h3 style="margin:0;">REPORT DETAIL CASH CARRY</h3>
-                            <span style="font-size:12px;">' . date("d F Y", strtotime($filter_from)) . ' to ' . date("d F Y", strtotime($filter_to)) . '</span>
-                        </center>
-                        <br>
-                        <div style="width:100%;">
-                            <table style="font-size:12px; width:50%; float:left; margin-bottom:20px;">
+                            
+                            <table id="customers" border="1">
                                 <tr>
-                                    <td>Employee ID</td>
-                                    <td>:</td>
-                                    <td><b>' . $cash_carries[0]['employee_number'] . '</b></td>
-                                </tr>
-                                <tr>
-                                    <td>Employee Name</td>
-                                    <td>:</td>
-                                    <td><b>' . $cash_carries[0]['employee_name'] . '</b></td>
-                                </tr>
-                                <tr>
-                                    <td>Plant</td>
-                                    <td>:</td>
-                                    <td><b>' . $cash_carries[0]['division_name'] . '</b></td>
-                                </tr>
-                            </table>
-                            <table style="font-size:12px; width:50%; float:left;">
-                                <tr>
-                                    <td>Departement</td>
-                                    <td>:</td>
-                                    <td><b>' . $cash_carries[0]['departement_name'] . '</b></td>
-                                </tr>
-                                <tr>
-                                    <td>Departement Sub</td>
-                                    <td>:</td>
-                                    <td><b>' . $cash_carries[0]['departement_sub_name'] . '</b></td>
-                                </tr>
-                                <tr>
-                                    <td>Group</td>
-                                    <td>:</td>
-                                    <td><b>' . $cash_carries[0]['group_name'] . '</b></td>
-                                </tr>
-                            </table>
-                        </div>
-                        
-                        <table id="customers" border="1">
-                            <tr>
-                                <th width="20">No</th>
-                                <th style="text-align:center;">Bank No</th>
-                                <th style="text-align:center;">Bank Name</th>
-                                <th style="text-align:center;">Trans Date</th>
-                                <th style="text-align:center;">Type</th>
-                                <th style="text-align:center;">Hour</th>
-                                <th style="text-align:center;">Amount</th>
-                                <th style="text-align:center;">Meal</th>
-                                <th style="text-align:center;">Total</th>
-                            </tr>';
-            $no = 1;
-            $grand_total = 0;
-            foreach ($cash_carries as $record) {
-                $this->db->select('c.days');
-                $this->db->from('shift_employees a');
-                $this->db->join('shifts b', 'a.shift_id = b.id', 'left');
-                $this->db->join('shift_details c', 'b.id = c.shift_id', 'left');
-                $this->db->where('a.employee_id', $record['employee_id']);
-                $shift_employee = $this->db->get()->row();
+                                    <th width="20">No</th>
+                                    <th style="text-align:center;">Bank No</th>
+                                    <th style="text-align:center;">Bank Name</th>
+                                    <th style="text-align:center;">Trans Date</th>
+                                    <th style="text-align:center;">Type</th>
+                                    <th style="text-align:center;">Hour</th>
+                                    <th style="text-align:center;">Amount</th>
+                                    <th style="text-align:center;">Meal</th>
+                                    <th style="text-align:center;">Total</th>
+                                </tr>';
+                $no = 1;
+                $grand_total = 0;
+                foreach ($cash_carries as $record) {
+                    $this->db->select('c.days');
+                    $this->db->from('shift_employees a');
+                    $this->db->join('shifts b', 'a.shift_id = b.id', 'left');
+                    $this->db->join('shift_details c', 'b.id = c.shift_id', 'left');
+                    $this->db->where('a.employee_id', $record['employee_id']);
+                    $shift_employee = $this->db->get()->row();
 
-                $this->db->select('trans_date');
-                $this->db->from('calendars');
-                $this->db->where('trans_date', $record['trans_date']);
-                $calendars = $this->db->get()->result_array();
+                    $this->db->select('trans_date');
+                    $this->db->from('calendars');
+                    $this->db->where('trans_date', $record['trans_date']);
+                    $calendars = $this->db->get()->result_array();
 
-                $start = strtotime($record['trans_date']);
-                $att_time_begin = strtotime(@$record['date_in'] . " " . @$record['time_in']);
-                $att_time_end = strtotime(@$record['date_out'] . " " . @$record['time_out']);
-                
-                $tomorrow = strtotime(date('Y-m-d', strtotime(@$record['date_out'] . "+1 days")) . " " . @$record['time_out']);
+                    $start = strtotime($record['trans_date']);
+                    $att_time_begin = strtotime(@$record['date_in'] . " " . @$record['time_in']);
+                    $att_time_end = strtotime(@$record['date_out'] . " " . @$record['time_out']);
+                    
+                    $tomorrow = strtotime(date('Y-m-d', strtotime(@$record['date_out'] . "+1 days")) . " " . @$record['time_out']);
 
-                $att_diff = $att_time_end - $att_time_begin;
-                $att_hour = floor($att_diff / (60 * 60));
-
-                if ($att_hour < 0) {
-                    $att_diff = $tomorrow - $att_time_begin;
+                    $att_diff = $att_time_end - $att_time_begin;
                     $att_hour = floor($att_diff / (60 * 60));
-                }
 
-                $cc_hour = $record['duration_hour'];
+                    if ($att_hour < 0) {
+                        $att_diff = $tomorrow - $att_time_begin;
+                        $att_hour = floor($att_diff / (60 * 60));
+                    }
 
-                //Validasi Jam
-                if ($att_hour > $cc_hour) {
-                    $hour = $cc_hour;
-                } else {
-                    $hour = $att_hour;
-                }
+                    $cc_hour = $record['duration_hour'];
 
-                //Validasi Uang makan
-                if ($record['meal'] == 0) {
-                    $meal = 0;
-                } else {
-                    $meal = @$record['total_meal'];
-                }
+                    //Validasi Jam
+                    if ($att_hour > $cc_hour) {
+                        $hour = $cc_hour;
+                    } else {
+                        $hour = $att_hour;
+                    }
 
-                if (@$shift_employee->days == "5") {
-                    if (date('w', $start) !== '0' && date('w', $start) !== '6') {
+                    //Validasi Uang makan
+                    if ($record['meal'] == 0) {
+                        $meal = 0;
+                    } else {
+                        $meal = @$record['total_meal'];
+                    }
 
-                        //Kalo ada tanggal Merah
-                        if (count($calendars) > 0) {
-                            $total = ((@$record['total_holiday'] * $hour));
+                    if (@$shift_employee->days == "5") {
+                        if (date('w', $start) !== '0' && date('w', $start) !== '6') {
+
+                            //Kalo ada tanggal Merah
+                            if (count($calendars) > 0) {
+                                $total = ((@$record['total_holiday'] * $hour));
+                            } else {
+                                $total = ((@$record['total_weekday'] * $hour));
+                            }
                         } else {
-                            $total = ((@$record['total_weekday'] * $hour));
+                            if (date('w', $start) === '0'){
+                                $total = ((@$record['total_sunday'] * $hour));
+                            }else{
+                                $total = ((@$record['total_saturday'] * $hour));
+                            }
                         }
                     } else {
-                        if (date('w', $start) === '0'){
-                            $total = ((@$record['total_sunday'] * $hour));
-                        }else{
-                            $total = ((@$record['total_saturday'] * $hour));
-                        }
-                    }
-                } else {
-                    if (date('w', $start) !== '0') {
+                        if (date('w', $start) !== '0') {
 
-                        //Kalo ada tanggal Merah
-                        if (count($calendars) > 0) {
-                            $total = ((@$record['total_holiday'] * $hour));
+                            //Kalo ada tanggal Merah
+                            if (count($calendars) > 0) {
+                                $total = ((@$record['total_holiday'] * $hour));
+                            } else {
+                                $total = ((@$record['total_weekday'] * $hour));
+                            }
                         } else {
-                            $total = ((@$record['total_weekday'] * $hour));
-                        }
-                    } else {
-                        if (date('w', $start) === '0'){
-                            $total = ((@$record['total_sunday'] * $hour));
-                        }else{
-                            $total = ((@$record['total_saturday'] * $hour));
+                            if (date('w', $start) === '0'){
+                                $total = ((@$record['total_sunday'] * $hour));
+                            }else{
+                                $total = ((@$record['total_saturday'] * $hour));
+                            }
                         }
                     }
+
+                    $html .= '  <tr>
+                                    <td>' . $no . '</td>
+                                    <td style="mso-number-format:\@;">' . $record['bank_no'] . '</td>
+                                    <td>' . $record['bank_name'] . '</td>
+                                    <td>' . $record['trans_date'] . '</td>
+                                    <td>' . $record['type'] . '</td>
+                                    <td style="text-align:center;">' . number_format($hour) . '</td>
+                                    <td style="text-align:right;">' . number_format($total) . '</td>
+                                    <td style="text-align:right;">' . number_format($meal) . '</td>
+                                    <td style="text-align:right;">' . number_format($total + $meal) . '</td>
+                                </tr>';
+                    $grand_total += ($total + $meal);
+                    $no++;
                 }
 
                 $html .= '  <tr>
-                                <td>' . $no . '</td>
-                                <td style="mso-number-format:\@;">' . $record['bank_no'] . '</td>
-                                <td>' . $record['bank_name'] . '</td>
-                                <td>' . $record['trans_date'] . '</td>
-                                <td>' . $record['type'] . '</td>
-                                <td style="text-align:center;">' . number_format($hour) . '</td>
-                                <td style="text-align:right;">' . number_format($total) . '</td>
-                                <td style="text-align:right;">' . number_format($meal) . '</td>
-                                <td style="text-align:right;">' . number_format($total + $meal) . '</td>
+                                <th style="text-align:right;" colspan="8">GRAND TOTAL</th>
+                                <th style="text-align:right;">' . number_format($grand_total) . '</th>
                             </tr>';
-                $grand_total += ($total + $meal);
-                $no++;
+                $html .= '</table>
+                            <br>
+                            <center>
+                                <table id="customers" style="width:60%;">
+                                    <tr>
+                                        <th width="100" style="text-align:center;">BOD</th>
+                                        <th width="100" style="text-align:center;">ASSISTANT MANAGER</th>
+                                        <th width="100" style="text-align:center;">PAYROLL STAFF</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="height:60px;"></td>
+                                        <td style="height:60px;"></td>
+                                        <td style="height:60px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:center; height:20px;"></th>
+                                        <th style="text-align:center;"></th>
+                                        <th style="text-align:center;"></th>
+                                    </tr>
+                                </table>
+                            </center>
+                            </body></html>';
+                echo $html;
+            }else{
+                echo "<center><br><br><br><h2>Data Not Complete to View</h2></center>";
             }
-
-            $html .= '  <tr>
-                            <th style="text-align:right;" colspan="8">GRAND TOTAL</th>
-                            <th style="text-align:right;">' . number_format($grand_total) . '</th>
-                        </tr>';
-            $html .= '</table>
-                        <br>
-                        <center>
-                            <table id="customers" style="width:60%;">
-                                <tr>
-                                    <th width="100" style="text-align:center;">BOD</th>
-                                    <th width="100" style="text-align:center;">ASSISTANT MANAGER</th>
-                                    <th width="100" style="text-align:center;">PAYROLL STAFF</th>
-                                </tr>
-                                <tr>
-                                    <td style="height:60px;"></td>
-                                    <td style="height:60px;"></td>
-                                    <td style="height:60px;"></td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align:center; height:20px;"></th>
-                                    <th style="text-align:center;"></th>
-                                    <th style="text-align:center;"></th>
-                                </tr>
-                            </table>
-                        </center>
-                        </body></html>';
-            echo $html;
         }
     }
 
@@ -602,10 +604,9 @@ class Cash_carries extends CI_Controller
                 $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
                 $this->db->join('groups e', "b.group_id = e.id");
                 $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
-                $this->db->join('notifications k', "a.id = k.table_id and k.table_name = 'cash_carries'", 'left');
                 $this->db->where('a.deleted', 0);
                 $this->db->where('a.status', 0);
-                $this->db->where("(k.users_id_to = '' or k.users_id_to is null)");
+                $this->db->where("(a.approved_to = '' or a.approved_to is null)");
                 if ($filter_from != "" && $filter_to != "") {
                     $this->db->where('a.trans_date >=', $filter_from);
                     $this->db->where('a.trans_date <=', $filter_to);
@@ -650,10 +651,9 @@ class Cash_carries extends CI_Controller
                     $this->db->join('attandances g', "b.number = g.number and a.trans_date = g.date_in", 'left');
                     $this->db->join('setup_cash_carries h', 'a.employee_id = h.employee_id', 'left');
                     $this->db->join('allowance_cash_carries i', 'h.allowance_id = i.id', 'left');
-                    $this->db->join('notifications k', "a.id = k.table_id and k.table_name = 'cash_carries'", 'left');
                     $this->db->where('a.deleted', 0);
                     $this->db->where('a.status', 0);
-                    $this->db->where("(k.users_id_to = '' or k.users_id_to is null)");
+                    $this->db->where("(a.approved_to = '' or a.approved_to is null)");
                     $this->db->where('a.employee_id =', $cash_carry['employee_id']);
                     $this->db->group_by("a.employee_id");
                     $this->db->order_by('b.name', 'ASC');

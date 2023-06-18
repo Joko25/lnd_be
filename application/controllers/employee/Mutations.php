@@ -59,9 +59,7 @@ class Mutations extends CI_Controller
         $offset = ($page - 1) * $rows;
         $result = array();
         //Select Query
-        $this->db->select('a.*, 
-            i.users_id_from as status_check,
-            i.users_id_to as status_notification, 
+        $this->db->select('a.*,
             b.number as employee_number, 
             b.name as employee_name, 
             c.name as division_name, 
@@ -72,7 +70,6 @@ class Mutations extends CI_Controller
         $this->db->join('divisions c', 'a.division_id = c.id');
         $this->db->join('departements d', 'a.departement_id = d.id');
         $this->db->join('departement_subs e', 'a.departement_sub_id = e.id');
-        $this->db->join('notifications i', "a.id = i.table_id and i.table_name = 'mutations'", 'left');
         $this->db->where('a.deleted', 0);
         $this->db->like('b.departement_id', $aprvDepartement);
         $this->db->like('b.division_id', $filter_divisions);
@@ -283,9 +280,7 @@ class Mutations extends CI_Controller
         $this->db->from('config');
         $config = $this->db->get()->row();
 
-        $this->db->select('a.*, 
-            i.users_id_from as status_check,
-            i.users_id_to as status_notification, 
+        $this->db->select('a.*,
             b.number as employee_number, 
             b.name as employee_name, 
             c.name as division_name, 
@@ -296,7 +291,6 @@ class Mutations extends CI_Controller
         $this->db->join('divisions c', 'a.division_id = c.id');
         $this->db->join('departements d', 'a.departement_id = d.id');
         $this->db->join('departement_subs e', 'a.departement_sub_id = e.id');
-        $this->db->join('notifications i', "a.id = i.table_id and i.table_name = 'mutations'", 'left');
         $this->db->where('a.deleted', 0);
         $this->db->like('b.departement_id', $aprvDepartement);
         $this->db->like('b.division_id', $filter_divisions);

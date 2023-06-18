@@ -21,9 +21,9 @@
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
         <tr>
-            <th data-options="field:'status_notification',width:100,align:'center',styler:statusStyler, formatter:statusFormatter"> Status</th>
-            <th data-options="field:'status_check',width:120,align:'center'"> By</th>
-            <th data-options="field:'status_date',width:150,align:'center'"> Date</th>
+            <th data-options="field:'approved',width:100,align:'center',styler:statusStyler, formatter:statusFormatter"> Status</th>
+            <th data-options="field:'approved_by',width:120,align:'center'"> By</th>
+            <th data-options="field:'approved_date',width:150,align:'center'"> Date</th>
             <th data-options="field:'created_by',width:100,align:'center'"> By</th>
             <th data-options="field:'created_date',width:150,align:'center'"> Date</th>
             <th data-options="field:'updated_by',width:100,align:'center'"> By</th>
@@ -588,15 +588,15 @@
 
     //CELLSTYLE STATUS
     function statusStyler(value, row, index) {
-        if (value == "" || value == null) {
+        if (row.approved_to == "" || row.approved_to == null) {
             return 'background: #53D636; color:white;';
         } else {
             return 'background: #FF5F5F; color:white;';
         }
     }
     //FORMATTER STATUS
-    function statusFormatter(value) {
-        if (value == "" || value == null) {
+    function statusFormatter(value, row) {
+        if (row.approved_to == "" || row.approved_to == null) {
             return 'Approved';
         } else {
             return 'Checked';

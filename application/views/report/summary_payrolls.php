@@ -12,9 +12,9 @@
             <th colspan="3" data-options="field:'',width:100,halign:'center'"> Approval</th>
         </tr>
         <tr>
-            <th data-options="field:'status_notification',width:100,align:'center',styler:statusStyler, formatter:statusFormatter"> Status</th>
-            <th data-options="field:'status_check',width:120,align:'center'"> By</th>
-            <th data-options="field:'status_date',width:150,align:'center'"> Date</th>
+            <th data-options="field:'approved',width:100,align:'center',styler:statusStyler, formatter:statusFormatter"> Status</th>
+            <th data-options="field:'approved_by',width:120,align:'center'"> By</th>
+            <th data-options="field:'approved_date',width:150,align:'center'"> Date</th>
         </tr>
     </thead>
 </table>
@@ -338,7 +338,7 @@
 
     function FormatterFile(value, row) {
         var linkPrint = "pdf_view('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
-        if (row.status_notification == "" || row.status_notification == null) {
+        if (row.approved_to == "" || row.approved_to == null) {
             $("#pdf_detail").linkbutton('enable');
         } else {
             $("#pdf_detail").linkbutton('disable');
@@ -348,7 +348,7 @@
     };
 
     function FormatterExcel(value, row) {
-        if (row.status_notification == "" || row.status_notification == null) {
+        if (row.approved_to == "" || row.approved_to == null) {
             var linkPrint = "excel_detail('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
         } else {
             var linkPrint = "toastr.info('Still Checked Approval')";
@@ -369,15 +369,15 @@
 
     //CELLSTYLE STATUS
     function statusStyler(value, row, index) {
-        if (value == "" || value == null) {
+        if (row.approved_to == "" || row.approved_to == null) {
             return 'background: #53D636; color:white;';
         } else {
             return 'background: #FF5F5F; color:white;';
         }
     }
     //FORMATTER STATUS
-    function statusFormatter(value) {
-        if (value == "" || value == null) {
+    function statusFormatter(value, row) {
+        if (row.approved_to == "" || row.approved_to == null) {
             return 'Approved';
         } else {
             return 'Checked';

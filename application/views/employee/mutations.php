@@ -10,8 +10,8 @@
             <th rowspan="2" data-options="field:'departement_name',width:150,halign:'center'">Departement</th>
             <th rowspan="2" data-options="field:'departement_sub_name',width:150,halign:'center'">Departement Sub</th>
             <th rowspan="2" data-options="field:'description',width:300,halign:'center'">Note</th>
-            <th rowspan="2" data-options="field:'status_notification',width:100,align:'center',styler:statusStyler, formatter:statusFormatter">Approval</th>
-            <th rowspan="2" data-options="field:'status_check',width:120,align:'center'">Approval By</th>
+            <th rowspan="2" data-options="field:'approved',width:100,align:'center',styler:statusStyler, formatter:statusFormatter">Approval</th>
+            <th rowspan="2" data-options="field:'approved_by',width:120,align:'center'">Approval By</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
@@ -563,7 +563,7 @@
 
     //CELLSTYLE STATUS
     function statusStyler(value, row, index) {
-        if (value == "" || value == null) {
+        if (row.approved_to == "" || row.approved_to == null) {
             return 'background: #53D636; color:white;';
         } else {
             return 'background: #FF5F5F; color:white;';
@@ -571,8 +571,8 @@
     }
 
     //FORMATTER STATUS
-    function statusFormatter(value) {
-        if (value == "" || value == null) {
+    function statusFormatter(value, row) {
+        if (row.approved_to == "" || row.approved_to == null) {
             return 'Approved';
         } else {
             return 'Checked';

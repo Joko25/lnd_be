@@ -16,41 +16,51 @@ class Approvals extends CI_Controller
 
     public function approveall()
     {
-        $users_id_from = $this->input->post('users_id_from');
+        $approved_to = $this->input->post('approved_to');
+        $created_by = $this->input->post('created_by');
         $table_name = $this->input->post('table_name');
 
-        $notifications = $this->crud->reads('notifications', [], ["users_id_from" => $users_id_from, "table_name" => $table_name]);
-        $approvals = $this->crud->read('approvals', [], ["table_name" => $table_name, "id" => $notifications[0]->approvals_id]);
+        $datas = $this->crud->reads($table_name, [], ["approved_to" => $approved_to, "created_by" => $created_by]);
+        
+        foreach ($datas as $data) {
+            $id = $data->id;
+            $user = $this->crud->read('users', [], ["username" => $data->created_by]);
+            $approval = $this->crud->read('approvals', [], ["table_name" => $table_name, "departement_id" => @$user->departement_id]);
+            
+            if ($data->approved == 1) {
+                $users_id = @$approval->user_approval_2;
+                $approved = 2;
+            } elseif ($data->approved == 2) {
+                $users_id = @$approval->user_approval_3;
+                $approved = 3;
+            } elseif ($data->approved == 3) {
+                $users_id = @$approval->user_approval_4;
+                $approved = 4;
+            } elseif ($data->approved == 4) {
+                $users_id = @$approval->user_approval_5;
+                $approved = 5;
+            } else {
+                $users_id = "";
+                $approved = 0;
+            }
 
-        if ($notifications[0]->status == 1) {
-            $users_id = @$approvals->user_approval_2;
-        } elseif ($notifications[0]->status == 2) {
-            $users_id = @$approvals->user_approval_3;
-        } elseif ($notifications[0]->status == 3) {
-            $users_id = @$approvals->user_approval_4;
-        } elseif ($notifications[0]->status == 4) {
-            $users_id = @$approvals->user_approval_5;
-        } else {
-            $users_id = "";
-        }
-
-        //Approval Mutation
-        if ($table_name == "mutations" && $users_id == "") {
-            foreach ($notifications as $notification) {
-                $mutations = $this->crud->read('mutations', [], ["id" => $notification->table_id]);
+            //Approval Mutation
+            if ($table_name == "mutations" && $users_id == "") {
+                $mutations = $this->crud->read('mutations', [], ["id" => $id]);
                 $postEmployee = array(
                     "division_id" => $mutations->division_id,
                     "departement_id" => $mutations->departement_id,
                     "departement_sub_id" => $mutations->departement_sub_id
                 );
-                $this->crud->update('employees', ["id" => $mutations->employee_id], $postEmployee);
-            }
-        }
 
-        //Approval Agreement
-        if ($table_name == "agreements" && $users_id == "") {
-            foreach ($notifications as $notification) {
-                $agreements = $this->crud->read('agreements', [], ["id" => $notification->table_id]);
+                if($mutations->type == "PERMANENT"){
+                    $send = $this->db->update('employees', $postEmployee, ["id" => $mutations->employee_id]);
+                }
+            }
+
+            //Approval Agreement
+            if ($table_name == "agreements" && $users_id == "") {
+                $agreements = $this->crud->read('agreements', [], ["id" => $id]);
                 $postEmployee = array(
                     "position_id" => $agreements->position_id,
                     "group_id" => $agreements->group_id,
@@ -58,40 +68,46 @@ class Approvals extends CI_Controller
                     "date_sign" => $agreements->date_sign,
                     "date_expired" => $agreements->date_expired,
                 );
-                $this->crud->update('employees', ["number" => $agreements->number], $postEmployee);
+
+                $send = $this->db->update('employees', $postEmployee, ["number" => $agreements->number]);
             }
+
+            $values = array(
+                "approved_by" => $this->session->username,
+                "approved_date" => date('Y-m-d H:i:s'),
+                "approved_to" => $users_id,
+                "approved" => $approved,
+            );
+
+            $send = $this->db->update($table_name, $values, ["id" => $id]);
         }
 
-        $values = array(
-            "created_by" => $this->session->username,
-            "created_date" => date('Y-m-d H:i:s'),
-            "users_id_from" => $this->session->username,
-            "users_id_to" => $users_id,
-            "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $table_name)) . "</b>",
-            "status" => ($notifications[0]->status + 1),
-        );
-
-        $send = $this->crud->update('notifications', ["users_id_from" => $users_id_from, "table_name" => $table_name], $values);
-        echo $send;
+        echo json_encode(array("title" => "Approved", "message" => "Data Approved Successfully", "theme" => "success"));
     }
 
     public function approve()
     {
         $id = $this->input->post('id');
         $tablename = $this->input->post('tablename');
-        $notifications = $this->crud->read('notifications', [], ["table_id" => $id, "table_name" => $tablename]);
-        $approvals = $this->crud->read('approvals', [], ["table_name" => $tablename, "id" => $notifications->approvals_id]);
+        $data = $this->crud->read($tablename, [], ["id" => $id]);
+        $user = $this->crud->read('users', [], ["username" => $data->created_by]);
+        $approval = $this->crud->read('approvals', [], ["table_name" => $tablename, "departement_id" => @$user->departement_id]);
 
-        if ($notifications->status == 1) {
-            $users_id = @$approvals->user_approval_2;
-        } elseif ($notifications->status == 2) {
-            $users_id = @$approvals->user_approval_3;
-        } elseif ($notifications->status == 3) {
-            $users_id = @$approvals->user_approval_4;
-        } elseif ($notifications->status == 4) {
-            $users_id = @$approvals->user_approval_5;
+        if ($data->approved == 1) {
+            $users_id = @$approval->user_approval_2;
+            $approved = 2;
+        } elseif ($data->approved == 2) {
+            $users_id = @$approval->user_approval_3;
+            $approved = 3;
+        } elseif ($data->approved == 3) {
+            $users_id = @$approval->user_approval_4;
+            $approved = 4;
+        } elseif ($data->approved == 4) {
+            $users_id = @$approval->user_approval_5;
+            $approved = 5;
         } else {
             $users_id = "";
+            $approved = 0;
         }
 
         //Approval Mutation
@@ -104,7 +120,12 @@ class Approvals extends CI_Controller
             );
 
             if($mutations->type == "PERMANENT"){
-                $this->crud->update('employees', ["id" => $mutations->employee_id], $postEmployee);
+                $send = $this->db->update('employees', $postEmployee, ["id" => $mutations->employee_id]);
+                if($send){
+                    echo json_encode(array("title" => "Approved", "message" => "Data Approved Successfully", "theme" => "success"));
+                } else {
+                    echo log_message('error', 'There is an error in your system or data');
+                }
             }
         }
 
@@ -118,20 +139,28 @@ class Approvals extends CI_Controller
                 "date_sign" => $agreements->date_sign,
                 "date_expired" => $agreements->date_expired,
             );
-            $this->crud->update('employees', ["number" => $agreements->number], $postEmployee);
+
+            $send = $this->db->update('employees', $postEmployee, ["number" => $agreements->number]);
+            if($send){
+                echo json_encode(array("title" => "Approved", "message" => "Data Approved Successfully", "theme" => "success"));
+            } else {
+                echo log_message('error', 'There is an error in your system or data');
+            }
         }
 
         $values = array(
-            "created_by" => $this->session->username,
-            "created_date" => date('Y-m-d H:i:s'),
-            "users_id_from" => $this->session->username,
-            "users_id_to" => $users_id,
-            "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $tablename)) . "</b>",
-            "status" => ($notifications->status + 1),
+            "approved_by" => $this->session->username,
+            "approved_date" => date('Y-m-d H:i:s'),
+            "approved_to" => $users_id,
+            "approved" => $approved,
         );
 
-        $send = $this->crud->update('notifications', ["table_id" => $id, "table_name" => $tablename], $values);
-        echo $send;
+        $send = $this->db->update($tablename, $values, ["id" => $id]);
+        if($send){
+            echo json_encode(array("title" => "Approved", "message" => "Data Approved Successfully", "theme" => "success"));
+        } else {
+            echo log_message('error', 'There is an error in your system or data');
+        }
     }
 
     public function approvePayrolls()
@@ -153,67 +182,66 @@ class Approvals extends CI_Controller
         $this->db->group_by('a.employee_id');
         $records = $this->db->get()->result_array();
 
-        $users_id = "";
         foreach ($records as $record) {
             $payroll_id = $record['id'];
-            $notifications = $this->crud->read('notifications', [], ["table_id" => $payroll_id, "table_name" => $tablename]);
-            $approvals = $this->crud->read('approvals', [], ["table_name" => $tablename]);
 
-            if (@$notifications->status == 1) {
-                $users_id = @$approvals->user_approval_2;
-            } elseif (@$notifications->status == 2) {
-                $users_id = @$approvals->user_approval_3;
-            } elseif (@$notifications->status == 3) {
-                $users_id = @$approvals->user_approval_4;
-            } elseif (@$notifications->status == 4) {
-                $users_id = @$approvals->user_approval_5;
+            $data = $this->crud->read($tablename, [], ["id" => $payroll_id]);
+            $user = $this->crud->read('users', [], ["username" => $data->created_by]);
+            $approval = $this->crud->read('approvals', [], ["table_name" => $tablename, "departement_id" => @$user->departement_id]);
+
+            if ($data->approved == 1) {
+                $users_id = @$approval->user_approval_2;
+                $approved = 2;
+            } elseif ($data->approved == 2) {
+                $users_id = @$approval->user_approval_3;
+                $approved = 3;
+            } elseif ($data->approved == 3) {
+                $users_id = @$approval->user_approval_4;
+                $approved = 4;
+            } elseif ($data->approved == 4) {
+                $users_id = @$approval->user_approval_5;
+                $approved = 5;
             } else {
                 $users_id = "";
+                $approved = 0;
             }
 
             $values = array(
-                "created_by" => $this->session->username,
-                "created_date" => date('Y-m-d H:i:s'),
-                "users_id_from" => $this->session->username,
-                "users_id_to" => $users_id,
-                "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $tablename)) . "</b>",
-                "status" => (@$notifications->status + 1),
+                "approved_by" => $this->session->username,
+                "approved_date" => date('Y-m-d H:i:s'),
+                "approved_to" => $users_id,
+                "approved" => $approved,
             );
-
-            if ($users_id == "") {
-                $send = $this->crud->update('payrolls', ["id" => $payroll_id], ["status" => 1]);
-            }
-
-            $send = $this->crud->update('notifications', ["table_id" => $payroll_id, "table_name" => $tablename], $values);
+            
+            $send = $this->db->update($tablename, $values, ["id" => $payroll_id]);
         }
-        echo $send;
+
+        echo json_encode(array("title" => "Approved", "message" => "Data Approved Successfully", "theme" => "success"));
     }
 
     public function disapproveall()
     {
-        $users_id_from = $this->input->post('users_id_from');
+        $created_by = $this->input->post('created_by');
+        $approved_to = $this->input->post('approved_to');
         $table_name = $this->input->post('table_name');
-        $notifications = $this->crud->reads('notifications', [], ["users_id_from" => $users_id_from, "table_name" => $table_name]);
+        $datas = $this->crud->reads($table_name, [], ["approved_to" => $approved_to, "created_by" => $created_by]);
 
         /* Default */
-        foreach ($notifications as $notification) {
-            $send = $this->crud->delete('notifications', ["table_id" => $notification->table_id, "table_name" => $table_name]);
-            $send = $this->crud->delete($table_name, ["id" => $notification->table_id]);
+        foreach ($datas as $data) {
+            $send = $this->crud->delete($table_name, ["id" => $data->id]);
         }
 
-        echo $send;
+        echo json_encode(array("title" => "Disapproved", "message" => "Data Disapproved Successfully", "theme" => "success"));
     }
 
     public function disapprove()
     {
         $id = $this->input->post('id');
         $tablename = $this->input->post('tablename');
-        $notifications = $this->crud->read('notifications', [], ["table_id" => $id, "table_name" => $tablename]);
 
         /* Default */
-        $send = $this->crud->delete('notifications', ["table_id" => $id, "table_name" => $tablename]);
         $send = $this->crud->delete($tablename, ["id" => $id]);
-        echo $send;
+        echo json_encode(array("title" => "Disapproved", "message" => "Data Disapproved Successfully", "theme" => "success"));
     }
 
     public function disapprovePayrolls()
@@ -237,26 +265,18 @@ class Approvals extends CI_Controller
 
         foreach ($records as $record) {
             $payroll_id = $record['id'];
-            $notifications = $this->crud->read('notifications', [], ["table_id" => $payroll_id, "table_name" => $tablename]);
-
-            /* Default */
-            $send = $this->crud->delete('notifications', ["table_id" => $payroll_id, "table_name" => $tablename]);
             $send = $this->crud->delete($tablename, ["id" => $payroll_id]);
         }
+
         echo $send;
     }
 
     public function approvalCount()
     {
-        $this->db->select('a.*, b.name as fullname, b.avatar');
-        $this->db->from('notifications a');
-        $this->db->join('users b', 'a.users_id_to = b.username');
-        $this->db->where('b.username', $this->session->username);
-        $this->db->group_by('a.table_name');
-        $this->db->group_by('a.users_id_from');
-        $this->db->order_by('a.created_date', 'DESC');
-        $totalRows = $this->db->count_all_results('', false);
+        $cash_carries = $this->crud->reads("cash_carries", [], ["approved_to" => $this->session->username], "", "", "", ["approved_by"]);
+        $payrolls = $this->crud->reads("payrolls", [], ["approved_to" => $this->session->username], "", "", "", ["approved_by"]);
 
+        $totalRows = (count($cash_carries) + count($payrolls));
         if ($totalRows > 0) {
             echo '<span class="badge">' . $totalRows . '</span>';
         } else {
@@ -266,26 +286,48 @@ class Approvals extends CI_Controller
 
     public function approvalList()
     {
-        $this->db->select('a.*, c.name as fullname, c.avatar');
-        $this->db->from('notifications a');
-        $this->db->join('users b', 'a.users_id_to = b.username');
-        $this->db->join('users c', 'a.users_id_from = c.username');
-        $this->db->where('b.username', $this->session->username);
-        $this->db->group_by('a.table_name');
-        $this->db->group_by('a.users_id_from');
-        $this->db->order_by('a.created_date', 'DESC');
-        $records = $this->db->get()->result_object();
+        //Cash Carries
+        $this->db->select('b.name as fullname, a.approved_to, a.created_by, b.avatar');
+        $this->db->from('cash_carries a');
+        $this->db->join('users b', 'a.approved_by = b.username');
+        $this->db->join('users c', 'a.approved_to = c.username');
+        $this->db->where('a.approved_to', $this->session->username);
+        $this->db->group_by('a.created_by');
+        $cash_carries = $this->db->get()->result_object();
 
-        if (count($records) > 0) {
-            foreach ($records as $record) {
-                if ($record->avatar == "") {
-                    $avatar = base_url('assets/image/users/default.png');
-                } else {
-                    $avatar = $record->avatar;
-                }
+        //Payrolls
+        $this->db->select('b.name as fullname, a.approved_to, a.created_by, b.avatar');
+        $this->db->from('payrolls a');
+        $this->db->join('users b', 'a.approved_by = b.username');
+        $this->db->join('users c', 'a.approved_to = c.username');
+        $this->db->where('a.approved_to', $this->session->username);
+        $this->db->group_by('a.created_by');
+        $payrolls = $this->db->get()->result_object();
 
-                $link = "approvalDetail('" . $record->table_name . "','" . $record->users_id_from . "')";
-                echo '<li class="list-isi">
+        if (count($cash_carries) > 0) {
+            foreach ($cash_carries as $cash_carry) {
+                $this->approvalMessage($cash_carry->avatar, $cash_carry->fullname, $cash_carry->approved_to, $cash_carry->created_by, "cash_carries");
+            }
+        } elseif(count($payrolls) > 0) {
+            foreach ($payrolls as $payroll) {
+                $this->approvalMessage($payroll->avatar, $payroll->fullname, $payroll->approved_to, $payroll->created_by, "payrolls");
+            }
+        }else{
+            echo '  <div class="alert alert-info" role="alert">
+                        Notification Not Found
+                    </div>';
+        }
+    }
+
+    public function approvalMessage($foto, $fullname, $approved_to, $created_by, $table){
+        if ($foto == "") {
+            $avatar = base_url('assets/image/users/default.png');
+        } else {
+            $avatar = $foto;
+        }
+
+        $link = "approvalDetail('$table', '$approved_to', '$created_by')";
+        echo '  <li class="list-isi">
                     <a onclick="' . $link . '">
                         <table style="width: 100%;">
                             <tr>
@@ -296,66 +338,30 @@ class Approvals extends CI_Controller
                                     </div>
                                 </td>
                                 <td style="padding-left: 10px;">
-                                    <b>' . $record->fullname . '</b><br>
-                                    <small>' . $record->description . '</small>
+                                    <b>' . $fullname . '</b><br>
+                                    <small>Sent a request to approve data <b>' . strtoupper(str_replace("_", " ", $table)) . '</b></small>
                                 </td>
                             </tr>
                         </table>
                     </a>
                 </li>';
-            }
-        } else {
-            echo '  <div class="alert alert-info" role="alert">
-                        Notification Not Found
-                    </div>';
-        }
     }
 
-    public function approvalUsers($users_id_from)
+    public function approvalUsers($approved_to, $created_by)
     {
-        $this->db->select('a.*');
+        $this->db->select('*');
         $this->db->from('users a');
-        $this->db->join("notifications b", "a.id = b.table_id and b.table_name = 'users'");
-        $this->db->where('b.users_id_to', $this->session->username);
-        $this->db->where('b.users_id_from', $users_id_from);
-        $this->db->order_by('a.created_date', 'DESC');
+        $this->db->where('approved_to', $approved_to);
+        $this->db->where('created_by', $created_by);
+        $this->db->order_by('created_date', 'DESC');
         $records = $this->db->get()->result_array();
 
         die(json_encode($records));
     }
 
-    public function approvalEmployees($users_id_from)
+    public function approvalAgreements($approved_to, $created_by)
     {
         $this->db->select('a.*, 
-                b.users_id_from as status_check,
-                b.users_id_to as status_notification, 
-                c.name as division_name, 
-                d.name as departement_name, 
-                e.name as departement_sub_name,
-                e.type, 
-                g.name as position_name,
-                h.name as contract_name');
-        $this->db->from('employees a');
-        $this->db->join('notifications b', "a.id = b.table_id and b.table_name = 'employees'");
-        $this->db->join('divisions c', 'c.id = a.division_id');
-        $this->db->join('departements d', 'd.id = a.departement_id');
-        $this->db->join('departement_subs e', 'e.id = a.departement_sub_id');
-        $this->db->join('agreements f', 'a.number = f.number and f.status = 0');
-        $this->db->join('positions g', 'g.id = a.position_id', 'left');
-        $this->db->join('contracts h', 'h.id = a.contract_id', 'left');
-        $this->db->where('b.users_id_to', $this->session->username);
-        $this->db->where('b.users_id_from', $users_id_from);
-        $this->db->order_by('a.created_date', 'DESC');
-        $records = $this->db->get()->result_array();
-
-        die(json_encode($records));
-    }
-
-    public function approvalAgreements($users_id_from)
-    {
-        $this->db->select('a.*, 
-                i.users_id_from as status_check,
-                i.users_id_to as status_notification, 
                 b.name as employee_name, 
                 c.name as division_name, 
                 d.name as departement_name, 
@@ -371,19 +377,16 @@ class Approvals extends CI_Controller
         $this->db->join('positions f', 'f.id = a.position_id');
         $this->db->join('contracts g', 'g.id = a.contract_id');
         $this->db->join('groups h', 'h.id = a.group_id');
-        $this->db->join('notifications i', "a.id = i.table_id and i.table_name = 'agreements'", 'left');
-        $this->db->where('i.users_id_to', $this->session->username);
-        $this->db->where('i.users_id_from', $users_id_from);
+        $this->db->where('a.approved_to', $approved_to);
+        $this->db->where('a.created_by', $created_by);
         $records = $this->db->get()->result_array();
 
         die(json_encode($records));
     }
 
-    public function approvalMutations($users_id_from)
+    public function approvalMutations($approved_to, $created_by)
     {
         $this->db->select('a.*, 
-                i.users_id_from as status_check,
-                i.users_id_to as status_notification, 
                 b.number as employee_number, 
                 b.name as employee_name, 
                 c.name as division_name, 
@@ -394,43 +397,17 @@ class Approvals extends CI_Controller
         $this->db->join('divisions c', 'a.division_id = c.id');
         $this->db->join('departements d', 'a.departement_id = d.id');
         $this->db->join('departement_subs e', 'a.departement_sub_id = e.id');
-        $this->db->join('notifications i', "a.id = i.table_id and i.table_name = 'mutations'", 'left');
         $this->db->where('a.deleted', 0);
-        $this->db->where('i.users_id_to', $this->session->username);
-        $this->db->where('i.users_id_from', $users_id_from);
+        $this->db->where('a.approved_to', $approved_to);
+        $this->db->where('a.created_by', $created_by);
         $records = $this->db->get()->result_array();
 
         die(json_encode($records));
     }
 
-    public function approvalEmployeeRequests($users_id_from)
+    public function approvalPermits($approved_to, $created_by)
     {
-        $this->db->select('a.*, 
-                i.users_id_from as status_check,
-                i.users_id_to as status_notification, 
-                c.name as division_name, 
-                d.name as departement_name,
-                e.name as departement_sub_name');
-        $this->db->from('employee_requests a');
-        $this->db->join('divisions c', 'a.division_id = c.id');
-        $this->db->join('departements d', 'a.departement_id = d.id');
-        $this->db->join('departement_subs e', 'a.departement_sub_id = e.id');
-        $this->db->join('notifications i', "a.id = i.table_id and i.table_name = 'employee_requests'", 'left');
-        $this->db->where('a.deleted', 0);
-        $this->db->where('i.users_id_to', $this->session->username);
-        $this->db->where('i.users_id_from', $users_id_from);
-        $this->db->order_by('a.due_date', 'ASC');
-        $records = $this->db->get()->result_array();
-
-        die(json_encode($records));
-    }
-
-    public function approvalPermits($users_id_from)
-    {
-        $this->db->select('a.*, 
-                b.users_id_from as status_check,
-                b.users_id_to as status_notification, 
-                b.updated_date as status_date,
+        $this->db->select('a.*,
                 c.number as employee_number,
                 c.name as employee_name,
                 d.name as division_name,
@@ -441,7 +418,6 @@ class Approvals extends CI_Controller
                 i.name as request_name
             ');
         $this->db->from('permits a');
-        $this->db->join('notifications b', "a.id = b.table_id and b.table_name = 'permits'", 'left');
         $this->db->join('employees c', 'a.employee_id = c.id');
         $this->db->join('divisions d', 'c.division_id = d.id');
         $this->db->join('departements e', 'c.departement_id = e.id');
@@ -450,20 +426,17 @@ class Approvals extends CI_Controller
         $this->db->join('reasons h', 'a.reason_id = h.id');
         $this->db->join('users i', 'a.created_by = i.username');
         $this->db->where('c.status', 0);
-        $this->db->where('b.users_id_from', $users_id_from);
-        $this->db->where('b.users_id_to', $this->session->username);
+        $this->db->where('a.approved_to', $approved_to);
+        $this->db->where('a.created_by', $created_by);
         $this->db->order_by('a.permit_date', 'DESC');
         $records = $this->db->get()->result_array();
 
         die(json_encode($records));
     }
 
-    public function approvalOvertimes($users_id_from)
+    public function approvalOvertimes($approved_to, $created_by)
     {
-        $this->db->select('a.*, 
-                g.users_id_from as status_check,
-                g.users_id_to as status_notification, 
-                g.updated_date as status_date,
+        $this->db->select('a.*,
                 c.name as division_name,
                 d.name as departement_name,
                 e.name as departement_sub_name,
@@ -477,12 +450,11 @@ class Approvals extends CI_Controller
         $this->db->join('departements d', 'b.departement_id = d.id');
         $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
         $this->db->join('users f', "a.created_by = f.username");
-        $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'overtimes'", 'left');
         $this->db->where('b.deleted', 0);
         $this->db->where('b.status', 0);
         $this->db->where('a.deleted', 0);
-        $this->db->where('g.users_id_from', $users_id_from);
-        $this->db->where('g.users_id_to', $this->session->username);
+        $this->db->where('a.approved_to', $approved_to);
+        $this->db->where('a.created_by', $created_by);
         $this->db->group_by('a.trans_date');
         $this->db->group_by('a.employee_id');
         $this->db->group_by('a.type');
@@ -492,12 +464,9 @@ class Approvals extends CI_Controller
         die(json_encode($records));
     }
 
-    public function approvalCashCarries($users_id_from)
+    public function approvalCashCarries($approved_to, $created_by)
     {
         $this->db->select('a.*, 
-                g.users_id_from as status_check,
-                g.users_id_to as status_notification, 
-                g.updated_date as status_date,
                 c.name as division_name,
                 d.name as departement_name,
                 e.name as departement_sub_name,
@@ -511,12 +480,11 @@ class Approvals extends CI_Controller
         $this->db->join('departements d', 'b.departement_id = d.id');
         $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
         $this->db->join('users f', "a.created_by = f.username");
-        $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'cash_carries'", 'left');
         $this->db->where('b.deleted', 0);
         $this->db->where('b.status', 0);
         $this->db->where('a.deleted', 0);
-        $this->db->where('g.users_id_from', $users_id_from);
-        $this->db->where('g.users_id_to', $this->session->username);
+        $this->db->where('a.approved_to', $approved_to);
+        $this->db->where('a.created_by', $created_by);
         $this->db->group_by('a.trans_date');
         $this->db->group_by('a.employee_id');
         $this->db->group_by('a.type');
@@ -526,12 +494,9 @@ class Approvals extends CI_Controller
         die(json_encode($records));
     }
 
-    public function approvalChangeDays($users_id_from)
+    public function approvalChangeDays($approved_to, $created_by)
     {
-        $this->db->select('a.*, 
-                g.users_id_from as status_check,
-                g.users_id_to as status_notification, 
-                g.updated_date as status_date,
+        $this->db->select('a.*,
                 c.name as division_name,
                 d.name as departement_name,
                 e.name as departement_sub_name,
@@ -545,12 +510,11 @@ class Approvals extends CI_Controller
         $this->db->join('departements d', 'b.departement_id = d.id');
         $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
         $this->db->join('users f', "a.created_by = f.username");
-        $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'change_days'", 'left');
         $this->db->where('b.deleted', 0);
         $this->db->where('b.status', 0);
         $this->db->where('a.deleted', 0);
-        $this->db->where('g.users_id_from', $users_id_from);
-        $this->db->where('g.users_id_to', $this->session->username);
+        $this->db->where('a.approved_to', $approved_to);
+        $this->db->where('a.created_by', $created_by);
         $this->db->group_by('a.start');
         $this->db->group_by('a.employee_id');
         $this->db->order_by('a.created_date', 'DESC');
@@ -559,18 +523,18 @@ class Approvals extends CI_Controller
         die(json_encode($records));
     }
 
-    public function approvalPayrolls()
+    public function approvalPayrolls($approved_to, $created_by)
     {
         $this->db->select('a.period_start, a.period_end, b.group_id, d.name as group_name, c.name, a.created_date, COUNT(a.employee_id) as employee, SUM(a.net_income) as amount');
         $this->db->from('payrolls a');
         $this->db->join('employees b', 'a.employee_id = b.id');
         $this->db->join('users c', 'a.created_by = c.username');
         $this->db->join('groups d', 'b.group_id = d.id');
-        $this->db->join('notifications e', "a.id = e.table_id and e.table_name = 'payrolls'", 'left');
         $this->db->where('b.deleted', 0);
         $this->db->where('b.status', 0);
         $this->db->where('a.status', 0);
-        $this->db->where('e.users_id_to', $this->session->username);
+        $this->db->where('a.approved_to', $approved_to);
+        $this->db->where('a.created_by', $created_by);
         $this->db->group_by('b.group_id');
         $records = $this->db->get()->result_array();
 
@@ -588,12 +552,9 @@ class Approvals extends CI_Controller
         die(json_encode($data));
     }
 
-    public function approvalSetupSalary($users_id_from)
+    public function approvalSetupSalary($approved_to, $created_by)
     {
-        $this->db->select('a.*, 
-                g.users_id_from as status_check,
-                g.users_id_to as status_notification, 
-                g.updated_date as status_date,
+        $this->db->select('a.*,
                 c.name as division_name,
                 d.name as departement_name,
                 e.name as departement_sub_name,
@@ -608,12 +569,11 @@ class Approvals extends CI_Controller
         $this->db->join('departements d', 'b.departement_id = d.id');
         $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
         $this->db->join('users f', "a.created_by = f.username");
-        $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'setup_salaries'", 'left');
         $this->db->join('salary_components h', 'a.salary_component_id = h.id', 'left');
         $this->db->where('b.deleted', 0);
         $this->db->where('b.status', 0);
-        $this->db->where('g.users_id_from', $users_id_from);
-        $this->db->where('g.users_id_to', $this->session->username);
+        $this->db->where('a.approved_to', $approved_to);
+        $this->db->where('a.created_by', $created_by);
         $this->db->group_by('a.employee_id');
         $this->db->order_by('b.name', 'ASC');
         $records = $this->db->get()->result_array();
@@ -621,12 +581,9 @@ class Approvals extends CI_Controller
         die(json_encode($records));
     }
 
-    public function approvalWarningLetters($users_id_from)
+    public function approvalWarningLetters($approved_to, $created_by)
     {
-        $this->db->select('a.*, 
-                g.users_id_from as status_check,
-                g.users_id_to as status_notification, 
-                g.updated_date as status_date,
+        $this->db->select('a.*,
                 c.name as division_name,
                 d.name as departement_name,
                 e.name as departement_sub_name,
@@ -641,12 +598,11 @@ class Approvals extends CI_Controller
         $this->db->join('departements d', 'b.departement_id = d.id');
         $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
         $this->db->join('users f', "a.created_by = f.username");
-        $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'warning_letters'", 'left');
         $this->db->join('violations h', 'a.violation_id = h.id', 'left');
         $this->db->where('b.deleted', 0);
         $this->db->where('b.status', 0);
-        $this->db->where('g.users_id_from', $users_id_from);
-        $this->db->where('g.users_id_to', $this->session->username);
+        $this->db->where('a.approved_to', $approved_to);
+        $this->db->where('a.created_by', $created_by);
         $this->db->group_by('a.employee_id');
         $this->db->order_by('b.name', 'ASC');
         $records = $this->db->get()->result_array();
@@ -654,7 +610,7 @@ class Approvals extends CI_Controller
         die(json_encode($records));
     }
 
-    public function approvalResignations($users_id_from)
+    public function approvalResignations($approved_to, $created_by)
     {
         $this->db->select('a.*, 
                 g.users_id_from as status_check,
@@ -678,8 +634,8 @@ class Approvals extends CI_Controller
         $this->db->join('reason_resignations h', 'a.reason_resignation_id = h.id', 'left');
         $this->db->where('b.deleted', 0);
         $this->db->where('b.status', 0);
-        $this->db->where('g.users_id_from', $users_id_from);
-        $this->db->where('g.users_id_to', $this->session->username);
+        $this->db->where('a.approved_to', $approved_to);
+        $this->db->where('a.created_by', $created_by);
         $this->db->group_by('a.employee_id');
         $this->db->order_by('b.name', 'ASC');
         $records = $this->db->get()->result_array();

@@ -106,17 +106,13 @@ class Warning_letters extends CI_Controller
                 d.name as division_name, 
                 e.name as departement_name, 
                 f.name as departement_sub_name, 
-                c.name as violation_name,
-                g.users_id_to as status_check,
-                g.users_id_to as status_notification, 
-                g.updated_date as status_date');
+                c.name as violation_name');
             $this->db->from('warning_letters a');
             $this->db->join('employees b', 'a.employee_id = b.id');
             $this->db->join('violations c', 'a.violation_id = c.id');
             $this->db->join('divisions d', 'b.division_id = d.id');
             $this->db->join('departements e', 'b.departement_id = e.id');
             $this->db->join('departement_subs f', 'b.departement_sub_id = f.id');
-            $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'warning_letters'", 'left');
             $this->db->where('a.deleted', 0);
             $this->db->where('a.issue_date >=', $filter_from);
             $this->db->where('a.issue_date <=', $filter_to);

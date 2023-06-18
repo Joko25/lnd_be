@@ -127,11 +127,9 @@ class Crud extends CI_Model
             if ($this->db->update($table, $data)) {
                 $this->logs("Update Before", json_encode($dataBefore), $table);
                 $this->logs("Update New", json_encode($data), $table);
-                $reads = $this->reads($table, [], $data);
-
-                foreach ($reads as $read) {
-                    $this->approvals($table, $read->id);
-                }
+                
+                $read = $this->read($table, [], $where);
+                $this->approvals($table, $read->id);
 
                 return json_encode(array("title" => "Good Job", "message" => "Data Updated Successfully", "theme" => "success"));
             } else {
@@ -145,11 +143,6 @@ class Crud extends CI_Model
     function delete($table, $data)
     {
         if ($this->session->username != "") {
-            $reads = $this->reads($table, [], $data);
-            foreach ($reads as $read) {
-                $this->db->delete('notifications', ["table_name" => $table, "table_id" => $read->id]);
-            }
-
             $dataBefore = $this->read($table, [], $data);
 
             if ($this->db->delete($table, $data)) {
@@ -221,48 +214,78 @@ class Crud extends CI_Model
 
     function approvals($table, $table_id)
     {
-        $id = $this->autoid('notifications');
+        $query = $this->db->query("DESCRIBE $table");
+        $fields = $query->result_array();
 
         $user = $this->read('users', [], ["username" => $this->session->username]);
-        //Approval
         $approval = $this->read('approvals', [], ["table_name" => $table, "departement_id" => @$user->departement_id]);
-        $notifications = $this->read('notifications', [], ["table_name" => $table, "table_id" => $table_id]);
-        
-        if (!empty($approval)) {
-            if(empty($notifications->table_id)){
-                $this->db->insert("notifications", [
-                    "id" => $id,
-                    "approvals_id" => $approval->id,
-                    "users_id_from" => $this->session->username,
-                    "users_id_to" => $approval->user_approval_1,
-                    "table_id" => $table_id,
-                    "table_name" => $table,
-                    "name" => "CREATED APPROVAL",
-                    "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $table)) . "</b>",
-                    "status" => 1,
-                    "created_by" => $this->session->username,
-                    "created_date" => date('Y-m-d H:i:s'),
-                    "deleted" => 0
-                ]);
-            }else{
-                $this->db->delete("notifications", ["table_id" => $table_id, "table_name" => $table]);
-                $this->db->insert("notifications", [
-                    "id" => $id,
-                    "approvals_id" => $approval->id,
-                    "users_id_from" => $this->session->username,
-                    "users_id_to" => $approval->user_approval_1,
-                    "table_id" => $table_id,
-                    "table_name" => $table,
-                    "name" => "CREATED APPROVAL",
-                    "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $table)) . "</b>",
-                    "status" => 1,
-                    "created_by" => $this->session->username,
-                    "created_date" => date('Y-m-d H:i:s'),
-                    "deleted" => 0
-                ]);
+
+        $fieldExists = false;
+        foreach ($fields as $field) {
+            if ($field['Field'] == "approved") {
+                $fieldExists = true;
+                break;
+            }
+        }
+
+        if ($fieldExists) {
+            if (!empty($approval)) {
+                $formApprove = [
+                    "approved" => 1,
+                    "approved_to" => $approval->user_approval_1,
+                    "approved_by" => $this->session->username,
+                ];
+
+                $this->db->where(["id" => $table_id]);
+                $this->db->update($table, $formApprove);
             }
         }
     }
+
+    // function approvals($table, $table_id)
+    // {
+    //     $id = $this->autoid('notifications');
+
+    //     $user = $this->read('users', [], ["username" => $this->session->username]);
+    //     //Approval
+    //     $approval = $this->read('approvals', [], ["table_name" => $table, "departement_id" => @$user->departement_id]);
+    //     $notifications = $this->read('notifications', [], ["table_name" => $table, "table_id" => $table_id]);
+        
+    //     if (!empty($approval)) {
+    //         if(empty($notifications->table_id)){
+    //             $this->db->insert("notifications", [
+    //                 "id" => $id,
+    //                 "approvals_id" => $approval->id,
+    //                 "users_id_from" => $this->session->username,
+    //                 "users_id_to" => $approval->user_approval_1,
+    //                 "table_id" => $table_id,
+    //                 "table_name" => $table,
+    //                 "name" => "CREATED APPROVAL",
+    //                 "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $table)) . "</b>",
+    //                 "status" => 1,
+    //                 "created_by" => $this->session->username,
+    //                 "created_date" => date('Y-m-d H:i:s'),
+    //                 "deleted" => 0
+    //             ]);
+    //         }else{
+    //             $this->db->delete("notifications", ["table_id" => $table_id, "table_name" => $table]);
+    //             $this->db->insert("notifications", [
+    //                 "id" => $id,
+    //                 "approvals_id" => $approval->id,
+    //                 "users_id_from" => $this->session->username,
+    //                 "users_id_to" => $approval->user_approval_1,
+    //                 "table_id" => $table_id,
+    //                 "table_name" => $table,
+    //                 "name" => "CREATED APPROVAL",
+    //                 "description" => "Sent a request on " . date("d F Y H:i:s") . "  to approve data <b>" . strtoupper(str_replace("_", " ", $table)) . "</b>",
+    //                 "status" => 1,
+    //                 "created_by" => $this->session->username,
+    //                 "created_date" => date('Y-m-d H:i:s'),
+    //                 "deleted" => 0
+    //             ]);
+    //         }
+    //     }
+    // }
 
     function connectionInfo()
     {
