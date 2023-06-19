@@ -225,12 +225,12 @@
                                         var title = "<b style='color: green;'>" + result.title + "</b> | " + result.message;
                                         setTimeout(function() {
                                             requestSendMail(total, json, number + 1, value);
-                                        }, 10000);
+                                        }, 20000);
                                     } else {
                                         var title = "<b style='color: red;'>" + result.title + "</b> | " + result.message;
                                         setTimeout(function() {
                                             requestSendMail(total, json, number + 1, value);
-                                        }, 10000);
+                                        }, 20000);
                                     }
                                     $("#p_remarks").append(title + "<br>");
                                 }

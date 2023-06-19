@@ -415,7 +415,7 @@ class Payrolls extends CI_Controller
             if($attandance_amount >= $hkw){
                 $wd = $hkw;
             }else{
-                $wd = $attandance_amount;
+                $wd = $absen;
             }
 
             $masuk = @$wd;
@@ -437,8 +437,8 @@ class Payrolls extends CI_Controller
             foreach ($r_allowance as $allowance_data) {
                 if ($allowance_data['calculate_days'] == "1") {
                     $arr_allowance_number .= strtolower($allowance_data['number']) . ",";
-                    $arr_allowance_amount .= ($allowance_data['amount'] * $hkw) . ",";
-                    $arr_allowance_amount_total += ($allowance_data['amount'] * $hkw);
+                    $arr_allowance_amount .= ($allowance_data['amount'] * $masuk) . ",";
+                    $arr_allowance_amount_total += ($allowance_data['amount'] * $masuk);
                 } else {
                     $arr_allowance_number .= strtolower($allowance_data['number']) . ",";
                     $arr_allowance_amount .= $allowance_data['amount'] . ",";
@@ -450,7 +450,7 @@ class Payrolls extends CI_Controller
                     $count_allowance_number += 1;
 
                     if ($allowance_data['calculate_days'] == "1") {
-                        $arr_allowance_amount_number += ($allowance_data['amount'] * $hkw);
+                        $arr_allowance_amount_number += ($allowance_data['amount'] * $masuk);
                     } else {
                         $arr_allowance_amount_number += ($allowance_data['amount']);
                     }

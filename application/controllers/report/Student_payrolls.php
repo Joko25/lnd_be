@@ -178,6 +178,7 @@ class Student_payrolls extends CI_Controller
                                 <th rowspan="2" style="text-align:center;">PPH21</th>
                                 <th rowspan="2" style="text-align:center;">Total<br>Deduction</th>
                                 <th rowspan="2" style="text-align:center;">Nett Income</th>
+                                <th rowspan="2" style="text-align:center;">Sign</th>
                             </tr>
                             <tr>
                                 <th style="text-align:center;">Allowence</th>
@@ -221,6 +222,7 @@ class Student_payrolls extends CI_Controller
                                         <td style="text-align:right;">' . number_format($employee['pph']) . '</td>
                                         <td style="text-align:right;">' . number_format($total_deduction + $employee['deduction_absence_amount'] + $employee['bpjs_employee_total'] + $employee['bpjs_company_total'] + $employee['loan_cooperative'] + $employee['loan_bank'] + $employee['loan_other'] + $employee['correction_minus']) . '</td>
                                         <td style="text-align:right;">' . number_format(($employee['net_income'])) . '</td>
+                                        <td style="text-align:right;"></td>
                                     </tr>';
                             $total += $employee['net_income'];
                             $no++;
@@ -229,6 +231,7 @@ class Student_payrolls extends CI_Controller
                         $html .= '  <tr>
                                         <th style="text-align:right;" colspan="18">GRAND TOTAL</th>
                                         <th style="text-align:right;">' . number_format($total) . '</th>
+                                        <th style="text-align:right;"></th>
                                     </tr>
                                     </table>
                                     <br>
@@ -330,6 +333,7 @@ class Student_payrolls extends CI_Controller
                                             <th rowspan="2" style="text-align:center;">Boarding<br>Fee</th>
                                             <th colspan="2" style="text-align:center;">Correction</th>
                                             <th rowspan="2" style="text-align:center;">Total</th>
+                                            <th rowspan="2" style="text-align:center;">Sign</th>
                                         </tr>
                                         <tr>
                                             <th width="50" style="text-align:center;">Month I <br>(' . @number_format($allowance_1->amount) . ')</th>
@@ -371,6 +375,7 @@ class Student_payrolls extends CI_Controller
                                             <td style="text-align:right;">' . number_format($employee['correction_plus']) . '</td>
                                             <td style="text-align:right;">' . number_format($employee['correction_minus']) . '</td>
                                             <td style="text-align:right;">' . @number_format($employee['total_income']) . '</td>
+                                            <td></td>
                                         </tr>';
                             $total += $employee['total_income'];
                             $no++;
@@ -380,6 +385,7 @@ class Student_payrolls extends CI_Controller
                         echo '  <tr>
                                     <th style="text-align:right;" colspan="15">GRAND TOTAL</th>
                                     <th style="text-align:right;">' . number_format($total) . '</th>
+                                    <th style="text-align:right;"></th>
                                 </tr>
                                 </table>
                                 <br>
