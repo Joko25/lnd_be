@@ -268,9 +268,11 @@ class Payrolls extends CI_Controller
         if ($this->input->post()) {
             $record   = $this->input->post();
 
+            //ambil data dari variabel filter
             $filter_from = $this->input->get('filter_from');
             $filter_to = $this->input->get('filter_to');
 
+            //Ubah format tanggal menjadi tahun dan bulan
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
@@ -278,11 +280,14 @@ class Payrolls extends CI_Controller
             $start = strtotime($filter_from);
             $finish = strtotime($filter_to);
 
+            //Looping tanggal awal sampai tanggal akhir
             for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
                 //Jika tanggal yg di looping bukan hari sabtu dan minggu
                 if (date('w', $i) !== '0' && date('w', $i) !== '6') {
+                    //Hari kerja
                     $weekday[] = date('Y-m-d', $i);
                 } else {
+                	//Hari libur
                     $weekend[] = date('Y-m-d', $i);
                 }
             }
@@ -290,7 +295,7 @@ class Payrolls extends CI_Controller
             //Setting Payroll
             $config = $this->db->get('payroll_config')->result();
 
-            //Holiday
+            //Tanggal merah di master calendar
             $this->db->select('trans_date');
             $this->db->from('calendars');
             $this->db->where('trans_date >=', $filter_from);
@@ -303,8 +308,7 @@ class Payrolls extends CI_Controller
                 $w_calendars[] = $cal['trans_date'];
             }
 
-            //Permit_allowance
-            //Mengambil field dan isinya dari permit allowance
+            //Permit yang non deduction atau tidak potong gaji
             $permit_date = "'" . implode( "', '" , $weekend ) . "'";
             $calendar_date = "'" . implode( "', '" , $w_calendars ) . "'";
             $q_permit = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
@@ -326,8 +330,7 @@ class Payrolls extends CI_Controller
             $arr_permit_amount_ex = explode(",", substr($arr_permit_amount, 0, -1));
             $arr_permit_combine = array_combine($arr_permit_number_ex, $arr_permit_amount_ex);
 
-            //Permit Deduction
-            //Mengambil field dan isinya dari permit allowance
+            //Permit yang deduction atau potong gaji
             $q_permit_deduction = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                     FROM permit_types b
                     LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) and a.permit_date not in ($calendar_date)
@@ -338,6 +341,19 @@ class Payrolls extends CI_Controller
             $arr_total_permit_deduction = 0;
             foreach ($r_permit_deduction as $permit_data_deduction) {
                 $arr_total_permit_deduction += $permit_data_deduction['amount'];
+            }
+
+            //Permit atau absen nya YES di anggap masuk kerja
+            $q_permit_absence = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
+                    FROM permit_types b
+                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) and a.permit_date not in ($calendar_date)
+                    WHERE b.absence = 'YES' and (a.approved_to = '' or a.approved_to is null)
+                    GROUP BY b.id");
+
+            $r_permit_absence = $q_permit_absence->result_array();
+            $arr_total_permit_absence = 0;
+            foreach ($r_permit_absence as $permit_data_absence) {
+                $arr_total_permit_absence += $permit_data_absence['amount'];
             }
 
             //Change Days
@@ -409,19 +425,26 @@ class Payrolls extends CI_Controller
             $attandance = $this->db->get()->row();
             $attandance_amount = empty($attandance->amount) ? 0 : $attandance->amount;
 
+            //Hitung HKW atau jumlah hari kerja
             $hkw = (@count($weekday) - @$calendar_amount);
-            $absen = (@count($weekday) - @$calendar_amount - @$attandance_amount - @$changeDays_amount - $arr_total_permit - $arr_total_permit_deduction);
 
-            if($attandance_amount >= $hkw){
+            //Hitung bereapa hari dia ga ada absen
+            $absen = (@count($weekday) - @$calendar_amount - @$attandance_amount - @$changeDays_amount - $arr_total_permit - $arr_total_permit_deduction);
+            
+            //Hitung Hari dia masuk kerja
+            $working_days = ($attandance_amount + $arr_total_permit_absence);
+
+            //Jika hari kerja nya lebih besar dari HKW maka nilai ambil HKW
+            if($working_days >= $hkw){
                 $wd = $hkw;
             }else{
-                $wd = $absen;
+                $wd = $working_days;
             }
 
+          	//Total Masuk kerja
             $masuk = @$wd;
 
-            //Allowance Amount
-            //jika dia ada tunjuangan ambil field dan isinya
+            //Allowances / Tunjangan kerja
             $q_allowance = $this->db->query("SELECT b.number, b.name, coalesce(a.amount, 0) as amount, b.calculate_days, b.type
                     FROM allowances b
                     LEFT JOIN setup_allowances a ON a.allowance_id = b.id and a.employee_id = '$record[id]'
@@ -470,8 +493,7 @@ class Payrolls extends CI_Controller
             $arr_allowance_combine = array_combine($arr_allowance_number_ex, $arr_allowance_amount_ex);
             //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
-            //Deduction Amount
-            //Jika dia ada pemotongan gaji ambil field dan isinya
+            //Deduction atau Potongan Gaji
             $q_deduction = $this->db->query("SELECT b.number, b.name, a.amount
                     FROM deductions b
                     LEFT JOIN setup_deductions a ON a.deduction_id = b.id and a.employee_id = '$record[id]'
@@ -493,7 +515,7 @@ class Payrolls extends CI_Controller
             //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
             //BPJS Employee
-            //Kalo dia mempunyai BPJS
+            //Kalo dia mempunyai BPJS potong gaji BPJS employee
             $r_bpjs_emp = $this->crud->reads('bpjs', ['status' => 0]);
             $arr_bpjs_emp_number = "";
             $arr_bpjs_emp_amount = "";
@@ -550,7 +572,7 @@ class Payrolls extends CI_Controller
             $arr_bpjs_emp_combine = array_combine($arr_bpjs_emp_number_ex, $arr_bpjs_emp_amount_ex);
             //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
-            //BPJS Company
+            //BPJS Company atau  potongan gaji dari perusahaan
             $r_bpjs_com = $this->crud->reads('bpjs', ['status' => 0]);
             $arr_bpjs_com_number = "";
             $arr_bpjs_com_amount = "";
