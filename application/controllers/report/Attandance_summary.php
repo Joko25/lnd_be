@@ -20,7 +20,10 @@ class Attandance_summary extends CI_Controller
         if (empty($this->session->username)) {
             redirect('error_session');
         } elseif ($this->checkuserAccess($this->id_menu()) > 0) {
+            $username = $this->session->username;
+            
             $data['button'] = $this->getbutton($this->id_menu());
+            $data['user'] = $this->crud->read("users", [], ["username" => $username]);
 
             $this->load->view('template/header', $data);
             $this->load->view('report/attandance_summary');

@@ -12,7 +12,6 @@ class Cash_carries extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->model('crud');
-        $this->load->model('emails');
 
         //VALIDASI FORM
         $this->form_validation->set_rules('number', 'Employee', 'required|min_length[1]|max_length[30]');
@@ -425,7 +424,6 @@ class Cash_carries extends CI_Controller
                 echo json_encode(array("title" => "Duplicate", "message" => "Cash Carry has been created", "theme" => "error"));
             } else {
                 $send = $this->crud->create('cash_carries', $post_final);
-                $this->emails->emailCashCarry($employee_id, $trans_date, $type);
                 echo $send;
             }
         } else {
@@ -474,7 +472,6 @@ class Cash_carries extends CI_Controller
             );
 
             if ($this->crud->update('cash_carries', ["request_code" => $request_code, "employee_id" => $employee_id], $post_final)) {
-                $this->emails->emailCashCarry($employee_id, $trans_date, $type);
                 echo json_encode(array("title" => "Good Job", "message" => "Data Updated Successfully", "theme" => "success"));
             } else {
                 echo log_message('error', 'There is an error in your system or data');
@@ -693,7 +690,6 @@ class Cash_carries extends CI_Controller
                         );
 
                         $send = $this->crud->create('cash_carries', $post_cash_carries);
-                        $this->emails->emailCashCarry($employee->id, $data['trans_date'], $data['type']);
                         echo $send;
                     }
                 } else {

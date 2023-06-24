@@ -102,7 +102,6 @@ class Login extends CI_Controller
             } else {
                 $data['message'] = "";
                 $this->load->view('login', $data);
-                // $this->load->view('maintenance');
             }
         } else {
             redirect('home');

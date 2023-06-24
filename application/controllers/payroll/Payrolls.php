@@ -287,7 +287,7 @@ class Payrolls extends CI_Controller
                     //Hari kerja
                     $weekday[] = date('Y-m-d', $i);
                 } else {
-                	//Hari libur
+                    //Hari libur
                     $weekend[] = date('Y-m-d', $i);
                 }
             }
@@ -441,7 +441,7 @@ class Payrolls extends CI_Controller
                 $wd = $working_days;
             }
 
-          	//Total Masuk kerja
+            //Total Masuk kerja
             $masuk = @$wd;
 
             //Allowances / Tunjangan kerja

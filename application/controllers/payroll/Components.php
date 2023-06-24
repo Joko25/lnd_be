@@ -15,7 +15,6 @@ class Components extends CI_Controller
 
         //VALIDASI FORM
         $this->form_validation->set_rules('number', 'Code', 'required|min_length[1]|max_length[20]|is_unique[salary_components.number]');
-        $this->form_validation->set_rules('name', 'Name', 'required|min_length[1]|max_length[30]|is_unique[salary_components.name]');
     }
 
     //HALAMAN UTAMA

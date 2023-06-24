@@ -73,14 +73,28 @@
         var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
         if (Difference_In_Days <= 31) {
-            if ((filter_division != "" && filter_departement != "") || filter_employee != "") {
+            if ("<?= $user->access ?>" == "0") {
+                if ((filter_division != "" && filter_departement != "") || filter_employee != "") {
+                    $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
+                    $("#printout").attr('src', '<?= base_url('report/attandance_summary/print') ?>' + url);
+                } else {
+                    toastr.info("Please Select Division, Departement or Employee");
+                }
+            } else {
+                if ((filter_division != "" && filter_departement != "") || filter_employee != "") {
+                    $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
+                    $("#printout").attr('src', '<?= base_url('report/attandance_summary/print') ?>' + url);
+                } else {
+                    toastr.info("Please Select Division, Departement or Employee");
+                }
+            }
+        } else {
+            if (filter_employee != "") {
                 $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
                 $("#printout").attr('src', '<?= base_url('report/attandance_summary/print') ?>' + url);
             } else {
-                toastr.info("Please Select Division, Departement or Employee");
+                toastr.info("Please Select Employee");
             }
-        } else {
-            toastr.error("Max Duration Period Date is 31 Days");
         }
     }
 
