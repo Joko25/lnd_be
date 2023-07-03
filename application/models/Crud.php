@@ -129,7 +129,7 @@ class Crud extends CI_Model
                 $this->logs("Update New", json_encode($data), $table);
                 
                 $read = $this->read($table, [], $where);
-                $this->approvals($table, $read->id);
+                $this->approvals($table, @$read->id);
 
                 return json_encode(array("title" => "Good Job", "message" => "Data Updated Successfully", "theme" => "success"));
             } else {

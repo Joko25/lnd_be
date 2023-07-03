@@ -336,7 +336,7 @@ class Attandances extends CI_Controller
                             'date_in' => $date_in,
                             'time_in' => $time_in,
                             'date_out' => $date_out,
-                            'time_out' => @$shift->end,
+                            // 'time_out' => @$shift->end,
                         );
                         $this->crud->create('attandances', $data_attandance);
                         echo json_encode(array("title" => "Created", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Create data Check In", "theme" => "success"));
@@ -388,7 +388,7 @@ class Attandances extends CI_Controller
                         $data_attandance = array(
                             'number' => $data['number'],
                             'date_in' => $date_out,
-                            'time_in' => @$shift->start,
+                            // 'time_in' => @$shift->start,
                             'date_out' => $date_in,
                             'time_out' => $time_in,
                         );

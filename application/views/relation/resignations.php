@@ -7,7 +7,7 @@
             <th rowspan="2" data-options="field:'employee_name',width:200,halign:'center'">Employee Name</th>
             <th rowspan="2" data-options="field:'division_name',width:150,halign:'center'">Division</th>
             <th rowspan="2" data-options="field:'departement_name',width:150,halign:'center'">Departement</th>
-            <th rowspan="2" data-options="field:'departement_sub_name',width:150,halign:'center'">Departement Name</th>
+            <th rowspan="2" data-options="field:'departement_sub_name',width:150,halign:'center'">Departement Sub</th>
             <th rowspan="2" data-options="field:'resign_type',width:100,align:'center'">Resign Type</th>
             <th rowspan="2" data-options="field:'date_sign',width:120,align:'center'">Join Date</th>
             <th rowspan="2" data-options="field:'request_date',width:100,align:'center'">Request Date</th>

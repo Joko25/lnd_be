@@ -39,6 +39,7 @@ class Resignations extends CI_Controller
         $this->db->select('*');
         $this->db->from('cutoff');
         $this->db->where('finish <', $dateNow);
+        $this->db->order_by('start', 'desc');
         $cutoff = $this->db->get()->row();
 
         $this->db->select('*');
@@ -69,16 +70,10 @@ class Resignations extends CI_Controller
     }
 
     //GET DATE SERVICE
-    public function readService($dateSign = "")
+    public function readService($dateSign = "", $dateResign = "")
     {
-        if ($dateSign == "") {
-            $date = $this->input->post('date');
-        } else {
-            $date = $dateSign;
-        }
-
-        $start  = date_create($date);
-        $end = date_create(); // waktu sekarang
+        $start  = date_create($dateSign);
+        $end = date_create($dateResign); // waktu sekarang
         $diff  = date_diff($start, $end);
         $d = $diff->d . ' Days ';
 
@@ -155,7 +150,7 @@ class Resignations extends CI_Controller
             //Mapping Data
             $data  = array();
             foreach ($records as $record) {
-                $data[] =  array_merge($record, array("service" => $this->readService($record['date_sign'])));
+                $data[] =  array_merge($record, array("service" => $this->readService($record['date_sign'], $record['resign_date'])));
             }
 
             $result['total'] = $totalRows;
@@ -398,7 +393,7 @@ class Resignations extends CI_Controller
                             <td>' . $data['resign_type'] . '</td>
                             <td>' . $data['date_sign'] . '</td>
                             <td>' . $data['resign_date'] . '</td>
-                            <td>' . $this->readService($data['date_sign']) . '</td>
+                            <td>' . $this->readService($data['date_sign'], $data['resign_date']) . '</td>
                             <td>' . $data['reason_name'] . '</td>
                             <td>' . $data['remarks'] . '</td>
                         </tr>';
