@@ -36,7 +36,7 @@ class Positions extends CI_Controller
     public function reads()
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
-        $send = $this->crud->reads('positions', ["name" => $post]);
+        $send = $this->crud->reads('positions', ["name" => $post], [], "", "name", "asc");
         echo json_encode($send);
     }
 

@@ -15,7 +15,7 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form class="login100-form validate-form" method="post">
+				<form class="login100-form validate-form" style="padding: 30px;" method="post">
 					<center>
 						<img src="<?= $config->logo ?>" width="150">
 					</center>

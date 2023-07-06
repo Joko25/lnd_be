@@ -140,6 +140,105 @@ class Account_coa extends CI_Controller
         echo $send;
     }
 
+    //UPLOAD DATA
+    public function upload()
+    {
+        error_reporting(0);
+        require_once 'assets/vendors/excel_reader2.php';
+        $target = basename($_FILES['file_upload']['name']);
+        move_uploaded_file($_FILES['file_upload']['tmp_name'], $target);
+        chmod($_FILES['file_upload']['name'], 0777);
+        $file = $_FILES['file_upload']['name'];
+        $data = new Spreadsheet_Excel_Reader($file, false);
+        $total_row = $data->rowcount($sheet_index = 0);
+
+        for ($i = 3; $i <= $total_row; $i++) {
+            $datas[] = array(
+                'departement_number' => $data->val($i, 2),
+                'position_number' => $data->val($i, 3),
+                'contract_number' => $data->val($i, 4),
+                'account_number' => $data->val($i, 5),
+                'job_type' => $data->val($i, 6)
+            );
+        }
+
+        $datas['total'] = count($datas);
+        echo json_encode($datas);
+        unlink($_FILES['file_upload']['name']);
+    }
+
+    public function uploadclearFailed()
+    {
+        @unlink('failed/setup_coa.txt');
+    }
+
+    public function uploadcreateFailed()
+    {
+        if ($this->input->post()) {
+            $message = $this->input->post('message');
+            $textFailed = fopen('failed/setup_coa.txt', 'a');
+            fwrite($textFailed, $message . "\n");
+            fclose($textFailed);
+        }
+    }
+
+    public function uploadDownloadFailed()
+    {
+        $file = "failed/setup_coa.txt";
+
+        header('Content-Description: File Failed');
+        header('Content-Disposition: attachment; filename=' . basename($file));
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . @filesize($file));
+        header("Content-Type: text/plain");
+        @readfile($file);
+    }
+
+    public function uploadcreate()
+    {
+        if ($this->input->post()) {
+            $data = $this->input->post('data');
+            $departement = $this->crud->read('departements', ["number" => $data['departement_number']]);
+            $position = $this->crud->read('positions', ["number" => $data['position_number']]);
+            $contract = $this->crud->read('contracts', ["number" => $data['contract_number']]);
+            $account = $this->crud->read('accounts', ["number" => $data['account_number']]);
+            $account_coa = $this->crud->reads('account_coa', ["departement_id" => @$departement->id, "position_id" => @$position->id, "contact_id" => @$contract->id, "job_type" => $data['job_type']]);
+
+            if (!empty($departement)) {
+                if (!empty($position)) {
+                    if (!empty($contract)) {
+                        if (!empty($account)) {
+                            if (empty($account_coa)) {
+                                $post = array(
+                                    'departement_id' => $departement->id,
+                                    'position_id' => $position->id,
+                                    'contract_id' => $contract->id,
+                                    'account_id' => $account->id,
+                                    'job_type' => $data['job_type']
+                                );
+
+                                $send = $this->crud->create('account_coa', $post);
+                                echo $send;
+                            } else {
+                                echo json_encode(array("title" => "Available", "message" => "Setup COA Duplicated", "theme" => "error"));
+                            }
+                        }else{
+                            echo json_encode(array("title" => "Not Found", "message" => $data['account_number'] . " COA Not Found", "theme" => "error"));
+                        }
+                    }else{
+                        echo json_encode(array("title" => "Not Found", "message" => $data['contract_number'] . " Employee Type No Not Found", "theme" => "error"));
+                    }
+                }else{
+                    echo json_encode(array("title" => "Not Found", "message" => $data['position_number'] . " Position No Not Found", "theme" => "error"));
+                }
+            } else {
+                echo json_encode(array("title" => "Not Found", "message" => $data['departement_number'] . " Departement No Not Found", "theme" => "error"));
+            }
+        }
+    }
+
     //PRINT & EXCEL DATA
     public function print($option = "")
     {

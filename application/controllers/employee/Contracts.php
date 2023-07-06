@@ -36,7 +36,7 @@ class Contracts extends CI_Controller
     public function reads()
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
-        $send = $this->crud->reads('contracts', ["name" => $post]);
+        $send = $this->crud->reads('contracts', ["name" => $post], [], "", "name", "asc");
         echo json_encode($send);
     }
 

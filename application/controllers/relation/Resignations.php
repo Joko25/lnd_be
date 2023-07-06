@@ -38,7 +38,6 @@ class Resignations extends CI_Controller
 
         $this->db->select('*');
         $this->db->from('cutoff');
-        $this->db->where('finish <', $dateNow);
         $this->db->order_by('start', 'desc');
         $cutoff = $this->db->get()->row();
 

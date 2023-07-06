@@ -72,9 +72,12 @@
                     <option value="TERMINATION">TERMINATION</option>
                 </select>
             </div>
-            <div class="fitem">
+            <div class="fitem" style="margin-bottom: 10px;">
                 <span style="width:35%; display:inline-block;">Reason</span>
                 <input style="width:60%;" id="filter_reason" class="easyui-combobox">
+            </div>
+            <div class="alert alert-primary" role="alert">
+                Note : Auto inactive employee status if (RESIGN DATE) < (CUTOFF START) in ON PROCEDURE
             </div>
         </div>
     </fieldset>

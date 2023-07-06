@@ -243,7 +243,11 @@ class Attandances extends CI_Controller
                     $this->db->join('shifts c', 'c.id = b.shift_id');
                     $this->db->join('shift_details d', 'd.shift_id = c.id');
                     $this->db->where('b.employee_id', $record['id']);
-                    $this->db->where("d.start >= '$tolerance_hour_min' and d.start <= '$tolerance_hour_plus'");
+                    if(@$attandance->time_in > "23:00:00"){
+                        $this->db->where("d.start >= '$tolerance_hour_min'");
+                    }else{
+                        $this->db->where("d.start >= '$tolerance_hour_min' and d.start <= '$tolerance_hour_plus'");
+                    }
                     $shift = $this->db->get()->row();
 
                     $this->db->select("*");
