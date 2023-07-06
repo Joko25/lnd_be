@@ -216,6 +216,399 @@ class Payroll_records extends CI_Controller
                 
                 $html .= '</body></html>';
                 echo $html;
+            }else if($filter_type == "Magang"){
+                $records = $this->crud->query("SELECT a.name, 
+                (COALESCE(c.total, 0)) as total_mp,
+                (COALESCE(c.total_income, 0)) as total_salary,
+                (COALESCE(d.total, 0)) as cash_mp,
+                (COALESCE(d.total_income, 0)) as cash_salary,
+                (COALESCE(e.total, 0)) as bsi_mp,
+                (COALESCE(e.total_income, 0)) as bsi_salary,
+                (COALESCE(f.total, 0)) as mandiri_mp,
+                (COALESCE(f.total_income, 0)) as mandiri_salary
+                FROM sources a
+                JOIN employees b ON a.id = b.source_id
+                LEFT JOIN (SELECT a.source_id, COUNT(a.id) as total, SUM(b.net_income) as total_income FROM employees a JOIN payrolls b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$period_start' and b.period_end = '$period_end' and a.source_id != '' GROUP BY a.source_id) c ON a.id = c.source_id
+                LEFT JOIN (SELECT a.source_id, COUNT(a.id) as total, SUM(b.net_income) as total_income FROM employees a JOIN payrolls b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$period_start' and b.period_end = '$period_end' and a.source_id != '' and (a.bank_name = '-' or a.bank_name = '') GROUP BY a.source_id) d ON a.id = d.source_id
+                LEFT JOIN (SELECT a.source_id, COUNT(a.id) as total, SUM(b.net_income) as total_income FROM employees a JOIN payrolls b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$period_start' and b.period_end = '$period_end' and a.source_id != '' and a.bank_name = 'Bank Syariah Indonesia' GROUP BY a.source_id) e ON a.id = e.source_id
+                LEFT JOIN (SELECT a.source_id, COUNT(a.id) as total, SUM(b.net_income) as total_income FROM employees a JOIN payrolls b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$period_start' and b.period_end = '$period_end' and a.source_id != '' and a.bank_name = 'Bank Mandiri' GROUP BY a.source_id) f ON a.id = f.source_id
+                WHERE a.group_id = '20221119000003' and b.departement_id like '%$filter_departement%'
+                GROUP BY a.id");
+
+                //Config
+                $this->db->select('*');
+                $this->db->from('config');
+                $config = $this->db->get()->row();
+
+                $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+                        <style> .str{ mso-number-format:\@; } </style>
+                        <body>
+                        <center>
+                            <div style="float: left; font-size: 12px; text-align: left;">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+                                            <img src="' . $config->favicon . '" width="30">
+                                        </td>
+                                        <td style="font-size: 14px; text-align: left; margin:2px;">
+                                            <b>' . $config->name . '</b><br>
+                                            <small>' . $config->description . '</small>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="float: right; font-size: 12px; text-align: right;">
+                                Print Date ' . date("d M Y H:i:s") . ' <br>
+                                Print By ' . $this->session->username . '  
+                            </div>
+                        </center><br><br><br>
+                        <center>
+                            <h3 style="margin:0;">Payroll Records</h3>
+                            <p style="margin:0;"><b>Payroll Method Magang</b></p>
+                            <p style="margin:0;">Period ' . $filter_from . ' to ' . $filter_to . '</p>
+                        </center>
+                        <br>';
+
+                $html .= '  <table id="customers" border="1">
+                                <tr>
+                                    <th style="text-align:center;" width="50">No</th>
+                                    <th style="text-align:center;" width="200">Sources</th>
+                                    <th style="text-align:center;" width="80">MP</th>
+                                    <th style="text-align:center;" width="100">Amount</th>
+                                    <th style="text-align:center;" width="80">MP</th>
+                                    <th style="text-align:center;" width="100">CASH</th>
+                                    <th style="text-align:center;" width="80">MP</th>
+                                    <th style="text-align:center;" width="100">BSM</th>
+                                    <th style="text-align:center;" width="80">MP</th>
+                                    <th style="text-align:center;" width="100">Mandiri</th>
+                                </tr>';
+                $no = 1;
+                $total_mp = 0;
+                $total_salary = 0;
+                $cash_mp = 0;
+                $total_cash = 0;
+                $bsi_mp = 0;
+                $total_bsi = 0;
+                $mandiri_mp = 0;
+                $total_mandiri = 0;
+                foreach ($records as $record) {
+                    $html .= "  <tr>
+                                    <td>".$no."</td>
+                                    <td>".$record->name."</td>
+                                    <td style='text-align:right;'>".number_format($record->total_mp)."</td>
+                                    <td style='text-align:right;'>".number_format($record->total_salary)."</td>
+                                    <td style='text-align:right;'>".number_format($record->cash_mp)."</td>
+                                    <td style='text-align:right;'>".number_format($record->cash_salary)."</td>
+                                    <td style='text-align:right;'>".number_format($record->bsi_mp)."</td>
+                                    <td style='text-align:right;'>".number_format($record->bsi_salary)."</td>
+                                    <td style='text-align:right;'>".number_format($record->mandiri_mp)."</td>
+                                    <td style='text-align:right;'>".number_format($record->mandiri_salary)."</td>
+                                </tr>";
+                    $no++;
+                    $total_mp += $record->total_mp;
+                    $total_salary += $record->total_salary;
+                    $cash_mp += $record->cash_mp;
+                    $total_cash += $record->cash_salary;
+                    $bsi_mp += $record->bsi_mp;
+                    $total_bsi += $record->bsi_salary;
+                    $mandiri_mp += $record->mandiri_mp;
+                    $total_mandiri += $record->mandiri_salary;
+                }
+                $html .= "  <tr>
+                                <td colspan='2' style='text-align:right; font-weight:bold;'>GRAND TOTAL</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_mp)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_salary)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($cash_mp)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_cash)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($bsi_mp)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_bsi)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($mandiri_mp)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_mandiri)."</td>
+                            </tr>";
+                $html .= '</table>
+                <br>
+                <center>
+                    <table id="customers" style="width:70%;">
+                        <tr>
+                            <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
+                            <th colspan="2" style="text-align:center;">CONFIRM OK</th>
+                            <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
+                        </tr>
+                        <tr>
+                            <th width="100" style="text-align:center;">COST CONTROL</th>
+                            <th width="100" style="text-align:center;">HRD</th>
+                        </tr>
+                        <tr>
+                            <td style="height:60px;"></td>
+                            <td style="height:60px;"></td>
+                            <td style="height:60px;"></td>
+                            <td style="height:60px;"></td>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center;">BOD</th>
+                            <th style="text-align:center;">ASSISTANT MANAGER</th>
+                            <th style="text-align:center;">ASSISTANT MANAGER</th>
+                            <th style="text-align:center;">PAYROLL STAFF</th>
+                        </tr>
+                    </table>
+                </center>';
+                
+                $html .= '</body></html>';
+                echo $html;
+            }else if($filter_type == "PKL"){
+                $records = $this->crud->query("SELECT a.name, 
+                (COALESCE(c.total, 0)) as total_mp,
+                (COALESCE(c.total_income, 0)) as total_salary,
+                (COALESCE(d.total, 0)) as cash_mp,
+                (COALESCE(d.total_income, 0)) as cash_salary
+                FROM sources a
+                JOIN employees b ON a.id = b.source_id
+                LEFT JOIN (SELECT a.source_id, COUNT(a.id) as total, SUM(b.total_income) as total_income FROM employees a JOIN payroll_pkl b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$filter_from' and b.period_end = '$filter_to' and a.source_id != '' GROUP BY a.source_id) c ON a.id = c.source_id
+                LEFT JOIN (SELECT a.source_id, COUNT(a.id) as total, SUM(b.total_income) as total_income FROM employees a JOIN payroll_pkl b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$filter_from' and b.period_end = '$filter_to' and a.source_id != '' and (a.bank_name = '-' or a.bank_name = '') GROUP BY a.source_id) d ON a.id = d.source_id
+                WHERE a.group_id = '20221119000005' and b.departement_id like '%$filter_departement%'
+                GROUP BY a.id");
+
+                //Config
+                $this->db->select('*');
+                $this->db->from('config');
+                $config = $this->db->get()->row();
+
+                $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+                        <style> .str{ mso-number-format:\@; } </style>
+                        <body>
+                        <center>
+                            <div style="float: left; font-size: 12px; text-align: left;">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+                                            <img src="' . $config->favicon . '" width="30">
+                                        </td>
+                                        <td style="font-size: 14px; text-align: left; margin:2px;">
+                                            <b>' . $config->name . '</b><br>
+                                            <small>' . $config->description . '</small>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="float: right; font-size: 12px; text-align: right;">
+                                Print Date ' . date("d M Y H:i:s") . ' <br>
+                                Print By ' . $this->session->username . '  
+                            </div>
+                        </center><br><br><br>
+                        <center>
+                            <h3 style="margin:0;">Payroll Records</h3>
+                            <p style="margin:0;"><b>Payroll Method by PKL</b></p>
+                            <p style="margin:0;">Period ' . $filter_from . ' to ' . $filter_to . '</p>
+                        </center>
+                        <br>';
+
+                $html .= '  <table id="customers" border="1">
+                                <tr>
+                                    <th style="text-align:center;" width="50">No</th>
+                                    <th style="text-align:center;" width="800">Sources</th>
+                                    <th style="text-align:center;" width="80">MP</th>
+                                    <th style="text-align:center;" width="100">Amount</th>
+                                    <th style="text-align:center;" width="80">MP</th>
+                                    <th style="text-align:center;" width="100">CASH</th>
+                                </tr>';
+                $no = 1;
+                $total_mp = 0;
+                $total_salary = 0;
+                $cash_mp = 0;
+                $total_cash = 0;
+                foreach ($records as $record) {
+                    $html .= "  <tr>
+                                    <td>".$no."</td>
+                                    <td>".$record->name."</td>
+                                    <td style='text-align:right;'>".number_format($record->total_mp)."</td>
+                                    <td style='text-align:right;'>".number_format($record->total_salary)."</td>
+                                    <td style='text-align:right;'>".number_format($record->cash_mp)."</td>
+                                    <td style='text-align:right;'>".number_format($record->cash_salary)."</td>
+                                </tr>";
+                    $no++;
+                    $total_mp += $record->total_mp;
+                    $total_salary += $record->total_salary;
+                    $cash_mp += $record->cash_mp;
+                    $total_cash += $record->cash_salary;
+                }
+                $html .= "  <tr>
+                                <td colspan='2' style='text-align:right; font-weight:bold;'>GRAND TOTAL</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_mp)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_salary)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($cash_mp)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_cash)."</td>
+                            </tr>";
+                $html .= '</table>
+                <br>
+                <center>
+                    <table id="customers" style="width:70%;">
+                        <tr>
+                            <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
+                            <th colspan="2" style="text-align:center;">CONFIRM OK</th>
+                            <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
+                        </tr>
+                        <tr>
+                            <th width="100" style="text-align:center;">COST CONTROL</th>
+                            <th width="100" style="text-align:center;">HRD</th>
+                        </tr>
+                        <tr>
+                            <td style="height:60px;"></td>
+                            <td style="height:60px;"></td>
+                            <td style="height:60px;"></td>
+                            <td style="height:60px;"></td>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center;">BOD</th>
+                            <th style="text-align:center;">ASSISTANT MANAGER</th>
+                            <th style="text-align:center;">ASSISTANT MANAGER</th>
+                            <th style="text-align:center;">PAYROLL STAFF</th>
+                        </tr>
+                    </table>
+                </center>';
+                
+                $html .= '</body></html>';
+                echo $html;
+            }else if($filter_type == "Group"){
+                $records = $this->crud->query("SELECT a.name, 
+                (COALESCE(c.total, 0) + COALESCE(g.total, 0)) as total_mp,
+                (COALESCE(c.total_income, 0) + COALESCE(g.total_income, 0)) as total_salary,
+                (COALESCE(d.total, 0) + COALESCE(h.total, 0)) as cash_mp,
+                (COALESCE(d.total_income, 0) + COALESCE(h.total_income, 0)) as cash_salary,
+                (COALESCE(e.total, 0)) as bsi_mp,
+                (COALESCE(e.total_income, 0)) as bsi_salary,
+                (COALESCE(f.total, 0)) as mandiri_mp,
+                (COALESCE(f.total_income, 0)) as mandiri_salary
+                FROM groups a
+                JOIN employees b ON a.id = b.group_id
+                LEFT JOIN (SELECT a.group_id, COUNT(a.id) as total, SUM(b.net_income) as total_income FROM employees a JOIN payrolls b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$period_start' and b.period_end = '$period_end' and a.group_id != '' GROUP BY a.group_id) c ON a.id = c.group_id
+                LEFT JOIN (SELECT a.group_id, COUNT(a.id) as total, SUM(b.net_income) as total_income FROM employees a JOIN payrolls b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$period_start' and b.period_end = '$period_end' and a.group_id != '' and (a.bank_name = '-' or a.bank_name = '') GROUP BY a.group_id) d ON a.id = d.group_id
+                LEFT JOIN (SELECT a.group_id, COUNT(a.id) as total, SUM(b.net_income) as total_income FROM employees a JOIN payrolls b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$period_start' and b.period_end = '$period_end' and a.group_id != '' and a.bank_name = 'Bank Syariah Indonesia' GROUP BY a.group_id) e ON a.id = e.group_id
+                LEFT JOIN (SELECT a.group_id, COUNT(a.id) as total, SUM(b.net_income) as total_income FROM employees a JOIN payrolls b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$period_start' and b.period_end = '$period_end' and a.group_id != '' and a.bank_name = 'Bank Mandiri' GROUP BY a.group_id) f ON a.id = f.group_id
+                LEFT JOIN (SELECT a.group_id, COUNT(a.id) as total, SUM(b.total_income) as total_income FROM employees a JOIN payroll_pkl b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$filter_from' and b.period_end = '$filter_to' and a.group_id != '' GROUP BY a.group_id) g ON a.id = g.group_id
+                LEFT JOIN (SELECT a.group_id, COUNT(a.id) as total, SUM(b.total_income) as total_income FROM employees a JOIN payroll_pkl b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$filter_from' and b.period_end = '$filter_to' and a.group_id != '' and (a.bank_name = '-' or a.bank_name = '') GROUP BY a.group_id) h ON a.id = h.group_id
+                WHERE b.departement_id like '%$filter_departement%'
+                GROUP BY a.id");
+
+                //Config
+                $this->db->select('*');
+                $this->db->from('config');
+                $config = $this->db->get()->row();
+
+                $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+                        <style> .str{ mso-number-format:\@; } </style>
+                        <body>
+                        <center>
+                            <div style="float: left; font-size: 12px; text-align: left;">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+                                            <img src="' . $config->favicon . '" width="30">
+                                        </td>
+                                        <td style="font-size: 14px; text-align: left; margin:2px;">
+                                            <b>' . $config->name . '</b><br>
+                                            <small>' . $config->description . '</small>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="float: right; font-size: 12px; text-align: right;">
+                                Print Date ' . date("d M Y H:i:s") . ' <br>
+                                Print By ' . $this->session->username . '  
+                            </div>
+                        </center><br><br><br>
+                        <center>
+                            <h3 style="margin:0;">Payroll Records</h3>
+                            <p style="margin:0;"><b>Payroll Method By Group</b></p>
+                            <p style="margin:0;">Period ' . $filter_from . ' to ' . $filter_to . '</p>
+                        </center>
+                        <br>';
+
+                $html .= '  <table id="customers" border="1">
+                                <tr>
+                                    <th style="text-align:center;" width="50">No</th>
+                                    <th style="text-align:center;" width="800">Group</th>
+                                    <th style="text-align:center;" width="80">MP</th>
+                                    <th style="text-align:center;" width="100">Amount</th>
+                                    <th style="text-align:center;" width="80">MP</th>
+                                    <th style="text-align:center;" width="100">CASH</th>
+                                    <th style="text-align:center;" width="80">MP</th>
+                                    <th style="text-align:center;" width="100">BSI</th>
+                                    <th style="text-align:center;" width="80">MP</th>
+                                    <th style="text-align:center;" width="100">Mandiri</th>
+                                </tr>';
+                $no = 1;
+                $total_mp = 0;
+                $total_salary = 0;
+                $cash_mp = 0;
+                $total_cash = 0;
+                $bsi_mp = 0;
+                $total_bsi = 0;
+                $mandiri_mp = 0;
+                $total_mandiri = 0;
+                foreach ($records as $record) {
+                    $html .= "  <tr>
+                                    <td>".$no."</td>
+                                    <td>".$record->name."</td>
+                                    <td style='text-align:right;'>".number_format($record->total_mp)."</td>
+                                    <td style='text-align:right;'>".number_format($record->total_salary)."</td>
+                                    <td style='text-align:right;'>".number_format($record->cash_mp)."</td>
+                                    <td style='text-align:right;'>".number_format($record->cash_salary)."</td>
+                                    <td style='text-align:right;'>".number_format($record->bsi_mp)."</td>
+                                    <td style='text-align:right;'>".number_format($record->bsi_salary)."</td>
+                                    <td style='text-align:right;'>".number_format($record->mandiri_mp)."</td>
+                                    <td style='text-align:right;'>".number_format($record->mandiri_salary)."</td>
+                                </tr>";
+                    $no++;
+                    $total_mp += $record->total_mp;
+                    $total_salary += $record->total_salary;
+                    $cash_mp += $record->cash_mp;
+                    $total_cash += $record->cash_salary;
+                    $bsi_mp += $record->bsi_mp;
+                    $total_bsi += $record->bsi_salary;
+                    $mandiri_mp += $record->mandiri_mp;
+                    $total_mandiri += $record->mandiri_salary;
+                }
+                $html .= "  <tr>
+                                <td colspan='2' style='text-align:right; font-weight:bold;'>GRAND TOTAL</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_mp)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_salary)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($cash_mp)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_cash)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($bsi_mp)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_bsi)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($mandiri_mp)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_mandiri)."</td>
+                            </tr>";
+                $html .= '</table>
+                <br>
+                <center>
+                    <table id="customers" style="width:70%;">
+                        <tr>
+                            <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
+                            <th colspan="2" style="text-align:center;">CONFIRM OK</th>
+                            <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
+                        </tr>
+                        <tr>
+                            <th width="100" style="text-align:center;">COST CONTROL</th>
+                            <th width="100" style="text-align:center;">HRD</th>
+                        </tr>
+                        <tr>
+                            <td style="height:60px;"></td>
+                            <td style="height:60px;"></td>
+                            <td style="height:60px;"></td>
+                            <td style="height:60px;"></td>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center;">BOD</th>
+                            <th style="text-align:center;">ASSISTANT MANAGER</th>
+                            <th style="text-align:center;">ASSISTANT MANAGER</th>
+                            <th style="text-align:center;">PAYROLL STAFF</th>
+                        </tr>
+                    </table>
+                </center>';
+                
+                $html .= '</body></html>';
+                echo $html;
             }
         }
     }

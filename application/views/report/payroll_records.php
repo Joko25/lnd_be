@@ -30,6 +30,7 @@
                     <option value="Karyawan">Karyawan</option>
                     <option value="Magang">Magang</option>
                     <option value="PKL">PKL</option>
+                    <option value="Group">Group</option>
                 </select>
             </div>
         </div>
