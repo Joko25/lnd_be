@@ -225,8 +225,8 @@ class Accounts extends CI_Controller
         <table id="customers" border="1">
             <tr>
                 <th width="20">No</th>
-                <th>Code</th>
-                <th>Name</th>
+                <th>COA Code</th>
+                <th>COA Number</th>
                 <th>Description</th>
             </tr>';
         $no = 1;

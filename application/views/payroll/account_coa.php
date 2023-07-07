@@ -6,7 +6,7 @@
             <th rowspan="2" data-options="field:'departement_name',width:150,halign:'center'">Departement</th>
             <th rowspan="2" data-options="field:'position_name',width:150,halign:'center'">Position</th>
             <th rowspan="2" data-options="field:'contract_name',width:150,halign:'center'">Employee type</th>
-            <th rowspan="2" data-options="field:'account_name',width:150,halign:'center'">Account Name</th>
+            <th rowspan="2" data-options="field:'account_name',width:150,halign:'center'">COA Number</th>
             <th rowspan="2" data-options="field:'job_type',width:100,halign:'center'">Job Type</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
@@ -43,7 +43,7 @@
                 <input style="width:60%;" name="contract_id" id="contract_id" required="" class="easyui-combobox">
             </div>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Account No</span>
+                <span style="width:35%; display:inline-block;">COA Number</span>
                 <input style="width:60%;" name="account_id" id="account_id" required="" class="easyui-combobox">
             </div>
             <div class="fitem">

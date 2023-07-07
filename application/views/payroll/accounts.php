@@ -3,8 +3,8 @@
     <thead>
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
-            <th rowspan="2" data-options="field:'number',width:120,align:'center'">COA Number</th>
-            <th rowspan="2" data-options="field:'name',width:200,halign:'center'">COA Name</th>
+            <th rowspan="2" data-options="field:'number',width:120,align:'center'">COA Code</th>
+            <th rowspan="2" data-options="field:'name',width:200,halign:'center'">COA Number</th>
             <th rowspan="2" data-options="field:'description',width:150,halign:'center'">Description</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
@@ -29,11 +29,11 @@
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Form Data</b></legend>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">COA Number</span>
+                <span style="width:35%; display:inline-block;">COA Code</span>
                 <input style="width:60%;" name="number" required="" class="easyui-textbox">
             </div>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">COA Name</span>
+                <span style="width:35%; display:inline-block;">COA Number</span>
                 <input style="width:60%;" name="name" required="" class="easyui-textbox">
             </div>
             <div class="fitem">

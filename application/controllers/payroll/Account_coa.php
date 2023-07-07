@@ -291,7 +291,7 @@ class Account_coa extends CI_Controller
                 <th>Departement</th>
                 <th>Position</th>
                 <th>Employee Type</th>
-                <th>Account Name</th>
+                <th>COA Number</th>
                 <th>Job Type</th>
             </tr>';
         $no = 1;
