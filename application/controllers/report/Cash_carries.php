@@ -61,7 +61,7 @@ class Cash_carries extends CI_Controller
         $this->db->join('departements c', "b.departement_id = c.id");
         $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
         $this->db->join('groups e', "b.group_id = e.id");
-        $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
+        //$this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
         $this->db->where('a.deleted', 0);
         $this->db->where('a.status', 0);
         $this->db->where("(a.approved_to = '' or a.approved_to is null)");
@@ -109,7 +109,7 @@ class Cash_carries extends CI_Controller
             $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
             $this->db->join('divisions h', "b.division_id = h.id");
             $this->db->join('groups e', "b.group_id = e.id");
-            $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
+            //$this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
             $this->db->join('attandances g', "b.number = g.number and a.trans_date = g.date_in");
             $this->db->join('setup_cash_carries j', 'a.employee_id = j.employee_id', 'left');
             $this->db->join('allowance_cash_carries i', 'j.allowance_id = i.id', 'left');
@@ -251,7 +251,7 @@ class Cash_carries extends CI_Controller
             $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
             $this->db->join('divisions h', "b.division_id = h.id");
             $this->db->join('groups e', "b.group_id = e.id");
-            $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
+            //$this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
             $this->db->join('attandances g', "b.number = g.number and a.trans_date = g.date_in");
             $this->db->join('setup_cash_carries j', 'a.employee_id = j.employee_id', 'left');
             $this->db->join('allowance_cash_carries i', 'j.allowance_id = i.id', 'left');
@@ -511,7 +511,7 @@ class Cash_carries extends CI_Controller
             $this->db->join('employees b', "a.employee_id = b.id");
             $this->db->join('divisions c', "b.division_id = c.id");
             $this->db->join('departements d', "b.departement_id = d.id");
-            $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
+            //$this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
             $this->db->where('a.deleted', 0);
             $this->db->where('a.status', 0);
             if ($filter_from != "" && $filter_to != "") {
@@ -603,7 +603,7 @@ class Cash_carries extends CI_Controller
                 $this->db->join('departements c', "b.departement_id = c.id");
                 $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
                 $this->db->join('groups e', "b.group_id = e.id");
-                $this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
+                //$this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
                 $this->db->where('a.deleted', 0);
                 $this->db->where('a.status', 0);
                 $this->db->where("(a.approved_to = '' or a.approved_to is null)");
