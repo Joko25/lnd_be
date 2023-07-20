@@ -43,6 +43,8 @@ $config = $this->db->get()->row();
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/vendors/sweetalert2.min.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/vendors/guidely.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/bootstrap/css/bootstrap.min.css?4') ?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
     <script type="text/javascript" src="<?= base_url('assets/vendors/toastr.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/vendors/sweetalert2.all.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/vendors/guidely.min.js') ?>"></script>

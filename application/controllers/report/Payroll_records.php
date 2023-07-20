@@ -232,7 +232,7 @@ class Payroll_records extends CI_Controller
                 LEFT JOIN (SELECT a.source_id, COUNT(a.id) as total, SUM(b.net_income) as total_income FROM employees a JOIN payrolls b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$period_start' and b.period_end = '$period_end' and a.source_id != '' and (a.bank_name = '-' or a.bank_name = '') GROUP BY a.source_id) d ON a.id = d.source_id
                 LEFT JOIN (SELECT a.source_id, COUNT(a.id) as total, SUM(b.net_income) as total_income FROM employees a JOIN payrolls b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$period_start' and b.period_end = '$period_end' and a.source_id != '' and a.bank_name = 'Bank Syariah Indonesia' GROUP BY a.source_id) e ON a.id = e.source_id
                 LEFT JOIN (SELECT a.source_id, COUNT(a.id) as total, SUM(b.net_income) as total_income FROM employees a JOIN payrolls b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$period_start' and b.period_end = '$period_end' and a.source_id != '' and a.bank_name = 'Bank Mandiri' GROUP BY a.source_id) f ON a.id = f.source_id
-                WHERE a.group_id = '20221119000003' and b.departement_id like '%$filter_departement%'
+                WHERE a.contract_id = '20221119000003' and b.departement_id like '%$filter_departement%'
                 GROUP BY a.id");
 
                 //Config
@@ -365,7 +365,7 @@ class Payroll_records extends CI_Controller
                 JOIN employees b ON a.id = b.source_id
                 LEFT JOIN (SELECT a.source_id, COUNT(a.id) as total, SUM(b.total_income) as total_income FROM employees a JOIN payroll_pkl b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$filter_from' and b.period_end = '$filter_to' and a.source_id != '' GROUP BY a.source_id) c ON a.id = c.source_id
                 LEFT JOIN (SELECT a.source_id, COUNT(a.id) as total, SUM(b.total_income) as total_income FROM employees a JOIN payroll_pkl b ON a.id = b.employee_id WHERE a.status = 0 and b.period_start = '$filter_from' and b.period_end = '$filter_to' and a.source_id != '' and (a.bank_name = '-' or a.bank_name = '') GROUP BY a.source_id) d ON a.id = d.source_id
-                WHERE a.group_id = '20221119000005' and b.departement_id like '%$filter_departement%'
+                WHERE a.contract_id = '20221119000005' and b.departement_id like '%$filter_departement%'
                 GROUP BY a.id");
 
                 //Config

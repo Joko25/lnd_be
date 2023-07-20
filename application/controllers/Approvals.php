@@ -275,8 +275,9 @@ class Approvals extends CI_Controller
     {
         $cash_carries = $this->crud->reads("cash_carries", [], ["approved_to" => $this->session->username], "", "", "", ["approved_by"]);
         $payrolls = $this->crud->reads("payrolls", [], ["approved_to" => $this->session->username], "", "", "", ["approved_by"]);
+        $setup_salaries = $this->crud->reads("setup_salaries", [], ["approved_to" => $this->session->username], "", "", "", ["approved_by"]);
 
-        $totalRows = (count($cash_carries) + count($payrolls));
+        $totalRows = (count($cash_carries) + count($payrolls) + count($setup_salaries));
         if ($totalRows > 0) {
             echo '<span class="badge">' . $totalRows . '</span>';
         } else {
@@ -304,6 +305,15 @@ class Approvals extends CI_Controller
         $this->db->group_by('a.created_by');
         $payrolls = $this->db->get()->result_object();
 
+        //Setup Salary
+        $this->db->select('b.name as fullname, a.approved_to, a.created_by, b.avatar');
+        $this->db->from('setup_salaries a');
+        $this->db->join('users b', 'a.approved_by = b.username');
+        $this->db->join('users c', 'a.approved_to = c.username');
+        $this->db->where('a.approved_to', $this->session->username);
+        $this->db->group_by('a.created_by');
+        $setup_salaries = $this->db->get()->result_object();
+
         if (count($cash_carries) > 0) {
             foreach ($cash_carries as $cash_carry) {
                 $this->approvalMessage($cash_carry->avatar, $cash_carry->fullname, $cash_carry->approved_to, $cash_carry->created_by, "cash_carries");
@@ -311,6 +321,10 @@ class Approvals extends CI_Controller
         } elseif(count($payrolls) > 0) {
             foreach ($payrolls as $payroll) {
                 $this->approvalMessage($payroll->avatar, $payroll->fullname, $payroll->approved_to, $payroll->created_by, "payrolls");
+            }
+        } elseif(count($setup_salaries) > 0) {
+            foreach ($setup_salaries as $setup_salarie) {
+                $this->approvalMessage($setup_salarie->avatar, $setup_salarie->fullname, $setup_salarie->approved_to, $setup_salarie->created_by, "setup_salaries");
             }
         }else{
             echo '  <div class="alert alert-info" role="alert">

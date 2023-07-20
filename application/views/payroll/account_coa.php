@@ -5,7 +5,7 @@
             <th rowspan="2" field="ck" checkbox="true"></th>
             <th rowspan="2" data-options="field:'departement_name',width:150,halign:'center'">Departement</th>
             <th rowspan="2" data-options="field:'position_name',width:150,halign:'center'">Position</th>
-            <th rowspan="2" data-options="field:'contract_name',width:150,halign:'center'">Employee type</th>
+            <th rowspan="2" data-options="field:'group_name',width:150,halign:'center'">Group</th>
             <th rowspan="2" data-options="field:'account_name',width:150,halign:'center'">COA Number</th>
             <th rowspan="2" data-options="field:'job_type',width:100,halign:'center'">Job Type</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
@@ -89,7 +89,7 @@
         $('#frm_insert').form('clear');
         $('#departement_id').combobox('enable');
         $('#position_id').combobox('enable');
-        $('#contract_id').combobox('enable');
+        $('#group_id').combobox('enable');
     }
 
     //EDIT DATA
@@ -100,7 +100,7 @@
             $('#frm_insert').form('load', row);
             $('#departement_id').combobox('disable');
             $('#position_id').combobox('disable');
-            $('#contract_id').combobox('disable');
+            $('#group_id').combobox('disable');
             
             url_save = '<?= base_url('payroll/account_coa/update') ?>?id=' + btoa(row.id);
         } else {

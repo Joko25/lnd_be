@@ -2,20 +2,21 @@
 
 	<!-- Header -->
 	<div data-options="region:'north', border:false" id="header">
-		<div style="float: left;">
+		<div style="float: left;" class="animate__animated animate__bounce animate__slower">
 			<img src="<?= base_url('assets/image/hris.png') ?>" width="100">
 		</div>
-
-		<div class="logo-company">
+		
+		<div class="logo-company animate__animated animate__bounceIn animate__slower">
 			<img src="<?= $config->favicon ?>" width="50"><br>
 		</div>
-		<div class="name-company">
+		<div class="name-company animate__animated animate__bounceIn animate__slower">
 			<b style="font-size: 16px !important;"><?= $config->name ?></b><br>
 			<div class="name-lisence">
 				<b><?= $config->description ?></b><br>
 			</div>
 		</div>
-		<div class="logo">
+
+		<div class="logo animate__animated animate__bounceInRight animate__slower">
 			<a onclick="approval()" href="#" title="Approval" class="notification approval">
 				<i class="fa fa-check-square" style="font-size: 25px !important;"></i>
 				<div id="approvalCount"></div>

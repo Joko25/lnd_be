@@ -194,7 +194,7 @@ class Attandance_summary extends CI_Controller
                         $this->db->select("*");
                         $this->db->from('change_days');
                         $this->db->where('employee_id', $data['employee_id']);
-                        $this->db->where('start', $working_date);
+                        $this->db->where('(start='.$working_date.' or end='.$working_date.')');
                         $change_day = $this->db->get()->row();
                         
                         //Shifts
