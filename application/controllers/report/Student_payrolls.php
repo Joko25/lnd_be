@@ -86,7 +86,7 @@ class Student_payrolls extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid black;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
             <style> .str{ mso-number-format:\@; } </style>
             <body>';
             $this->db->select('a.id as group_id, a.name as group_name, b.id as source_id, b.name as source_name');
@@ -178,7 +178,7 @@ class Student_payrolls extends CI_Controller
                                 <th rowspan="2" style="text-align:center;">PPH21</th>
                                 <th rowspan="2" style="text-align:center;">Total<br>Deduction</th>
                                 <th rowspan="2" style="text-align:center;">Nett Income</th>
-                                <th rowspan="2" style="text-align:center;">Sign</th>
+                                <th rowspan="2" width="50" style="text-align:center;">Sign</th>
                             </tr>
                             <tr>
                                 <th style="text-align:center;">Allowence</th>
@@ -222,7 +222,7 @@ class Student_payrolls extends CI_Controller
                                         <td style="text-align:right;">' . number_format($employee['pph']) . '</td>
                                         <td style="text-align:right;">' . number_format($total_deduction + $employee['deduction_absence_amount'] + $employee['bpjs_employee_total'] + $employee['bpjs_company_total'] + $employee['loan_cooperative'] + $employee['loan_bank'] + $employee['loan_other'] + $employee['correction_minus']) . '</td>
                                         <td style="text-align:right;">' . number_format(($employee['net_income'])) . '</td>
-                                        <td style="text-align:right;"></td>
+                                        <td style="vertical-align: text-top; height:30px;">'.$no.'.</td>
                                     </tr>';
                             $total += $employee['net_income'];
                             $no++;
@@ -239,14 +239,16 @@ class Student_payrolls extends CI_Controller
                                         <table id="customers" style="width:70%;">
                                             <tr>
                                                 <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
-                                                <th colspan="2" style="text-align:center;">CONFIRM OK</th>
+                                                <th colspan="3" style="text-align:center;">CONFIRM OK</th>
                                                 <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
                                             </tr>
                                             <tr>
                                                 <th width="100" style="text-align:center;">COST CONTROL</th>
                                                 <th width="100" style="text-align:center;">HRD</th>
+                                                <th width="100" style="text-align:center;">HRD</th>
                                             </tr>
                                             <tr>
+                                                <td style="height:60px;"></td>
                                                 <td style="height:60px;"></td>
                                                 <td style="height:60px;"></td>
                                                 <td style="height:60px;"></td>
@@ -255,6 +257,7 @@ class Student_payrolls extends CI_Controller
                                             <tr>
                                                 <th style="text-align:center;">BOD</th>
                                                 <th style="text-align:center;">ASSISTANT MANAGER</th>
+                                                <th style="text-align:center;">MANAGER</th>
                                                 <th style="text-align:center;">ASSISTANT MANAGER</th>
                                                 <th style="text-align:center;">PAYROLL STAFF</th>
                                             </tr>
@@ -274,7 +277,7 @@ class Student_payrolls extends CI_Controller
                 $html .= '</body></html>';
                 echo $html;
             } else {
-                echo '  <html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+                echo '  <html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid black;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
                         <style> .str{ mso-number-format:\@; } </style>
                         <body>';
 
@@ -333,7 +336,7 @@ class Student_payrolls extends CI_Controller
                                             <th rowspan="2" style="text-align:center;">Boarding<br>Fee</th>
                                             <th colspan="2" style="text-align:center;">Correction</th>
                                             <th rowspan="2" style="text-align:center;">Total</th>
-                                            <th rowspan="2" style="text-align:center;">Sign</th>
+                                            <th rowspan="2" width="50" style="text-align:center;">Sign</th>
                                         </tr>
                                         <tr>
                                             <th width="50" style="text-align:center;">Month I <br>(' . @number_format($allowance_1->amount) . ')</th>
@@ -375,7 +378,7 @@ class Student_payrolls extends CI_Controller
                                             <td style="text-align:right;">' . number_format($employee['correction_plus']) . '</td>
                                             <td style="text-align:right;">' . number_format($employee['correction_minus']) . '</td>
                                             <td style="text-align:right;">' . @number_format($employee['total_income']) . '</td>
-                                            <td></td>
+                                            <td style="vertical-align: text-top; height:30px;">'.$no.'.</td>
                                         </tr>';
                             $total += $employee['total_income'];
                             $no++;
@@ -383,7 +386,7 @@ class Student_payrolls extends CI_Controller
 
                         echo $html2;
                         echo '  <tr>
-                                    <th style="text-align:right;" colspan="15">GRAND TOTAL</th>
+                                    <th style="text-align:right;" colspan="16">GRAND TOTAL</th>
                                     <th style="text-align:right;">' . number_format($total) . '</th>
                                     <th style="text-align:right;"></th>
                                 </tr>
@@ -393,14 +396,16 @@ class Student_payrolls extends CI_Controller
                                     <table id="customers" style="width:70%;">
                                         <tr>
                                             <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
-                                            <th colspan="2" style="text-align:center;">CONFIRM OK</th>
+                                            <th colspan="3" style="text-align:center;">CONFIRM OK</th>
                                             <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
                                         </tr>
                                         <tr>
                                             <th width="100" style="text-align:center;">COST CONTROL</th>
                                             <th width="100" style="text-align:center;">HRD</th>
+                                            <th width="100" style="text-align:center;">HRD</th>
                                         </tr>
                                         <tr>
+                                            <td style="height:60px;"></td>
                                             <td style="height:60px;"></td>
                                             <td style="height:60px;"></td>
                                             <td style="height:60px;"></td>
@@ -409,6 +414,7 @@ class Student_payrolls extends CI_Controller
                                         <tr>
                                             <th style="text-align:center;">BOD</th>
                                             <th style="text-align:center;">ASSISTANT MANAGER</th>
+                                            <th style="text-align:center;">MANAGER</th>
                                             <th style="text-align:center;">ASSISTANT MANAGER</th>
                                             <th style="text-align:center;">PAYROLL STAFF</th>
                                         </tr>

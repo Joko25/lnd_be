@@ -11,7 +11,7 @@
             <th rowspan="2" data-options="field:'warning_letter',width:100,align:'center', styler:cellStyler, formatter:cellFormatter">Warning Letter</th>
             <th rowspan="2" data-options="field:'issue_date',width:120,align:'center'">Trans Date</th>
             <th rowspan="2" data-options="field:'issue_date',width:100,align:'center'">Issue Date</th>
-            <th rowspan="2" data-options="field:'reason_name',width:150,halign:'center'">Violation</th>
+            <th rowspan="2" data-options="field:'violation_name',width:150,halign:'center'">Violation</th>
             <th rowspan="2" data-options="field:'remarks',width:200,halign:'center'">Remarks</th>
             <th colspan="3" data-options="field:'',width:100,halign:'center'"> Approval</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
@@ -229,7 +229,12 @@
         $('#dg').datagrid({
             url: '<?= base_url('relation/warning_letters/datatables') ?>',
             pagination: true,
-            rownumbers: true
+            rownumbers: true,
+            rowStyler: function(index, row) {
+                if (row.employee_status == 1) {
+                    return 'background-color:#FFDCDC;';
+                }
+            }
         });
 
         //SAVE DATA

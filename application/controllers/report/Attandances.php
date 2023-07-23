@@ -96,12 +96,13 @@ class Attandances extends CI_Controller
                 <meta http-equiv="expires" content="0">
                 <meta http-equiv="pragma" content="no-cache">
             <head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
-            $this->db->select("a.id, a.number, a.name, c.name as division_name, d.name as departement_name, e.name as departement_sub_name");
+            $this->db->select("a.id, a.number, a.name, c.name as division_name, d.name as departement_name, e.name as departement_sub_name, f.warning_letter");
             $this->db->from('employees a');
             $this->db->join('divisions c', 'a.division_id = c.id');
             $this->db->join('departements d', 'a.departement_id = d.id');
             $this->db->join('departement_subs e', 'a.departement_sub_id = e.id');
             $this->db->join('privilege_groups i', "a.group_id = i.group_id and i.username = '$username'");
+            $this->db->join('(SELECT employee_id, MAX(warning_letter) as warning_letter FROM warning_letters GROUP BY employee_id) f', 'a.id = f.employee_id', 'left');
             $this->db->where('a.deleted', 0);
             $this->db->where('a.status', 0);
             $this->db->like('a.division_id', $filter_division);
@@ -125,6 +126,16 @@ class Attandances extends CI_Controller
             $no = 1;
 
             foreach ($records as $record) {
+                if(!empty($record['warning_letter'])){
+                    if($record['warning_letter'] != "4"){
+                        $warning_letter = "SP ".$record['warning_letter'];
+                    }else{
+                        $warning_letter = "TERMINATION";
+                    }
+                }else{
+                    $warning_letter = "-";
+                }
+
                 $html = '<div style="page-break-after:always;"><center>
                     <div style="float: left; font-size: 12px; text-align: left;">
                         <table style="width: 100%;">
@@ -175,6 +186,11 @@ class Attandances extends CI_Controller
                         <td>Sub Departement</td>
                         <td>:</td>
                         <td><b>' . $record['departement_sub_name'] . '</b></td>
+                    </tr>
+                    <tr>
+                        <td>Warning Letter</td>
+                        <td>:</td>
+                        <td><b>' . $warning_letter . '</b></td>
                     </tr>
                 </table>
                 <br>

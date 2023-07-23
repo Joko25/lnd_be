@@ -90,6 +90,9 @@
                 <select style="width:60%;" name="correction_name" panelHeight="auto" id="correction_name" required="" class="easyui-combobox">
                     <option value="CORRECTION">CORRECTION</option>
                     <option value="SALARY">SALARY CORRECTION</option>
+                    <option value="BACKUP">BACKUP</option>
+                    <option value="CASH CARRY">CASH CARRY</option>
+                    <option value="HOLIDAY ATT">HOLIDAY ATTANDANCE</option>
                 </select>
             </div>
             <div class="fitem">

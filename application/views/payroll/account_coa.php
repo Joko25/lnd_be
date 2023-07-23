@@ -5,7 +5,7 @@
             <th rowspan="2" field="ck" checkbox="true"></th>
             <th rowspan="2" data-options="field:'departement_name',width:150,halign:'center'">Departement</th>
             <th rowspan="2" data-options="field:'position_name',width:150,halign:'center'">Position</th>
-            <th rowspan="2" data-options="field:'group_name',width:150,halign:'center'">Group</th>
+            <th rowspan="2" data-options="field:'contract_name',width:150,halign:'center'">Employee Type</th>
             <th rowspan="2" data-options="field:'account_name',width:150,halign:'center'">COA Number</th>
             <th rowspan="2" data-options="field:'job_type',width:100,halign:'center'">Job Type</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>

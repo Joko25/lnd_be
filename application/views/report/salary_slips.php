@@ -65,7 +65,7 @@
     </div>
 </div>
 
-<div id="dlg_print" class="easyui-window" title="Print Preview" data-options="closed: true,minimizable:false,collapsible:false,maximizable:false,modal:true,footer:'#footer'" style="width: 800px; height: 500px; top: 20px;">
+<div id="dlg_print" class="easyui-window" title="Print Preview" data-options="closed: true,minimizable:false,collapsible:false,maximizable:false,modal:true,footer:'#footer'" style="width: 1000px; height: 500px; top: 20px;">
     <iframe id="printout" src="" style="width: 100%; height:410px; border: 0;"></iframe>
     <div id="footer" style="padding:5px; text-align:right;">
         <a class="easyui-linkbutton c6" onclick="pdf_detail()" style="width:120px">Print</a>
@@ -388,13 +388,21 @@
     });
 
     function FormatterFile(value, row) {
-        var linkPrint = "pdf_view('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
-        return '<a href="#" onclick="' + linkPrint + '" class="btn btn-primary btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-eye"></i> View</a>';
+        if(row.approved_to != null){
+            return "<b style='color:red;'>NOT APPROVED</b>";
+        }else{
+            var linkPrint = "pdf_view('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
+            return '<a href="#" onclick="' + linkPrint + '" class="btn btn-primary btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-eye"></i> View</a>';
+        }
     };
 
     function FormatterMail(value, row) {
-        var linkPrint = "slipMail('" + row.departement_id + "','" + row.departement_sub_id + "')";
-        return '<a href="#" onclick="' + linkPrint + '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-envelope"></i> Send</a>';
+        if(row.approved_to != null){
+            return "<b style='color:red;'>NOT APPROVED</b>";
+        }else{
+            var linkPrint = "slipMail('" + row.departement_id + "','" + row.departement_sub_id + "')";
+            return '<a href="#" onclick="' + linkPrint + '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-envelope"></i> Send</a>';
+        }
     };
 
     //Format Datepicker

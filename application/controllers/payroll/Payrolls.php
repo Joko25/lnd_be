@@ -116,6 +116,7 @@ class Payrolls extends CI_Controller
             //Get Data Array
             $records = $this->db->get()->result_array();
             foreach ($records as $record) {
+
                 $arr = array(
                     "employee_id" => $record['employee_id'],
                     "number" => $record['number'],

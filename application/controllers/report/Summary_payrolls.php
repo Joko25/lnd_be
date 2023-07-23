@@ -153,7 +153,7 @@ class Summary_payrolls extends CI_Controller
             $this->db->from('config');
             $config = $this->db->get()->row();
 
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid black;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
                     <body>';
             $no = 1;
             $hal = 1;
@@ -300,36 +300,39 @@ class Summary_payrolls extends CI_Controller
                 }
 
                 $html .= '  <tr>
-                                    <th style="text-align:right;" colspan="18">GRAND TOTAL</th>
-                                    <th style="text-align:right;">' . number_format($total) . '</th>
-                                </tr>';
+                                <th style="text-align:right;" colspan="18">GRAND TOTAL</th>
+                                <th style="text-align:right;">' . number_format($total) . '</th>
+                            </tr>';
                 $html .= '</table>
-                                <br>
-                                <center>
-                                    <table id="customers" style="width:70%;">
-                                        <tr>
-                                            <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
-                                            <th colspan="2" style="text-align:center;">CONFIRM OK</th>
-                                            <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
-                                        </tr>
-                                        <tr>
-                                            <th width="100" style="text-align:center;">COST CONTROL</th>
-                                            <th width="100" style="text-align:center;">HRD</th>
-                                        </tr>
-                                        <tr>
-                                            <td style="height:60px;"></td>
-                                            <td style="height:60px;"></td>
-                                            <td style="height:60px;"></td>
-                                            <td style="height:60px;"></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="text-align:center;">BOD</th>
-                                            <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                            <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                            <th style="text-align:center;">PAYROLL STAFF</th>
-                                        </tr>
-                                    </table>
-                                </center><br><br><br>';
+                            <br>
+                            <center>
+                                <table id="customers" style="width:70%;">
+                                    <tr>
+                                        <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
+                                        <th colspan="3" style="text-align:center;">CONFIRM OK</th>
+                                        <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
+                                    </tr>
+                                    <tr>
+                                        <th width="100" style="text-align:center;">COST CONTROL</th>
+                                        <th width="100" style="text-align:center;">HRD</th>
+                                        <th width="100" style="text-align:center;">HRD</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="height:60px;"></td>
+                                        <td style="height:60px;"></td>
+                                        <td style="height:60px;"></td>
+                                        <td style="height:60px;"></td>
+                                        <td style="height:60px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:center;">BOD</th>
+                                        <th style="text-align:center;">ASSISTANT MANAGER</th>
+                                        <th style="text-align:center;">MANAGER</th>
+                                        <th style="text-align:center;">ASSISTANT MANAGER</th>
+                                        <th style="text-align:center;">PAYROLL STAFF</th>
+                                    </tr>
+                                </table>
+                            </center><br><br><br>';
                 $hal++;
                 if (($i + 1) != $page) {
                     $html .= '<div style="page-break-after:always;"></div>';
@@ -401,7 +404,7 @@ class Summary_payrolls extends CI_Controller
             $this->db->from('config');
             $config = $this->db->get()->row();
 
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
+            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid black;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
             $no = 1;
             $hal = 1;
             for ($i = 0; $i < $page; $i++) {
@@ -492,33 +495,7 @@ class Summary_payrolls extends CI_Controller
                                 <th style="text-align:right;">' . number_format($totalEmployee) . '</th>
                                 <th style="text-align:right;">' . number_format($totalIncome) . '</th>
                             </tr>
-                            </table>
-                            <br>
-                            <center>
-                                <table id="customers" style="width:70%;">
-                                    <tr>
-                                        <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
-                                        <th colspan="2" style="text-align:center;">CONFIRM OK</th>
-                                        <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
-                                    </tr>
-                                    <tr>
-                                        <th width="100" style="text-align:center;">COST CONTROL</th>
-                                        <th width="100" style="text-align:center;">HRD</th>
-                                    </tr>
-                                    <tr>
-                                        <td style="height:60px;"></td>
-                                        <td style="height:60px;"></td>
-                                        <td style="height:60px;"></td>
-                                        <td style="height:60px;"></td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:center;">BOD</th>
-                                        <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                        <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                        <th style="text-align:center;">PAYROLL STAFF</th>
-                                    </tr>
-                                </table>
-                            </center>';
+                            </table>';
 
                 $hal++;
                 if (($i + 1) != $page) {

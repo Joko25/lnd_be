@@ -204,7 +204,7 @@ class Account_coa extends CI_Controller
             $position = $this->crud->read('positions', ["number" => $data['position_number']]);
             $contract = $this->crud->read('contracts', ["number" => $data['contract_number']]);
             $account = $this->crud->read('accounts', ["name" => $data['account_number']]);
-            $account_coa = $this->crud->reads('account_coa', ["departement_id" => @$departement->id, "position_id" => @$position->id, "contract_id" => @$contract->id, "job_type" => $data['job_type']]);
+            $account_coa = $this->crud->reads('account_coa', [], ["departement_id" => @$departement->id, "position_id" => @$position->id, "contract_id" => @$contract->id, "job_type" => $data['job_type']]);
 
             if (!empty($departement)) {
                 if (!empty($position)) {

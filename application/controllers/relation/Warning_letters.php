@@ -101,7 +101,8 @@ class Warning_letters extends CI_Controller
             //Select Query
             $this->db->select('a.*, 
                 b.name as employee_name, 
-                b.number as employee_number, 
+                b.number as employee_number,
+                b.status as employee_status,
                 b.date_sign, 
                 d.name as division_name, 
                 e.name as departement_name, 

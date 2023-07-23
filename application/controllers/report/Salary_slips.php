@@ -47,6 +47,10 @@ class Salary_slips extends CI_Controller
 
             //Select Query
             $this->db->select('
+            a.approved,
+            a.approved_to,
+            a.approved_by,
+            a.approved_date,
             b.departement_id,
             b.departement_sub_id,
             b.group_id,
@@ -93,10 +97,20 @@ class Salary_slips extends CI_Controller
 
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
-            $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, coalesce(c.amount_plus_correction, 0) as amount_plus_correction, coalesce(d.amount_plus_salary, 0) as amount_plus_salary, b.email FROM payrolls a
+            $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, 
+                coalesce(c.amount_plus_correction, 0) as amount_plus_correction, 
+                coalesce(d.amount_plus_salary, 0) as amount_plus_salary,
+                coalesce(f.amount_plus_backup, 0) as amount_plus_backup,
+                coalesce(g.amount_plus_cc, 0) as amount_plus_cc,
+                coalesce(h.amount_plus_holiday, 0) as amount_plus_holiday,
+                b.email 
+                FROM payrolls a
                 JOIN employees b ON a.employee_id = b.id
-                LEFT JOIN (SELECT employee_id, `trans_date`, SUM(amount) as amount_plus_correction FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'CORRECTION' GROUP BY employee_id) c ON a.employee_id = c.employee_id
-                LEFT JOIN (SELECT employee_id, `trans_date`, SUM(amount) as amount_plus_salary FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'SALARY' GROUP BY employee_id) d ON a.employee_id = d.employee_id
+                LEFT JOIN (SELECT employee_id, `trans_date`, correction_name, SUM(amount) as amount_plus_correction FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'CORRECTION' GROUP BY employee_id) c ON a.employee_id = c.employee_id
+                LEFT JOIN (SELECT employee_id, `trans_date`, correction_name, SUM(amount) as amount_plus_salary FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'SALARY' GROUP BY employee_id) d ON a.employee_id = d.employee_id
+                LEFT JOIN (SELECT employee_id, `trans_date`, correction_name, SUM(amount) as amount_plus_backup FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'BACKUP' GROUP BY employee_id) f ON a.employee_id = f.employee_id
+                LEFT JOIN (SELECT employee_id, `trans_date`, correction_name, SUM(amount) as amount_plus_cc FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'CASH CARRY' GROUP BY employee_id) g ON a.employee_id = g.employee_id
+                LEFT JOIN (SELECT employee_id, `trans_date`, correction_name, SUM(amount) as amount_plus_holiday FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'HOLIDAY ATT' GROUP BY employee_id) h ON a.employee_id = h.employee_id
                 LEFT JOIN privilege_groups e ON b.group_id = e.id and e.username = '$username' and e.status = '1'
                 WHERE a.period_start = '$period_start'
                 AND a.period_end = '$period_end'
@@ -118,6 +132,8 @@ class Salary_slips extends CI_Controller
         $filter_from = $this->input->get('filter_from');
         $filter_to = $this->input->get('filter_to');
         $record = $this->input->post('data');
+
+        $total_correction = ($record['amount_plus_correction'] + $record['amount_plus_salary'] + $record['amount_plus_backup'] + $record['amount_plus_cc'] +$record['amount_plus_holiday']);
         //Config
         $this->db->select('*');
         $this->db->from('config');
@@ -270,12 +286,22 @@ class Salary_slips extends CI_Controller
                                         <td style="text-align:right;">(<b>' . ($record['overtime_weekday'] + $record['overtime_holiday']) . '</b> Hour) <b>' . number_format(($record['overtime_amount_weekday'] + $record['overtime_amount_holiday'])) . '</b></td>
                                     </tr>
                                     <tr>
-                                        <td style="text-align:left;">Correction Plus</td>
-                                        <td style="text-align:right;"><b>' . number_format(($record['amount_plus_correction'])) . '</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align:left;">Correction Salary</td>
-                                        <td style="text-align:right;"><b>' . number_format(($record['amount_plus_salary'])) . '</b></td>
+                                        <td style="text-align:left;">
+                                            Correction<br>
+                                            - <small>Plus</small><br>
+                                            - <small>Salary</small><br>
+                                            - <small>Backup</small><br>
+                                            - <small>Cash Carry</small><br>
+                                            - <small>Holiday Attandance</small>
+                                        </td>
+                                        <td style="text-align:right;">
+                                            <b>' . number_format(($total_correction)) . '</b><br>
+                                            <small><b>' . number_format(($record['amount_plus_correction'])) . '</b></small><br>
+                                            <small><b>' . number_format(($record['amount_plus_salary'])) . '</b></small><br>
+                                            <small><b>' . number_format(($record['amount_plus_backup'])) . '</b></small><br>
+                                            <small><b>' . number_format(($record['amount_plus_cc'])) . '</b></small><br>
+                                            <small><b>' . number_format(($record['amount_plus_holiday'])) . '</b></small>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td style="text-align:left;">Correction Overtime</td>
@@ -378,19 +404,30 @@ class Salary_slips extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, c.amount_plus_correction, d.amount_plus_salary FROM payrolls a
-                JOIN employees b ON a.employee_id = b.id
-                LEFT JOIN (SELECT employee_id, `trans_date`, SUM(amount) as amount_plus_correction FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'CORRECTION' GROUP BY employee_id) c ON a.employee_id = c.employee_id
-                LEFT JOIN (SELECT employee_id, `trans_date`, SUM(amount) as amount_plus_salary FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'SALARY' GROUP BY employee_id) d ON a.employee_id = d.employee_id
-                LEFT JOIN privilege_groups e ON b.group_id = e.id and e.username = '$username' and e.status = '1'
-                WHERE a.period_start = '$period_start'
-                AND a.period_end = '$period_end'
-                AND b.division_id LIKE '%$filter_division%'
-                AND b.departement_id LIKE '%$filter_departement%'
-                AND b.departement_sub_id LIKE '%$filter_departement_sub%'
-                AND b.group_id LIKE '%$filter_group%'
-                AND a.employee_id LIKE '%$filter_employee%'
-                ORDER BY a.`name` ASC");
+            $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no,
+            coalesce(c.amount_plus_correction, 0) as amount_plus_correction, 
+            coalesce(d.amount_plus_salary, 0) as amount_plus_salary,
+            coalesce(f.amount_plus_backup, 0) as amount_plus_backup,
+            coalesce(g.amount_plus_cc, 0) as amount_plus_cc,
+            coalesce(h.amount_plus_holiday, 0) as amount_plus_holiday,
+            b.email 
+            FROM payrolls a
+            JOIN employees b ON a.employee_id = b.id
+            LEFT JOIN (SELECT employee_id, `trans_date`, correction_name, SUM(amount) as amount_plus_correction FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'CORRECTION' GROUP BY employee_id) c ON a.employee_id = c.employee_id
+            LEFT JOIN (SELECT employee_id, `trans_date`, correction_name, SUM(amount) as amount_plus_salary FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'SALARY' GROUP BY employee_id) d ON a.employee_id = d.employee_id
+            LEFT JOIN (SELECT employee_id, `trans_date`, correction_name, SUM(amount) as amount_plus_backup FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'BACKUP' GROUP BY employee_id) f ON a.employee_id = f.employee_id
+            LEFT JOIN (SELECT employee_id, `trans_date`, correction_name, SUM(amount) as amount_plus_cc FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'CASH CARRY' GROUP BY employee_id) g ON a.employee_id = g.employee_id
+            LEFT JOIN (SELECT employee_id, `trans_date`, correction_name, SUM(amount) as amount_plus_holiday FROM corrections WHERE trans_date between '$filter_from' and '$filter_to' and correction_type = 'PLUS' and correction_name = 'HOLIDAY ATT' GROUP BY employee_id) h ON a.employee_id = h.employee_id
+            LEFT JOIN privilege_groups e ON b.group_id = e.id and e.username = '$username' and e.status = '1'
+            WHERE a.period_start = '$period_start'
+            AND a.period_end = '$period_end'
+            AND b.division_id LIKE '%$filter_division%'
+            AND b.departement_id LIKE '%$filter_departement%'
+            AND b.departement_sub_id LIKE '%$filter_departement_sub%'
+            AND b.group_id LIKE '%$filter_group%'
+            AND a.employee_id LIKE '%$filter_employee%'
+            GROUP BY b.id
+            ORDER BY a.`name` ASC");
             $records = $query->result_array();
 
             //Config
@@ -415,6 +452,7 @@ class Salary_slips extends CI_Controller
             $no = 1;
             //Looping per Employee
             foreach ($records as $record) {
+                $total_correction = ($record['amount_plus_correction'] + $record['amount_plus_salary'] + $record['amount_plus_backup'] + $record['amount_plus_cc'] +$record['amount_plus_holiday']);
 
                 //Deduction Amount
                 $total_deduction_amount = 0;
@@ -549,12 +587,22 @@ class Salary_slips extends CI_Controller
                                                     <td style="text-align:right;">(<b>' . ($record['overtime_weekday'] + $record['overtime_holiday']) . '</b> Hour) <b>' . number_format(($record['overtime_amount_weekday'] + $record['overtime_amount_holiday'])) . '</b></td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="text-align:left;">Correction Plus</td>
-                                                    <td style="text-align:right;"><b>' . number_format(($record['amount_plus_correction'])) . '</b></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="text-align:left;">Correction Salary</td>
-                                                    <td style="text-align:right;"><b>' . number_format(($record['amount_plus_salary'])) . '</b></td>
+                                                    <td style="text-align:left;">
+                                                        Correction<br>
+                                                        - <small>Plus</small><br>
+                                                        - <small>Salary</small><br>
+                                                        - <small>Backup</small><br>
+                                                        - <small>Cash Carry</small><br>
+                                                        - <small>Holiday Attandance</small>
+                                                    </td>
+                                                    <td style="text-align:right;">
+                                                        <b>' . number_format(($total_correction)) . '</b><br>
+                                                        <small><b>' . number_format(($record['amount_plus_correction'])) . '</b></small><br>
+                                                        <small><b>' . number_format(($record['amount_plus_salary'])) . '</b></small><br>
+                                                        <small><b>' . number_format(($record['amount_plus_backup'])) . '</b></small><br>
+                                                        <small><b>' . number_format(($record['amount_plus_cc'])) . '</b></small><br>
+                                                        <small><b>' . number_format(($record['amount_plus_holiday'])) . '</b></small>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align:left;">Correction Overtime</td>
