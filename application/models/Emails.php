@@ -207,7 +207,7 @@ class Emails extends CI_Model
             'smtp_host' => 'aeconsys.com',
             'smtp_port' => 465,
             'smtp_user' => 'kinenta@aeconsys.com',
-            'smtp_pass' => 'Angeska@123#',
+            'smtp_pass' => 'Hilman1196',
             'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
             'mailtype' => 'html', //plaintext 'text' mails or 'html'
             'smtp_timeout' => '4', //in seconds

@@ -225,12 +225,12 @@
                                         var title = "<b style='color: green;'>" + result.title + "</b> | " + result.message;
                                         setTimeout(function() {
                                             requestSendMail(total, json, number + 1, value);
-                                        }, 20000);
+                                        }, 50000);
                                     } else {
                                         var title = "<b style='color: red;'>" + result.title + "</b> | " + result.message;
                                         setTimeout(function() {
                                             requestSendMail(total, json, number + 1, value);
-                                        }, 20000);
+                                        }, 50000);
                                     }
                                     $("#p_remarks").append(title + "<br>");
                                 }
@@ -388,21 +388,21 @@
     });
 
     function FormatterFile(value, row) {
-        if(row.approved_to != null){
-            return "<b style='color:red;'>NOT APPROVED</b>";
-        }else{
+        // if(row.approved_to != ""){
+        //     return "<b style='color:red;'>NOT APPROVED</b>";
+        // }else{
             var linkPrint = "pdf_view('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
             return '<a href="#" onclick="' + linkPrint + '" class="btn btn-primary btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-eye"></i> View</a>';
-        }
+        //}
     };
 
     function FormatterMail(value, row) {
-        if(row.approved_to != null){
-            return "<b style='color:red;'>NOT APPROVED</b>";
-        }else{
+        // if(row.approved_to != ""){
+        //     return "<b style='color:red;'>NOT APPROVED</b>";
+        // }else{
             var linkPrint = "slipMail('" + row.departement_id + "','" + row.departement_sub_id + "')";
             return '<a href="#" onclick="' + linkPrint + '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-envelope"></i> Send</a>';
-        }
+        //}
     };
 
     //Format Datepicker
