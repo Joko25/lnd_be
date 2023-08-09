@@ -33,7 +33,7 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 260px;">
+<div id="toolbar" style="height: 270px; padding: 10px;">
     <fieldset style="width: 100%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
         <div style="width: 50%; float: left;">
@@ -80,7 +80,7 @@
     </fieldset>
     <?= $button ?>
 </div>
- 
+
 <!-- DIALOG SAVE AND UPDATE -->
 <div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 400px; padding:10px; top: 20px;">
     <form id="frm_insert" method="post" novalidate>
@@ -216,9 +216,9 @@
         var filter_resign_type = $("#filter_resign_type").combobox('getValue');
         var filter_reason = $("#filter_reason").combobox('getValue');
 
-        var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_division=" + filter_division + "&filter_departement=" + filter_departement + 
-        "&filter_departement_sub=" + filter_departement_sub + "&filter_employee=" + filter_employee + 
-        "&filter_resign_type=" + filter_resign_type + "&filter_reason=" + filter_reason;
+        var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_division=" + filter_division + "&filter_departement=" + filter_departement +
+            "&filter_departement_sub=" + filter_departement_sub + "&filter_employee=" + filter_employee +
+            "&filter_resign_type=" + filter_resign_type + "&filter_reason=" + filter_reason;
 
         $('#dg').datagrid({
             url: '<?= base_url('relation/resignations/datatables') ?>' + url
@@ -253,9 +253,9 @@
         var filter_resign_type = $("#filter_resign_type").combobox('getValue');
         var filter_reason = $("#filter_reason").combobox('getValue');
 
-        var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_division=" + filter_division + "&filter_departement=" + filter_departement + 
-        "&filter_departement_sub=" + filter_departement_sub + "&filter_employee=" + filter_employee + 
-        "&filter_resign_type=" + filter_resign_type + "&filter_reason=" + filter_reason;
+        var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_division=" + filter_division + "&filter_departement=" + filter_departement +
+            "&filter_departement_sub=" + filter_departement_sub + "&filter_employee=" + filter_employee +
+            "&filter_resign_type=" + filter_resign_type + "&filter_reason=" + filter_reason;
 
         window.location.assign('<?= base_url('relation/resignations/print/excel') ?>' + url);
     }
@@ -408,13 +408,13 @@
             textField: 'text',
             data: [{
                 text: 'RESIGN'
-            },{
+            }, {
                 text: 'TERMINATION'
             }],
-            onSelect: function(row, val){
-                if(row.text == "RESIGN"){
+            onSelect: function(row, val) {
+                if (row.text == "RESIGN") {
                     var url_employee = '<?= base_url('employee/employees/reads') ?>';
-                }else{
+                } else {
                     var url_employee = '<?= base_url('relation/warning_letters/readTermination') ?>';
                 }
 
@@ -531,21 +531,21 @@
         });
 
         $("#request_date").datebox({
-            onSelect: function(date){
-                var request_date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+            onSelect: function(date) {
+                var request_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
                 var resign_date = $("#resign_date").datebox('getValue');
 
-                if(resign_date == ""){
+                if (resign_date == "") {
                     toastr.info("Please Select Resign Date");
-                }else{
+                } else {
                     var endDate = daysBetween(request_date, resign_date);
-                    if(endDate > 0){
-                        if(endDate >= 30){
+                    if (endDate > 0) {
+                        if (endDate >= 30) {
                             $("#status_resign").textbox('setValue', 'ON PROCEDURE');
-                        }else{
+                        } else {
                             $("#status_resign").textbox('setValue', 'UN PROCEDURE');
                         }
-                    }else{
+                    } else {
                         toastr.warning("Request Date < Resign Date");
                     }
                 }
@@ -553,21 +553,21 @@
         });
 
         $("#resign_date").datebox({
-            onSelect: function(date2){
+            onSelect: function(date2) {
                 var request_date = $("#request_date").datebox('getValue');
-                var resign_date = date2.getFullYear()+"-"+(date2.getMonth()+1)+"-"+date2.getDate();
+                var resign_date = date2.getFullYear() + "-" + (date2.getMonth() + 1) + "-" + date2.getDate();
 
-                if(request_date == ""){
+                if (request_date == "") {
                     toastr.info("Please Select Request Date");
-                }else{
+                } else {
                     var endDate = daysBetween(request_date, resign_date);
-                    if(endDate > 0){
-                        if(endDate >= 30){
+                    if (endDate > 0) {
+                        if (endDate >= 30) {
                             $("#status_resign").textbox('setValue', 'ON PROCEDURE');
-                        }else{
+                        } else {
                             $("#status_resign").textbox('setValue', 'UN PROCEDURE');
                         }
-                    }else{
+                    } else {
                         toastr.warning("Request Date < Resign Date");
                     }
                 }
@@ -580,7 +580,7 @@
         var two = new Date(first);
 
         var Difference_In_Time = one.getTime() - two.getTime();
-	    var Difference_In_Days = (Difference_In_Time / (1000 * 60 * 60 * 24) + 2);
+        var Difference_In_Days = (Difference_In_Time / (1000 * 60 * 60 * 24) + 2);
 
         // Round down.
         return Math.floor(Difference_In_Days);

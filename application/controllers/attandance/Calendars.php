@@ -78,6 +78,11 @@ class Calendars extends CI_Controller
                         text-align: left;
                         color: black;
                     }
+
+                    textarea { 
+                        border: 0;
+                        background:transparent;
+                    }
                 </style>
                 <table id="customers" style="width: 100%;">
                     <tr>

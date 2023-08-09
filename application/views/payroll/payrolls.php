@@ -1,5 +1,5 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:99.5%; height: 700px;" toolbar="#toolbar">
+<table id="dg" class="easyui-datagrid" style="width:100%; height: 640px;" toolbar="#toolbar">
     <thead frozen="true">
         <tr>
             <th data-options="field:'number',width:150,halign:'center'">Employee ID</th>
@@ -107,7 +107,7 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 260px;">
+<div id="toolbar" style="height: 270px; padding: 10px;">
     <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
         <div style="width: 50%; float: left;">

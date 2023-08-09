@@ -340,6 +340,13 @@ class Payroll_pkl extends CI_Controller
         }
     }
 
+    public function delete_id()
+    {
+        $data = $this->input->post();
+        $delete = $this->crud->delete("payroll_pkl", ['id' => $data['id']]);
+        echo $delete;
+    }
+
     //PRINT & EXCEL DATA
     public function print($option = "")
     {

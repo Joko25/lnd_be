@@ -22,7 +22,7 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 220px;">
+<div id="toolbar" style="height: 230px; padding: 10px;">
     <div style="width: 100%;">
         <fieldset style="width: 50%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
             <legend><b>Form Filter Data</b></legend>

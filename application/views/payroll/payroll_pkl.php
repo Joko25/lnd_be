@@ -23,7 +23,7 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 230px;">
+<div id="toolbar" style="height: 235px; padding: 10px;">
     <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
         <div style="width: 50%; float:left;">
@@ -264,6 +264,38 @@
                     }
                 }
             });
+        }
+    }
+
+    function deleted() {
+        var rows = $('#dg').datagrid('getSelections');
+        if (rows.length > 0) {
+            $.messager.confirm('Warning', 'Are you sure you want to delete this data?', function(r) {
+                if (r) {
+                    for (var i = 0; i < rows.length; i++) {
+                        var row = rows[i];
+                        $.ajax({
+                            method: 'post',
+                            url: '<?= base_url('payroll/payroll_pkl/delete_id') ?>',
+                            data: {
+                                id: row.id
+                            },
+                            success: function(result) {
+                                var result = eval('(' + result + ')');
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                toastr.error(jqXHR.statusText);
+                                $.messager.alert("Error", jqXHR.statusText, 'error');
+                            },
+                            complete: function(data) {
+                                $('#dg').datagrid('reload');
+                            }
+                        });
+                    }
+                }
+            });
+        } else {
+            toastr.warning("Please select one of the data in the table first!", "Information");
         }
     }
 

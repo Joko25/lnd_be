@@ -48,7 +48,7 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 265px;">
+<div id="toolbar" style="height: 270px; padding: 10px;">
     <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
         <div style="width: 50%; float: left;">
@@ -716,15 +716,15 @@
                     var rows = $('#dg2').datagrid('getRows');
                     var totalrows = rows.length;
                     endEditing();
-                    
-                    if(idm_no != "" && request_code != "" && totalrows > 0){
+
+                    if (idm_no != "" && request_code != "" && totalrows > 0) {
                         $('#frm_insert').form('submit', {
                             url: '<?= base_url('attandance/cash_carries/uploadFile') ?>',
                             method: 'POST',
                             onSubmit: function() {
                                 return $(this).form('validate');
                             },
-                            success:function(data){
+                            success: function(data) {
                                 var data = eval('(' + data + ')');
                                 var file_attachment = data.attachment;
                                 var file_attachment_idm = data.attachment_idm;
@@ -789,7 +789,7 @@
                         });
 
                         $('#dlg_insert').dialog('close');
-                    }else{
+                    } else {
                         toastr.info("Please complete your cash carry data");
                     }
                 }

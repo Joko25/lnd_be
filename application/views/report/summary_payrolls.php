@@ -19,7 +19,7 @@
     </thead>
 </table>
 
-<div id="toolbar" style="height: 230px;">
+<div id="toolbar" style="height: 240px; padding: 10px;">
     <!-- <div style="width: 100%; display: grid; grid-template-columns: auto auto auto; grid-gap: 5px; display: flex;"> -->
     <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
@@ -343,7 +343,7 @@
         } else {
             $("#pdf_detail").linkbutton('disable');
         }
-        
+
         return '<a href="#" onclick="' + linkPrint + '" class="btn btn-primary btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-eye"></i> View</a>';
     };
 

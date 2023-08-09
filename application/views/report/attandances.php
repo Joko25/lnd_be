@@ -1,6 +1,6 @@
 <table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar"></table>
 
-<div id="toolbar" style="height: 260px;">
+<div id="toolbar" style="height: 270px; padding: 10px;">
     <!-- <div style="width: 100%; display: grid; grid-template-columns: auto auto auto; grid-gap: 5px; display: flex;"> -->
     <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
@@ -59,7 +59,6 @@
     <iframe id="printout" src="" style="width: 100%; height:500px; border: 0;"></iframe>
 </div>
 <script>
-
     function reload() {
         window.location.reload();
     }
