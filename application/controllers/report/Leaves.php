@@ -52,6 +52,8 @@ class Leaves extends CI_Controller
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
 
+            $calendar = $this->crud->reads("calendars", ["trans_date" => $filter_year], ["permit" => 1]);
+
             $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
             <style> .str{ mso-number-format:\@; } </style>
             <body>';
@@ -127,13 +129,15 @@ class Leaves extends CI_Controller
                                     <th rowspan="2" style="text-align:center;">Sub Departement</th>
                                     <th rowspan="2" style="text-align:center;">Employee ID</th>
                                     <th rowspan="2" style="text-align:center;">Employee Name</th>
-                                    <th colspan="3" style="text-align:center;">' . $filter_year . '</th>
+                                    <th colspan="4" style="text-align:center;">' . $filter_year . '</th>
                                 </tr>
                                 <tr>
                                     <th style="text-align:center;">Available</th>
                                     <th style="text-align:center;">Used</th>
+                                    <th style="text-align:center;">Calendar</th>
                                     <th style="text-align:center;">Balance</th>
                                 </tr>';
+
                 $this->db->select("a.*, SUM(e.duration) as leaves, b.name as departement_sub_name");
                 $this->db->from('employees a');
                 $this->db->join('departement_subs b', 'a.departement_sub_id = b.id');
@@ -160,11 +164,7 @@ class Leaves extends CI_Controller
 
                 $no = 1;
                 foreach ($employees as $employee) {
-                    if ((12 - @$employee['leaves']) <= 0) {
-                        $balance = "<b style='color:red;'>" . (12 - @$employee['leaves']) . "</b>";
-                    } else {
-                        $balance = "<b>" . (12 - @$employee['leaves']) . "</b>";
-                    }
+                    $balance = "<b>" . (12 - @$employee['leaves'] - count($calendar)) . "</b>";
 
                     $html .= '<tr>
                                 <th>' . $no . '</th>
@@ -172,7 +172,8 @@ class Leaves extends CI_Controller
                                 <th class="str">' . $employee['number'] . '</th>
                                 <th>' . $employee['name'] . '</th>
                                 <th style="text-align:center;">' . 12 . '</th>
-                                <th style="text-align:center;">' . $employee['leaves'] . '</th>
+                                <th style="text-align:center; color:red;">' . $employee['leaves'] . '</th>
+                                <th style="text-align:center; color:red;">' . count($calendar) . '</th>
                                 <th style="text-align:center;">' . @$balance . '</th>
                             </tr>';
                     $no++;

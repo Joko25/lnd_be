@@ -2,6 +2,12 @@
 date_default_timezone_set("Asia/Bangkok");
 
 //Config
+$username = $this->session->username;
+$this->db->select('*');
+$this->db->from('users');
+$this->db->where('username', $username);
+$profile = $this->db->get()->row();
+
 $this->db->select('*');
 $this->db->from('config');
 $config = $this->db->get()->row();
@@ -21,7 +27,7 @@ $config = $this->db->get()->row();
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
     <!-- Easyui -->
-    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/themes/' . $config->theme . '/easyui.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/themes/' . $profile->theme . '/easyui.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/themes/icon.css?' . time()) ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/themes/color.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/themes/style.css?' . time()) ?>">
@@ -43,8 +49,8 @@ $config = $this->db->get()->row();
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/vendors/sweetalert2.min.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/vendors/guidely.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/bootstrap/css/bootstrap.min.css?4') ?>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
     <script type="text/javascript" src="<?= base_url('assets/vendors/toastr.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/vendors/sweetalert2.all.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/vendors/guidely.min.js') ?>"></script>

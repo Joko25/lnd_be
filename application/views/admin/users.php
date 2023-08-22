@@ -10,6 +10,7 @@
             <th data-options="field:'phone',width:150">Phone</th>
             <th data-options="field:'position',width:200">Position</th>
             <th data-options="field:'avatar',width:200">File Foto</th>
+            <th data-options="field:'theme',width:100">Theme</th>
             <th data-options="field:'actived',width:150, styler:cellStyler, formatter:cellFormatter">Status</th>
             <th data-options="field:'access',width:150, styler:cellStyler2, formatter:cellFormatter2">Access</th>
         </tr>
@@ -61,6 +62,27 @@
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Foto Profile</span>
                 <input style="width:60%;" name="avatar" id="avatar" class="easyui-filebox" accept=".jpg, .png, .jpeg">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Theme App</span>
+                <select style="width:60%;" name="theme" id="theme" class="easyui-combobox">
+                    <option value="default">Default</option>
+                    <option value="cupertino">Cupertino</option>
+                    <option value="black">Black</option>
+                    <option value="bootstrap">Bootstrap</option>
+                    <option value="gray">Gray</option>
+                    <option value="pepper-grinder">Pepper Grinder</option>
+                    <option value="material">Material</option>
+                    <option value="material-blue">Material Blue</option>
+                    <option value="material-teal">Material Teal</option>
+                    <option value="metro">Metro</option>
+                    <option value="metro-blue">Metro Blue</option>
+                    <option value="metro-gray">Metro Gray</option>
+                    <option value="metro-green">Metro Green</option>
+                    <option value="metro-orange">Metro Orange</option>
+                    <option value="metro-red">Metro Red</option>
+                    <option value="sunny">Sunny</option>
+                </select>
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Status</span>

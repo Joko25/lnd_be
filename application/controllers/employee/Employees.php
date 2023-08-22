@@ -320,9 +320,9 @@ class Employees extends CI_Controller
         $this->db->join('positions g', 'g.id = a.position_id', 'left');
         $this->db->join('contracts h', 'h.id = a.contract_id', 'left');
         $this->db->where('a.deleted', 0);
-        if($filter_status == ""){
+        if ($filter_status == "") {
             $this->db->where('a.status', 0);
-        }else{
+        } else {
             $this->db->like('a.status', $filter_status);
         }
         $this->db->like('a.departement_id', $aprvDepartement);
@@ -794,6 +794,18 @@ class Employees extends CI_Controller
                 echo json_encode(array("title" => "Failed", "message" => "<b>" . $data['number'] . " | " . $data['name'] . "</b> Marital Status ID Not Found", "theme" => "error"));
             } elseif (!empty($employees)) {
                 $sendEmployees = $this->crud->update('employees', ["number" => $data['number']], $employeesData);
+                $this->crud->update('agreements', ["number" => $data['number']], ["status" => 1]);
+
+                $agreementsData = array(
+                    'number' => $data['number'],
+                    'contract_id' => $contracts->id,
+                    'position_id' => $positions->id,
+                    'group_id' => $groups->id,
+                    'date_sign' => $data['date_sign'],
+                    'date_expired' => $data['date_expired']
+                );
+
+                $sendAgreement = $this->crud->create('agreements', $agreementsData);
                 echo $sendEmployees;
             } else {
                 $agreementsData = array(

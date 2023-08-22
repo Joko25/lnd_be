@@ -78,6 +78,8 @@ class Permits extends CI_Controller
         $this->db->where('a.employee_id', $employee_id);
         $records = $this->db->get()->result_array();
 
+        $calendar = $this->crud->reads("calendars", ["trans_date" => $year], ["permit" => 1]);
+
         $permitType = $this->crud->read('permit_types', [], ["id" => $permit_type_id, "cutoff" => "YES"]);
         $permits = $this->crud->reads('permits', ["employee_id" => $employee_id, "DATE_FORMAT(permit_date, '%Y')" => $year], ["permit_type_id" => @$permitType->id]);
         $totalPermit = 0;
@@ -85,7 +87,7 @@ class Permits extends CI_Controller
             $totalPermit += $permit->duration;
         }
 
-        echo json_encode(@array_merge($records, ["total" => (12 - $totalPermit)]));
+        echo json_encode(@array_merge($records, ["total" => (12 - $totalPermit - count($calendar))]));
     }
 
     public function getDays()
@@ -345,9 +347,11 @@ class Permits extends CI_Controller
                         $send = "";
 
                         $year = date("Y");
+
+                        $calendar = $this->crud->reads("calendars", ["trans_date" => $year], ["permit" => 1]);
                         $permitTypeCutoff = $this->crud->read('permit_types', ["id" => $permittype->id, "cutoff" => "YES"]);
                         $permits = $this->crud->reads('permits', ["permit_date" => $year], ["employee_id" => $employee->id, "permit_type_id" => @$permitTypeCutoff->id]);
-                        $totalPermit = 12;
+                        $totalPermit = (12 - count($calendar));
                         foreach ($permits as $leave) {
                             $totalPermit -= $leave->duration;
                         }

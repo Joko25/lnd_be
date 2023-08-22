@@ -254,15 +254,15 @@ class Payroll_pkl extends CI_Controller
             $allowence1 = ($payroll_1 * @$allowance_1->amount);
             $allowence = ($allowence1 + $allowence2 + $allowence3);
 
-            if ($attandance_count == 0) {
-                $total_income = 0;
-                $intern_fee = 0;
-                $boarding = 0;
-            } else {
-                $intern_fee = ($internship * @$attandance_count);
-                $boarding = $record['boarding_fee'];
-                $total_income = @($allowence + ($correctionPlus[0]->total - $correctionMinus[0]->total) + ($internship * @$attandance_count) + $boarding);
-            }
+            // if ($attandance_count == 0) {
+            //     $total_income = 0;
+            //     $intern_fee = 0;
+            //     $boarding = 0;
+            // } else {
+            $intern_fee = ($internship * @$attandance_count);
+            $boarding = $record['boarding_fee'];
+            $total_income = @($allowence + ($correctionPlus[0]->total - $correctionMinus[0]->total) + ($internship * @$attandance_count) + $boarding);
+            //}
 
             $arr = array(
                 "employee_id" => $record['id'],
@@ -433,7 +433,7 @@ class Payroll_pkl extends CI_Controller
                             <td>' . number_format($data['allowence']) . '</td>
                             <td>' . number_format($data['correction_plus']) . '</td>
                             <td>' . number_format($data['correction_minus']) . '</td>
-                            <td>' . number_format($data['amoutotal_incoment']) . '</td>
+                            <td>' . number_format($data['total_income']) . '</td>
                         </tr>';
             $no++;
         }

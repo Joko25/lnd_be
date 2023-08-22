@@ -108,15 +108,22 @@ class Calendars extends CI_Controller
             }
 
             $tanggal = $tahun . "-" . $bulan . "-" . $d;
-            $this->db->select('description');
+            $this->db->select('description, permit');
             $this->db->from('calendars');
             $this->db->where('deleted', 0);
             $this->db->where('trans_date', $tanggal);
             $data = $this->db->get()->result_array();
 
+            if (@$data[0]['permit'] == 1) {
+                $options = "<option value='0'>No</option><option selected value='1'>Yes</option>";
+            } else {
+                $options = "<option value='0' selected>No</option><option value='1'>Yes</option>";
+            }
+
             //Jika Hari Minggu
             $style = "background:white !important;";
             $checkbox = "<input hidden checked class='checked' type='checkbox' value='" . $d . "' name='days[]' style='float: left; width: 20px;'/>";
+            $permit = "Cut Leave <select name='permit[]' style='width:100%;'>" . $options . "</select>";
             $note = "<textarea rows='4' style='width:100%;' name='description[]'>" . @$data[0]['description'] . "</textarea>";
 
             if (@$data[0]['description'] != "") {
@@ -126,12 +133,14 @@ class Calendars extends CI_Controller
             if (date("l", mktime(0, 0, 0, $bulan, $d, $tahun)) == "Sunday") {
                 $style = "background:#FFDADA !important;";
                 $note = "<textarea rows='2' hidden name='description[]'></textarea>";
+                $permit = "<select hidden name='permit[]'><option value='0'>No</option><option value='1'>Yes</option></select>";
             }
 
             $html .= "  <td align=center style='" . $style . "' valign=middle>
                             $checkbox
                             <b style='font-size: 20px;'>$d</b><br>
                             $note
+                            $permit
                         </td>";
 
             //Jika Sudah seminggu
@@ -150,12 +159,19 @@ class Calendars extends CI_Controller
             $month = $this->input->post('filter_month');
             $year = $this->input->post('filter_year');
             $days = $this->input->post('days');
+            $permits = $this->input->post('permit');
             $description = $this->input->post('description');
 
             for ($i = 0; $i < count($days); $i++) {
                 $date = $year . "-" . $month . "-" . $days[$i];
                 $remark = @$description[$i];
+                $permit = @$permits[$i];
 
+                // if (empty($permits[$i])) {
+                //     $permit = 0;
+                // } else {
+                //     $permit = 1;
+                // }
 
                 $this->db->select('*');
                 $this->db->from('calendars');
@@ -165,9 +181,9 @@ class Calendars extends CI_Controller
 
                 if ($remark != "") {
                     if ($records > 0) {
-                        $this->crud->update('calendars', ["trans_date" => $date], ["description" => $remark]);
+                        $this->crud->update('calendars', ["trans_date" => $date], ["description" => $remark, "permit" => $permit]);
                     } else {
-                        $send = $this->crud->create('calendars', ["trans_date" => $date, "description" => $remark]);
+                        $this->crud->create('calendars', ["trans_date" => $date, "description" => $remark, "permit" => $permit]);
                     }
                 } else {
                     if ($records > 0) {

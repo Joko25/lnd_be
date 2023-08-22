@@ -326,6 +326,10 @@ class Attandances extends CI_Controller
                             'number' => $data['number'],
                             'date_in' => $date_in,
                             'time_in' => $time_in,
+                            'shift_start' => @$shift->start,
+                            'shift_name' => @$shift->name,
+                            'shift_detail' => @$shift->shift_name,
+                            'shift_days' => @$shift->days,
                         );
 
                         $this->crud->update('attandances', ["id" => $attandance_in->id], $data_attandance);
@@ -336,6 +340,10 @@ class Attandances extends CI_Controller
                             'date_in' => $date_in,
                             'time_in' => $time_in,
                             'date_out' => $date_out,
+                            'shift_start' => @$shift->start,
+                            'shift_name' => @$shift->name,
+                            'shift_detail' => @$shift->shift_name,
+                            'shift_days' => @$shift->days,
                             // 'time_out' => @$shift->end,
                         );
                         $this->crud->create('attandances', $data_attandance);
@@ -381,6 +389,10 @@ class Attandances extends CI_Controller
                             'number' => $data['number'],
                             'date_out' => $date_in,
                             'time_out' => $time_in,
+                            'shift_start' => @$shift->start,
+                            'shift_name' => @$shift->name,
+                            'shift_detail' => @$shift->shift_name,
+                            'shift_days' => @$shift->days,
                         );
                         $this->crud->update('attandances', ["id" => $attandance_out->id], $data_attandance);
                         echo json_encode(array("title" => "Updated", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Update data Check Out", "theme" => "success"));
@@ -391,6 +403,10 @@ class Attandances extends CI_Controller
                             // 'time_in' => @$shift->start,
                             'date_out' => $date_in,
                             'time_out' => $time_in,
+                            'shift_start' => @$shift->start,
+                            'shift_name' => @$shift->name,
+                            'shift_detail' => @$shift->shift_name,
+                            'shift_days' => @$shift->days,
                         );
                         $this->crud->create('attandances', $data_attandance);
                         echo json_encode(array("title" => "Created", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Create data Check Out", "theme" => "success"));
