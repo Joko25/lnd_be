@@ -131,9 +131,9 @@ class Cash_carries extends CI_Controller
                     $total = ((@$allowance_cash_carry->weekday * $duration) + $meal);
                 }
             } else {
-                if (date('w', $hourTrans) === '0'){
+                if (date('w', $hourTrans) === '0') {
                     $total = ((@$allowance_cash_carry->sunday * $duration) + $meal);
-                }else{
+                } else {
                     $total = ((@$allowance_cash_carry->saturday * $duration) + $meal);
                 }
             }
@@ -147,9 +147,9 @@ class Cash_carries extends CI_Controller
                     $total = ((@$allowance_cash_carry->weekday * $duration) + $meal);
                 }
             } else {
-                if (date('w', $hourTrans) === '0'){
+                if (date('w', $hourTrans) === '0') {
                     $total = ((@$allowance_cash_carry->sunday * $duration) + $meal);
-                }else{
+                } else {
                     $total = ((@$allowance_cash_carry->saturday * $duration) + $meal);
                 }
             }
@@ -158,8 +158,15 @@ class Cash_carries extends CI_Controller
         return $total;
     }
 
-    public function convertHour($trans_date, $start, $end)
+    public function convertHour($trans_date, $start, $end, $employee_id)
     {
+        //Cek data Setup
+        $this->db->select('b.name');
+        $this->db->from('setup_cash_carries a');
+        $this->db->join('allowance_cash_carries b', 'a.allowance_id = b.id');
+        $this->db->where('a.employee_id', $employee_id);
+        $setup = $this->db->get()->row();
+
         //Set Duration
         $time_begin = strtotime($trans_date . " " . $start);
         $time_end = strtotime($trans_date . " " . $end);
@@ -175,8 +182,20 @@ class Cash_carries extends CI_Controller
             $minutes = ($diff - $hour * (60 * 60));
         }
 
-        $duration = $hour . " Hour " . floor($minutes / 60) . " Minutes";
-        $duration_hour = round($diff / (60 * 60), 2);
+        if ($setup->name == "DRIVER") {
+            if (floor($minutes / 60) >= 30) {
+                $final_minutes = floor($minutes / 60);
+            } else {
+                $final_minutes = "0";
+            }
+        } else {
+            $final_minutes = floor($minutes / 60);
+        }
+
+        $duration = $hour . " Hour " . $final_minutes . " Minutes";
+        $duration_hour = $hour . "." . $final_minutes;
+
+        // $duration_hour = round($diff / (60 * 60), 2);
         $arr = array("duration" => $duration, "duration_hour" => $duration_hour);
         return $arr;
     }
@@ -236,7 +255,7 @@ class Cash_carries extends CI_Controller
             if ($filter_from != "" && $filter_to != "") {
                 $this->db->where('a.trans_date >=', $filter_from);
                 $this->db->where('a.trans_date <=', $filter_to);
-            }else{
+            } else {
                 $this->db->where('a.trans_date >=', date("Y-m-01"));
                 $this->db->where('a.trans_date <=', date("Y-m-t"));
             }
@@ -244,10 +263,10 @@ class Cash_carries extends CI_Controller
             $this->db->like('b.departement_id', $filter_departement);
             $this->db->like('b.departement_sub_id', $filter_departement_sub);
             $this->db->like('b.id', $filter_employee);
-            if($filter_request_code != ""){
+            if ($filter_request_code != "") {
                 $this->db->where('a.request_code', $filter_request_code);
             }
-            if($filter_idm != ""){
+            if ($filter_idm != "") {
                 $this->db->where('a.idm_no', $filter_idm);
             }
             if ($filter_approval == "0") {
@@ -328,9 +347,9 @@ class Cash_carries extends CI_Controller
                             $total = ((@$record['total_weekday'] * $hour) + $meal);
                         }
                     } else {
-                        if (date('w', $start) === '0'){
+                        if (date('w', $start) === '0') {
                             $total = ((@$record['total_sunday'] * $hour) + $meal);
-                        }else{
+                        } else {
                             $total = ((@$record['total_saturday'] * $hour) + $meal);
                         }
                     }
@@ -344,9 +363,9 @@ class Cash_carries extends CI_Controller
                             $total = ((@$record['total_weekday'] * $hour) + $meal);
                         }
                     } else {
-                        if (date('w', $start) === '0'){
+                        if (date('w', $start) === '0') {
                             $total = ((@$record['total_sunday'] * $hour) + $meal);
-                        }else{
+                        } else {
                             $total = ((@$record['total_saturday'] * $hour) + $meal);
                         }
                     }
@@ -395,7 +414,7 @@ class Cash_carries extends CI_Controller
             $attachment = trim($post['attachment']);
             $attachment_idm = trim($post['attachment_idm']);
             $remarks = $post['remarks'];
-            $duration = $this->convertHour($trans_date, $start, $end);
+            $duration = $this->convertHour($trans_date, $start, $end, $employee_id);
             $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, ($duration['duration_hour'] - ($break / 60)), $meal);
 
             $post_final = array(
@@ -449,7 +468,7 @@ class Cash_carries extends CI_Controller
             $plan = $post['plan'];
             $actual = $post['actual'];
             $remarks = $post['remarks'];
-            $duration = $this->convertHour($trans_date, $start, $end);
+            $duration = $this->convertHour($trans_date, $start, $end, $employee_id);
             $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, ($duration['duration_hour'] - ($break / 60)), $meal);
 
             $post_final = array(
@@ -507,7 +526,7 @@ class Cash_carries extends CI_Controller
             $extension_final = strtolower(end($extension_explode));
             $size = $_FILES["attachment"]['size'];
             $temporary = $_FILES["attachment"]['tmp_name'];
-            $newName =  "ATT_".time() . "." . $extension_final;
+            $newName =  "ATT_" . time() . "." . $extension_final;
 
             if (in_array($extension_final, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file == "") {
                 if ($size < 2097152) {
@@ -525,7 +544,7 @@ class Cash_carries extends CI_Controller
             $extension_final2 = strtolower(end($extension_explode2));
             $size2 = $_FILES["attachment_idm"]['size'];
             $temporary2 = $_FILES["attachment_idm"]['tmp_name'];
-            $newName2 =  "IDM_".time() . "." . $extension_final2;
+            $newName2 =  "IDM_" . time() . "." . $extension_final2;
 
             if (in_array($extension_final2, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file2 == "") {
                 if ($size2 < 2097152) {
@@ -572,7 +591,7 @@ class Cash_carries extends CI_Controller
             $extension_final2 = strtolower(end($extension_explode2));
             $size2 = $_FILES["attachment_idm"]['size'];
             $temporary2 = $_FILES["attachment_idm"]['tmp_name'];
-            $newName2 =  "IDM_" .time(). "." . $extension_final2;
+            $newName2 =  "IDM_" . time() . "." . $extension_final2;
 
             if (in_array($extension_final2, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file2 == "") {
                 if ($size2 < 2097152) {
@@ -660,14 +679,14 @@ class Cash_carries extends CI_Controller
                         } else {
                             $meal = "0";
                         }
-                        
-                        if($data['break'] == "" || $data['break'] == "0"){
+
+                        if ($data['break'] == "" || $data['break'] == "0") {
                             $break = 0;
-                        }else{
+                        } else {
                             $break = $data['break'];
                         }
 
-                        $duration = $this->convertHour($data['trans_date'], $data['start'], $data['end']);
+                        $duration = $this->convertHour($data['trans_date'], $data['start'], $data['end'], $employee->id);
                         $ot_amount = $this->readOvertimePrice($employee->id, $data['trans_date'], ($duration['duration_hour'] - ($break / 60)), $meal);
 
                         $post_cash_carries = array(
@@ -748,7 +767,7 @@ class Cash_carries extends CI_Controller
         if ($filter_from != "" && $filter_to != "") {
             $this->db->where('a.trans_date >=', $filter_from);
             $this->db->where('a.trans_date <=', $filter_to);
-        }else{
+        } else {
             $this->db->where('a.trans_date >=', date("Y-m-01"));
             $this->db->where('a.trans_date <=', date("Y-m-t"));
         }
@@ -756,10 +775,10 @@ class Cash_carries extends CI_Controller
         $this->db->like('b.departement_id', $filter_departement);
         $this->db->like('b.departement_sub_id', $filter_departement_sub);
         $this->db->like('b.id', $filter_employee);
-        if($filter_request_code != ""){
+        if ($filter_request_code != "") {
             $this->db->where('a.request_code', $filter_request_code);
         }
-        if($filter_idm != ""){
+        if ($filter_idm != "") {
             $this->db->where('a.idm_no', $filter_idm);
         }
         if ($filter_approval == "0") {

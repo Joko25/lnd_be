@@ -309,8 +309,8 @@ class Payrolls extends CI_Controller
             }
 
             //Permit yang non deduction atau tidak potong gaji
-            $permit_date = "'" . implode( "', '" , $weekend ) . "'";
-            $calendar_date = "'" . implode( "', '" , $w_calendars ) . "'";
+            $permit_date = "'" . implode("', '", $weekend) . "'";
+            $calendar_date = "'" . implode("', '", $w_calendars) . "'";
             $q_permit = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                     FROM permit_types b
                     LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date)
@@ -415,13 +415,13 @@ class Payrolls extends CI_Controller
             $loan_other_amount = empty($loan_other->amount) ? 0 : $loan_other->amount;
 
             //Attandances
-            $this->db->select("COUNT(*) as amount");
-            $this->db->from('attandances');
-            $this->db->where('number', $record['number']);
-            $this->db->where('date_in >=', $filter_from);
-            $this->db->where('date_in <=', $filter_to);
-            $this->db->where_not_in('date_in', $weekend);
-            $this->db->where_not_in('date_in', $w_calendars);
+            $this->db->select("COUNT(a.date_in) as amount");
+            $this->db->from('(SELECT DISTINCT number, date_in FROM attandances) a');
+            $this->db->where('a.number', $record['number']);
+            $this->db->where('a.date_in >=', $filter_from);
+            $this->db->where('a.date_in <=', $filter_to);
+            $this->db->where_not_in('a.date_in', $weekend);
+            $this->db->where_not_in('a.date_in', $w_calendars);
             $attandance = $this->db->get()->row();
             $attandance_amount = empty($attandance->amount) ? 0 : $attandance->amount;
 
@@ -430,14 +430,14 @@ class Payrolls extends CI_Controller
 
             //Hitung bereapa hari dia ga ada absen
             $absen = (@count($weekday) - @$calendar_amount - @$attandance_amount - @$changeDays_amount - $arr_total_permit - $arr_total_permit_deduction);
-            
+
             //Hitung Hari dia masuk kerja
             $working_days = ($attandance_amount + $arr_total_permit_absence);
 
             //Jika hari kerja nya lebih besar dari HKW maka nilai ambil HKW
-            if($working_days >= $hkw){
+            if ($working_days >= $hkw) {
                 $wd = $hkw;
-            }else{
+            } else {
                 $wd = $working_days;
             }
 

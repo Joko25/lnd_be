@@ -566,6 +566,9 @@
                 }]
             ],
             onSelect: function(value, employee) {
+                $("#permit_type_id").combobox('clear');
+                $("#reason_id").combobox('clear');
+
                 $.ajax({
                     url: '<?= base_url('attandance/permits/readShifts') ?>',
                     type: 'post',

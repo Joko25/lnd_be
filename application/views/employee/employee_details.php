@@ -132,11 +132,11 @@ if ($employee->image_profile == "" || $employee->image_profile == null) {
                 </div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Religion</span>
-                    <b style="width:60%;"><?= $religion->name ?></b>
+                    <b style="width:60%;"><?= @$religion->name ?></b>
                 </div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Marital Status</span>
-                    <b style="width:60%;"><?= $marital->name ?></b>
+                    <b style="width:60%;"><?= @$marital->name ?></b>
                 </div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">National ID</span>

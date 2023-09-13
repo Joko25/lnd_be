@@ -21,7 +21,7 @@ class Attandance_summary extends CI_Controller
             redirect('error_session');
         } elseif ($this->checkuserAccess($this->id_menu()) > 0) {
             $username = $this->session->username;
-            
+
             $data['button'] = $this->getbutton($this->id_menu());
             $data['user'] = $this->crud->read("users", [], ["username" => $username]);
 
@@ -48,21 +48,21 @@ class Attandance_summary extends CI_Controller
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
 
-            $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+            $header_html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
             <style> .str{ mso-number-format:\@; } </style>
             <body>';
-            $this->db->select("a.id as employee_id, a.number, a.name, a.division_id, a.departement_id, a.departement_sub_id, c.name as division_name, d.name as departement_name");
-            $this->db->from('employees a');
-            $this->db->join('divisions c', 'a.division_id = c.id');
-            $this->db->join('departements d', 'a.departement_id = d.id');
-            $this->db->where('a.deleted', 0);
+            $this->db->select("a.division_id, a.departement_id, a.departement_sub_id, c.name as division_name, d.name as departement_name, e.name as departement_sub_name");
+            $this->db->from('divisions c');
+            $this->db->join('departements d', 'd.division_id = c.id');
+            $this->db->join('departement_subs e', 'e.departement_id = d.id');
+            $this->db->join('employees a', 'a.division_id = c.id and a.departement_id = d.id and a.departement_sub_id = e.id');
             $this->db->where('a.status', 0);
             $this->db->like('a.division_id', $filter_division);
             $this->db->like('a.departement_id', $filter_departement);
             $this->db->like('a.departement_sub_id', $filter_departement_sub);
             $this->db->like('a.id', $filter_employee);
-            $this->db->group_by('a.departement_id');
-            $this->db->order_by('d.name', 'asc');
+            $this->db->group_by('e.id');
+            $this->db->order_by('e.name', 'asc');
             $records = $this->db->get()->result_array();
 
             //Config
@@ -70,12 +70,44 @@ class Attandance_summary extends CI_Controller
             $this->db->from('config');
             $config = $this->db->get()->row();
 
+            $start = strtotime($filter_from);
+            $finish = strtotime($filter_to);
+
+            $weekday = [];
+            $weekend = [];
+
+            for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
+                //Jika tanggal yg di looping bukan hari sabtu dan minggu
+                if (date('w', $i) !== '0' && date('w', $i) !== '6') {
+                    //Hari kerja
+                    $weekday[] = date('Y-m-d', $i);
+                } else {
+                    //Hari libur
+                    $weekend[] = date('Y-m-d', $i);
+                }
+            }
+
+            //Tanggal merah di master calendar
+            $this->db->select('trans_date');
+            $this->db->from('calendars');
+            $this->db->where('trans_date >=', $filter_from);
+            $this->db->where('trans_date <=', $filter_to);
+            if(count($weekend) > 0){
+                $this->db->where_not_in('trans_date', $weekend);
+            }
+            $calendar = $this->db->get()->result_array();
+            $calendar_amount = empty($calendar) ? 0 : count($calendar);
+            $w_calendars = array();
+            foreach ($calendar as $cal) {
+                $w_calendars[] = $cal['trans_date'];
+            }
+
             $no = 1;
             foreach ($records as $record) {
                 //Permit
                 $permit_types = $this->crud->reads("permit_types", [], [], "", "name", "asc");
 
-                $html .= '<div style="page-break-after:always;">
+                $html = '<div style="page-break-after:always;">
                 <center>
                     <div style="float: left; font-size: 12px; text-align: left;">
                         <table style="width: 100%;">
@@ -111,6 +143,11 @@ class Attandance_summary extends CI_Controller
                         <td>:</td>
                         <td><b>' . $record['departement_name'] . '</b></td>
                     </tr>
+                    <tr>
+                        <td>Departement Sub</td>
+                        <td>:</td>
+                        <td><b>' . $record['departement_sub_name'] . '</b></td>
+                    </tr>
                 </table>
                 <br>
 
@@ -123,6 +160,7 @@ class Attandance_summary extends CI_Controller
                     <th style="text-align:center;" rowspan="2">Shift</th>
                     <th style="text-align:center;" colspan="' . count($permit_types) . '">Permit</th>
                     <th style="text-align:center;" rowspan="2">Absence</th>
+                    <th style="text-align:center;" rowspan="2">Change Days</th>
                     <th style="text-align:center;" rowspan="2">Working Days</th>
                     <th style="text-align:center;" rowspan="2">Total Days</th>
                 </tr>
@@ -154,7 +192,7 @@ class Attandance_summary extends CI_Controller
                 $this->db->where('a.status', '0');
                 $this->db->where('a.division_id', $record['division_id']);
                 $this->db->where('a.departement_id', $record['departement_id']);
-                $this->db->like('a.departement_sub_id', $filter_departement_sub);
+                $this->db->like('a.departement_sub_id', $record['departement_sub_id']);
                 $this->db->like('a.id', $filter_employee);
                 $this->db->group_by('a.number');
                 $this->db->order_by('e.name, a.name', 'asc');
@@ -163,129 +201,89 @@ class Attandance_summary extends CI_Controller
                 $attandance_absece = 0;
                 $attandance_total = 0;
                 $attandance_days = 0;
-                $attadance_libur = 0;
+                $change_days = 0;
+                $total_days = 0;
+
                 foreach ($employees as $data) {
 
-                    $employee_id = $data['employee_id'];
-                    $start = strtotime($filter_from);
-                    $finish = strtotime($filter_to);
-                    $working = 0;
-                    $absence = 0;
-                    $libur = 0;
-                    $weekday = [];
+                    //Attandances
+                    $this->db->select("COUNT(a.date_in) as amount");
+                    $this->db->from('(SELECT DISTINCT number, date_in, date_out FROM attandances) a');
+                    $this->db->where('a.number', $data['number']);
+                    $this->db->where("((a.date_in >= '$filter_from' and a.date_in <= '$filter_to') or (a.date_out >= '$filter_from' and a.date_out <= '$filter_to'))");
+                    if(count($weekend) > 0){
+                        $this->db->where_not_in('a.date_in', $weekend);
+                    }
+                    if(count($w_calendars) > 0){
+                        $this->db->where_not_in('a.date_in', $w_calendars);
+                    }
+                    $attandance = $this->db->get()->row();
+                    $attandance_amount = empty($attandance->amount) ? 0 : $attandance->amount;
 
-                    for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
-                        $working_date = date('Y-m-d', $i);
+                    //Change Days
+                    $this->db->select("COUNT(*) as days");
+                    $this->db->from('change_days');
+                    $this->db->where('employee_id', $data['employee_id']);
+                    $this->db->where("(start between '$filter_from' and '$filter_to' or end between '$filter_from' and '$filter_to')");
+                    $changeDays = $this->db->get()->row();
+                    $changeDays_amount = empty($changeDays->days) ? 0 : $changeDays->days;
 
-                        //Calendars
-                        $this->db->select('description');
-                        $this->db->from('calendars');
-                        $this->db->where('trans_date', $working_date);
-                        $holiday = $this->db->get()->row();
+                    //Permit yang non deduction atau tidak potong gaji
+                    $permit_date = "'" . implode("', '", $weekend) . "'";
+                    $calendar_date = "'" . implode("', '", $w_calendars) . "'";
+                    $q_permit = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
+                            FROM permit_types b
+                            LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$data[employee_id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date)
+                            WHERE (a.approved_to = '' or a.approved_to is null)
+                            GROUP BY b.id");
+                    $r_permit = $q_permit->result_array();
+                    $arr_total_permit = 0;
+                    foreach ($r_permit as $permit_data) {
+                        $arr_total_permit += $permit_data['amount'];
+                    }
 
-                        //Attandance
-                        $this->db->select("*");
-                        $this->db->from('attandances');
-                        $this->db->where("date_in = '$working_date'");
-                        $this->db->where('number', $data['number']);
-                        $attandance = $this->db->get()->row();
+                    //Permit yang deduction atau potong gaji
+                    // $q_permit_deduction = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
+                    // FROM permit_types b
+                    // LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$data[employee_id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) and a.permit_date not in ($calendar_date)
+                    // WHERE b.payroll = 'DEDUCTION' and (a.approved_to = '' or a.approved_to is null)
+                    // GROUP BY b.id");
 
-                        //Change Days
-                        $this->db->select("*");
-                        $this->db->from('change_days');
-                        $this->db->where('employee_id', $data['employee_id']);
-                        $this->db->where("(start='".$working_date."' OR end='".$working_date."')");
-                        $change_day = $this->db->get()->row();
-                        
-                        //Shifts
-                        $tolerance_hour_min = date("H:i:s", strtotime('-2 Hour', strtotime(@$attandance->time_in)));
-                        $tolerance_hour_plus = date("H:i:s", strtotime('+2 Hour', strtotime(@$attandance->time_in)));
-                        $this->db->select("d.start, d.end, d.days, d.working, d.tolerance, c.name, d.name as shift_name");
-                        $this->db->from('shift_employees b');
-                        $this->db->join('shifts c', 'c.id = b.shift_id');
-                        $this->db->join('shift_details d', 'd.shift_id = c.id');
-                        $this->db->where('b.employee_id', $employee_id);
-                        $this->db->where("d.start >=  '$tolerance_hour_min' and d.start <= '$tolerance_hour_plus'");
-                        $shift = $this->db->get()->row();
+                    // $r_permit_deduction = $q_permit_deduction->result_array();
+                    // $arr_total_permit_deduction = 0;
+                    // foreach ($r_permit_deduction as $permit_data_deduction) {
+                    //     $arr_total_permit_deduction += $permit_data_deduction['amount'];
+                    // }
 
-                        //Permits
-                        $queryPermit = $this->db->query("SELECT SUM(a.duration) as amount, b.absence
-                            FROM permits a
-                            JOIN permit_types b ON a.permit_type_id = b.id
-                            WHERE (a.approved_to = '' or a.approved_to is null) and a.employee_id = '$data[employee_id]' and a.permit_date = '$working_date'
-                            GROUP BY a.employee_id");
-                        $rowPermit = $queryPermit->row();
+                    //Permit atau absen nya YES di anggap masuk kerja
+                    $q_permit_absence = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
+                    FROM permit_types b
+                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$data[employee_id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) and a.permit_date not in ($calendar_date)
+                    WHERE b.absence = 'YES' and (a.approved_to = '' or a.approved_to is null)
+                    GROUP BY b.id");
 
-                        //Jika hari kerja nya adalah 5 hari
-                        if (@$shift->days == "5") {
-                            if (date('w', $i) !== '0' && date('w', $i) !== '6') {
-                                $weekday[] = date('Y-m-d', $i);
+                    $r_permit_absence = $q_permit_absence->result_array();
+                    $arr_total_permit_absence = 0;
+                    foreach ($r_permit_absence as $permit_data_absence) {
+                        $arr_total_permit_absence += $permit_data_absence['amount'];
+                    }
 
-                                if (!empty($holiday->description)) {
-                                    $working += 0;
-                                    $absence += 0;
-                                    $libur += 1;
-                                } else {
-                                    if (@$rowPermit->absence == "YES") {
-                                        $working += 1;
-                                        $absence += 0;
-                                    } elseif (@$rowPermit->absence == "NO") {
-                                        $working += 0;
-                                        $absence += 0;
-                                    } elseif (@$change_day->start != null) {
-                                        $working += 1;
-                                        $absence += 0;
-                                    } elseif (@$attandance->time_in == null && @$attandance->time_out == null) {
-                                        $working += 0;
-                                        $absence += 1;
-                                    } else {
-                                        $working += 1;
-                                        $absence += 0;
-                                    }
+                    $hkw = (@count($weekday) - @$calendar_amount);
+                    $absence = (@count($weekday) - @$calendar_amount - @$attandance_amount - $arr_total_permit - @$changeDays_amount);
 
-                                    $libur += 0;
-                                }
-                            } else {
-                                $weekend[] = date('Y-m-d', $i);
-                                $working += 0;
-                                $absence += 0;
-                                $libur += 0;
-                            }
-                        }else{
-                            if (date('w', $i) !== '0') {
-                                $weekday[] = date('Y-m-d', $i);
+                    if ($absence < 0) {
+                        $absence_final = 0;
+                    } else {
+                        $absence_final = $absence;
+                    }
 
-                                if (!empty($holiday->description)) {
-                                    $working += 0;
-                                    $absence += 0;
-                                    $libur += 1;
-                                } else {
-                                    if (@$rowPermit->absence == "YES") {
-                                        $working += 1;
-                                        $absence += 0;
-                                    } elseif (@$rowPermit->absence == "NO") {
-                                        $working += 0;
-                                        $absence += 0;
-                                    } elseif (@$change_day->start != null) {
-                                        $working += 1;
-                                        $absence += 0;
-                                    } elseif (@$attandance->time_in == null && @$attandance->time_out == null) {
-                                        $working += 0;
-                                        $absence += 1;
-                                    } else {
-                                        $working += 1;
-                                        $absence += 0;
-                                    }
+                    //Hitung Hari dia masuk kerja
+                    $working_days = ($attandance_amount + $arr_total_permit_absence);
 
-                                    $libur += 0;
-                                }
-                            }else {
-                                $weekend[] = date('Y-m-d', $i);
-                                $working += 0;
-                                $absence += 0;
-                                $libur += 0;
-                            }
-                        }
+                    if ($working_days >= $hkw) {
+                        $working_day_final = $hkw;
+                    } else {
+                        $working_day_final = $working_days;
                     }
 
                     //Permit
@@ -308,14 +306,16 @@ class Attandance_summary extends CI_Controller
                         $total_permit += $data_permit['permit'];
                     }
 
-                    $html .= '  <td style="text-align:center;">' . $absence . '</td>
-                                <td style="text-align:center;">' . $working . '</td>
-                                <td style="text-align:center;">' . (count($weekday) - $libur) . '</td>
+                    $html .= '  <td style="text-align:center;">' . $absence_final . '</td>
+                                <td style="text-align:center;">' . $changeDays_amount . '</td>
+                                <td style="text-align:center;">' . $working_day_final . '</td>
+                                <td style="text-align:center;">' . $hkw . '</td>
                             </tr>';
 
-                    $attandance_absece += $absence;
-                    $attandance_total += $working;
-                    $attadance_libur += $libur;
+                    $attandance_absece += $absence_final;
+                    $attandance_total += $working_day_final;
+                    $change_days += @$changeDays_amount;
+                    $total_days += $hkw;
                     $attandance_days += count($weekday);
                     $no++;
                 }
@@ -324,8 +324,8 @@ class Attandance_summary extends CI_Controller
                 $this->db->select("b.name, COUNT(a.duration) as permit");
                 $this->db->from("permit_types b");
                 $this->db->join(
-                    "(SELECT a.employee_id, a.permit_type_id, a.permit_date, a.duration, b.departement_id, b.departement_sub_id FROM permits a JOIN employees b ON a.employee_id = b.id WHERE (a.approved_to = '' or a.approved_to is null)) a",
-                    "a.permit_type_id = b.id and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.employee_id LIKE '%$filter_employee%' and a.departement_id LIKE '%$filter_departement%' and a.departement_sub_id LIKE '%$filter_departement_sub%'",
+                    "(SELECT a.employee_id, a.permit_type_id, a.permit_date, a.duration, b.departement_id, b.departement_sub_id FROM permits a JOIN employees b ON a.employee_id = b.id WHERE b.status = 0 and (a.approved_to = '' or a.approved_to is null)) a",
+                    "a.permit_type_id = b.id and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.employee_id LIKE '%$filter_employee%' and a.departement_id = '$record[departement_id]' and a.departement_sub_id LIKE '%$record[departement_sub_id]%'",
                     "left"
                 );
                 $this->db->group_by("b.id");
@@ -334,8 +334,8 @@ class Attandance_summary extends CI_Controller
 
                 //Total Permit Final MP
                 $q_permit_mp = $this->db->query("SELECT a.name, COUNT(b.employee_id) as employee FROM permit_types a 
-                LEFT JOIN (SELECT a.employee_id, a.permit_type_id, a.permit_date, a.duration, b.departement_id, b.departement_sub_id FROM permits a JOIN employees b ON a.employee_id = b.id WHERE (a.approved_to = '' or a.approved_to is null) 
-                and a.permit_date BETWEEN '$filter_from' and '$filter_to' and a.employee_id LIKE '%$filter_employee%' and b.departement_id LIKE '%$filter_departement%' and b.departement_sub_id LIKE '%$filter_departement_sub%'
+                LEFT JOIN (SELECT a.employee_id, a.permit_type_id, a.permit_date, a.duration, b.departement_id, b.departement_sub_id FROM permits a JOIN employees b ON a.employee_id = b.id WHERE b.status = 0 and (a.approved_to = '' or a.approved_to is null) 
+                and a.permit_date BETWEEN '$filter_from' and '$filter_to' and a.employee_id LIKE '%$filter_employee%' and b.departement_id LIKE '%$record[departement_id]%' and b.departement_sub_id LIKE '%$record[departement_sub_id]%'
                 GROUP BY a.employee_id, a.permit_type_id) b ON a.id = b.permit_type_id
                 GROUP BY a.id ORDER BY a.name ASC");
                 $rt_permit_mp = $q_permit_mp->result_array();
@@ -346,8 +346,9 @@ class Attandance_summary extends CI_Controller
                     $html .= '<td style="text-align:center;">' . $row['permit'] . '</td>';
                 }
                 $html .= '  <th style="text-align:center;">' . $attandance_absece . '</th>
+                            <th style="text-align:center;">' . $change_days . '</th>
                             <th style="text-align:center;">' . $attandance_total . '</th>
-                            <th style="text-align:center;">' . ($attandance_days - $attadance_libur) . '</th>
+                            <th style="text-align:center;">' . ($total_days) . '</th>
                         </tr>';
 
                 //Grand Total MP
@@ -358,13 +359,15 @@ class Attandance_summary extends CI_Controller
                 $html .= '  <th style="text-align:center;"></th>
                             <th style="text-align:center;"></th>
                             <th style="text-align:center;"></th>
+                            <th style="text-align:center;"></th>
                         </tr>';
 
                 $html .= '</table></div><br><br>';
+
+                echo $header_html . $html;
             }
 
-            $html .= '</body></html>';
-            echo $html;
+            echo '</body></html>';
         }
     }
 }
