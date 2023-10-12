@@ -33,7 +33,7 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 270px; padding:10px;">
+<div id="toolbar" style="height: 260px;">
     <fieldset style="width: 99.8%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
         <div style="width:33%; float: left;">
@@ -239,7 +239,7 @@
                         <input style="width:60%;" name="tax_id" id="tax_id" class="easyui-textbox">
                     </div>
                     <div class="fitem">
-                        <span style="width:35%; display:inline-block;">Jamsostek</span>
+                        <span style="width:35%; display:inline-block;">BPJS TK</span>
                         <input style="width:35%;" name="jamsostek" id="jamsostek" class="easyui-textbox">
                         <input style="width:20%;" name="jamsostek_date" id="jamsostek_date" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
                     </div>

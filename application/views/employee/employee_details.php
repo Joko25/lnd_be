@@ -24,19 +24,17 @@ if ($employee->status == 0) {
     $status = '<span class="button-red" style="width: 100%; font-size: 20px !important;">NOT ACTIVE</span>';
 }
 
-if(!empty($resignation->employee_id)){
-    if($resignation->status_resign == "ON PROCEDURE"){
-        $status_resign = '<span class="button-green" style="width: 100%; font-size: 20px !important;">'.$resignation->status_resign.'</span>';
+if (!empty($resignation->employee_id)) {
+    if ($resignation->status_resign == "ON PROCEDURE") {
+        $status_resign = '<span class="button-green" style="width: 100%; font-size: 20px !important;">' . $resignation->status_resign . '</span>';
     } else {
-        $status_resign = '<span class="button-red" style="width: 100%; font-size: 20px !important;">'.$resignation->status_resign.'</span>';
+        $status_resign = '<span class="button-red" style="width: 100%; font-size: 20px !important;">' . $resignation->status_resign . '</span>';
     }
-}else{
+} else {
     $status_resign = '<span class="button-gray" style="width: 100%; font-size: 20px !important;">NO DATA RESIGN</span>';
 }
 
 if ($employee->image_profile == "" || $employee->image_profile == null) {
-    $image = "<img src='" . base_url('assets/image/users/default.png') . "' style='width: 100%;'>";
-} elseif ($employee->image_id == "" || $employee->image_id == null) {
     $image = "<img src='" . base_url('assets/image/users/default.png') . "' style='width: 100%;'>";
 } else {
     $image = "<img src='" . $employee->image_profile . "' style='width: 100%;'>";
@@ -147,11 +145,11 @@ if ($employee->image_profile == "" || $employee->image_profile == null) {
                     <b style="width:60%;"><?= $employee->tax_id ?></b>
                 </div>
                 <div class="fitem">
-                    <span style="width:35%; display:inline-block;">Jamsostek</span>
+                    <span style="width:35%; display:inline-block;">BPJS TK</span>
                     <b style="width:60%;"><?= $employee->jamsostek ?></b>
                 </div>
                 <div class="fitem">
-                    <span style="width:35%; display:inline-block;">Jamsostek Date</span>
+                    <span style="width:35%; display:inline-block;">BPJS TK Date</span>
                     <b style="width:60%;"><?= $employee->jamsostek_date ?></b>
                 </div>
                 <div class="fitem">

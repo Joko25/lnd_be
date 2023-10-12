@@ -21,12 +21,12 @@ class Approvals extends CI_Controller
         $table_name = $this->input->post('table_name');
 
         $datas = $this->crud->reads($table_name, [], ["approved_to" => $approved_to, "created_by" => $created_by]);
-        
+
         foreach ($datas as $data) {
             $id = $data->id;
             $user = $this->crud->read('users', [], ["username" => $data->created_by]);
             $approval = $this->crud->read('approvals', [], ["table_name" => $table_name, "departement_id" => @$user->departement_id]);
-            
+
             if ($data->approved == 1) {
                 $users_id = @$approval->user_approval_2;
                 $approved = 2;
@@ -53,7 +53,7 @@ class Approvals extends CI_Controller
                     "departement_sub_id" => $mutations->departement_sub_id
                 );
 
-                if($mutations->type == "PERMANENT"){
+                if ($mutations->type == "PERMANENT") {
                     $send = $this->db->update('employees', $postEmployee, ["id" => $mutations->employee_id]);
                 }
             }
@@ -119,9 +119,9 @@ class Approvals extends CI_Controller
                 "departement_sub_id" => $mutations->departement_sub_id
             );
 
-            if($mutations->type == "PERMANENT"){
+            if ($mutations->type == "PERMANENT") {
                 $send = $this->db->update('employees', $postEmployee, ["id" => $mutations->employee_id]);
-                if($send){
+                if ($send) {
                     echo json_encode(array("title" => "Approved", "message" => "Data Approved Successfully", "theme" => "success"));
                 } else {
                     echo log_message('error', 'There is an error in your system or data');
@@ -141,7 +141,7 @@ class Approvals extends CI_Controller
             );
 
             $send = $this->db->update('employees', $postEmployee, ["number" => $agreements->number]);
-            if($send){
+            if ($send) {
                 echo json_encode(array("title" => "Approved", "message" => "Data Approved Successfully", "theme" => "success"));
             } else {
                 echo log_message('error', 'There is an error in your system or data');
@@ -156,7 +156,7 @@ class Approvals extends CI_Controller
         );
 
         $send = $this->db->update($tablename, $values, ["id" => $id]);
-        if($send){
+        if ($send) {
             echo json_encode(array("title" => "Approved", "message" => "Data Approved Successfully", "theme" => "success"));
         } else {
             echo log_message('error', 'There is an error in your system or data');
@@ -212,7 +212,7 @@ class Approvals extends CI_Controller
                 "approved_to" => $users_id,
                 "approved" => $approved,
             );
-            
+
             $send = $this->db->update($tablename, $values, ["id" => $payroll_id]);
         }
 
@@ -273,11 +273,47 @@ class Approvals extends CI_Controller
 
     public function approvalCount()
     {
-        $cash_carries = $this->crud->reads("cash_carries", [], ["approved_to" => $this->session->username], "", "", "", ["approved_by"]);
-        $payrolls = $this->crud->reads("payrolls", [], ["approved_to" => $this->session->username], "", "", "", ["approved_by"]);
-        $setup_salaries = $this->crud->reads("setup_salaries", [], ["approved_to" => $this->session->username], "", "", "", ["approved_by"]);
+        $this->db->select('b.name as fullname, a.approved_to, a.created_by, b.avatar');
+        $this->db->from('cash_carries a');
+        $this->db->join('users b', 'a.approved_by = b.username');
+        $this->db->join('users c', 'a.approved_to = c.username');
+        $this->db->where('a.approved_to', $this->session->username);
+        $this->db->group_by('a.created_by');
+        $cash_carries = $this->db->get()->result_object();
 
-        $totalRows = (count($cash_carries) + count($payrolls) + count($setup_salaries));
+        $this->db->select('b.name as fullname, a.approved_to, a.created_by, b.avatar');
+        $this->db->from('payrolls a');
+        $this->db->join('users b', 'a.approved_by = b.username');
+        $this->db->join('users c', 'a.approved_to = c.username');
+        $this->db->where('a.approved_to', $this->session->username);
+        $this->db->group_by('a.created_by');
+        $payrolls = $this->db->get()->result_object();
+
+        $this->db->select('b.name as fullname, a.approved_to, a.created_by, b.avatar');
+        $this->db->from('setup_salaries a');
+        $this->db->join('users b', 'a.approved_by = b.username');
+        $this->db->join('users c', 'a.approved_to = c.username');
+        $this->db->where('a.approved_to', $this->session->username);
+        $this->db->group_by('a.created_by');
+        $setup_salaries = $this->db->get()->result_object();
+
+        $this->db->select('b.name as fullname, a.approved_to, a.created_by, b.avatar');
+        $this->db->from('permits a');
+        $this->db->join('users b', 'a.approved_by = b.username');
+        $this->db->join('users c', 'a.approved_to = c.username');
+        $this->db->where('a.approved_to', $this->session->username);
+        $this->db->group_by('a.created_by');
+        $permits = $this->db->get()->result_object();
+
+        $this->db->select('b.name as fullname, a.approved_to, a.created_by, b.avatar');
+        $this->db->from('change_days a');
+        $this->db->join('users b', 'a.approved_by = b.username');
+        $this->db->join('users c', 'a.approved_to = c.username');
+        $this->db->where('a.approved_to', $this->session->username);
+        $this->db->group_by('a.created_by');
+        $change_days = $this->db->get()->result_object();
+
+        $totalRows = (count($cash_carries) + count($payrolls) + count($setup_salaries) + count($permits) + count($change_days));
         if ($totalRows > 0) {
             echo '<span class="badge">' . $totalRows . '</span>';
         } else {
@@ -314,26 +350,57 @@ class Approvals extends CI_Controller
         $this->db->group_by('a.created_by');
         $setup_salaries = $this->db->get()->result_object();
 
+        //Permits
+        $this->db->select('b.name as fullname, a.approved_to, a.created_by, b.avatar');
+        $this->db->from('permits a');
+        $this->db->join('users b', 'a.approved_by = b.username');
+        $this->db->join('users c', 'a.approved_to = c.username');
+        $this->db->where('a.approved_to', $this->session->username);
+        $this->db->group_by('a.created_by');
+        $permits = $this->db->get()->result_object();
+
+        //Change Days
+        $this->db->select('b.name as fullname, a.approved_to, a.created_by, b.avatar');
+        $this->db->from('change_days a');
+        $this->db->join('users b', 'a.approved_by = b.username');
+        $this->db->join('users c', 'a.approved_to = c.username');
+        $this->db->where('a.approved_to', $this->session->username);
+        $this->db->group_by('a.created_by');
+        $change_days = $this->db->get()->result_object();
+
         if (count($cash_carries) > 0) {
             foreach ($cash_carries as $cash_carry) {
                 $this->approvalMessage($cash_carry->avatar, $cash_carry->fullname, $cash_carry->approved_to, $cash_carry->created_by, "cash_carries");
             }
-        } elseif(count($payrolls) > 0) {
+        }
+
+        if (count($payrolls) > 0) {
             foreach ($payrolls as $payroll) {
                 $this->approvalMessage($payroll->avatar, $payroll->fullname, $payroll->approved_to, $payroll->created_by, "payrolls");
             }
-        } elseif(count($setup_salaries) > 0) {
+        }
+
+        if (count($setup_salaries) > 0) {
             foreach ($setup_salaries as $setup_salarie) {
                 $this->approvalMessage($setup_salarie->avatar, $setup_salarie->fullname, $setup_salarie->approved_to, $setup_salarie->created_by, "setup_salaries");
             }
-        }else{
-            echo '  <div class="alert alert-info" role="alert">
-                        Notification Not Found
-                    </div>';
+        }
+
+        if (count($permits) > 0) {
+            foreach ($permits as $permit) {
+                $this->approvalMessage($permit->avatar, $permit->fullname, $permit->approved_to, $permit->created_by, "permits");
+            }
+        }
+
+        if (count($change_days) > 0) {
+            foreach ($change_days as $change_day) {
+                $this->approvalMessage($change_day->avatar, $change_day->fullname, $change_day->approved_to, $change_day->created_by, "change_days");
+            }
         }
     }
 
-    public function approvalMessage($foto, $fullname, $approved_to, $created_by, $table){
+    public function approvalMessage($foto, $fullname, $approved_to, $created_by, $table)
+    {
         if ($foto == "") {
             $avatar = base_url('assets/image/users/default.png');
         } else {

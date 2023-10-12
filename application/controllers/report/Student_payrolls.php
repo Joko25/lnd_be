@@ -239,16 +239,14 @@ class Student_payrolls extends CI_Controller
                                         <table id="customers" style="width:70%;">
                                             <tr>
                                                 <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
-                                                <th colspan="3" style="text-align:center;">CONFIRM OK</th>
+                                                <th colspan="2" style="text-align:center;">CONFIRM OK</th>
                                                 <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
                                             </tr>
                                             <tr>
                                                 <th width="100" style="text-align:center;">COST CONTROL</th>
                                                 <th width="100" style="text-align:center;">HRD</th>
-                                                <th width="100" style="text-align:center;">HRD</th>
                                             </tr>
                                             <tr>
-                                                <td style="height:60px;"></td>
                                                 <td style="height:60px;"></td>
                                                 <td style="height:60px;"></td>
                                                 <td style="height:60px;"></td>
@@ -258,7 +256,6 @@ class Student_payrolls extends CI_Controller
                                                 <th style="text-align:center;">BOD</th>
                                                 <th style="text-align:center;">ASSISTANT MANAGER</th>
                                                 <th style="text-align:center;">MANAGER</th>
-                                                <th style="text-align:center;">ASSISTANT MANAGER</th>
                                                 <th style="text-align:center;">PAYROLL STAFF</th>
                                             </tr>
                                         </table>
@@ -352,8 +349,6 @@ class Student_payrolls extends CI_Controller
                         $this->db->where('period_start', $filter_from);
                         $this->db->where('period_end', $filter_to);
                         $this->db->like('employee_id', $filter_employee);
-                        $this->db->order_by('departement_name', 'asc');
-                        $this->db->order_by('departement_sub_name', 'asc');
                         $this->db->order_by('employee_name', 'asc');
                         $this->db->limit(20, ($i * 20));
                         $employees = $this->db->get()->result_array();
@@ -396,16 +391,14 @@ class Student_payrolls extends CI_Controller
                                     <table id="customers" style="width:70%;">
                                         <tr>
                                             <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
-                                            <th colspan="3" style="text-align:center;">CONFIRM OK</th>
+                                            <th colspan="2" style="text-align:center;">CONFIRM OK</th>
                                             <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
                                         </tr>
                                         <tr>
                                             <th width="100" style="text-align:center;">COST CONTROL</th>
                                             <th width="100" style="text-align:center;">HRD</th>
-                                            <th width="100" style="text-align:center;">HRD</th>
                                         </tr>
                                         <tr>
-                                            <td style="height:60px;"></td>
                                             <td style="height:60px;"></td>
                                             <td style="height:60px;"></td>
                                             <td style="height:60px;"></td>
@@ -415,7 +408,6 @@ class Student_payrolls extends CI_Controller
                                             <th style="text-align:center;">BOD</th>
                                             <th style="text-align:center;">ASSISTANT MANAGER</th>
                                             <th style="text-align:center;">MANAGER</th>
-                                            <th style="text-align:center;">ASSISTANT MANAGER</th>
                                             <th style="text-align:center;">PAYROLL STAFF</th>
                                         </tr>
                                     </table>

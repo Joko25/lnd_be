@@ -37,6 +37,81 @@ class Pph_21 extends CI_Controller
         echo json_encode($send);
     }
 
+    public function csv()
+    {
+        if ($this->input->get()) {
+
+            header("Content-type: text/csv; charset=utf-8");
+            header("Content-Disposition: attachment; filename=pph21_" . time() . ".csv");
+            $output = fopen("php://output", "w");
+            fputcsv($output, array(
+                "Masa Pajak", "Tahun Pajak", "Pembetulan", "Nomor Bukti Potong", "NPWP", "NIK", "Nama",
+                "Alamat", "WP Luar Negeri", "Kode Negara", "Kode Pajak", "Jumlah Bruto", "Jumlah DPP", "Tanpa NPWP", "Tarif",
+                "Jumlah Pph", "NPWP Pemotong", "Nama Pemotong", "Tanggal Bukti Potong"
+            ));
+
+            $filter_from = $this->input->get('filter_from');
+            $filter_to = $this->input->get('filter_to');
+            $filter_group = $this->input->get('filter_group');
+
+            $tgl_bp = date("d-M-y", strtotime($filter_from));
+            $period_start = date("Y-m", strtotime($filter_from));
+            $period_end = date("Y-m", strtotime($filter_to));
+
+            $query = $this->db->query("SELECT b.name, b.tax_id, b.national_id, b.address, a.attandance_wd, a.marital, a.income
+                FROM payrolls a
+                JOIN employees b ON a.employee_id = b.id
+                JOIN groups d ON b.group_id = d.id
+                LEFT JOIN sources c ON b.source_id = c.id
+                WHERE a.period_start = '$period_start' and a.period_end = '$period_end' and d.id like '%$filter_group%'
+                GROUP BY a.id
+                ORDER BY c.name, a.name ASC");
+            $records = $query->result_array();
+
+            //Config
+            $this->db->select('*');
+            $this->db->from('config');
+            $config = $this->db->get()->row();
+
+            $no = 1;
+            foreach ($records as $record) {
+                $number = "1.3-" . date("m", strtotime($filter_from)) . "." . date("y", strtotime($filter_from)) . "-" .  sprintf("%07s", $no);
+
+                if ($record['tax_id'] == "") {
+                    $tarif = "5";
+                } else {
+                    $tarif = "6";
+                }
+
+                $data = array(
+                    date("m", strtotime($filter_from)),
+                    date("Y", strtotime($filter_from)),
+                    "0",
+                    "$number",
+                    str_replace(array('.', '-'), '', $record['tax_id']),
+                    $record['national_id'],
+                    $record['name'],
+                    $record['address'],
+                    "N",
+                    "",
+                    "21-100-03",
+                    $record['income'],
+                    "",
+                    "N",
+                    $tarif,
+                    "",
+                    $config->npwp,
+                    $config->name,
+                    date("30/m/Y", strtotime($filter_from)),
+                );
+
+                fputcsv($output, $data);
+
+                $no++;
+            }
+        }
+    }
+
     public function print($option = "")
     {
         if ($option == "excel") {

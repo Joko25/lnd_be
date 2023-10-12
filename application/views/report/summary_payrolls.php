@@ -59,6 +59,7 @@
     </fieldset>
 
     <?= $button ?>
+    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="excel_detail_full()"><i class="fa fa-file"></i> Export Excel Detail</a>
     <iframe id="printout_recap" src="" style="width: 100%; height:500px; border: 0;" hidden></iframe>
 </div>
 
@@ -150,6 +151,30 @@
                 '&filter_group=' + filter_group;
 
             window.location.assign('<?= base_url('report/summary_payrolls/print/excel') ?>' + url);
+        }
+    }
+
+    function excel_detail_full() {
+        var filter_from = $("#filter_from").combogrid('getValue');
+        var filter_to = $("#filter_to").textbox('getValue');
+        var filter_division = $("#filter_division").combobox('getValue');
+        var filter_departement = $("#filter_departement").combobox('getValue');
+        var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
+        var filter_employee = $("#filter_employee").combogrid('getValue');
+        var filter_group = $("#filter_group").combobox('getValue');
+
+        if (filter_from == "" || filter_to == "" || filter_division == "") {
+            toastr.warning("Please Choose Filter Date & Division");
+        } else {
+            var url = "?filter_division=" + filter_division +
+                "&filter_departement=" + filter_departement +
+                "&filter_departement_sub=" + filter_departement_sub +
+                '&filter_from=' + filter_from +
+                '&filter_to=' + filter_to +
+                '&filter_employee=' + filter_employee +
+                '&filter_group=' + filter_group;
+
+            window.location.assign('<?= base_url('report/summary_payrolls/print_detail/excel') ?>' + url);
         }
     }
 

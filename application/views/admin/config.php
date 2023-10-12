@@ -21,6 +21,10 @@
                     <input style="width:60%;" name="address" value="<?= $config->address ?>" class="easyui-textbox">
                 </div>
                 <div class="fitem">
+                    <span style="width:35%; display:inline-block;">NPWP</span>
+                    <input style="width:60%;" name="npwp" value="<?= $config->npwp ?>" class="easyui-textbox">
+                </div>
+                <div class="fitem">
                     <span style="width:35%; display:inline-block;">Latitude</span>
                     <input style="width:60%;" name="latitude" value="<?= $config->latitude ?>" class="easyui-textbox">
                 </div>
@@ -40,44 +44,11 @@
                     <span style="width:35%; display:inline-block;">Login</span>
                     <input style="width:60%;" name="image" class="easyui-filebox">
                 </div>
-                <!-- <div class="fitem">
-                    <span style="width:35%; display:inline-block;">Theme</span>
-                    <select style="width:60%;" name="theme" value="<?= $config->theme ?>" class="easyui-combobox">
-                        <option value="default">Default</option>
-                        <option value="cupertino">Cupertino</option>
-                        <option value="black">Black</option>
-                        <option value="bootstrap">Bootstrap</option>
-                        <option value="gray">Gray</option>
-                        <option value="pepper-grinder">Pepper Grinder</option>
-                        <option value="material">Material</option>
-                        <option value="material-blue">Material Blue</option>
-                        <option value="material-teal">Material Teal</option>
-                        <option value="metro">Metro</option>
-                        <option value="metro-blue">Metro Blue</option>
-                        <option value="metro-gray">Metro Gray</option>
-                        <option value="metro-green">Metro Green</option>
-                        <option value="metro-orange">Metro Orange</option>
-                        <option value="metro-red">Metro Red</option>
-                        <option value="sunny">Sunny</option>
-                    </select>
-                </div> -->
                 <br>
                 <center>
                     <a class="easyui-linkbutton c6" onclick="saved()" data-options="iconCls:'icon-ok'">Save Changes</a>
                 </center>
                 <br>
-            </fieldset>
-            <fieldset style="width:30%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
-                <legend><b>Generate QR Code Attandances</b></legend>
-                <div class="fitem">
-                    <input style="width:100%;" disabled name="token" value="<?= $config->token ?>" class="easyui-textbox">
-                </div>
-                <br>
-                <center>
-                    <a class="easyui-linkbutton c5" onclick="generateQrCode()">Generate QR Code</a>
-                    <br>
-                    <img src="<?= base_url('assets/image/qrcode/' . $config->token . ".png") ?>" style="width: 80%;">
-                </center>
             </fieldset>
         </div>
     </form>

@@ -21,6 +21,7 @@
         </div>
     </fieldset>
     <?= $button ?>
+    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="csv()"><i class="fa fa-file"></i> Export CSV</a>
 </div>
 
 <div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;">
@@ -62,6 +63,21 @@
 
             $.messager.alert('Please Wait', 'Export Excel Data..!', 'info');
             window.location.assign('<?= base_url('report/pph_21/print/excel') ?>' + url);
+        }
+    }
+
+    function csv() {
+        var filter_from = $("#filter_from").combogrid('getValue');
+        var filter_to = $("#filter_to").textbox('getValue');
+        var filter_group = $("#filter_group").combobox('getValue');
+
+        if (filter_from == "" || filter_to == "") {
+            toastr.warning("Please Choose Filter Date");
+        } else {
+            var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_group=" + filter_group;
+
+            $.messager.alert('Please Wait', 'Export CSV Data..!', 'info');
+            window.open('<?= base_url('report/pph_21/csv') ?>' + url);
         }
     }
 
