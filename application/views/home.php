@@ -3,7 +3,7 @@
 	<!-- Header -->
 	<div data-options="region:'north', border:false" id="header" style="background-image: url(<?= base_url('assets/image/header/' . $profile->theme . '.png') ?>);">
 		<div style="float: left;" class="animate__animated animate__bounce animate__slower">
-			<img src="<?= base_url('assets/image/hris.png') ?>" width="100">
+			<img src="<?= base_url('assets/image/logo/' . $profile->theme . '.png') ?>" width="150">
 		</div>
 
 		<div class="logo-company animate__animated animate__bounceIn animate__slower">
@@ -237,13 +237,6 @@
 
 <script>
 	$(function() {
-		var isMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-		if (isMobile) {
-			window.location.assign('home/device');
-		}
-
-		//Deteksi Internet
 		window.addEventListener('load', function(event) {
 			detectInternet();
 		});

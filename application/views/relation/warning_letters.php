@@ -30,7 +30,7 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 270px; padding: 10px;">
+<div id="toolbar" style="height: 260px;">
     <fieldset style="width: 100%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
         <div style="width: 50%; float: left;">
@@ -79,7 +79,7 @@
     </fieldset>
     <?= $button ?>
 </div>
-
+ 
 <!-- DIALOG SAVE AND UPDATE -->
 <div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 400px; padding:10px; top: 20px;">
     <form id="frm_insert" method="post" novalidate>
@@ -186,9 +186,9 @@
         var filter_warning_letter = $("#filter_warning_letter").combobox('getValue');
         var filter_violation = $("#filter_violation").combobox('getValue');
 
-        var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_division=" + filter_division + "&filter_departement=" + filter_departement +
-            "&filter_departement_sub=" + filter_departement_sub + "&filter_employee=" + filter_employee +
-            "&filter_warning_letter=" + filter_warning_letter + "&filter_violation=" + filter_violation;
+        var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_division=" + filter_division + "&filter_departement=" + filter_departement + 
+        "&filter_departement_sub=" + filter_departement_sub + "&filter_employee=" + filter_employee + 
+        "&filter_warning_letter=" + filter_warning_letter + "&filter_violation=" + filter_violation;
 
         $('#dg').datagrid({
             url: '<?= base_url('relation/warning_letters/datatables') ?>' + url
@@ -213,9 +213,9 @@
         var filter_warning_letter = $("#filter_warning_letter").combobox('getValue');
         var filter_violation = $("#filter_violation").combobox('getValue');
 
-        var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_division=" + filter_division + "&filter_departement=" + filter_departement +
-            "&filter_departement_sub=" + filter_departement_sub + "&filter_employee=" + filter_employee +
-            "&filter_warning_letter=" + filter_warning_letter + "&filter_violation=" + filter_violation;
+        var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_division=" + filter_division + "&filter_departement=" + filter_departement + 
+        "&filter_departement_sub=" + filter_departement_sub + "&filter_employee=" + filter_employee + 
+        "&filter_warning_letter=" + filter_warning_letter + "&filter_violation=" + filter_violation;
 
         window.location.assign('<?= base_url('relation/warning_letters/print/excel') ?>' + url);
     }
@@ -284,7 +284,7 @@
                     width: 200
                 }]
             ],
-            onSelect: function(val, row) {
+            onSelect: function(val, row){
                 $('#warning_letter').combobox({
                     url: '<?= base_url('relation/warning_letters/readWarningLetter/') ?>' + row.id,
                     prompt: 'Choose Warning Letter',
@@ -397,7 +397,7 @@
     function cellFormatter(value) {
         if (value == "4") {
             return 'TERMINATION';
-        } else {
+        }else {
             return value;
         }
     };

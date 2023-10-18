@@ -259,9 +259,9 @@ class Payroll_pkl extends CI_Controller
             //     $intern_fee = 0;
             //     $boarding = 0;
             // } else {
-            $intern_fee = ($internship * @$attandance_count);
-            $boarding = $record['boarding_fee'];
-            $total_income = @($allowence + ($correctionPlus[0]->total - $correctionMinus[0]->total) + ($internship * @$attandance_count) + $boarding);
+                $intern_fee = ($internship * @$attandance_count);
+                $boarding = $record['boarding_fee'];
+                $total_income = @($allowence + ($correctionPlus[0]->total - $correctionMinus[0]->total) + ($internship * @$attandance_count) + $boarding);
             //}
 
             $arr = array(

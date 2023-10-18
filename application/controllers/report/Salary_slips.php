@@ -179,56 +179,64 @@ class Salary_slips extends CI_Controller
 
         //Allowance Amount
         //jika dia ada tunjuangan ambil field dan isinya
-        $q_allowance = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
-            FROM allowances b
-            JOIN setup_allowances a ON a.allowance_id = b.id
-            WHERE a.employee_id = '$record[employee_id]' and b.type = 'FIX'
-            GROUP BY b.id ORDER BY b.type asc");
-        $r_allowance = $q_allowance->result_array();
-
+        $r_allowance = json_decode($record['allowence'], true);
         $arr_allowance_amount_total = 0;
-        $html_allowance_fix = "";
-        foreach ($r_allowance as $allowance_data) {
-            $arr_allowance_amount_total += $allowance_data['amount'];
-            $html_allowance_fix .= '<tr>
-                                        <td style="text-align:left;">' . $allowance_data['name'] . '</td>
-                                        <td style="text-align:right;"><b>' . number_format($allowance_data['amount']) . '</b></td>
-                                    </tr>';
+        foreach ($r_allowance as $allowance_data => $allowance_val) {
+            $arr_allowance_amount_total += $allowance_val;
         }
 
-        $q_allowance2 = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
-            FROM allowances b
-            JOIN setup_allowances a ON a.allowance_id = b.id
-            WHERE a.employee_id = '$record[employee_id]' and b.type = 'TEMPORARY'
-            GROUP BY b.id ORDER BY b.type asc");
-        $r_allowance2 = $q_allowance2->result_array();
+        //Allowance Amount
+        //jika dia ada tunjuangan ambil field dan isinya
+        // $q_allowance = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
+        //     FROM allowances b
+        //     JOIN setup_allowances a ON a.allowance_id = b.id
+        //     WHERE a.employee_id = '$record[employee_id]' and b.type = 'FIX'
+        //     GROUP BY b.id ORDER BY b.type asc");
+        // $r_allowance = $q_allowance->result_array();
 
-        $arr_allowance2_amount_total = 0;
-        $html_allowance_temp = "";
-        foreach ($r_allowance2 as $allowance_data2) {
-            $arr_allowance2_amount_total += $allowance_data2['amount'];
-            $html_allowance_temp .= '<tr>
-                                        <td style="text-align:left;">' . $allowance_data2['name'] . '</td>
-                                        <td style="text-align:right;"><b>' . number_format($allowance_data2['amount']) . '</b></td>
-                                    </tr>';
-        }
+        // $arr_allowance_amount_total = 0;
+        // $html_allowance_fix = "";
+        // foreach ($r_allowance as $allowance_data) {
+        //     $arr_allowance_amount_total += $allowance_data['amount'];
+        //     $html_allowance_fix .= '<tr>
+        //                                 <td style="text-align:left;">' . $allowance_data['name'] . '</td>
+        //                                 <td style="text-align:right;"><b>' . number_format($allowance_data['amount']) . '</b></td>
+        //                             </tr>';
+        // }
 
-        $q_allowance3 = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
-            FROM allowances b
-            JOIN setup_allowances a ON a.allowance_id = b.id
-            WHERE a.employee_id = '$record[employee_id]' and b.type = 'NONE' and b.calculate_days = '1'
-            GROUP BY b.id ORDER BY b.type asc");
-        $r_allowance3 = $q_allowance3->result_array();
+        // $q_allowance2 = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
+        //     FROM allowances b
+        //     JOIN setup_allowances a ON a.allowance_id = b.id
+        //     WHERE a.employee_id = '$record[employee_id]' and b.type = 'TEMPORARY'
+        //     GROUP BY b.id ORDER BY b.type asc");
+        // $r_allowance2 = $q_allowance2->result_array();
 
-        $arr_allowance3_amount_total = 0;
-        $html_allowance_none = "";
-        foreach ($r_allowance3 as $allowance_data3) {
-            $arr_allowance3_amount_total += ($allowance_data3['amount'] * $record['attandance_wd']);
-            $html_allowance_none .= '<tr>
-                                        <td style="text-align:left;">' . $allowance_data3['name'] . '</td>
-                                        <td style="text-align:right;"><b>' . number_format($allowance_data3['amount'] * $record['attandance_wd']) . '</b></td>
-                                    </tr>';
-        }
+        // $arr_allowance2_amount_total = 0;
+        // $html_allowance_temp = "";
+        // foreach ($r_allowance2 as $allowance_data2) {
+        //     $arr_allowance2_amount_total += $allowance_data2['amount'];
+        //     $html_allowance_temp .= '<tr>
+        //                                 <td style="text-align:left;">' . $allowance_data2['name'] . '</td>
+        //                                 <td style="text-align:right;"><b>' . number_format($allowance_data2['amount']) . '</b></td>
+        //                             </tr>';
+        // }
+
+        // $q_allowance3 = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
+        //     FROM allowances b
+        //     JOIN setup_allowances a ON a.allowance_id = b.id
+        //     WHERE a.employee_id = '$record[employee_id]' and b.type = 'NONE' and b.calculate_days = '1'
+        //     GROUP BY b.id ORDER BY b.type asc");
+        // $r_allowance3 = $q_allowance3->result_array();
+
+        // $arr_allowance3_amount_total = 0;
+        // $html_allowance_none = "";
+        // foreach ($r_allowance3 as $allowance_data3) {
+        //     $arr_allowance3_amount_total += ($allowance_data3['amount'] * $record['attandance_wd']);
+        //     $html_allowance_none .= '<tr>
+        //                                 <td style="text-align:left;">' . $allowance_data3['name'] . '</td>
+        //                                 <td style="text-align:right;"><b>' . number_format($allowance_data3['amount'] * $record['attandance_wd']) . '</b></td>
+        //                             </tr>';
+        // }
         //-------------------------------------------------------------------------------------------------------------------------------
 
         //Deduction Amount
@@ -270,7 +278,7 @@ class Salary_slips extends CI_Controller
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        $total_income = $record['salary'] + $arr_allowance_amount_total + $arr_allowance2_amount_total + $arr_allowance3_amount_total + $record['total_overtime_amount'] + $record['correction_plus'];
+        $total_income = $record['salary'] + $arr_allowance_amount_total + $record['total_overtime_amount'] + $record['correction_plus'];
         $total_deduction = $record['deduction_absence_amount'] + $total_deduction_amount + $arr_deduction_amount_total + $record['loan_bank'] + $record['loan_cooperative'] + $record['loan_other'] + $record['correction_minus'];
 
         $html .= '  <center><div class="container" style="border:1px solid black; margin-bottom:20px; padding-top:10px; float:left;">
@@ -349,34 +357,23 @@ class Salary_slips extends CI_Controller
                                     <th colspan="2" style="text-align:center">INCOME</th>
                                 </tr>
                                 <tr>
-                                    <td style="text-align:left;" width="150"><b>Basic Salary</b></td>
+                                    <td style="text-align:left;" width="150">Basic Salary</td>
                                     <td style="text-align:right;" width="150"><b>' . number_format($record['salary']) . '</b></td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align:left;"><b>Allowances (Fix)</b></td>
-                                    <td style="text-align:right;">-</td>
+                                    <td style="text-align:left;">Allowances</td>
+                                    <td style="text-align:right;"><b>'.number_format($arr_allowance_amount_total).'</b></td>
                                 </tr>
-                                ' . $html_allowance_fix . '
                                 <tr>
-                                    <td style="text-align:left;"><b>Allowances (Temporary)</b></td>
-                                    <td style="text-align:right;">-</td>
-                                </tr>
-                                 ' . $html_allowance_temp . '
-                                <tr>
-                                    <td style="text-align:left;"><b>Allowances (None)</b></td>
-                                    <td style="text-align:right;">-</td>
-                                </tr>
-                                 ' . $html_allowance_none . '
-                                <tr>
-                                    <td style="text-align:left;"><b>Overtime</b></td>
+                                    <td style="text-align:left;">Overtime</td>
                                     <td style="text-align:right;">(<b>' . ($record['overtime_weekday'] + $record['overtime_holiday']) . '</b> Hour) <b>' . number_format(($record['overtime_amount_weekday'] + $record['overtime_amount_holiday'])) . '</b></td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align:left;"><b>Correction Overtime</b></td>
+                                    <td style="text-align:left;">Correction Overtime</td>
                                     <td style="text-align:right;">(<b>' . $record['overtime_correction'] . '</b> Hour) <b>' . number_format(($record['overtime_amount_correction'])) . '</b></td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align:left;"><b>Correction</b></td>
+                                    <td style="text-align:left;">Correction</td>
                                     <td style="text-align:right;">-</td>
                                 </tr>
                                 ' . $html_correction_plus . '
@@ -549,56 +546,64 @@ class Salary_slips extends CI_Controller
 
                 //Allowance Amount
                 //jika dia ada tunjuangan ambil field dan isinya
-                $q_allowance = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
-                    FROM allowances b
-                    JOIN setup_allowances a ON a.allowance_id = b.id
-                    WHERE a.employee_id = '$record[employee_id]' and b.type = 'FIX'
-                    GROUP BY b.id ORDER BY b.type asc");
-                $r_allowance = $q_allowance->result_array();
-
+                $r_allowance = json_decode($record['allowence'], true);
                 $arr_allowance_amount_total = 0;
-                $html_allowance_fix = "";
-                foreach ($r_allowance as $allowance_data) {
-                    $arr_allowance_amount_total += $allowance_data['amount'];
-                    $html_allowance_fix .= '<tr>
-                                                <td style="text-align:left;">' . $allowance_data['name'] . '</td>
-                                                <td style="text-align:right;"><b>' . number_format($allowance_data['amount']) . '</b></td>
-                                            </tr>';
+                foreach ($r_allowance as $allowance_data => $allowance_val) {
+                    $arr_allowance_amount_total += $allowance_val;
                 }
 
-                $q_allowance2 = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
-                    FROM allowances b
-                    JOIN setup_allowances a ON a.allowance_id = b.id
-                    WHERE a.employee_id = '$record[employee_id]' and b.type = 'TEMPORARY'
-                    GROUP BY b.id ORDER BY b.type asc");
-                $r_allowance2 = $q_allowance2->result_array();
+                //Allowance Amount
+                //jika dia ada tunjuangan ambil field dan isinya
+                // $q_allowance = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
+                //     FROM allowances b
+                //     JOIN setup_allowances a ON a.allowance_id = b.id
+                //     WHERE a.employee_id = '$record[employee_id]' and b.type = 'FIX'
+                //     GROUP BY b.id ORDER BY b.type asc");
+                // $r_allowance = $q_allowance->result_array();
 
-                $arr_allowance2_amount_total = 0;
-                $html_allowance_temp = "";
-                foreach ($r_allowance2 as $allowance_data2) {
-                    $arr_allowance2_amount_total += $allowance_data2['amount'];
-                    $html_allowance_temp .= '<tr>
-                                                <td style="text-align:left;">' . $allowance_data2['name'] . '</td>
-                                                <td style="text-align:right;"><b>' . number_format($allowance_data2['amount']) . '</b></td>
-                                            </tr>';
-                }
+                // $arr_allowance_amount_total = 0;
+                // $html_allowance_fix = "";
+                // foreach ($r_allowance as $allowance_data) {
+                //     $arr_allowance_amount_total += $allowance_data['amount'];
+                //     $html_allowance_fix .= '<tr>
+                //                                 <td style="text-align:left;">' . $allowance_data['name'] . '</td>
+                //                                 <td style="text-align:right;"><b>' . number_format($allowance_data['amount']) . '</b></td>
+                //                             </tr>';
+                // }
 
-                $q_allowance3 = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
-                    FROM allowances b
-                    JOIN setup_allowances a ON a.allowance_id = b.id
-                    WHERE a.employee_id = '$record[employee_id]' and b.type = 'NONE' and b.calculate_days = '1'
-                    GROUP BY b.id ORDER BY b.type asc");
-                $r_allowance3 = $q_allowance3->result_array();
+                // $q_allowance2 = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
+                //     FROM allowances b
+                //     JOIN setup_allowances a ON a.allowance_id = b.id
+                //     WHERE a.employee_id = '$record[employee_id]' and b.type = 'TEMPORARY'
+                //     GROUP BY b.id ORDER BY b.type asc");
+                // $r_allowance2 = $q_allowance2->result_array();
 
-                $arr_allowance3_amount_total = 0;
-                $html_allowance_none = "";
-                foreach ($r_allowance3 as $allowance_data3) {
-                    $arr_allowance3_amount_total += ($allowance_data3['amount'] * $record['attandance_wd']);
-                    $html_allowance_none .= '<tr>
-                                                <td style="text-align:left;">' . $allowance_data3['name'] . '</td>
-                                                <td style="text-align:right;"><b>' . number_format($allowance_data3['amount'] * $record['attandance_wd']) . '</b></td>
-                                            </tr>';
-                }
+                // $arr_allowance2_amount_total = 0;
+                // $html_allowance_temp = "";
+                // foreach ($r_allowance2 as $allowance_data2) {
+                //     $arr_allowance2_amount_total += $allowance_data2['amount'];
+                //     $html_allowance_temp .= '<tr>
+                //                                 <td style="text-align:left;">' . $allowance_data2['name'] . '</td>
+                //                                 <td style="text-align:right;"><b>' . number_format($allowance_data2['amount']) . '</b></td>
+                //                             </tr>';
+                // }
+
+                // $q_allowance3 = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
+                //     FROM allowances b
+                //     JOIN setup_allowances a ON a.allowance_id = b.id
+                //     WHERE a.employee_id = '$record[employee_id]' and b.type = 'NONE' and b.calculate_days = '1'
+                //     GROUP BY b.id ORDER BY b.type asc");
+                // $r_allowance3 = $q_allowance3->result_array();
+
+                // $arr_allowance3_amount_total = 0;
+                // $html_allowance_none = "";
+                // foreach ($r_allowance3 as $allowance_data3) {
+                //     $arr_allowance3_amount_total += ($allowance_data3['amount'] * $record['attandance_wd']);
+                //     $html_allowance_none .= '<tr>
+                //                                 <td style="text-align:left;">' . $allowance_data3['name'] . '</td>
+                //                                 <td style="text-align:right;"><b>' . number_format($allowance_data3['amount'] * $record['attandance_wd']) . '</b></td>
+                //                             </tr>';
+                // }
                 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
                 //Deduction Amount
@@ -642,7 +647,7 @@ class Salary_slips extends CI_Controller
                 }
                 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
-                $total_income = $record['salary'] + $arr_allowance_amount_total + $arr_allowance2_amount_total + $arr_allowance3_amount_total + $record['total_overtime_amount'] + $record['correction_plus'];
+                $total_income = $record['salary'] + $arr_allowance_amount_total + $record['total_overtime_amount'] + $record['correction_plus'];
                 $total_deduction = $record['deduction_absence_amount'] + $total_deduction_amount + $arr_deduction_amount_total + $record['loan_bank'] + $record['loan_cooperative'] + $record['loan_other'] + $record['correction_minus'];
                 if ($no % 2 == 0) {
                     $html .= '<div style="page-break-after:always;">';
@@ -724,34 +729,23 @@ class Salary_slips extends CI_Controller
                                                         <th colspan="2" style="text-align:center">INCOME</th>
                                                     </tr>
                                                     <tr>
-                                                        <td style="text-align:left;" width="150"><b>Basic Salary</b></td>
+                                                        <td style="text-align:left;" width="150">Basic Salary</td>
                                                         <td style="text-align:right;" width="150"><b>' . number_format($record['salary']) . '</b></td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="text-align:left;"><b>Allowances (Fix)</b></td>
-                                                        <td style="text-align:right;">-</td>
+                                                        <td style="text-align:left;">Allowances</td>
+                                                        <td style="text-align:right;"><b>'.number_format($arr_allowance_amount_total).'</b></td>
                                                     </tr>
-                                                    ' . $html_allowance_fix . '
                                                     <tr>
-                                                        <td style="text-align:left;"><b>Allowances (Temporary)</b></td>
-                                                        <td style="text-align:right;">-</td>
-                                                    </tr>
-                                                     ' . $html_allowance_temp . '
-                                                    <tr>
-                                                        <td style="text-align:left;"><b>Allowances (None)</b></td>
-                                                        <td style="text-align:right;">-</td>
-                                                    </tr>
-                                                     ' . $html_allowance_none . '
-                                                    <tr>
-                                                        <td style="text-align:left;"><b>Overtime</b></td>
+                                                        <td style="text-align:left;">Overtime</td>
                                                         <td style="text-align:right;">(<b>' . ($record['overtime_weekday'] + $record['overtime_holiday']) . '</b> Hour) <b>' . number_format(($record['overtime_amount_weekday'] + $record['overtime_amount_holiday'])) . '</b></td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="text-align:left;"><b>Correction Overtime</b></td>
+                                                        <td style="text-align:left;">Correction Overtime</td>
                                                         <td style="text-align:right;">(<b>' . $record['overtime_correction'] . '</b> Hour) <b>' . number_format(($record['overtime_amount_correction'])) . '</b></td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="text-align:left;"><b>Correction</b></td>
+                                                        <td style="text-align:left;">Correction</td>
                                                         <td style="text-align:right;">-</td>
                                                     </tr>
                                                     ' . $html_correction_plus . '

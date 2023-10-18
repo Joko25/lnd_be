@@ -59,6 +59,7 @@
     <iframe id="printout" src="" style="width: 100%; height:500px; border: 0;"></iframe>
 </div>
 <script>
+
     function reload() {
         window.location.reload();
     }

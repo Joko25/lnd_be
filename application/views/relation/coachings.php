@@ -25,7 +25,7 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 240px; padding: 10px;">
+<div id="toolbar" style="height: 230px;">
     <fieldset style="width: 100%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
         <div style="width: 50%; float: left;">
@@ -68,7 +68,7 @@
     </fieldset>
     <?= $button ?>
 </div>
-
+ 
 <!-- DIALOG SAVE AND UPDATE -->
 <div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 400px; padding:10px; top: 20px;">
     <form id="frm_insert" method="post" novalidate>
@@ -167,9 +167,9 @@
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_type = $("#filter_type").combobox('getValue');
 
-        var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_division=" + filter_division + "&filter_departement=" + filter_departement +
-            "&filter_departement_sub=" + filter_departement_sub + "&filter_employee=" + filter_employee +
-            "&filter_type=" + filter_type;
+        var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_division=" + filter_division + "&filter_departement=" + filter_departement + 
+        "&filter_departement_sub=" + filter_departement_sub + "&filter_employee=" + filter_employee + 
+        "&filter_type=" + filter_type;
 
         $('#dg').datagrid({
             url: '<?= base_url('relation/coachings/datatables') ?>' + url
@@ -193,9 +193,9 @@
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_type = $("#filter_type").combobox('getValue');
 
-        var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_division=" + filter_division + "&filter_departement=" + filter_departement +
-            "&filter_departement_sub=" + filter_departement_sub + "&filter_employee=" + filter_employee +
-            "&filter_type=" + filter_type;
+        var url = "?filter_from=" + filter_from + "&filter_to=" + filter_to + "&filter_division=" + filter_division + "&filter_departement=" + filter_departement + 
+        "&filter_departement_sub=" + filter_departement_sub + "&filter_employee=" + filter_employee + 
+        "&filter_type=" + filter_type;
 
         window.location.assign('<?= base_url('relation/coachings/print/excel') ?>' + url);
     }
@@ -246,7 +246,7 @@
             textField: 'text',
             data: [{
                 text: 'COACHING'
-            }, {
+            },{
                 text: 'COUNSELING'
             }]
         });
