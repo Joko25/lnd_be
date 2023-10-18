@@ -206,19 +206,59 @@ class Payroll_pkl extends CI_Controller
                 $this->db->group_by('a.employee_id');
                 $permit = $this->db->get()->row();
 
+                //Working Calendar
+                $this->db->select('description');
+                $this->db->from('calendars');
+                $this->db->where('trans_date', $working_date);
+                $holiday = $this->db->get()->row();
+
                 $tidakabsen = @$permit->duration;
 
+                //Attandance
                 $this->db->select("*");
                 $this->db->from('attandances');
                 $this->db->where('number', $record['number']);
                 $this->db->where("(date_in = '$working_date' or date_out = '$working_date')");
                 $attandance = $this->db->get()->row();
 
-                if (date('w', $z) !== '0' && date('w', $z) !== '6') {
-                    if ($attandance) {
-                        $day = 1;
+                //Shift and Setting Group
+                $tolerance_hour_min = date("H:i:s", strtotime('-2 Hour', strtotime(@$attandance->time_in)));
+                $tolerance_hour_plus = date("H:i:s", strtotime('+2 Hour', strtotime(@$attandance->time_in)));
+                $this->db->select("d.start, d.end, d.days, d.working, d.tolerance, c.name, d.name as shift_name");
+                $this->db->from('shift_employees b');
+                $this->db->join('shifts c', 'c.id = b.shift_id');
+                $this->db->join('shift_details d', 'd.shift_id = c.id');
+                $this->db->where('b.employee_id', $record['id']);
+                if (@$attandance->time_in > "23:00:00") {
+                    $this->db->where("d.start >= '$tolerance_hour_min'");
+                } elseif (@$attandance->time_in != "") {
+                    $this->db->where("d.start >= '$tolerance_hour_min' and d.start <= '$tolerance_hour_plus'");
+                }
+                $shift = $this->db->get()->row();
+
+                if (@$holiday->description == null) {
+                    if (@$shift->days == "6") {
+                        //minggu doang libur
+                        if (date('w', $z) !== '0') {
+                            if ($attandance) {
+                                $day = 1;
+                            } else {
+                                $day = $tidakabsen;
+                            }
+                        } else {
+                            $day = 0;
+                        }
                     } else {
-                        $day = $tidakabsen;
+                        //sabtu dan minggu libur
+                        if (date('w', $z) !== '0' && date('w', $z) !== '6') {
+                            if ($attandance) {
+                                $day = 1;
+                            } else {
+                                $day = $tidakabsen;
+                            }
+                        } else {
+                            $day = 0;
+                        }
                     }
                 } else {
                     $day = 0;
@@ -259,9 +299,9 @@ class Payroll_pkl extends CI_Controller
             //     $intern_fee = 0;
             //     $boarding = 0;
             // } else {
-                $intern_fee = ($internship * @$attandance_count);
-                $boarding = $record['boarding_fee'];
-                $total_income = @($allowence + ($correctionPlus[0]->total - $correctionMinus[0]->total) + ($internship * @$attandance_count) + $boarding);
+            $intern_fee = ($internship * @$attandance_count);
+            $boarding = $record['boarding_fee'];
+            $total_income = @($allowence + ($correctionPlus[0]->total - $correctionMinus[0]->total) + ($internship * @$attandance_count) + $boarding);
             //}
 
             $arr = array(

@@ -126,13 +126,13 @@ class Attandances extends CI_Controller
             $no = 1;
 
             foreach ($records as $record) {
-                if(!empty($record['warning_letter'])){
-                    if($record['warning_letter'] != "4"){
-                        $warning_letter = "SP ".$record['warning_letter'];
-                    }else{
+                if (!empty($record['warning_letter'])) {
+                    if ($record['warning_letter'] != "4") {
+                        $warning_letter = "SP " . $record['warning_letter'];
+                    } else {
                         $warning_letter = "TERMINATION";
                     }
-                }else{
+                } else {
                     $warning_letter = "-";
                 }
 
@@ -259,9 +259,9 @@ class Attandances extends CI_Controller
                     $this->db->join('shifts c', 'c.id = b.shift_id');
                     $this->db->join('shift_details d', 'd.shift_id = c.id');
                     $this->db->where('b.employee_id', $record['id']);
-                    if(@$attandance->time_in > "23:00:00"){
+                    if (@$attandance->time_in > "23:00:00") {
                         $this->db->where("d.start >= '$tolerance_hour_min'");
-                    }elseif(@$attandance->time_in != ""){
+                    } elseif (@$attandance->time_in != "") {
                         $this->db->where("d.start >= '$tolerance_hour_min' and d.start <= '$tolerance_hour_plus'");
                     }
                     $shift = $this->db->get()->row();
@@ -326,9 +326,9 @@ class Attandances extends CI_Controller
                             $this->db->where('date_in', $change_day->end);
                             $attandance_cc_in = $this->db->get()->row();
 
-                            if(@$attandance_cc_in->time_in != ""){
+                            if (@$attandance_cc_in->time_in != "") {
                                 $style = "style='background: #B0ADFF;'";
-                            }else{
+                            } else {
                                 $style = "style='background: #FFADAD;'";
                             }
                         } elseif (@$change_day_end->end != null) {
@@ -340,9 +340,9 @@ class Attandances extends CI_Controller
                             $this->db->where('date_in', $change_day_end->start);
                             $attandance_cc_out = $this->db->get()->row();
 
-                            if(@$attandance_cc_out->time_in != ""){
+                            if (@$attandance_cc_out->time_in != "") {
                                 $style = "style='background: #B0ADFF;'";
-                            }else{
+                            } else {
                                 $style = "style='background: #FFADAD;'";
                             }
                         } elseif ($weekend == "Weekend") {
@@ -408,9 +408,9 @@ class Attandances extends CI_Controller
                                                     <td>' . $shiftName . '</td>
                                                     <td>' . @$attandance->time_in . '</td>
                                                     <td>' . @$attandance->time_out . '</td>
-                                                    <td>' . @$attandance->request_code . '</td>
-                                                    <td>' . @$attandance->start . '</td>
-                                                    <td>' . @$attandance->end . '
+                                                    <td>' . @$cash_carry->idm_no . '</td>
+                                                    <td>' . @$cash_carry->start . '</td>
+                                                    <td>' . @$cash_carry->end . '</td>
                                                     <td></td>
                                                     <td ' . $style_status . '>' . $attandance_status . '</td>
                                                     <td>' . $holiday . '</td>
@@ -422,9 +422,9 @@ class Attandances extends CI_Controller
                                                     <td>' . $shiftName . '</td>
                                                     <td>' . @$attandance->time_in . '</td>
                                                     <td>' . @$attandance->time_out . '</td>
-                                                    <td>' . @$attandance->request_code . '</td>
-                                                    <td>' . @$attandance->start . '</td>
-                                                    <td>' . @$attandance->end . '
+                                                    <td>' . @$cash_carry->idm_no . '</td>
+                                                    <td>' . @$cash_carry->start . '</td>
+                                                    <td>' . @$cash_carry->end . '</td>
                                                     <td></td>
                                                     <td ' . $style_status . '>' . $attandance_status . '</td>
                                                     <td>' . $holiday . '</td>
@@ -438,9 +438,9 @@ class Attandances extends CI_Controller
                                     <td>' . $shiftName . '</td>
                                     <td>' . @$attandance->time_in . '</td>
                                     <td>' . @$attandance->time_out . '</td>
-                                    <td>' . @$attandance->request_code . '</td>
-                                    <td>' . @$attandance->start . '</td>
-                                    <td>' . @$attandance->end . '
+                                    <td>' . @$cash_carry->idm_no . '</td>
+                                    <td>' . @$cash_carry->start . '</td>
+                                    <td>' . @$cash_carry->end . '</td>
                                     <td></td>
                                     <td ' . $style_status . '>' . $attandance_status . '</td>
                                     <td>' . $holiday . '</td>

@@ -716,15 +716,15 @@
                     var rows = $('#dg2').datagrid('getRows');
                     var totalrows = rows.length;
                     endEditing();
-                    
-                    if(idm_no != "" && request_code != "" && totalrows > 0){
+
+                    if (idm_no != "" && request_code != "" && totalrows > 0) {
                         $('#frm_insert').form('submit', {
                             url: '<?= base_url('attandance/cash_carries/uploadFile') ?>',
                             method: 'POST',
                             onSubmit: function() {
                                 return $(this).form('validate');
                             },
-                            success:function(data){
+                            success: function(data) {
                                 var data = eval('(' + data + ')');
                                 var file_attachment = data.attachment;
                                 var file_attachment_idm = data.attachment_idm;
@@ -784,12 +784,12 @@
                             allowOutsideClick: false,
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location.reload();
+                                $('#dg').datagrid('reload');
                             }
                         });
 
                         $('#dlg_insert').dialog('close');
-                    }else{
+                    } else {
                         toastr.info("Please complete your cash carry data");
                     }
                 }

@@ -74,7 +74,9 @@ class Attandance_summary extends CI_Controller
             $finish = strtotime($filter_to);
 
             $weekday = [];
+            $weekday2 = [];
             $weekend = [];
+            $weekend2 = [];
 
             for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
                 //Jika tanggal yg di looping bukan hari sabtu dan minggu
@@ -85,6 +87,14 @@ class Attandance_summary extends CI_Controller
                     //Hari libur
                     $weekend[] = date('Y-m-d', $i);
                 }
+
+                if (date('w', $i) !== '0') {
+                    //Hari kerja
+                    $weekday2[] = date('Y-m-d', $i);
+                } else {
+                    //Hari libur
+                    $weekend2[] = date('Y-m-d', $i);
+                }
             }
 
             //Tanggal merah di master calendar
@@ -92,8 +102,8 @@ class Attandance_summary extends CI_Controller
             $this->db->from('calendars');
             $this->db->where('trans_date >=', $filter_from);
             $this->db->where('trans_date <=', $filter_to);
-            if(count($weekend) > 0){
-                $this->db->where_not_in('trans_date', $weekend);
+            if (count($weekend2) > 0) {
+                $this->db->where_not_in('trans_date', $weekend2);
             }
             $calendar = $this->db->get()->result_array();
             $calendar_amount = empty($calendar) ? 0 : count($calendar);
@@ -206,15 +216,23 @@ class Attandance_summary extends CI_Controller
 
                 foreach ($employees as $data) {
 
+                    if ($data['days'] == "6") {
+                        $weekend_day = $weekend2;
+                        $weekday_day = $weekday2;
+                    } else {
+                        $weekend_day = $weekend;
+                        $weekday_day = $weekday;
+                    }
+
                     //Attandances
                     $this->db->select("COUNT(a.date_in) as amount");
                     $this->db->from('(SELECT DISTINCT number, date_in, date_out FROM attandances) a');
                     $this->db->where('a.number', $data['number']);
                     $this->db->where("((a.date_in >= '$filter_from' and a.date_in <= '$filter_to') or (a.date_out >= '$filter_from' and a.date_out <= '$filter_to'))");
-                    if(count($weekend) > 0){
-                        $this->db->where_not_in('a.date_in', $weekend);
+                    if (count($weekend_day) > 0) {
+                        $this->db->where_not_in('a.date_in', $weekend_day);
                     }
-                    if(count($w_calendars) > 0){
+                    if (count($w_calendars) > 0) {
                         $this->db->where_not_in('a.date_in', $w_calendars);
                     }
                     $attandance = $this->db->get()->row();
@@ -229,7 +247,7 @@ class Attandance_summary extends CI_Controller
                     $changeDays_amount = empty($changeDays->days) ? 0 : $changeDays->days;
 
                     //Permit yang non deduction atau tidak potong gaji
-                    $permit_date = "'" . implode("', '", $weekend) . "'";
+                    $permit_date = "'" . implode("', '", $weekend_day) . "'";
                     $calendar_date = "'" . implode("', '", $w_calendars) . "'";
                     $q_permit = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                             FROM permit_types b
@@ -268,8 +286,8 @@ class Attandance_summary extends CI_Controller
                         $arr_total_permit_absence += $permit_data_absence['amount'];
                     }
 
-                    $hkw = (@count($weekday) - @$calendar_amount);
-                    $absence = (@count($weekday) - @$calendar_amount - @$attandance_amount - $arr_total_permit - @$changeDays_amount);
+                    $hkw = (@count($weekday_day) - @$calendar_amount);
+                    $absence = (@count($weekday_day) - @$calendar_amount - @$attandance_amount - $arr_total_permit - @$changeDays_amount);
 
                     if ($absence < 0) {
                         $absence_final = 0;
@@ -316,7 +334,7 @@ class Attandance_summary extends CI_Controller
                     $attandance_total += $working_day_final;
                     $change_days += @$changeDays_amount;
                     $total_days += $hkw;
-                    $attandance_days += count($weekday);
+                    $attandance_days += count($weekday_day);
                     $no++;
                 }
 

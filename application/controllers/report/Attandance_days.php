@@ -61,6 +61,7 @@ class Attandance_days extends CI_Controller
             $this->db->like('c.id', $filter_division);
             $this->db->like('d.id', $filter_departement);
             $this->db->like('e.id', $filter_departement_sub);
+            $this->db->group_by('b.id');
             $this->db->order_by('d.name', 'ASC');
             $this->db->order_by('e.name', 'ASC');
             $this->db->order_by('b.name', 'ASC');
@@ -172,37 +173,45 @@ class Attandance_days extends CI_Controller
                     if (@$data['days'] == "5") {
                         //sabtu dan minggu libur
                         if (date('w', $i) !== '0' && date('w', $i) !== '6') {
-                            $status = "";
+                            if (!empty($holiday->description)) {
+                                $status = "HOLIDAY";
+                            } else {
+                                if (@$permit->permit_name != null) {
+                                    $status = "PERMIT";
+                                } elseif (@$shift->start == null) {
+                                    $status = "UN SETTING";
+                                } elseif (@$shift->start <= @$attandance->time_in) {
+                                    $status = "LATE";
+                                } elseif (@$shift->start >= @$attandance->time_in) {
+                                    $status = "ON TIME";
+                                } else {
+                                    $status = "ABSENCE";
+                                }
+                            }
                         } else {
-                            $status = "Weekend";
+                            $status = "WEEKEND";
                         }
                     } else {
                         //sabtu doang libur
                         if (date('w', $i) !== '0') {
-                            $status = "";
-                        } else {
-                            $status = "Weekend";
-                        }
-                    }
-
-                    if (date('w', $i) !== '0' && date('w', $i) !== '6') {
-                        if (!empty($holiday->description)) {
-                            $status = "HOLIDAY";
-                        } else {
-                            if (@$permit->permit_name != null) {
-                                $status = "PERMIT";
-                            } elseif (@$shift->start == null) {
-                                $status = "UN SETTING";
-                            } elseif (@$shift->start <= @$attandance->time_in) {
-                                $status = "LATE";
-                            } elseif (@$shift->start >= @$attandance->time_in) {
-                                $status = "ON TIME";
+                            if (!empty($holiday->description)) {
+                                $status = "HOLIDAY";
                             } else {
-                                $status = "ABSENCE";
+                                if (@$permit->permit_name != null) {
+                                    $status = "PERMIT";
+                                } elseif (@$shift->start == null) {
+                                    $status = "UN SETTING";
+                                } elseif (@$shift->start <= @$attandance->time_in) {
+                                    $status = "LATE";
+                                } elseif (@$shift->start >= @$attandance->time_in) {
+                                    $status = "ON TIME";
+                                } else {
+                                    $status = "ABSENCE";
+                                }
                             }
+                        } else {
+                            $status = "WEEKEND";
                         }
-                    } else {
-                        $status = "WEEKEND";
                     }
 
                     if ($status == "WEEKEND") {

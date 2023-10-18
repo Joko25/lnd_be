@@ -786,6 +786,12 @@
 							halign: 'center',
 							title: "Note",
 						}, {
+							field: 'attachment',
+							width: 100,
+							align: 'center',
+							title: "Attachment",
+							formatter: FormatterFile
+						}, {
 							field: 'action',
 							width: 80,
 							align: 'center',
@@ -1605,6 +1611,14 @@
 
 		return "<b>" + formatter.format(value) + "</b>";
 	}
+
+	function FormatterFile(value) {
+		if (value == "" || value == null) {
+			return '-';
+		} else {
+			return '<a href="' + value + '" target="_blank" style="text-decoration: none;"><i class="fa fa-eye"></i> View</a>';
+		}
+	};
 </script>
 
 </html>

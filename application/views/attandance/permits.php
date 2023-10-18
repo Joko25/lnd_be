@@ -568,7 +568,7 @@
             onSelect: function(value, employee) {
                 $("#permit_type_id").combobox('clear');
                 $("#reason_id").combobox('clear');
-                
+
                 $.ajax({
                     url: '<?= base_url('attandance/permits/readShifts') ?>',
                     type: 'post',
@@ -693,7 +693,7 @@
         if (value == "" || value == null) {
             return '-';
         } else {
-            return '<a href="' + value + '" style="text-decoration: none;"><i class="fa fa-download"></i> Download</a>';
+            return '<a href="' + value + '" target="_blank" style="text-decoration: none;"><i class="fa fa-download"></i> Download</a>';
         }
     };
 
