@@ -718,6 +718,16 @@
                     endEditing();
 
                     if (idm_no != "" && request_code != "" && totalrows > 0) {
+                        Swal.fire({
+                            title: 'Please Wait for Save Data',
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            },
+                        });
+
                         $('#frm_insert').form('submit', {
                             url: '<?= base_url('attandance/cash_carries/uploadFile') ?>',
                             method: 'POST',
@@ -771,22 +781,23 @@
                                     },
                                     dataType: "json",
                                     success: function(result) {
-                                        //
+                                        if(totalrows == (i + 1)){
+                                            Swal.close();
+                                            Swal.fire({
+                                                title: "Save Cash Carries Success",
+                                                icon: "success",
+                                                confirmButtonText: 'Ok',
+                                                allowOutsideClick: false,
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    $('#dg').datagrid('reload');
+                                                }
+                                            });
+                                        }
                                     }
                                 });
                             }
                         }
-
-                        Swal.fire({
-                            title: "Save Cash Carries Success",
-                            icon: "success",
-                            confirmButtonText: 'Ok',
-                            allowOutsideClick: false,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $('#dg').datagrid('reload');
-                            }
-                        });
 
                         $('#dlg_insert').dialog('close');
                     } else {

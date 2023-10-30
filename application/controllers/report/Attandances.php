@@ -96,7 +96,7 @@ class Attandances extends CI_Controller
                 <meta http-equiv="expires" content="0">
                 <meta http-equiv="pragma" content="no-cache">
             <head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
-            $this->db->select("a.id, a.number, a.name, c.name as division_name, d.name as departement_name, e.name as departement_sub_name, f.warning_letter");
+            $this->db->select("a.id, a.number, a.name, c.name as division_name, d.name as departement_name, e.name as departement_sub_name, f.warning_letter, a.date_sign");
             $this->db->from('employees a');
             $this->db->join('divisions c', 'a.division_id = c.id');
             $this->db->join('departements d', 'a.departement_id = d.id');
@@ -186,6 +186,11 @@ class Attandances extends CI_Controller
                         <td>Sub Departement</td>
                         <td>:</td>
                         <td><b>' . $record['departement_sub_name'] . '</b></td>
+                    </tr>
+                    <tr>
+                        <td>Sign Date</td>
+                        <td>:</td>
+                        <td><b>' . date("d F Y", strtotime($record['date_sign'])) . '</b></td>
                     </tr>
                     <tr>
                         <td>Warning Letter</td>

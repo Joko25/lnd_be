@@ -172,7 +172,6 @@ class Attandance_summary extends CI_Controller
                     <th style="text-align:center;" rowspan="2">Absence</th>
                     <th style="text-align:center;" rowspan="2">Change Days</th>
                     <th style="text-align:center;" rowspan="2">Working Days</th>
-                    <th style="text-align:center;" rowspan="2">Total Days</th>
                 </tr>
                 <tr>';
                 foreach ($permit_types as $permit_type) {
@@ -224,11 +223,13 @@ class Attandance_summary extends CI_Controller
                         $weekday_day = $weekday;
                     }
 
+                    $tomorow = date('Y-m-d', strtotime("+1 day", strtotime($filter_from)));
+
                     //Attandances
                     $this->db->select("COUNT(a.date_in) as amount");
                     $this->db->from('(SELECT DISTINCT number, date_in, date_out FROM attandances) a');
                     $this->db->where('a.number', $data['number']);
-                    $this->db->where("((a.date_in >= '$filter_from' and a.date_in <= '$filter_to') or (a.date_out >= '$filter_from' and a.date_out <= '$filter_to'))");
+                    $this->db->where("((a.date_in >= '$filter_from' and a.date_in <= '$filter_to') or (a.date_out >= '$tomorow' and a.date_out <= '$filter_to'))");
                     if (count($weekend_day) > 0) {
                         $this->db->where_not_in('a.date_in', $weekend_day);
                     }
@@ -298,12 +299,6 @@ class Attandance_summary extends CI_Controller
                     //Hitung Hari dia masuk kerja
                     $working_days = ($attandance_amount + $arr_total_permit_absence);
 
-                    if ($working_days >= $hkw) {
-                        $working_day_final = $hkw;
-                    } else {
-                        $working_day_final = $working_days;
-                    }
-
                     //Permit
                     $q_permit = $this->db->query("SELECT b.name, COUNT(a.duration) as permit
                             FROM permit_types b
@@ -326,12 +321,11 @@ class Attandance_summary extends CI_Controller
 
                     $html .= '  <td style="text-align:center;">' . $absence_final . '</td>
                                 <td style="text-align:center;">' . $changeDays_amount . '</td>
-                                <td style="text-align:center;">' . $working_day_final . '</td>
-                                <td style="text-align:center;">' . $hkw . '</td>
+                                <td style="text-align:center;">' . $working_days . '</td>
                             </tr>';
 
                     $attandance_absece += $absence_final;
-                    $attandance_total += $working_day_final;
+                    $attandance_total += $working_days;
                     $change_days += @$changeDays_amount;
                     $total_days += $hkw;
                     $attandance_days += count($weekday_day);
@@ -366,7 +360,6 @@ class Attandance_summary extends CI_Controller
                 $html .= '  <th style="text-align:center;">' . $attandance_absece . '</th>
                             <th style="text-align:center;">' . $change_days . '</th>
                             <th style="text-align:center;">' . $attandance_total . '</th>
-                            <th style="text-align:center;">' . ($total_days) . '</th>
                         </tr>';
 
                 //Grand Total MP
@@ -375,7 +368,6 @@ class Attandance_summary extends CI_Controller
                     $html .= '<td style="text-align:center;">' . $row_mp['employee'] . '</td>';
                 }
                 $html .= '  <th style="text-align:center;"></th>
-                            <th style="text-align:center;"></th>
                             <th style="text-align:center;"></th>
                             <th style="text-align:center;"></th>
                         </tr>';

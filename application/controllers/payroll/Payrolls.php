@@ -377,6 +377,19 @@ class Payrolls extends CI_Controller
                 $arr_total_permit_absence += $permit_data_absence['amount'];
             }
 
+            //Permit atau absen nya NO di anggap tidak kerja
+            $q_permit_absence_no = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
+                    FROM permit_types b
+                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) and a.permit_date not in ($calendar_date)
+                    WHERE b.absence = 'NO' and (a.approved_to = '' or a.approved_to is null)
+                    GROUP BY b.id");
+
+            $r_permit_absence_no = $q_permit_absence_no->result_array();
+            $arr_total_permit_absence_no = 0;
+            foreach ($r_permit_absence_no as $permit_data_absence_no) {
+                $arr_total_permit_absence_no += $permit_data_absence_no['amount'];
+            }
+
             //Change Days
             $this->db->select("COUNT(*) as days");
             $this->db->from('change_days');
@@ -446,137 +459,137 @@ class Payrolls extends CI_Controller
             $attandance = $this->db->get()->row();
             $attandance_amount = empty($attandance->amount) ? 0 : $attandance->amount;
 
-            $employee_id = $record['id'];
-            //cash carries
-            $cash_carries = $this->crud->query("SELECT
-                a.employee_id,
-                a.trans_date,
-                a.duration_hour,
-                a.meal,
-                c.date_in,
-                c.time_in,
-                c.date_out,
-                c.time_out,
-                COALESCE(h.weekday, 0) as total_weekday,
-                COALESCE(h.sunday, 0) as total_sunday,
-                COALESCE(h.saturday, 0) as total_saturday,
-                COALESCE(h.holiday, 0) as total_holiday,
-                COALESCE(h.meal, 0) as total_meal,
-                f.days 
-            FROM cash_carries a 
-            JOIN employees b ON a.employee_id = b.id
-            JOIN attandances c ON b.number = c.number and a.trans_date = c.date_in
-            JOIN shift_employees d ON a.employee_id = d.employee_id
-            JOIN shifts e ON e.id = d.shift_id
-            JOIN shift_details f ON e.id = f.shift_id
-            JOIN setup_cash_carries g ON a.employee_id = g.employee_id
-            JOIN allowance_cash_carries h ON g.allowance_id = h.id
-            WHERE a.employee_id = '$employee_id' and a.trans_date between '$filter_from' and '$filter_to'
-            GROUP BY a.employee_id, a.trans_date");
+            // $employee_id = $record['id'];
+            // //cash carries
+            // $cash_carries = $this->crud->query("SELECT
+            //     a.employee_id,
+            //     a.trans_date,
+            //     a.duration_hour,
+            //     a.meal,
+            //     c.date_in,
+            //     c.time_in,
+            //     c.date_out,
+            //     c.time_out,
+            //     COALESCE(h.weekday, 0) as total_weekday,
+            //     COALESCE(h.sunday, 0) as total_sunday,
+            //     COALESCE(h.saturday, 0) as total_saturday,
+            //     COALESCE(h.holiday, 0) as total_holiday,
+            //     COALESCE(h.meal, 0) as total_meal,
+            //     f.days 
+            // FROM cash_carries a 
+            // JOIN employees b ON a.employee_id = b.id
+            // JOIN attandances c ON b.number = c.number and a.trans_date = c.date_in
+            // JOIN shift_employees d ON a.employee_id = d.employee_id
+            // JOIN shifts e ON e.id = d.shift_id
+            // JOIN shift_details f ON e.id = f.shift_id
+            // JOIN setup_cash_carries g ON a.employee_id = g.employee_id
+            // JOIN allowance_cash_carries h ON g.allowance_id = h.id
+            // WHERE a.employee_id = '$employee_id' and a.trans_date between '$filter_from' and '$filter_to'
+            // GROUP BY a.employee_id, a.trans_date");
 
-            $overtime_weekday = 0;
-            $overtime_convert_weekday = 0;
-            $overtime_amount_weekday = 0;
-            $overtime_holiday = 0;
-            $overtime_convert_holiday = 0;
-            $overtime_amount_holiday = 0;
-            foreach ($cash_carries as $cash_carry) {
-                $this->db->select('trans_date');
-                $this->db->from('calendars');
-                $this->db->where('trans_date', $cash_carry->trans_date);
-                $calendars = $this->db->get()->result_array();
+            // $overtime_weekday = 0;
+            // $overtime_convert_weekday = 0;
+            // $overtime_amount_weekday = 0;
+            // $overtime_holiday = 0;
+            // $overtime_convert_holiday = 0;
+            // $overtime_amount_holiday = 0;
+            // foreach ($cash_carries as $cash_carry) {
+            //     $this->db->select('trans_date');
+            //     $this->db->from('calendars');
+            //     $this->db->where('trans_date', $cash_carry->trans_date);
+            //     $calendars = $this->db->get()->result_array();
 
-                $start = strtotime($cash_carry->trans_date);
-                $att_time_begin = strtotime(@$cash_carry->date_in . " " . @$cash_carry->time_in);
-                $att_time_end = strtotime(@$cash_carry->date_out . " " . @$cash_carry->time_out);
+            //     $start = strtotime($cash_carry->trans_date);
+            //     $att_time_begin = strtotime(@$cash_carry->date_in . " " . @$cash_carry->time_in);
+            //     $att_time_end = strtotime(@$cash_carry->date_out . " " . @$cash_carry->time_out);
 
-                $tomorrow = strtotime(date('Y-m-d', strtotime(@$cash_carry->date_out . "+1 days")) . " " . @$cash_carry->time_out);
+            //     $tomorrow = strtotime(date('Y-m-d', strtotime(@$cash_carry->date_out . "+1 days")) . " " . @$cash_carry->time_out);
 
-                $att_diff = $att_time_end - $att_time_begin;
-                $att_hour = floor($att_diff / (60 * 60));
+            //     $att_diff = $att_time_end - $att_time_begin;
+            //     $att_hour = floor($att_diff / (60 * 60));
 
-                if ($att_hour < 0) {
-                    $att_diff = $tomorrow - $att_time_begin;
-                    $att_hour = floor($att_diff / (60 * 60));
-                }
+            //     if ($att_hour < 0) {
+            //         $att_diff = $tomorrow - $att_time_begin;
+            //         $att_hour = floor($att_diff / (60 * 60));
+            //     }
 
-                $cc_hour = $cash_carry->duration_hour;
+            //     $cc_hour = $cash_carry->duration_hour;
 
-                //Validasi Jam
-                if ($att_hour > $cc_hour) {
-                    $hour = $cc_hour;
-                } else {
-                    $hour = $att_hour;
-                }
+            //     //Validasi Jam
+            //     if ($att_hour > $cc_hour) {
+            //         $hour = $cc_hour;
+            //     } else {
+            //         $hour = $att_hour;
+            //     }
 
-                //Validasi Uang makan
-                if ($cash_carry->meal == 0 or @$cash_carry->time_in == "") {
-                    $meal = 0;
-                } else {
-                    $meal = @$cash_carry->total_meal;
-                }
+            //     //Validasi Uang makan
+            //     if ($cash_carry->meal == 0 or @$cash_carry->time_in == "") {
+            //         $meal = 0;
+            //     } else {
+            //         $meal = @$cash_carry->total_meal;
+            //     }
 
-                if (@$cash_carry->days == "5") {
-                    if (date('w', $start) !== '0' && date('w', $start) !== '6') {
+            //     if (@$cash_carry->days == "5") {
+            //         if (date('w', $start) !== '0' && date('w', $start) !== '6') {
 
-                        //Kalo ada tanggal Merah
-                        if (count($calendars) > 0) {
-                            $overtime_holiday += 1;
-                            $overtime_convert_holiday += $hour;
-                            $overtime_amount_holiday += ((@$cash_carry->total_holiday * $hour) + $meal);
-                        } else {
-                            $overtime_weekday += 1;
-                            $overtime_convert_weekday += $hour;
-                            $overtime_amount_weekday += ((@$cash_carry->total_weekday * $hour) + $meal);
-                        }
-                    } else {
-                        if (date('w', $start) === '0') {
-                            $overtime_holiday += 1;
-                            $overtime_convert_holiday += $hour;
-                            $overtime_amount_holiday += ((@$cash_carry->total_sunday * $hour) + $meal);
-                        } else {
-                            $overtime_holiday += 1;
-                            $overtime_convert_holiday += $hour;
-                            $overtime_amount_holiday += ((@$cash_carry->total_saturday * $hour) + $meal);
-                        }
-                    }
-                } else {
-                    if (date('w', $start) !== '0') {
+            //             //Kalo ada tanggal Merah
+            //             if (count($calendars) > 0) {
+            //                 $overtime_holiday += 1;
+            //                 $overtime_convert_holiday += $hour;
+            //                 $overtime_amount_holiday += ((@$cash_carry->total_holiday * $hour) + $meal);
+            //             } else {
+            //                 $overtime_weekday += 1;
+            //                 $overtime_convert_weekday += $hour;
+            //                 $overtime_amount_weekday += ((@$cash_carry->total_weekday * $hour) + $meal);
+            //             }
+            //         } else {
+            //             if (date('w', $start) === '0') {
+            //                 $overtime_holiday += 1;
+            //                 $overtime_convert_holiday += $hour;
+            //                 $overtime_amount_holiday += ((@$cash_carry->total_sunday * $hour) + $meal);
+            //             } else {
+            //                 $overtime_holiday += 1;
+            //                 $overtime_convert_holiday += $hour;
+            //                 $overtime_amount_holiday += ((@$cash_carry->total_saturday * $hour) + $meal);
+            //             }
+            //         }
+            //     } else {
+            //         if (date('w', $start) !== '0') {
 
-                        //Kalo ada tanggal Merah
-                        if (count($calendars) > 0) {
-                            $overtime_holiday += 1;
-                            $overtime_convert_holiday += $hour;
-                            $overtime_amount_holiday += ((@$cash_carry->total_holiday * $hour) + $meal);
-                        } else {
-                            $overtime_weekday += 1;
-                            $overtime_convert_weekday += $hour;
-                            $overtime_amount_weekday += ((@$cash_carry->total_weekday * $hour) + $meal);
-                        }
-                    } else {
-                        if (date('w', $start) === '0') {
-                            $overtime_holiday += 1;
-                            $overtime_convert_holiday += $hour;
-                            $overtime_amount_holiday += ((@$cash_carry->total_sunday * $hour) + $meal);
-                        } else {
-                            $overtime_holiday += 1;
-                            $overtime_convert_holiday += $hour;
-                            $overtime_amount_holiday += ((@$cash_carry->total_saturday * $hour) + $meal);
-                        }
-                    }
-                }
-            }
+            //             //Kalo ada tanggal Merah
+            //             if (count($calendars) > 0) {
+            //                 $overtime_holiday += 1;
+            //                 $overtime_convert_holiday += $hour;
+            //                 $overtime_amount_holiday += ((@$cash_carry->total_holiday * $hour) + $meal);
+            //             } else {
+            //                 $overtime_weekday += 1;
+            //                 $overtime_convert_weekday += $hour;
+            //                 $overtime_amount_weekday += ((@$cash_carry->total_weekday * $hour) + $meal);
+            //             }
+            //         } else {
+            //             if (date('w', $start) === '0') {
+            //                 $overtime_holiday += 1;
+            //                 $overtime_convert_holiday += $hour;
+            //                 $overtime_amount_holiday += ((@$cash_carry->total_sunday * $hour) + $meal);
+            //             } else {
+            //                 $overtime_holiday += 1;
+            //                 $overtime_convert_holiday += $hour;
+            //                 $overtime_amount_holiday += ((@$cash_carry->total_saturday * $hour) + $meal);
+            //             }
+            //         }
+            //     }
+            // }
 
-            $total_overtime = ($overtime_weekday + $overtime_holiday);
-            $total_overtime_convert = ($overtime_convert_weekday + $overtime_convert_holiday);
-            $total_overtime_amount = ($overtime_amount_weekday + $overtime_amount_holiday);
+            // $total_overtime = ($overtime_weekday + $overtime_holiday);
+            // $total_overtime_convert = ($overtime_convert_weekday + $overtime_convert_holiday);
+            // $total_overtime_amount = ($overtime_amount_weekday + $overtime_amount_holiday);
 
 
             //Hitung HKW atau jumlah hari kerja
             $hkw = (@count($weekday_day) - @$calendar_amount);
 
             //Hitung bereapa hari dia ga ada absen
-            $absen = (@count($weekday_day) - @$calendar_amount - @$attandance_amount - @$changeDays_amount - $arr_total_permit - $arr_total_permit_deduction);
+            $absen = (@count($weekday_day) - @$calendar_amount - @$attandance_amount - @$changeDays_amount - @$arr_total_permit_absence_no - $arr_total_permit_absence);
 
             //Hitung Hari dia masuk kerja
             $working_days = ($attandance_amount + $arr_total_permit_absence);
@@ -929,7 +942,7 @@ class Payrolls extends CI_Controller
             }
 
             //Total Pendapatan Gaji (Gaji + Tunjangan + BPJS dari perusahaan + Koreksi plus + lembur hari biasa + lembur hari libur)
-            $total_all_allowance = ($record['salary'] + $total_overtime_amount + $arr_allowance_amount_total + $arr_bpjs_com_amount_total + @$correction_plus_amount);
+            $total_all_allowance = ($record['salary'] + $arr_allowance_amount_total + $arr_bpjs_com_amount_total + @$correction_plus_amount);
 
             //Total Potongan Gaji (Ijin/Sakit + Koreksi Minus + alpha)
             $total_all_deduction = ($arr_permit_type_amount_b_total + @$correction_minus_amount + $absence_amount);
@@ -1008,18 +1021,18 @@ class Payrolls extends CI_Controller
                 "bpjs_company" => json_encode($arr_bpjs_com_combine),
                 "bpjs_company_total" => $arr_bpjs_com_amount_total,
                 "correction_plus" => @$correction_plus_amount,
-                "overtime_weekday" => $overtime_weekday,
-                "overtime_convert_weekday" => $overtime_convert_weekday,
-                "overtime_amount_weekday" => $overtime_amount_weekday,
-                "overtime_holiday" => $overtime_holiday,
-                "overtime_convert_holiday" => $overtime_convert_holiday,
-                "overtime_amount_holiday" => $overtime_amount_holiday,
+                "overtime_weekday" => 0,
+                "overtime_convert_weekday" => 0,
+                "overtime_amount_weekday" => 0,
+                "overtime_holiday" => 0,
+                "overtime_convert_holiday" => 0,
+                "overtime_amount_holiday" => 0,
                 "overtime_correction" => 0,
                 "overtime_convert_correction" => 0,
                 "overtime_amount_correction" => 0,
-                "total_overtime" => $total_overtime,
-                "total_overtime_convert" => $total_overtime_convert,
-                "total_overtime_amount" => $total_overtime_amount,
+                "total_overtime" => 0,
+                "total_overtime_convert" => 0,
+                "total_overtime_amount" => 0,
                 "total_all_allowance" => $total_all_allowance,
                 "deduction_number" => json_encode($arr_permit_type_combine_b),
                 "deduction_amount" => json_encode($arr_permit_type_combine),

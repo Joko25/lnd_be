@@ -173,7 +173,7 @@ class Cash_carries extends CI_Controller
         $tomorrow = strtotime(date('Y-m-d', strtotime($trans_date . "+1 days")) . " " . $end);
 
         $diff = $time_end - $time_begin;
-        $hour = floor($diff / (60 * 60));
+        $hour = floor($diff / (60 * 60) - $break);
         $minutes = ($diff - $hour * (60 * 60));
 
         if ($hour < 0) {
@@ -183,9 +183,9 @@ class Cash_carries extends CI_Controller
         }
 
         //if($setup->name == "DRIVER"){
-        if (floor(($minutes / 60) + $break) == 59) {
+        if (floor($minutes / 60) == 59) {
             $final_minutes = "59";
-        } else if (floor(($minutes / 60) + $break) >= 29 and floor(($minutes / 60) + $break) <= 58) {
+        } else if (floor($minutes / 60) >= 29 and floor($minutes / 60) <= 58) {
             $final_minutes = "50";
         } else {
             $final_minutes = "0";
