@@ -325,6 +325,7 @@ class Payrolls extends CI_Controller
             $calendar = $this->db->get()->result_array();
             $calendar_amount = empty($calendar) ? 0 : count($calendar);
 
+            $w_calendars = array();
             foreach ($calendar as $cal) {
                 $w_calendars[] = $cal['trans_date'];
             }
@@ -332,6 +333,12 @@ class Payrolls extends CI_Controller
             //Permit yang non deduction atau tidak potong gaji
             $permit_date = "'" . implode("', '", $weekend_day) . "'";
             $calendar_date = "'" . implode("', '", $w_calendars) . "'";
+
+            if(count($w_calendars) > 0){
+                $calendar_where = "and a.permit_date not in ($calendar_date)";
+            }else{
+                $calendar_where = "";
+            }
             $q_permit = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                     FROM permit_types b
                     LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date)
@@ -354,7 +361,7 @@ class Payrolls extends CI_Controller
             //Permit yang deduction atau potong gaji
             $q_permit_deduction = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                     FROM permit_types b
-                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) and a.permit_date not in ($calendar_date)
+                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) $calendar_where
                     WHERE b.payroll = 'DEDUCTION' and (a.approved_to = '' or a.approved_to is null)
                     GROUP BY b.id");
 
@@ -367,7 +374,7 @@ class Payrolls extends CI_Controller
             //Permit atau absen nya YES di anggap masuk kerja
             $q_permit_absence = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                     FROM permit_types b
-                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) and a.permit_date not in ($calendar_date)
+                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) $calendar_where
                     WHERE b.absence = 'YES' and (a.approved_to = '' or a.approved_to is null)
                     GROUP BY b.id");
 
@@ -380,7 +387,7 @@ class Payrolls extends CI_Controller
             //Permit atau absen nya NO di anggap tidak kerja
             $q_permit_absence_no = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                     FROM permit_types b
-                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) and a.permit_date not in ($calendar_date)
+                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) $calendar_where
                     WHERE b.absence = 'NO' and (a.approved_to = '' or a.approved_to is null)
                     GROUP BY b.id");
 
@@ -449,15 +456,24 @@ class Payrolls extends CI_Controller
             $loan_other_amount = empty($loan_other->amount) ? 0 : $loan_other->amount;
 
             //Attandances
-            $this->db->select("COUNT(a.date_in) as amount");
-            $this->db->from('(SELECT DISTINCT number, date_in FROM attandances) a');
-            $this->db->where('a.number', $record['number']);
-            $this->db->where('a.date_in >=', $filter_from);
-            $this->db->where('a.date_in <=', $filter_to);
-            $this->db->where_not_in('a.date_in', $weekend_day);
-            $this->db->where_not_in('a.date_in', $w_calendars);
-            $attandance = $this->db->get()->row();
-            $attandance_amount = empty($attandance->amount) ? 0 : $attandance->amount;
+            $tomorow = date('Y-m-d', strtotime("+1 day", strtotime($filter_from)));
+            $this->db->select("number, date_in");
+            $this->db->from('attandances');
+            $this->db->where('number', $record['number']);
+            $this->db->where("((date_in >= '$filter_from' and date_in <= '$filter_to') or (date_out >= '$tomorow' and date_out <= '$filter_to'))");
+            if (count($weekend_day) > 0) {
+                $this->db->where_not_in('date_in', $weekend_day);
+            }
+            if (count($w_calendars) > 0) {
+                $this->db->where_not_in('date_in', $w_calendars);
+            }
+            $this->db->group_by('date_in');
+            $attandances = $this->db->get()->result_array();
+
+            $attandance_amount = 0;
+            foreach ($attandances as $attandance) {
+                $attandance_amount++;
+            }
 
             // $employee_id = $record['id'];
             // //cash carries

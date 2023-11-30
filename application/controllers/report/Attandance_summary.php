@@ -102,6 +102,7 @@ class Attandance_summary extends CI_Controller
             $this->db->from('calendars');
             $this->db->where('trans_date >=', $filter_from);
             $this->db->where('trans_date <=', $filter_to);
+            $this->db->where('description !=', "Weekend");
             if (count($weekend2) > 0) {
                 $this->db->where_not_in('trans_date', $weekend2);
             }
@@ -226,18 +227,23 @@ class Attandance_summary extends CI_Controller
                     $tomorow = date('Y-m-d', strtotime("+1 day", strtotime($filter_from)));
 
                     //Attandances
-                    $this->db->select("COUNT(a.date_in) as amount");
-                    $this->db->from('(SELECT DISTINCT number, date_in, date_out FROM attandances) a');
-                    $this->db->where('a.number', $data['number']);
-                    $this->db->where("((a.date_in >= '$filter_from' and a.date_in <= '$filter_to') or (a.date_out >= '$tomorow' and a.date_out <= '$filter_to'))");
+                    $this->db->select("number, date_in");
+                    $this->db->from('attandances');
+                    $this->db->where('number', $data['number']);
+                    $this->db->where("((date_in >= '$filter_from' and date_in <= '$filter_to') or (date_out >= '$tomorow' and date_out <= '$filter_to'))");
                     if (count($weekend_day) > 0) {
-                        $this->db->where_not_in('a.date_in', $weekend_day);
+                        $this->db->where_not_in('date_in', $weekend_day);
                     }
                     if (count($w_calendars) > 0) {
-                        $this->db->where_not_in('a.date_in', $w_calendars);
+                        $this->db->where_not_in('date_in', $w_calendars);
                     }
-                    $attandance = $this->db->get()->row();
-                    $attandance_amount = empty($attandance->amount) ? 0 : $attandance->amount;
+                    $this->db->group_by('date_in');
+                    $attandances = $this->db->get()->result_array();
+
+                    $attandance_amount = 0;
+                    foreach ($attandances as $attandance) {
+                        $attandance_amount++;
+                    }
 
                     //Change Days
                     $this->db->select("COUNT(*) as days");

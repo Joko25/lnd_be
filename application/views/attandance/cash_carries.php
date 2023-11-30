@@ -790,7 +790,7 @@
                                                 allowOutsideClick: false,
                                             }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    $('#dg').datagrid('reload');
+                                                    location.reload();
                                                 }
                                             });
                                         }

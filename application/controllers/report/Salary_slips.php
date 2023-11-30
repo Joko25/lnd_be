@@ -284,19 +284,16 @@ class Salary_slips extends CI_Controller
         $html .= '  <center><div class="container" style="border:1px solid black; margin-bottom:20px; padding-top:10px; float:left;">
                 <table style="width: 100%;">
                     <tr>
-                        <td width="80" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
-                            <img src="' . $config->favicon . '" width="50">
-                        </td>
-                        <td style="font-size: 30px; text-align: left; margin:2px;">
+                        <td style="font-size: 16px; text-align: left; margin:2px;">
                             <b>' . $config->name . '</b>
                         </td>
-                        <td style="font-size: 30px; text-align: right; margin:2px;">
+                        <td style="font-size: 16px; text-align: right; margin:2px;">
                             SALARY SLIP
                         </td>
                     </tr>
                 </table>
                 <hr>
-                <div style="float:left; width:50%;">
+                <div style="float:left; width:100%;">
                     <table style="width:100%; margin-bottom: 5px; font-size: 12px;">
                         <tr>
                             <th style="text-align:left; width: 30%;">Cut Off Period</th>
@@ -323,10 +320,6 @@ class Salary_slips extends CI_Controller
                             <th style="text-align:left;">:</th>
                             <th style="text-align:left;">' . $record['departement_sub_name'] . '</th>
                         </tr>
-                    </table>
-                </div>
-                <div style="float:left; width:50%;">
-                    <table style="width:100%; margin-bottom: 5px; font-size: 12px;">
                         <tr>
                             <th style="text-align:left; width: 30%;">National ID</th>
                             <th style="text-align:left; width: 5%;">:</th>

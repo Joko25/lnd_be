@@ -321,9 +321,9 @@
         });
 
         calendars();
-        setTimeout(function() {
-            window.location.href = window.location;
-        }, 30000);
+        // setTimeout(function() {
+        //     window.location.href = window.location;
+        // }, 30000);
 
         setInterval(jam, 1000);
     });

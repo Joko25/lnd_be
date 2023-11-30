@@ -117,7 +117,7 @@ class Pph_212 extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            $query = $this->db->query("SELECT a.number, b.name, b.tax_id, b.national_id, c.name as alamat, a.attandance_wd, a.marital, a.net_income, d.name as group_name
+            $query = $this->db->query("SELECT b.name, b.tax_id, b.national_id, b.address, a.attandance_wd, a.marital, a.pph, a.income
                 FROM payrolls a
                 JOIN employees b ON a.employee_id = b.id
                 JOIN groups d ON b.group_id = d.id and d.ppt = 0
@@ -143,47 +143,29 @@ class Pph_212 extends CI_Controller
                     <table id="customers" border="1">
                         <tr>
                             <th width="30">No</th>
-                            <th style="text-align:center;">No. Urut</th>
-                            <th style="text-align:center;">No. Urut BP</th>
-                            <th style="text-align:center;">No BP</th>
-                            <th style="text-align:center;">Tgl BP</th>
-                            <th style="text-align:center;">Penerima Penghasilan</th>
-                            <th style="text-align:center;">Group</th>
-                            <th style="text-align:center;">NIK</th>
-                            <th style="text-align:center;">Nama</th>
+                            <th style="text-align:center;">Masa Pajak</th>
+                            <th style="text-align:center;">Tahun Pajak</th>
+                            <th style="text-align:center;">Pembetulan</th>
                             <th style="text-align:center;">NPWP</th>
-                            <th style="text-align:center;">NIK/No. Pasport</th>
-                            <th style="text-align:center;">Alamat</th>
-                            <th style="text-align:center;">Asal Negara</th>
+                            <th style="text-align:center;">Nama</th>
+                            <th style="text-align:center;">Kode Pajak</th>
+                            <th style="text-align:center;">Jumlah Bruto</th>
+                            <th style="text-align:center;">Jumlah PPh</th>
                             <th style="text-align:center;">Kode Negara</th>
-                            <th style="text-align:center;">Status PTKP</th>
-                            <th style="text-align:center;">GU</th>
-                            <th style="text-align:center;">Jml HK</th>
-                            <th style="text-align:center;">PTT<br>Bulanan</th>
-                            <th style="text-align:center;">Pembayaran</th>
                         </tr>';
             $no = 1;
             foreach ($records as $record) {
                 $html .= '<tr>
                             <td style="text-align:center;">' . $no . '</td>
-                            <td style="text-align:center;">Non Final</td>
-                            <td style="text-align:center;">' . sprintf("%05s", $no) . '</td>
-                            <td style="text-align:center;">1.3-01.23-' . sprintf("%07s", $no) . '</td>
-                            <td style="text-align:center;">' . $tgl_bp . '</td>
-                            <td>PTT atau Pegawai Lepas</td>
-                            <td>' . $record['group_name'] . '</td>
-                            <td>' . $record['number'] . '</td>
+                            <td style="text-align:center;">' . date("m", strtotime($filter_from)) . '</td>
+                            <td style="text-align:center;">' . date("Y", strtotime($filter_from)) . '</td>
+                            <td style="text-align:center;">0</td>
+                            <td>' . str_replace(array('.', '-'), '', $record['tax_id']) . '</td>
                             <td>' . $record['name'] . '</td>
-                            <td style="text-align:center;">' . $record['tax_id'] . '</td>
-                            <td style="text-align:center;" class="str">' . $record['national_id'] . '</td>
-                            <td>' . $record['alamat'] . '</td>
-                            <td></td>
-                            <td></td>
-                            <td style="text-align:center;">' . $record['marital'] . '</td>
-                            <td style="text-align:center;">X</td>
-                            <td style="text-align:center;">' . $record['attandance_wd'] . '</td>
-                            <td style="text-align:center;">X</td>
-                            <td style="text-align:right;">' . number_format($record['net_income']) . '</td>
+                            <td>21-100-03</td>
+                            <td style="text-align:right;">' . number_format($record['income']) . '</td>
+                            <td style="text-align:right;">' . number_format($record['pph']) . '</td>
+                            <td style="text-align:center;"></td>
                         </tr>';
                 $no++;
             }

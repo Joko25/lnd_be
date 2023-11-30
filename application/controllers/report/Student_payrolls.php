@@ -181,7 +181,7 @@ class Student_payrolls extends CI_Controller
                                 <th rowspan="2" width="50" style="text-align:center;">Sign</th>
                             </tr>
                             <tr>
-                                <th style="text-align:center;">Allowence</th>
+                                <th style="text-align:center;">Allowance</th>
                                 <th style="text-align:center;">BPJS</th>
                                 <th style="text-align:center;">BPJS</th>
                                 <th style="text-align:center;">Deduction</th>
@@ -255,7 +255,7 @@ class Student_payrolls extends CI_Controller
                                             <tr>
                                                 <th style="text-align:center;">BOD</th>
                                                 <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                                <th style="text-align:center;">MANAGER</th>
+                                                <th style="text-align:center;">ASSISTANT MANAGER</th>
                                                 <th style="text-align:center;">PAYROLL STAFF</th>
                                             </tr>
                                         </table>
@@ -327,8 +327,8 @@ class Student_payrolls extends CI_Controller
                                             <th rowspan="2" style="text-align:center;">Departement</th>
                                             <th rowspan="2" style="text-align:center;">Departement Sub</th>
                                             <th rowspan="2" width="50" style="text-align:center;">Attandance</th>
-                                            <th colspan="3" style="text-align:center;">Allowence Amount Type</th>
-                                            <th rowspan="2" style="text-align:center;">Allowence</th>
+                                            <th colspan="3" style="text-align:center;">Allowance Amount Type</th>
+                                            <th rowspan="2" style="text-align:center;">Allowance</th>
                                             <th rowspan="2" style="text-align:center;">Intern<br>Fee</th>
                                             <th rowspan="2" style="text-align:center;">Boarding<br>Fee</th>
                                             <th colspan="2" style="text-align:center;">Correction</th>
@@ -407,7 +407,7 @@ class Student_payrolls extends CI_Controller
                                         <tr>
                                             <th style="text-align:center;">BOD</th>
                                             <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                            <th style="text-align:center;">MANAGER</th>
+                                            <th style="text-align:center;">ASSISTANT MANAGER</th>
                                             <th style="text-align:center;">PAYROLL STAFF</th>
                                         </tr>
                                     </table>

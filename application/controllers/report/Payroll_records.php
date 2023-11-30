@@ -48,13 +48,13 @@ class Payroll_records extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            if ($filter_type == "Karyawan") {
+            if($filter_type == "Karyawan"){
                 $where = "AND a.contract_id NOT IN('20221119000004','20221119000006')";
-            } elseif ($filter_type == "Magang") {
+            }elseif($filter_type == "Magang"){
                 $where = "AND a.contract_id ='20221119000004'";
-            } elseif ($filter_type == "PKL") {
+            }elseif($filter_type == "PKL"){
                 $where = "AND a.contract_id ='20221119000006'";
-            } else {
+            }else{
                 $where = "";
             }
 
@@ -132,7 +132,7 @@ class Payroll_records extends CI_Controller
                     </center>
                     <br>';
 
-            $html .= '  <table id="customers" border="1">
+                $html .= '  <table id="customers" border="1">
                                 <tr>
                                     <th style="text-align:center;" width="50">No</th>
                                     <th style="text-align:center;" width="200">Plant</th>
@@ -152,58 +152,58 @@ class Payroll_records extends CI_Controller
                                     <th style="text-align:center;" width="80">MP</th>
                                     <th style="text-align:center;" width="100">Mandiri</th>
                                 </tr>';
-            $no = 1;
-            $total_mp = 0;
-            $total_salary = 0;
-            $cash_mp = 0;
-            $total_cash = 0;
-            $bsi_mp = 0;
-            $total_bsi = 0;
-            $mandiri_mp = 0;
-            $total_mandiri = 0;
-            foreach ($records as $record) {
-                $html .= "  <tr>
-                                    <td>" . $no . "</td>
-                                    <td>" . $record->division_name . "</td>
-                                    <td>" . $record->job_type . "</td>
-                                    <td>" . $record->departement_name . "</td>
-                                    <td>" . $record->departement_sub_name . "</td>
-                                    <td>" . $record->position_name . "</td>
-                                    <td>" . $record->contract_name . "</td>
-                                    <td>" . $record->source_name . "</td>
-                                    <td>" . $record->account_name . "</td>
-                                    <td style='text-align:right;'>" . number_format($record->total_mp) . "</td>
-                                    <td style='text-align:right;'>" . number_format($record->total_salary) . "</td>
-                                    <td style='text-align:right;'>" . number_format($record->cash_mp) . "</td>
-                                    <td style='text-align:right;'>" . number_format($record->total_cash) . "</td>
-                                    <td style='text-align:right;'>" . number_format($record->bsi_mp) . "</td>
-                                    <td style='text-align:right;'>" . number_format($record->total_bsi) . "</td>
-                                    <td style='text-align:right;'>" . number_format($record->mandiri_mp) . "</td>
-                                    <td style='text-align:right;'>" . number_format($record->total_mandiri) . "</td>
+                $no = 1;
+                $total_mp = 0;
+                $total_salary = 0;
+                $cash_mp = 0;
+                $total_cash = 0;
+                $bsi_mp = 0;
+                $total_bsi = 0;
+                $mandiri_mp = 0;
+                $total_mandiri = 0;
+                foreach ($records as $record) {
+                    $html .= "  <tr>
+                                    <td>".$no."</td>
+                                    <td>".$record->division_name."</td>
+                                    <td>".$record->job_type."</td>
+                                    <td>".$record->departement_name."</td>
+                                    <td>".$record->departement_sub_name."</td>
+                                    <td>".$record->position_name."</td>
+                                    <td>".$record->contract_name."</td>
+                                    <td>".$record->source_name."</td>
+                                    <td>".$record->account_name."</td>
+                                    <td style='text-align:right;'>".number_format($record->total_mp)."</td>
+                                    <td style='text-align:right;'>".number_format($record->total_salary)."</td>
+                                    <td style='text-align:right;'>".number_format($record->cash_mp)."</td>
+                                    <td style='text-align:right;'>".number_format($record->total_cash)."</td>
+                                    <td style='text-align:right;'>".number_format($record->bsi_mp)."</td>
+                                    <td style='text-align:right;'>".number_format($record->total_bsi)."</td>
+                                    <td style='text-align:right;'>".number_format($record->mandiri_mp)."</td>
+                                    <td style='text-align:right;'>".number_format($record->total_mandiri)."</td>
                                 </tr>";
 
-                $total_mp += $record->total_mp;
-                $total_salary += $record->total_salary;
-                $cash_mp += $record->cash_mp;
-                $total_cash += $record->total_cash;
-                $bsi_mp += $record->bsi_mp;
-                $total_bsi += $record->total_bsi;
-                $mandiri_mp += $record->mandiri_mp;
-                $total_mandiri += $record->total_mandiri;
-                $no++;
-            }
-            $html .= "  <tr>
+                    $total_mp += $record->total_mp;
+                    $total_salary += $record->total_salary;
+                    $cash_mp += $record->cash_mp;
+                    $total_cash += $record->total_cash;
+                    $bsi_mp += $record->bsi_mp;
+                    $total_bsi += $record->total_bsi;
+                    $mandiri_mp += $record->mandiri_mp;
+                    $total_mandiri += $record->total_mandiri;
+                    $no++;
+                }
+                $html .= "  <tr>
                                 <td colspan=9 style='text-align:right; font-weight:bold;'>GRAND TOTAL</td>
-                                <td style='text-align:right; font-weight:bold;'>" . number_format($total_mp) . "</td>
-                                <td style='text-align:right; font-weight:bold;'>" . number_format($total_salary) . "</td>
-                                <td style='text-align:right; font-weight:bold;'>" . number_format($cash_mp) . "</td>
-                                <td style='text-align:right; font-weight:bold;'>" . number_format($total_cash) . "</td>
-                                <td style='text-align:right; font-weight:bold;'>" . number_format($bsi_mp) . "</td>
-                                <td style='text-align:right; font-weight:bold;'>" . number_format($total_bsi) . "</td>
-                                <td style='text-align:right; font-weight:bold;'>" . number_format($mandiri_mp) . "</td>
-                                <td style='text-align:right; font-weight:bold;'>" . number_format($total_mandiri) . "</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_mp)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_salary)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($cash_mp)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_cash)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($bsi_mp)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_bsi)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($mandiri_mp)."</td>
+                                <td style='text-align:right; font-weight:bold;'>".number_format($total_mandiri)."</td>
                             </tr>";
-            $html .= '</table>
+                $html .= '</table>
                 <br>
                 <table id="customers" border="1" style="width:30%;">
                     <tr>
@@ -235,9 +235,9 @@ class Payroll_records extends CI_Controller
             $summary_total = 0;
             foreach ($summaries as $summary) {
                 $html .= "  <tr>
-                                <td>" . $nos . "</td>
-                                <td>" . $summary->name . "</td>
-                                <td style='text-align:right'>" . number_format($summary->total_salary) . "</td>
+                                <td>".$nos."</td>
+                                <td>".$summary->name."</td>
+                                <td style='text-align:right'>".number_format($summary->total_salary)."</td>
                             </tr>";
                 $nos++;
                 $summary_total += $summary->total_salary;
@@ -245,10 +245,10 @@ class Payroll_records extends CI_Controller
 
             $html .= "  <tr>
                             <td colspan='2' style='text-align:right; font-weight:bold;'>GRAND TOTAL</td>
-                            <td style='text-align:right; font-weight:bold;'>" . number_format($summary_total) . "</td>
+                            <td style='text-align:right; font-weight:bold;'>".number_format($summary_total)."</td>
                         </tr>";
 
-            $html .= '</table><br>
+        $html .= '</table><br>
                 <center>
                     <table id="customers" style="width:70%;">
                         <tr>
@@ -274,9 +274,9 @@ class Payroll_records extends CI_Controller
                         </tr>
                     </table>
                 </center>';
-
-            $html .= '</body></html>';
-            echo $html;
+                
+                $html .= '</body></html>';
+                echo $html;
         }
     }
 }
