@@ -2,7 +2,7 @@
 date_default_timezone_set("Asia/Bangkok");
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pph_21 extends CI_Controller
+class Pph_212 extends CI_Controller
 {
     public function __construct()
     {
@@ -23,7 +23,7 @@ class Pph_21 extends CI_Controller
             $data['button'] = $this->getbutton($this->id_menu());
 
             $this->load->view('template/header', $data);
-            $this->load->view('report/pph_21');
+            $this->load->view('report/pph_212');
         } else {
             redirect('error_access');
         }
@@ -33,7 +33,7 @@ class Pph_21 extends CI_Controller
     public function groups()
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
-        $send = $this->crud->reads('groups', ["name" => $post], ["ppt" => "1"]);
+        $send = $this->crud->reads('groups', ["name" => $post], ["ppt" => "0"]);
         echo json_encode($send);
     }
 
@@ -42,12 +42,11 @@ class Pph_21 extends CI_Controller
         if ($this->input->get()) {
 
             header("Content-type: text/csv; charset=utf-8");
-            header("Content-Disposition: attachment; filename=pph21_" . time() . ".csv");
+            header("Content-Disposition: attachment; filename=pph21_employee_" . time() . ".csv");
             $output = fopen("php://output", "w");
             fputcsv($output, array(
-                "Masa Pajak", "Tahun Pajak", "Pembetulan", "Nomor Bukti Potong", "NPWP", "NIK", "Nama",
-                "Alamat", "WP Luar Negeri", "Kode Negara", "Kode Pajak", "Jumlah Bruto", "Jumlah DPP", "Tanpa NPWP", "Tarif",
-                "Jumlah Pph", "NPWP Pemotong", "Nama Pemotong", "Tanggal Bukti Potong"
+                "Masa Pajak", "Tahun Pajak", "Pembetulan", "NPWP", "Nama",
+                "Kode Pajak", "Jumlah Bruto", "Jumlah Pph", "Kode Negara"
             ));
 
             $filter_from = $this->input->get('filter_from');
@@ -58,14 +57,13 @@ class Pph_21 extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            $query = $this->db->query("SELECT b.name, b.tax_id, b.national_id, b.address, a.attandance_wd, a.marital, a.income
+            $query = $this->db->query("SELECT b.name, b.tax_id, b.national_id, b.address, a.attandance_wd, a.marital, a.pph, a.income
                 FROM payrolls a
                 JOIN employees b ON a.employee_id = b.id
-                JOIN groups d ON b.group_id = d.id and d.ppt = 1
-                LEFT JOIN sources c ON b.source_id = c.id
+                JOIN groups d ON b.group_id = d.id and d.ppt = 0
                 WHERE a.period_start = '$period_start' and a.period_end = '$period_end' and d.id like '%$filter_group%'
                 GROUP BY a.id
-                ORDER BY c.name, a.name ASC");
+                ORDER BY a.name ASC");
             $records = $query->result_array();
 
             //Config
@@ -87,22 +85,12 @@ class Pph_21 extends CI_Controller
                     date("m", strtotime($filter_from)),
                     date("Y", strtotime($filter_from)),
                     "0",
-                    "$number",
                     str_replace(array('.', '-'), '', $record['tax_id']),
-                    $record['national_id'],
                     $record['name'],
-                    $record['address'],
-                    "N",
-                    "",
                     "21-100-03",
                     $record['income'],
-                    "",
-                    "N",
-                    $tarif,
-                    "",
-                    $config->npwp,
-                    $config->name,
-                    date("30/m/Y", strtotime($filter_from)),
+                    $record['pph'],
+                    ""
                 );
 
                 fputcsv($output, $data);
@@ -117,7 +105,7 @@ class Pph_21 extends CI_Controller
         if ($option == "excel") {
             $format  = date("Ymd");
             header("Content-type: application/vnd-ms-excel");
-            header("Content-Disposition: attachment; filename=pph21_$format.xls");
+            header("Content-Disposition: attachment; filename=pph21_employee_$format.xls");
         }
 
         if ($this->input->get()) {
@@ -132,7 +120,7 @@ class Pph_21 extends CI_Controller
             $query = $this->db->query("SELECT a.number, b.name, b.tax_id, b.national_id, c.name as alamat, a.attandance_wd, a.marital, a.net_income, d.name as group_name
                 FROM payrolls a
                 JOIN employees b ON a.employee_id = b.id
-                JOIN groups d ON b.group_id = d.id and d.ppt = 1
+                JOIN groups d ON b.group_id = d.id and d.ppt = 0
                 LEFT JOIN sources c ON b.source_id = c.id
                 WHERE a.period_start = '$period_start' and a.period_end = '$period_end' and d.id like '%$filter_group%'
                 GROUP BY a.id

@@ -38,8 +38,9 @@ class Summary_payrolls extends CI_Controller
         $filter_departement = $this->input->get('filter_departement');
         $filter_departement_sub = $this->input->get('filter_departement_sub');
         $filter_employee = $this->input->get('filter_employee');
-        $filter_group = $this->input->get('filter_group');
+        $filter_group = base64_decode($this->input->get('filter_group'));
         $username = $this->session->username;
+        $filter_group_ex = explode(",", trim($filter_group));
 
         $period_start = date("Y-m", strtotime($filter_from));
         $period_end = date("Y-m", strtotime($filter_to));
@@ -68,11 +69,13 @@ class Summary_payrolls extends CI_Controller
         $this->db->where('a.deleted', 0);
         $this->db->where('a.period_start =', $period_start);
         $this->db->where('a.period_end =', $period_end);
+        if ($filter_group != "") {
+            $this->db->where_in('e.name', $filter_group_ex);
+        }
         $this->db->like('b.id', $filter_employee);
         $this->db->like('b.division_id', $filter_division);
         $this->db->like('b.departement_id', $filter_departement);
         $this->db->like('b.departement_sub_id', $filter_departement_sub);
-        $this->db->like('b.group_id', $filter_group);
         $this->db->group_by(array("c.id", "d.id", "e.id"));
         $this->db->order_by('c.name', 'ASC');
         $this->db->order_by('SUM(a.net_income)', 'ASC');
@@ -97,7 +100,7 @@ class Summary_payrolls extends CI_Controller
             $filter_departement = $this->input->get('filter_departement');
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
-            $filter_group = $this->input->get('filter_group');
+            $filter_group = base64_decode($this->input->get('filter_group'));
             $username = $this->session->username;
 
             $period_start = date("Y-m", strtotime($filter_from));
@@ -111,7 +114,7 @@ class Summary_payrolls extends CI_Controller
                 AND b.departement_id LIKE '%$filter_departement%'
                 AND b.departement_sub_id LIKE '%$filter_departement_sub%'
                 AND a.employee_id LIKE '%$filter_employee%'
-                AND c.group_id LIKE '%$filter_group%'
+                AND c.group_id = '$filter_group'
                 ORDER BY a.`name` ASC");
             $payrolls = $query->result_array();
 
@@ -246,7 +249,7 @@ class Summary_payrolls extends CI_Controller
                     AND b.departement_id LIKE '%$filter_departement%'
                     AND b.departement_sub_id LIKE '%$filter_departement_sub%'
                     AND a.employee_id LIKE '%$filter_employee%'
-                    AND c.group_id LIKE '%$filter_group%'
+                    AND c.group_id = '$filter_group'
                     ORDER BY a.`name` ASC LIMIT 20 OFFSET $offset");
                 $records = $query->result_array();
 
@@ -355,7 +358,8 @@ class Summary_payrolls extends CI_Controller
             $filter_departement = $this->input->get('filter_departement');
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
-            $filter_group = $this->input->get('filter_group');
+            $filter_group = base64_decode($this->input->get('filter_group'));
+            $filter_group_ex = explode(",", $filter_group);
             $username = $this->session->username;
 
             $period_start = date("Y-m", strtotime($filter_from));
@@ -381,11 +385,13 @@ class Summary_payrolls extends CI_Controller
             $this->db->where('a.deleted', 0);
             $this->db->where('a.period_start =', $period_start);
             $this->db->where('a.period_end =', $period_end);
+            if ($filter_group != "") {
+                $this->db->where_in('e.name', $filter_group_ex);
+            }
             $this->db->like('b.id', $filter_employee);
             $this->db->like('b.division_id', $filter_division);
             $this->db->like('b.departement_id', $filter_departement);
             $this->db->like('b.departement_sub_id', $filter_departement_sub);
-            $this->db->like('b.group_id', $filter_group);
             $this->db->group_by(array("c.id", "d.id", "e.id"));
             $this->db->order_by('c.name', 'ASC');
             $this->db->order_by('SUM(a.net_income)', 'ASC');
@@ -424,11 +430,13 @@ class Summary_payrolls extends CI_Controller
                 $this->db->where('a.deleted', 0);
                 $this->db->where('a.period_start =', $period_start);
                 $this->db->where('a.period_end =', $period_end);
+                if ($filter_group != "") {
+                    $this->db->where_in('e.name', $filter_group_ex);
+                }
                 $this->db->like('b.id', $filter_employee);
                 $this->db->like('b.division_id', $filter_division);
                 $this->db->like('b.departement_id', $filter_departement);
                 $this->db->like('b.departement_sub_id', $filter_departement_sub);
-                $this->db->like('b.group_id', $filter_group);
                 $this->db->group_by(array("c.id", "d.id", "e.id"));
                 $this->db->order_by('c.name', 'ASC');
                 $this->db->order_by('SUM(a.net_income)', 'ASC');
@@ -520,7 +528,8 @@ class Summary_payrolls extends CI_Controller
             $filter_departement = $this->input->get('filter_departement');
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
-            $filter_group = $this->input->get('filter_group');
+            $filter_group = base64_decode($this->input->get('filter_group'));
+            $filter_group_ex = explode(",", $filter_group);
             $username = $this->session->username;
 
             $period_start = date("Y-m", strtotime($filter_from));
@@ -529,7 +538,6 @@ class Summary_payrolls extends CI_Controller
             $division = $this->crud->read("divisions", [], ["id" => $filter_division]);
             $departement = $this->crud->read("departements", [], ["id" => $filter_departement]);
             $departement_sub = $this->crud->read("departement_subs", [], ["id" => $filter_departement_sub]);
-            $group = $this->crud->read("groups", [], ["id" => $filter_group]);
 
             if (empty($division->id)) {
                 $division_name = "ALL";
@@ -547,12 +555,6 @@ class Summary_payrolls extends CI_Controller
                 $departement_sub_name = "ALL";
             } else {
                 $departement_sub_name = $departement_sub->name;
-            }
-
-            if (empty($group->id)) {
-                $group_name = "ALL";
-            } else {
-                $group_name = $group->name;
             }
 
             //Config
@@ -606,11 +608,6 @@ class Summary_payrolls extends CI_Controller
                                     <td>:</td>
                                     <td><b>' . $departement_sub_name . '</b></td>
                                 </tr>
-                                <tr>
-                                    <td>Group</td>
-                                    <td>:</td>
-                                    <td><b>' . $group_name . '</b></td>
-                                </tr>
                             </table>
                             <br>
                             <table id="customers" border="1">
@@ -650,17 +647,23 @@ class Summary_payrolls extends CI_Controller
                                     <th style="text-align:center;">ABS (AMT)</th>
                                 </tr>';
 
-            $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, b.national_id FROM payrolls a
-                    JOIN employees b ON a.employee_id = b.id
-                    JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
-                    WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
-                    AND b.division_id LIKE '%$filter_division%'
-                    AND b.departement_id LIKE '%$filter_departement%'
-                    AND b.departement_sub_id LIKE '%$filter_departement_sub%'
-                    AND a.employee_id LIKE '%$filter_employee%'
-                    AND c.group_id LIKE '%$filter_group%'
-                    ORDER BY a.`name` ASC");
-            $records = $query->result_array();
+            $this->db->select('a.*, b.bank_branch, b.bank_no, b.national_id');
+            $this->db->from('payrolls a');
+            $this->db->join('employees b', "a.employee_id = b.id");
+            $this->db->join('privilege_groups c', "b.group_id = c.group_id and c.username = '$username' and c.status = '1'");
+            $this->db->join('groups d', "b.group_id = d.id");
+            $this->db->where('a.deleted', 0);
+            $this->db->where('a.period_start =', $period_start);
+            $this->db->where('a.period_end =', $period_end);
+            if ($filter_group != "") {
+                $this->db->where_in('d.name', $filter_group_ex);
+            }
+            $this->db->like('a.employee_id', $filter_employee);
+            $this->db->like('b.division_id', $filter_division);
+            $this->db->like('b.departement_id', $filter_departement);
+            $this->db->like('b.departement_sub_id', $filter_departement_sub);
+            $this->db->order_by('a.name', 'ASC');
+            $records = $this->db->get()->result_array();
 
             $no = 1;
             $total = 0;
