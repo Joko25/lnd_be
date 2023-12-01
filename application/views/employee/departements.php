@@ -5,7 +5,7 @@
             <th rowspan="2" field="ck" checkbox="true"></th>
             <th rowspan="2" data-options="field:'number',width:80,align:'center'">Code</th>
             <th rowspan="2" data-options="field:'number_id',width:80,align:'center'">Reff ID</th>
-            <th rowspan="2" data-options="field:'division_name',width:200">Division</th>
+            <th rowspan="2" data-options="field:'division_name',halign:'center',width:200">Division</th>
             <th rowspan="2" data-options="field:'name',width:200,halign:'center'">Name</th>
             <th rowspan="2" data-options="field:'description',width:150,halign:'center'">Description</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
@@ -21,8 +21,8 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 185px;">
-    <div style="width: 100%;">
+<div id="toolbar" style="height: 200px;">
+    <div style="width: 100%; padding: 10px;">
         <fieldset style="width: 50%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
             <legend><b>Form Filter Data</b></legend>
             <div class="fitem">

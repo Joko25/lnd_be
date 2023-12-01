@@ -33,7 +33,7 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 260px;">
+<div id="toolbar" style="height: 270px; padding: 10px;">
     <fieldset style="width: 99.8%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
         <div style="width:33%; float: left;">
@@ -125,7 +125,7 @@
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Employee ID</span>
                     <input style="width:30%;" name="number" id="number" required="" class="easyui-textbox">
-                    <a class="easyui-linkbutton" onclick="generate_id()"><i class="fa fa-rotate-left"></i> Generate</a>
+                    <a class="easyui-linkbutton" onclick="generate_id()"><i class="fa fa-rotate-left"></i></a>
                 </div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Candidate ID</span>

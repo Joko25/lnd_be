@@ -11,7 +11,7 @@
     </thead>
 </table>
 
-<div id="toolbar" style="height: 220px;">
+<div id="toolbar" style="height: 235px; padding:10px;">
     <!-- <div style="width: 100%; display: grid; grid-template-columns: auto auto auto; grid-gap: 5px; display: flex;"> -->
     <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
@@ -391,8 +391,8 @@
         // if(row.approved_to != ""){
         //     return "<b style='color:red;'>NOT APPROVED</b>";
         // }else{
-            var linkPrint = "pdf_view('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
-            return '<a href="#" onclick="' + linkPrint + '" class="btn btn-primary btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-eye"></i> View</a>';
+        var linkPrint = "pdf_view('" + row.departement_id + "','" + row.departement_sub_id + "','" + row.group_id + "')";
+        return '<a href="#" onclick="' + linkPrint + '" class="btn btn-primary btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-eye"></i> View</a>';
         //}
     };
 
@@ -400,8 +400,8 @@
         // if(row.approved_to != ""){
         //     return "<b style='color:red;'>NOT APPROVED</b>";
         // }else{
-            var linkPrint = "slipMail('" + row.departement_id + "','" + row.departement_sub_id + "')";
-            return '<a href="#" onclick="' + linkPrint + '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-envelope"></i> Send</a>';
+        var linkPrint = "slipMail('" + row.departement_id + "','" + row.departement_sub_id + "')";
+        return '<a href="#" onclick="' + linkPrint + '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-envelope"></i> Send</a>';
         //}
     };
 

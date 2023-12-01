@@ -1,6 +1,6 @@
 <table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar"></table>
 
-<div id="toolbar" style="height: 220px;">
+<div id="toolbar" style="height: 240px; padding: 10px;">
     <form id="frm_search" method="post" enctype="multipart/form-data" novalidate>
         <!-- <div style="width: 100%; display: grid; grid-template-columns: auto auto auto; grid-gap: 5px; display: flex;"> -->
         <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
@@ -87,7 +87,7 @@
 </div>
 
 <div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;">
-    <iframe id="printout" src="" style="width: 100%; height:500px; border: 0;"></iframe>
+    <iframe id="printout" src="" style="width: 100%; height:530px; border: 0;"></iframe>
 </div>
 <script>
     function reload() {

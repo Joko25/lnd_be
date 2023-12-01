@@ -3,7 +3,7 @@
     <thead>
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
-            <th rowspan="2" data-options="field:'employee_number',width:120,align:'center'">Employee ID</th>
+            <th rowspan="2" data-options="field:'employee_number',width:120,halign:'center'">Employee ID</th>
             <th rowspan="2" data-options="field:'employee_name',width:200,halign:'center'">Employee Name</th>
             <th rowspan="2" data-options="field:'division_name',width:200,halign:'center'">Division</th>
             <th rowspan="2" data-options="field:'departement_name',width:200,halign:'center'">Departement</th>
@@ -42,7 +42,7 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 265px;">
+<div id="toolbar" style="height: 275px; padding:10px;">
     <fieldset style="width: 100%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
         <legend><b>Form Filter Data</b></legend>
         <div style="width: 50%; float: left;">
