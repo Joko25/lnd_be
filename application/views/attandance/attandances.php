@@ -1,5 +1,5 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:99.5%; height: 770px;" toolbar="#toolbar" data-options="rownumbers:true, singleSelect:false, view: scrollview, idField:'date_in', autoRowHeight:false, pageSize:50">
+<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar" data-options="rownumbers:true, singleSelect:false, view: scrollview, fit:true, idField:'date_in', autoRowHeight:false, pageSize:50">
     <thead>
         <tr>
             <th field="ck" checkbox="true"></th>

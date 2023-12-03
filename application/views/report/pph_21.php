@@ -24,8 +24,8 @@
     <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="csv()"><i class="fa fa-file"></i> Export CSV</a>
 </div>
 
-<div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;">
-    <iframe id="printout" src="" style="width: 100%; height:500px; border: 0;"></iframe>
+<div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;" data-options="fit:true">
+    <iframe id="printout" src="" style="width: 100%; height: 65%; border: 0;"></iframe>
 </div>
 <script>
     function reload() {

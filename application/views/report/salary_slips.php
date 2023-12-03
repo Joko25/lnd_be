@@ -1,5 +1,5 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar" data-options="rownumbers: true">
+<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar" data-options="rownumbers: true, fit:true">
     <thead>
         <tr>
             <th data-options="field:'departement_name',width:200,halign:'center'">Departement</th>

@@ -1,5 +1,5 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar">
+<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar">
     <thead>
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
@@ -104,7 +104,7 @@
                             },
                             success: function(result) {
                                 var result = eval('(' + result + ')');
-                                if(i == parseInt(rows.length - 1)){
+                                if (i == parseInt(rows.length - 1)) {
                                     Swal.close();
                                     toastr.success(result.message);
                                     $('#dg').datagrid('reload');
@@ -214,7 +214,7 @@
 
         window.location.assign('<?= base_url('employee/job_types/print/excel') ?>' + url);
     }
-    
+
     //RELOAD
     function reload() {
         window.location.reload();
@@ -226,6 +226,9 @@
             url: '<?= base_url('employee/job_types/datatables') ?>',
             pagination: true,
             rownumbers: true,
+            fit: true,
+            pageList: [20, 50, 100, 500, 1000],
+            pageSize: 20,
             rowStyler: function(index, row) {
                 if (row.job_type == "" || row.job_type == null) {
                     return 'background-color:#FFDCDC;';

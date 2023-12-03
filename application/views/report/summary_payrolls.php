@@ -1,5 +1,5 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar" data-options="rownumbers: true">
+<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar" data-options="rownumbers: true,fit:true,">
     <thead>
         <tr>
             <th rowspan="2" data-options="field:'departement_name',width:200,halign:'center'">Departement</th>
@@ -64,7 +64,7 @@
 </div>
 
 <div id="dlg_print" class="easyui-window" title="Print Preview" data-options="closed: true,minimizable:false,collapsible:false,maximizable:true,modal:true,footer:'#footer'" style="width: 1000px; height: 500px; top: 20px;">
-    <iframe id="printout" src="" style="width: 100%; height:550px; border: 0;"></iframe>
+    <iframe id="printout" src="" style="width: 100%; height:98%; border: 0;"></iframe>
     <div id="footer" style="padding:5px; text-align:right;">
         <a class="easyui-linkbutton c6" id="pdf_detail" onclick="pdf_detail()" style="width:120px">Print</a>
     </div>

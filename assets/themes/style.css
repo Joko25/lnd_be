@@ -26,21 +26,22 @@
 
 body {
 	font-size: 12px;
+	zoom: 80%;
 }
 
 /* Resolution Laptop */
-@media screen and (max-width: 1366px) {
+/* @media screen and (max-width: 1366px) {
 	body {
 		zoom: 80%;
 	}
-}
+} */
 
 /* Resolution Notebook */
-@media screen and (max-width: 1280px) {
+/* @media screen and (max-width: 1280px) {
 	body {
 		zoom: 80%;
 	}
-}
+} */
 
 #header {
 	height: 70px;

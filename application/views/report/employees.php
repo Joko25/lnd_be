@@ -86,8 +86,8 @@
     </form>
 </div>
 
-<div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;">
-    <iframe id="printout" src="" style="width: 100%; height:530px; border: 0;"></iframe>
+<div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;" data-options="fit:true">
+    <iframe id="printout" src="" style="width: 100%; height:60%; border:0;"></iframe>
 </div>
 <script>
     function reload() {

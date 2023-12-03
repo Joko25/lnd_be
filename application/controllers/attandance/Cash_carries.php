@@ -1,7 +1,8 @@
 <?php
 date_default_timezone_set("Asia/Bangkok");
 defined('BASEPATH') or exit('No direct script access allowed');
-class Journal_entries extends CI_Controller
+
+class Cash_carries extends CI_Controller
 {
     public function __construct()
     {
@@ -11,9 +12,12 @@ class Journal_entries extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->model('crud');
-        //Validasi Form
-        $this->form_validation->set_rules('item_id', 'Product No', 'required|min_length[1]|max_length[50]');
+
+        //VALIDASI FORM
+        $this->form_validation->set_rules('number', 'Employee', 'required|min_length[1]|max_length[30]');
     }
+
+    //HALAMAN UTAMA
     public function index()
     {
         if (empty($this->session->username)) {
@@ -22,180 +26,428 @@ class Journal_entries extends CI_Controller
             $data['button'] = $this->getbutton($this->id_menu());
 
             $this->load->view('template/header', $data);
-            $this->load->view('assets/journal_entries');
+            $this->load->view('attandance/cash_carries');
         } else {
             redirect('error_access');
         }
     }
 
-    public function readYears()
-    {
-        $tahun_before = date('Y', strtotime('-10 year', strtotime(date('Y'))));
-        $tahun_next = date('Y', strtotime('+1 year', strtotime(date('Y'))));
-        for ($i = $tahun_next; $i >= $tahun_before; $i--) {
-            $arr[] = array("id" => $i, "name" => $i);
-        }
-
-        echo json_encode($arr);
-    }
-
-    public function readMonths()
-    {
-        $months = array('01' => 'January', '02' => 'February', '03' => 'March', '04' => 'April', '05' => 'May', '06' => 'June', '07' => 'July', '08' => 'August', '09' => 'September', '10' => 'October', '11' => 'November', '12' => 'December');
-        foreach ($months as $key => $value) {
-            $arr[] = array("id" => $key, "name" => $value);
-        }
-
-        echo json_encode($arr);
-    }
-
-    public function readAssetNo($category_id, $month, $year)
+    //GET DATA
+    public function reads()
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
-        $category = base64_decode($category_id);
-        $date = $year . "-" . $month;
-
-        $send = $this->crud->query("SELECT DISTINCT asset_no as number, asset_name as name FROM asset_journals WHERE asset_category_number = '$category' and periode = '$date' and (`asset_no` like '%$post%' or asset_name like '%$post%')");
+        $send = $this->crud->reads('cash_carries', ["name" => $post]);
         echo json_encode($send);
     }
 
-    public function getData()
+    public function readIdm()
     {
-        if ($this->input->post()) {
-            $month = $this->input->post('month');
-            $year = $this->input->post('year');
-            $category = $this->input->post('category');
-            $number = $this->input->post('number');
+        $this->db->select('idm_no');
+        $this->db->from('cash_carries');
+        $this->db->group_by('idm_no');
+        $records = $this->db->get()->result_array();
+        echo json_encode($records);
+    }
 
-            $period = date("Y-m-t", strtotime($year . "-" . $month));
+    public function readRequestCode()
+    {
+        $filter_from = $this->input->get('filter_from');
+        $filter_to = $this->input->get('filter_to');
+        $filter_division = $this->input->get('filter_division');
+        $filter_departement = $this->input->get('filter_departement');
+        $filter_departement_sub = $this->input->get('filter_departement_sub');
 
-            $this->db->select('*');
-            $this->db->from('asset_fixeds');
-            $this->db->where('trans_date <=', $period);
-            $this->db->where("DATE_ADD(trans_date, INTERVAL estimate_month MONTH) >=", $period);
-            $this->db->like('asset_category_number', $category);
-            $this->db->like('number', $number);
-            $this->db->order_by('number', 'asc');
-
-            //Total Data
-            $totalRows = $this->db->count_all_results('', false);
-            //Get Data Array
-            $records = $this->db->get()->result_array();
-            //Mapping Data
-            $result['total'] = $totalRows;
-            $result = array_merge($result, ['rows' => $records]);
-            echo json_encode($result);
+        $this->db->select('a.request_code');
+        $this->db->from('cash_carries a');
+        $this->db->join('employees b', 'a.employee_id = b.id');
+        if ($filter_from != "" && $filter_to != "") {
+            $this->db->where('a.trans_date >=', $filter_from);
+            $this->db->where('a.trans_date <=', $filter_to);
         }
+        $this->db->like('b.division_id', $filter_division);
+        $this->db->like('b.departement_id', $filter_departement);
+        $this->db->like('b.departement_sub_id', $filter_departement_sub);
+        $this->db->group_by('a.request_code');
+        $records = $this->db->get()->result_array();
+        echo json_encode($records);
+    }
+
+    public function requestCode()
+    {
+        $date = date("ym");
+        $post = $this->input->post();
+        $departement = $this->crud->read('departements', [], ["id" => $post['departement_id']]);
+
+        $template = "CC" . $departement->number . $date;
+        $this->db->select('max(SUBSTRING(request_code, -4)) as code');
+        $this->db->from('cash_carries');
+        $this->db->where('deleted', 0);
+        $this->db->like('request_code', $template);
+        $records = $this->db->get()->result_array();
+
+        $requestcode = (int) $records[0]['code'];
+        $requestcode++;
+
+        $templatefinal = $template . sprintf("%04s", $requestcode);
+        echo $templatefinal;
+    }
+
+    public function readOvertimePrice($employee_id, $trans_date, $duration, $meal)
+    {
+        $employee = $this->crud->read("employees", [], ["id" => $employee_id]);
+        $this->db->select('c.days');
+        $this->db->from('shift_employees a');
+        $this->db->join('shifts b', 'a.shift_id = b.id', 'left');
+        $this->db->join('shift_details c', 'b.id = c.shift_id', 'left');
+        $this->db->where('a.employee_id', $employee_id);
+        $shift_employee = $this->db->get()->row();
+
+        $setup_cash_carry = $this->crud->read("setup_cash_carries", [], ["employee_id" => $employee_id]);
+        $allowance_cash_carry = $this->crud->read("allowance_cash_carries", [], ["id" => @$setup_cash_carry->allowance_id]);
+
+        //ambil durasi berapa jam jika ada lemburan
+        $hourTrans = strtotime($trans_date);
+
+        //cek apakah ada hari libur nasional per tanggal dari looping
+        $this->db->select('trans_date');
+        $this->db->from('calendars');
+        $this->db->where('trans_date', $trans_date);
+        $calendars = $this->db->get()->result_array();
+
+        //Validasi Uang makan
+        if ($meal == 0) {
+            $meal = 0;
+        } else {
+            $meal = @$allowance_cash_carry->meal;
+        }
+
+        if (@$shift_employee->days == "5") {
+            if (date('w', $hourTrans) !== '0' && date('w', $hourTrans) !== '6') {
+
+                //Kalo ada tanggal Merah
+                if (count($calendars) > 0) {
+                    $total = ((@$allowance_cash_carry->holiday * $duration) + $meal);
+                } else {
+                    $total = ((@$allowance_cash_carry->weekday * $duration) + $meal);
+                }
+            } else {
+                if (date('w', $hourTrans) === '0') {
+                    $total = ((@$allowance_cash_carry->sunday * $duration) + $meal);
+                } else {
+                    $total = ((@$allowance_cash_carry->saturday * $duration) + $meal);
+                }
+            }
+        } else {
+            if (date('w', $hourTrans) !== '0') {
+
+                //Kalo ada tanggal Merah
+                if (count($calendars) > 0) {
+                    $total = ((@$allowance_cash_carry->holiday * $duration) + $meal);
+                } else {
+                    $total = ((@$allowance_cash_carry->weekday * $duration) + $meal);
+                }
+            } else {
+                if (date('w', $hourTrans) === '0') {
+                    $total = ((@$allowance_cash_carry->sunday * $duration) + $meal);
+                } else {
+                    $total = ((@$allowance_cash_carry->saturday * $duration) + $meal);
+                }
+            }
+        }
+
+        return $total;
+    }
+
+    public function convertHour($trans_date, $start, $end, $employee_id, $break)
+    {
+        //Cek data Setup
+        $this->db->select('b.name');
+        $this->db->from('setup_cash_carries a');
+        $this->db->join('allowance_cash_carries b', 'a.allowance_id = b.id');
+        $this->db->where('a.employee_id', $employee_id);
+        $setup = $this->db->get()->row();
+
+        //Set Duration
+        $time_begin = strtotime($trans_date . " " . $start);
+        $time_end = strtotime($trans_date . " " . $end);
+        $tomorrow = strtotime(date('Y-m-d', strtotime($trans_date . "+1 days")) . " " . $end);
+
+        $diff = ($time_end - $time_begin - ($break * 60));
+        $hour = floor($diff / (60 * 60));
+        $minutes = ($diff - $hour * (60 * 60));
+
+        if ($hour < 0) {
+            $diff = ($tomorrow - $time_begin - ($break * 60));
+            $hour = floor($diff / (60 * 60));
+            $minutes = ($diff - $hour * (60 * 60));
+        }
+
+        $final_minutes2 = floor($minutes / 60);
+        $final_duration = ($final_minutes2 / 60);
+
+        //if($setup->name == "DRIVER"){
+        if (floor($final_minutes2 / 60) == 59) {
+            $final_minutes = "59";
+        } else if (floor($final_minutes2 / 60) >= 29 and floor($final_minutes2 / 60) <= 58) {
+            $final_minutes = "50";
+        } else {
+            $final_minutes = "0";
+        }
+        // }else{
+        //     $final_minutes = floor($minutes / 60);
+        // }
+
+        $duration = $hour . " Hour " . $final_minutes . " Minutes";
+        $duration_hour = $hour . "." . $final_minutes;
+
+        // $duration_hour = round($diff / (60 * 60), 2);
+        $arr = array("duration" => $duration, "duration_hour" => $duration_hour);
+        return $arr;
     }
 
     //GET DATATABLES
     public function datatables()
     {
-        if ($this->input->get()) {
+        if ($this->input->post()) {
+            $filter_from = $this->input->get('filter_from');
+            $filter_to = $this->input->get('filter_to');
+            $filter_division = $this->input->get('filter_division');
+            $filter_departement = $this->input->get('filter_departement');
+            $filter_departement_sub = $this->input->get('filter_departement_sub');
+            $filter_employee = $this->input->get('filter_employee');
+            $filter_request_code = base64_decode($this->input->get('filter_request_code'));
+            $filter_idm = base64_decode($this->input->get('filter_idm'));
+            $filter_approval = $this->input->get('filter_approval');
+            $aprvDepartement = $this->checkApprovalAccess('cash_carries');
 
-            $filter_month = base64_decode($this->input->get('filter_month'));
-            $filter_year = base64_decode($this->input->get('filter_year'));
-            $filter_category = base64_decode($this->input->get('filter_category'));
-            $filter_asset_no = base64_decode($this->input->get('filter_asset_no'));
+            $page   = $this->input->post('page');
+            $rows   = $this->input->post('rows');
 
-            $filter_period = $filter_year . "-" . $filter_month;
-
+            //Pagination 1-10
+            $page   = isset($page) ? intval($page) : 1;
+            $rows   = isset($rows) ? intval($rows) : 10;
+            $offset = ($page - 1) * $rows;
+            $result = array();
             //Select Query
-            $this->db->select('b.*, d.number as gl_no, (DATE_ADD(a.trans_date, INTERVAL a.estimate_month MONTH)) as expired, 
-            c.name as asset_category_name, a.residual,
-            a.purchase_invoice_number, a.trans_date as purchase_date, a.cost, 
-            a.estimate_month, a.estimate_year');
-            $this->db->from('asset_journals b');
-            $this->db->join('asset_fixeds a', 'a.number = b.asset_no');
-            $this->db->join('asset_categories c', 'a.asset_category_number = c.number');
-            $this->db->join('journal_postings d', 'b.asset_no = d.document_no and b.trans_date = d.trans_date', 'left');
-            $this->db->where('b.periode', $filter_period);
-            if($filter_category != ""){
-                $this->db->where('b.asset_category_number', $filter_category);
+            $this->db->select('a.*, 
+                b.position_id,
+                c.name as division_name,
+                d.name as departement_name,
+                e.name as departement_sub_name,
+                b.number as employee_number,
+                b.name as employee_name,
+                f.name as fullname,
+                COALESCE(i.weekday, 0) as total_weekday,
+                COALESCE(i.sunday, 0) as total_sunday,
+                COALESCE(i.saturday, 0) as total_saturday,
+                COALESCE(i.holiday, 0) as total_holiday,
+                COALESCE(i.meal, 0) as total_meal
+            ');
+
+            $this->db->from('cash_carries a');
+            $this->db->join('employees b', 'a.employee_id = b.id');
+            $this->db->join('divisions c', 'b.division_id = c.id');
+            $this->db->join('departements d', 'b.departement_id = d.id');
+            $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
+            $this->db->join('users f', "a.created_by = f.username");
+            // $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'cash_carries'", 'left');
+            $this->db->join('setup_cash_carries h', 'a.employee_id = h.employee_id', 'left');
+            $this->db->join('allowance_cash_carries i', 'h.allowance_id = i.id', 'left');
+            $this->db->where('b.deleted', 0);
+            $this->db->where('b.status', 0);
+            $this->db->where('a.deleted', 0);
+            $this->db->like('b.departement_id', $aprvDepartement);
+            if ($filter_from != "" && $filter_to != "") {
+                $this->db->where('a.trans_date >=', $filter_from);
+                $this->db->where('a.trans_date <=', $filter_to);
+            } else {
+                $this->db->where('a.trans_date >=', date("Y-m-01"));
+                $this->db->where('a.trans_date <=', date("Y-m-t"));
             }
-            $this->db->like('b.asset_no', $filter_asset_no);
-            $this->db->group_by('b.id');
-            $this->db->order_by('b.periode', 'asc');
-            $this->db->order_by('a.number', 'asc');
+            $this->db->like('b.division_id', $filter_division);
+            $this->db->like('b.departement_id', $filter_departement);
+            $this->db->like('b.departement_sub_id', $filter_departement_sub);
+            $this->db->like('b.id', $filter_employee);
+            if ($filter_request_code != "") {
+                $this->db->where('a.request_code', $filter_request_code);
+            }
+            if ($filter_idm != "") {
+                $this->db->where('a.idm_no', $filter_idm);
+            }
+            if ($filter_approval == "0") {
+                $this->db->where("(a.approved_to = '' or a.approved_to is null)");
+            } elseif ($filter_approval == "1") {
+                $this->db->where("(a.approved_to != '' and a.approved_to is not null)");
+            }
+            $this->db->group_by('a.trans_date');
+            $this->db->group_by('a.employee_id');
+            $this->db->group_by('a.type');
+            $this->db->order_by('a.trans_date', 'DESC');
 
             //Total Data
             $totalRows = $this->db->count_all_results('', false);
+            //Limit 1 - 10
+            $this->db->limit($rows, $offset);
             //Get Data Array
             $records = $this->db->get()->result_array();
+
+            $datas = [];
+            $total = 0;
+            foreach ($records as $record) {
+                $this->db->select('*');
+                $this->db->from('attandances');
+                $this->db->where('number', $record['employee_number']);
+                $this->db->where('date_in', $record['trans_date']);
+                $attandance = $this->db->get()->row();
+
+                $this->db->select('c.days');
+                $this->db->from('shift_employees a');
+                $this->db->join('shifts b', 'a.shift_id = b.id', 'left');
+                $this->db->join('shift_details c', 'b.id = c.shift_id', 'left');
+                $this->db->where('a.employee_id', $record['employee_id']);
+                $shift_employee = $this->db->get()->row();
+
+                $this->db->select('trans_date');
+                $this->db->from('calendars');
+                $this->db->where('trans_date', $record['trans_date']);
+                $calendars = $this->db->get()->result_array();
+
+                $start = strtotime($record['trans_date']);
+                $att_time_begin = strtotime(@$attandance->date_in . " " . @$attandance->time_in);
+                $att_time_end = strtotime(@$attandance->date_out . " " . @$attandance->time_out);
+
+                $tomorrow = strtotime(date('Y-m-d', strtotime(@$attandance->date_out . "+1 days")) . " " . @$attandance->time_out);
+
+                $att_diff = $att_time_end - $att_time_begin;
+                $att_hour = floor($att_diff / (60 * 60));
+
+                if ($att_hour < 0) {
+                    $att_diff = $tomorrow - $att_time_begin;
+                    $att_hour = floor($att_diff / (60 * 60));
+                }
+
+                $cc_hour = $record['duration_hour'];
+
+                //Validasi Jam
+                if ($att_hour > $cc_hour) {
+                    $hour = $cc_hour;
+                } else {
+                    $hour = $att_hour;
+                }
+
+                //Validasi Uang makan
+                if ($record['meal'] == 0 or @$attandance->time_in == "") {
+                    $meal = 0;
+                } else {
+                    $meal = @$record['total_meal'];
+                }
+
+                if (@$shift_employee->days == "5") {
+                    if (date('w', $start) !== '0' && date('w', $start) !== '6') {
+
+                        //Kalo ada tanggal Merah
+                        if (count($calendars) > 0) {
+                            $total = ((@$record['total_holiday'] * $hour) + $meal);
+                        } else {
+                            $total = ((@$record['total_weekday'] * $hour) + $meal);
+                        }
+                    } else {
+                        if (date('w', $start) === '0') {
+                            $total = ((@$record['total_sunday'] * $hour) + $meal);
+                        } else {
+                            $total = ((@$record['total_saturday'] * $hour) + $meal);
+                        }
+                    }
+                } else {
+                    if (date('w', $start) !== '0') {
+
+                        //Kalo ada tanggal Merah
+                        if (count($calendars) > 0) {
+                            $total = ((@$record['total_holiday'] * $hour) + $meal);
+                        } else {
+                            $total = ((@$record['total_weekday'] * $hour) + $meal);
+                        }
+                    } else {
+                        if (date('w', $start) === '0') {
+                            $total = ((@$record['total_sunday'] * $hour) + $meal);
+                        } else {
+                            $total = ((@$record['total_saturday'] * $hour) + $meal);
+                        }
+                    }
+                }
+
+                $amount = ["amount_actual" => $total, "duration_att" => number_format($att_hour, 2), "time_in" => @$attandance->time_in, "time_out" => @$attandance->time_out];
+                $datas[] = array_merge($record, $amount);
+            }
+
             //Mapping Data
             $result['total'] = $totalRows;
-            $result = array_merge($result, ['rows' => $records]);
+            $result = array_merge($result, ['rows' => @$datas]);
             echo json_encode($result);
         }
     }
 
-    public function calculate($category, $total)
+    public function datatable_updates()
     {
-        $category_number = base64_decode($category);
-        $asset_categories = $this->crud->reads("asset_categories", [], ["number" => $category_number]);
-        $no = 1;
-        foreach ($asset_categories as $asset_category) {
-            if ($asset_category->account_type == "DEBIT") {
-                $debit = $total;
-                $credit = 0;
-            } else {
-                $debit = 0;
-                $credit = $total;
-            }
-
-            $data[] = array(
-                "asset_category_number" => $category_number,
-                "account_number" => $asset_category->account_number,
-                "account_name" => $asset_category->account_name,
-                "debit" => $debit,
-                "credit" => $credit,
-                "flag" => $no,
-            );
-
-            $no++;
-        }
-
-        echo json_encode($data);
+        $request_code = base64_decode($this->input->get('request_code'));
+        $this->db->select('a.*, b.name as employee_name');
+        $this->db->from('cash_carries a');
+        $this->db->join('employees b', 'a.employee_id = b.id');
+        $this->db->where('a.request_code', $request_code);
+        $this->db->order_by('b.name', 'ASC');
+        $records = $this->db->get()->result_array();
+        echo json_encode($records);
     }
 
     //CREATE DATA
     public function create()
     {
         if ($this->input->post()) {
-            $post   = $this->input->post();
-            $asset_journals = $this->crud->read('asset_journals', [], ["asset_no" => $post['asset_no'], "periode" => $post['periode']]);
+            $post = $this->input->post();
+            $trans_date = $post['trans_date'];
+            $employee_id = $post['employee_id'];
+            $request_code = $post['request_code'];
+            $request_name = $post['request_name'];
+            $idm_no = $post['idm_no'];
+            $start = $post['start'];
+            $end = $post['end'];
+            $break = $post['break'];
+            $type = $post['type'];
+            $meal = $post['meal'];
+            $plan = $post['plan'];
+            $actual = $post['actual'];
+            $attachment = trim($post['attachment']);
+            $attachment_idm = trim($post['attachment_idm']);
+            $remarks = $post['remarks'];
+            $duration = $this->convertHour($trans_date, $start, $end, $employee_id, $break);
+            $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, $duration['duration_hour'], $meal);
 
-            if (@$asset_journals->id != "") {
-                echo json_encode(array("title" => "Duplicate", "message" => "Asset No " . $post['asset_no'] . " in Period " . $post['periode'] . " Duplicate", "theme" => "error"));
+            $post_final = array(
+                "trans_date" =>  $trans_date,
+                "employee_id" =>  $employee_id,
+                "request_code" =>  $request_code,
+                "request_name" =>  $request_name,
+                "start" =>  $start,
+                "end" =>  $end,
+                "type" =>  $type,
+                "duration" =>  $duration['duration'],
+                "duration_hour" => $duration['duration_hour'],
+                "amount" =>  $ot_amount,
+                "meal" =>  $meal,
+                "plan" =>  $plan,
+                "actual" =>  $actual,
+                "break" =>  $break,
+                "remarks" =>  $remarks,
+                "idm_no" =>  $idm_no,
+                "attachment_idm" =>  $attachment_idm,
+                "attachment" =>  $attachment,
+            );
+
+            $cash_carries = $this->crud->reads('cash_carries', [], ["employee_id" => $employee_id, "trans_date" => $trans_date, "type" => $type]);
+            if (count($cash_carries) > 0) {
+                echo json_encode(array("title" => "Duplicate", "message" => "Cash Carry has been created", "theme" => "error"));
             } else {
-                $asset_categories = $this->crud->reads("asset_categories", [], ["number" => $post['asset_category_number']]);
-
-                $send = json_encode(array("title" => "Not Found", "message" => "Asset Category " . $post['asset_category_number'] . " Not Found", "theme" => "error"));
-                foreach ($asset_categories as $asset_category) {
-
-                    if ($asset_category->account_type == "DEBIT") {
-                        $debit = $post['depreciation'];
-                        $credit = 0;
-                    } else {
-                        $debit = 0;
-                        $credit = $post['depreciation'];
-                    }
-
-                    $data = array(
-                        "asset_category_number" => $post['asset_category_number'],
-                        "asset_no" => $post['asset_no'],
-                        "asset_name" => $post['asset_name'],
-                        "periode" => $post['periode'],
-                        "trans_date" => $post['trans_date'],
-                        "account_number" => $asset_category->account_number,
-                        "account_name" => $asset_category->account_name,
-                        "debit" => $debit,
-                        "credit" => $credit,
-                    );
-
-                    $send = $this->crud->create('asset_journals', $data);
-                }
-
+                $send = $this->crud->create('cash_carries', $post_final);
                 echo $send;
             }
         } else {
@@ -203,17 +455,53 @@ class Journal_entries extends CI_Controller
         }
     }
 
-    public function saveJournal()
+    //UPDATE DATA
+    public function update()
     {
-        $post = $this->input->post();
-        $asset_journal_details = $this->crud->reads('asset_journal_details', [], ["periode" => $post['periode'], "asset_category_number" => $post['asset_category_number'], "account_number" => $post['account_number']]);
+        if ($this->input->post()) {
+            $post = $this->input->post();
+            $trans_date = $post['trans_date'];
+            $employee_id = $post['employee_id'];
+            $request_code = $post['request_code'];
+            $request_name = $post['request_name'];
+            $idm_no = $post['idm_no'];
+            $start = $post['start'];
+            $end = $post['end'];
+            $break = $post['break'];
+            $type = $post['type'];
+            $meal = $post['meal'];
+            $plan = $post['plan'];
+            $actual = $post['actual'];
+            $remarks = $post['remarks'];
+            $duration = $this->convertHour($trans_date, $start, $end, $employee_id, $break);
+            $ot_amount = $this->readOvertimePrice($employee_id, $trans_date, $duration['duration_hour'], $meal);
 
-        if (count($asset_journal_details) > 0) {
-            $send = $this->crud->update('asset_journal_details', ["periode" => $post['periode'], "asset_category_number" => $post['asset_category_number'], "account_number" => $post['account_number']], $post);
-            echo $send;
+            $post_final = array(
+                "trans_date" =>  $trans_date,
+                "employee_id" =>  $employee_id,
+                "request_code" =>  $request_code,
+                "request_name" =>  $request_name,
+                "start" =>  $start,
+                "end" =>  $end,
+                "type" =>  $type,
+                "duration" =>  $duration['duration'],
+                "duration_hour" => $duration['duration_hour'],
+                "amount" =>  $ot_amount,
+                "meal" =>  $meal,
+                "plan" =>  $plan,
+                "actual" =>  $actual,
+                "break" =>  $break,
+                "remarks" =>  $remarks,
+                "idm_no" =>  $idm_no
+            );
+
+            if ($this->crud->update('cash_carries', ["request_code" => $request_code, "employee_id" => $employee_id], $post_final)) {
+                echo json_encode(array("title" => "Good Job", "message" => "Data Updated Successfully", "theme" => "success"));
+            } else {
+                echo log_message('error', 'There is an error in your system or data');
+            }
         } else {
-            $send = $this->crud->create('asset_journal_details', $post);
-            echo $send;
+            show_error("Cannot Process your request");
         }
     }
 
@@ -221,20 +509,129 @@ class Journal_entries extends CI_Controller
     public function delete()
     {
         $data = $this->input->post();
-        $send = $this->crud->delete('asset_journals', $data);
-        echo $send;
+        $delete = $this->crud->delete("cash_carries", ['id' => $data['id']]);
+
+        @unlink(base_url("assets/image/cash_carry/" . $data['attachment']));
+        echo $delete;
+    }
+
+    //UPLOAD FILE
+    public function uploadFile()
+    {
+
+        $newName = "";
+        $newName2 = "";
+
+        if (!empty($_FILES["attachment"]["name"])) {
+            //Setting Upload Image
+            $request_code = trim($this->input->post('request_code'));
+
+            $file = $_FILES["attachment"]["name"];
+            $extension_explode = explode('.', $file);
+            $extension_final = strtolower(end($extension_explode));
+            $size = $_FILES["attachment"]['size'];
+            $temporary = $_FILES["attachment"]['tmp_name'];
+            $newName =  "ATT_" . time() . "." . $extension_final;
+
+            if (in_array($extension_final, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file == "") {
+                if ($size < 2097152) {
+                    @move_uploaded_file($temporary, "assets/image/cash_carry/" . $newName);
+                }
+            }
+        }
+
+        if (!empty($_FILES["attachment_idm"]["name"])) {
+            //Setting Upload Image
+            $idm_no = trim($this->input->post('idm_no'));
+
+            $file2 = $_FILES["attachment_idm"]["name"];
+            $extension_explode2 = explode('.', $file2);
+            $extension_final2 = strtolower(end($extension_explode2));
+            $size2 = $_FILES["attachment_idm"]['size'];
+            $temporary2 = $_FILES["attachment_idm"]['tmp_name'];
+            $newName2 =  "IDM_" . time() . "." . $extension_final2;
+
+            if (in_array($extension_final2, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file2 == "") {
+                if ($size2 < 2097152) {
+                    @move_uploaded_file($temporary2, "assets/image/cash_carry/" . $newName2);
+                }
+            }
+        }
+
+        echo json_encode(array("attachment" => $newName, "attachment_idm" => $newName2));
+    }
+
+    function formatTanggal($date)
+    {
+        // menggunakan class Datetime
+        $datetime = DateTime::createFromFormat('d/m/Y', $date);
+        return @$datetime->format('Y-m-d');
+    }
+
+    //UPLOAD DATA
+    public function upload()
+    {
+        error_reporting(0);
+        require_once 'assets/vendors/excel_reader2.php';
+        $target = basename($_FILES['file_upload']['name']);
+        move_uploaded_file($_FILES['file_upload']['tmp_name'], $target);
+        chmod($_FILES['file_upload']['name'], 0777);
+        $file = $_FILES['file_upload']['name'];
+        $data = new Spreadsheet_Excel_Reader($file, false);
+        $total_row = $data->rowcount($sheet_index = 0);
+
+        //Setting Upload Image
+        $idm_no = trim($this->input->post('idm_no'));
+
+        if (!empty($_FILES["attachment_idm"]["name"])) {
+            $file2 = $_FILES["attachment_idm"]["name"];
+            $extension_explode2 = explode('.', $file2);
+            $extension_final2 = strtolower(end($extension_explode2));
+            $size2 = $_FILES["attachment_idm"]['size'];
+            $temporary2 = $_FILES["attachment_idm"]['tmp_name'];
+            $newName2 =  "IDM_" . time() . "." . $extension_final2;
+
+            if (in_array($extension_final2, ['png', 'jpg', 'jpeg', 'pdf']) === true || $file2 == "") {
+                if ($size2 < 2097152) {
+                    @move_uploaded_file($temporary2, "assets/image/cash_carry/" . $newName2);
+                }
+            }
+        }
+
+        for ($i = 3; $i <= $total_row; $i++) {
+            $datas[] = array(
+                'number' => $data->val($i, 2),
+                'trans_date' => $data->val($i, 3),
+                'start' => date("H:i", strtotime($data->val($i, 4))),
+                'end' => date("H:i", strtotime($data->val($i, 5))),
+                'duration_hour' => $data->val($i, 6),
+                'break' => $data->val($i, 7),
+                'type' => $data->val($i, 8),
+                'meal' => $data->val($i, 9),
+                'plan' => $data->val($i, 10),
+                'actual' => $data->val($i, 11),
+                'remarks' => $data->val($i, 12),
+                'request_code' => $templatefinal,
+                'idm_no' => $idm_no,
+                'attachment_idm' => $newName2
+            );
+        }
+
+        $datas['total'] = count($datas);
+        echo json_encode($datas);
+        unlink($_FILES['file_upload']['name']);
     }
 
     public function uploadclearFailed()
     {
-        @unlink('failed/journal_entries.txt');
+        @unlink('failed/cash_carries.txt');
     }
 
     public function uploadcreateFailed()
     {
         if ($this->input->post()) {
             $message = $this->input->post('message');
-            $textFailed = fopen('failed/journal_entries.txt', 'a');
+            $textFailed = fopen('failed/cash_carries.txt', 'a');
             fwrite($textFailed, $message . "\n");
             fclose($textFailed);
         }
@@ -242,7 +639,7 @@ class Journal_entries extends CI_Controller
 
     public function uploadDownloadFailed()
     {
-        $file = "failed/journal_entries.txt";
+        $file = "failed/cash_carries.txt";
 
         header('Content-Description: File Failed');
         header('Content-Disposition: attachment; filename=' . basename($file));
@@ -252,5 +649,229 @@ class Journal_entries extends CI_Controller
         header('Content-Length: ' . @filesize($file));
         header("Content-Type: text/plain");
         @readfile($file);
+    }
+
+    public function uploadcreate()
+    {
+        if ($this->input->post()) {
+            $data = $this->input->post('data');
+            if ($data['trans_date'] == "") {
+                echo json_encode(array("title" => "Format Date", "message" => $data['number'] . " Format Date is Null", "theme" => "error"));
+            } else {
+                $employee = $this->crud->read('employees', [], ["number" => $data['number']]);
+
+                if (!empty($employee)) {
+                    $cash_carries = $this->crud->read('cash_carries', [], ["employee_id" => $employee->id, "trans_date" => $data['trans_date'], "type" => $data['type']]);
+
+                    if (!empty($cash_carries)) {
+                        echo json_encode(array("title" => "Available", "message" => $employee->name . " has been created", "theme" => "error"));
+                    } else {
+                        if ($data['meal'] == "YES") {
+                            $meal = "1";
+                        } else {
+                            $meal = "0";
+                        }
+
+                        if ($data['break'] == "" || $data['break'] == "0") {
+                            $break = 0;
+                        } else {
+                            $break = $data['break'];
+                        }
+
+                        $date = date("ymd", strtotime($data['trans_date']));
+                        $this->db->select('max(SUBSTRING(request_code, -4)) as code');
+                        $this->db->from('cash_carries');
+                        $this->db->where('deleted', 0);
+                        $this->db->where('SUBSTRING(request_code, 4, 6)=', $date);
+                        $records = $this->db->get()->row();
+
+                        $requestcode = (int) $records->code;
+                        $requestcode++;
+
+                        $template = "CC/" . $date . "/";
+                        $templatefinal = $template . sprintf("%04s", $requestcode);
+
+                        $duration = $this->convertHour($data['trans_date'], $data['start'], $data['end'], $employee->id, $break);
+                        $ot_amount = $this->readOvertimePrice($employee->id, $data['trans_date'], $duration['duration_hour'], $meal);
+
+                        $post_cash_carries = array(
+                            'employee_id' => $employee->id,
+                            'trans_date' => $data['trans_date'],
+                            'request_code' => $templatefinal,
+                            'request_name' => $this->session->name,
+                            'start' => $data['start'],
+                            'end' => $data['end'],
+                            'break' => $break,
+                            'type' => $data['type'],
+                            'meal' => $meal,
+                            'plan' => $data['plan'],
+                            'actual' => $data['actual'],
+                            "duration" =>  $duration['duration'],
+                            "duration_hour" => $duration['duration_hour'],
+                            'remarks' => $data['remarks'],
+                            'amount' =>  $ot_amount,
+                            'idm_no' => $data['idm_no'],
+                            'attachment_idm' => $data['attachment_idm']
+                        );
+
+                        $send = $this->crud->create('cash_carries', $post_cash_carries);
+                        echo $send;
+                    }
+                } else {
+                    echo json_encode(array("title" => "Not Found", "message" => $data['number'] . " Employee ID Not Found", "theme" => "error"));
+                }
+            }
+        }
+    }
+
+    //PRINT & EXCEL DATA
+    public function print($option = "")
+    {
+        if ($option == "excel") {
+            $format  = date("Ymd");
+            header("Content-type: application/vnd-ms-excel");
+            header("Content-Disposition: attachment; filename=cash_carries_$format.xls");
+        }
+
+        $filter_from = $this->input->get('filter_from');
+        $filter_to = $this->input->get('filter_to');
+        $filter_division = $this->input->get('filter_division');
+        $filter_departement = $this->input->get('filter_departement');
+        $filter_departement_sub = $this->input->get('filter_departement_sub');
+        $filter_employee = $this->input->get('filter_employee');
+        $filter_request_code = base64_decode($this->input->get('filter_request_code'));
+        $filter_idm = base64_decode($this->input->get('filter_idm'));
+        $filter_approval = $this->input->get('filter_approval');
+        $aprvDepartement = $this->checkApprovalAccess('cash_carries');
+
+        //Config
+        $this->db->select('*');
+        $this->db->from('config');
+        $config = $this->db->get()->row();
+
+        //Select Query
+        $this->db->select('a.*, 
+                b.position_id,
+                c.name as division_name,
+                d.name as departement_name,
+                e.name as departement_sub_name,
+                b.number as employee_number,
+                b.name as employee_name,
+                f.name as fullname
+        ');
+        $this->db->from('cash_carries a');
+        $this->db->join('employees b', 'a.employee_id = b.id');
+        $this->db->join('divisions c', 'b.division_id = c.id');
+        $this->db->join('departements d', 'b.departement_id = d.id');
+        $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
+        $this->db->join('users f', "a.created_by = f.username");
+        // $this->db->join('notifications g', "a.id = g.table_id and g.table_name = 'cash_carries'", 'left');
+        $this->db->where('b.deleted', 0);
+        $this->db->where('b.status', 0);
+        $this->db->where('a.deleted', 0);
+        $this->db->like('b.departement_id', $aprvDepartement);
+        if ($filter_from != "" && $filter_to != "") {
+            $this->db->where('a.trans_date >=', $filter_from);
+            $this->db->where('a.trans_date <=', $filter_to);
+        } else {
+            $this->db->where('a.trans_date >=', date("Y-m-01"));
+            $this->db->where('a.trans_date <=', date("Y-m-t"));
+        }
+        $this->db->like('b.division_id', $filter_division);
+        $this->db->like('b.departement_id', $filter_departement);
+        $this->db->like('b.departement_sub_id', $filter_departement_sub);
+        $this->db->like('b.id', $filter_employee);
+        if ($filter_request_code != "") {
+            $this->db->where('a.request_code', $filter_request_code);
+        }
+        if ($filter_idm != "") {
+            $this->db->where('a.idm_no', $filter_idm);
+        }
+        if ($filter_approval == "0") {
+            $this->db->where("(a.approved_to = '' or a.approved_to is null)");
+        } elseif ($filter_approval == "1") {
+            $this->db->where("(a.approved_to != '' and a.approved_to is not null)");
+        }
+        $this->db->group_by('a.trans_date');
+        $this->db->group_by('a.employee_id');
+        $this->db->group_by('a.type');
+        $this->db->order_by('a.trans_date', 'DESC');
+        $records = $this->db->get()->result_array();
+
+        $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+        <body>
+        <center>
+            <div style="float: left; font-size: 12px; text-align: left;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+                            <img src="' . $config->favicon . '" width="30">
+                        </td>
+                        <td style="font-size: 14px; text-align: left; margin:2px;">
+                            <b>' . $config->name . '</b><br>
+                            <small>DATA CASH CARRY</small>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="float: right; font-size: 12px; text-align: right;">
+                Print Date ' . date("d M Y H:m:s") . ' <br>
+                Print By ' . $this->session->username . '  
+            </div>
+        </center>
+        <br><br><br>
+        
+        <table id="customers" border="1">
+            <tr>
+                <th width="20">No</th>
+                <th>Request Date</th>
+                <th>Request No</th>
+                <th>IDM No</th>
+                <th>Request Name</th>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Division</th>
+                <th>Departement</th>
+                <th>Departement Sub</th>
+                <th>Trans Date</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Break</th>
+                <th>Duration</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Plan</th>
+                <th>Actual</th>
+                <th>Remarks</th>
+            </tr>';
+        $no = 1;
+        foreach ($records as $data) {
+            $html .= '  <tr>
+                            <td>' . $no . '</td>
+                            <td>' . $data['trans_date'] . '</td>
+                            <td>' . $data['request_code'] . '</td>
+                            <td>' . $data['idm_no'] . '</td>
+                            <td>' . $data['fullname'] . '</td>
+                            <td style="mso-number-format:\@;">' . $data['employee_number'] . '</td>
+                            <td>' . $data['employee_name'] . '</td>
+                            <td>' . $data['division_name'] . '</td>
+                            <td>' . $data['departement_name'] . '</td>
+                            <td>' . $data['departement_sub_name'] . '</td>
+                            <td>' . date("d F Y", strtotime($data['trans_date'])) . '</td>
+                            <td>' . $data['start'] . '</td>
+                            <td>' . $data['end'] . '</td>
+                            <td>' . $data['break'] . '</td>
+                            <td>' . $data['duration_hour'] . '</td>
+                            <td>' . $data['type'] . '</td>
+                            <td>' . $data['amount'] . '</td>
+                            <td>' . $data['plan'] . '</td>
+                            <td>' . $data['actual'] . '</td>
+                            <td>' . $data['remarks'] . '</td>
+                        </tr>';
+            $no++;
+        }
+
+        $html .= '</table></body></html>';
+        echo $html;
     }
 }

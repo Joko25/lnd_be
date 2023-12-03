@@ -1,10 +1,10 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar">
+<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar">
     <thead frozen="true">
         <tr>
             <th field="ck" checkbox="true"></th>
-            <th data-options="field:'employee_number',width:100,halign:'center'">Employee ID</th>
-            <th data-options="field:'employee_name',width:250,halign:'center'">Employee Name</th>
+            <th data-options="field:'employee_number',width:120,halign:'center'">Employee ID</th>
+            <th data-options="field:'employee_name',width:200,halign:'center'">Employee Name</th>
         </tr>
     </thead>
     <thead>
@@ -17,7 +17,7 @@
             <th rowspan="2" data-options="field:'amount_actual',width:80,halign:'center',align:'right', formatter:numberformat">Actual<br>Amount</th>
             <th rowspan="2" data-options="field:'plan',width:80,halign:'center',align:'right'">Plan<br>Output</th>
             <th rowspan="2" data-options="field:'actual',width:80,halign:'center',align:'right'">Actual<br>Output</th>
-            <th rowspan="2" data-options="field:'remarks',width:250,halign:'center'">Remarks</th>
+            <th rowspan="2" data-options="field:'remarks',width:400,halign:'center'">Remarks</th>
             <th rowspan="2" data-options="field:'attachment',width:100,align:'center', formatter:fileFormatter">Attachment</th>
             <th rowspan="2" data-options="field:'attachment_idm',width:100,align:'center', formatter:fileFormatter2">Attachment<br>IDM</th>
             <th colspan="3" data-options="field:'',width:100,halign:'center'"> Approval</th>
@@ -27,15 +27,15 @@
         <tr>
             <th data-options="field:'trans_date',width:100,halign:'center'">Request Date</th>
             <th data-options="field:'request_code',width:150,halign:'center'">Request No</th>
-            <th data-options="field:'idm_no',width:120,halign:'center'">IDM No</th>
-            <th data-options="field:'fullname',width:120,halign:'center'">Request Name</th>
+            <th data-options="field:'idm_no',width:200,halign:'center'">IDM No</th>
+            <th data-options="field:'fullname',width:200,halign:'center'">Request Name</th>
             <th data-options="field:'start',width:80,align:'center'">Start</th>
             <th data-options="field:'end',width:80,align:'center'">End</th>
             <th data-options="field:'break',width:80,align:'center'">Break<br>(Minute)</th>
             <th data-options="field:'duration_hour',width:80,align:'center'">Duration<br>(Hour)</th>
             <th data-options="field:'time_in',width:80,align:'center'">Time In</th>
             <th data-options="field:'time_out',width:80,align:'center'">Time Out</th>
-            <th data-options="field:'duration_att',width:120,align:'center'">Duration</th>
+            <th data-options="field:'duration_att',width:80,align:'center'">Duration</th>
             <th data-options="field:'approved',width:100,align:'center',styler:statusStyler, formatter:statusFormatter"> Status</th>
             <th data-options="field:'approved_by',width:120,align:'center'"> By</th>
             <th data-options="field:'approved_date',width:150,align:'center'"> Date</th>
@@ -696,7 +696,10 @@
         $('#dg').datagrid({
             url: '<?= base_url('attandance/cash_carries/datatables') ?>',
             pagination: true,
-            rownumbers: true
+            rownumbers: true,
+            fit: true,
+            pageList: [20, 50, 100, 500, 1000],
+            pageSize: 20,
         });
 
         //SAVE DATA

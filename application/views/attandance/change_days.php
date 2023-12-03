@@ -1,13 +1,13 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar">
+<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar">
     <thead>
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
             <th rowspan="2" data-options="field:'request_code',width:120,halign:'center'">Request No</th>
-            <th rowspan="2" data-options="field:'employee_id',width:100,halign:'center'">Employee ID</th>
+            <th rowspan="2" data-options="field:'employee_id',width:120,halign:'center'">Employee ID</th>
             <th rowspan="2" data-options="field:'employee_name',width:200,halign:'center'">Employee Name</th>
-            <th rowspan="2" data-options="field:'start',width:80,halign:'center'">Start</th>
-            <th rowspan="2" data-options="field:'end',width:80,halign:'center'">Replace</th>
+            <th rowspan="2" data-options="field:'start',width:100,halign:'center'">Start</th>
+            <th rowspan="2" data-options="field:'end',width:100,halign:'center'">Replace</th>
             <th rowspan="2" data-options="field:'remarks',width:200,halign:'center'">Remarks</th>
             <th colspan="3" data-options="field:'',width:100,halign:'center'"> Approval</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
@@ -208,7 +208,10 @@
         $('#dg').datagrid({
             url: '<?= base_url('attandance/change_days/datatables') ?>' + url,
             pagination: true,
-            rownumbers: true
+            rownumbers: true,
+            fit: true,
+            pageList: [20, 50, 100, 500, 1000],
+            pageSize: 20,
         });
 
         $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");

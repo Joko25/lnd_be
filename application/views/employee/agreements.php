@@ -1,5 +1,5 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:99.5%;" toolbar="#toolbar">
+<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar">
     <thead>
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
@@ -244,6 +244,9 @@
             url: '<?= base_url('employee/agreements/datatables') ?>',
             pagination: true,
             rownumbers: true,
+            fit: true,
+            pageList: [20, 50, 100, 500, 1000],
+            pageSize: 20,
             rowStyler: function(index, row) {
                 if (row.status == 1) {
                     return 'background-color:#FFDCDC;';

@@ -1,5 +1,5 @@
 <!-- TABLE DATAGRID -->
-<table id="dg" class="easyui-datagrid" style="width:99.5%; height: 700px;" toolbar="#toolbar">
+<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar">
     <thead frozen="true">
         <tr>
             <th data-options="field:'number',width:150,halign:'center'">Employee ID</th>
@@ -457,7 +457,10 @@
         $('#dg').datagrid({
             // url: '<?= base_url('payroll/payrolls/datatables') ?>',
             pagination: true,
-            rownumbers: true
+            rownumbers: true,
+            fit: true,
+            pageList: [20, 50, 100, 500, 1000],
+            pageSize: 20,
         });
 
         //Filter Cutoff
