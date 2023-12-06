@@ -33,91 +33,95 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 270px; padding: 10px;">
-    <fieldset style="width: 99.8%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
-        <legend><b>Form Filter Data</b></legend>
-        <div style="width:33%; float: left;">
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Division</span>
-                <input style="width:60%;" id="filter_divisions" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Departement</span>
-                <input style="width:60%;" id="filter_departements" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Departement Sub</span>
-                <input style="width:60%;" id="filter_departement_subs" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Employee Name</span>
-                <input style="width:60%;" id="filter_employees" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;"></span>
-                <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
-            </div>
+<div id="toolbar">
+    <div class="easyui-accordion" style="width:100%; margin-bottom:5px;">
+        <div title="Click this to hide the filter" data-options="onCollapse: function(){ $('#dg').datagrid('reload'); }" style="padding:10px; background:#F4F4F4;">
+            <fieldset style="width: 99.8%; border:2px solid #d0d0d0; border-radius:4px;">
+                <legend><b>Form Filter Data</b></legend>
+                <div style="width:33%; float: left;">
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Division</span>
+                        <input style="width:60%;" id="filter_divisions" class="easyui-combogrid">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Departement</span>
+                        <input style="width:60%;" id="filter_departements" class="easyui-combogrid">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Departement Sub</span>
+                        <input style="width:60%;" id="filter_departement_subs" class="easyui-combogrid">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Employee Name</span>
+                        <input style="width:60%;" id="filter_employees" class="easyui-combogrid">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;"></span>
+                        <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
+                    </div>
+                </div>
+                <div style="width:33%; float: left;">
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Position</span>
+                        <input style="width:60%;" id="filter_positions" class="easyui-combogrid">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Employee Type</span>
+                        <input style="width:60%;" id="filter_contracts" class="easyui-combogrid">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Group</span>
+                        <input style="width:60%;" id="filter_groups" class="easyui-combogrid">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Religion</span>
+                        <input style="width:60%;" id="filter_religions" class="easyui-combobox">
+                    </div>
+                </div>
+                <div style="width:33%; float: left;">
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Martial Status</span>
+                        <input style="width:60%;" id="filter_maritals" class="easyui-combogrid">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Fit For Service</span>
+                        <select style="width:60%;" id="filter_services" class="easyui-combobox" data-options="panelHeight:'auto'">
+                            <option value="">Choose All</option>
+                            <option value="1">Less than 1 Year</option>
+                            <option value="2">1 - 2 Year</option>
+                            <option value="5">2 - 5 Year</option>
+                            <option value="8">5 - 8 Year</option>
+                            <option value="10">8 - 10 Year</option>
+                            <option value="11">More than 10 Year</option>
+                        </select>
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Contract Expired</span>
+                        <select style="width:60%;" id="filter_expired" class="easyui-combobox" data-options="panelHeight:'auto'">
+                            <option value="">Choose All</option>
+                            <option value="0">Yesterday</option>
+                            <option value="1">Today</option>
+                            <option value="2">Tomorrow</option>
+                            <option value="3">1 Weeks</option>
+                            <option value="4">1 Months</option>
+                        </select>
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Status</span>
+                        <select style="width:60%;" id="filter_status" class="easyui-combobox" data-options="panelHeight:'auto'">
+                            <option value="0">Active</option>
+                            <option value="1">Not Active</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
         </div>
-        <div style="width:33%; float: left;">
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Position</span>
-                <input style="width:60%;" id="filter_positions" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Employee Type</span>
-                <input style="width:60%;" id="filter_contracts" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Group</span>
-                <input style="width:60%;" id="filter_groups" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Religion</span>
-                <input style="width:60%;" id="filter_religions" class="easyui-combobox">
-            </div>
-        </div>
-        <div style="width:33%; float: left;">
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Martial Status</span>
-                <input style="width:60%;" id="filter_maritals" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Fit For Service</span>
-                <select style="width:60%;" id="filter_services" class="easyui-combobox" data-options="panelHeight:'auto'">
-                    <option value="">Choose All</option>
-                    <option value="1">Less than 1 Year</option>
-                    <option value="2">1 - 2 Year</option>
-                    <option value="5">2 - 5 Year</option>
-                    <option value="8">5 - 8 Year</option>
-                    <option value="10">8 - 10 Year</option>
-                    <option value="11">More than 10 Year</option>
-                </select>
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Contract Expired</span>
-                <select style="width:60%;" id="filter_expired" class="easyui-combobox" data-options="panelHeight:'auto'">
-                    <option value="">Choose All</option>
-                    <option value="0">Yesterday</option>
-                    <option value="1">Today</option>
-                    <option value="2">Tomorrow</option>
-                    <option value="3">1 Weeks</option>
-                    <option value="4">1 Months</option>
-                </select>
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Status</span>
-                <select style="width:60%;" id="filter_status" class="easyui-combobox" data-options="panelHeight:'auto'">
-                    <option value="0">Active</option>
-                    <option value="1">Not Active</option>
-                </select>
-            </div>
-        </div>
-    </fieldset>
+    </div>
     <?= $button ?>
 </div>
 
 <!-- DIALOG SAVE AND UPDATE -->
-<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 80%; height: 950px; padding:10px; top: 20px;">
+<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 80%; height: 600px; padding:10px; top: 20px;">
     <form id="frm_insert" method="post" enctype="multipart/form-data" novalidate>
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Basic Information</b></legend>
@@ -1781,8 +1785,8 @@
             url: '<?= base_url('employee/employees/datatables') ?>',
             pagination: true,
             rownumbers: true,
-            fit: true,
             pageList: [20, 50, 100, 500, 1000],
+            fit: true,
             pageSize: 20,
             rowStyler: function(index, row) {
                 if (row.status == 1) {

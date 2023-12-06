@@ -1,59 +1,59 @@
-<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar"></table>
+<div class="easyui-accordion" style="width:100%;">
+    <div title="Click this to hide the filter" data-options="selected:true" style="padding:10px; background:#F4F4F4;">
+        <!-- <div style="width: 100%; display: grid; grid-template-columns: auto auto auto; grid-gap: 5px; display: flex;"> -->
+        <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
+            <legend><b>Form Filter Data</b></legend>
+            <div style="width: 50%; float:left;">
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Period Date</span>
+                    <input style="width:28%;" name="filter_from" id="filter_from" class="easyui-combogrid"> To
+                    <input style="width:28%;" name="filter_to" id="filter_to" data-options="prompt:'Date To'" readonly class="easyui-textbox">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Division</span>
+                    <input style="width:60%;" id="filter_division" class="easyui-combobox">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Departement</span>
+                    <input style="width:60%;" id="filter_departement" class="easyui-combobox">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;"></span>
+                    <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
+                </div>
+            </div>
+            <div style="width: 49%; float:left;">
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Departement Sub</span>
+                    <input style="width:60%;" id="filter_departement_sub" class="easyui-combobox">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Group</span>
+                    <input style="width:60%;" id="filter_group" name="filter_group" class="easyui-combobox">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Employee</span>
+                    <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Bank Name</span>
+                    <select style="width:60%;" name="filter_bank" id="filter_bank" class="easyui-combobox">
+                        <option value="-">Cash</option>
+                        <option value="Bank Mandiri">Bank Mandiri</option>
+                        <option value="Bank Syariah Indonesia">Bank Syariah Indonesia</option>
+                        <option value="Bank Central Asia">Bank Central Asia</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
 
-<div id="toolbar" style="height: 235px; padding:10px;">
-    <!-- <div style="width: 100%; display: grid; grid-template-columns: auto auto auto; grid-gap: 5px; display: flex;"> -->
-    <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
-        <legend><b>Form Filter Data</b></legend>
-        <div style="width: 50%; float:left;">
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Period Date</span>
-                <input style="width:28%;" name="filter_from" id="filter_from" class="easyui-combogrid"> To
-                <input style="width:28%;" name="filter_to" id="filter_to" data-options="prompt:'Date To'" readonly class="easyui-textbox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Division</span>
-                <input style="width:60%;" id="filter_division" class="easyui-combobox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Departement</span>
-                <input style="width:60%;" id="filter_departement" class="easyui-combobox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;"></span>
-                <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
-            </div>
-        </div>
-        <div style="width: 49%; float:left;">
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Departement Sub</span>
-                <input style="width:60%;" id="filter_departement_sub" class="easyui-combobox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Group</span>
-                <input style="width:60%;" id="filter_group" name="filter_group" class="easyui-combobox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Employee</span>
-                <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Bank Name</span>
-                <select style="width:60%;" name="filter_bank" id="filter_bank" class="easyui-combobox">
-                    <option value="-">Cash</option>
-                    <option value="Bank Mandiri">Bank Mandiri</option>
-                    <option value="Bank Syariah Indonesia">Bank Syariah Indonesia</option>
-                    <option value="Bank Central Asia">Bank Central Asia</option>
-                </select>
-            </div>
-        </div>
-    </fieldset>
-
-    <?= $button ?>
-    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="csv()"><i class="fa fa-file"></i> CSV</a>
+        <?= $button ?>
+        <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="csv()"><i class="fa fa-file"></i> CSV</a>
+    </div>
 </div>
 
 <div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;" data-options="fit:true">
-    <iframe id="printout" src="" style="width: 100%; height:60%; border: 0;"></iframe>
+    <iframe id="printout" src="" style="width: 100%; height:95%; border: 0;"></iframe>
 </div>
 <script>
     function reload() {

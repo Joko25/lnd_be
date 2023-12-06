@@ -27,39 +27,43 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 235px; padding: 10px;">
-    <fieldset style="width: 49%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px; float: left;">
-        <legend><b>Form Filter Data</b></legend>
-        <div class="fitem">
-            <span style="width:35%; display:inline-block;">Request Date</span>
-            <input style="width:30%;" id="filter_from" value="<?= date("Y-m-01") ?>" data-options="formatter:myformatter,parser:myparser,editable: false" class="easyui-datebox">
-            <input style="width:30%;" id="filter_to" value="<?= date("Y-m-t") ?>" data-options="formatter:myformatter,parser:myparser,editable: false" class="easyui-datebox">
+<div id="toolbar">
+    <div class="easyui-accordion" style="width:100%; margin-bottom:5px;">
+        <div title="Click this to hide the filter" data-options="onCollapse: function(){ $('#dg').datagrid('reload'); }" style="padding:10px; background:#F4F4F4;">
+            <fieldset style="width: 49%; border:2px solid #d0d0d0; border-radius:4px; float: left;">
+                <legend><b>Form Filter Data</b></legend>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Request Date</span>
+                    <input style="width:30%;" id="filter_from" value="<?= date("Y-m-01") ?>" data-options="formatter:myformatter,parser:myparser,editable: false" class="easyui-datebox">
+                    <input style="width:30%;" id="filter_to" value="<?= date("Y-m-t") ?>" data-options="formatter:myformatter,parser:myparser,editable: false" class="easyui-datebox">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Request Name</span>
+                    <input style="width:60%;" id="filter_request" class="easyui-combobox">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Approval</span>
+                    <select style="width:60%;" id="filter_approval" class="easyui-combobox" data-options="panelHeight:'auto'">
+                        <option value="">Choose All</option>
+                        <option value="0">Approve</option>
+                        <option value="1">Checked</option>
+                    </select>
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;"></span>
+                    <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
+                </div>
+            </fieldset>
+            <fieldset style="width: 49%; border:2px solid #d0d0d0; border-radius:4px; float: left;">
+                <legend><b>Information Request</b></legend>
+                <div style="height: 146px; overflow: auto;" id="infoproposal">
+                    <center>
+                        <h4>No information at this time</h4>
+                    </center>
+                </div>
+            </fieldset>
         </div>
-        <div class="fitem">
-            <span style="width:35%; display:inline-block;">Request Name</span>
-            <input style="width:60%;" id="filter_request" class="easyui-combobox">
-        </div>
-        <div class="fitem">
-            <span style="width:35%; display:inline-block;">Approval</span>
-            <select style="width:60%;" id="filter_approval" class="easyui-combobox" data-options="panelHeight:'auto'">
-                <option value="">Choose All</option>
-                <option value="0">Approve</option>
-                <option value="1">Checked</option>
-            </select>
-        </div>
-        <div class="fitem">
-            <span style="width:35%; display:inline-block;"></span>
-            <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
-        </div>
-    </fieldset>
-    <fieldset style="width: 49%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px; float: left;">
-        <legend><b>Information Request</b></legend>
-        <div style="height: 146px; overflow: auto;" id="infoproposal">
-            <center>
-                <h4>No information at this time</h4>
-            </center>
-        </div>
-    </fieldset>
+    </div>
     <?= $button ?>
 </div>
 

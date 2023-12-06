@@ -27,28 +27,30 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 200px; padding:10px;">
-    <div style="width: 100%;">
-        <fieldset style="width: 50%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
-            <legend><b>Form Filter Data</b></legend>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Request ID</span>
-                <input style="width:60%;" id="filter_request" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Candidate Name</span>
-                <input style="width:60%;" id="filter_candidate" class="easyui-textbox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;"></span>
-                <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
-                <a href="javascript:;" class="easyui-linkbutton" onclick="closing()"><i class="fa fa-check-circle"></i> Closing Request</a>
-            </div>
-        </fieldset>
-        <?= $button ?>
-        <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true"><i class="fa fa-whatsapp"></i> <span id="wa">Send Whatsapp</span></a>
-        <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true"><i class="fa fa-envelope"></i> <span id="mail">Send Email</span></a>
+<div id="toolbar">
+    <div class="easyui-accordion" style="width:100%; margin-bottom:5px;">
+        <div title="Click this to hide the filter" data-options="onCollapse: function(){ $('#dg').datagrid('reload'); }" style="padding:10px; background:#F4F4F4;">
+            <fieldset style="width: 50%; border:2px solid #d0d0d0; border-radius:4px;">
+                <legend><b>Form Filter Data</b></legend>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Request ID</span>
+                    <input style="width:60%;" id="filter_request" class="easyui-combogrid">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Candidate Name</span>
+                    <input style="width:60%;" id="filter_candidate" class="easyui-textbox">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;"></span>
+                    <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
+                    <a href="javascript:;" class="easyui-linkbutton" onclick="closing()"><i class="fa fa-check-circle"></i> Closing Request</a>
+                </div>
+            </fieldset>
+        </div>
     </div>
+    <?= $button ?>
+    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true"><i class="fa fa-whatsapp"></i> <span id="wa">Send Whatsapp</span></a>
+    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true"><i class="fa fa-envelope"></i> <span id="mail">Send Email</span></a>
 </div>
 
 <!-- DIALOG SAVE AND UPDATE -->

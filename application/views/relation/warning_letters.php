@@ -30,53 +30,57 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 275px; padding:10px;">
-    <fieldset style="width: 100%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
-        <legend><b>Form Filter Data</b></legend>
-        <div style="width: 50%; float: left;">
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Trans Date</span>
-                <input style="width:30%;" name="filter_from" id="filter_from" value="<?= date("Y-m-01") ?>" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
-                <input style="width:30%;" name="filter_to" id="filter_to" value="<?= date("Y-m-t") ?>" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Division</span>
-                <input style="width:60%;" id="filter_division" class="easyui-combobox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Departement</span>
-                <input style="width:60%;" id="filter_departement" class="easyui-combobox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Departement Sub</span>
-                <input style="width:60%;" id="filter_departement_sub" class="easyui-combobox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;"></span>
-                <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
-            </div>
+<div id="toolbar">
+    <div class="easyui-accordion" style="width:100%; margin-bottom:5px;">
+        <div title="Click this to hide the filter" data-options="onCollapse: function(){ $('#dg').datagrid('reload'); }" style="padding:10px; background:#F4F4F4;">
+            <fieldset style="width: 100%; border:2px solid #d0d0d0; border-radius:4px;">
+                <legend><b>Form Filter Data</b></legend>
+                <div style="width: 50%; float: left;">
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Trans Date</span>
+                        <input style="width:30%;" name="filter_from" id="filter_from" value="<?= date("Y-m-01") ?>" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
+                        <input style="width:30%;" name="filter_to" id="filter_to" value="<?= date("Y-m-t") ?>" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Division</span>
+                        <input style="width:60%;" id="filter_division" class="easyui-combobox">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Departement</span>
+                        <input style="width:60%;" id="filter_departement" class="easyui-combobox">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Departement Sub</span>
+                        <input style="width:60%;" id="filter_departement_sub" class="easyui-combobox">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;"></span>
+                        <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
+                    </div>
+                </div>
+                <div style="width: 50%; float: left;">
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Employee</span>
+                        <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Waning Letter</span>
+                        <select style="width:60%;" id="filter_warning_letter" class="easyui-combobox" panelHeight="auto">
+                            <option value="">Choose All</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">TERMINATION</option>
+                        </select>
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Violation</span>
+                        <input style="width:60%;" id="filter_violation" class="easyui-combobox">
+                    </div>
+                </div>
+            </fieldset>
         </div>
-        <div style="width: 50%; float: left;">
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Employee</span>
-                <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Waning Letter</span>
-                <select style="width:60%;" id="filter_warning_letter" class="easyui-combobox" panelHeight="auto">
-                    <option value="">Choose All</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">TERMINATION</option>
-                </select>
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Violation</span>
-                <input style="width:60%;" id="filter_violation" class="easyui-combobox">
-            </div>
-        </div>
-    </fieldset>
+    </div>
     <?= $button ?>
 </div>
 

@@ -1,35 +1,35 @@
-<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar"></table>
+<div class="easyui-accordion" style="width:100%;">
+    <div title="Click this to hide the filter" data-options="selected:true" style="padding:10px; background:#F4F4F4;">
+        <!-- <div style="width: 100%; display: grid; grid-template-columns: auto auto auto; grid-gap: 5px; display: flex;"> -->
+        <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
+            <legend><b>Form Filter Data</b></legend>
+            <div style="width: 50%; float:left;">
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Period Date</span>
+                    <input style="width:28%;" name="filter_from" id="filter_from" class="easyui-combogrid"> To
+                    <input style="width:28%;" name="filter_to" id="filter_to" data-options="prompt:'Date To'" readonly class="easyui-textbox">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Division</span>
+                    <input style="width:60%;" id="filter_division" class="easyui-combobox">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Departement</span>
+                    <input style="width:60%;" id="filter_departement" class="easyui-combobox">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;"></span>
+                    <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
+                </div>
+            </div>
+        </fieldset>
 
-<div id="toolbar" style="height: 230px; padding:10px;">
-    <!-- <div style="width: 100%; display: grid; grid-template-columns: auto auto auto; grid-gap: 5px; display: flex;"> -->
-    <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
-        <legend><b>Form Filter Data</b></legend>
-        <div style="width: 50%; float:left;">
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Period Date</span>
-                <input style="width:28%;" name="filter_from" id="filter_from" class="easyui-combogrid"> To
-                <input style="width:28%;" name="filter_to" id="filter_to" data-options="prompt:'Date To'" readonly class="easyui-textbox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Division</span>
-                <input style="width:60%;" id="filter_division" class="easyui-combobox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Departement</span>
-                <input style="width:60%;" id="filter_departement" class="easyui-combobox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;"></span>
-                <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
-            </div>
-        </div>
-    </fieldset>
-
-    <?= $button ?>
+        <?= $button ?>
+    </div>
 </div>
 
 <div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;" data-options="fit:true">
-    <iframe id="printout" src="" style="width: 100%; height:62%; border: 0;"></iframe>
+    <iframe id="printout" src="" style="width: 100%; height:95%; border: 0;"></iframe>
 </div>
 <script>
     function reload() {

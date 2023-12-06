@@ -186,9 +186,9 @@ class Cash_carries extends CI_Controller
         $final_duration = ($final_minutes2 / 60);
 
         //if($setup->name == "DRIVER"){
-        if (floor($final_minutes2 / 60) == 59) {
+        if (floor($minutes / 60) == 59) {
             $final_minutes = "59";
-        } else if (floor($final_minutes2 / 60) >= 29 and floor($final_minutes2 / 60) <= 58) {
+        } else if (floor($minutes / 60) >= 29 and floor($minutes / 60) <= 58) {
             $final_minutes = "50";
         } else {
             $final_minutes = "0";

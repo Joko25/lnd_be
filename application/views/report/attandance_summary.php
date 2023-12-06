@@ -1,45 +1,44 @@
-<table id="dg" class="easyui-datagrid" style="width:100%;" toolbar="#toolbar"></table>
-
-<div id="toolbar" style="height: 235px; padding:10px;">
-    <!-- <div style="width: 100%; display: grid; grid-template-columns: auto auto auto; grid-gap: 5px; display: flex;"> -->
-    <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
-        <legend><b>Form Filter Data</b></legend>
-        <div style="width: 50%; float:left;">
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Trans Date</span>
-                <input style="width:28%;" id="filter_from" class="easyui-datebox" value="<?= date("Y-m-01") ?>" data-options="formatter:myformatter,parser:myparser, editable:false"> To
-                <input style="width:28%;" id="filter_to" class="easyui-datebox" value="<?= date("Y-m-t") ?>" data-options="formatter:myformatter,parser:myparser, editable:false">
+<div class="easyui-accordion" style="width:100%;">
+    <div title="Click this to hide the filter" data-options="selected:true" style="padding:10px; background:#F4F4F4;">
+        <!-- <div style="width: 100%; display: grid; grid-template-columns: auto auto auto; grid-gap: 5px; display: flex;"> -->
+        <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; border-radius:4px;">
+            <legend><b>Form Filter Data</b></legend>
+            <div style="width: 50%; float:left;">
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Trans Date</span>
+                    <input style="width:28%;" id="filter_from" class="easyui-datebox" value="<?= date("Y-m-01") ?>" data-options="formatter:myformatter,parser:myparser, editable:false"> To
+                    <input style="width:28%;" id="filter_to" class="easyui-datebox" value="<?= date("Y-m-t") ?>" data-options="formatter:myformatter,parser:myparser, editable:false">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Division</span>
+                    <input style="width:60%;" id="filter_division" class="easyui-combobox">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Departement</span>
+                    <input style="width:60%;" id="filter_departement" class="easyui-combobox">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;"></span>
+                    <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
+                </div>
             </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Division</span>
-                <input style="width:60%;" id="filter_division" class="easyui-combobox">
+            <div style="width: 49%; float:left;">
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Departement Sub</span>
+                    <input style="width:60%;" id="filter_departement_sub" class="easyui-combobox">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Employee</span>
+                    <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
+                </div>
             </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Departement</span>
-                <input style="width:60%;" id="filter_departement" class="easyui-combobox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;"></span>
-                <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
-            </div>
-        </div>
-        <div style="width: 49%; float:left;">
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Departement Sub</span>
-                <input style="width:60%;" id="filter_departement_sub" class="easyui-combobox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Employee</span>
-                <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
-            </div>
-        </div>
-    </fieldset>
-
-    <?= $button ?>
+        </fieldset>
+        <?= $button ?>
+    </div>
 </div>
 
 <div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;" data-options="fit:true">
-    <iframe id="printout" src="" style="width: 100%; height:60%; border: 0;"></iframe>
+    <iframe id="printout" src="" style="width: 100%; height:95%; border: 0;"></iframe>
 </div>
 <script>
     function reload() {

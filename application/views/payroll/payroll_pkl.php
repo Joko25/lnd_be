@@ -23,29 +23,33 @@
 </table>
 
 <!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 235px; padding:10px;">
-    <fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
-        <legend><b>Form Filter Data</b></legend>
-        <div style="width: 50%; float:left;">
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Period Date</span>
-                <input style="width:28%;" name="filter_from" id="filter_from" class="easyui-combogrid"> To
-                <input style="width:28%;" name="filter_to" id="filter_to" data-options="prompt:'Date To'" readonly class="easyui-textbox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Source</span>
-                <input style="width:60%;" id="filter_source" name="filter_source" class="easyui-combobox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Employee</span>
-                <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;"></span>
-                <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
-            </div>
+<div id="toolbar">
+    <div class="easyui-accordion" style="width:100%; margin-bottom:5px;">
+        <div title="Click this to hide the filter" data-options="onCollapse: function(){ $('#dg').datagrid('reload'); }" style="padding:10px; background:#F4F4F4;">
+            <fieldset style="width: 99%; border:2px solid #d0d0d0; border-radius:4px;">
+                <legend><b>Form Filter Data</b></legend>
+                <div style="width: 50%; float:left;">
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Period Date</span>
+                        <input style="width:28%;" name="filter_from" id="filter_from" class="easyui-combogrid"> To
+                        <input style="width:28%;" name="filter_to" id="filter_to" data-options="prompt:'Date To'" readonly class="easyui-textbox">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Source</span>
+                        <input style="width:60%;" id="filter_source" name="filter_source" class="easyui-combobox">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Employee</span>
+                        <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;"></span>
+                        <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
+                    </div>
+                </div>
+            </fieldset>
         </div>
-    </fieldset>
+    </div>
     <?= $button ?>
 </div>
 
