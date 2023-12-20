@@ -32,7 +32,7 @@
 </div>
 
 <div class="easyui-panel" title="Print Preview" style="width:100%;padding:10px;" data-options="fit:true">
-    <iframe id="printout" src="" style="width: 100%; height:54%; border: 0;"></iframe>
+    <iframe id="printout" src="" style="width: 100%; height:98%; border: 0;"></iframe>
 </div>
 <script>
     function reload() {

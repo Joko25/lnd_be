@@ -413,7 +413,8 @@ class Student_payrolls extends CI_Controller
                                     </table>
                                 </center>';
                         $hal++;
-                        if (($i + 1) != $page) {
+
+                        if (($i + 1) == $page) {
                             echo '<div style="page-break-after:always;"></div>';
                         }
 

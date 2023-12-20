@@ -176,8 +176,8 @@ class Approvals extends CI_Controller
         $this->db->where('b.group_id', $id);
         $this->db->where('a.period_start', $period_start);
         $this->db->where('a.period_end', $period_end);
+        $this->db->where('a.approved_to', $this->session->username);
         $this->db->where('b.deleted', 0);
-        $this->db->where('b.status', 0);
         $this->db->where('a.status', 0);
         $this->db->group_by('a.employee_id');
         $records = $this->db->get()->result_array();
@@ -611,7 +611,7 @@ class Approvals extends CI_Controller
         $this->db->join('users c', 'a.created_by = c.username');
         $this->db->join('groups d', 'b.group_id = d.id');
         $this->db->where('b.deleted', 0);
-        $this->db->where('b.status', 0);
+        // $this->db->where('b.status', 0);
         $this->db->where('a.status', 0);
         $this->db->where('a.approved_to', $approved_to);
         $this->db->where('a.created_by', $created_by);

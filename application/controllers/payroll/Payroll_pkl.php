@@ -206,6 +206,14 @@ class Payroll_pkl extends CI_Controller
                 $this->db->group_by('a.employee_id');
                 $permit = $this->db->get()->row();
 
+                //Change Days
+                $this->db->select("COUNT(*) as days");
+                $this->db->from('change_days');
+                $this->db->where('employee_id', $record['id']);
+                $this->db->where("(start = '$working_date' or end = '$working_date')");
+                $changeDays = $this->db->get()->row();
+                $changeDays_amount = empty($changeDays->days) ? 0 : $changeDays->days;
+
                 //Working Calendar
                 $this->db->select('description');
                 $this->db->from('calendars');
@@ -246,7 +254,11 @@ class Payroll_pkl extends CI_Controller
                                 $day = $tidakabsen;
                             }
                         } else {
-                            $day = 0;
+                            if($changeDays_amount > 0){
+                                $day = 1;
+                            }else{
+                                $day = 0;
+                            }
                         }
                     } else {
                         //sabtu dan minggu libur
@@ -257,11 +269,19 @@ class Payroll_pkl extends CI_Controller
                                 $day = $tidakabsen;
                             }
                         } else {
-                            $day = 0;
+                            if($changeDays_amount > 0){
+                                $day = 1;
+                            }else{
+                                $day = 0;
+                            }
                         }
                     }
                 } else {
-                    $day = 0;
+                    if($changeDays_amount > 0){
+                        $day = 1;
+                    }else{
+                        $day = 0;
+                    }
                 }
 
                 $payroll_end = date_create($working_date);
