@@ -133,6 +133,10 @@ if ($employee->image_profile == "" || $employee->image_profile == null) {
                             <td><b><?= @$group->name ?></b></td>
                         </tr>
                         <tr>
+                            <td>Source</td>
+                            <td><b><?= @$source->name ?></b></td>
+                        </tr>
+                        <tr>
                             <td>Sign Date</td>
                             <td><b><?= date("d F Y", strtotime($employee->date_sign)) ?></b></td>
                         </tr>

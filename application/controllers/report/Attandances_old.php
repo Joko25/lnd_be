@@ -2,7 +2,7 @@
 date_default_timezone_set("Asia/Bangkok");
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Attandances extends CI_Controller
+class Attandances_old extends CI_Controller
 {
     public function __construct()
     {
@@ -26,7 +26,7 @@ class Attandances extends CI_Controller
             $data['user'] = $this->crud->read("users", [], ["username" => $username]);
 
             $this->load->view('template/header', $data);
-            $this->load->view('report/attandances');
+            $this->load->view('report/attandances_old');
         } else {
             redirect('error_access');
         }
@@ -86,8 +86,7 @@ class Attandances extends CI_Controller
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
             $filter_permit_type = $this->input->get('filter_permit_type');
-            // $filter_status = $this->input->get('filter_status');
-            $filter_status_employee = $this->input->get('filter_status_employee');
+            $filter_status = $this->input->get('filter_status');
             $filter_group = $this->input->get('filter_group');
             $username = $this->session->username;
 
@@ -105,7 +104,7 @@ class Attandances extends CI_Controller
             $this->db->join('privilege_groups i', "a.group_id = i.group_id and i.username = '$username'");
             $this->db->join('(SELECT employee_id, MAX(warning_letter) as warning_letter FROM warning_letters GROUP BY employee_id) f', 'a.id = f.employee_id', 'left');
             $this->db->where('a.deleted', 0);
-            $this->db->where('a.status', $filter_status_employee);
+            $this->db->where('a.status', 0);
             $this->db->like('a.division_id', $filter_division);
             $this->db->like('a.departement_id', $filter_departement);
             $this->db->like('a.departement_sub_id', $filter_departement_sub);
@@ -124,6 +123,7 @@ class Attandances extends CI_Controller
 
             $start = strtotime($filter_from);
             $finish = strtotime($filter_to);
+            $no = 1;
 
             foreach ($records as $record) {
                 if (!empty($record['warning_letter'])) {
@@ -136,7 +136,7 @@ class Attandances extends CI_Controller
                     $warning_letter = "-";
                 }
 
-                $html = '<div style="page-break-after:always;"><center>
+                echo '<div style="page-break-after:always;"><center>
                     <div style="float: left; font-size: 12px; text-align: left;">
                         <table style="width: 100%;">
                             <tr>
@@ -221,7 +221,6 @@ class Attandances extends CI_Controller
                 $description = "";
                 $style = "";
                 $shiftName = "";
-                $no = 1;
                 for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
                     $working_date = date('Y-m-d', $i);
 
@@ -236,13 +235,6 @@ class Attandances extends CI_Controller
                     $this->db->from('calendars');
                     $this->db->where('trans_date', $working_date);
                     $holiday = $this->db->get()->row();
-
-                    //Resignation
-                    $this->db->select('*');
-                    $this->db->from('resignations');
-                    $this->db->where('employee_id', $record['id']);
-                    $this->db->where('resign_date <', $working_date);
-                    $resignation = $this->db->get()->row();
 
                     //Permit
                     $this->db->select("a.*, c.name as reason_name, d.name as permit_name");
@@ -384,12 +376,6 @@ class Attandances extends CI_Controller
                         } elseif (@$attandance->time_in == null && @$attandance->time_out != null) {
                             $attandance_status = "UN CHECK IN";
                             $style_status = "style='color:blue; font-weight:bold;'";
-                        } elseif ($record['date_sign'] >= $working_date) {
-                            $attandance_status = "NOT JOIN YET";
-                            $style_status = "style='color:blue; font-weight:bold;'";
-                        } elseif (!empty($resignation)) {
-                            $attandance_status = "RESIGN";
-                            $style_status = "style='color:red; font-weight:bold;'";
                         } else {
                             $attandance_status = "ABSENCE";
                             $style_status = "style='color:red; font-weight:bold;'";
@@ -415,22 +401,40 @@ class Attandances extends CI_Controller
                         }
                     }
 
-                    if ($attandance_status == @strtoupper($filter_permit_type)) {
-                        $html .= '  <tr ' . $style . '>
-                                        <td>' . $no . '</td>
-                                        <td>' . date('d F Y', strtotime($working_date)) . '</td>
-                                        <td>' . $shiftName . '</td>
-                                        <td>' . @$attandance->time_in . '</td>
-                                        <td>' . @$attandance->time_out . '</td>
-                                        <td>' . @$cash_carry->idm_no . '</td>
-                                        <td>' . @$cash_carry->start . '</td>
-                                        <td>' . @$cash_carry->end . '</td>
-                                        <td></td>
-                                        <td ' . $style_status . '>' . $attandance_status . '</td>
-                                        <td>' . $holiday . '</td>
-                                    </tr>';
-                    } else if($filter_permit_type == "") {
-                        $html .= '<tr ' . $style . '>
+                    if ($filter_status != "" or $filter_permit_type != "") {
+                        if ($holiday == "") {
+                            if ($filter_status == $attandance_status) {
+                                echo '<tr ' . $style . '>
+                                                    <td>' . $no . '</td>
+                                                    <td>' . date('d F Y', strtotime($working_date)) . '</td>
+                                                    <td>' . $shiftName . '</td>
+                                                    <td>' . @$attandance->time_in . '</td>
+                                                    <td>' . @$attandance->time_out . '</td>
+                                                    <td>' . @$cash_carry->idm_no . '</td>
+                                                    <td>' . @$cash_carry->start . '</td>
+                                                    <td>' . @$cash_carry->end . '</td>
+                                                    <td></td>
+                                                    <td ' . $style_status . '>' . $attandance_status . '</td>
+                                                    <td>' . $holiday . '</td>
+                                                </tr>';
+                            } elseif ($attandance_status == @strtoupper($filter_permit_type)) {
+                                echo '<tr ' . $style . '>
+                                                    <td>' . $no . '</td>
+                                                    <td>' . date('d F Y', strtotime($working_date)) . '</td>
+                                                    <td>' . $shiftName . '</td>
+                                                    <td>' . @$attandance->time_in . '</td>
+                                                    <td>' . @$attandance->time_out . '</td>
+                                                    <td>' . @$cash_carry->idm_no . '</td>
+                                                    <td>' . @$cash_carry->start . '</td>
+                                                    <td>' . @$cash_carry->end . '</td>
+                                                    <td></td>
+                                                    <td ' . $style_status . '>' . $attandance_status . '</td>
+                                                    <td>' . $holiday . '</td>
+                                                </tr>';
+                            }
+                        }
+                    } else {
+                        echo '<tr ' . $style . '>
                                     <td>' . $no . '</td>
                                     <td>' . date('d F Y', strtotime($working_date)) . '</td>
                                     <td>' . $shiftName . '</td>
@@ -444,12 +448,11 @@ class Attandances extends CI_Controller
                                     <td>' . $holiday . '</td>
                                 </tr>';
                     }
-                    
+
                     $no++;
                 }
 
-                $html .= '</table></div><br><br>';
-                echo $html;
+                echo '</table></div><br><br>';
             }
         }
     }

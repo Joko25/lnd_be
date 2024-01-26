@@ -14,16 +14,19 @@
             <th rowspan="2" data-options="field:'type',width:100,halign:'center'">Job Type</th>
             <th rowspan="2" data-options="field:'contract_name',width:100,halign:'center'">Employee Type</th>
             <th rowspan="2" data-options="field:'date_sign',width:100,halign:'center',formatter:FormatterDate">Join Date</th>
-            <th rowspan="2" data-options="field:'date_expired',width:120,halign:'center',formatter:FormatterDate">Contract Expired</th>
+            <th rowspan="2" data-options="field:'date_expired',width:100,halign:'center',formatter:FormatterDate">Contract<br>Expired</th>
+            <th rowspan="2" data-options="field:'resign_date',width:100,halign:'center',formatter:FormatterDate">Resign Date</th>
             <th rowspan="2" data-options="field:'service',width:180,halign:'center'">Fit Of Service</th>
-            <th rowspan="2" data-options="field:'bank_name',width:200,halign:'center'">Bank Name</th>
-            <th rowspan="2" data-options="field:'bank_no',width:100,halign:'center'">Bank Account</th>
-            <th rowspan="2" data-options="field:'status_notification',width:100,align:'center',styler:statusStyler, formatter:statusFormatter">Approval</th>
-            <th rowspan="2" data-options="field:'status_check',width:120,align:'center'">Approval By</th>
+            <th rowspan="2" data-options="field:'bank_name',width:150,halign:'center'">Bank Name</th>
+            <th rowspan="2" data-options="field:'bank_no',width:120,halign:'center'">Bank Account</th>
+            <th colspan="3">Approval</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
         <tr>
+            <th data-options="field:'approved_to',width:100,align:'center',styler:statusStyler, formatter:statusFormatter"> Status</th>
+            <th data-options="field:'approved_by',width:100,align:'center'"> By</th>
+            <th data-options="field:'approved_date',width:150,align:'center'"> Date</th>
             <th data-options="field:'created_by',width:100,align:'center'"> By</th>
             <th data-options="field:'created_date',width:150,align:'center'"> Date</th>
             <th data-options="field:'updated_by',width:100,align:'center'"> By</th>
@@ -73,15 +76,20 @@
                         <span style="width:35%; display:inline-block;">Group</span>
                         <input style="width:60%;" id="filter_groups" class="easyui-combogrid">
                     </div>
-                    <div class="fitem">
+                    <div class="fitem" hidden>
                         <span style="width:35%; display:inline-block;">Religion</span>
                         <input style="width:60%;" id="filter_religions" class="easyui-combobox">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Martial Status</span>
+                        <input style="width:60%;" id="filter_maritals" class="easyui-combogrid">
                     </div>
                 </div>
                 <div style="width:33%; float: left;">
                     <div class="fitem">
-                        <span style="width:35%; display:inline-block;">Martial Status</span>
-                        <input style="width:60%;" id="filter_maritals" class="easyui-combogrid">
+                        <span style="width:35%; display:inline-block;">Join Date</span>
+                        <input style="width:28%;" id="filter_from_join" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser, editable:false"> To
+                        <input style="width:28%;" id="filter_to_join" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser, editable:false">
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Fit For Service</span>
@@ -108,10 +116,12 @@
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Status</span>
-                        <select style="width:60%;" id="filter_status" class="easyui-combobox" data-options="panelHeight:'auto'">
+                        <select style="width:30%;" id="filter_status" class="easyui-combobox" data-options="panelHeight:'auto'">
                             <option value="0">Active</option>
                             <option value="1">Not Active</option>
                         </select>
+                        
+                        &nbsp; &nbsp; <input class="easyui-checkbox" id="filter_resign" value="1"> &nbsp; Resign
                     </div>
                 </div>
             </fieldset>
@@ -1026,6 +1036,15 @@
         var filter_services = $("#filter_services").combobox('getValue');
         var filter_expired = $("#filter_expired").combobox('getValue');
         var filter_status = $("#filter_status").combobox('getValue');
+        var filter_resign = $("#filter_resign").checkbox('options');
+        var filter_from_join = $("#filter_from_join").datebox('getValue');
+        var filter_to_join = $("#filter_to_join").datebox('getValue');
+
+        if(filter_resign.checked == true){
+            var resign = "1";
+        }else{
+            var resign = "0";
+        }
 
         var url = "?filter_divisions=" + filter_divisions +
             "&filter_departements=" + filter_departements +
@@ -1038,7 +1057,10 @@
             "&filter_maritals=" + filter_maritals +
             "&filter_services=" + filter_services +
             "&filter_expired=" + filter_expired +
-            "&filter_status=" + filter_status;
+            "&filter_status=" + filter_status +
+            "&filter_from_join=" + btoa(filter_from_join) +
+            "&filter_to_join=" + btoa(filter_to_join) +
+            "&filter_resign=" + resign;
 
         $('#dg').datagrid({
             url: '<?= base_url('employee/employees/datatables') ?>' + url
@@ -1066,6 +1088,15 @@
         var filter_services = $("#filter_services").combobox('getValue');
         var filter_expired = $("#filter_expired").combobox('getValue');
         var filter_status = $("#filter_status").combobox('getValue');
+        var filter_resign = $("#filter_resign").checkbox('options');
+        var filter_from_join = $("#filter_from_join").datebox('getValue');
+        var filter_to_join = $("#filter_to_join").datebox('getValue');
+
+        if(filter_resign.checked == true){
+            var resign = "1";
+        }else{
+            var resign = "0";
+        }
 
         var url = "?filter_divisions=" + filter_divisions +
             "&filter_departements=" + filter_departements +
@@ -1078,7 +1109,10 @@
             "&filter_maritals=" + filter_maritals +
             "&filter_services=" + filter_services +
             "&filter_expired=" + filter_expired +
-            "&filter_status=" + filter_status;
+            "&filter_status=" + filter_status +
+            "&filter_from_join=" + btoa(filter_from_join) +
+            "&filter_to_join=" + btoa(filter_to_join) +
+            "&filter_resign=" + resign;
 
         window.location.assign('<?= base_url('employee/employees/print/excel') ?>' + url);
     }
@@ -1791,6 +1825,8 @@
             rowStyler: function(index, row) {
                 if (row.status == 1) {
                     return 'background-color:#FFDCDC;';
+                }else if(row.resign_date != null){
+                    return 'background-color:#FFD44D;';
                 }
             }
         });

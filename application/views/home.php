@@ -476,11 +476,11 @@
 		$('#dlg_approval').dialog('open');
 	}
 
-	// approvalList();
-	// approvalCount();
-	// resignations();
-	// setInterval(approvalList, 10000);
-	// setInterval(approvalCount, 10000);
+	approvalList();
+	approvalCount();
+	resignations();
+	setInterval(approvalList, 10000);
+	setInterval(approvalCount, 10000);
 
 	function approvalList() {
 		$.ajax({

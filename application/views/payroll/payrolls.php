@@ -8,6 +8,7 @@
     </thead>
     <thead>
         <tr>
+            <th rowspan="2" data-options="field:'status_resign',width:80,halign:'center', formatter:statusResign, styler:styleStatusResign">Status</th>
             <th rowspan="2" data-options="field:'division_name',width:200,halign:'center'">Division</th>
             <th rowspan="2" data-options="field:'departement_name',width:200,halign:'center'">Departement</th>
             <th rowspan="2" data-options="field:'departement_sub_name',width:200,halign:'center'">Departement Sub</th>
@@ -15,7 +16,7 @@
             <th rowspan="2" data-options="field:'contract_name',width:100,halign:'center'">Status</th>
             <th rowspan="2" data-options="field:'source_name',width:200,halign:'center'">Source</th>
             <th rowspan="2" data-options="field:'position_name',width:100,halign:'center'">Position</th>
-            <th rowspan="2" data-options="field:'shift_name',width:100,halign:'center'">Shift</th>
+            <th rowspan="2" data-options="field:'shift_name',width:150,halign:'center'">Shift</th>
             <th rowspan="2" data-options="field:'level',width:80,halign:'center'">Level</th>
             <th rowspan="2" data-options="field:'marital',width:80,halign:'center'">Marital</th>
             <th rowspan="2" data-options="field:'group_name',width:100,halign:'center'">Group</th>
@@ -147,6 +148,14 @@
                     <div class="fitem">
                         <span style="width:30%; display:inline-block;">Group</span>
                         <input style="width:60%;" id="filter_group" name="filter_group" class="easyui-combobox">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:30%; display:inline-block;">Status</span>
+                        <select style="width:30%;" id="filter_status" class="easyui-combobox" data-options="panelHeight:'auto'">
+                            <option value="">Choose All</option>
+                            <option value="0">Active</option>
+                            <option value="1">Not Active</option>
+                        </select>
                     </div>
                 </div>
             </fieldset>
@@ -399,6 +408,7 @@
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_employee_type = $("#filter_employee_type").combobox('getValue');
         var filter_group = $("#filter_group").combobox('getValue');
+        var filter_status = $("#filter_status").combobox('getValue');
 
         var url = "?filter_from=" + filter_from +
             "&filter_to=" + filter_to +
@@ -407,6 +417,7 @@
             "&filter_departement_sub=" + filter_departement_sub +
             "&filter_employee=" + filter_employee +
             "&filter_employee_type=" + filter_employee_type +
+            "&filter_status=" + filter_status +
             "&filter_group=" + filter_group;
 
         if (filter_from == "" || filter_to == "") {
@@ -436,6 +447,7 @@
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_employee_type = $("#filter_employee_type").combobox('getValue');
         var filter_group = $("#filter_group").combobox('getValue');
+        var filter_status = $("#filter_status").combobox('getValue');
 
         var url = "?filter_from=" + filter_from +
             "&filter_to=" + filter_to +
@@ -444,6 +456,7 @@
             "&filter_departement_sub=" + filter_departement_sub +
             "&filter_employee=" + filter_employee +
             "&filter_employee_type=" + filter_employee_type +
+            "&filter_status=" + filter_status +
             "&filter_group=" + filter_group;
 
         if (filter_from == "" || filter_to == "") {
@@ -639,17 +652,25 @@
         }
     }
 
-    function StylerAllowence(value, row, index) {
-        return 'background: #C6FFB5;';
-    }
-
-    function StylerDeduction(value, row, index) {
-        return 'background: #FFB5B5;';
-    }
-
     function numberformat(value, row) {
         const formatter = new Intl.NumberFormat('id-ID');
 
         return "<b>" + formatter.format(value) + "</b>";
+    }
+
+    function statusResign(value, row){
+        if(value == null){
+            return "ACTIVE";
+        }else{
+            return "NOT ACTIVE";
+        }
+    }
+
+    function styleStatusResign(value, row, index) {
+        if(value == null){
+            return 'background: #53D636; color:white;';
+        }else{
+            return 'background: #FF5F5F; color:white;';
+        }
     }
 </script>

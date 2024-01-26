@@ -134,7 +134,7 @@ class Employees extends CI_Controller
                     $content = "<tr>
                                     <td>" . $no . "</td>";
                     for ($z = 0; $z < count($form['filter_column']); $z++) {
-                        $content .= "<td class='str'>" . $data[$form['filter_column'][$z]] . "</td>";
+                        $content .= "<td style='mso-number-format:\@;'>" . $data[$form['filter_column'][$z]] . "</td>";
                     }
 
                     $content .= "   <td " . $style . ">" . $status . "</td>

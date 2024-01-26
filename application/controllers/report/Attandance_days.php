@@ -44,19 +44,22 @@ class Attandance_days extends CI_Controller
             $filter_departement = $this->input->get('filter_departement');
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
+            $filter_permit_type = $this->input->get('filter_permit_type');
+            $filter_status_in = $this->input->get('filter_status_in');
             $filter_status = $this->input->get('filter_status');
+            $filter_status_employee = $this->input->get('filter_status_employee');
 
             $this->db->select('b.id as employee_id, b.number as employee_number, b.name as employee_name, c.name as division_name, 
-            d.name as departement_name, e.name as departement_sub_name, g.name as shift_name, h.days');
+            d.name as departement_name, e.name as departement_sub_name, g.name as shift_name, h.days, b.date_sign');
             $this->db->from('employees b');
             $this->db->join('divisions c', 'b.division_id = c.id');
             $this->db->join('departements d', 'b.departement_id = d.id');
             $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
             $this->db->join('shift_employees f', 'b.id = f.employee_id', 'left');
-            $this->db->join('shifts g', 'f.shift_id = g.id');
-            $this->db->join('shift_details h', 'h.shift_id = g.id');
+            $this->db->join('shifts g', 'f.shift_id = g.id', 'left');
+            $this->db->join('shift_details h', 'h.shift_id = g.id', 'left');
             $this->db->where('b.deleted', 0);
-            $this->db->where('b.status', 0);
+            $this->db->like('b.status', $filter_status_employee);
             $this->db->like('b.id', $filter_employee);
             $this->db->like('c.id', $filter_division);
             $this->db->like('d.id', $filter_departement);
@@ -111,6 +114,8 @@ class Attandance_days extends CI_Controller
                     <th>Trans Date</th>
                     <th>Time In/Out</th>
                     <th>Status</th>
+                    <th>Permit</th>
+                    <th>Description</th>
                 </tr>';
             $no = 1;
 
@@ -118,7 +123,6 @@ class Attandance_days extends CI_Controller
             $finish = strtotime($filter_to);
 
             foreach ($records as $data) {
-                $html = "";
                 for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
                     $working_date = date('Y-m-d', $i);
 
@@ -128,34 +132,30 @@ class Attandance_days extends CI_Controller
                     $holiday = $this->db->get()->row();
 
                     //Attandance and Overtime
-                    $this->db->select("*");
+                    $this->db->select("date_in, time_in, date_out, time_out");
                     $this->db->from('attandances');
                     $this->db->where("date_in", $working_date);
-                    $this->db->where("location", 1);
                     $this->db->where('number', $data['employee_number']);
-                    $attandance_in = $this->db->get()->row();
+                    $this->db->order_by('date_in', 'asc');
+                    $attandance = $this->db->get()->row();
 
-                    $tomorrow = date('Y-m-d',strtotime($working_date . "+1 days"));
-                    $today_out = $this->crud->read('attandances', [], ["number" => $data['employee_number'], "date_in" => $working_date, "location" => 2]);
-                    if(!empty(@$today_out->date_in)){
-                        $tomorrow_out = $this->crud->read('attandances', [], ["number" => $data['employee_number'], "date_in" => $tomorrow, "location" => 2]);
-                        if(@$attandance_in->time_in > @$today_out->time_in){
-                            $attandance_out = $tomorrow_out;
-                        }else{
-                            if(empty(@$attandance_in->time_in)){
-                                $attandance_out = [];
-                            }else{
-                                $attandance_out = $today_out;
-                            }
-                        }
-                    }else{
-                        $tomorrow_out = $this->crud->read('attandances', [], ["number" => $data['employee_number'], "date_in" => $tomorrow, "location" => 2]);
-                        if(@$attandance_in->time_in > @$tomorrow_out->time_in){
-                            $attandance_out = $tomorrow_out;
-                        }else{
-                            $attandance_out = [];
-                        }
-                    }
+                    //Resignation
+                    $this->db->select('*');
+                    $this->db->from('resignations');
+                    $this->db->where('employee_id', $data['employee_id']);
+                    $this->db->where('resign_date <', $working_date);
+                    $resignation = $this->db->get()->row();
+
+                    //Shift and Setting Group
+                    $tolerance_hour_min = date("H:i:s", strtotime('-2 Hour', strtotime(@$attandance->time_in)));
+                    $tolerance_hour_plus = date("H:i:s", strtotime('+2 Hour', strtotime(@$attandance->time_in)));
+                    $this->db->select("d.start, d.end, d.days, d.working, d.tolerance, c.name, d.name as shift_name");
+                    $this->db->from('shift_employees b');
+                    $this->db->join('shifts c', 'c.id = b.shift_id');
+                    $this->db->join('shift_details d', 'd.shift_id = c.id');
+                    $this->db->where('b.employee_id', $data['employee_id']);
+                    $this->db->where("d.start >=  '$tolerance_hour_min' and d.start <= '$tolerance_hour_plus'");
+                    $shift = $this->db->get()->row();
 
                     //PERMIT
                     $this->db->select("a.*, c.name as reason_name, d.name as permit_name");
@@ -183,42 +183,84 @@ class Attandance_days extends CI_Controller
                         if (date('w', $i) !== '0' && date('w', $i) !== '6') {
                             if (!empty($holiday->description)) {
                                 $status = "HOLIDAY";
+                                $remarks = $holiday->description;
                             } else {
                                 if (@$permit->permit_name != null) {
                                     $status = "PERMIT";
-                                } elseif (@$attandance_in->shift_start == null) {
+                                    $remarks = @$permit->note;
+                                } elseif (@$shift->start == null) {
                                     $status = "UN SETTING";
-                                } elseif (@$attandance_in->shift_start <= @$attandance_in->time_in) {
-                                    $status = "LATE";
-                                } elseif (@$attandance_in->shift_start >= @$attandance_in->time_in) {
-                                    $status = "ON TIME";
-                                } else {
+                                    $remarks = "Check Shift Employee";
+                                } elseif ($data['date_sign'] >= $working_date) {
+                                    $status = "NOT JOIN YET";
+                                    $remarks = "";
+                                } elseif (!empty($resignation)) {
+                                    $status = "RESIGN";
+                                    $remarks = $resignation->remarks;
+                                } elseif (@$change_day_end->end != null || @$change_day->start != null) {
+                                    $status = "CHANGE DAY";
+                                    $remarks = @$change_day_end->remarks;
+                                } elseif (empty($attandance->time_in) && empty($attandance->time_out)) {
                                     $status = "ABSENCE";
+                                    $remarks = "";
+                                } elseif (@$shift->start <= @$attandance->time_in) {
+                                    $status = "LATE";
+                                    $remarks = "";
+                                } elseif (@$shift->start >= @$attandance->time_in) {
+                                    $status = "ON TIME";
+                                    $remarks = "";
                                 }
                             }
                         } else {
-                            $status = "WEEKEND";
+                            if (@$change_day_end->end != null || @$change_day->start != null) {
+                                $status = "CHANGE DAY";
+                                $remarks = @$change_day->remarks;
+                            } else {
+                                $status = "WEEKEND";
+                                $remarks = "";
+                            }
                         }
                     } else {
                         //sabtu doang libur
                         if (date('w', $i) !== '0') {
                             if (!empty($holiday->description)) {
                                 $status = "HOLIDAY";
+                                $remarks = $holiday->description;
                             } else {
                                 if (@$permit->permit_name != null) {
                                     $status = "PERMIT";
-                                } elseif (@$attandance_in->shift_start == null) {
+                                    $remarks = @$permit->note;
+                                } elseif (@$shift->start == null) {
                                     $status = "UN SETTING";
-                                } elseif (@$attandance_in->shift_start <= @$attandance_in->time_in) {
-                                    $status = "LATE";
-                                } elseif (@$attandance_in->shift_start >= @$attandance_in->time_in) {
-                                    $status = "ON TIME";
-                                } else {
+                                    $remarks = "Check Shift Employee";
+                                } elseif ($data['date_sign'] >= $working_date) {
+                                    $status = "NOT JOIN YET";
+                                    $remarks = "";
+                                } elseif (!empty($resignation)) {
+                                    $status = "RESIGN";
+                                    $remarks = $resignation->remarks;
+                                } elseif (@$change_day_end->end != null || @$change_day->start != null) {
+                                    $status = "CHANGE DAY";
+                                    $remarks = @$change_day_end->remarks;
+                                } elseif (empty($attandance->time_in) && empty($attandance->time_out)) {
                                     $status = "ABSENCE";
+                                    $remarks = "";
+                                } elseif (@$shift->start <= @$attandance->time_in) {
+                                    $status = "LATE";
+                                    $remarks = "";
+                                } elseif (@$shift->start >= @$attandance->time_in) {
+                                    $status = "ON TIME";
+                                    $remarks = "";
                                 }
                             }
                         } else {
-                            $status = "WEEKEND";
+                            if (@$change_day_end->end != null || @$change_day->start != null) {
+                                $status = "CHANGE DAY";
+                                $remarks = @$change_day->remarks;
+                            } else {
+                                $status = "WEEKEND";
+                                $remarks = "";
+                            }
                         }
                     }
 
@@ -226,43 +268,52 @@ class Attandance_days extends CI_Controller
                         $style = "style='color:red; font-weight:bold;'";
                     } elseif ($status == "PERMIT") {
                         $style = "style='color:blue; font-weight:bold;'";
+                    } elseif ($status == "CHANGE DAY") {
+                        $style = "style='color:blue; font-weight:bold;'";
                     } elseif ($status == "LATE") {
                         $style = "style='color:orange; font-weight:bold;'";
                     } elseif ($status == "ON TIME") {
                         $style = "style='color:green; font-weight:bold;'";
+                    } elseif ($status == "NOT JOIN YET") {
+                        $style = "style='color:gray; font-weight:bold;'";
                     } else {
                         $style = "style='color:red; font-weight:bold;'";
                     }
 
-                    if ($status == $filter_status) {
-                        $html .= '   <tr>
-                                        <td>' . $no . '</td>
-                                        <td>' . $data['departement_name'] . '</td>
-                                        <td>' . $data['departement_sub_name'] . '</td>
-                                        <td style="mso-number-format:\@;">' . $data['employee_number'] . '</td>
-                                        <td>' . $data['employee_name'] . '</td>
-                                        <td>' . $data['shift_name'] . '</td>
-                                        <td>' . date("d F Y", strtotime(@$working_date)) . '</td>
-                                        <td>' . @$attandance_in->time_in . ' - ' . @$attandance_out->time_in . '</td>
-                                        <td ' . $style . '>' . $status . '</td>
-                                    </tr>';
-                    } else {
-                        $html .= '   <tr>
-                                        <td>' . $no . '</td>
-                                        <td>' . $data['departement_name'] . '</td>
-                                        <td>' . $data['departement_sub_name'] . '</td>
-                                        <td style="mso-number-format:\@;">' . $data['employee_number'] . '</td>
-                                        <td>' . $data['employee_name'] . '</td>
-                                        <td>' . $data['shift_name'] . '</td>
-                                        <td>' . date("d F Y", strtotime(@$working_date)) . '</td>
-                                        <td>' . @$attandance_in->time_in . ' - ' . @$attandance_out->time_in . '</td>
-                                        <td ' . $style . '>' . $status . '</td>
-                                    </tr>';
-                    }
+                    $html =     '<tr>
+                                    <td>' . $no . '</td>
+                                    <td>' . $data['departement_name'] . '</td>
+                                    <td>' . $data['departement_sub_name'] . '</td>
+                                    <td style="mso-number-format:\@;">' . $data['employee_number'] . '</td>
+                                    <td>' . $data['employee_name'] . '</td>
+                                    <td>' . $data['shift_name'] . '</td>
+                                    <td>' . date("d F Y", strtotime(@$working_date)) . '</td>
+                                    <td>' . @$attandance->time_in . ' - ' . @$attandance->time_out . '</td>
+                                    <td ' . $style . '>' . $status . '</td>
+                                    <td ' . $style . '>' . @$permit->permit_name . '</td>
+                                    <td>' . $remarks . '</td>
+                                </tr>';
 
-                    $no++;
+                    if ($status == $filter_status) {
+                        echo  $html;      
+                        $no++;
+                    } else if (@$permit->permit_name != "" && @$permit->permit_name == @strtoupper($filter_permit_type)) {
+                        echo  $html;      
+                        $no++;
+                    } else if ($filter_status_in == "INOUT" && !empty(@$attandance->time_in) && !empty(@$attandance->time_out)){
+                        echo  $html;      
+                        $no++;
+                    } else if ($filter_status_in == "IN" && @$attandance->time_in != null && @$attandance->time_out == null){
+                        echo  $html;      
+                        $no++;
+                    } else if ($filter_status_in == "OUT" && empty(@$attandance->time_in) && !empty(@$attandance->time_out)){
+                        echo  $html;      
+                        $no++;
+                    } else if($filter_status == "" && $filter_permit_type == "" && $filter_status_in == "") {
+                        echo  $html;      
+                        $no++;
+                    }
                 }
-                echo $html;
             }
 
             echo '</table></body></html>';

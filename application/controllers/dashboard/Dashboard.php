@@ -118,7 +118,7 @@ class Dashboard extends CI_Controller
             $permit = $this->db->get()->row();
 
             //Attandance and Overtime
-            $this->db->select("b.date_in, b.time_in, c.request_code, c.start, c.end, c.duration, c.remarks");
+            $this->db->select("b.date_in, b.time_in, b.date_out, b.time_out, c.request_code, c.start, c.end, c.duration, c.remarks");
             $this->db->from('employees a');
             $this->db->join('attandances b', 'a.number = b.number');
             $this->db->join('overtimes c', 'a.id = c.employee_id and b.date_in = c.trans_date', 'left');
@@ -306,24 +306,19 @@ class Dashboard extends CI_Controller
 
             $working_date = date("Y-m-$d");
 
-            $this->db->select("date_in, time_in");
-            $this->db->from('attandances');
-            $this->db->where('date_in =', $working_date);
-            $this->db->where('number', $this->session->number);
-            $this->db->where('location', 1);
-            $attandance_in = $this->db->get()->row();
+            $this->db->select("b.date_in, b.time_in, b.date_out, b.time_out");
+            $this->db->from('employees a');
+            $this->db->join('attandances b', 'a.number = b.number');
+            $this->db->where('b.date_in =', $working_date);
+            $this->db->where('a.number', $this->session->number);
+            $this->db->order_by('a.name', 'asc');
+            $this->db->order_by('b.date_in', 'asc');
+            $attandances = $this->db->get()->row();
 
-            $this->db->select("date_in, time_in");
-            $this->db->from('attandances');
-            $this->db->where('date_in =', $working_date);
-            $this->db->where('number', $this->session->number);
-            $this->db->where('location', 2);
-            $attandance_out = $this->db->get()->row();
-
-            if (!empty($attandance_in->time_in)) {
+            if (!empty($attandances->time_in)) {
                 $in = "<div style='background:#65B451;padding:2px;color:white;margin:0;'> IN : " . $attandances->time_in . "</div>";
-                if (!empty($attandance_out->time_in)) {
-                    $out = "<div style='background:#B45151;padding:2px;color:white;margin:0;'>OUT : " . $attandances->time_in . "</div>";
+                if (!empty($attandances->time_out)) {
+                    $out = "<div style='background:#B45151;padding:2px;color:white;margin:0;'>OUT : " . $attandances->time_out . "</div>";
                 } else {
                     $out = "";
                 }

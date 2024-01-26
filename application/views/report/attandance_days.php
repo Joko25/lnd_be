@@ -18,28 +18,48 @@
                     <input style="width:60%;" id="filter_departement" class="easyui-combobox">
                 </div>
                 <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Departement Sub</span>
+                    <input style="width:60%;" id="filter_departement_sub" class="easyui-combobox">
+                </div>
+                <div class="fitem">
                     <span style="width:35%; display:inline-block;"></span>
                     <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
                 </div>
             </div>
             <div style="width: 49%; float:left;">
                 <div class="fitem">
-                    <span style="width:35%; display:inline-block;">Departement Sub</span>
-                    <input style="width:60%;" id="filter_departement_sub" class="easyui-combobox">
-                </div>
-                <div class="fitem">
                     <span style="width:35%; display:inline-block;">Employee</span>
-                    <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
+                    <select style="width:20%;" id="filter_status_employee" class="easyui-combobox" data-options="panelHeight:'auto'">
+                        <option value="0">Active</option>
+                        <option value="1">Not Active</option>
+                    </select>
+                    <input style="width:40%;" id="filter_employee" class="easyui-combogrid">
                 </div>
                 <div class="fitem">
-                    <span style="width:35%; display:inline-block;">Status Attandance</span>
+                    <span style="width:35%; display:inline-block;">Permit Type</span>
+                    <input style="width:60%;" id="filter_permit_type" class="easyui-combogrid">
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Status Attendance</span>
                     <select style="width:60%;" id="filter_status" panelHeight="auto" class="easyui-combobox">
-                        <option value="">CHOOSE ALL</option>
+                        <option value="">Choose All</option>
                         <option value="ON TIME">ON TIME</option>
-                        <option value="PERMIT">PERMIT</option>
+                        <option value="CHANGE DAY">CHANGE DAY</option>
                         <option value="LATE">LATE</option>
                         <option value="UN SETTING">UN SETTING</option>
+                        <option value="PERMIT">PERMIT</option>
+                        <option value="NOT JOIN YET">NOT JOIN YET</option>
                         <option value="ABSENCE">ABSENCE</option>
+                        <option value="RESIGN">RESIGN</option>
+                    </select>
+                </div>
+                <div class="fitem">
+                    <span style="width:35%; display:inline-block;">Status In/Out</span>
+                    <select style="width:60%;" id="filter_status_in" class="easyui-combobox" panelHeight="auto">
+                        <option value="">Choose All</option>
+                        <option value="INOUT">IN & OUT</option>
+                        <option value="IN">JUST IN</option>
+                        <option value="OUT">JUST OUT</option>
                     </select>
                 </div>
             </div>
@@ -67,7 +87,10 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
+        var filter_permit_type = $("#filter_permit_type").combobox('getValue');
         var filter_status = $("#filter_status").combobox('getValue');
+        var filter_status_in = $("#filter_status_in").combobox('getValue');
+        var filter_status_employee = $("#filter_status_employee").combobox('getValue');
 
         var url = "?filter_from=" + filter_from +
             "&filter_to=" + filter_to +
@@ -75,6 +98,9 @@
             "&filter_departement=" + filter_departement +
             "&filter_departement_sub=" + filter_departement_sub +
             "&filter_employee=" + filter_employee +
+            "&filter_permit_type=" + filter_permit_type +
+            "&filter_status_in=" + filter_status_in +
+            "&filter_status_employee=" + filter_status_employee +
             "&filter_status=" + filter_status;
 
         var date1 = new Date(filter_from);
@@ -99,7 +125,10 @@
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
+        var filter_permit_type = $("#filter_permit_type").combobox('getValue');
         var filter_status = $("#filter_status").combobox('getValue');
+        var filter_status_in = $("#filter_status_in").combobox('getValue');
+        var filter_status_employee = $("#filter_status_employee").combobox('getValue');
 
         var url = "?filter_from=" + filter_from +
             "&filter_to=" + filter_to +
@@ -107,6 +136,9 @@
             "&filter_departement=" + filter_departement +
             "&filter_departement_sub=" + filter_departement_sub +
             "&filter_employee=" + filter_employee +
+            "&filter_permit_type=" + filter_permit_type +
+            "&filter_status_in=" + filter_status_in +
+            "&filter_status_employee=" + filter_status_employee +
             "&filter_status=" + filter_status;
 
         var date1 = new Date(filter_from);
@@ -190,6 +222,50 @@
                             }
                         });
                     }
+                });
+            }
+        });
+
+        $("#filter_permit_type").combobox({
+            url: '<?= base_url('attandance/permit_types/reads') ?>',
+            valueField: 'name',
+            textField: 'name',
+            prompt: "Choose All",
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combobox('clear').combobox('textbox').focus();
+                }
+            }],
+        });
+
+        $('#filter_status_employee').combobox({
+            onChange: function(status) {
+                $('#filter_employee').combogrid({
+                    url: '<?= base_url('employee/employees/reads/') ?>' + status,
+                    panelWidth: 450,
+                    idField: 'id',
+                    textField: 'name',
+                    mode: 'remote',
+                    fitColumns: true,
+                    prompt: 'Choose All',
+                    icons: [{
+                        iconCls: 'icon-clear',
+                        handler: function(e) {
+                            $(e.data.target).combogrid('clear').combogrid('textbox').focus();
+                        }
+                    }],
+                    columns: [
+                        [{
+                            field: 'number',
+                            title: 'Employee ID',
+                            width: 120
+                        }, {
+                            field: 'name',
+                            title: 'Employee Name',
+                            width: 200
+                        }]
+                    ],
                 });
             }
         });

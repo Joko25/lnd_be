@@ -50,6 +50,7 @@ class Employees extends CI_Controller
             $data['religion'] = $this->crud->read('religions', [], ["id" => $data['employee']->religion_id]);
             $data['resignation'] = $this->crud->read('resignations', [], ["employee_id" => $number]);
             $data['service'] = $this->readService($data['employee']->date_sign);
+            $data['source'] = $this->crud->read('sources', [], ["id" => $data['employee']->source_id]);
             $data['id_menu'] = $id_menu;
 
             $this->load->view('template/header', $data);
@@ -58,7 +59,7 @@ class Employees extends CI_Controller
     }
 
     //GET DATA
-    public function reads()
+    public function reads($status = 0)
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
         $get = $this->input->get();
@@ -76,7 +77,7 @@ class Employees extends CI_Controller
 
         $this->db->select('*');
         $this->db->from('employees');
-        $this->db->where('status', 0);
+        $this->db->where('status', $status);
         if ($get) {
             $this->db->like($get);
         }
@@ -98,7 +99,6 @@ class Employees extends CI_Controller
 
         $this->db->select('a.*, c.name as division_name, d.name as departement_name, e.name as departement_sub_name, f.name as position_name');
         $this->db->from('employees a');
-        $this->db->join('notifications b', 'a.id = b.table_id', 'left');
         $this->db->join('divisions c', 'a.division_id = c.id');
         $this->db->join('departements d', 'a.departement_id = d.id');
         $this->db->join('departement_subs e', 'a.departement_sub_id = e.id');
@@ -251,6 +251,10 @@ class Employees extends CI_Controller
         $filter_services = $this->input->get('filter_services');
         $filter_expired = $this->input->get('filter_expired');
         $filter_status = $this->input->get('filter_status');
+        $filter_resign = $this->input->get('filter_resign');
+        $filter_from_join = base64_decode($this->input->get('filter_from_join'));
+        $filter_to_join = base64_decode($this->input->get('filter_to_join'));
+
         $aprvDepartement = $this->checkApprovalAccess('employees');
         $today = date("Y-m-d");
 
@@ -302,24 +306,28 @@ class Employees extends CI_Controller
         $offset = ($page - 1) * $rows;
         $result = array();
         //Select Query
-        $this->db->select('a.*, 
-                b.users_id_from as status_check,
-                b.users_id_to as status_notification, 
+        $this->db->select('a.*,
                 c.name as division_name, 
                 d.name as departement_name, 
                 e.name as departement_sub_name,
                 e.type, 
                 g.name as position_name,
-                h.name as contract_name');
+                h.name as contract_name,
+                i.resign_date');
         $this->db->from('employees a');
-        $this->db->join('notifications b', "a.id = b.table_id and b.table_name = 'employees'", 'left');
         $this->db->join('divisions c', 'c.id = a.division_id');
         $this->db->join('departements d', 'd.id = a.departement_id');
         $this->db->join('departement_subs e', 'e.id = a.departement_sub_id');
-        $this->db->join('agreements f', 'a.number = f.number and f.status = 0');
         $this->db->join('positions g', 'g.id = a.position_id', 'left');
         $this->db->join('contracts h', 'h.id = a.contract_id', 'left');
+        $this->db->join('resignations i', 'a.id = i.employee_id', 'left');
         $this->db->where('a.deleted', 0);
+        if($filter_from_join != ""  && $filter_to_join != ""){
+            $this->db->where("a.date_sign between '$filter_from_join' and '$filter_to_join'");
+        }
+        if($filter_resign == "1"){
+            $this->db->where("i.resign_date is not null");
+        }
         if ($filter_status == "") {
             $this->db->where('a.status', 0);
         } else {
@@ -913,6 +921,10 @@ class Employees extends CI_Controller
         $filter_services = $this->input->get('filter_services');
         $filter_expired = $this->input->get('filter_expired');
         $filter_status = $this->input->get('filter_status');
+        $filter_resign = $this->input->get('filter_resign');
+        $filter_from_join = base64_decode($this->input->get('filter_from_join'));
+        $filter_to_join = base64_decode($this->input->get('filter_to_join'));
+
         $aprvDepartement = $this->checkApprovalAccess('employees');
 
         $today = date("Y-m-d");
@@ -957,7 +969,6 @@ class Employees extends CI_Controller
         }
 
         $this->db->select('a.*, 
-                b.users_id_to as status_notification, 
                 c.number as division_number, 
                 c.name as division_name, 
                 d.number as departement_number, 
@@ -979,18 +990,23 @@ class Employees extends CI_Controller
                 l.number as source_number,
                 l.name as source_name');
         $this->db->from('employees a');
-        $this->db->join('notifications b', 'a.id = b.table_id', 'left');
         $this->db->join('divisions c', 'c.id = a.division_id');
         $this->db->join('departements d', 'd.id = a.departement_id');
         $this->db->join('departement_subs e', 'e.id = a.departement_sub_id');
-        $this->db->join('agreements f', 'a.number = f.number and f.status = 0');
         $this->db->join('positions g', 'g.id = a.position_id', 'left');
         $this->db->join('contracts h', 'h.id = a.contract_id', 'left');
         $this->db->join('groups i', 'i.id = a.group_id', 'left');
         $this->db->join('religions j', 'j.id = a.religion_id', 'left');
         $this->db->join('maritals k', 'k.id = a.marital_id', 'left');
         $this->db->join('sources l', 'l.id = a.source_id', 'left');
+        $this->db->join('resignations m', 'a.id = m.employee_id', 'left');
         $this->db->where('a.deleted', 0);
+        if($filter_from_join != ""  && $filter_to_join != ""){
+            $this->db->where("a.date_sign between '$filter_from_join' and '$filter_to_join'");
+        }
+        if($filter_resign == "1"){
+            $this->db->where("m.resign_date is not null");
+        }
         $this->db->like('a.status', $filter_status);
         $this->db->like('a.departement_id', $aprvDepartement);
         $whereService1;
@@ -1078,7 +1094,13 @@ class Employees extends CI_Controller
             </tr>';
         $no = 1;
         foreach ($records as $data) {
-            $html .= '<tr>
+            if($data['status'] == "1"){
+                $style = "style='background:#FFDCDC;'";
+            }else{
+                $style = "";
+            }
+
+            $html .= '<tr '.$style.'>
                     <td>' . $no . '</td>
                     <td class="str">' . $data['number'] . '</td>
                     <td>' . $data['name'] . '</td>
