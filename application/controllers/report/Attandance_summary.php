@@ -230,7 +230,7 @@ class Attandance_summary extends CI_Controller
                     $this->db->select("number, date_in");
                     $this->db->from('attandances');
                     $this->db->where('number', $data['number']);
-                    $this->db->where("((date_in >= '$filter_from' and date_in <= '$filter_to') or (date_out >= '$tomorow' and date_out <= '$filter_to'))");
+                    $this->db->where("((date_in >= '$filter_from' and date_in <= '$filter_to'))");
                     if (count($weekend_day) > 0) {
                         $this->db->where_not_in('date_in', $weekend_day);
                     }

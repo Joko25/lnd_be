@@ -4,14 +4,13 @@
         <tr>
             <th field="ck" checkbox="true"></th>
             <th data-options="field:'dayname',width:80">Day</th>
-            <th data-options="field:'date_in',width:80">Date In</th>
-            <th data-options="field:'date_out',width:80">Date Out</th>
+            <th data-options="field:'date_in',width:80">Date</th>
+            <th data-options="field:'time_in',width:80">Time</th>
+            <th data-options="field:'location',width:80, formatter:locationFormat, styler:locationStyle">Location</th>
             <th data-options="field:'departement_name',width:200">Departement</th>
             <th data-options="field:'number',width:120">Employee ID</th>
             <th data-options="field:'name',width:200">Employee Name</th>
             <th data-options="field:'contract_name',width:100">Type</th>
-            <th data-options="field:'time_in',width:80">Check In</th>
-            <th data-options="field:'time_out',width:80">Check Out</th>
         </tr>
     </thead>
 </table>
@@ -20,7 +19,7 @@
 <div id="toolbar">
     <div class="easyui-accordion" style="width:100%; margin-bottom:5px;">
         <div title="Click this to hide the filter" data-options="onCollapse: function(){ $('#dg').datagrid('reload'); }" style="padding:10px; background:#F4F4F4;">
-            <fieldset style="width: 99%; border:2px solid #d0d0d0; border-radius:4px;">
+            <fieldset style="width: 60%; border:2px solid #d0d0d0; border-radius:4px; float: left;">
                 <legend><b>Form Filter Data</b></legend>
                 <div style="width: 50%; float: left;">
                     <div class="fitem">
@@ -61,13 +60,20 @@
                     </div>
                 </div>
             </fieldset>
+            <fieldset style="width: 39%; border:2px solid #d0d0d0; border-radius:4px; float: left;">
+                <legend><b>Convert Attendance</b></legend>
+                <span style="float: left; color:green;">SUCCESS : <b id="p_success2">0</b></span><span style="float: right; color:red;"> FAILED : <b id="p_failed2">0</b></span>
+                <div id="p_upload2" class="easyui-progressbar" style="width:100%; margin-top: 10px;"></div>
+                <center><b id="p_start2">0</b> Of <b id="p_finish2">0</b></center>
+                <a href="javascript:;" class="easyui-linkbutton" onclick="convertData()"><i class="fa fa-add"></i> Convertation</a>
+            </fieldset>
         </div>
     </div>
     <?= $button ?>
 </div>
 
 <!-- DIALOG SAVE AND UPDATE -->
-<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 400px; padding:10px; top: 20px;">
+<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 500px; padding:10px; top: 20px;">
     <form id="frm_insert" method="post" novalidate>
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Form Data</b></legend>
@@ -76,14 +82,16 @@
                 <input style="width:60%;" id="number" name="number" required class="easyui-combogrid">
             </div>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Time In</span>
+                <span style="width:35%; display:inline-block;">Datetime</span>
                 <input style="width:30%;" name="date_in" id="date_in" class="easyui-datebox" required data-options="formatter:myformatter,parser:myparser, editable:false">
                 <input style="width:30%;" name="time_in" id="time_in" class="easyui-maskedbox" mask="99:99:99" required>
             </div>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Time Out</span>
-                <input style="width:30%;" name="date_out" id="date_out" class="easyui-datebox" required data-options="formatter:myformatter,parser:myparser, editable:false">
-                <input style="width:30%;" name="time_out" id="time_out" class="easyui-maskedbox" mask="99:99:99" required>
+                <span style="width:35%; display:inline-block;">Status</span>
+                <select style="width:30%;" name="location" class="easyui-combobox" required data-options="panelHeight:'auto'">
+                    <option value="1">Check In</option>
+                    <option value="2">Check Out</option>
+                </select>
             </div>
         </fieldset>
     </form>
@@ -120,6 +128,61 @@
 <iframe id="printout" src="" style="width: 100%;" hidden></iframe>
 
 <script>
+    function convertData(){
+        var filter_from = $("#filter_from").datebox('getValue');
+        var filter_to = $("#filter_to").datebox('getValue');
+
+        Swal.fire({
+            title: 'Please Wait for Get Data',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
+
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('attandance/attandances/getData') ?>",
+            data: "filter_from=" + filter_from + "&filter_to=" + filter_to,
+            dataType: "json",
+            success: function (json) {
+                Swal.close();
+                requestData2(json.total, json);
+                
+                function requestData2(total, json, number = 1, value = 0, success = 1, failed = 1) {
+                    if (value < 100) {
+                        value = Math.floor((number / total) * 100);
+                        $('#p_upload2').progressbar('setValue', value);
+                        $('#p_start2').html(number);
+                        $('#p_finish2').html(total);
+
+                        $.ajax({
+                            type: "POST",
+                            async: true,
+                            url: "<?= base_url('attandance/attandances/createConvert') ?>",
+                            data: {
+                                "data": json[number - 1]
+                            },
+                            cache: false,
+                            dataType: "json",
+                            success: function(result) {
+                                if (result.theme == "success") {
+                                    $('#p_success2').html(success);
+                                    requestData2(total, json, number + 1, value, success + 1, failed + 0);
+                                } else {
+                                    $('#p_failed2').html(failed);
+                                    requestData2(total, json, number + 1, value, success + 0, failed + 1);
+                                }
+                            },
+                        });
+                    }
+                }
+            }
+        });
+    }
+
     //ADD DATA
     function add() {
         $('#dlg_insert').dialog('open');
@@ -560,6 +623,22 @@
         $('.blink').fadeIn(500);
     }
     setInterval(blink_text, 1000);
+
+    function locationFormat(val){
+        if (val == "1") {
+            return "Check In";
+        }else{
+            return "Check Out";
+        }
+    }
+
+    function locationStyle(val){
+        if (val == "1") {
+            return 'background-color:green;color:white;';
+        }else{
+            return 'background-color:red;color:white;';
+        }
+    }
 
     //Format Datepicker
     function myformatter(date) {

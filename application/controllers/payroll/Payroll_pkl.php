@@ -251,14 +251,14 @@ class Payroll_pkl extends CI_Controller
                             if ($attandance) {
                                 $day = 1;
                             } else {
-                                $day = $tidakabsen;
+                                if($changeDays_amount > 0){
+                                    $day = 1;
+                                }else{
+                                    $day = $tidakabsen;
+                                }
                             }
                         } else {
-                            if($changeDays_amount > 0){
-                                $day = 1;
-                            }else{
-                                $day = 0;
-                            }
+                            $day = 0;
                         }
                     } else {
                         //sabtu dan minggu libur
@@ -266,22 +266,18 @@ class Payroll_pkl extends CI_Controller
                             if ($attandance) {
                                 $day = 1;
                             } else {
-                                $day = $tidakabsen;
+                                if($changeDays_amount > 0){
+                                    $day = 1;
+                                }else{
+                                    $day = $tidakabsen;
+                                }
                             }
                         } else {
-                            if($changeDays_amount > 0){
-                                $day = 1;
-                            }else{
-                                $day = 0;
-                            }
+                            $day = 0;
                         }
                     }
                 } else {
-                    if($changeDays_amount > 0){
-                        $day = 1;
-                    }else{
-                        $day = 0;
-                    }
+                    $day = 0;
                 }
 
                 $payroll_end = date_create($working_date);

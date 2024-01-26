@@ -298,7 +298,30 @@ class Cash_carries extends CI_Controller
                 $this->db->from('attandances');
                 $this->db->where('number', $record['employee_number']);
                 $this->db->where('date_in', $record['trans_date']);
-                $attandance = $this->db->get()->row();
+                $this->db->where('location', 1);
+                $attandance_in = $this->db->get()->row();
+
+                $tomorrow = date('Y-m-d',strtotime($working_date . "+1 days"));
+                $today_out = $this->crud->read('attandances', [], ["number" => $record['employee_number'], "date_in" => $working_date, "location" => 2]);
+                if(!empty(@$today_out->date_in)){
+                    $tomorrow_out = $this->crud->read('attandances', [], ["number" => $record['employee_number'], "date_in" => $tomorrow, "location" => 2]);
+                    if(@$attandance_in->time_in > @$today_out->time_in){
+                        $attandance_out = $tomorrow_out;
+                    }else{
+                        if(empty(@$attandance_in->time_in)){
+                            $attandance_out = [];
+                        }else{
+                            $attandance_out = $today_out;
+                        }
+                    }
+                }else{
+                    $tomorrow_out = $this->crud->read('attandances', [], ["number" => $record['employee_number'], "date_in" => $tomorrow, "location" => 2]);
+                    if(@$attandance_in->time_in > @$tomorrow_out->time_in){
+                        $attandance_out = $tomorrow_out;
+                    }else{
+                        $attandance_out = [];
+                    }
+                }
 
                 $this->db->select('c.days');
                 $this->db->from('shift_employees a');
@@ -313,10 +336,10 @@ class Cash_carries extends CI_Controller
                 $calendars = $this->db->get()->result_array();
 
                 $start = strtotime($record['trans_date']);
-                $att_time_begin = strtotime(@$attandance->date_in . " " . @$attandance->time_in);
-                $att_time_end = strtotime(@$attandance->date_out . " " . @$attandance->time_out);
+                $att_time_begin = strtotime(@$attandance_in->date_in . " " . @$attandance_in->time_in);
+                $att_time_end = strtotime(@$attandance_out->date_in . " " . @$attandance_out->time_in);
 
-                $tomorrow = strtotime(date('Y-m-d', strtotime(@$attandance->date_out . "+1 days")) . " " . @$attandance->time_out);
+                $tomorrow = strtotime(date('Y-m-d', strtotime(@$attandance_out->date_in . "+1 days")) . " " . @$attandance_out->time_in);
 
                 $att_diff = $att_time_end - $att_time_begin;
                 $att_hour = floor($att_diff / (60 * 60));
@@ -336,7 +359,7 @@ class Cash_carries extends CI_Controller
                 }
 
                 //Validasi Uang makan
-                if ($record['meal'] == 0 or @$attandance->time_in == "") {
+                if ($record['meal'] == 0 or @$attandance_in->time_in == "") {
                     $meal = 0;
                 } else {
                     $meal = @$record['total_meal'];
@@ -376,7 +399,7 @@ class Cash_carries extends CI_Controller
                     }
                 }
 
-                $amount = ["amount_actual" => $total, "duration_att" => number_format($att_hour, 2), "time_in" => @$attandance->time_in, "time_out" => @$attandance->time_out];
+                $amount = ["amount_actual" => $total, "duration_att" => number_format($att_hour, 2), "time_in" => @$attandance_in->time_in, "time_out" => @$attandance_out->time_in];
                 $datas[] = array_merge($record, $amount);
             }
 

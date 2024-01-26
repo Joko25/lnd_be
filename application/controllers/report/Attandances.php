@@ -246,29 +246,41 @@ class Attandances extends CI_Controller
                     $permit = $this->db->get()->row();
 
                     //Attandance and Overtime
-                    $this->db->select("b.date_in, b.time_in, b.date_out, b.time_out, c.request_code, c.start, c.end, c.duration, c.remarks");
-                    $this->db->from('employees a');
-                    $this->db->join('attandances b', 'a.number = b.number');
-                    $this->db->join('overtimes c', 'a.id = c.employee_id and b.date_in = c.trans_date', 'left');
-                    $this->db->where("b.date_in = '$working_date'");
-                    $this->db->where('a.id', $record['id']);
-                    $this->db->order_by('a.name', 'asc');
-                    $this->db->order_by('b.date_in', 'asc');
-                    $attandance = $this->db->get()->row();
+                    $this->db->select("*");
+                    $this->db->from('attandances');
+                    $this->db->where("date_in", $working_date);
+                    $this->db->where("location", 1);
+                    $this->db->where('number', $record['number']);
+                    $attandance_in = $this->db->get()->row();
+
+                    $tomorrow = date('Y-m-d',strtotime($working_date . "+1 days"));
+                    $today_out = $this->crud->read('attandances', [], ["number" => $record['number'], "date_in" => $working_date, "location" => 2]);
+                    if(!empty(@$today_out->date_in)){
+                        $tomorrow_out = $this->crud->read('attandances', [], ["number" => $record['number'], "date_in" => $tomorrow, "location" => 2]);
+                        if(@$attandance_in->time_in > @$today_out->time_in){
+                            $attandance_out = $tomorrow_out;
+                        }else{
+                            if(empty(@$attandance_in->time_in)){
+                                $attandance_out = [];
+                            }else{
+                                $attandance_out = $today_out;
+                            }
+                        }
+                    }else{
+                        $tomorrow_out = $this->crud->read('attandances', [], ["number" => $record['number'], "date_in" => $tomorrow, "location" => 2]);
+                        if(@$attandance_in->time_in > @$tomorrow_out->time_in){
+                            $attandance_out = $tomorrow_out;
+                        }else{
+                            $attandance_out = [];
+                        }
+                    }
 
                     //Shift and Setting Group
-                    $tolerance_hour_min = date("H:i:s", strtotime('-2 Hour', strtotime(@$attandance->time_in)));
-                    $tolerance_hour_plus = date("H:i:s", strtotime('+2 Hour', strtotime(@$attandance->time_in)));
                     $this->db->select("d.start, d.end, d.days, d.working, d.tolerance, c.name, d.name as shift_name");
                     $this->db->from('shift_employees b');
                     $this->db->join('shifts c', 'c.id = b.shift_id');
                     $this->db->join('shift_details d', 'd.shift_id = c.id');
                     $this->db->where('b.employee_id', $record['id']);
-                    if (@$attandance->time_in > "23:00:00") {
-                        $this->db->where("d.start >= '$tolerance_hour_min'");
-                    } elseif (@$attandance->time_in != "") {
-                        $this->db->where("d.start >= '$tolerance_hour_min' and d.start <= '$tolerance_hour_plus'");
-                    }
                     $shift = $this->db->get()->row();
 
                     $this->db->select("*");
@@ -306,11 +318,11 @@ class Attandances extends CI_Controller
                         }
                     }
 
-                    if (@$shift->start >= @$attandance->time_in) {
+                    if (@$attandance_in->shift_start >= @$attandance_in->time_in) {
                         $status_masuk = "ON TIME";
-                    } elseif (@$shift->start == null) {
+                    } elseif (empty(@$attandance_in->shift_start)) {
                         $status_masuk = "UN SETTING";
-                    } elseif (@$shift->start <= @$attandance->time_in) {
+                    } elseif (@$attandance_in->shift_start <= @$attandance_in->time_in) {
                         $status_masuk = "LATE";
                     } else {
                         $status_masuk = "ERROR";
@@ -356,9 +368,6 @@ class Attandances extends CI_Controller
                         } elseif (@$permit->permit_name != null) {
                             $holiday = @$permit->note;
                             $style = "style='background: #FDFFB0;'";
-                        } elseif (@$attandance->remarks != null) {
-                            $holiday = @$attandance->remarks;
-                            $style = "";
                         } else {
                             $holiday = @$holiday->description;
                             $style = "";
@@ -369,14 +378,14 @@ class Attandances extends CI_Controller
                         $style = "style='background: #FFBEB0;'";
                     }
 
-                    if (@$attandance->time_in == null && $holiday != 'Weekend') {
+                    if (@$attandance_in->time_in == null && $holiday != 'Weekend') {
                         if (@$permit->permit_name != null) {
                             $attandance_status = @strtoupper($permit->permit_name);
                             $style_status = "style='color:black; font-weight:bold;'";
                         } elseif ($holiday != null) {
                             $attandance_status = "";
                             $style_status = "style='color:red; font-weight:bold;'";
-                        } elseif (@$attandance->time_in == null && @$attandance->time_out != null) {
+                        } elseif (@$attandance_in->time_in == null && @$attandance_out->time_in != null) {
                             $attandance_status = "UN CHECK IN";
                             $style_status = "style='color:blue; font-weight:bold;'";
                         } else {
@@ -392,7 +401,7 @@ class Attandances extends CI_Controller
                             $shiftName = "";
                         } else {
                             $attandance_status = @$status_masuk;
-                            $shiftName = @$shift->name . " - " . @$shift->shift_name;
+                            $shiftName = @$attandance_in->shift_detail . " - " . @$attandance_in->shift_name;
                         }
 
                         if (@$status_masuk == "LATE") {
@@ -411,8 +420,8 @@ class Attandances extends CI_Controller
                                                     <td>' . $no . '</td>
                                                     <td>' . date('d F Y', strtotime($working_date)) . '</td>
                                                     <td>' . $shiftName . '</td>
-                                                    <td>' . @$attandance->time_in . '</td>
-                                                    <td>' . @$attandance->time_out . '</td>
+                                                    <td>' . @$attandance_in->time_in . '</td>
+                                                    <td>' . @$attandance_out->time_in . '</td>
                                                     <td>' . @$cash_carry->idm_no . '</td>
                                                     <td>' . @$cash_carry->start . '</td>
                                                     <td>' . @$cash_carry->end . '</td>
@@ -425,8 +434,8 @@ class Attandances extends CI_Controller
                                                     <td>' . $no . '</td>
                                                     <td>' . date('d F Y', strtotime($working_date)) . '</td>
                                                     <td>' . $shiftName . '</td>
-                                                    <td>' . @$attandance->time_in . '</td>
-                                                    <td>' . @$attandance->time_out . '</td>
+                                                    <td>' . @$attandance_in->time_in . '</td>
+                                                    <td>' . @$attandance_out->time_in . '</td>
                                                     <td>' . @$cash_carry->idm_no . '</td>
                                                     <td>' . @$cash_carry->start . '</td>
                                                     <td>' . @$cash_carry->end . '</td>
@@ -441,8 +450,8 @@ class Attandances extends CI_Controller
                                     <td>' . $no . '</td>
                                     <td>' . date('d F Y', strtotime($working_date)) . '</td>
                                     <td>' . $shiftName . '</td>
-                                    <td>' . @$attandance->time_in . '</td>
-                                    <td>' . @$attandance->time_out . '</td>
+                                    <td>' . @$attandance_in->time_in . '</td>
+                                    <td>' . @$attandance_out->time_in . '</td>
                                     <td>' . @$cash_carry->idm_no . '</td>
                                     <td>' . @$cash_carry->start . '</td>
                                     <td>' . @$cash_carry->end . '</td>
