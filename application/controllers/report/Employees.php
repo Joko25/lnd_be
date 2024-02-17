@@ -131,10 +131,20 @@ class Employees extends CI_Controller
                         $style = "style='background: #FF796C; text-align:center;'";
                     }
 
+                    $this->db->select('level');
+                    $this->db->from('employee_educations');
+                    $this->db->where('number', $data['number']);
+                    $this->db->order_by('id', 'desc');
+                    $employee_education = $this->db->get()->row();
+
                     $content = "<tr>
                                     <td>" . $no . "</td>";
                     for ($z = 0; $z < count($form['filter_column']); $z++) {
-                        $content .= "<td style='mso-number-format:\@;'>" . $data[$form['filter_column'][$z]] . "</td>";
+                        if($form['filter_column'][$z] == "education"){
+                            $content .= "<td style='mso-number-format:\@;'>" . @$employee_education->level . "</td>";
+                        }else{
+                            $content .= "<td style='mso-number-format:\@;'>" . $data[$form['filter_column'][$z]] . "</td>";
+                        }
                     }
 
                     $content .= "   <td " . $style . ">" . $status . "</td>

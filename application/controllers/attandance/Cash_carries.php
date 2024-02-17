@@ -174,27 +174,36 @@ class Cash_carries extends CI_Controller
 
         $diff = ($time_end - $time_begin - ($break * 60));
         $hour = floor($diff / (60 * 60));
-        $minutes = ($diff - $hour * (60 * 60));
+        // $minutes = ($diff - $hour * (60 * 60));
+        $minutes = (($diff % 3600) / 60);
 
         if ($hour < 0) {
             $diff = ($tomorrow - $time_begin - ($break * 60));
             $hour = floor($diff / (60 * 60));
-            $minutes = ($diff - $hour * (60 * 60));
+            $minutes = (($diff % 3600) / 60);
         }
 
         $final_minutes2 = floor($minutes / 60);
         $final_duration = ($final_minutes2 / 60);
 
-        //if($setup->name == "DRIVER"){
-        if (floor($final_minutes2 / 60) == 59) {
-            $final_minutes = "59";
-        } else if (floor($final_minutes2 / 60) >= 29 and floor($final_minutes2 / 60) <= 58) {
+        if($minutes > 0 && $minutes < 30){
+            $final_minutes = "00";
+        }else if($minutes >= 30 && $minutes <= "59"){
             $final_minutes = "50";
-        } else {
-            $final_minutes = "0";
+        }else{
+            $final_minutes = "00";
         }
+
+        // if($setup->name == "DRIVER"){
+        //     if (floor($final_minutes2 / 60) == 59) {
+        //         $final_minutes = "59";
+        //     } else if (floor($final_minutes2 / 60) >= 29 and floor($final_minutes2 / 60) <= 58) {
+        //         $final_minutes = "50";
+        //     } else {
+        //         $final_minutes = "0";
+        //     }
         // }else{
-        //     $final_minutes = floor($minutes / 60);
+        //     $final_minutes = floor($final_minutes2 / 60);
         // }
 
         $duration = $hour . " Hour " . $final_minutes . " Minutes";

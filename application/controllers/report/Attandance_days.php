@@ -188,7 +188,7 @@ class Attandance_days extends CI_Controller
                                 if (@$permit->permit_name != null) {
                                     $status = "PERMIT";
                                     $remarks = @$permit->note;
-                                } elseif (@$shift->start == null) {
+                                } elseif (@$shift->start == null && !empty($attandance->time_in)) {
                                     $status = "UN SETTING";
                                     $remarks = "Check Shift Employee";
                                 } elseif ($data['date_sign'] >= $working_date) {
@@ -230,7 +230,7 @@ class Attandance_days extends CI_Controller
                                 if (@$permit->permit_name != null) {
                                     $status = "PERMIT";
                                     $remarks = @$permit->note;
-                                } elseif (@$shift->start == null) {
+                                } elseif (@$shift->start == null && !empty($attandance->time_in)) {
                                     $status = "UN SETTING";
                                     $remarks = "Check Shift Employee";
                                 } elseif ($data['date_sign'] >= $working_date) {
@@ -293,6 +293,8 @@ class Attandance_days extends CI_Controller
                                     <td ' . $style . '>' . @$permit->permit_name . '</td>
                                     <td>' . $remarks . '</td>
                                 </tr>';
+                    
+                    $no++;
 
                     if ($status == $filter_status) {
                         echo  $html;      

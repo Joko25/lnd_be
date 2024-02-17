@@ -92,8 +92,6 @@ class Cash_carries extends CI_Controller
                 b.departement_sub_id,
                 b.group_id,
                 b.position_id,
-                g.time_in,
-                g.time_out,
                 c.name as departement_name, 
                 d.name as departement_sub_name,
                 h.name as division_name, 
@@ -110,7 +108,7 @@ class Cash_carries extends CI_Controller
             $this->db->join('divisions h', "b.division_id = h.id");
             $this->db->join('groups e', "b.group_id = e.id");
             //$this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
-            $this->db->join('attandances g', "b.number = g.number and a.trans_date = g.date_in");
+            // $this->db->join('attandances g', "b.number = g.number and a.trans_date = g.date_in");
             $this->db->join('setup_cash_carries j', 'a.employee_id = j.employee_id', 'left');
             $this->db->join('allowance_cash_carries i', 'j.allowance_id = i.id', 'left');
             $this->db->where('a.deleted', 0);
@@ -139,27 +137,7 @@ class Cash_carries extends CI_Controller
                 $calendars = $this->db->get()->result_array();
 
                 $start = strtotime($record['trans_date']);
-                $att_time_begin = strtotime(@$record['date_in'] . " " . @$record['time_in']);
-                $att_time_end = strtotime(@$record['date_out'] . " " . @$record['time_out']);
-                
-                $tomorrow = strtotime(date('Y-m-d', strtotime(@$record['date_out'] . "+1 days")) . " " . @$record['time_out']);
-
-                $att_diff = $att_time_end - $att_time_begin;
-                $att_hour = floor($att_diff / (60 * 60));
-
-                if ($att_hour < 0) {
-                    $att_diff = $tomorrow - $att_time_begin;
-                    $att_hour = floor($att_diff / (60 * 60));
-                }
-
-                $cc_hour = $record['duration_hour'];
-
-                //Validasi Jam
-                if ($att_hour > $cc_hour) {
-                    $hour = $cc_hour;
-                } else {
-                    $hour = $att_hour;
-                }
+                $hour = $record['duration_hour'];
 
                 //Validasi Uang makan
                 if ($record['meal'] == 0) {
@@ -234,8 +212,6 @@ class Cash_carries extends CI_Controller
                 b.departement_sub_id,
                 b.group_id,
                 b.position_id,
-                g.time_in,
-                g.time_out,
                 c.name as departement_name, 
                 d.name as departement_sub_name,
                 h.name as division_name, 
@@ -252,7 +228,7 @@ class Cash_carries extends CI_Controller
             $this->db->join('divisions h', "b.division_id = h.id");
             $this->db->join('groups e', "b.group_id = e.id");
             //$this->db->join('privilege_groups f', "b.group_id = f.id and f.username = '$username' and f.status = '1'", "left");
-            $this->db->join('attandances g', "b.number = g.number and a.trans_date = g.date_in");
+            // $this->db->join('attandances g', "b.number = g.number and a.trans_date = g.date_in");
             $this->db->join('setup_cash_carries j', 'a.employee_id = j.employee_id', 'left');
             $this->db->join('allowance_cash_carries i', 'j.allowance_id = i.id', 'left');
             $this->db->where('a.deleted', 0);
@@ -365,27 +341,27 @@ class Cash_carries extends CI_Controller
                     $calendars = $this->db->get()->result_array();
 
                     $start = strtotime($record['trans_date']);
-                    $att_time_begin = strtotime(@$record['date_in'] . " " . @$record['time_in']);
-                    $att_time_end = strtotime(@$record['date_out'] . " " . @$record['time_out']);
+                    // $att_time_begin = strtotime(@$record['date_in'] . " " . @$record['time_in']);
+                    // $att_time_end = strtotime(@$record['date_out'] . " " . @$record['time_out']);
                     
-                    $tomorrow = strtotime(date('Y-m-d', strtotime(@$record['date_out'] . "+1 days")) . " " . @$record['time_out']);
+                    // $tomorrow = strtotime(date('Y-m-d', strtotime(@$record['date_out'] . "+1 days")) . " " . @$record['time_out']);
 
-                    $att_diff = $att_time_end - $att_time_begin;
-                    $att_hour = floor($att_diff / (60 * 60));
+                    // $att_diff = $att_time_end - $att_time_begin;
+                    // $att_hour = floor($att_diff / (60 * 60));
 
-                    if ($att_hour < 0) {
-                        $att_diff = $tomorrow - $att_time_begin;
-                        $att_hour = floor($att_diff / (60 * 60));
-                    }
+                    // if ($att_hour < 0) {
+                    //     $att_diff = $tomorrow - $att_time_begin;
+                    //     $att_hour = floor($att_diff / (60 * 60));
+                    // }
 
-                    $cc_hour = $record['duration_hour'];
+                    $hour = $record['duration_hour'];
 
                     //Validasi Jam
-                    if ($att_hour > $cc_hour) {
-                        $hour = $cc_hour;
-                    } else {
-                        $hour = $att_hour;
-                    }
+                    // if ($att_hour > $cc_hour) {
+                    //     $hour = $cc_hour;
+                    // } else {
+                    //     $hour = $att_hour;
+                    // }
 
                     //Validasi Uang makan
                     if ($record['meal'] == 0) {
@@ -633,8 +609,6 @@ class Cash_carries extends CI_Controller
                         b.departement_sub_id,
                         b.group_id,
                         b.position_id,
-                        g.time_in,
-                        g.time_out,
                         c.name as departement_name, 
                         d.name as departement_sub_name, 
                         e.name as group_name,
@@ -648,7 +622,7 @@ class Cash_carries extends CI_Controller
                     $this->db->join('departements c', "b.departement_id = c.id");
                     $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
                     $this->db->join('groups e', "b.group_id = e.id");
-                    $this->db->join('attandances g', "b.number = g.number and a.trans_date = g.date_in", 'left');
+                    // $this->db->join('attandances g', "b.number = g.number and a.trans_date = g.date_in", 'left');
                     $this->db->join('setup_cash_carries h', 'a.employee_id = h.employee_id', 'left');
                     $this->db->join('allowance_cash_carries i', 'h.allowance_id = i.id', 'left');
                     $this->db->where('a.deleted', 0);
@@ -674,27 +648,7 @@ class Cash_carries extends CI_Controller
                         $calendars = $this->db->get()->result_array();
 
                         $start = strtotime($record['trans_date']);
-                        $att_time_begin = strtotime(@$record['date_in'] . " " . @$record['time_in']);
-                        $att_time_end = strtotime(@$record['date_out'] . " " . @$record['time_out']);
-                        
-                        $tomorrow = strtotime(date('Y-m-d', strtotime(@$record['date_out'] . "+1 days")) . " " . @$record['time_out']);
-
-                        $att_diff = $att_time_end - $att_time_begin;
-                        $att_hour = floor($att_diff / (60 * 60));
-
-                        if ($att_hour < 0) {
-                            $att_diff = $tomorrow - $att_time_begin;
-                            $att_hour = floor($att_diff / (60 * 60));
-                        }
-
-                        $cc_hour = $record['duration_hour'];
-
-                        //Validasi Jam
-                        if ($att_hour > $cc_hour) {
-                            $hour = $cc_hour;
-                        } else {
-                            $hour = $att_hour;
-                        }
+                        $hour = $record['duration_hour'];
 
                         //Validasi Uang makan
                         if ($record['meal'] == 0) {

@@ -13,6 +13,7 @@
             <th rowspan="2" data-options="field:'position_name',width:100,halign:'center'">Position</th>
             <th rowspan="2" data-options="field:'type',width:100,halign:'center'">Job Type</th>
             <th rowspan="2" data-options="field:'contract_name',width:100,halign:'center'">Employee Type</th>
+            <th rowspan="2" data-options="field:'shift_name',width:100,halign:'center'">Shift Type</th>
             <th rowspan="2" data-options="field:'date_sign',width:100,halign:'center',formatter:FormatterDate">Join Date</th>
             <th rowspan="2" data-options="field:'date_expired',width:100,halign:'center',formatter:FormatterDate">Contract<br>Expired</th>
             <th rowspan="2" data-options="field:'resign_date',width:100,halign:'center',formatter:FormatterDate">Resign Date</th>
@@ -90,6 +91,10 @@
                         <span style="width:35%; display:inline-block;">Join Date</span>
                         <input style="width:28%;" id="filter_from_join" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser, editable:false"> To
                         <input style="width:28%;" id="filter_to_join" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser, editable:false">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Shift Type</span>
+                        <input style="width:60%;" id="filter_shift" class="easyui-combobox">
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Fit For Service</span>
@@ -491,9 +496,9 @@
                 type: "post",
                 url: "<?= base_url('employee/employees/readNumber') ?>",
                 data: "departement_id=" + departement_id + "&contract_id=" + contract_id + "&source_id=" + source_id + "&date_sign=" + btoa(date_sign),
-                dataType: "html",
+                dataType: "json",
                 success: function(number) {
-                    $("#number").textbox("setValue", number);
+                    $("#number").textbox("setValue", number.id);
                 }
             });
         }
@@ -1035,6 +1040,7 @@
         var filter_maritals = $("#filter_maritals").combogrid('getValue');
         var filter_services = $("#filter_services").combobox('getValue');
         var filter_expired = $("#filter_expired").combobox('getValue');
+        var filter_shift = $("#filter_shift").combobox('getValue');
         var filter_status = $("#filter_status").combobox('getValue');
         var filter_resign = $("#filter_resign").checkbox('options');
         var filter_from_join = $("#filter_from_join").datebox('getValue');
@@ -1057,6 +1063,7 @@
             "&filter_maritals=" + filter_maritals +
             "&filter_services=" + filter_services +
             "&filter_expired=" + filter_expired +
+            "&filter_shift=" + filter_shift +
             "&filter_status=" + filter_status +
             "&filter_from_join=" + btoa(filter_from_join) +
             "&filter_to_join=" + btoa(filter_to_join) +
@@ -1087,6 +1094,7 @@
         var filter_maritals = $("#filter_maritals").combogrid('getValue');
         var filter_services = $("#filter_services").combobox('getValue');
         var filter_expired = $("#filter_expired").combobox('getValue');
+        var filter_shift = $("#filter_shift").combobox('getValue');
         var filter_status = $("#filter_status").combobox('getValue');
         var filter_resign = $("#filter_resign").checkbox('options');
         var filter_from_join = $("#filter_from_join").datebox('getValue');
@@ -1109,6 +1117,7 @@
             "&filter_maritals=" + filter_maritals +
             "&filter_services=" + filter_services +
             "&filter_expired=" + filter_expired +
+            "&filter_shift=" + filter_shift +
             "&filter_status=" + filter_status +
             "&filter_from_join=" + btoa(filter_from_join) +
             "&filter_to_join=" + btoa(filter_to_join) +
@@ -2185,6 +2194,19 @@
 
         $('#filter_religions').combobox({
             url: '<?php echo base_url('employee/religions/reads'); ?>',
+            valueField: 'id',
+            textField: 'name',
+            prompt: 'Choose All',
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combobox('clear').combobox('textbox').focus();
+                }
+            }],
+        });
+
+        $('#filter_shift').combobox({
+            url: '<?php echo base_url('attandance/shifts/reads'); ?>',
             valueField: 'id',
             textField: 'name',
             prompt: 'Choose All',

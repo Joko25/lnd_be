@@ -233,7 +233,7 @@ class Employees extends CI_Controller
             $autoID = $numberFormat . sprintf("%04s", $requestcode);
         }
 
-        echo $autoID;
+        die(json_encode(array("id" => $autoID)));
     }
 
     //GET DATATABLES
@@ -250,6 +250,7 @@ class Employees extends CI_Controller
         $filter_maritals = $this->input->get('filter_maritals');
         $filter_services = $this->input->get('filter_services');
         $filter_expired = $this->input->get('filter_expired');
+        $filter_shift = $this->input->get('filter_shift');
         $filter_status = $this->input->get('filter_status');
         $filter_resign = $this->input->get('filter_resign');
         $filter_from_join = base64_decode($this->input->get('filter_from_join'));
@@ -313,7 +314,8 @@ class Employees extends CI_Controller
                 e.type, 
                 g.name as position_name,
                 h.name as contract_name,
-                i.resign_date');
+                i.resign_date,
+                j.name as shift_name');
         $this->db->from('employees a');
         $this->db->join('divisions c', 'c.id = a.division_id');
         $this->db->join('departements d', 'd.id = a.departement_id');
@@ -321,6 +323,8 @@ class Employees extends CI_Controller
         $this->db->join('positions g', 'g.id = a.position_id', 'left');
         $this->db->join('contracts h', 'h.id = a.contract_id', 'left');
         $this->db->join('resignations i', 'a.id = i.employee_id', 'left');
+        $this->db->join('shift_employees f', 'a.id = f.employee_id', 'left');
+        $this->db->join('shifts j', 'f.shift_id = j.id', 'left');
         $this->db->where('a.deleted', 0);
         if($filter_from_join != ""  && $filter_to_join != ""){
             $this->db->where("a.date_sign between '$filter_from_join' and '$filter_to_join'");
@@ -346,6 +350,9 @@ class Employees extends CI_Controller
         $this->db->like("a.group_id", $filter_groups);
         $this->db->like("a.religion_id", $filter_religions);
         $this->db->like("a.marital_id", $filter_maritals);
+        if($filter_shift != ""){
+            $this->db->like("j.id", $filter_shift);
+        }
         $this->db->order_by('a.name', 'ASC');
         //Total Data
         $totalRows = $this->db->count_all_results('', false);
@@ -920,6 +927,7 @@ class Employees extends CI_Controller
         $filter_maritals = $this->input->get('filter_maritals');
         $filter_services = $this->input->get('filter_services');
         $filter_expired = $this->input->get('filter_expired');
+        $filter_shift = $this->input->get('filter_shift');
         $filter_status = $this->input->get('filter_status');
         $filter_resign = $this->input->get('filter_resign');
         $filter_from_join = base64_decode($this->input->get('filter_from_join'));
@@ -988,7 +996,8 @@ class Employees extends CI_Controller
                 k.number as marital_number,
                 k.name as marital_name,
                 l.number as source_number,
-                l.name as source_name');
+                l.name as source_name,
+                n.name as shift_name');
         $this->db->from('employees a');
         $this->db->join('divisions c', 'c.id = a.division_id');
         $this->db->join('departements d', 'd.id = a.departement_id');
@@ -1000,6 +1009,8 @@ class Employees extends CI_Controller
         $this->db->join('maritals k', 'k.id = a.marital_id', 'left');
         $this->db->join('sources l', 'l.id = a.source_id', 'left');
         $this->db->join('resignations m', 'a.id = m.employee_id', 'left');
+        $this->db->join('shift_employees f', 'a.id = f.employee_id', 'left');
+        $this->db->join('shifts n', 'f.shift_id = n.id', 'left');
         $this->db->where('a.deleted', 0);
         if($filter_from_join != ""  && $filter_to_join != ""){
             $this->db->where("a.date_sign between '$filter_from_join' and '$filter_to_join'");
@@ -1021,6 +1032,9 @@ class Employees extends CI_Controller
         $this->db->like("a.group_id", $filter_groups);
         $this->db->like("a.religion_id", $filter_religions);
         $this->db->like("a.marital_id", $filter_maritals);
+        if($filter_shift != ""){
+            $this->db->like("n.id", $filter_shift);
+        }
         $this->db->order_by('a.name', 'ASC');
         $this->db->group_by('a.number', 'ASC');
         $records = $this->db->get()->result_array();
@@ -1061,6 +1075,7 @@ class Employees extends CI_Controller
                 <th>Group</th>
                 <th>ID Source</th>
                 <th>Source</th>
+                <th>Shift Type</th>
                 <th>Join Date</th>
                 <th>Contract Expired</th>
                 <th>Fit Of Service</th>
@@ -1120,6 +1135,7 @@ class Employees extends CI_Controller
                     <td>' . $data['group_name'] . '</td>
                     <td><b style="color:red;">' . $data['source_number'] . '</b></td>
                     <td>' . $data['source_name'] . '</td>
+                    <td>' . $data['shift_name'] . '</td>
                     <td>' . $data['date_sign'] . '</td>
                     <td>' . $data['date_expired'] . '</td>
                     <td>' . $this->readService($data['date_sign']) . '</td>

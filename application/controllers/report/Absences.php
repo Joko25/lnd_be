@@ -290,14 +290,14 @@ class Absences extends CI_Controller
                     }
 
                     $html .= '<tr>
-                                <td>' . $no . '</td>
-                                <td>' . $departement_sub['name'] . '</td>
-                                <td>' . $mp . '</td>
-                                <td>' . $absence . '</td>
-                                <td>' . $permit . '</td>
-                                <td>' . $sick . '</td>
-                                <td>' . $leave . '</td>
-                                <td>' . ($absence + $permit + $sick + $leave) . '</td>
+                                <td style="text-align:center;">' . $no . '</td>
+                                <td style="text-align:center;">' . $departement_sub['name'] . '</td>
+                                <td style="text-align:center;">' . $mp . '</td>
+                                <td style="text-align:center;">' . $absence . '</td>
+                                <td style="text-align:center;">' . $permit . '</td>
+                                <td style="text-align:center;">' . $sick . '</td>
+                                <td style="text-align:center;">' . $leave . '</td>
+                                <td style="text-align:center;">' . ($absence + $permit + $sick + $leave) . '</td>
                             </tr>';
                     $no++;
                 }

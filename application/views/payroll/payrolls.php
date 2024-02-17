@@ -154,7 +154,7 @@
                         <select style="width:30%;" id="filter_status" class="easyui-combobox" data-options="panelHeight:'auto'">
                             <option value="">Choose All</option>
                             <option value="0">Active</option>
-                            <option value="1">Not Active</option>
+                            <option value="1">Resign</option>
                         </select>
                     </div>
                 </div>
@@ -662,7 +662,7 @@
         if(value == null){
             return "ACTIVE";
         }else{
-            return "NOT ACTIVE";
+            return "RESIGN";
         }
     }
 
@@ -670,7 +670,7 @@
         if(value == null){
             return 'background: #53D636; color:white;';
         }else{
-            return 'background: #FF5F5F; color:white;';
+            return 'background: #FFC41B; color:white;';
         }
     }
 </script>
