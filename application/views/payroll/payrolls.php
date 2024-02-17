@@ -19,6 +19,7 @@
             <th rowspan="2" data-options="field:'shift_name',width:150,halign:'center'">Shift</th>
             <th rowspan="2" data-options="field:'level',width:80,halign:'center'">Level</th>
             <th rowspan="2" data-options="field:'marital',width:80,halign:'center'">Marital</th>
+            <th rowspan="2" data-options="field:'ter_number',width:80,halign:'center'">TER Code</th>
             <th rowspan="2" data-options="field:'group_name',width:100,halign:'center'">Group</th>
             <th rowspan="2" data-options="field:'national_id',width:150,halign:'center'">National ID</th>
             <th rowspan="2" data-options="field:'tax_id',width:150,halign:'center'">NPWP</th>
@@ -45,6 +46,7 @@
             <th rowspan="2" data-options="field:'bpjs_employee_total',width:100,align:'center', formatter:numberformat">Total BPJS<br>Employee</th>
             <!-- <th rowspan="2" data-options="field:'netto',width:100,align:'center'">Netto</th> -->
             <th rowspan="2" data-options="field:'pph',width:100,align:'center', formatter:numberformat">PPH21</th>
+            <th rowspan="2" data-options="field:'ter',width:100,align:'center', formatter:numberformat">TER</th>
             <th rowspan="2" data-options="field:'net_income',width:100,align:'center', formatter:numberformat">Net Income</th>
         </tr>
         <tr>
@@ -657,6 +659,21 @@
 
         return "<b>" + formatter.format(value) + "</b>";
     }
+
+    // function numberformatDecimal(value, row) {
+    //     var digits = 2;
+    //     var currency = 'IDR';
+    //     var format = "id-ID";
+
+    //     if (value != null) {
+    //         const formatter = new Intl.NumberFormat(format, {
+    //             style: 'currency',
+    //             currency: currency,
+    //             minimumFractionDigits: digits
+    //         });
+    //         return "<b>" + formatter.format(value) + "</b>";
+    //     }
+    // }
 
     function statusResign(value, row){
         if(value == null){

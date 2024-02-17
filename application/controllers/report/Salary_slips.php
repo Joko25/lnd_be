@@ -355,6 +355,11 @@ class Salary_slips extends CI_Controller
                             <th style="text-align:left;">(' . $record['marital'] . ') <small>' . $record['marital_name'] . '<small></th>
                         </tr>
                         <tr>
+                            <th style="text-align:left;">TER Code</th>
+                            <th style="text-align:left;">:</th>
+                            <th style="text-align:left;">'.$record['ter_number'].'</th>
+                        </tr>
+                        <tr>
                             <th style="text-align:left;">Working Days</th>
                             <th style="text-align:left;">:</th>
                             <th style="text-align:left;">' . $record['attandance_wd'] . ' Days</th>
@@ -390,7 +395,7 @@ class Salary_slips extends CI_Controller
                                 </tr>
                                 ' . $html_correction_plus . '
                                 <tr>
-                                    <th style="text-align:left;">TOTAL INCOME <i>(a)</i></th>
+                                    <th style="text-align:left;">BRUTO INCOME <i>(a)</i></th>
                                     <th style="text-align:right;"><b>' . number_format($total_income) . '</b></th>
                                 </tr>
                                 <tr>
@@ -402,7 +407,7 @@ class Salary_slips extends CI_Controller
                                     <th style="text-align:right;"><b>' . number_format(($arr_bpjs_com_amount_total)) . '</b></th>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:left;">BRUTO INCOME <i>(c) = (a + b)</i></th>
+                                    <th style="text-align:left;">TOTAL INCOME <i>(c) = (a + b)</i></th>
                                     <th style="text-align:right;"><b>' . number_format($total_income + $arr_bpjs_com_amount_total) . '</b></th>
                                 </tr>
                             </table>
@@ -442,8 +447,8 @@ class Salary_slips extends CI_Controller
                                     <th style="text-align:right;"><b>' . number_format(($arr_bpjs_emp_amount_total)) . '</b></th>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:left;">PPH 21 <i>(f)</i></th>
-                                    <th style="text-align:right;"><b>' . number_format($record['pph']) . '</b></th>
+                                    <th style="text-align:left;">TER <i>(f)</i></th>
+                                    <th style="text-align:right;"><b>' . number_format($record['ter']) . '</b></th>
                                 </tr>
                                 <tr>
                                     <th style="text-align:left;">NET INCOME <i>(c - d - e - f)</i></th>
@@ -704,6 +709,11 @@ class Salary_slips extends CI_Controller
                                                 <th style="text-align:left;">(' . $record['marital'] . ') <small>' . $record['marital_name'] . '<small></th>
                                             </tr>
                                             <tr>
+                                                <th style="text-align:left;">TER Code</th>
+                                                <th style="text-align:left;">:</th>
+                                                <th style="text-align:left;">'.$record['ter_number'].'</th>
+                                            </tr>
+                                            <tr>
                                                 <th style="text-align:left;">Working Days</th>
                                                 <th style="text-align:left;">:</th>
                                                 <th style="text-align:left;">' . $record['attandance_wd'] . ' Days</th>
@@ -739,7 +749,7 @@ class Salary_slips extends CI_Controller
                                                     </tr>
                                                     ' . $html_correction_plus . '
                                                     <tr>
-                                                        <th style="text-align:left;">TOTAL INCOME <i>(a)</i></th>
+                                                        <th style="text-align:left;">BRUTO INCOME <i>(a)</i></th>
                                                         <th style="text-align:right;"><b>' . number_format($total_income) . '</b></th>
                                                     </tr>
                                                     <tr>
@@ -751,7 +761,7 @@ class Salary_slips extends CI_Controller
                                                         <th style="text-align:right;"><b>' . number_format(($arr_bpjs_com_amount_total)) . '</b></th>
                                                     </tr>
                                                     <tr>
-                                                        <th style="text-align:left;">BRUTO INCOME <i>(c) = (a + b)</i></th>
+                                                        <th style="text-align:left;">TOTAL INCOME <i>(c) = (a + b)</i></th>
                                                         <th style="text-align:right;"><b>' . number_format($total_income + $arr_bpjs_com_amount_total) . '</b></th>
                                                     </tr>
                                                 </table>
@@ -791,8 +801,8 @@ class Salary_slips extends CI_Controller
                                                         <th style="text-align:right;"><b>' . number_format(($arr_bpjs_emp_amount_total)) . '</b></th>
                                                     </tr>
                                                     <tr>
-                                                        <th style="text-align:left;">PPH 21 <i>(f)</i></th>
-                                                        <th style="text-align:right;"><b>' . number_format($record['pph']) . '</b></th>
+                                                        <th style="text-align:left;">TER <i>(f)</i></th>
+                                                        <th style="text-align:right;"><b>' . number_format($record['ter']) . '</b></th>
                                                     </tr>
                                                     <tr>
                                                         <th style="text-align:left;">NET INCOME <i>(c - d - e - f)</i></th>

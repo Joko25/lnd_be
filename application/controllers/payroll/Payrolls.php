@@ -141,6 +141,7 @@ class Payrolls extends CI_Controller
                     "source_name" => $record['source_name'],
                     "level" => $record['level'],
                     "marital" => $record['marital'],
+                    "ter_number" => $record['ter_number'],
                     "tax_id" => $record['tax_id'],
                     "national_id" => $record['national_id'],
                     "shift_name" => $record['shift_name'],
@@ -180,6 +181,7 @@ class Payrolls extends CI_Controller
                     //"bpjs_employee" => json_encode($arr_bpjs_emp_combine),
                     "bpjs_employee_total" => $record['bpjs_employee_total'],
                     "pph" => $record['pph'],
+                    "ter" => $record['ter'],
                     "net_income" => $record['net_income'],
                 );
 
@@ -238,6 +240,7 @@ class Payrolls extends CI_Controller
                     p.amount as salary,
                     p.bpjs,
                     q.number as marital,
+                    q.ter_type,
                     a.tax_id
                 FROM employees a
                 JOIN divisions b ON a.division_id = b.id
@@ -877,6 +880,23 @@ class Payrolls extends CI_Controller
             //     "hasil_akhir" => $pph_pasal . " (pph_debt / 12)",
             // )));
 
+            //Rumus TER
+            $this->db->select("number, ter");
+            $this->db->from('marital_categories');
+            $this->db->where('ter_from <', $total_all_allowance);
+            $this->db->where('ter_to >', $total_all_allowance);
+            $this->db->where('type', $record['ter_type']);
+            $marital_category = $this->db->get()->row();
+            
+
+            if(empty($marital_category)){
+                $ter_number = "-";
+                $ter = 0;
+            }else{
+                $ter_number = $marital_category->number;
+                $ter = (($total_all_allowance * $marital_category->ter) / 100);
+            }
+
             //Kalo gaji per tahun nya lebih dari master ptkp
             if ($netto_year >= @$r_ptkp->amount) {
                 //jika npwp nya kosong maka kena potongan 120%
@@ -891,7 +911,7 @@ class Payrolls extends CI_Controller
             }
 
             //Total keseluruhan
-            $netincome = ($income - $pph_final - $arr_deduction_amount_total - $arr_bpjs_emp_amount_total - @$loan_cooperative->amount - @$loan_bank->amount - @$loan_other->amount);
+            $netincome = ($income - $ter - $arr_deduction_amount_total - $arr_bpjs_emp_amount_total - @$loan_cooperative->amount - @$loan_bank->amount - @$loan_other->amount);
             $roundup = 500; // digit pembulatan, dalam hal ini ratusan
             $roundupIncome = ceil($netincome / $roundup) * $roundup;
             //-------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -912,6 +932,7 @@ class Payrolls extends CI_Controller
                 "job_type" => $record['type'],
                 "level" => $record['level'],
                 "marital" => $record['marital'],
+                "ter_number" => $ter_number,
                 "tax_id" => $record['tax_id'],
                 "shift_name" => $record['shift_name_2'],
                 "attandance" => json_encode($arr_permit_combine),
@@ -949,6 +970,7 @@ class Payrolls extends CI_Controller
                 "bpjs_employee" => json_encode($arr_bpjs_emp_combine),
                 "bpjs_employee_total" => $arr_bpjs_emp_amount_total,
                 "pph" => ($pph_final),
+                "ter" => $ter,
                 "net_income" => ($roundupIncome)
             );
 
@@ -1141,6 +1163,7 @@ class Payrolls extends CI_Controller
                 <th rowspan="2">Shift</th>
                 <th rowspan="2">Level</th>
                 <th rowspan="2">Marital</th>
+                <th rowspan="2">TER Code</th>
                 <th rowspan="2">Group</th>
                 <th rowspan="2">National ID</th>
                 <th rowspan="2">NPWP</th>
@@ -1165,6 +1188,7 @@ class Payrolls extends CI_Controller
                 <th colspan="' . (count($bpjs)) . '">BPJS Employee</th>
                 <th rowspan="2">Total BPJS Employee</th>
                 <th rowspan="2">PPH21</th>
+                <th rowspan="2">TER</th>
                 <th rowspan="2">Net Income</th>
             </tr>
             <tr>';
@@ -1227,6 +1251,7 @@ class Payrolls extends CI_Controller
                     <td>' . $record['shift_name'] . '</td>
                     <td>' . $record['level'] . '</td>
                     <td>' . $record['marital'] . '</td>
+                    <td>' . $record['ter_number'] . '</td>
                     <td>' . $record['group_name'] . '</td>
                     <td class="str">' . $record['national_id'] . '</td>
                     <td>' . $record['tax_id'] . '</td>';
@@ -1279,6 +1304,7 @@ class Payrolls extends CI_Controller
             }
             $html .= '<td>' . $record['bpjs_employee_total'] . '</td>';
             $html .= '<td>' . $record['pph'] . '</td>';
+            $html .= '<td>' . $record['ter'] . '</td>';
             $html .= '<td>' . $record['net_income'] . '</td>';
             $no++;
         }
