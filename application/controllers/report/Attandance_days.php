@@ -191,7 +191,7 @@ class Attandance_days extends CI_Controller
                                 } elseif (@$shift->start == null && !empty($attandance->time_in)) {
                                     $status = "UN SETTING";
                                     $remarks = "Check Shift Employee";
-                                } elseif ($data['date_sign'] >= $working_date) {
+                                } elseif ($data['date_sign'] > $working_date) {
                                     $status = "NOT JOIN YET";
                                     $remarks = "";
                                 } elseif (!empty($resignation)) {

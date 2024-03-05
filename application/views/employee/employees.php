@@ -1868,6 +1868,7 @@
                                     }
                                 });
 
+                                $('#dgFamily').datagrid('acceptChanges');
                                 var rowFamily = $('#dgFamily').datagrid('getRows');
                                 var totalFamily = rowFamily.length;
                                 endEditingFamily();
@@ -1903,6 +1904,7 @@
                                     }
                                 });
 
+                                $('#dgEducation').datagrid('acceptChanges');
                                 var rowEducation = $('#dgEducation').datagrid('getRows');
                                 var totalEducation = rowEducation.length;
                                 endEditingEducation();
@@ -1938,6 +1940,7 @@
                                     }
                                 });
 
+                                $('#dgExperience').datagrid('acceptChanges');
                                 var rowExperience = $('#dgExperience').datagrid('getRows');
                                 var totalExperience = rowExperience.length;
                                 endEditingExperience();
@@ -1973,6 +1976,7 @@
                                     }
                                 });
 
+                                $('#dgTraining').datagrid('acceptChanges');
                                 var rowTraining = $('#dgTraining').datagrid('getRows');
                                 var totalTraining = rowTraining.length;
                                 endEditingTraining();
@@ -2007,6 +2011,7 @@
                                     }
                                 });
 
+                                $('#dgCarrer').datagrid('acceptChanges');
                                 var rowCarrer = $('#dgCarrer').datagrid('getRows');
                                 var totalCarrer = rowCarrer.length;
                                 endEditingCarrer();

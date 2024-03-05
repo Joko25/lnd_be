@@ -175,7 +175,7 @@ class Student_payrolls extends CI_Controller
                                 <th colspan="4" style="text-align:center;">Deduction</th>
                                 <th rowspan="2" style="text-align:center;">Loan</th>
                                 <th rowspan="2" style="text-align:center;">Correction <br> Minus</th>
-                                <th rowspan="2" style="text-align:center;">PPH21</th>
+                                <th rowspan="2" style="text-align:center;">TER</th>
                                 <th rowspan="2" style="text-align:center;">Total<br>Deduction</th>
                                 <th rowspan="2" style="text-align:center;">Nett Income</th>
                                 <th rowspan="2" width="50" style="text-align:center;">Sign</th>
@@ -202,6 +202,16 @@ class Student_payrolls extends CI_Controller
                                 $total_deduction += (int)$val_deduction;
                             }
 
+                            $total_ip = 0;
+                            foreach (json_decode($employee['deduction_number'], true) as $ip => $val_ip) {
+                                $total_ip += (int)$val_ip;
+                            }
+
+                            $total_ip_amount = 0;
+                            foreach (json_decode($employee['deduction_amount'], true) as $ip_amount => $val_ip_amount) {
+                                $total_ip_amount += (int)$val_ip_amount;
+                            }
+
                             $html .= '<tr>
                                         <td>' . $no . '</td>
                                         <td style="mso-number-format:\@;">' . $employee['number'] . '</td>
@@ -215,12 +225,12 @@ class Student_payrolls extends CI_Controller
                                         <td style="text-align:right;">' . number_format(($employee['salary'] + $total_allowence + $employee['correction_plus'] + $employee['bpjs_company_total'])) . '</td>
                                         <td style="text-align:right;">' . number_format(($employee['bpjs_employee_total'] + $employee['bpjs_company_total'])) . '</td>
                                         <td style="text-align:right;">' . number_format($total_deduction) . '</td>
-                                        <td style="text-align:right;">' . number_format($employee['deduction_absence']) . '</td>
-                                        <td style="text-align:right;">' . number_format($employee['deduction_absence_amount']) . '</td>
+                                        <td style="text-align:right;">' . number_format($employee['deduction_absence'] + $total_ip) . '</td>
+                                        <td style="text-align:right;">' . number_format($employee['deduction_absence_amount'] + $total_ip_amount) . '</td>
                                         <td style="text-align:right;">' . number_format(($employee['loan_cooperative'] + $employee['loan_bank'] + $employee['loan_other'])) . '</td>
                                         <td style="text-align:right;">' . number_format($employee['correction_minus']) . '</td>
                                         <td style="text-align:right;">' . number_format($employee['pph']) . '</td>
-                                        <td style="text-align:right;">' . number_format($total_deduction + $employee['deduction_absence_amount'] + $employee['bpjs_employee_total'] + $employee['bpjs_company_total'] + $employee['loan_cooperative'] + $employee['loan_bank'] + $employee['loan_other'] + $employee['correction_minus']) . '</td>
+                                        <td style="text-align:right;">' . number_format($total_deduction + $employee['deduction_absence_amount'] + $employee['bpjs_employee_total'] + $employee['bpjs_company_total'] + $employee['loan_cooperative'] + $employee['loan_bank'] + $employee['loan_other'] + $employee['correction_minus'] + $total_ip_amount) . '</td>
                                         <td style="text-align:right;">' . number_format(($employee['net_income'])) . '</td>
                                         <td style="vertical-align: text-top; height:30px;">'.$no.'.</td>
                                     </tr>';
@@ -233,34 +243,7 @@ class Student_payrolls extends CI_Controller
                                         <th style="text-align:right;">' . number_format($total) . '</th>
                                         <th style="text-align:right;"></th>
                                     </tr>
-                                    </table>
-                                    <br>
-                                    <center>
-                                        <table id="customers" style="width:70%;">
-                                            <tr>
-                                                <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
-                                                <th colspan="2" style="text-align:center;">CONFIRM OK</th>
-                                                <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
-                                            </tr>
-                                            <tr>
-                                                <th width="100" style="text-align:center;">COST CONTROL</th>
-                                                <th width="100" style="text-align:center;">HRD</th>
-                                            </tr>
-                                            <tr>
-                                                <td style="height:60px;"></td>
-                                                <td style="height:60px;"></td>
-                                                <td style="height:60px;"></td>
-                                                <td style="height:60px;"></td>
-                                            </tr>
-                                            <tr>
-                                                <th style="text-align:center;">BOD</th>
-                                                <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                                <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                                <th style="text-align:center;">PAYROLL STAFF</th>
-                                            </tr>
-                                        </table>
-                                    </center>';
-                        $html .= '</table><br><br>';
+                                </table><br>';
 
                         $hal++;
                         if (($i + 1) != $page) {
@@ -268,16 +251,42 @@ class Student_payrolls extends CI_Controller
                         }
                     }
 
+                    $html .= '<center>
+                                <table id="customers" style="width:70%;">
+                                    <tr>
+                                        <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
+                                        <th colspan="2" style="text-align:center;">CONFIRM OK</th>
+                                        <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
+                                    </tr>
+                                    <tr>
+                                        <th width="100" style="text-align:center;">COST CONTROL</th>
+                                        <th width="100" style="text-align:center;">HRD</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="height:60px;"></td>
+                                        <td style="height:60px;"></td>
+                                        <td style="height:60px;"></td>
+                                        <td style="height:60px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:center;">BOD</th>
+                                        <th style="text-align:center;">ASSISTANT MANAGER</th>
+                                        <th style="text-align:center;">ASSISTANT MANAGER</th>
+                                        <th style="text-align:center;">PAYROLL STAFF</th>
+                                    </tr>
+                                </table>
+                            </center>';
+                            
                     $html .= "</div>";
                 }
 
                 $html .= '</body></html>';
                 echo $html;
             } else {
-                echo '  <html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid black;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
+                $html2 = '  <html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid black;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
                         <style> .str{ mso-number-format:\@; } </style>
                         <body>';
-
+                        
                 foreach ($records as $record) {
                     $allowance_1 = $this->crud->read("allowance_students", [], ["group_id" => $record['group_id'], "months" => "1"]);
                     $allowance_2 = $this->crud->read("allowance_students", [], ["group_id" => $record['group_id'], "months" => "2"]);
@@ -288,12 +297,12 @@ class Student_payrolls extends CI_Controller
                     $rows = 20;
                     $page = ceil(count($payrolls) / $rows);
 
-                    echo '<div style="page-break-after:always;">';
+                    $html2 .= '<div style="page-break-after:always;">';
                     $no = 1;
                     $hal = 1;
                     for ($i = 0; $i < $page; $i++) {
                         $offset = ($i * 20);
-                        $html2   = '  <center>
+                        $html2   .= '  <center>
                                         <div style="float: left; font-size: 12px; text-align: left;">
                                             <table style="width: 100%;">
                                                 <tr>
@@ -379,50 +388,52 @@ class Student_payrolls extends CI_Controller
                             $no++;
                         }
 
-                        echo $html2;
-                        echo '  <tr>
-                                    <th style="text-align:right;" colspan="16">GRAND TOTAL</th>
-                                    <th style="text-align:right;">' . number_format($total) . '</th>
-                                    <th style="text-align:right;"></th>
-                                </tr>
-                                </table>
-                                <br>
-                                <center>
-                                    <table id="customers" style="width:70%;">
-                                        <tr>
-                                            <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
-                                            <th colspan="2" style="text-align:center;">CONFIRM OK</th>
-                                            <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
-                                        </tr>
-                                        <tr>
-                                            <th width="100" style="text-align:center;">COST CONTROL</th>
-                                            <th width="100" style="text-align:center;">HRD</th>
-                                        </tr>
-                                        <tr>
-                                            <td style="height:60px;"></td>
-                                            <td style="height:60px;"></td>
-                                            <td style="height:60px;"></td>
-                                            <td style="height:60px;"></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="text-align:center;">BOD</th>
-                                            <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                            <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                            <th style="text-align:center;">PAYROLL STAFF</th>
-                                        </tr>
-                                    </table>
-                                </center>';
+                        $html2 .= '  <tr>
+                                        <th style="text-align:right;" colspan="16">GRAND TOTAL</th>
+                                        <th style="text-align:right;">' . number_format($total) . '</th>
+                                        <th style="text-align:right;"></th>
+                                    </tr>
+                                    </table><br>';
                         $hal++;
-
-                        if (($i + 1) == $page) {
-                            echo '<div style="page-break-after:always;"></div>';
+                        if (($i + 1) != $page) {
+                            $html2 .= '<div style="page-break-after:always;"></div>';
                         }
+                    }
 
-                        echo '</div><br><br>';
+                    if(count($payrolls) > 0){
+                        $html2 .= '<center>
+                                        <table id="customers" style="width:70%;">
+                                            <tr>
+                                                <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
+                                                <th colspan="2" style="text-align:center;">CONFIRM OK</th>
+                                                <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
+                                            </tr>
+                                            <tr>
+                                                <th width="100" style="text-align:center;">COST CONTROL</th>
+                                                <th width="100" style="text-align:center;">HRD</th>
+                                            </tr>
+                                            <tr>
+                                                <td style="height:60px;"></td>
+                                                <td style="height:60px;"></td>
+                                                <td style="height:60px;"></td>
+                                                <td style="height:60px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center;">BOD</th>
+                                                <th style="text-align:center;">ASSISTANT MANAGER</th>
+                                                <th style="text-align:center;">ASSISTANT MANAGER</th>
+                                                <th style="text-align:center;">PAYROLL STAFF</th>
+                                            </tr>
+                                        </table>
+                                    </center>';
+                                    
+                        $html2 .= '<div style="page-break-after:always;"></div>';
                     }
                 }
+                
+                $html2 .= '</body></html>';
 
-                echo '</body></html>';
+                echo $html2;
             }
         }
     }

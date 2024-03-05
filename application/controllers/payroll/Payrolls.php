@@ -804,8 +804,10 @@ class Payrolls extends CI_Controller
                 // @$arr_permit_type_amount_b_total += round(($record['salary'] / 30) * $arr_permit_type_amount_qty) . ",";
 
                 if ($record['group_name'] == "MAGANG") {
-                    $arr_permit_type_amount .= round((($record['salary'] - $arr_deduction_amount_total) / $hkw) * $arr_permit_type_amount_qty) . ",";
-                    @$arr_permit_type_amount_b_total += round((($record['salary'] - $arr_deduction_amount_total) / $hkw) * $arr_permit_type_amount_qty) . ",";
+                    // $arr_permit_type_amount .= round((($record['salary'] - $arr_deduction_amount_total) / $hkw) * $arr_permit_type_amount_qty) . ",";
+                    // @$arr_permit_type_amount_b_total += round((($record['salary'] - $arr_deduction_amount_total) / $hkw) * $arr_permit_type_amount_qty) . ",";
+                    $arr_permit_type_amount .= round(($record['salary'] / $hkw) * $arr_permit_type_amount_qty) . ",";
+                    @$arr_permit_type_amount_b_total += round(($record['salary'] / $hkw) * $arr_permit_type_amount_qty) . ",";
                 } elseif ($count_allowance_number > 0) {
                     $arr_permit_type_amount .= round(($arr_allowance_amount_number / $hkw) * $arr_permit_type_amount_qty) . ",";
                     @$arr_permit_type_amount_b_total += round(($arr_allowance_amount_number / $hkw) * $arr_permit_type_amount_qty) . ",";

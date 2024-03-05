@@ -98,10 +98,11 @@ class Salary_slips extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, b.national_id, b.tax_id, i.name as marital_name, b.email 
+            $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, b.national_id, b.tax_id, i.name as marital_name, b.email, d.ter as ter_persentase
             FROM payrolls a
             JOIN employees b ON a.employee_id = b.id
             JOIN privilege_groups e ON b.group_id = e.group_id and e.username = '$username' and e.status = '1'
+            LEFT JOIN marital_categories d ON a.ter_number = d.number
             LEFT JOIN maritals i ON a.marital = i.number
             WHERE a.period_start = '$period_start'
             AND a.period_end = '$period_end'
@@ -179,64 +180,29 @@ class Salary_slips extends CI_Controller
 
         //Allowance Amount
         //jika dia ada tunjuangan ambil field dan isinya
-        $r_allowance = json_decode($record['allowence'], true);
-        $arr_allowance_amount_total = 0;
-        foreach ($r_allowance as $allowance_data => $allowance_val) {
-            $arr_allowance_amount_total += $allowance_val;
-        }
-
-        //Allowance Amount
-        //jika dia ada tunjuangan ambil field dan isinya
-        // $q_allowance = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
-        //     FROM allowances b
-        //     JOIN setup_allowances a ON a.allowance_id = b.id
-        //     WHERE a.employee_id = '$record[employee_id]' and b.type = 'FIX'
-        //     GROUP BY b.id ORDER BY b.type asc");
-        // $r_allowance = $q_allowance->result_array();
-
+        // $r_allowance = json_decode($record['allowence'], true);
         // $arr_allowance_amount_total = 0;
-        // $html_allowance_fix = "";
-        // foreach ($r_allowance as $allowance_data) {
-        //     $arr_allowance_amount_total += $allowance_data['amount'];
-        //     $html_allowance_fix .= '<tr>
-        //                                 <td style="text-align:left;">' . $allowance_data['name'] . '</td>
-        //                                 <td style="text-align:right;"><b>' . number_format($allowance_data['amount']) . '</b></td>
-        //                             </tr>';
+        // foreach ($r_allowance as $allowance_data => $allowance_val) {
+        //     $arr_allowance_amount_total += $allowance_val;
         // }
 
-        // $q_allowance2 = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
-        //     FROM allowances b
-        //     JOIN setup_allowances a ON a.allowance_id = b.id
-        //     WHERE a.employee_id = '$record[employee_id]' and b.type = 'TEMPORARY'
-        //     GROUP BY b.id ORDER BY b.type asc");
-        // $r_allowance2 = $q_allowance2->result_array();
+        $total_allowence = 0;
+        $total_allowence_temp = 0;
+        $total_allowence_fix = 0;
+        foreach (json_decode($record['allowence'], true) as $allowence => $val_allowence) {
+            $allTemp = $this->crud->read("allowances", ["number" => $allowence], ["type" => "TEMPORARY"]);
+            $allFix = $this->crud->read("allowances", ["number" => $allowence], ["type" => "FIX"]);
+            
+            if(!empty($allTemp)){
+                $total_allowence_temp += (int) $val_allowence;
+            }
 
-        // $arr_allowance2_amount_total = 0;
-        // $html_allowance_temp = "";
-        // foreach ($r_allowance2 as $allowance_data2) {
-        //     $arr_allowance2_amount_total += $allowance_data2['amount'];
-        //     $html_allowance_temp .= '<tr>
-        //                                 <td style="text-align:left;">' . $allowance_data2['name'] . '</td>
-        //                                 <td style="text-align:right;"><b>' . number_format($allowance_data2['amount']) . '</b></td>
-        //                             </tr>';
-        // }
+            if(!empty($allFix)){
+                $total_allowence_fix += (int) $val_allowence;
+            }
 
-        // $q_allowance3 = $this->db->query("SELECT b.type, b.name, SUM(a.amount) as amount
-        //     FROM allowances b
-        //     JOIN setup_allowances a ON a.allowance_id = b.id
-        //     WHERE a.employee_id = '$record[employee_id]' and b.type = 'NONE' and b.calculate_days = '1'
-        //     GROUP BY b.id ORDER BY b.type asc");
-        // $r_allowance3 = $q_allowance3->result_array();
-
-        // $arr_allowance3_amount_total = 0;
-        // $html_allowance_none = "";
-        // foreach ($r_allowance3 as $allowance_data3) {
-        //     $arr_allowance3_amount_total += ($allowance_data3['amount'] * $record['attandance_wd']);
-        //     $html_allowance_none .= '<tr>
-        //                                 <td style="text-align:left;">' . $allowance_data3['name'] . '</td>
-        //                                 <td style="text-align:right;"><b>' . number_format($allowance_data3['amount'] * $record['attandance_wd']) . '</b></td>
-        //                             </tr>';
-        // }
+            $total_allowence += (int)$val_allowence;
+        }
         //-------------------------------------------------------------------------------------------------------------------------------
 
         //Deduction Amount
@@ -297,7 +263,7 @@ class Salary_slips extends CI_Controller
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        $total_income = $record['salary'] + $arr_allowance_amount_total + $record['total_overtime_amount'] + $record['correction_plus'];
+        $total_income = $record['salary'] + $total_allowence + $record['total_overtime_amount'] + $record['correction_plus'];
         $total_deduction = $record['deduction_absence_amount'] + $total_deduction_amount + $arr_deduction_amount_total + $record['loan_bank'] + $record['loan_cooperative'] + $record['loan_other'] + $record['correction_minus'];
 
         $html .= '  <center><div class="container" style="border:1px solid black; margin-bottom:20px; padding-top:10px; float:left;">
@@ -378,8 +344,12 @@ class Salary_slips extends CI_Controller
                                     <td style="text-align:right;" width="150"><b>' . number_format($record['salary']) . '</b></td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align:left;">Allowences</td>
-                                    <td style="text-align:right;"><b>'.number_format($arr_allowance_amount_total).'</b></td>
+                                    <td style="text-align:left;">Allowance (Fix)</td>
+                                    <td style="text-align:right;"><b>'.number_format($total_allowence_fix).'</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:left;">Allowance (Tmp)</td>
+                                    <td style="text-align:right;"><b>'.number_format($total_allowence_temp).'</b></td>
                                 </tr>
                                 <tr>
                                     <td style="text-align:left;">Overtime</td>
@@ -395,7 +365,7 @@ class Salary_slips extends CI_Controller
                                 </tr>
                                 ' . $html_correction_plus . '
                                 <tr>
-                                    <th style="text-align:left;">BRUTO INCOME <i>(a)</i></th>
+                                    <th style="text-align:left;">TOTAL INCOME <i>(a)</i></th>
                                     <th style="text-align:right;"><b>' . number_format($total_income) . '</b></th>
                                 </tr>
                                 <tr>
@@ -407,7 +377,7 @@ class Salary_slips extends CI_Controller
                                     <th style="text-align:right;"><b>' . number_format(($arr_bpjs_com_amount_total)) . '</b></th>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:left;">TOTAL INCOME <i>(c) = (a + b)</i></th>
+                                    <th style="text-align:left;">BRUTO INCOME <i>(c) = (a + b)</i></th>
                                     <th style="text-align:right;"><b>' . number_format($total_income + $arr_bpjs_com_amount_total) . '</b></th>
                                 </tr>
                             </table>
@@ -431,7 +401,7 @@ class Salary_slips extends CI_Controller
                                     <td style="text-align:right;"><b>' . number_format($record['correction_minus']) . '</b></td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align:left;">Allowence BPJS Company</td>
+                                    <td style="text-align:left;">BPJS Company</td>
                                     <td style="text-align:right;"><b>' . number_format($arr_bpjs_com_amount_total) . '</b></td>
                                 </tr>
                                 <tr>
@@ -447,7 +417,7 @@ class Salary_slips extends CI_Controller
                                     <th style="text-align:right;"><b>' . number_format(($arr_bpjs_emp_amount_total)) . '</b></th>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:left;">TER <i>(f)</i></th>
+                                    <th style="text-align:left;">TER ('.$record['ter_persentase'].') <i>(f)</i></th>
                                     <th style="text-align:right;"><b>' . number_format($record['ter']) . '</b></th>
                                 </tr>
                                 <tr>
@@ -504,10 +474,11 @@ class Salary_slips extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, b.national_id, b.tax_id, i.name as marital_name, b.email 
+            $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, b.national_id, b.tax_id, i.name as marital_name, b.email, d.ter as ter_persentase
             FROM payrolls a
             JOIN employees b ON a.employee_id = b.id
             JOIN privilege_groups e ON b.group_id = e.group_id and e.username = '$username' and e.status = '1'
+            LEFT JOIN marital_categories d ON a.ter_number = d.number
             LEFT JOIN maritals i ON a.marital = i.number
             WHERE a.period_start = '$period_start'
             AND a.period_end = '$period_end'
@@ -575,10 +546,28 @@ class Salary_slips extends CI_Controller
 
                 //Allowance Amount
                 //jika dia ada tunjuangan ambil field dan isinya
-                $r_allowance = json_decode($record['allowence'], true);
-                $arr_allowance_amount_total = 0;
-                foreach ($r_allowance as $allowance_data => $allowance_val) {
-                    $arr_allowance_amount_total += $allowance_val;
+                // $r_allowance = json_decode($record['allowence'], true);
+                // $arr_allowance_amount_total = 0;
+                // foreach ($r_allowance as $allowance_data => $allowance_val) {
+                //     $arr_allowance_amount_total += $allowance_val;
+                // }
+
+                $total_allowence = 0;
+                $total_allowence_temp = 0;
+                $total_allowence_fix = 0;
+                foreach (json_decode($record['allowence'], true) as $allowence => $val_allowence) {
+                    $allTemp = $this->crud->read("allowances", ["number" => $allowence], ["type" => "TEMPORARY"]);
+                    $allFix = $this->crud->read("allowances", ["number" => $allowence], ["type" => "FIX"]);
+                    
+                    if(!empty($allTemp)){
+                        $total_allowence_temp += (int) $val_allowence;
+                    }
+
+                    if(!empty($allFix)){
+                        $total_allowence_fix += (int) $val_allowence;
+                    }
+
+                    $total_allowence += (int)$val_allowence;
                 }
                 
                 //Deduction Amount
@@ -641,7 +630,7 @@ class Salary_slips extends CI_Controller
                 }
                 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
-                $total_income = $record['salary'] + $arr_allowance_amount_total + $record['total_overtime_amount'] + $record['correction_plus'];
+                $total_income = $record['salary'] + $total_allowence + $record['total_overtime_amount'] + $record['correction_plus'];
                 $total_deduction = $record['deduction_absence_amount'] + $total_deduction_amount + $arr_deduction_amount_total + $record['loan_bank'] + $record['loan_cooperative'] + $record['loan_other'] + $record['correction_minus'];
                 if ($no % 2 == 0) {
                     $html .= '<div style="page-break-after:always;">';
@@ -651,12 +640,12 @@ class Salary_slips extends CI_Controller
                                     <table style="width: 100%;">
                                         <tr>
                                             <td width="80" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
-                                                <img src="' . $config->favicon . '" width="50">
+                                                <img src="' . $config->favicon . '" width="40">
                                             </td>
-                                            <td style="font-size: 30px; text-align: left; margin:2px;">
+                                            <td style="font-size: 20px; text-align: left; margin:2px;">
                                                 <b>' . $config->name . '</b>
                                             </td>
-                                            <td style="font-size: 30px; text-align: right; margin:2px;">
+                                            <td style="font-size: 20px; text-align: right; margin:2px;">
                                                 SALARY SLIP
                                             </td>
                                         </tr>
@@ -732,8 +721,12 @@ class Salary_slips extends CI_Controller
                                                         <td style="text-align:right;" width="150"><b>' . number_format($record['salary']) . '</b></td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="text-align:left;">Allowences</td>
-                                                        <td style="text-align:right;"><b>'.number_format($arr_allowance_amount_total).'</b></td>
+                                                        <td style="text-align:left;">Allowance (Fix)</td>
+                                                        <td style="text-align:right;"><b>'.number_format($total_allowence_fix).'</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:left;">Allowance (Tmp)</td>
+                                                        <td style="text-align:right;"><b>'.number_format($total_allowence_temp).'</b></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="text-align:left;">Overtime</td>
@@ -749,7 +742,7 @@ class Salary_slips extends CI_Controller
                                                     </tr>
                                                     ' . $html_correction_plus . '
                                                     <tr>
-                                                        <th style="text-align:left;">BRUTO INCOME <i>(a)</i></th>
+                                                        <th style="text-align:left;">TOTAL INCOME <i>(a)</i></th>
                                                         <th style="text-align:right;"><b>' . number_format($total_income) . '</b></th>
                                                     </tr>
                                                     <tr>
@@ -761,7 +754,7 @@ class Salary_slips extends CI_Controller
                                                         <th style="text-align:right;"><b>' . number_format(($arr_bpjs_com_amount_total)) . '</b></th>
                                                     </tr>
                                                     <tr>
-                                                        <th style="text-align:left;">TOTAL INCOME <i>(c) = (a + b)</i></th>
+                                                        <th style="text-align:left;">BRUTO INCOME <i>(c) = (a + b)</i></th>
                                                         <th style="text-align:right;"><b>' . number_format($total_income + $arr_bpjs_com_amount_total) . '</b></th>
                                                     </tr>
                                                 </table>
@@ -785,7 +778,7 @@ class Salary_slips extends CI_Controller
                                                         <td style="text-align:right;"><b>' . number_format($record['correction_minus']) . '</b></td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="text-align:left;">Allowence BPJS Company</td>
+                                                        <td style="text-align:left;">BPJS Company</td>
                                                         <td style="text-align:right;"><b>' . number_format($arr_bpjs_com_amount_total) . '</b></td>
                                                     </tr>
                                                     <tr>
@@ -801,7 +794,7 @@ class Salary_slips extends CI_Controller
                                                         <th style="text-align:right;"><b>' . number_format(($arr_bpjs_emp_amount_total)) . '</b></th>
                                                     </tr>
                                                     <tr>
-                                                        <th style="text-align:left;">TER <i>(f)</i></th>
+                                                        <th style="text-align:left;">TER ('.$record['ter_persentase'].') <i>(f)</i></th>
                                                         <th style="text-align:right;"><b>' . number_format($record['ter']) . '</b></th>
                                                     </tr>
                                                     <tr>

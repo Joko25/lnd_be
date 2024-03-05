@@ -384,7 +384,7 @@ class Attandances extends CI_Controller
                         } elseif (@$attandance->time_in == null && @$attandance->time_out != null) {
                             $attandance_status = "UN CHECK IN";
                             $style_status = "style='color:blue; font-weight:bold;'";
-                        } elseif ($record['date_sign'] >= $working_date) {
+                        } elseif ($record['date_sign'] > $working_date) {
                             $attandance_status = "NOT JOIN YET";
                             $style_status = "style='color:blue; font-weight:bold;'";
                         } elseif (!empty($resignation)) {
