@@ -58,7 +58,17 @@ class Permits extends CI_Controller
 
                 $data = array();
                 foreach ($records as $record) {
-                    $data[] = array_merge($record, array("file_attachment" => "assets/image/attandance/" . $record['attachment']));
+                    if(!empty($record['attachment'])){
+                        if(substr($record['attachment'], -4) == "jpeg"){
+                            $attachment = "assets/image/attandance/" . substr($record['attachment'], -15);
+                        }else{
+                            $attachment = "assets/image/attandance/" . substr($record['attachment'], -14);
+                        }
+                    }else{
+                        $attachment = null;
+                    }
+
+                    $data[] = array_merge($record, array("file_attachment" => $attachment));
                 }
 
                 die(json_encode(array(

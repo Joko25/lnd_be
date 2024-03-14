@@ -2,7 +2,7 @@
 date_default_timezone_set("Asia/Bangkok");
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Allowances extends CI_Controller
+class News extends CI_Controller
 {
     public function __construct()
     {
@@ -12,9 +12,6 @@ class Allowances extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->model('crud');
-
-        //VALIDASI FORM
-        $this->form_validation->set_rules('number', 'Code', 'required|min_length[1]|max_length[20]|is_unique[allowances.number]');
     }
 
     //HALAMAN UTAMA
@@ -26,7 +23,7 @@ class Allowances extends CI_Controller
             $data['button'] = $this->getbutton($this->id_menu());
 
             $this->load->view('template/header', $data);
-            $this->load->view('payroll/allowances');
+            $this->load->view('announcement/news');
         } else {
             redirect('error_access');
         }
@@ -36,7 +33,7 @@ class Allowances extends CI_Controller
     public function reads()
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
-        $send = $this->crud->reads('allowances', ["name" => $post]);
+        $send = $this->crud->reads('news', ["name" => $post]);
         echo json_encode($send);
     }
 
@@ -44,7 +41,6 @@ class Allowances extends CI_Controller
     public function datatables()
     {
         if ($this->input->post()) {
-            $filters = json_decode($this->input->post('filterRules'));
             $page = $this->input->post('page');
             $rows = $this->input->post('rows');
             //Pagination 1-10
@@ -54,13 +50,8 @@ class Allowances extends CI_Controller
             $result = array();
             //Select Query
             $this->db->select('*');
-            $this->db->from('allowances');
+            $this->db->from('news');
             $this->db->where('deleted', 0);
-            if (@count($filters) > 0) {
-                foreach ($filters as $filter) {
-                    $this->db->like($filter->field, $filter->value);
-                }
-            }
             $this->db->order_by('name', 'ASC');
             //Total Data
             $totalRows = $this->db->count_all_results('', false);
@@ -68,9 +59,40 @@ class Allowances extends CI_Controller
             $this->db->limit($rows, $offset);
             //Get Data Array
             $records = $this->db->get()->result_array();
+
+            $data = array();
+            foreach ($records as $record) {
+                $division = $this->crud->read("divisions", [], ["id" => $record['division_id']]);
+                $departement_id = json_decode($record['departement_id'], false);
+                
+                $departement_value = "";
+                foreach ($departement_id as $departement => $value) {
+                    $dept = $this->crud->read("departements", [], ["id" => $value]);
+
+                    $departement_value .= $dept->name.", ";
+                }
+
+                $data[] = array(
+                    "id" => $record['id'],
+                    "division_id" => $record['division_id'],
+                    "division_name" => $division->name,
+                    "departement_id" => $departement_id,
+                    "departement_name" => $departement_value,
+                    "name" => $record['name'],
+                    "description" => $record['description'],
+                    "start_date" => $record['start_date'],
+                    "finish_date" => $record['finish_date'],
+                    "attachment" => $record['attachment'],
+                    "created_by" => $record['created_by'],
+                    "created_date" => $record['created_date'],
+                    "updated_by" => $record['updated_by'],
+                    "updated_date" => $record['updated_date'],
+                );
+            }
+
             //Mapping Data
             $result['total'] = $totalRows;
-            $result = array_merge($result, ['rows' => $records]);
+            $result = array_merge($result, ['rows' => $data]);
             echo json_encode($result);
         }
     }
@@ -79,13 +101,21 @@ class Allowances extends CI_Controller
     public function create()
     {
         if ($this->input->post()) {
-            if ($this->form_validation->run() == TRUE) {
-                $post   = $this->input->post();
-                $send   = $this->crud->create('allowances', $post);
-                echo $send;
-            } else {
-                show_error(validation_errors());
-            }
+            $post = $this->input->post();
+
+            $attachment = $this->crud->upload('attachment', ["jpg", "png", "jpeg", "pdf"], 'assets/document/news/');
+
+            $send = $this->crud->create('news', array(
+                "division_id" => $post['division_id'],
+                "departement_id" => json_encode($post['departement_id']),
+                "name" => $post['name'],
+                "start_date" => $post['start_date'],
+                "finish_date" => $post['finish_date'],
+                "description" => $post['description'],
+                "attachment" => $attachment
+            ));
+
+            echo $send;
         } else {
             show_error("Cannot Process your request");
         }
@@ -97,10 +127,18 @@ class Allowances extends CI_Controller
         if ($this->input->post()) {
             $id   = base64_decode($this->input->get('id'));
             $post = $this->input->post();
-            $send = $this->crud->update('allowances', ["id" => $id], $post);
-            if($send){
-                $this->crud->update('setup_allowances', ["allowance_id" => $id], ["amount" => $post['amount']]);
-            }
+            $attachment = $this->crud->upload('attachment', ["jpg", "png", "jpeg", "pdf"], 'assets/document/news/', ["id" => $id], "news", "attachment");
+
+            $send = $this->crud->update('news', ["id" => $id], array(
+                    "division_id" => $post['division_id'],
+                    "departement_id" => json_encode($post['departement_id']),
+                    "name" => $post['name'],
+                    "start_date" => $post['start_date'],
+                    "finish_date" => $post['finish_date'],
+                    "description" => $post['description'],
+                    "attachment" => $attachment,
+                ));
+
             echo $send;
         } else {
             show_error("Cannot Process your request");
@@ -111,7 +149,7 @@ class Allowances extends CI_Controller
     public function delete()
     {
         $data = $this->input->post();
-        $send = $this->crud->delete('allowances', $data);
+        $send = $this->crud->delete('news', $data);
         echo $send;
     }
 
@@ -121,7 +159,7 @@ class Allowances extends CI_Controller
         if ($option == "excel") {
             $format  = date("Ymd");
             header("Content-type: application/vnd-ms-excel");
-            header("Content-Disposition: attachment; filename=allowances_$format.xls");
+            header("Content-Disposition: attachment; filename=news_$format.xls");
         }
 
         //Config
@@ -130,8 +168,9 @@ class Allowances extends CI_Controller
         $config = $this->db->get()->row();
 
         $this->db->select('*');
-        $this->db->from('allowances');
+        $this->db->from('news');
         $this->db->where('deleted', 0);
+        $this->db->order_by('name', 'ASC');
         $records = $this->db->get()->result_array();
 
         $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
@@ -144,7 +183,7 @@ class Allowances extends CI_Controller
                         </td>
                         <td style="font-size: 14px; text-align: left; margin:2px;">
                             <b>' . $config->name . '</b><br>
-                            <small>MASTER ALLOWANCE</small>
+                            <small>MASTER DIVISION</small>
                         </td>
                     </tr>
                 </table>
@@ -159,21 +198,17 @@ class Allowances extends CI_Controller
         <table id="customers" border="1">
             <tr>
                 <th width="20">No</th>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Amount</th>
-                <th>Type</th>
-                <th>Description</th>
+                <th>Start Date</th>
+                <th>Finish Date</th>
+                <th>Title</th>
             </tr>';
         $no = 1;
         foreach ($records as $data) {
             $html .= '<tr>
                     <td>' . $no . '</td>
-                    <td>' . $data['number'] . '</td>
-                    <td>' . $data['name'] . '</td>
-                    <td>' . $data['amount'] . '</td>
-                    <td>' . $data['type'] . '</td>
-                    <td>' . $data['description'] . '</td>';
+                    <td>' . $data['start_date'] . '</td>
+                    <td>' . $data['finish_date'] . '</td>
+                    <td>' . $data['name'] . '</td>';
             $no++;
         }
 

@@ -28,16 +28,14 @@ class Payrolls extends CI_Controller
             $user = $this->mobile->read("users", [], ["api_key" => $api_key]);
 
             if ($user) {
-                $employee = $this->mobile->read("employees", [], ["number" => $user->number]);
-
                 $this->db->select('a.*, b.bank_branch, b.bank_no, b.national_id, b.tax_id, d.name as source_name, c.name as marital_name, 
                     b.name as employee_name, b.number as employee_number');
                 $this->db->from('payrolls a');
                 $this->db->join('employees b', 'a.employee_id = b.id');
                 $this->db->join('maritals c', 'a.marital = c.number', 'left');
                 $this->db->join('sources d', 'b.source_id = d.id', 'left');
-                $this->db->like('b.id', $employee->id);
-                $this->db->where("a.approved_to is null or a.approved_to = ''");
+                $this->db->where('b.number', $user->number);
+                $this->db->where("(a.approved_to is null or a.approved_to = '')");
                 $this->db->order_by('a.period_start', 'DESC');
                 $this->db->group_by('a.employee_id');
                 $this->db->group_by('a.period_start');

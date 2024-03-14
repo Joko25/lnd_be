@@ -246,6 +246,7 @@ class Machines extends CI_Controller
                             'shift_name' => @$shift->name,
                             'shift_detail' => @$shift->shift_name,
                             'shift_days' => @$shift->days,
+                            'status' => "MACHINE",
                         );
 
                         $this->crud->update('attandances', ["id" => $attandance_in->id], $data_attandance);
@@ -260,6 +261,7 @@ class Machines extends CI_Controller
                             'shift_name' => @$shift->name,
                             'shift_detail' => @$shift->shift_name,
                             'shift_days' => @$shift->days,
+                            'status' => "MACHINE",
                             // 'time_out' => @$shift->end,
                         );
                         $this->crud->create('attandances', $data_attandance);
@@ -309,6 +311,7 @@ class Machines extends CI_Controller
                             'shift_name' => @$shift->name,
                             'shift_detail' => @$shift->shift_name,
                             'shift_days' => @$shift->days,
+                            'status' => "MACHINE",
                         );
                         $this->crud->update('attandances', ["id" => $attandance_out->id], $data_attandance);
                         echo json_encode(array("title" => "Updated", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Update data Check Out", "theme" => "success"));
@@ -323,6 +326,7 @@ class Machines extends CI_Controller
                             'shift_name' => @$shift->name,
                             'shift_detail' => @$shift->shift_name,
                             'shift_days' => @$shift->days,
+                            'status' => "MACHINE",
                         );
                         $this->crud->create('attandances', $data_attandance);
                         echo json_encode(array("title" => "Created", "message" => $employee->name . " | " . $date_in . " " . $time_in . " Create data Check Out", "theme" => "success"));
