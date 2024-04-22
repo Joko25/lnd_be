@@ -81,6 +81,7 @@ class Attandances extends CI_Controller
         if ($this->input->get()) {
             $filter_from = $this->input->get('filter_from');
             $filter_to = $this->input->get('filter_to');
+            $filter_6 = date("y-m-d", strtotime("-6 month", strtotime($filter_from)));
             $filter_division = $this->input->get('filter_division');
             $filter_departement = $this->input->get('filter_departement');
             $filter_departement_sub = $this->input->get('filter_departement_sub');
@@ -103,7 +104,7 @@ class Attandances extends CI_Controller
             $this->db->join('departements d', 'a.departement_id = d.id');
             $this->db->join('departement_subs e', 'a.departement_sub_id = e.id');
             $this->db->join('privilege_groups i', "a.group_id = i.group_id and i.username = '$username'");
-            $this->db->join('(SELECT employee_id, MAX(warning_letter) as warning_letter FROM warning_letters GROUP BY employee_id) f', 'a.id = f.employee_id', 'left');
+            $this->db->join("(SELECT employee_id, MAX(warning_letter) as warning_letter FROM warning_letters WHERE issue_date BETWEEN '$filter_6' and '$filter_from' GROUP BY employee_id) f", 'a.id = f.employee_id', 'left');
             $this->db->where('a.deleted', 0);
             $this->db->where('a.status', $filter_status_employee);
             $this->db->like('a.division_id', $filter_division);

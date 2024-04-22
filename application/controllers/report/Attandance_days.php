@@ -293,8 +293,6 @@ class Attandance_days extends CI_Controller
                                     <td ' . $style . '>' . @$permit->permit_name . '</td>
                                     <td>' . $remarks . '</td>
                                 </tr>';
-                    
-                    $no++;
 
                     if ($status == $filter_status) {
                         echo  $html;      

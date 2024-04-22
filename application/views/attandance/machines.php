@@ -80,7 +80,8 @@
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Period</span>
-                <input style="width:60%;" name="period" id="period" value="<?= date("Y-m-d") ?>" class="easyui-datebox" required data-options="formatter:myformatter,parser:myparser, editable:false">
+                <input style="width:30%;" name="period_from" id="period_from" value="<?= date("Y-m-d") ?>" class="easyui-datebox" required data-options="formatter:myformatter,parser:myparser, editable:false">
+                <input style="width:30%;" name="period_to" id="period_to" value="<?= date("Y-m-d") ?>" class="easyui-datebox" required data-options="formatter:myformatter,parser:myparser, editable:false">
             </div>
         </fieldset>
     </form>

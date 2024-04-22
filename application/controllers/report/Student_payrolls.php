@@ -288,9 +288,9 @@ class Student_payrolls extends CI_Controller
                         <body>';
                         
                 foreach ($records as $record) {
-                    $allowance_1 = $this->crud->read("allowance_students", [], ["group_id" => $record['group_id'], "months" => "1"]);
-                    $allowance_2 = $this->crud->read("allowance_students", [], ["group_id" => $record['group_id'], "months" => "2"]);
-                    $allowance_3 = $this->crud->read("allowance_students", [], ["group_id" => $record['group_id'], "months" => "3"]);
+                    $allowance_1 = $this->crud->read("allowance_students", [], ["group_id" => $record['group_id'], "months" => "1", "type" => "SALARY"]);
+                    $allowance_2 = $this->crud->read("allowance_students", [], ["group_id" => $record['group_id'], "months" => "2", "type" => "SALARY"]);
+                    $allowance_3 = $this->crud->read("allowance_students", [], ["group_id" => $record['group_id'], "months" => "3", "type" => "SALARY"]);
                     $payrolls = $this->crud->reads("payroll_pkl", [], ["period_start" => $filter_from, "period_end" => $filter_to, "source_id" => $record['source_id']]);
 
                     //Config Page

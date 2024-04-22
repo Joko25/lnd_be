@@ -119,8 +119,17 @@ class Machines extends CI_Controller
         $ip = $this->input->post('ip');
         $port = $this->input->post('port');
         $keys = $this->input->post('keys');
-        $period = $this->input->post('period');
+        $period_from = $this->input->post('period_from');
+        $period_to = $this->input->post('period_to');
         $type = $this->input->post('type');
+
+        $dateFrom = strtotime($period_from);
+        $dateTo = strtotime($period_to);
+
+        $period = [];
+        for ($i = $dateFrom; $i <= $dateTo; $i += (60 * 60 * 24)) {
+            $period[] = date('Y-m-d', $i);
+        }
 
         $connect = fsockopen($ip, $port, $errno, $errstr, 1);
 
@@ -154,7 +163,7 @@ class Machines extends CI_Controller
                 $date = $pecah[0];
                 $time = $pecah[1];
 
-                if($date == $period){
+                if (in_array($date, $period)) {
                     if(in_array($PIN, $lastPin)){
                         //
                     }else{
