@@ -985,6 +985,17 @@
 							halign: 'center',
 							title: "Note",
 						}, {
+							field: 'attachment_idm',
+							width: 80,
+							halign: 'center',
+							title: "IDM",
+							formatter:fileFormatter2
+						}, {
+							field: 'remarks',
+							width: 200,
+							halign: 'center',
+							title: "Note",
+						}, {
 							field: 'action',
 							width: 80,
 							align: 'center',
@@ -1629,6 +1640,14 @@
 			return '<a href="' + value + '" target="_blank" style="text-decoration: none;"><i class="fa fa-eye"></i> View</a>';
 		}
 	};
+
+	function fileFormatter2(value) {
+        if (value == "" || value == null) {
+            return '-';
+        } else {
+            return '<a href="<?= base_url('assets/image/cash_carry/') ?>' + value + '" target="_blank" class="btn btn-primary btn-sm" style="pointer-events:auto; opacity:1;"><i class="fa fa-eye"></i> View</a>';
+        }
+    };
 </script>
 
 </html>

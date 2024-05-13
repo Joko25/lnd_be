@@ -174,6 +174,9 @@ class Thr extends CI_Controller
             $filter_employee = $this->input->get('filter_employee');
             $filter_employee_type = $this->input->get('filter_employee_type');
             $filter_group = $this->input->get('filter_group');
+            $filter_cutoff = base64_decode($this->input->get('filter_cutoff'));
+            $filter_period = date("Y-m", strtotime("-1 month", strtotime($filter_cutoff)));
+
             $username = $this->session->username;
 
             $query = $this->db->query("SELECT a.*, 
@@ -195,11 +198,14 @@ class Thr extends CI_Controller
                     q.number as marital,
                     q.ter_type,
                     a.tax_id,
-                    o.thr_fee
+                    o.thr_fee,
+                    e.total_all_allowance,
+                    e.bpjs_company
                 FROM employees a
                 JOIN divisions b ON a.division_id = b.id
                 JOIN departements c ON a.departement_id = c.id
                 JOIN departement_subs d ON a.departement_sub_id = d.id
+                JOIN payrolls e ON a.id = e.employee_id and e.period_end = '$filter_period'
                 LEFT JOIN contracts f ON a.contract_id = f.id
                 LEFT JOIN positions g ON a.position_id = g.id
                 LEFT JOIN groups i ON a.group_id = i.id
@@ -327,19 +333,22 @@ class Thr extends CI_Controller
             // } else {
             //     $pph_final = 0;
             // }
+            
+            $bpjs = json_decode($record['bpjs_company'], true);
+            $income_thr = (($record['total_all_allowance'] - $bpjs['jht_company'] - $bpjs['jp_company']) + $thr);
 
             //Rumus TER
             $this->db->select("number, ter");
             $this->db->from('marital_categories');
-            $this->db->where('ter_from <', $thr);
-            $this->db->where('ter_to >', $thr);
+            $this->db->where('ter_from <', $income_thr);
+            $this->db->where('ter_to >', $income_thr);
             $this->db->where('type', $record['ter_type']);
             $marital_category = $this->db->get()->row();
             
             if(empty($marital_category)){
                 $ter = 0;
             }else{
-                $ter = (($thr * $marital_category->ter) / 100);
+                $ter = (($income_thr * $marital_category->ter) / 100);
             }
 
             if($numBulan >= 1){
@@ -360,6 +369,8 @@ class Thr extends CI_Controller
                     "allowence" => $totalAllowence,
                     "total" => ($salary + $totalAllowence),
                     "thr" => $thr,
+                    "income" => ($record['total_all_allowance'] - $bpjs['jht_company'] - $bpjs['jp_company']),
+                    "income_thr" => $income_thr,
                     "pph" => ($ter),
                     "total_thr" => ($thr - $ter),
                 );
@@ -523,6 +534,8 @@ class Thr extends CI_Controller
                 <th>Allowence</th>
                 <th>Total</th>
                 <th>THR</th>
+                <th>Payroll</th>
+                <th>Total Income</th>
                 <th>TER</th>
                 <th>Total THR</th>
             </tr>';
@@ -545,6 +558,8 @@ class Thr extends CI_Controller
                             <td>' . $data['allowence'] . '</td>
                             <td>' . $data['total'] . '</td>
                             <td>' . $data['thr'] . '</td>
+                            <td>' . $data['income'] . '</td>
+                            <td>' . $data['income_thr'] . '</td>
                             <td>' . $data['pph'] . '</td>
                             <td>' . $data['total_thr'] . '</td>
                         </tr>';

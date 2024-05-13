@@ -840,7 +840,7 @@ class Payrolls extends CI_Controller
 
             //Harga Potong Gaji kalo dia ga masuk kerja
             if ($record['group_name'] == "MAGANG") {
-                $absence_amount = round((($record['salary'] - $arr_deduction_amount_total) / $hkw) * $absence_qty_final);
+                $absence_amount = round(($record['salary'] / $hkw) * $absence_qty_final);
             } elseif ($count_allowance_number > 0) {
                 $absence_amount = round(($arr_allowance_amount_number / $hkw) * $absence_qty_final);
             } else {
@@ -890,7 +890,6 @@ class Payrolls extends CI_Controller
             $this->db->where('type', $record['ter_type']);
             $marital_category = $this->db->get()->row();
             
-
             if(empty($marital_category)){
                 $ter_number = "-";
                 $ter = 0;
@@ -1189,7 +1188,6 @@ class Payrolls extends CI_Controller
                 <th colspan="3">LOAN</th>
                 <th colspan="' . (count($bpjs)) . '">BPJS Employee</th>
                 <th rowspan="2">Total BPJS Employee</th>
-                <th rowspan="2">PPH21</th>
                 <th rowspan="2">TER</th>
                 <th rowspan="2">Net Income</th>
             </tr>
@@ -1305,7 +1303,6 @@ class Payrolls extends CI_Controller
                 $html .= '<td>' . $val_bpjs_employee . '</td>';
             }
             $html .= '<td>' . $record['bpjs_employee_total'] . '</td>';
-            $html .= '<td>' . $record['pph'] . '</td>';
             $html .= '<td>' . $record['ter'] . '</td>';
             $html .= '<td>' . $record['net_income'] . '</td>';
             $no++;

@@ -45,7 +45,7 @@
             <th colspan="<?= count($bpjs) ?>">BPJS Employee</th>
             <th rowspan="2" data-options="field:'bpjs_employee_total',width:100,align:'center', formatter:numberformat">Total BPJS<br>Employee</th>
             <!-- <th rowspan="2" data-options="field:'netto',width:100,align:'center'">Netto</th> -->
-            <th rowspan="2" data-options="field:'pph',width:100,align:'center', formatter:numberformat">PPH21</th>
+            <!-- <th rowspan="2" data-options="field:'pph',width:100,align:'center', formatter:numberformat">PPH21</th> -->
             <th rowspan="2" data-options="field:'ter',width:100,align:'center', formatter:numberformat">TER</th>
             <th rowspan="2" data-options="field:'net_income',width:100,align:'center', formatter:numberformat">Net Income</th>
         </tr>
@@ -136,6 +136,7 @@
                     <div class="fitem">
                         <span style="width:30%; display:inline-block;"></span>
                         <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
+                        <a href="javascript:;" class="easyui-linkbutton" onclick="formula()"><i class="fa fa-percent"></i> Formula</a>
                     </div>
                 </div>
                 <div style="width: 50%; float: left;">
@@ -185,6 +186,64 @@
 <iframe id="printout" src="<?= base_url('payroll/payrolls/print') ?>" style="width: 100%;" hidden></iframe>
 
 <script>
+    function formula(){
+        Swal.fire({
+            width: 600,
+            html: `<div style="text-align:left;"><center><b style="font-size:16px !important;">Perhitungan Payroll</b><hr></center>
+                <b>Ketentuan Allowence</b>
+                <ul>
+                    <li>Jika Calculate Daily (YES) dan Type (TEMPORARY) Maka (Amount * Working Day)</li>
+                    <li>Jika Calculate Daily (NO) Maka (Amount)</li>
+                </ul>
+                <b>Ketentuan BPJS Employee</b>
+                <ul>
+                    <li>Jika BPJS TK dan JKN tidak di isi maka tidak ada perhitungan</li>
+                    <li>Jika JKN di isi dan Setup Salary (bpjs) = 0 maka (Salary + Allowence x BPJS (% Employee) x Employee List (JKN Family))</li>
+                    <li>Jika JKN di isi dan Setup Salary (bpjs) > 0 maka (Salary (bpjs) x BPJS (% Employee) x Employee List (JKN Family))</li>
+                    <li>Jika BPJS TK di isi maka (Salary + Allowence x BPJS (% Employee))</li>
+                </ul>
+                <b>Ketentuan BPJS Company</b>
+                <ul>
+                    <li>Jika BPJS TK dan JKN tidak di isi maka tidak ada perhitungan</li>
+                    <li>Jika JKN di isi dan Setup Salary (bpjs) = 0 maka (Salary + Allowence x BPJS (% Company) x Employee List (JKN Family))</li>
+                    <li>Jika JKN di isi dan Setup Salary (bpjs) > 0 maka (Salary (bpjs) x BPJS (% Company))</li>
+                    <li>Jika BPJS TK di isi maka (Salary + Allowence x BPJS (% Company))</li>
+                </ul>
+                <b>Ketentuan Potongan Permit (Deduction)</b>
+                <ul>
+                    <li>Jika Group (Magang) maka (Salary / HKW) x Total Permit</li>
+                    <li>Jika Group (Karyawan) maka (Salary + Allowence / HKW) * Total Permit</li>
+                </ul>
+                <b>Ketentuan Potongan Absensi</b>
+                <ul>
+                    <li>Jika Group (Magang) maka (Salary / HKW) x Total tidak masuk kerja</li>
+                    <li>Jika Group (Karyawan) maka (Salary + Allowence / HKW) x Total tidak masuk kerja</li>
+                </ul>
+                <b>Rumus Bruto Income</b>
+                <ul>
+                    <li>Salary + Allowence + BPJS (Company) + Correction Plus</li>
+                </ul>
+                <b>Rumus Income</b>
+                <ul>
+                    <li>Bruto Income - Deduction - BPJS (Company)</li>
+                </ul>
+                <b>Rumus TER</b>
+                <ul>
+                    <li>Bruto Income x (% Range TER Category pada Bruto Income)</li>
+                </ul>
+                <b>Rumus Net Income</b>
+                <ul>
+                    <li>Income - TER - Deduction - Loan - BPJS (Employee)</li>
+                </ul>`,
+            showClass: {
+                popup: `animate__animated animate__fadeInUp animate__faster`
+            },
+            hideClass: {
+                popup: `animate__animated animate__fadeOutDown animate__faster`
+            }
+        });
+    }
+    
     function add() {
         var filter_from = $("#filter_from").combogrid('getValue');
         var filter_to = $("#filter_to").textbox('getValue');

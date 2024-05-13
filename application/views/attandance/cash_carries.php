@@ -745,6 +745,48 @@
                                 var data = eval('(' + data + ')');
                                 var file_attachment = data.attachment;
                                 var file_attachment_idm = data.attachment_idm;
+
+                                for (let i = 0; i < totalrows; i++) {
+                                    if (rows[i].employee_id) {
+                                        $.ajax({
+                                            type: "post",
+                                            url: url_save,
+                                            data: {
+                                                trans_date: trans_date,
+                                                request_code: request_code,
+                                                request_name: request_name,
+                                                idm_no: idm_no,
+                                                type: type,
+                                                attachment: file_attachment,
+                                                attachment_idm: file_attachment_idm,
+                                                employee_id: rows[i].employee_id,
+                                                start: rows[i].start,
+                                                end: rows[i].end,
+                                                meal: rows[i].meal,
+                                                plan: rows[i].plan,
+                                                actual: rows[i].actual,
+                                                break: rows[i].break,
+                                                remarks: rows[i].remarks
+                                            },
+                                            dataType: "json",
+                                            success: function(result) {
+                                                if (totalrows == (i + 1)) {
+                                                    Swal.close();
+                                                    Swal.fire({
+                                                        title: "Save Cash Carries Success",
+                                                        icon: "success",
+                                                        confirmButtonText: 'Ok',
+                                                        allowOutsideClick: false,
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            location.reload();
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
                             }
                         });
 
@@ -763,48 +805,6 @@
                         //     var explode_idm = attachment_idm['name'].split('.');
                         //     var file_attachment_idm = idm_no + "." + explode_idm[1];
                         // }
-
-                        for (let i = 0; i < totalrows; i++) {
-                            if (rows[i].employee_id) {
-                                $.ajax({
-                                    type: "post",
-                                    url: url_save,
-                                    data: {
-                                        trans_date: trans_date,
-                                        request_code: request_code,
-                                        request_name: request_name,
-                                        idm_no: idm_no,
-                                        type: type,
-                                        attachment: file_attachment,
-                                        attachment_idm: file_attachment_idm,
-                                        employee_id: rows[i].employee_id,
-                                        start: rows[i].start,
-                                        end: rows[i].end,
-                                        meal: rows[i].meal,
-                                        plan: rows[i].plan,
-                                        actual: rows[i].actual,
-                                        break: rows[i].break,
-                                        remarks: rows[i].remarks
-                                    },
-                                    dataType: "json",
-                                    success: function(result) {
-                                        if (totalrows == (i + 1)) {
-                                            Swal.close();
-                                            Swal.fire({
-                                                title: "Save Cash Carries Success",
-                                                icon: "success",
-                                                confirmButtonText: 'Ok',
-                                                allowOutsideClick: false,
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    location.reload();
-                                                }
-                                            });
-                                        }
-                                    }
-                                });
-                            }
-                        }
 
                         $('#dlg_insert').dialog('close');
                     } else {

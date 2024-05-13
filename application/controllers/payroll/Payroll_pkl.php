@@ -200,7 +200,7 @@ class Payroll_pkl extends CI_Controller
                 $this->db->from('permits a');
                 $this->db->join('permit_types b', 'a.permit_type_id = b.id');
                 $this->db->where('a.status', 0);
-                $this->db->where('b.payroll', 'NON DEDUCTION');
+                $this->db->where('b.absence', 'YES');
                 $this->db->where('a.employee_id', $record['id']);
                 $this->db->where('a.permit_date', $working_date);
                 $this->db->group_by('a.employee_id');

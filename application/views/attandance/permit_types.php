@@ -102,7 +102,7 @@
 
             <div class="fitem">
 
-                <span style="width:35%; display:inline-block;">Absence</span>
+                <span style="width:35%; display:inline-block;">Attandance</span>
 
                 <select style="width:60%;" name="absence" required="" class="easyui-combobox" panelHeight="auto">
 
@@ -276,17 +276,14 @@
         //SETTING DATAGRID EASYUI
 
         $('#dg').datagrid({
-
             url: '<?= base_url('attandance/permit_types/datatables') ?>',
-
             pagination: true,
-
             clientPaging: false,
-
             remoteFilter: true,
-
-            rownumbers: true
-
+            rownumbers: true,
+            fit: true,
+            pageList: [20, 50, 100, 500, 1000],
+            pageSize: 20,
         }).datagrid('enableFilter');
 
 

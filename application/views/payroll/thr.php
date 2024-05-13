@@ -21,6 +21,8 @@
             <th data-options="field:'allowence',width:100,align:'center', formatter:numberformat">Allowence</th>
             <th data-options="field:'total',width:100,align:'center', formatter:numberformat">Total</th>
             <th data-options="field:'thr',width:100,align:'center', formatter:numberformat">THR</th>
+            <th data-options="field:'income',width:100,align:'center', formatter:numberformat">Payroll</th>
+            <th data-options="field:'income_thr',width:100,align:'center', formatter:numberformat">Total Income</th>
             <th data-options="field:'pph',width:100,align:'center', formatter:numberformat">TER</th>
             <th data-options="field:'total_thr',width:100,align:'center', formatter:numberformat">Total THR</th>
         </tr>
