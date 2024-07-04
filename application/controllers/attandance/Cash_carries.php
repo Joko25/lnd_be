@@ -132,9 +132,17 @@ class Cash_carries extends CI_Controller
                 }
             } else {
                 if (date('w', $hourTrans) === '0') {
-                    $total = ((@$allowance_cash_carry->sunday * $duration) + $meal);
+                    if (count($calendars) > 0) {
+                        $total = ((@$allowance_cash_carry->holiday * $duration) + $meal);
+                    } else {
+                        $total = ((@$allowance_cash_carry->sunday * $duration) + $meal);
+                    }
                 } else {
-                    $total = ((@$allowance_cash_carry->saturday * $duration) + $meal);
+                    if (count($calendars) > 0) {
+                        $total = ((@$allowance_cash_carry->holiday * $duration) + $meal);
+                    } else {
+                        $total = ((@$allowance_cash_carry->saturday * $duration) + $meal);
+                    }
                 }
             }
         } else {
@@ -148,9 +156,17 @@ class Cash_carries extends CI_Controller
                 }
             } else {
                 if (date('w', $hourTrans) === '0') {
-                    $total = ((@$allowance_cash_carry->sunday * $duration) + $meal);
+                    if (count($calendars) > 0) {
+                        $total = ((@$allowance_cash_carry->holiday * $duration) + $meal);
+                    } else {
+                        $total = ((@$allowance_cash_carry->sunday * $duration) + $meal);
+                    }
                 } else {
-                    $total = ((@$allowance_cash_carry->saturday * $duration) + $meal);
+                    if (count($calendars) > 0) {
+                        $total = ((@$allowance_cash_carry->holiday * $duration) + $meal);
+                    } else {
+                        $total = ((@$allowance_cash_carry->saturday * $duration) + $meal);
+                    }
                 }
             }
         }
