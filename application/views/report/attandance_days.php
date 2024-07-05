@@ -65,6 +65,7 @@
             </div>
         </fieldset>
         <?= $button ?>
+        <a href="javascript:;" class="easyui-linkbutton" plain="true" onclick="printcsv()"><i class="fa fa-file"></i> Export to CSV</a>
     </div>
 </div>
 
@@ -110,11 +111,15 @@
         var Difference_In_Time = date2.getTime() - date1.getTime();
         var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
-        if (Difference_In_Days <= 31) {
-            $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
-            $("#printout").attr('src', '<?= base_url('report/attandance_days/print') ?>' + url);
-        } else {
-            toastr.error("Max Duration Period Date is 31 Days");
+        if(filter_departement != "" || filter_employee != ""){
+            if (Difference_In_Days <= 31) {
+                $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
+                $("#printout").attr('src', '<?= base_url('report/attandance_days/print') ?>' + url);
+            } else {
+                toastr.error("Max Duration Period Date is 31 Days");
+            }
+        }else{
+            toastr.info("It is recommended to immediately click export to csv");
         }
     }
 
@@ -148,8 +153,59 @@
         var Difference_In_Time = date2.getTime() - date1.getTime();
         var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
+        if(filter_departement != "" || filter_employee != ""){
+            if (Difference_In_Days <= 31) {
+                window.location.assign('<?= base_url('report/attandance_days/print/excel') ?>' + url);
+            } else {
+                toastr.error("Max Duration Period Date is 31 Days");
+            }
+        }else{
+            toastr.info("It is recommended to immediately click export to csv");
+        }
+    }
+
+    function printcsv() {
+        var filter_from = $("#filter_from").datebox('getValue');
+        var filter_to = $("#filter_to").datebox('getValue');
+        var filter_division = $("#filter_division").combobox('getValue');
+        var filter_departement = $("#filter_departement").combobox('getValue');
+        var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
+        var filter_employee = $("#filter_employee").combogrid('getValue');
+        var filter_permit_type = $("#filter_permit_type").combobox('getValue');
+        var filter_status = $("#filter_status").combobox('getValue');
+        var filter_status_in = $("#filter_status_in").combobox('getValue');
+        var filter_status_employee = $("#filter_status_employee").combobox('getValue');
+
+        var url = "?filter_from=" + filter_from +
+            "&filter_to=" + filter_to +
+            "&filter_division=" + filter_division +
+            "&filter_departement=" + filter_departement +
+            "&filter_departement_sub=" + filter_departement_sub +
+            "&filter_employee=" + filter_employee +
+            "&filter_permit_type=" + filter_permit_type +
+            "&filter_status_in=" + filter_status_in +
+            "&filter_status_employee=" + filter_status_employee +
+            "&filter_status=" + filter_status;
+
+        var date1 = new Date(filter_from);
+        var date2 = new Date(filter_to);
+
+        // // Do the math.
+        var Difference_In_Time = date2.getTime() - date1.getTime();
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
         if (Difference_In_Days <= 31) {
-            window.location.assign('<?= base_url('report/attandance_days/print/excel') ?>' + url);
+            Swal.fire({
+                title: 'Please Wait for Export Excel Data, If it has been downloaded, just close this page',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
+            window.location.assign('<?= base_url('report/attandance_days/printcsv') ?>' + url);
         } else {
             toastr.error("Max Duration Period Date is 31 Days");
         }

@@ -529,6 +529,7 @@
         });
         $("#jkn_family").combobox("setValue", "1");
         $("#form_status_date").hide();
+
         tableFamily();
         tableEducation();
         tableExperience();
@@ -545,31 +546,11 @@
                 $('#frm_insert').form('load', row);
                 url_save = '<?= base_url('employee/employees/update') ?>?id=' + btoa(row.id);
 
-                tableFamily();
-                tableEducation();
-                tableExperience();
-                tableTraining();
-                tableCarrer();
-
-                $('#dgFamily').datagrid({
-                    url: '<?= base_url('employee/employees/readFamilys/') ?>' + row.number
-                });
-
-                $('#dgEducation').datagrid({
-                    url: '<?= base_url('employee/employees/readEducation/') ?>' + row.number
-                });
-
-                $('#dgExperience').datagrid({
-                    url: '<?= base_url('employee/employees/readExperience/') ?>' + row.number
-                });
-
-                $('#dgTraining').datagrid({
-                    url: '<?= base_url('employee/employees/readTraining/') ?>' + row.number
-                });
-
-                $('#dgCarrer').datagrid({
-                    url: '<?= base_url('employee/employees/readCarrer/') ?>' + row.number
-                });
+                tableFamily(row.number);
+                tableEducation(row.number);
+                tableExperience(row.number);
+                tableTraining(row.number);
+                tableCarrer(row.number);
 
                 $("#number").textbox("disable");
                 $("#candidate_id").combogrid("disable");
@@ -1132,9 +1113,10 @@
 
     //-----------------------------------------------------------------------------------------------------------------------------------------
 
-    function tableFamily() {
+    function tableFamily(number) {
         var lastIndex;
         var dgFamily = $('#dgFamily').datagrid({
+            url: '<?= base_url('employee/employees/readFamilys/') ?>' + number,
             singleSelect: true,
             columns: [
                 [{
@@ -1273,9 +1255,10 @@
 
     //-----------------------------------------------------------------------------------------------------------------------------------------
 
-    function tableEducation() {
+    function tableEducation(number) {
         var lastIndex;
         var dgEducation = $('#dgEducation').datagrid({
+            url: '<?= base_url('employee/employees/readEducation/') ?>' + number,
             singleSelect: true,
             columns: [
                 [{
@@ -1420,9 +1403,10 @@
 
     //-----------------------------------------------------------------------------------------------------------------------------------------
 
-    function tableExperience() {
+    function tableExperience(number) {
         var lastIndex;
         var dgExperience = $('#dgExperience').datagrid({
+            url: '<?= base_url('employee/employees/readExperience/') ?>' + number,
             singleSelect: true,
             columns: [
                 [{
@@ -1564,9 +1548,10 @@
 
     //-----------------------------------------------------------------------------------------------------------------------------------------
 
-    function tableTraining() {
+    function tableTraining(number) {
         var lastIndex;
         var dgTraining = $('#dgTraining').datagrid({
+            url: '<?= base_url('employee/employees/readTraining/') ?>' + number,
             singleSelect: true,
             columns: [
                 [{
@@ -1694,9 +1679,10 @@
 
     //-----------------------------------------------------------------------------------------------------------------------------------------
 
-    function tableCarrer() {
+    function tableCarrer(number) {
         var lastIndex;
         var dgCarrer = $('#dgCarrer').datagrid({
+            url: '<?= base_url('employee/employees/readCarrer/') ?>' + number,
             singleSelect: true,
             columns: [
                 [{
@@ -1909,7 +1895,7 @@
                                 var totalEducation = rowEducation.length;
                                 endEditingEducation();
                                 for (let i = 0; i < totalEducation; i++) {
-                                    if (rowEducation[i].level) {
+                                    // if (rowEducation[i].level) {
                                         $.ajax({
                                             type: "post",
                                             url: '<?= base_url('employee/employees/createEducation') ?>',
@@ -1927,7 +1913,7 @@
                                                 //
                                             }
                                         });
-                                    }
+                                    // }
                                 }
 
                                 $.ajax({

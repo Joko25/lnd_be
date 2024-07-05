@@ -496,7 +496,7 @@ class Payrolls extends CI_Controller
             $absen = (@count($weekday_day) - @$calendar_amount - @$attandance_amount - @$changeDays_amount - @$arr_total_permit_absence_no - $arr_total_permit_absence);
 
             //Hitung Hari dia masuk kerja
-            $working_days = ($attandance_amount + $arr_total_permit_absence);
+            $working_days = ($attandance_amount + $arr_total_permit_absence + $changeDays_amount);
 
             //Jika hari kerja nya lebih besar dari HKW maka nilai ambil HKW
             if ($working_days >= $hkw) {

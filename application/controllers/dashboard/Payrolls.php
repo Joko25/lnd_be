@@ -49,10 +49,12 @@ class Payrolls extends CI_Controller
         $period_start = date("Y-m", strtotime($filter_from));
         $period_end = date("Y-m", strtotime($filter_to));
 
-        $query = $this->crud->query("SELECT departement_name, SUM(net_income) as income 
-            FROM `payrolls` 
-            WHERE period_start = '$period_start' and period_end = '$period_end' 
-            GROUP BY departement_name ORDER BY departement_name ASC");
+        $query = $this->crud->query("SELECT c.name as departement_name, SUM(a.net_income) as income 
+            FROM payrolls a
+            JOIN employees b ON a.employee_id = b.id
+            JOIN departements c ON b.departement_id = c.id
+            WHERE a.period_start = '$period_start' and a.period_end = '$period_end' 
+            GROUP BY c.name ORDER BY c.name ASC");
         
         $name = array();
         $income = array();
@@ -115,10 +117,12 @@ class Payrolls extends CI_Controller
         $period_start = date("Y-m", strtotime($filter_from));
         $period_end = date("Y-m", strtotime($filter_to));
 
-        $query = $this->crud->query("SELECT departement_name as name, SUM(net_income) as total, COUNT(employee_id) as total_mp
-            FROM `payrolls` 
-            WHERE period_start = '$period_start' and period_end = '$period_end' 
-            GROUP BY departement_name ORDER BY SUM(net_income) DESC");
+        $query = $this->crud->query("SELECT c.name, SUM(a.net_income) as total, COUNT(a.employee_id) as total_mp
+            FROM payrolls a
+            JOIN employees b ON a.employee_id = b.id
+            JOIN departements c ON b.departement_id = c.id
+            WHERE a.period_start = '$period_start' and a.period_end = '$period_end' 
+            GROUP BY c.name ORDER BY SUM(a.net_income) DESC");
 
         $result['total'] = count($query);
         $result['rows'] = $query;

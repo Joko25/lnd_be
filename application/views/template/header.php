@@ -56,7 +56,7 @@ $config = $this->db->get()->row();
     <script type="text/javascript" src="<?= base_url('assets/vendors/sweetalert2.all.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/vendors/guidely.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/vendors/summernote/summernote-lite.js') ?>"></script>
-    <script type="text/javascript" src="<?= base_url('assets/bootstrap/js/bootstrap.min.js?3') ?>"></script>
+    <!-- <script type="text/javascript" src="<?= base_url('assets/bootstrap/js/bootstrap.min.js?3') ?>"></script> -->
 
     <!-- Charts -->
     <script src="<?= base_url('assets/vendors/charts/code/highcharts.js') ?>"></script>

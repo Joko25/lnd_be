@@ -29,6 +29,339 @@ class Attandance_days extends CI_Controller
         }
     }
 
+    public function printcsv(){
+        if ($this->input->get()) {
+
+            header("Content-type: text/csv; charset=utf-8");
+            header("Content-Disposition: attachment; filename=attandance_days_" . time() . ".csv");
+            $output = fopen("php://output", "w");
+
+            fputcsv($output, array(
+                "No","Departement", "Departement Sub", "Employee ID", "Employee Name", "Shift", "Trans Date", "Time In/Out",
+                "Status", "Permit", "Description"
+            ));
+
+            $filter_from = $this->input->get('filter_from');
+            $filter_to = $this->input->get('filter_to');
+            $filter_division = $this->input->get('filter_division');
+            $filter_departement = $this->input->get('filter_departement');
+            $filter_departement_sub = $this->input->get('filter_departement_sub');
+            $filter_employee = $this->input->get('filter_employee');
+            $filter_permit_type = $this->input->get('filter_permit_type');
+            $filter_status_in = $this->input->get('filter_status_in');
+            $filter_status = $this->input->get('filter_status');
+            $filter_status_employee = $this->input->get('filter_status_employee');
+
+            $this->db->select('b.id as employee_id, b.number as employee_number, b.name as employee_name, c.name as division_name, 
+            d.name as departement_name, e.name as departement_sub_name, g.name as shift_name, h.days, b.date_sign');
+            $this->db->from('employees b');
+            $this->db->join('divisions c', 'b.division_id = c.id');
+            $this->db->join('departements d', 'b.departement_id = d.id');
+            $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
+            $this->db->join('shift_employees f', 'b.id = f.employee_id', 'left');
+            $this->db->join('shifts g', 'f.shift_id = g.id', 'left');
+            $this->db->join('shift_details h', 'h.shift_id = g.id', 'left');
+            $this->db->where('b.deleted', 0);
+            $this->db->like('b.status', $filter_status_employee);
+            $this->db->like('b.id', $filter_employee);
+            $this->db->like('c.id', $filter_division);
+            $this->db->like('d.id', $filter_departement);
+            $this->db->like('e.id', $filter_departement_sub);
+            $this->db->group_by('b.id');
+            $this->db->order_by('d.name', 'ASC');
+            $this->db->order_by('e.name', 'ASC');
+            $this->db->order_by('b.name', 'ASC');
+            $records = $this->db->get()->result_array();
+
+            $no = 1;
+            foreach ($records as $data) {
+                $start = strtotime($filter_from);
+                $finish = strtotime($filter_to);
+
+                //Calendars
+                $this->db->select('trans_date, description');
+                $this->db->from('calendars');
+                $this->db->where("trans_date between '$filter_from' and '$filter_to'");
+                $holidays = $this->db->get()->result_array();
+                $arrHoliday = [];
+                foreach ($holidays as $holiday) {
+                    $arrHoliday[] = ["trans_date" => $holiday['trans_date'], "description" => $holiday['description']];
+                }
+
+                //Attandance and Overtime
+                $this->db->select("date_in, time_in, date_out, time_out");
+                $this->db->from('attandances');
+                $this->db->where("date_in between '$filter_from' and '$filter_to'");
+                $this->db->where('number', $data['employee_number']);
+                $this->db->order_by('date_in', 'asc');
+                $attandances = $this->db->get()->result_array();
+                $arrAttandance = [];
+                foreach ($attandances as $attandance) {
+                    $arrAttandance[] = ["date_in" => $attandance['date_in'], "time_in" => $attandance['time_in'], "date_out" => $attandance['date_out'], "time_out" => $attandance['time_out']];
+                }
+
+                $arrAbsence = [];
+                foreach ($arrAttandance as $arrAB) {
+                    $arrAbsence[] = $arrAB['date_in'];
+                }
+
+                //Shifts
+                $this->db->select("d.start, d.end, d.days, d.working, d.tolerance, c.name, d.name as shift_name");
+                $this->db->from('shift_employees b');
+                $this->db->join('shifts c', 'c.id = b.shift_id');
+                $this->db->join('shift_details d', 'd.shift_id = c.id');
+                $this->db->where('b.employee_id', $data['employee_id']);
+                $shifts = $this->db->get()->result_array();
+                $arrShift = [];
+                foreach ($shifts as $shift) {
+                    $arrShift[] = ["start" => $shift['start']];
+                }
+
+                //PERMIT
+                $this->db->select("a.*, c.name as reason_name, d.name as permit_name");
+                $this->db->from('permits a');
+                $this->db->join('reasons c', 'a.reason_id = c.id');
+                $this->db->join('permit_types d', 'a.permit_type_id = d.id');
+                $this->db->where('a.employee_id', $data['employee_id']);
+                $this->db->where("a.permit_date between '$filter_from' and '$filter_to'");
+                $permits = $this->db->get()->result_array();
+                $arrPermit = [];
+                foreach ($permits as $permit) {
+                    $arrPermit[] = ["permit_date" => $permit['permit_date'], "permit_name" => $permit['permit_name'], "note" => $permit['note']];
+                }
+
+                //Resignation
+                $this->db->select('*');
+                $this->db->from('resignations');
+                $this->db->where('employee_id', $data['employee_id']);
+                $this->db->where("(resign_date between '$filter_from' and '$filter_to' or resign_date < '$filter_from')");
+                $resignation = $this->db->get()->row();
+
+                //Change Day Start
+                $this->db->select("*");
+                $this->db->from('change_days');
+                $this->db->where('employee_id', $data['employee_id']);
+                $this->db->where("(start between '$filter_from' and '$filter_to' or end between '$filter_from' and '$filter_to')");
+                $change_days = $this->db->get()->result_array();
+                $arrChangeDay = [];
+                foreach ($change_days as $change_day) {
+                    $arrChangeDay[] = ["start" => $change_day['start'], "end" => $change_day['end'], "remarks" => $change_day['remarks']];
+                }
+                
+                $permit = "";
+                $time_in = "";
+                $time_out = "";
+                $status = "";
+                $remarks = "";
+                for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
+                    $working_date = date('Y-m-d', $i);
+
+                    if (@$data['days'] == "5") {
+                        //sabtu dan minggu libur
+                        if (date('w', $i) !== '0' && date('w', $i) !== '6') {
+                            if(!in_array($working_date, $arrAbsence)){
+                                $status = "ABSENCE";
+                                $remarks = "";
+                            }
+
+                            if (!empty($resignation)) {
+                                $status = "RESIGN";
+                                $remarks = $resignation->remarks;
+                            }
+
+                            if (strtotime($data['date_sign']) > strtotime($working_date)) {
+                                $status = "NOT JOIN YET";
+                                $remarks = "";
+                            }
+
+                            if (empty($arrShift)) {
+                                $status = "UN SETTING";
+                                $remarks = "Check Shift Employee";
+                            }
+
+                            foreach ($arrHoliday as $arrH) {
+                                if ($working_date == $arrH['trans_date']) {
+                                    $status = "HOLIDAY";
+                                    $remarks = $arrH['description'];
+                                }
+                            }
+
+                            foreach ($arrPermit as $arrP) {
+                                if ($working_date == $arrP['permit_date']) {
+                                    $status = "PERMIT";
+                                    $permit = $arrP['permit_name'];
+                                    $remarks = $arrP['note'];
+                                }
+                            }
+
+                            foreach ($arrChangeDay as $arrC) {
+                                if ($working_date == $arrC['start']) {
+                                    $status = "CHANGE DAY START";
+                                    $remarks = $arrC['remarks'];
+                                }elseif ($working_date == $arrC['end']) {
+                                    $status = "CHANGE DAY END";
+                                    $remarks = $arrC['remarks'];
+                                }
+                            }
+
+                            foreach ($arrAttandance as $arrA) {
+                                if ($working_date == $arrA['date_in']) {
+                                    $date_in = strtotime($arrA['date_in']." ".$arrA['time_in']);
+                                    
+                                    foreach ($arrShift as $arrS) {
+                                        $working_date_time = strtotime($working_date. " " .$arrS['start']);
+                                        if($date_in > $working_date_time){
+                                            $time_in = $arrA['time_in'];
+                                            $time_out = $arrA['time_out'];
+                                            $status = "LATE";
+                                            $remarks = "";
+                                        }else{
+                                            $time_in = $arrA['time_in'];
+                                            $time_out = $arrA['time_out'];
+                                            $status = "ON TIME";
+                                            $remarks = "";
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            foreach ($arrChangeDay as $arrC) {
+                                if ($working_date == $arrC['start']) {
+                                    $status = "CHANGE DAY START";
+                                    $remarks = $arrC['remarks'];
+                                }elseif ($working_date == $arrC['end']) {
+                                    $status = "CHANGE DAY END";
+                                    $remarks = $arrC['remarks'];
+                                }else{
+                                    $status = "WEEKEND";
+                                    $remarks = "";
+                                }
+                            }
+
+                            if (empty($arrChangeDay)){
+                                $status = "WEEKEND";
+                                $remarks = "";
+                            }
+                        }
+                    } else {
+                        if (date('w', $i) !== '0') {
+                            foreach ($arrAttandance as $arrAB) {
+                                $arrAbsence[] = $arrAB['date_in'];
+                            }
+
+                            if(!in_array($working_date, $arrAbsence)){
+                                $status = "ABSENCE";
+                                $remarks = "";
+                            }
+                            
+                            if (!empty($resignation)) {
+                                $status = "RESIGN";
+                                $remarks = $resignation->remarks;
+                            }
+
+                            if (strtotime($data['date_sign']) > strtotime($working_date)) {
+                                $status = "NOT JOIN YET";
+                                $remarks = "";
+                            }
+
+                            if (empty($arrShift)) {
+                                $status = "UN SETTING";
+                                $remarks = "Check Shift Employee";
+                            }
+
+                            foreach ($arrHoliday as $arrH) {
+                                if ($working_date == $arrH['trans_date']) {
+                                    $status = "HOLIDAY";
+                                    $remarks = $arrH['description'];
+                                }
+                            }
+
+                            foreach ($arrPermit as $arrP) {
+                                if ($working_date == $arrP['permit_date']) {
+                                    $status = "PERMIT";
+                                    $permit = $arrP['permit_name'];
+                                    $remarks = $arrP['note'];
+                                }
+                            }
+
+                            foreach ($arrChangeDay as $arrC) {
+                                if ($working_date == $arrC['start']) {
+                                    $status = "CHANGE DAY START";
+                                    $remarks = $arrC['remarks'];
+                                }elseif ($working_date == $arrC['end']) {
+                                    $status = "CHANGE DAY END";
+                                    $remarks = $arrC['remarks'];
+                                }
+                            }
+
+                            foreach ($arrAttandance as $arrA) {
+                                if ($working_date == $arrA['date_in']) {
+                                    $date_in = strtotime($arrA['date_in']." ".$arrA['time_in']);
+                                    
+                                    foreach ($arrShift as $arrS) {
+                                        $working_date_time = strtotime($working_date. " " .$arrS['start']);
+                                        if($date_in > $working_date_time){
+                                            $time_in = $arrA['time_in'];
+                                            $time_out = $arrA['time_out'];
+                                            $status = "LATE";
+                                            $remarks = "";
+                                        }else{
+                                            $time_in = $arrA['time_in'];
+                                            $time_out = $arrA['time_out'];
+                                            $status = "ON TIME";
+                                            $remarks = "";
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            foreach ($arrChangeDay as $arrC) {
+                                if ($working_date == $arrC['start']) {
+                                    $status = "CHANGE DAY START";
+                                    $remarks = $arrC['remarks'];
+                                }elseif ($working_date == $arrC['end']) {
+                                    $status = "CHANGE DAY END";
+                                    $remarks = $arrC['remarks'];
+                                }else{
+                                    $status = "WEEKEND";
+                                    $remarks = "";
+                                }
+                            }
+
+                            if (empty($arrChangeDay)){
+                                $status = "WEEKEND";
+                                $remarks = "";
+                            }
+                        }
+                    }
+
+                    $data2 = array(
+                        $no,
+                        $data['departement_name'],
+                        $data['departement_sub_name'],
+                        "'".$data['employee_number'],
+                        $data['employee_name'],
+                        $data['shift_name'],
+                        date("d F Y", strtotime(@$working_date)),
+                        @$time_in . ' - ' . @$time_out,
+                        $status,
+                        $permit,
+                        $remarks
+                    );
+
+                    fputcsv($output, $data2);
+                    $no++;
+
+                    $permit = "";
+                    $time_in = "";
+                    $time_out = "";
+                    $status = "";
+                    $remarks = "";
+                }
+            }
+        }
+    }
+
     public function print($option = "")
     {
         if ($option == "excel") {
@@ -122,142 +455,258 @@ class Attandance_days extends CI_Controller
             $start = strtotime($filter_from);
             $finish = strtotime($filter_to);
 
+            //Calendars
+            $this->db->select('trans_date, description');
+            $this->db->from('calendars');
+            $this->db->where("trans_date between '$filter_from' and '$filter_to'");
+            $holidays = $this->db->get()->result_array();
+            $arrHoliday = [];
+            foreach ($holidays as $holiday) {
+                $arrHoliday[] = ["trans_date" => $holiday['trans_date'], "description" => $holiday['description']];
+            }
+
             foreach ($records as $data) {
+                //Attandance and Overtime
+                $this->db->select("date_in, time_in, date_out, time_out");
+                $this->db->from('attandances');
+                $this->db->where("date_in between '$filter_from' and '$filter_to'");
+                $this->db->where('number', $data['employee_number']);
+                $this->db->order_by('date_in', 'asc');
+                $attandances = $this->db->get()->result_array();
+                $arrAttandance = [];
+                foreach ($attandances as $attandance) {
+                    $arrAttandance[] = ["date_in" => $attandance['date_in'], "time_in" => $attandance['time_in'], "date_out" => $attandance['date_out'], "time_out" => $attandance['time_out']];
+                }
+
+                $arrAbsence = [];
+                foreach ($arrAttandance as $arrAB) {
+                    $arrAbsence[] = $arrAB['date_in'];
+                }
+
+                //Shifts
+                $this->db->select("d.start, d.end, d.days, d.working, d.tolerance, c.name, d.name as shift_name");
+                $this->db->from('shift_employees b');
+                $this->db->join('shifts c', 'c.id = b.shift_id');
+                $this->db->join('shift_details d', 'd.shift_id = c.id');
+                $this->db->where('b.employee_id', $data['employee_id']);
+                $shifts = $this->db->get()->result_array();
+                $arrShift = [];
+                foreach ($shifts as $shift) {
+                    $arrShift[] = ["start" => $shift['start']];
+                }
+
+                //PERMIT
+                $this->db->select("a.*, c.name as reason_name, d.name as permit_name");
+                $this->db->from('permits a');
+                $this->db->join('reasons c', 'a.reason_id = c.id');
+                $this->db->join('permit_types d', 'a.permit_type_id = d.id');
+                $this->db->where('a.employee_id', $data['employee_id']);
+                $this->db->where("a.permit_date between '$filter_from' and '$filter_to'");
+                $permits = $this->db->get()->result_array();
+                $arrPermit = [];
+                foreach ($permits as $permit) {
+                    $arrPermit[] = ["permit_date" => $permit['permit_date'], "permit_name" => $permit['permit_name'], "note" => $permit['note']];
+                }
+
+                //Resignation
+                $this->db->select('*');
+                $this->db->from('resignations');
+                $this->db->where('employee_id', $data['employee_id']);
+                $this->db->where("(resign_date between '$filter_from' and '$filter_to' or resign_date < '$filter_from')");
+                $resignation = $this->db->get()->row();
+
+                //Change Day Start
+                $this->db->select("*");
+                $this->db->from('change_days');
+                $this->db->where('employee_id', $data['employee_id']);
+                $this->db->where("(start between '$filter_from' and '$filter_to' or end between '$filter_from' and '$filter_to')");
+                $change_days = $this->db->get()->result_array();
+                $arrChangeDay = [];
+                foreach ($change_days as $change_day) {
+                    $arrChangeDay[] = ["start" => $change_day['start'], "end" => $change_day['end'], "remarks" => $change_day['remarks']];
+                }
+                
+                $permit = "";
+                $time_in = "";
+                $time_out = "";
+                $status = "";
+                $remarks = "";
                 for ($i = $start; $i <= $finish; $i += (60 * 60 * 24)) {
                     $working_date = date('Y-m-d', $i);
-
-                    $this->db->select('description');
-                    $this->db->from('calendars');
-                    $this->db->where('trans_date', $working_date);
-                    $holiday = $this->db->get()->row();
-
-                    //Attandance and Overtime
-                    $this->db->select("date_in, time_in, date_out, time_out");
-                    $this->db->from('attandances');
-                    $this->db->where("date_in", $working_date);
-                    $this->db->where('number', $data['employee_number']);
-                    $this->db->order_by('date_in', 'asc');
-                    $attandance = $this->db->get()->row();
-
-                    //Resignation
-                    $this->db->select('*');
-                    $this->db->from('resignations');
-                    $this->db->where('employee_id', $data['employee_id']);
-                    $this->db->where('resign_date <', $working_date);
-                    $resignation = $this->db->get()->row();
-
-                    //Shift and Setting Group
-                    $tolerance_hour_min = date("H:i:s", strtotime('-2 Hour', strtotime(@$attandance->time_in)));
-                    $tolerance_hour_plus = date("H:i:s", strtotime('+2 Hour', strtotime(@$attandance->time_in)));
-                    $this->db->select("d.start, d.end, d.days, d.working, d.tolerance, c.name, d.name as shift_name");
-                    $this->db->from('shift_employees b');
-                    $this->db->join('shifts c', 'c.id = b.shift_id');
-                    $this->db->join('shift_details d', 'd.shift_id = c.id');
-                    $this->db->where('b.employee_id', $data['employee_id']);
-                    $this->db->where("d.start >=  '$tolerance_hour_min' and d.start <= '$tolerance_hour_plus'");
-                    $shift = $this->db->get()->row();
-
-                    //PERMIT
-                    $this->db->select("a.*, c.name as reason_name, d.name as permit_name");
-                    $this->db->from('permits a');
-                    $this->db->join('reasons c', 'a.reason_id = c.id');
-                    $this->db->join('permit_types d', 'a.permit_type_id = d.id');
-                    $this->db->where('a.employee_id', $data['employee_id']);
-                    $this->db->where('a.permit_date', $working_date);
-                    $permit = $this->db->get()->row();
-
-                    $this->db->select("*");
-                    $this->db->from('change_days');
-                    $this->db->where('employee_id', $data['employee_id']);
-                    $this->db->where('start', $working_date);
-                    $change_day = $this->db->get()->row();
-
-                    $this->db->select("*");
-                    $this->db->from('change_days');
-                    $this->db->where('employee_id', $data['employee_id']);
-                    $this->db->where('end', $working_date);
-                    $change_day_end = $this->db->get()->row();
 
                     if (@$data['days'] == "5") {
                         //sabtu dan minggu libur
                         if (date('w', $i) !== '0' && date('w', $i) !== '6') {
-                            if (!empty($holiday->description)) {
-                                $status = "HOLIDAY";
-                                $remarks = $holiday->description;
-                            } else {
-                                if (@$permit->permit_name != null) {
+                            if(!in_array($working_date, $arrAbsence)){
+                                $status = "ABSENCE";
+                                $remarks = "";
+                            }
+
+                            if (!empty($resignation)) {
+                                $status = "RESIGN";
+                                $remarks = $resignation->remarks;
+                            }
+
+                            if (strtotime($data['date_sign']) > strtotime($working_date)) {
+                                $status = "NOT JOIN YET";
+                                $remarks = "";
+                            }
+
+                            if (empty($arrShift)) {
+                                $status = "UN SETTING";
+                                $remarks = "Check Shift Employee";
+                            }
+
+                            foreach ($arrHoliday as $arrH) {
+                                if ($working_date == $arrH['trans_date']) {
+                                    $status = "HOLIDAY";
+                                    $remarks = $arrH['description'];
+                                }
+                            }
+
+                            foreach ($arrPermit as $arrP) {
+                                if ($working_date == $arrP['permit_date']) {
                                     $status = "PERMIT";
-                                    $remarks = @$permit->note;
-                                } elseif (@$shift->start == null && !empty($attandance->time_in)) {
-                                    $status = "UN SETTING";
-                                    $remarks = "Check Shift Employee";
-                                } elseif ($data['date_sign'] > $working_date) {
-                                    $status = "NOT JOIN YET";
-                                    $remarks = "";
-                                } elseif (!empty($resignation)) {
-                                    $status = "RESIGN";
-                                    $remarks = $resignation->remarks;
-                                } elseif (@$change_day_end->end != null || @$change_day->start != null) {
-                                    $status = "CHANGE DAY";
-                                    $remarks = @$change_day_end->remarks;
-                                } elseif (empty($attandance->time_in) && empty($attandance->time_out)) {
-                                    $status = "ABSENCE";
-                                    $remarks = "";
-                                } elseif (@$shift->start <= @$attandance->time_in) {
-                                    $status = "LATE";
-                                    $remarks = "";
-                                } elseif (@$shift->start >= @$attandance->time_in) {
-                                    $status = "ON TIME";
-                                    $remarks = "";
+                                    $permit = $arrP['permit_name'];
+                                    $remarks = $arrP['note'];
+                                }
+                            }
+
+                            foreach ($arrChangeDay as $arrC) {
+                                if ($working_date == $arrC['start']) {
+                                    $status = "CHANGE DAY START";
+                                    $remarks = $arrC['remarks'];
+                                }elseif ($working_date == $arrC['end']) {
+                                    $status = "CHANGE DAY END";
+                                    $remarks = $arrC['remarks'];
+                                }
+                            }
+
+                            foreach ($arrAttandance as $arrA) {
+                                if ($working_date == $arrA['date_in']) {
+                                    $date_in = strtotime($arrA['date_in']." ".$arrA['time_in']);
+                                    
+                                    foreach ($arrShift as $arrS) {
+                                        $working_date_time = strtotime($working_date. " " .$arrS['start']);
+                                        if($date_in > $working_date_time){
+                                            $time_in = $arrA['time_in'];
+                                            $time_out = $arrA['time_out'];
+                                            $status = "LATE";
+                                            $remarks = "";
+                                        }else{
+                                            $time_in = $arrA['time_in'];
+                                            $time_out = $arrA['time_out'];
+                                            $status = "ON TIME";
+                                            $remarks = "";
+                                        }
+                                    }
                                 }
                             }
                         } else {
-                            if (@$change_day_end->end != null || @$change_day->start != null) {
-                                $status = "CHANGE DAY";
-                                $remarks = @$change_day->remarks;
-                            } else {
+                            foreach ($arrChangeDay as $arrC) {
+                                if ($working_date == $arrC['start']) {
+                                    $status = "CHANGE DAY START";
+                                    $remarks = $arrC['remarks'];
+                                }elseif ($working_date == $arrC['end']) {
+                                    $status = "CHANGE DAY END";
+                                    $remarks = $arrC['remarks'];
+                                }else{
+                                    $status = "WEEKEND";
+                                    $remarks = "";
+                                }
+                            }
+
+                            if (empty($arrChangeDay)){
                                 $status = "WEEKEND";
                                 $remarks = "";
                             }
                         }
                     } else {
-                        //sabtu doang libur
                         if (date('w', $i) !== '0') {
-                            if (!empty($holiday->description)) {
-                                $status = "HOLIDAY";
-                                $remarks = $holiday->description;
-                            } else {
-                                if (@$permit->permit_name != null) {
+                            foreach ($arrAttandance as $arrAB) {
+                                $arrAbsence[] = $arrAB['date_in'];
+                            }
+
+                            if(!in_array($working_date, $arrAbsence)){
+                                $status = "ABSENCE";
+                                $remarks = "";
+                            }
+                            
+                            if (!empty($resignation)) {
+                                $status = "RESIGN";
+                                $remarks = $resignation->remarks;
+                            }
+
+                            if (strtotime($data['date_sign']) > strtotime($working_date)) {
+                                $status = "NOT JOIN YET";
+                                $remarks = "";
+                            }
+
+                            if (empty($arrShift)) {
+                                $status = "UN SETTING";
+                                $remarks = "Check Shift Employee";
+                            }
+
+                            foreach ($arrHoliday as $arrH) {
+                                if ($working_date == $arrH['trans_date']) {
+                                    $status = "HOLIDAY";
+                                    $remarks = $arrH['description'];
+                                }
+                            }
+
+                            foreach ($arrPermit as $arrP) {
+                                if ($working_date == $arrP['permit_date']) {
                                     $status = "PERMIT";
-                                    $remarks = @$permit->note;
-                                } elseif (@$shift->start == null && !empty($attandance->time_in)) {
-                                    $status = "UN SETTING";
-                                    $remarks = "Check Shift Employee";
-                                } elseif ($data['date_sign'] >= $working_date) {
-                                    $status = "NOT JOIN YET";
-                                    $remarks = "";
-                                } elseif (!empty($resignation)) {
-                                    $status = "RESIGN";
-                                    $remarks = $resignation->remarks;
-                                } elseif (@$change_day_end->end != null || @$change_day->start != null) {
-                                    $status = "CHANGE DAY";
-                                    $remarks = @$change_day_end->remarks;
-                                } elseif (empty($attandance->time_in) && empty($attandance->time_out)) {
-                                    $status = "ABSENCE";
-                                    $remarks = "";
-                                } elseif (@$shift->start <= @$attandance->time_in) {
-                                    $status = "LATE";
-                                    $remarks = "";
-                                } elseif (@$shift->start >= @$attandance->time_in) {
-                                    $status = "ON TIME";
-                                    $remarks = "";
+                                    $permit = $arrP['permit_name'];
+                                    $remarks = $arrP['note'];
+                                }
+                            }
+
+                            foreach ($arrChangeDay as $arrC) {
+                                if ($working_date == $arrC['start']) {
+                                    $status = "CHANGE DAY START";
+                                    $remarks = $arrC['remarks'];
+                                }elseif ($working_date == $arrC['end']) {
+                                    $status = "CHANGE DAY END";
+                                    $remarks = $arrC['remarks'];
+                                }
+                            }
+
+                            foreach ($arrAttandance as $arrA) {
+                                if ($working_date == $arrA['date_in']) {
+                                    $date_in = strtotime($arrA['date_in']." ".$arrA['time_in']);
+                                    
+                                    foreach ($arrShift as $arrS) {
+                                        $working_date_time = strtotime($working_date. " " .$arrS['start']);
+                                        if($date_in > $working_date_time){
+                                            $time_in = $arrA['time_in'];
+                                            $time_out = $arrA['time_out'];
+                                            $status = "LATE";
+                                            $remarks = "";
+                                        }else{
+                                            $time_in = $arrA['time_in'];
+                                            $time_out = $arrA['time_out'];
+                                            $status = "ON TIME";
+                                            $remarks = "";
+                                        }
+                                    }
                                 }
                             }
                         } else {
-                            if (@$change_day_end->end != null || @$change_day->start != null) {
-                                $status = "CHANGE DAY";
-                                $remarks = @$change_day->remarks;
-                            } else {
+                            foreach ($arrChangeDay as $arrC) {
+                                if ($working_date == $arrC['start']) {
+                                    $status = "CHANGE DAY START";
+                                    $remarks = $arrC['remarks'];
+                                }elseif ($working_date == $arrC['end']) {
+                                    $status = "CHANGE DAY END";
+                                    $remarks = $arrC['remarks'];
+                                }else{
+                                    $status = "WEEKEND";
+                                    $remarks = "";
+                                }
+                            }
+
+                            if (empty($arrChangeDay)){
                                 $status = "WEEKEND";
                                 $remarks = "";
                             }
@@ -268,8 +717,8 @@ class Attandance_days extends CI_Controller
                         $style = "style='color:red; font-weight:bold;'";
                     } elseif ($status == "PERMIT") {
                         $style = "style='color:blue; font-weight:bold;'";
-                    } elseif ($status == "CHANGE DAY") {
-                        $style = "style='color:blue; font-weight:bold;'";
+                    } elseif ($status == "CHANGE DAY START" || $status == "CHANGE DAY END") {
+                        $style = "style='color:gray; font-weight:bold;'";
                     } elseif ($status == "LATE") {
                         $style = "style='color:orange; font-weight:bold;'";
                     } elseif ($status == "ON TIME") {
@@ -288,9 +737,9 @@ class Attandance_days extends CI_Controller
                                     <td>' . $data['employee_name'] . '</td>
                                     <td>' . $data['shift_name'] . '</td>
                                     <td>' . date("d F Y", strtotime(@$working_date)) . '</td>
-                                    <td>' . @$attandance->time_in . ' - ' . @$attandance->time_out . '</td>
+                                    <td>' . @$time_in . ' - ' . @$time_out . '</td>
                                     <td ' . $style . '>' . $status . '</td>
-                                    <td ' . $style . '>' . @$permit->permit_name . '</td>
+                                    <td ' . $style . '>' . @$permit . '</td>
                                     <td>' . $remarks . '</td>
                                 </tr>';
 
@@ -313,6 +762,12 @@ class Attandance_days extends CI_Controller
                         echo  $html;      
                         $no++;
                     }
+
+                    $permit = "";
+                    $time_in = "";
+                    $time_out = "";
+                    $status = "";
+                    $remarks = "";
                 }
             }
 
