@@ -39,7 +39,11 @@ class Payrolls extends CI_Controller
             FROM payrolls 
             WHERE period_start = '$period_start' and period_end = '$period_end'");
 
-        echo json_encode(array("total_mp" => @$mp[0]->total_mp, "total_bruto" => @$mp[0]->total_bruto, "total_income" => @$mp[0]->total_income, "total_ter" => @$mp[0]->total_ter));
+        $pkl = $this->crud->query("SELECT SUM(total_income) as total_pkl, COUNT(employee_id) as total_mp
+            FROM payroll_pkl 
+            WHERE period_start like '%$period_start%' and period_end like '%$period_end%'");
+
+        echo json_encode(array("total_mp" => (@$mp[0]->total_mp + @$pkl[0]->total_mp), "total_pkl" => @$pkl[0]->total_pkl, "total_income" => @$mp[0]->total_income, "total_ter" => @$mp[0]->total_ter));
     }
 
     public function chartDepartement()
@@ -110,6 +114,26 @@ class Payrolls extends CI_Controller
         die(json_encode(array("name" => $name, "income" => $income)));
     }
 
+    public function chartPkl()
+    {
+        $filter_from = base64_decode($this->input->get("filter_from"));
+        $filter_to = base64_decode($this->input->get("filter_to"));
+        $period_start = date("Y-m", strtotime($filter_from));
+        $period_end = date("Y-m", strtotime($filter_to));
+
+        $query = $this->crud->query("SELECT source_name, SUM(total_income) as income 
+            FROM payroll_pkl 
+            WHERE period_start like '%$period_start%' and period_end like '%$period_end%' 
+            GROUP BY source_name ORDER BY source_name ASC");
+        
+        $name = array();
+        foreach ($query as $data) {
+            $name[] = ["name" => $data->source_name, "y" => (int) $data->income];
+        }
+
+        die(json_encode($name));
+    }
+
     public function tableDepartement()
     {
         $filter_from = base64_decode($this->input->get("filter_from"));
@@ -159,6 +183,24 @@ class Payrolls extends CI_Controller
             FROM `payrolls` 
             WHERE period_start = '$period_start' and period_end = '$period_end' 
             GROUP BY group_name ORDER BY SUM(net_income) DESC");
+
+        $result['total'] = count($query);
+        $result['rows'] = $query;
+
+        die(json_encode($result));
+    }
+
+    public function tablePkl()
+    {
+        $filter_from = base64_decode($this->input->get("filter_from"));
+        $filter_to = base64_decode($this->input->get("filter_to"));
+        $period_start = date("Y-m", strtotime($filter_from));
+        $period_end = date("Y-m", strtotime($filter_to));
+        
+        $query = $this->crud->query("SELECT source_name as name, SUM(total_income) as total, COUNT(employee_id) as total_mp
+            FROM payroll_pkl 
+            WHERE period_start like '%$period_start%' and period_end like '%$period_end%' 
+            GROUP BY source_name ORDER BY SUM(total_income) DESC");
 
         $result['total'] = count($query);
         $result['rows'] = $query;

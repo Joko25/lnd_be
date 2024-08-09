@@ -93,12 +93,14 @@ class Payrolls extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            $this->db->select('a.*, b.national_id, d.name as source_name, e.employee_id as status_resign');
+            $this->db->select('a.*, b.national_id, d.name as source_name, e.employee_id as status_resign, g.number as account_no');
             $this->db->from('payrolls a');
             $this->db->join('employees b', 'a.employee_id = b.id');
             $this->db->join('sources d', 'b.source_id = d.id', 'left');
             $this->db->join('privilege_groups c', "(b.group_id = c.group_id or b.group_id is null or b.group_id = '') and c.username = '$username' and c.status = '1'");
             $this->db->join('resignations e', 'e.employee_id = b.id', 'left');
+            $this->db->join('account_coa f', 'b.division_id = f.division_id and b.departement_id = f.departement_id and b.position_id = f.position_id and b.contract_id = f.contract_id', 'left');
+            $this->db->join('accounts g', "f.account_id = g.id and g.category = 'payroll'", 'left');
             if ($filter_from != "" && $filter_to != "") {
                 $this->db->where('a.period_start =', $period_start);
                 $this->db->where('a.period_end =', $period_end);
@@ -143,6 +145,7 @@ class Payrolls extends CI_Controller
                     "marital" => $record['marital'],
                     "ter_number" => $record['ter_number'],
                     "tax_id" => $record['tax_id'],
+                    "account_no" => $record['account_no'],
                     "national_id" => $record['national_id'],
                     "shift_name" => $record['shift_name'],
                     //"attandance" => json_encode($arr_permit_combine),
@@ -1076,20 +1079,23 @@ class Payrolls extends CI_Controller
             $where_status = "";
         }
 
-        $query = $this->db->query("SELECT a.*, b.national_id, d.name as source_name, e.employee_id as status_resign FROM payrolls a
-                JOIN employees b on a.employee_id = b.id
-                LEFT JOIN sources d on b.source_id = d.id
-                JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
-                LEFT JOIN resignations e ON b.id = e.employee_id
-                WHERE a.period_start = '$period_start' $where_status
-                AND a.period_end = '$period_end'
-                AND b.division_id LIKE '%$filter_division%'
-                AND b.departement_id LIKE '%$filter_departement%'
-                AND b.departement_sub_id LIKE '%$filter_departement_sub%'
-                AND a.employee_id LIKE '%$filter_employee%'
-                AND b.contract_id LIKE '%$filter_employee_type%'
-                AND b.group_id LIKE '%$filter_group%'
-                ORDER BY a.name ASC");
+        $query = $this->db->query("SELECT a.*, b.national_id, d.name as source_name, e.employee_id as status_resign, g.number as account_no FROM payrolls a
+            JOIN employees b on a.employee_id = b.id
+            LEFT JOIN sources d on b.source_id = d.id
+            JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
+            LEFT JOIN resignations e ON b.id = e.employee_id
+            LEFT JOIN account_coa f ON b.division_id = f.division_id and b.departement_id = f.departement_id and b.position_id = f.position_id and b.contract_id = f.contract_id
+            LEFT JOIN accounts g ON f.account_id = g.id and g.category = 'payroll'
+            WHERE a.period_start = '$period_start' $where_status
+            AND a.period_end = '$period_end'
+            AND b.division_id LIKE '%$filter_division%'
+            AND b.departement_id LIKE '%$filter_departement%'
+            AND b.departement_sub_id LIKE '%$filter_departement_sub%'
+            AND a.employee_id LIKE '%$filter_employee%'
+            AND b.contract_id LIKE '%$filter_employee_type%'
+            AND b.group_id LIKE '%$filter_group%'
+            GROUP BY a.employee_id
+            ORDER BY a.name ASC");
         $records = $query->result_array();
 
         //Config
@@ -1145,6 +1151,7 @@ class Payrolls extends CI_Controller
                 <th rowspan="2">Group</th>
                 <th rowspan="2">National ID</th>
                 <th rowspan="2">NPWP</th>
+                <th rowspan="2">Account No</th>
                 <th colspan="' . (count($permit_type) + 1) . '">Attandance</th>
                 <th rowspan="2">Working Calendar</th>
                 <th rowspan="2">Salary</th>
@@ -1231,7 +1238,8 @@ class Payrolls extends CI_Controller
                     <td>' . $record['ter_number'] . '</td>
                     <td>' . $record['group_name'] . '</td>
                     <td class="str">' . $record['national_id'] . '</td>
-                    <td>' . $record['tax_id'] . '</td>';
+                    <td>' . $record['tax_id'] . '</td>
+                    <td>' . $record['account_no'] . '</td>';
             foreach (json_decode($record['attandance'], true) as $attandance => $val_attandance) {
                 $html .= '<td>' . $val_attandance . '</td>';
             }

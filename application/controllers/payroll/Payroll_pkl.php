@@ -109,7 +109,7 @@ class Payroll_pkl extends CI_Controller
             $this->db->from('payroll_pkl');
             if ($filter_from != "" && $filter_to != "") {
                 $this->db->where('period_start =', $filter_from);
-                $this->db->where('period_end =', $filter_to);
+                // $this->db->where('period_end =', $filter_to);
             }
             $this->db->like('employee_id', $filter_employee);
             $this->db->like('source_id', $filter_source);
@@ -427,7 +427,7 @@ class Payroll_pkl extends CI_Controller
         $this->db->from('payroll_pkl');
         if ($filter_from != "" && $filter_to != "") {
             $this->db->where('period_start =', $filter_from);
-            $this->db->where('period_end =', $filter_to);
+            // $this->db->where('period_end =', $filter_to);
         }
         $this->db->like('employee_id', $filter_employee);
         $this->db->like('source_id', $filter_source);

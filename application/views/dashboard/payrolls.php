@@ -30,8 +30,8 @@
                             <i class="fa fa-money" style="font-size: 35px !important;"></i>
                         </div>
                         <div style="float: left;">
-                            <small>Total Bruto Income</small>
-                            <h1 style="margin: 0; font-size:18px !important;" class="count" id="total_bruto">0</h1>
+                            <small>Total Net Income</small>
+                            <h1 style="margin: 0; font-size:18px !important;" class="count" id="total_income">0</h1>
                         </div>
                     </div>
                 </div>
@@ -41,8 +41,8 @@
                             <i class="fa fa-money" style="font-size: 35px !important;"></i>
                         </div>
                         <div style="float: left;">
-                            <small>Total Net Income</small>
-                            <h1 style="margin: 0; font-size:18px !important;" class="count" id="total_income">0</h1>
+                            <small>Total PKL</small>
+                            <h1 style="margin: 0; font-size:18px !important;" class="count" id="total_pkl">0</h1>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+
+        <div class="col-lg-3">
             <div class="row">
                 <div class="col-lg-12 mt-3">
                     <div class="card">
@@ -76,14 +77,14 @@
             <table id="dg_departement" class="easyui-datagrid" title="Table Data" style="width:100%;">
                 <thead>
                     <tr>
-                        <th data-options="field:'name',width:200,halign:'center'">Name</th>
+                        <th data-options="field:'name',width:160,halign:'center'">Name</th>
                         <th data-options="field:'total_mp',width:50,align:'center'">MP</th>
                         <th data-options="field:'total',width:120,halign:'center', align:'right', formatter:numberformat">Total</th>
                     </tr>
                 </thead>
             </table>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="row">
                 <div class="col-lg-12 mt-3">
                     <div class="card">
@@ -100,14 +101,14 @@
             <table id="dg_position" class="easyui-datagrid" title="Table Data" style="width:100%;">
                 <thead>
                     <tr>
-                        <th data-options="field:'name',width:200,halign:'center'">Name</th>
+                        <th data-options="field:'name',width:160,halign:'center'">Name</th>
                         <th data-options="field:'total_mp',width:50,align:'center'">MP</th>
                         <th data-options="field:'total',width:120,halign:'center', align:'right', formatter:numberformat">Total</th>
                     </tr>
                 </thead>
             </table>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="row">
                 <div class="col-lg-12 mt-3">
                     <div class="card">
@@ -124,9 +125,33 @@
             <table id="dg_group" class="easyui-datagrid" title="Table Data" style="width:100%;">
                 <thead>
                     <tr>
-                        <th data-options="field:'name',width:200,halign:'center'">Name</th>
+                        <th data-options="field:'name',width:160,halign:'center'">Name</th>
                         <th data-options="field:'total_mp',width:50,align:'center'">MP</th>
                         <th data-options="field:'total',width:120,halign:'center', align:'right', formatter:numberformat">Total</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="col-lg-3">
+            <div class="row">
+                <div class="col-lg-12 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            Payroll by PKL
+                        </div>
+                        <div class="card-body">
+                            <div id="chartPkl"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <table id="dg_pkl" class="easyui-datagrid" title="Table Data" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th data-options="field:'name',width:180,halign:'center'">Name</th>
+                        <th data-options="field:'total_mp',width:50,align:'center'">MP</th>
+                        <th data-options="field:'total',width:100,halign:'center', align:'right', formatter:numberformat">Total</th>
                     </tr>
                 </thead>
             </table>
@@ -144,7 +169,7 @@
             dataType: "json",
             success: function (pay) {
                 $("#total_mp").html(pay.total_mp);
-                $("#total_bruto").html(pay.total_bruto);
+                $("#total_pkl").html(pay.total_pkl);
                 $("#total_income").html(pay.total_income);
                 $("#total_ter").html(pay.total_ter);
 
@@ -177,6 +202,12 @@
 
         $('#dg_group').datagrid({
             url: '<?= base_url('dashboard/payrolls/tableGroup?filter_from=') ?>' + btoa(filter_from) + "&filter_to=" + btoa(filter_to),
+            rownumbers: true,
+            pagination: false,
+        });
+
+        $('#dg_pkl').datagrid({
+            url: '<?= base_url('dashboard/payrolls/tablePkl?filter_from=') ?>' + btoa(filter_from) + "&filter_to=" + btoa(filter_to),
             rownumbers: true,
             pagination: false,
         });
@@ -308,6 +339,53 @@
                     series: [{
                         name: 'Net Income',
                         data: group.income
+                    }]
+                });
+            }
+        });
+
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('dashboard/payrolls/chartPkl?filter_from=') ?>" + btoa(filter_from) + "&filter_to=" + btoa(filter_to),
+            data: "period_start=",
+            dataType: "json",
+            success: function (pkl) {
+                Highcharts.chart('chartPkl', {
+                    chart: {
+                        type: 'pie',
+                        height: 250
+                    },
+                    title: {
+                        text: ''
+                    },
+                    plotOptions: {
+                        series: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: [{
+                                enabled: true,
+                                distance: 20
+                            }, {
+                                enabled: true,
+                                distance: -40,
+                                format: '{point.percentage:.1f}%',
+                                style: {
+                                    fontSize: '1.2em',
+                                    textOutline: 'none',
+                                    opacity: 0.7
+                                },
+                                filter: {
+                                    operator: '>',
+                                    property: 'percentage',
+                                    value: 10
+                                }
+                            }]
+                        }
+                    },
+                    series: [{
+                        name: 'Net Income',
+                        colorByPoint: true,
+                        data: pkl
                     }]
                 });
             }

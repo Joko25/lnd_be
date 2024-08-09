@@ -428,8 +428,13 @@ class Employees extends CI_Controller
     {
         if ($this->input->post()) {
             $post = $this->input->post();
-            $send = $this->crud->create('employee_familys', $post);
-            echo $send;
+            if($post['id'] == ''){
+                $send = $this->crud->create('employee_familys', $post);
+                echo $send;
+            }else{
+                $send = $this->crud->update('employee_familys', ["id" => $post['id']], $post);
+                echo $send;
+            }
         } else {
             show_error("Cannot Process your request");
         }
@@ -439,8 +444,13 @@ class Employees extends CI_Controller
     {
         if ($this->input->post()) {
             $post = $this->input->post();
-            $send = $this->crud->create('employee_educations', $post);
-            echo $send;
+            if($post['id'] == ''){
+                $send = $this->crud->create('employee_educations', $post);
+                echo $send;
+            }else{
+                $send = $this->crud->update('employee_educations', ["id" => $post['id']], $post);
+                echo $send;
+            }
         } else {
             show_error("Cannot Process your request");
         }
@@ -450,8 +460,13 @@ class Employees extends CI_Controller
     {
         if ($this->input->post()) {
             $post = $this->input->post();
-            $send = $this->crud->create('employee_experiences', $post);
-            echo $send;
+            if($post['id'] == ''){
+                $send = $this->crud->create('employee_experiences', $post);
+                echo $send;
+            }else{
+                $send = $this->crud->update('employee_experiences', ["id" => $post['id']], $post);
+                echo $send;
+            }
         } else {
             show_error("Cannot Process your request");
         }
@@ -461,8 +476,13 @@ class Employees extends CI_Controller
     {
         if ($this->input->post()) {
             $post = $this->input->post();
-            $send = $this->crud->create('employee_trainings', $post);
-            echo $send;
+            if($post['id'] == ''){
+                $send = $this->crud->create('employee_trainings', $post);
+                echo $send;
+            }else{
+                $send = $this->crud->update('employee_trainings', ["id" => $post['id']], $post);
+                echo $send;
+            }
         } else {
             show_error("Cannot Process your request");
         }
@@ -472,8 +492,13 @@ class Employees extends CI_Controller
     {
         if ($this->input->post()) {
             $post = $this->input->post();
-            $send = $this->crud->create('employee_carrers', $post);
-            echo $send;
+            if($post['id'] == ''){
+                $send = $this->crud->create('employee_carrers', $post);
+                echo $send;
+            }else{
+                $send = $this->crud->update('employee_carrers', ["id" => $post['id']], $post);
+                echo $send;
+            }
         } else {
             show_error("Cannot Process your request");
         }
@@ -486,8 +511,8 @@ class Employees extends CI_Controller
             $id   = base64_decode($this->input->get('id'));
             $post = $this->input->post();
 
-            $image_id = $this->crud->upload('image_id', ['png', 'jpg', 'jpeg'], 'assets/image/employee/id/');
-            $image_profile = $this->crud->upload('image_profile', ['png', 'jpg', 'jpeg'], 'assets/image/employee/profile/');
+            $image_id = $this->crud->upload('image_id', ['png', 'jpg', 'jpeg'], 'assets/image/employee/id/', ["id" => $id], "employees", "image_id");
+            $image_profile = $this->crud->upload('image_profile', ['png', 'jpg', 'jpeg'], 'assets/image/employee/profile/', ["id" => $id], "employees", "image_profile");
             $post_final = array_merge($post, ["image_id" => $image_id, "image_profile" => $image_profile]);
 
             $send = $this->crud->update('employees', ["id" => $id], $post_final);

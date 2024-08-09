@@ -292,7 +292,7 @@ if ($employee->image_profile == "" || $employee->image_profile == null) {
                 <table id="dgCarrer" class="easyui-datagrid" style="width:100%;">
                     <thead>
                         <tr>
-                            <th data-options="field:'name',width:200,halign:'center'">Training Name</th>
+                            <th data-options="field:'name',width:200,halign:'center'">Carrer Name</th>
                             <th data-options="field:'description',width:300,halign:'center'">Description</th>
                             <th data-options="field:'start',width:100,halign:'center'">Date</th>
                             <th data-options="field:'profesion',width:150,halign:'center'">Profession</th>

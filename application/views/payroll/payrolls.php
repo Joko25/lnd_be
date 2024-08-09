@@ -23,6 +23,7 @@
             <th rowspan="2" data-options="field:'group_name',width:100,halign:'center'">Group</th>
             <th rowspan="2" data-options="field:'national_id',width:150,halign:'center'">National ID</th>
             <th rowspan="2" data-options="field:'tax_id',width:150,halign:'center'">NPWP</th>
+            <th rowspan="2" data-options="field:'account_no',width:100,halign:'center'">Account No</th>
             <th colspan="<?= (count($permit_type) + 1) ?>">Attandance</th>
             <th rowspan="2" data-options="field:'working_day',width:80,align:'center'">Working<br>Calendar</th>
             <th rowspan="2" data-options="field:'salary',width:100,align:'center', formatter:numberformat">Salary</th>

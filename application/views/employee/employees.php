@@ -1120,6 +1120,16 @@
             singleSelect: true,
             columns: [
                 [{
+                    field: 'id',
+                    width: 150,
+                    readonly: true,
+                    halign: 'center',
+                    title: "Family ID",
+                    hidden: true,
+                    editor: {
+                        type: 'textbox',
+                    }
+                },{
                     field: 'name',
                     width: 150,
                     readonly: true,
@@ -1245,10 +1255,31 @@
         }
     }
 
-    function removeFamily() {
-        if (editIndexFamily == undefined) {
-            return true;
-        }
+    function removeFamily(target) {
+        var dg = $('#dgFamily');
+        var row = dg.datagrid('getSelected');
+        var rowIndex = dg.datagrid('getRowIndex', row);
+
+        var ed = dg.datagrid('getEditor', {
+            index: editIndexFamily,
+            field: 'id'
+        });
+
+        $.ajax({
+            method: 'post',
+            url: "<?= base_url('employee/employees/deleteFamily') ?>",
+            data: {
+                id: row.id
+            },
+            success: function(result) {
+                var result = eval('(' + result + ')');
+                toastr.success(result.message);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                //toastr.error(jqXHR.statusText);
+            },
+        });
+
         $('#dgFamily').datagrid('cancelEdit', editIndexFamily).datagrid('deleteRow', editIndexFamily);
         editIndexFamily = undefined;
     }
@@ -1262,6 +1293,16 @@
             singleSelect: true,
             columns: [
                 [{
+                    field: 'id',
+                    width: 150,
+                    readonly: true,
+                    halign: 'center',
+                    title: "Education ID",
+                    hidden: true,
+                    editor: {
+                        type: 'textbox',
+                    }
+                },{
                     field: 'level',
                     width: 150,
                     readonly: true,
@@ -1394,9 +1435,30 @@
     }
 
     function removeEducation() {
-        if (editIndexEducation == undefined) {
-            return
-        }
+        var dg = $('#dgEducation');
+        var row = dg.datagrid('getSelected');
+        var rowIndex = dg.datagrid('getRowIndex', row);
+
+        var ed = dg.datagrid('getEditor', {
+            index: editIndexEducation,
+            field: 'id'
+        });
+
+        $.ajax({
+            method: 'post',
+            url: "<?= base_url('employee/employees/deleteEducation') ?>",
+            data: {
+                id: row.id
+            },
+            success: function(result) {
+                var result = eval('(' + result + ')');
+                toastr.success(result.message);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                //toastr.error(jqXHR.statusText);
+            },
+        });
+
         $('#dgEducation').datagrid('cancelEdit', editIndexEducation).datagrid('deleteRow', editIndexEducation);
         editIndexEducation = undefined;
     }
@@ -1410,6 +1472,16 @@
             singleSelect: true,
             columns: [
                 [{
+                    field: 'id',
+                    width: 150,
+                    readonly: true,
+                    halign: 'center',
+                    title: "Experience ID",
+                    hidden: true,
+                    editor: {
+                        type: 'textbox',
+                    }
+                },{
                     field: 'name',
                     width: 150,
                     readonly: true,
@@ -1539,9 +1611,30 @@
     }
 
     function removeExperience() {
-        if (editIndexExperience == undefined) {
-            return
-        }
+        var dg = $('#dgExperience');
+        var row = dg.datagrid('getSelected');
+        var rowIndex = dg.datagrid('getRowIndex', row);
+
+        var ed = dg.datagrid('getEditor', {
+            index: editIndexExperience,
+            field: 'id'
+        });
+
+        $.ajax({
+            method: 'post',
+            url: "<?= base_url('employee/employees/deleteExperience') ?>",
+            data: {
+                id: row.id
+            },
+            success: function(result) {
+                var result = eval('(' + result + ')');
+                toastr.success(result.message);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                //toastr.error(jqXHR.statusText);
+            },
+        });
+
         $('#dgExperience').datagrid('cancelEdit', editIndexExperience).datagrid('deleteRow', editIndexExperience);
         editIndexExperience = undefined;
     }
@@ -1555,6 +1648,16 @@
             singleSelect: true,
             columns: [
                 [{
+                    field: 'id',
+                    width: 150,
+                    readonly: true,
+                    halign: 'center',
+                    title: "Training ID",
+                    hidden: true,
+                    editor: {
+                        type: 'textbox',
+                    }
+                },{
                     field: 'name',
                     width: 150,
                     readonly: true,
@@ -1670,9 +1773,30 @@
     }
 
     function removeTraining() {
-        if (editIndexTraining == undefined) {
-            return
-        }
+        var dg = $('#dgTraining');
+        var row = dg.datagrid('getSelected');
+        var rowIndex = dg.datagrid('getRowIndex', row);
+
+        var ed = dg.datagrid('getEditor', {
+            index: editIndexTraining,
+            field: 'id'
+        });
+
+        $.ajax({
+            method: 'post',
+            url: "<?= base_url('employee/employees/deleteTraining') ?>",
+            data: {
+                id: row.id
+            },
+            success: function(result) {
+                var result = eval('(' + result + ')');
+                toastr.success(result.message);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                //toastr.error(jqXHR.statusText);
+            },
+        });
+
         $('#dgTraining').datagrid('cancelEdit', editIndexTraining).datagrid('deleteRow', editIndexTraining);
         editIndexTraining = undefined;
     }
@@ -1686,11 +1810,21 @@
             singleSelect: true,
             columns: [
                 [{
+                    field: 'id',
+                    width: 150,
+                    readonly: true,
+                    halign: 'center',
+                    title: "Carreer ID",
+                    hidden: true,
+                    editor: {
+                        type: 'textbox',
+                    }
+                },{
                     field: 'name',
                     width: 150,
                     readonly: true,
                     halign: 'center',
-                    title: "Family Name",
+                    title: "Carrer Name",
                     editor: {
                         type: 'textbox',
                         options: {
@@ -1801,9 +1935,30 @@
     }
 
     function removeCarrer() {
-        if (editIndexCarrer == undefined) {
-            return
-        }
+        var dg = $('#dgCarrer');
+        var row = dg.datagrid('getSelected');
+        var rowIndex = dg.datagrid('getRowIndex', row);
+
+        var ed = dg.datagrid('getEditor', {
+            index: editIndexCarrer,
+            field: 'id'
+        });
+
+        $.ajax({
+            method: 'post',
+            url: "<?= base_url('employee/employees/deleteCarrer') ?>",
+            data: {
+                id: row.id
+            },
+            success: function(result) {
+                var result = eval('(' + result + ')');
+                toastr.success(result.message);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                //toastr.error(jqXHR.statusText);
+            },
+        });
+
         $('#dgCarrer').datagrid('cancelEdit', editIndexCarrer).datagrid('deleteRow', editIndexCarrer);
         editIndexCarrer = undefined;
     }
@@ -1844,16 +1999,6 @@
                                 toastr.success(result.message, result.title);
                                 var number = $('#number').textbox('getValue');
 
-                                $.ajax({
-                                    type: "post",
-                                    url: "<?= base_url('employee/employees/deleteFamily') ?>",
-                                    data: "number=" + number,
-                                    dataType: "json",
-                                    success: function(response) {
-                                        //
-                                    }
-                                });
-
                                 $('#dgFamily').datagrid('acceptChanges');
                                 var rowFamily = $('#dgFamily').datagrid('getRows');
                                 var totalFamily = rowFamily.length;
@@ -1865,6 +2010,7 @@
                                             url: '<?= base_url('employee/employees/createFamily') ?>',
                                             data: {
                                                 number: number,
+                                                id: rowFamily[i].id,
                                                 name: rowFamily[i].name,
                                                 place: rowFamily[i].place,
                                                 birthday: rowFamily[i].birthday,
@@ -1880,16 +2026,6 @@
                                     }
                                 }
 
-                                $.ajax({
-                                    type: "post",
-                                    url: "<?= base_url('employee/employees/deleteEducation') ?>",
-                                    data: "number=" + number,
-                                    dataType: "json",
-                                    success: function(response) {
-                                        //
-                                    }
-                                });
-
                                 $('#dgEducation').datagrid('acceptChanges');
                                 var rowEducation = $('#dgEducation').datagrid('getRows');
                                 var totalEducation = rowEducation.length;
@@ -1901,6 +2037,7 @@
                                             url: '<?= base_url('employee/employees/createEducation') ?>',
                                             data: {
                                                 number: number,
+                                                id: rowEducation[i].id,
                                                 level: rowEducation[i].level,
                                                 degree: rowEducation[i].degree,
                                                 school: rowEducation[i].school,
@@ -1916,16 +2053,6 @@
                                     // }
                                 }
 
-                                $.ajax({
-                                    type: "post",
-                                    url: "<?= base_url('employee/employees/deleteExperience') ?>",
-                                    data: "number=" + number,
-                                    dataType: "json",
-                                    success: function(response) {
-                                        //
-                                    }
-                                });
-
                                 $('#dgExperience').datagrid('acceptChanges');
                                 var rowExperience = $('#dgExperience').datagrid('getRows');
                                 var totalExperience = rowExperience.length;
@@ -1937,6 +2064,7 @@
                                             url: '<?= base_url('employee/employees/createExperience') ?>',
                                             data: {
                                                 number: number,
+                                                id: rowExperience[i].id,
                                                 name: rowExperience[i].name,
                                                 type: rowExperience[i].type,
                                                 start: rowExperience[i].start,
@@ -1952,16 +2080,6 @@
                                     }
                                 }
 
-                                $.ajax({
-                                    type: "post",
-                                    url: "<?= base_url('employee/employees/deleteTraining') ?>",
-                                    data: "number=" + number,
-                                    dataType: "json",
-                                    success: function(response) {
-                                        //
-                                    }
-                                });
-
                                 $('#dgTraining').datagrid('acceptChanges');
                                 var rowTraining = $('#dgTraining').datagrid('getRows');
                                 var totalTraining = rowTraining.length;
@@ -1973,6 +2091,7 @@
                                             url: '<?= base_url('employee/employees/createTraining') ?>',
                                             data: {
                                                 number: number,
+                                                id: rowTraining[i].id,
                                                 name: rowTraining[i].name,
                                                 description: rowTraining[i].description,
                                                 start: rowTraining[i].start,
@@ -1987,16 +2106,6 @@
                                     }
                                 }
 
-                                $.ajax({
-                                    type: "post",
-                                    url: "<?= base_url('employee/employees/deleteCarrer') ?>",
-                                    data: "number=" + number,
-                                    dataType: "json",
-                                    success: function(response) {
-                                        //
-                                    }
-                                });
-
                                 $('#dgCarrer').datagrid('acceptChanges');
                                 var rowCarrer = $('#dgCarrer').datagrid('getRows');
                                 var totalCarrer = rowCarrer.length;
@@ -2008,6 +2117,7 @@
                                             url: '<?= base_url('employee/employees/createCarrer') ?>',
                                             data: {
                                                 number: number,
+                                                id: rowCarrer[i].id,
                                                 name: rowCarrer[i].name,
                                                 description: rowCarrer[i].description,
                                                 start: rowCarrer[i].start,

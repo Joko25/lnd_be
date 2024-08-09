@@ -683,7 +683,7 @@ class Cash_carries extends CI_Controller
             if ($data['trans_date'] == "") {
                 echo json_encode(array("title" => "Format Date", "message" => $data['number'] . " Format Date is Null", "theme" => "error"));
             } else {
-                $employee = $this->crud->read('employees', [], ["number" => $data['number']]);
+                $employee = $this->crud->read('employees', [], ["number" => $data['number'], "status" => 0]);
 
                 if (!empty($employee)) {
                     $cash_carries = $this->crud->read('cash_carries', [], ["employee_id" => $employee->id, "trans_date" => $data['trans_date'], "type" => $data['type']]);
