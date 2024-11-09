@@ -29,6 +29,33 @@ class Attandance_days extends CI_Controller
         }
     }
 
+    function cekStatusMasuk($shift, $masuk) {
+        // Konversi waktu masuk ke format detik
+        $masukTime = strtotime($masuk);
+        
+        // Variabel untuk menyimpan jarak waktu terkecil
+        $closestShift = null;
+        $minDiff = null;
+    
+        // Cari waktu shift terdekat
+        foreach ($shift as $shiftTime) {
+            $shiftTimeInSeconds = strtotime($shiftTime);
+            $diff = abs($masukTime - $shiftTimeInSeconds);
+    
+            if (is_null($minDiff) || $diff < $minDiff) {
+                $minDiff = $diff;
+                $closestShift = $shiftTime;
+            }
+        }
+    
+        // Periksa apakah waktu masuk lebih awal atau lebih lambat dari shift terdekat
+        if ($masukTime <= strtotime($closestShift)) {
+            return "ON TIME";
+        } else {
+            return "LATE";
+        }
+    }
+
     public function printcsv(){
         if ($this->input->get()) {
 
@@ -114,7 +141,7 @@ class Attandance_days extends CI_Controller
                 $shifts = $this->db->get()->result_array();
                 $arrShift = [];
                 foreach ($shifts as $shift) {
-                    $arrShift[] = ["start" => $shift['start']];
+                    $arrShift[] = $shift['start'];
                 }
 
                 //PERMIT
@@ -206,22 +233,12 @@ class Attandance_days extends CI_Controller
 
                             foreach ($arrAttandance as $arrA) {
                                 if ($working_date == $arrA['date_in']) {
-                                    $date_in = strtotime($arrA['date_in']." ".$arrA['time_in']);
+                                    $date_in = $arrA['time_in'];
                                     
-                                    foreach ($arrShift as $arrS) {
-                                        $working_date_time = strtotime($working_date. " " .$arrS['start']);
-                                        if($date_in > $working_date_time){
-                                            $time_in = $arrA['time_in'];
-                                            $time_out = $arrA['time_out'];
-                                            $status = "LATE";
-                                            $remarks = "";
-                                        }else{
-                                            $time_in = $arrA['time_in'];
-                                            $time_out = $arrA['time_out'];
-                                            $status = "ON TIME";
-                                            $remarks = "";
-                                        }
-                                    }
+                                    $time_in = $arrA['time_in'];
+                                    $time_out = $arrA['time_out'];
+                                    $status = $this->cekStatusMasuk($arrShift, $date_in);
+                                    $remarks = "";
                                 }
                             }
                         } else {
@@ -296,22 +313,12 @@ class Attandance_days extends CI_Controller
 
                             foreach ($arrAttandance as $arrA) {
                                 if ($working_date == $arrA['date_in']) {
-                                    $date_in = strtotime($arrA['date_in']." ".$arrA['time_in']);
+                                    $date_in = $arrA['time_in'];
                                     
-                                    foreach ($arrShift as $arrS) {
-                                        $working_date_time = strtotime($working_date. " " .$arrS['start']);
-                                        if($date_in > $working_date_time){
-                                            $time_in = $arrA['time_in'];
-                                            $time_out = $arrA['time_out'];
-                                            $status = "LATE";
-                                            $remarks = "";
-                                        }else{
-                                            $time_in = $arrA['time_in'];
-                                            $time_out = $arrA['time_out'];
-                                            $status = "ON TIME";
-                                            $remarks = "";
-                                        }
-                                    }
+                                    $time_in = $arrA['time_in'];
+                                    $time_out = $arrA['time_out'];
+                                    $status = $this->cekStatusMasuk($arrShift, $date_in);
+                                    $remarks = "";
                                 }
                             }
                         } else {
@@ -492,7 +499,7 @@ class Attandance_days extends CI_Controller
                 $shifts = $this->db->get()->result_array();
                 $arrShift = [];
                 foreach ($shifts as $shift) {
-                    $arrShift[] = ["start" => $shift['start']];
+                    $arrShift[] = $shift['start'];
                 }
 
                 //PERMIT
@@ -584,22 +591,12 @@ class Attandance_days extends CI_Controller
 
                             foreach ($arrAttandance as $arrA) {
                                 if ($working_date == $arrA['date_in']) {
-                                    $date_in = strtotime($arrA['date_in']." ".$arrA['time_in']);
+                                    $date_in = $arrA['time_in'];
                                     
-                                    foreach ($arrShift as $arrS) {
-                                        $working_date_time = strtotime($working_date. " " .$arrS['start']);
-                                        if($date_in > $working_date_time){
-                                            $time_in = $arrA['time_in'];
-                                            $time_out = $arrA['time_out'];
-                                            $status = "LATE";
-                                            $remarks = "";
-                                        }else{
-                                            $time_in = $arrA['time_in'];
-                                            $time_out = $arrA['time_out'];
-                                            $status = "ON TIME";
-                                            $remarks = "";
-                                        }
-                                    }
+                                    $time_in = $arrA['time_in'];
+                                    $time_out = $arrA['time_out'];
+                                    $status = $this->cekStatusMasuk($arrShift, $date_in);
+                                    $remarks = "";
                                 }
                             }
                         } else {
@@ -617,8 +614,19 @@ class Attandance_days extends CI_Controller
                             }
 
                             if (empty($arrChangeDay)){
-                                $status = "WEEKEND";
-                                $remarks = "";
+                                foreach ($arrAttandance as $arrA) {
+                                    if ($working_date == $arrA['date_in']) {
+                                        $date_in = $arrA['time_in'];
+                                        
+                                        $time_in = $arrA['time_in'];
+                                        $time_out = $arrA['time_out'];
+                                        $status = $this->cekStatusMasuk($arrShift, $date_in);
+                                        $remarks = "";
+                                    }else{
+                                        $status = "WEEKEND";
+                                        $remarks = "";
+                                    }
+                                }
                             }
                         }
                     } else {
@@ -674,22 +682,12 @@ class Attandance_days extends CI_Controller
 
                             foreach ($arrAttandance as $arrA) {
                                 if ($working_date == $arrA['date_in']) {
-                                    $date_in = strtotime($arrA['date_in']." ".$arrA['time_in']);
+                                    $date_in = $arrA['time_in'];
                                     
-                                    foreach ($arrShift as $arrS) {
-                                        $working_date_time = strtotime($working_date. " " .$arrS['start']);
-                                        if($date_in > $working_date_time){
-                                            $time_in = $arrA['time_in'];
-                                            $time_out = $arrA['time_out'];
-                                            $status = "LATE";
-                                            $remarks = "";
-                                        }else{
-                                            $time_in = $arrA['time_in'];
-                                            $time_out = $arrA['time_out'];
-                                            $status = "ON TIME";
-                                            $remarks = "";
-                                        }
-                                    }
+                                    $time_in = $arrA['time_in'];
+                                    $time_out = $arrA['time_out'];
+                                    $status = $this->cekStatusMasuk($arrShift, $date_in);
+                                    $remarks = "";
                                 }
                             }
                         } else {
@@ -707,8 +705,19 @@ class Attandance_days extends CI_Controller
                             }
 
                             if (empty($arrChangeDay)){
-                                $status = "WEEKEND";
-                                $remarks = "";
+                                foreach ($arrAttandance as $arrA) {
+                                    if ($working_date == $arrA['date_in']) {
+                                        $date_in = $arrA['time_in'];
+                                        
+                                        $time_in = $arrA['time_in'];
+                                        $time_out = $arrA['time_out'];
+                                        $status = $this->cekStatusMasuk($arrShift, $date_in);
+                                        $remarks = "";
+                                    }else{
+                                        $status = "WEEKEND";
+                                        $remarks = "";
+                                    }
+                                }
                             }
                         }
                     }

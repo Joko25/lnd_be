@@ -765,7 +765,7 @@ class Summary_payrolls extends CI_Controller
                             <td style="mso-number-format:\@;">' . $record['number'] . '</td>
                             <td style="mso-number-format:\@;">' . $record['national_id'] . '</td>
                             <td>' . $record['name'] . '</td>
-                            <td>' . $record['npwp'] . '</td>
+                            <td style="mso-number-format:\@;">' . $record['npwp'] . '</td>
                             <td>' . $record['position_name'] . '</td>
                             <td>' . $record['marital'] . '</td>
                             <td>' . $record['attandance_wd'] . '</td>

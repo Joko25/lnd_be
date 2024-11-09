@@ -71,6 +71,8 @@ class Account_coa extends CI_Controller
                         $this->db->like("d.name", $filter->value);
                     }else if($filter->field == "account_name"){
                         $this->db->like("e.name", $filter->value);
+                    }else if($filter->field == "category"){
+                        $this->db->like("e.category", $filter->value);
                     }else if($filter->field == "division_name"){
                         $this->db->like("f.name", $filter->value);
                     }else{

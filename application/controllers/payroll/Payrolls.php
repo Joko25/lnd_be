@@ -1238,7 +1238,7 @@ class Payrolls extends CI_Controller
                     <td>' . $record['ter_number'] . '</td>
                     <td>' . $record['group_name'] . '</td>
                     <td class="str">' . $record['national_id'] . '</td>
-                    <td>' . $record['tax_id'] . '</td>
+                    <td class="str">' . $record['tax_id'] . '</td>
                     <td>' . $record['account_no'] . '</td>';
             foreach (json_decode($record['attandance'], true) as $attandance => $val_attandance) {
                 $html .= '<td>' . $val_attandance . '</td>';

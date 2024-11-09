@@ -105,7 +105,10 @@ class Student_payrolls extends CI_Controller
             $config = $this->db->get()->row();
 
             if (@$records[0]['group_name'] == "MAGANG") {
+                $grandtotal = 0;
+                $autoid = 0;
                 foreach ($records as $record) {
+                    $autoid++;
                     $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, b.national_id FROM payrolls a
                         JOIN employees b ON a.employee_id = b.id
                         LEFT JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
@@ -124,6 +127,7 @@ class Student_payrolls extends CI_Controller
                     $html .= '<div style="page-break-after:always;">';
                     $no = 1;
                     $hal = 1;
+                    $totalgroup = 0;
                     for ($i = 0; $i < $page; $i++) {
                         $offset = ($i * 20);
                         $query = $this->db->query("SELECT a.*, b.bank_branch, b.bank_no, b.national_id FROM payrolls a
@@ -238,12 +242,32 @@ class Student_payrolls extends CI_Controller
                             $no++;
                         }
 
+                        $totalgroup += $total;
+                        $grandtotal += $total;
+
                         $html .= '  <tr>
-                                        <th style="text-align:right;" colspan="18">GRAND TOTAL</th>
+                                        <th style="text-align:right;" colspan="18">TOTAL SUB</th>
                                         <th style="text-align:right;">' . number_format($total) . '</th>
                                         <th style="text-align:right;"></th>
-                                    </tr>
-                                </table><br>';
+                                    </tr>';
+
+                        if (($i + 1) == $page) {
+                            $html .= '  <tr>
+                                            <th style="text-align:right;" colspan="18">TOTAL '.$record['source_name'].'</th>
+                                            <th style="text-align:right;">' . number_format($totalgroup) . '</th>
+                                            <th style="text-align:right;"></th>
+                                        </tr>';
+                        }
+
+                        if($autoid == count($records) && ($i + 1) == $page){
+                            $html .= '  <tr>
+                                            <th style="text-align:right;" colspan="18">GRAND TOTAL ALL '.$record['group_name'].'</th>
+                                            <th style="text-align:right;">' . number_format($grandtotal) . '</th>
+                                            <th style="text-align:right;"></th>
+                                        </tr>';
+                        }
+
+                        $html .= '</table><br>';
 
                         $hal++;
                         if (($i + 1) != $page) {
@@ -286,8 +310,12 @@ class Student_payrolls extends CI_Controller
                 $html2 = '  <html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid black;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
                         <style> .str{ mso-number-format:\@; } </style>
                         <body>';
-                        
+                
+                $autoid = 1;     
+                $grandtotal = 0;   
                 foreach ($records as $record) {
+                    $autoid++;
+
                     $allowance_1 = $this->crud->read("allowance_students", [], ["group_id" => $record['group_id'], "months" => "1", "type" => "SALARY"]);
                     $allowance_2 = $this->crud->read("allowance_students", [], ["group_id" => $record['group_id'], "months" => "2", "type" => "SALARY"]);
                     $allowance_3 = $this->crud->read("allowance_students", [], ["group_id" => $record['group_id'], "months" => "3", "type" => "SALARY"]);
@@ -300,6 +328,7 @@ class Student_payrolls extends CI_Controller
                     $html2 .= '<div style="page-break-after:always;">';
                     $no = 1;
                     $hal = 1;
+                    $grandgroup=0;
                     for ($i = 0; $i < $page; $i++) {
                         $offset = ($i * 20);
                         $html2   .= '  <center>
@@ -388,16 +417,34 @@ class Student_payrolls extends CI_Controller
                             $no++;
                         }
 
+                        $grandgroup += $total;
+                        $grandtotal += $total;
+
                         $html2 .= '  <tr>
-                                        <th style="text-align:right;" colspan="16">GRAND TOTAL</th>
+                                        <th style="text-align:right;" colspan="16">TOTAL SUB</th>
                                         <th style="text-align:right;">' . number_format($total) . '</th>
                                         <th style="text-align:right;"></th>
-                                    </tr>
-                                    </table><br>';
-                        $hal++;
-                        if (($i + 1) != $page) {
-                            $html2 .= '<div style="page-break-after:always;"></div>';
+                                    </tr>';
+                        // echo $autoid . "<br>";
+                        // if($autoid == count($records)){
+                        if (($i + 1) == $page) {
+                            $html2 .= '  <tr>
+                                            <th style="text-align:right;" colspan="16">TOTAL '.$record['source_name'].'</th>
+                                            <th style="text-align:right;">' . number_format($grandgroup) . '</th>
+                                            <th style="text-align:right;"></th>
+                                        </tr>';
                         }
+                        
+                        if($autoid == count($records)){
+                            $html2 .= '  <tr>
+                                            <th style="text-align:right;" colspan="16">GRAND TOTAL ALL '.$record['group_name'].'</th>
+                                            <th style="text-align:right;">' . number_format($grandtotal) . '</th>
+                                            <th style="text-align:right;"></th>
+                                        </tr>';
+                        }
+
+                        $html2 .= '</table><br>';
+                        $hal++;
                     }
 
                     if(count($payrolls) > 0){
