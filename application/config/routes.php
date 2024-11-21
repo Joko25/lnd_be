@@ -49,6 +49,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+$route['competence/get_data'] = 'lndCompetence/competence/get_data';
+$route['competence/get_detail/(:any)'] = 'lndCompetence/competence/get_detail/$1';
+$route['competence/create_data'] = 'lndCompetence/competence/create_data';
+$route['competence/update_data/(:any)'] = 'lndCompetence/competence/update_data/$1';
+$route['competence/delete_data/(:any)'] = 'lndCompetence/competence/delete_data/$1';
+
 $route['default_controller'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+
