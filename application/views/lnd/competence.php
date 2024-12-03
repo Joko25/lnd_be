@@ -1,0 +1,1 @@
+ini competence view

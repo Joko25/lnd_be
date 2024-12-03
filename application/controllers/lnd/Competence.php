@@ -14,6 +14,21 @@ class Competence extends CI_Controller {
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
         header('Access-Control-Allow-Headers: Content-Type, Authorization');
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');
+        $this->load->library('session');
+    }
+
+    public function index() {
+        if ($this->session->username != "") {
+            $data['config'] = $this->crud->read('config');
+            $data['session_name'] = $this->session->name;
+
+            $this->load->view('template/header');
+            $this->load->view('lnd/competence', $data);
+        } else {
+            redirect('error_session');
+        }
     }
 
     public function get_data() {
