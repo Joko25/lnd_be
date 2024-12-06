@@ -55,6 +55,12 @@ $route['competence/create_data'] = 'lndCompetence/competence/create_data';
 $route['competence/update_data/(:any)'] = 'lndCompetence/competence/update_data/$1';
 $route['competence/delete_data/(:any)'] = 'lndCompetence/competence/delete_data/$1';
 
+$route['curiculum/get_data'] = 'lndCuriculum/curiculum/get_data';
+$route['curiculum/get_detail/(:any)'] = 'lndCuriculum/curiculum/get_detail/$1';
+$route['curiculum/create_data'] = 'lndCuriculum/curiculum/create_data';
+$route['curiculum/update_data/(:any)'] = 'lndCuriculum/curiculum/update_data/$1';
+$route['curiculum/delete_data/(:any)'] = 'lndCuriculum/curiculum/delete_data/$1';
+
 $route['default_controller'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
