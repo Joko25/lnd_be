@@ -9,6 +9,7 @@ class CompetenceModel extends CI_Model {
 
     public function get_all_data() {
         $query = $this->db->get('lnd_competence');
+        echo $query;
         return $query->result_array();
     }
 
@@ -23,6 +24,8 @@ class CompetenceModel extends CI_Model {
     }
 
     public function insert_data($data) {
+        $data['createdBy'] = $this->session->username;
+        $data['createdTime'] = date('Y-m-d H:i:s');
         $this->db->insert('lnd_competence', $data);
 
         $query = $this->db->order_by('createdTime', 'desc')->limit(1)->get('lnd_competence');
