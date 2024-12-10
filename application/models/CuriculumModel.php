@@ -9,6 +9,7 @@ class CuriculumModel extends CI_Model {
 
     public function get_all_data() {
         $query = $this->db->get('lnd_curiculum');
+        echo $query;
         return $query->result_array();
     }
 
@@ -23,6 +24,8 @@ class CuriculumModel extends CI_Model {
     }
 
     public function insert_data($data) {
+        $data['createdBy'] = $this->session->username;
+        $data['createdTime'] = date('Y-m-d H:i:s');
         $this->db->insert('lnd_curiculum', $data);
 
         $query = $this->db->order_by('createdTime', 'desc')->limit(1)->get('lnd_curiculum');
