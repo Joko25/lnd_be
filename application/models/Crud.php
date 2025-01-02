@@ -38,6 +38,22 @@ class Crud extends CI_Model
         return $autoid;
     }
 
+    function autoidCreatedTime($table)
+    {
+        $date = date("Ymdms");
+        $sql = $this->db->query("SELECT max(`createdTime`) as kode FROM $table WHERE createdTime like '%$date%'");
+        $row = $sql->row();
+        $kode = $row->kode;
+
+        if ($kode == NULL) {
+            $autoid        = $date . sprintf("%06s", $kode + 1);
+        } else {
+            $autoid        = (int) $kode + 1;
+        }
+
+        return $autoid;
+    }
+
     function query($query)
     {
         $query = $this->db->query($query);
