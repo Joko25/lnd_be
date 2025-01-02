@@ -2,4 +2,4 @@
 deployment:
 tasks:
 - export DEPLOYPATH=/home/besk2966/public_html/lnd.bestari.work
-- /bin/cp -R * $DEPLOYPATH
+- /bin/cp -r * $DEPLOYPATH
