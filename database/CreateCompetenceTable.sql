@@ -1,4 +1,4 @@
-CREATE TABLE lnd_Competence (
+CREATE TABLE lnd_competence (
     id CHAR(30) NOT NULL PRIMARY KEY DEFAULT UUID(), -- UUID as a 30-character string
     competenceId CHAR(30) NOT NULL,  -- UUID reference for competence
     `desc` TEXT,                     -- Description
@@ -18,3 +18,12 @@ CREATE TABLE lnd_Competence (
     INDEX (departementId),           -- Index for faster lookups
     INDEX (subDepartementId)         -- Index for faster lookups
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE lnd_competence
+    DROP COLUMN positionId,
+    DROP COLUMN divisionId,
+    DROP COLUMN departementId,
+    DROP COLUMN subDepartementId,
+    DROP COLUMN isActive,
+    CHANGE COLUMN `desc` name TEXT NOT NULL,
+    ADD INDEX (competenceId);

@@ -46,10 +46,8 @@ class Competence extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, b.name as departement_name, c.name as sub_department_name');
+        $this->db->select('a.*, ROW_NUMBER() OVER (ORDER BY id) AS `index`');
         $this->db->from('lnd_competence a');
-        $this->db->join('departements b', 'a.departementId = b.id', 'left');
-        $this->db->join('departement_subs c', 'a.subDepartementId = c.id', 'left');
         
         if (!empty($competence_id)) {
             $this->db->like('a.competenceId', $competence_id);
@@ -99,9 +97,8 @@ class Competence extends CI_Controller {
         $rawInput = file_get_contents("php://input");
         parse_str($rawInput, $data);
         // Generate competenceId
-        $idGenerateDate = $this->crud->autoidCreatedTime('lnd_competence');
+        $idGenerateDate = $this->crud->autoidPrifix('lnd_competence', 'competenceId', 'C'); 
         $data['competenceId'] = $idGenerateDate;
-    
         // Validasi dan proses data
         if (!empty($data)) {
             $dataTemp = $this->CompetenceModel->insert_data($data);

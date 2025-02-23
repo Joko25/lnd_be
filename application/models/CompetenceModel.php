@@ -28,7 +28,7 @@ class CompetenceModel extends CI_Model {
         $data['createdTime'] = date('Y-m-d H:i:s');
         $this->db->insert('lnd_competence', $data);
 
-        $query = $this->db->order_by('createdTime', 'desc')->limit(1)->get('lnd_competence');
+        $query = $this->db->order_by('createdTime', 'name')->limit(1)->get('lnd_competence');
     
         $record = $query->row();
     
@@ -37,10 +37,12 @@ class CompetenceModel extends CI_Model {
 
     public function update_data($id, $data) {
         $this->db->where('id', $id);
+        $data['updatedBy'] = $this->session->username;
+        $data['updatedTime'] = date('Y-m-d H:i:s');
 
         $this->db->update('lnd_competence', $data);
         
-        $query = $this->db->order_by('updatedTime', 'desc')->limit(1)->get('lnd_competence');
+        $query = $this->db->order_by('updatedTime', 'name')->limit(1)->get('lnd_competence');
     
         $record = $query->row();
     

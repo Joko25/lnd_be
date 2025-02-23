@@ -53,6 +53,27 @@ class Crud extends CI_Model
 
         return $autoid;
     }
+    function autoidPrifix($table, $id, $prefix)
+    {
+        $yearMonth = date("Ym"); // Format: YYYYMM
+        $sql = $this->db->query("SELECT MAX($id) as maxId FROM $table WHERE $id LIKE '$prefix-$yearMonth%'");
+        $row = $sql->row();
+        $maxId = $row->maxId;
+
+        if ($maxId == NULL) {
+            $newNumber = 1; // Mulai dari 0001 jika belum ada data
+        } else {
+            // Ambil 4 digit terakhir sebagai nomor urut
+            $lastNumber = (int) substr($maxId, -4);
+            $newNumber = $lastNumber + 1;
+        }
+
+        // Format ID menjadi PREFIX-YYYYMMXXXX (XXXX = 4 digit nomor urut)
+        $autoid = sprintf("%s-%s%04d", $prefix, $yearMonth, $newNumber);
+
+        return $autoid;
+    }
+
 
     function query($query)
     {

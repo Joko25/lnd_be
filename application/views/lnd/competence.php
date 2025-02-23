@@ -25,24 +25,12 @@
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Form Data</b></legend>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Departement</span>
-                <input style="width:60%;" name="departementId" id="departement_id" required="" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Sub Departement</span>
-                <input style="width:60%;" name="subDepartementId" id="sub_departement_id" required="" class="easyui-combobox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Level</span>
-                <input style="width:30%;" name="positionId" required="" class="easyui-textbox">
+                <span style="width:35%; display:inline-block;">Competence Name</span>
+                <input style="width:60%;" name="name" required="" class="easyui-textbox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Remarks</span>
-                <input style="width:30%;" name="remark" required="" class="easyui-textbox">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Description</span>
-                <input style="width:60%;" name="desc" required="" class="easyui-textbox">
+                <input style="width:60%;" name="remark" required="" class="easyui-textbox">
             </div>
         </fieldset>
     </form>
@@ -53,8 +41,6 @@
 
 <script>
     window.onload = function() {
-        generatedDepList()
-
         $('#competence_id').combogrid({
             url: '<?php echo base_url('lnd/competence/list'); ?>',
             panelWidth: 420,
@@ -62,7 +48,7 @@
             textField: 'competenceId',
             mode: 'remote',
             fitColumns: true,
-            prompt: "Choose Division",
+            prompt: "Choose Competence",
             icons: [{
                 iconCls: 'icon-clear',
                 handler: function(e) {
@@ -74,8 +60,8 @@
                     field: 'competenceId',
                     title: 'Competence ID'
                 }, {
-                    field: 'desc',
-                    title: 'Description',
+                    field: 'name',
+                    title: 'Competence Name',
                     width: 250
                 }]
             ],
@@ -91,9 +77,6 @@
     function update() {
         var row = $('#dg').datagrid('getSelected');
         if (row) {
-            generatedSubDept(row.departementId)
-            console.log("#row", row);
-            
             $('#dlg_insert').dialog('open');
             $('#frm_insert').form('load', row);
             url_save = '<?= base_url('lnd/competence/update_data/') ?>' + row.id;
@@ -115,7 +98,6 @@
                         })
                         .then(response => response.json()) // Konversi response ke JSON
                         .then(data => {
-                            console.log('Response dari server:', data);
                             if (data.code === 200) {
                                 $('#dg').datagrid('reload');
                                 toastr.success(data.message, 'Success');
@@ -148,51 +130,6 @@
         $("#printout").attr('src', '<?= base_url('employee/departements/print') ?>' + params);
     }
 
-    function generatedSubDept(dept_id) {
-        $('#sub_departement_id').combobox({
-            url: '<?php echo base_url('employee/departement_subs/reads'); ?>?departement_id=' + dept_id,
-            valueField: 'id',
-            textField: 'name',
-            prompt: 'Choose All',
-            icons: [{
-                iconCls: 'icon-clear',
-                handler: function(e) {
-                    $(e.data.target).combobox('clear').combobox('textbox').focus();
-                }
-            }],
-        });
-    }
-
-
-
-    function generatedDepList(){
-        $('#departement_id').combogrid({
-            url: '<?= base_url('employee/departements/reads') ?>',
-            panelWidth: 420,
-            idField: 'id',
-            textField: 'name',
-            mode: 'remote',
-            fitColumns: true,
-            valueField: 'id',
-            prompt: "Choose Departement",
-            columns: [
-                [{
-                    field: 'number',
-                    title: 'Departement No',
-                    width: 80
-                }, {
-                    field: 'name',
-                    title: 'Departement Name',
-                    width: 250
-                }, ]
-            ],
-            onSelect: function(dept) {
-                var departement_id = $('#departement_id').combogrid('getValue');
-                generatedSubDept(departement_id)
-            }
-        });
-    }
-
     function sendDataToServer(requestData) {
         // Buat body dengan format x-www-form-urlencoded (query string)
         const formData = new URLSearchParams(requestData).toString();
@@ -205,11 +142,8 @@
             body: formData // Data body
         })
         .then(response => {
-            console.log("resp", response);
-            
             return response.json()}) // Ubah response ke JSON
         .then(data => {
-            console.log('Response dari server:', data);
             if(data.code >= 200 && data.code <= 300) {
                 toastr.success(data.message, 'Success');
                 $('#dg').datagrid('reload');
@@ -228,19 +162,24 @@
         $('#dg').datagrid({
             url: '<?= base_url('lnd/competence/datatables') ?>',
             columns: [[
-                {field: 'ck', checkbox: true},
-                {field: 'competenceId', title:'Competence ID', align: 'left'},
-                {field: 'positionId', title:'Level', width:100, align: 'left'},
-                {field: 'departement_name', title:'Department', align: 'left'},
-                {field: 'sub_department_name', title:'Sub Department', align: 'left'},
-                {field: 'remark', title:'Remarks', width:100, align: 'left'},
-                {field: 'createdBy', title:'User Entry', align: 'left'},
-                {field: 'createdTime', title:'Last Entry', align: 'left'},
+                // {field: 'ck', rowspan:'2', checkbox: true},
+                {field: 'competenceId', rowspan:'2', width:150, title:'Competence ID', halign: 'center'},
+                {field: 'index', rowspan:'2', width:80, title:'Index', halign: 'center'},
+                {field: 'name', rowspan:'2', width:200, title:'Competence Name', halign: 'center'},
+                {field: 'remark', rowspan:'2', width:100, title:'Remarks', halign: 'center'},
+                {field: '', colspan:2, title:'Created', width:80, align: 'center'},
+                {field: '', colspan:2, title:'Updated', width:80, align: 'center'},
+            ],[
+                {field: 'createdBy', title:'By', width:100, align: 'center'},
+                {field: 'createdTime', title:'Date', width:150, align: 'center'},
+                {field: 'updatedBy', title:'By', width:100, align: 'center'},
+                {field: 'updatedTime', title:'Date', width:150, align: 'center'},
             ]],
             toolbar: '#toolbar',
             pagination: true,
             rownumbers: true,
             fit: true,
+            singleSelect:true,
             pageList: [20, 50, 100, 500, 1000],
             pageSize: 20,
         });
