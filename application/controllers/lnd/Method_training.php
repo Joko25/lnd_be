@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Training_Activity extends CI_Controller {
+class Method_training extends CI_Controller {
     
     public function __construct() {
         parent::__construct();
         // Load any models or libraries needed
-        $this->load->model('TrainingActivityModel');
+        $this->load->model('MethodTrainingModel');
         $this->load->helper('url');
         $this->load->library('form_validation');
         $this->load->model('crud');
@@ -26,7 +26,7 @@ class Training_Activity extends CI_Controller {
             $data['button'] = $this->getbutton($this->id_menu());
 
             $this->load->view('template/header');
-            $this->load->view('lnd/training-activity', $data);
+            $this->load->view('lnd/method-training', $data);
         } else {
             redirect('error_session');
         }
@@ -35,7 +35,7 @@ class Training_Activity extends CI_Controller {
     public function datatables()
     {
         // Ambil parameter dari request
-        $trainingActivityId = $this->input->get('trainingActivityId', true); // Sanitize input GET
+        $methodTrainingId = $this->input->get('methodTrainingId', true); // Sanitize input GET
         $page = $this->input->post('page');
         $rows = $this->input->post('rows');
         
@@ -47,10 +47,10 @@ class Training_Activity extends CI_Controller {
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
         $this->db->select('a.*, ROW_NUMBER() OVER (ORDER BY id) AS `index`');
-        $this->db->from('lnd_training_activity a');
+        $this->db->from('lnd_method_training a');
         
-        if (!empty($trainingActivityId)) {
-            $this->db->like('a.trainingActivityId', $trainingActivityId);
+        if (!empty($methodTrainingId)) {
+            $this->db->like('a.methodTrainingId', $methodTrainingId);
         }
         $this->db->stop_cache(); // Stop caching the query
 
@@ -73,22 +73,22 @@ class Training_Activity extends CI_Controller {
     }
 
     public function get_data() {
-        $data = $this->TrainingActivityModel->get_all_data();
+        $data = $this->MethodTrainingModel->get_all_data();
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, [], 'Get Training Activity data failed');
+            $this->response->send(ResponseStatus::NOT_FOUND, [], 'Get Method Training data failed');
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Training Activity data successfully');
+            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Method Training data successfully');
         } 
     }
 
     public function get_detail($id) {
-        $data = $this->TrainingActivityModel->get_detail_data($id);
+        $data = $this->MethodTrainingModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get Training Activity data failed');
+            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get Method Training data failed');
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Training Activity data successfully');
+            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Method Training data successfully');
         } 
     }
 
@@ -96,24 +96,16 @@ class Training_Activity extends CI_Controller {
         // Ambil request body secara manual
         $rawInput = file_get_contents("php://input");
         parse_str($rawInput, $data);
-        // Generate trainingActivityId
-        $idGenerateDate = $this->crud->autoidPrifix('lnd_training_activity', 'trainingActivityId', 'T'); 
-        $data['trainingActivityId'] = $idGenerateDate;
-
-        // Pembuatan temporary Indexing
-        $this->db->select_max('index');
-        $query = $this->db->get('lnd_training_activity');
-        $last_number = $query->row()->index ?? 0; // Jika kosong, mulai dari 1
-
-        // Tambahkan nilai record_number baru
-        $data['index'] = $last_number + 1;
+        // Generate methodTrainingId
+        $idGenerateDate = $this->crud->autoidPrifix('lnd_method_training', 'methodTrainingId', 'MT'); 
+        $data['methodTrainingId'] = $idGenerateDate;
 
         // Validasi dan proses data
         if (!empty($data)) {
-            $dataTemp = $this->TrainingActivityModel->insert_data($data);
-            $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Training Activity created successfully');
+            $dataTemp = $this->MethodTrainingModel->insert_data($data);
+            $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Method Training created successfully');
         } else {
-            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Training Activity creation failed.');
+            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Method Training creation failed.');
         }
     }
     
@@ -124,29 +116,29 @@ class Training_Activity extends CI_Controller {
         // $payloadId   = base64_decode($id);
 
         if (!empty($data)) {
-            $dataTemp = $this->TrainingActivityModel->update_data($id, $data);
-            $this->response->send(200, $dataTemp, 'Training Activity updated successfully');
+            $dataTemp = $this->MethodTrainingModel->update_data($id, $data);
+            $this->response->send(200, $dataTemp, 'Method Training updated successfully');
         } else {
-            $this->response->send(400, null, 'Training Activity updated failed.');
+            $this->response->send(400, null, 'Method Training updated failed.');
         }
     }
 
     public function delete_data($id) {
-        $data = $this->TrainingActivityModel->get_detail_data($id);
+        $data = $this->MethodTrainingModel->get_detail_data($id);
 
         if(empty($data)) {
             $this->response->send(ResponseStatus::NOT_FOUND, null, 'Data not found');
         } else {
-            $this->TrainingActivityModel->delete_data($id);
-            $this->response->send(200, $id, 'Training Activity delete successfully');
+            $this->MethodTrainingModel->delete_data($id);
+            $this->response->send(200, $id, 'Method Training delete successfully');
         }
     }
 
     public function list()
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
-        $trainingActivityId = $this->input->get('trainingActivityId') ? $this->input->get('trainingActivityId') : "";
-        $send = $this->crud->reads('lnd_training_activity', ["trainingActivityId" => $post, "trainingActivityId" => $trainingActivityId]);
+        $methodTrainingId = $this->input->get('methodTrainingId') ? $this->input->get('methodTrainingId') : "";
+        $send = $this->crud->reads('lnd_method_training', ["methodTrainingId" => $post, "methodTrainingId" => $methodTrainingId]);
         echo json_encode($send);
     }
 }
