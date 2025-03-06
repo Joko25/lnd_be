@@ -1,4 +1,4 @@
-CREATE TABLE lnd_Curiculum (
+CREATE TABLE lnd_curiculum (
     id CHAR(30) NOT NULL PRIMARY KEY DEFAULT UUID(), -- UUID as a 30-character string
     curiculumId CHAR(30) NOT NULL,  -- UUID reference for curiculum
     `desc` TEXT,                     -- Description
