@@ -27,3 +27,7 @@ ALTER TABLE lnd_competence
     DROP COLUMN isActive,
     CHANGE COLUMN `desc` name TEXT NOT NULL,
     ADD INDEX (competenceId);
+
+
+ALTER TABLE lnd_competence
+ADD COLUMN `index` INTEGER;

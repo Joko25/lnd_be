@@ -46,7 +46,7 @@ class Competence extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, ROW_NUMBER() OVER (ORDER BY id) AS `index`');
+        $this->db->select('a.*');
         $this->db->from('lnd_competence a');
         
         if (!empty($competence_id)) {
@@ -80,6 +80,70 @@ class Competence extends CI_Controller {
         } else {
             $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Competence data successfully');
         } 
+    }
+
+    //PRINT & EXCEL DATA
+    public function print($option = "")
+    {
+        if ($option == "excel") {
+            $format  = date("Ymd");
+            header("Content-type: application/vnd-ms-excel");
+            header("Content-Disposition: attachment; filename=competence_$format.xls");
+        }
+
+        //Config
+        $this->db->select('*');
+        $this->db->from('config');
+        $config = $this->db->get()->row();
+
+        $this->db->select('*');
+        $this->db->from('lnd_competence');
+        $this->db->order_by('name', 'ASC');
+        $records = $this->db->get()->result_array();
+
+        $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+        <center>
+            <div style="float: left; font-size: 12px; text-align: left;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+                            <img src="' . $config->favicon . '" width="30">
+                        </td>
+                        <td style="font-size: 14px; text-align: left; margin:2px;">
+                            <b>' . $config->name . '</b><br>
+                            <small>MASTER DIVISION</small>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="float: right; font-size: 12px; text-align: right;">
+                Print Date ' . date("d M Y H:m:s") . ' <br>
+                Print By ' . $this->session->username . '  
+            </div>
+        </center>
+        <br><br><br>
+        
+        <table id="customers" border="1">
+            <tr>
+                <th width="20">No</th>
+                <th>Competence Id</th>
+                <th>Index</th>
+                <th>Competence Name</th>
+                <th>Remark</th>
+            </tr>';
+        $no = 1;
+        foreach ($records as $data) {
+            $html .= '<tr>
+                    <td>' . $no . '</td>
+                    <td>' . $data['competenceId'] . '</td>
+                    <td>' . $data['index'] . '</td>
+                    <td>' . $data['name'] . '</td>
+                    <td>' . $data['remark'] . '</td>';
+            $no++;
+        }
+
+        $html .= '</table></body></html>';
+        echo $html;
     }
 
     public function get_detail($id) {
@@ -139,5 +203,82 @@ class Competence extends CI_Controller {
         $competenceId = $this->input->get('competenceId') ? $this->input->get('competenceId') : "";
         $send = $this->crud->reads('lnd_competence', ["competenceId" => $post, "competenceId" => $competenceId]);
         echo json_encode($send);
+    }
+    //UPLOAD DATA
+    public function generatedata()
+    {
+        error_reporting(0);
+
+        if ($this->input->post('file_type') == "text") {
+            
+        } elseif ($this->input->post('file_type') == "excel") {
+            require_once 'assets/vendors/excel_reader2.php';
+            $target = basename($_FILES['file_upload']['name']);
+            move_uploaded_file($_FILES['file_upload']['tmp_name'], $target);
+            chmod($_FILES['file_upload']['name'], 0777);
+            $file = $_FILES['file_upload']['name'];
+            $data = new Spreadsheet_Excel_Reader($file, false);
+            $total_row = $data->rowcount($sheet_index = 0);
+
+            for ($i = 2; $i <= $total_row; $i++) {
+                $datas[] = array(
+                    'name' => trim($data->val($i, 1)),
+                    'index' => trim($data->val($i, 2)),
+                    'remark' => trim($data->val($i, 3))
+                );
+            }
+
+            $datas['total'] = count($datas);
+            echo json_encode($datas);
+
+            unlink($_FILES['file_upload']['name']);
+        } else {
+            echo json_encode("Format File Error");
+        }
+    }
+
+    public function upload()
+    {
+        if ($this->input->post()) {
+            $data = $this->input->post('data');
+            $idGenerateDate = $this->crud->autoidPrifix('lnd_competence', 'competenceId', 'C'); 
+            $data['competenceId'] = $idGenerateDate;
+            // Validasi dan proses data
+            if (!empty($data)) {
+                $dataTemp = $this->CompetenceModel->insert_data($data);
+                echo json_encode(array("title" => "Uploaded", "message" => $data['name'] . " Uploaded", "theme" => "success"));
+                // $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Competence created successfully');
+            } else {
+                echo json_encode(array("title" => "Warning", "message" => $data['name'] . " Competence upload failed.", "theme" => "error"));
+                // $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Competence creation failed.');
+            }
+        }
+    }
+
+    public function uploadFailed()
+    {
+        if ($this->input->post()) {
+            $message = $this->input->post('message');
+            $textFailed = fopen('failed/competence.txt', 'a');
+            fwrite($textFailed, $message . "\n");
+            fclose($textFailed);
+        }
+    }
+    public function uploadclearFailed()
+    {
+        @unlink('failed/competence.txt');
+    }
+    public function uploadDownloadFailed()
+    {
+        $file = "failed/competence.txt";
+
+        header('Content-Description: File Failed');
+        header('Content-Disposition: attachment; filename=' . basename($file));
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . @filesize($file));
+        header("Content-Type: text/plain");
+        @readfile($file);
     }
 }
