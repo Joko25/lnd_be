@@ -1,0 +1,45 @@
+<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+        <center>
+            <div style="float: left; font-size: 12px; text-align: left;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+                            <img src="http://43.254.126.202/hris-bri/assets/image/config/favicon/1683271592.png" width="30">
+                        </td>
+                        <td style="font-size: 14px; text-align: left; margin:2px;">
+                            <b>PT BANSHU RUBBER INDONESIA</b><br>
+                            <small>MASTER DIVISION</small>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="float: right; font-size: 12px; text-align: right;">
+                Print Date 06 Mar 2025 09:03:51 <br>
+                Print By admin  
+            </div>
+        </center>
+        <br><br><br>
+        
+        <table id="customers" border="1">
+            <tr>
+                <th width="20">No</th>
+                <th>Competence Id</th>
+                <th>Index</th>
+                <th>Competence Name</th>
+                <th>Remark</th>
+            </tr><tr>
+                    <td>1</td>
+                    <td>C-2025020001</td>
+                    <td>0</td>
+                    <td>Basic 1</td>
+                    <td>-</td><tr>
+                    <td>2</td>
+                    <td>C-2025020002</td>
+                    <td>1</td>
+                    <td>Basic 2</td>
+                    <td>-</td><tr>
+                    <td>3</td>
+                    <td>C-2025020003</td>
+                    <td>2</td>
+                    <td>Basic 3</td>
+                    <td>0</td></table></body></html>
