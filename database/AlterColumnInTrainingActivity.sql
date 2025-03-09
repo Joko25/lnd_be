@@ -1,4 +1,4 @@
-SET @table_name = 'your_table_name';
+SET @table_name = 'lnd_training_activity';
 SET @column_to_delete = 'activityName';
 SET @column_to_add = 'competenceId';
 SET @column_type = 'CHAR(36)'; -- Change this to your desired column type
