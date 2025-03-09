@@ -46,8 +46,9 @@ class Training_activity extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, ROW_NUMBER() OVER (ORDER BY id) AS `index`');
+        $this->db->select('a.*, b.desc as competenceName, ROW_NUMBER() OVER (ORDER BY id) AS `indexing`');
         $this->db->from('lnd_training_activity a');
+        $this->db->join('lnd_competence b', 'a.competenceId = b.id');
         
         if (!empty($trainingActivityId)) {
             $this->db->like('a.trainingActivityId', $trainingActivityId);
@@ -100,14 +101,6 @@ class Training_activity extends CI_Controller {
         $idGenerateDate = $this->crud->autoidPrifix('lnd_training_activity', 'trainingActivityId', 'T'); 
         $data['trainingActivityId'] = $idGenerateDate;
 
-        // Pembuatan temporary Indexing
-        $this->db->select_max('index');
-        $query = $this->db->get('lnd_training_activity');
-        $last_number = $query->row()->index ?? 0; // Jika kosong, mulai dari 1
-
-        // Tambahkan nilai record_number baru
-        $data['index'] = $last_number + 1;
-
         // Validasi dan proses data
         if (!empty($data)) {
             $dataTemp = $this->TrainingActivityModel->insert_data($data);
@@ -148,5 +141,154 @@ class Training_activity extends CI_Controller {
         $trainingActivityId = $this->input->get('trainingActivityId') ? $this->input->get('trainingActivityId') : "";
         $send = $this->crud->reads('lnd_training_activity', ["trainingActivityId" => $post, "trainingActivityId" => $trainingActivityId]);
         echo json_encode($send);
+    }
+
+    // GET DATA COMPTENCE
+    public function readsCompetence() 
+    {
+        $post = isset($_POST['q']) ? $_POST['q'] : "";
+        $send = $this->crud->reads('lnd_competence', ["competenceId" => $post]);
+        echo json_encode($send);
+    }
+
+    public function upload()
+    {
+        error_reporting(0);
+        require_once 'assets/vendors/excel_reader2.php';
+        $target = basename($_FILES['file_upload']['name']);
+        move_uploaded_file($_FILES['file_upload']['tmp_name'], $target);
+        chmod($_FILES['file_upload']['name'], 0777);
+        $file = $_FILES['file_upload']['name'];
+        $data = new Spreadsheet_Excel_Reader($file, false);
+        $total_row = $data->rowcount($sheet_index = 0);
+
+        for ($i = 3; $i <= $total_row; $i++) {
+            $datas[] = array(
+                'competenceId' => $data->val($i, 2),
+                'trainingActivity' => $data->val($i, 3),
+                'index' => $data->val($i, 4),
+                'remarks' => $data->val($i, 5)
+            );
+        }
+
+        $datas['total'] = count($datas);
+        echo json_encode($datas);
+        unlink($_FILES['file_upload']['name']);
+    }
+
+    public function uploadclearFailed()
+    {
+        @unlink('failed/training_activity.txt');
+    }
+
+    public function uploadcreateFailed()
+    {
+        if ($this->input->post()) {
+            $message = $this->input->post('message');
+            $textFailed = fopen('failed/training_activity.txt', 'a');
+            fwrite($textFailed, $message . "\n");
+            fclose($textFailed);
+        }
+    }
+
+    public function uploadCreate()
+    {
+        if ($this->input->post()) {
+            $data = $this->input->post('data');
+            $lnd_training_activity = $this->crud->read('lnd_training_activity', ["competenceId" => $data['competenceId'], "trainingActivity" => $data['trainingActivity'], "index" => $data['index'], "remarks" => $data['remarks']]);
+            $idGenerateDate = $this->crud->autoidPrifix('lnd_training_activity', 'trainingActivityId', 'T'); 
+            $data['trainingActivityId'] = $idGenerateDate;
+
+            // Validasi dan proses data
+            if (!empty($data)) {
+                $dataTemp = $this->TrainingActivityModel->insert_data($data);
+                echo json_encode(array("title" => "Good Job", "message" => "Data Saved Successfully", "theme" => "success"));
+                // $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Training Activity created successfully');
+            } else {
+                echo json_encode(array("title" => "Available", "message" => "Upload error", "theme" => "error"));
+                // $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Training Activity creation failed.');
+            }
+        }
+    }
+
+    public function uploadDownloadFailed()
+    {
+        $file = "failed/training_activity.txt";
+
+        header('Content-Description: File Failed');
+        header('Content-Disposition: attachment; filename=' . basename($file));
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . @filesize($file));
+        header("Content-Type: text/plain");
+        @readfile($file);
+    }
+
+    //PRINT & EXCEL DATA
+    public function print($option = "")
+    {
+        if ($option == "excel") {
+            $format  = date("Ymd");
+            header("Content-type: application/vnd-ms-excel");
+            header("Content-Disposition: attachment; filename=training_activity_$format.xls");
+        }
+
+        //Config
+        $this->db->select('*');
+        $this->db->from('config');
+        $config = $this->db->get()->row();
+
+        $this->db->select('a.*, b.desc as competenceName');
+        $this->db->from('lnd_training_activity a');
+        $this->db->join('lnd_competence b', 'a.competenceId = b.id');
+        $this->db->order_by('createdTime', 'DESC');
+        $records = $this->db->get()->result_array();
+
+        $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+        <center>
+            <div style="float: left; font-size: 12px; text-align: left;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+                            <img src="' . $config->favicon . '" width="30">
+                        </td>
+                        <td style="font-size: 14px; text-align: left; margin:2px;">
+                            <b>' . $config->name . '</b><br>
+                            <small>TER CATEGORIES</small>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="float: right; font-size: 12px; text-align: right;">
+                Print Date ' . date("d M Y H:m:s") . ' <br>
+                Print By ' . $this->session->username . '  
+            </div>
+        </center>
+        <br><br><br>
+        
+        <table id="customers" border="1">
+            <tr>
+                <th width="20">No</th>
+                <th>Training Activity ID</th>
+                <th>Competence Name</th>
+                <th>Training Activity</th>
+                <th>Index</th>
+                <th>Remarks</th>
+            </tr>';
+        $no = 1;
+        foreach ($records as $data) {
+            $html .= '<tr>
+                    <td>' . $no . '</td>
+                    <td>' . $data['trainingActivityId'] . '</td>
+                    <td>' . $data['competenceName'] . '</td>
+                    <td>' . $data['trainingActivity'] . '</td>
+                    <td>' . $data['index'] . '</td>
+                    <td>' . $data['remarks'] . '</td>';
+            $no++;
+        }
+
+        $html .= '</table></body></html>';
+        echo $html;
     }
 }
