@@ -1,8 +1,7 @@
 CREATE TABLE lnd_master_source (
     id CHAR(36) NOT NULL PRIMARY KEY DEFAULT (UUID()), -- UUID sebagai Primary Key
     masterSourceId VARCHAR(12) NOT NULL UNIQUE, -- Format unik seperti S-2502001
-    competenceName VARCHAR(255) NOT NULL, -- Nama kompetensi
-    trainingActivityName VARCHAR(255) NOT NULL, -- Nama Training
+    competenceId CHAR(36) NOT NULL, -- Referensi ke lnd_competence
     trainingActivityId CHAR(36) NOT NULL, -- Referensi ke lnd_training_activity
     uploadDataSource VARCHAR(255), -- Upload Data Source
     sourceName VARCHAR(255), -- Source Name
@@ -17,7 +16,13 @@ CREATE TABLE lnd_master_source (
     CONSTRAINT fk_trainingActivity FOREIGN KEY (trainingActivityId) 
     REFERENCES lnd_training_activity(id) ON DELETE CASCADE,
 
+    -- Foreign Key ke tabel lnd_training_activity
+    CONSTRAINT fk_competence FOREIGN KEY (competenceId) 
+    REFERENCES lnd_competence(id) ON DELETE CASCADE,
+    
     -- Index untuk optimasi query
-    INDEX idx_basicCompetenceId (masterSourceId),
-    INDEX idx_trainingActivityId (trainingActivityId)
+    INDEX idx_masterSourceId (masterSourceId),
+    INDEX idx_trainingActivityId (trainingActivityId),
+    INDEX idx_competenceId (competenceId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
