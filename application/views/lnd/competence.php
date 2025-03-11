@@ -232,7 +232,7 @@
                 {field: 'ck', rowspan:'2', checkbox: true},
                 {field: 'competenceId', rowspan:'2', width:150, title:'Competence ID', halign: 'center'},
                 {field: 'index', rowspan:'2', width:80, title:'Index', halign: 'center'},
-                {field: 'desc', rowspan:'2', width:200, title:'Competence Name', halign: 'center'},
+                {field: 'name', rowspan:'2', width:200, title:'Competence Name', halign: 'center'},
                 {field: 'remark', rowspan:'2', width:100, title:'Remarks', halign: 'center'},
                 {field: '', colspan:2, title:'Created', width:80, align: 'center'},
                 {field: '', colspan:2, title:'Updated', width:80, align: 'center'},

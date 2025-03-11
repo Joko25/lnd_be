@@ -73,7 +73,7 @@ class Basic_competency extends CI_Controller {
     }
 
     public function get_data() {
-        $data = $this->AssesmentTechniqueModel->get_all_data();
+        $data = $this->BasicCompetencyModel->get_all_data();
 
         if(empty($data)) {
             $this->response->send(ResponseStatus::NOT_FOUND, [], 'Get Basic Competence data failed');
@@ -83,7 +83,7 @@ class Basic_competency extends CI_Controller {
     }
 
     public function get_detail($id) {
-        $data = $this->AssesmentTechniqueModel->get_detail_data($id);
+        $data = $this->BasicCompetencyModel->get_detail_data($id);
 
         if(empty($data)) {
             $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get Basic Competence data failed');
@@ -101,7 +101,7 @@ class Basic_competency extends CI_Controller {
         $data['basicCompetenceId'] = $idGenerateDate;
         // Validasi dan proses data
         if (!empty($data)) {
-            $dataTemp = $this->AssesmentTechniqueModel->insert_data($data);
+            $dataTemp = $this->BasicCompetencyModel->insert_data($data);
             $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Basic Competence created successfully');
         } else {
             $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Basic Competence creation failed.');
@@ -115,7 +115,7 @@ class Basic_competency extends CI_Controller {
         // $payloadId   = base64_decode($id);
 
         if (!empty($data)) {
-            $dataTemp = $this->AssesmentTechniqueModel->update_data($id, $data);
+            $dataTemp = $this->BasicCompetencyModel->update_data($id, $data);
             $this->response->send(200, $dataTemp, 'Basic Competence updated successfully');
         } else {
             $this->response->send(400, null, 'Basic Competence updated failed.');
@@ -123,12 +123,12 @@ class Basic_competency extends CI_Controller {
     }
 
     public function delete_data($id) {
-        $data = $this->AssesmentTechniqueModel->get_detail_data($id);
+        $data = $this->BasicCompetencyModel->get_detail_data($id);
 
         if(empty($data)) {
             $this->response->send(ResponseStatus::NOT_FOUND, null, 'Data not found');
         } else {
-            $this->AssesmentTechniqueModel->delete_data($id);
+            $this->BasicCompetencyModel->delete_data($id);
             $this->response->send(200, $id, 'Basic Competence delete successfully');
         }
     }

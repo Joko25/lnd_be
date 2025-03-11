@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Master_Source extends CI_Controller {
+class Master_source extends CI_Controller {
     
     public function __construct() {
         parent::__construct();
@@ -46,7 +46,7 @@ class Master_Source extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, b.trainingActivity as trainingActivityName, c.desc as competenceName, ROW_NUMBER() OVER (ORDER BY id) AS `index`');
+        $this->db->select('a.*, b.trainingActivity as trainingActivityName, c.name as competenceName, ROW_NUMBER() OVER (ORDER BY id) AS `index`');
         $this->db->from('lnd_master_source a');
         $this->db->join('lnd_training_activity b', 'a.trainingActivityId = b.id');
         $this->db->join('lnd_competence c', 'a.competenceId = c.id');
