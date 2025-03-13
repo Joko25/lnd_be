@@ -1,6 +1,28 @@
 <table id="dg" class="easyui-datagrid" style="width:100%;">
 </table>
 
+<!-- TOOLBAR DATAGRID -->
+<div id="toolbar" style="height: 200px;">
+    <div style="width: 100%; padding: 10px;">
+        <fieldset style="width: 50%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
+            <legend><b>Form Filter Data</b></legend>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Competence Name</span>
+                <input style="width:60%;" id="competence_id" class="easyui-combogrid">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Training Activities</span>
+                <input style="width:60%;" id="training_activity_id" class="easyui-combogrid">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;"></span>
+                <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
+            </div>
+        </fieldset>
+        <?= $button ?>
+    </div>
+</div>
+
 <!-- DIALOG SAVE AND UPDATE -->
 <div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 400px; padding:10px; top: 20px;">
     <form id="frm_insert" method="post" novalidate>
@@ -11,12 +33,20 @@
                 <input style="width:60%;" id="competenceName" name="competenceId" required="" class="easyui-combogrid">
             </div>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Training Activity</span>
-                <input style="width:60%;" name="trainingActivity" required="" class="easyui-textbox">
+                <span style="width:35%; display:inline-block;">Index</span>
+                <input style="width:60%;" name="index" class="easyui-textbox" required="">
             </div>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Index</span>
-                <input style="width:60%;" name="index" class="easyui-textbox">
+                <span style="width:35%; display:inline-block;">Induction</span>
+                <select style="width:60%;" name="induction" required="" class="easyui-combobox" panelHeight="auto">
+                    <option value="L&D Program: Upgrade Competence">L&D Program: Upgrade Competence</option>
+                    <option value="L&D Program: Refresh Training">L&D Program: Refresh Training</option>
+                    <option value="L&D Program: Training Activities">L&D Program: Training Activities</option>
+                </select>
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Training Activity</span>
+                <input style="width:60%;" name="trainingActivity" required="" class="easyui-textbox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Remarks</span>
@@ -50,14 +80,61 @@
 <!-- PDF -->
 <iframe id="printout" src="<?= base_url('lnd/training_activity/print') ?>" style="width: 100%;" hidden></iframe>
 
-<!-- TOOLBAR DATAGRID -->
-<div id="toolbar" style="height: 35px;">
-    <?= $button ?>
-</div>
-
 <script>
     window.onload = function() {
+        $('#competence_id').combogrid({
+            url: '<?= base_url('lnd/training_activity/readsCompetence') ?>',
+            panelWidth: 450,
+            idField: 'id',
+            textField: 'desc',
+            mode: 'remote',
+            fitColumns: true,
+            prompt: 'Choose Competence',
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combogrid('clear').combogrid('textbox').focus();
+                }
+            }],
+            columns: [
+                [{
+                    field: 'competenceId',
+                    title: 'Competence ID',
+                    width: 120
+                }, {
+                    field: 'desc',
+                    title: 'Competence Name',
+                    width: 200
+                }]
+            ],
+        });
 
+        $('#training_activity_id').combogrid({
+            url: '<?= base_url('lnd/training_activity/list') ?>',
+            panelWidth: 450,
+            idField: 'id',
+            textField: 'trainingActivity',
+            mode: 'remote',
+            fitColumns: true,
+            prompt: 'Choose Training Activity',
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combogrid('clear').combogrid('textbox').focus();
+                }
+            }],
+            columns: [
+                [{
+                    field: 'trainingActivityId',
+                    title: 'Training Activity ID',
+                    width: 120
+                }, {
+                    field: 'trainingActivity',
+                    title: 'Training Activity Name',
+                    width: 200
+                }]
+            ],
+        });
     };
 
     function add() {
@@ -144,9 +221,10 @@
             columns: [[
                 {field: 'ck', rowspan:'2', checkbox: true},
                 {field: 'trainingActivityId', rowspan:'2', width:150, title:'Training Activity ID', halign: 'center'},
-                {field: 'competenceName', rowspan:'2', width:150, title:'Competence Name', halign: 'center'},
+                {field: 'competenceName', rowspan:'2', width:150, title:'Competence Standard', halign: 'center'},
                 {field: 'index', rowspan:'2', width:70, title:'Index', halign: 'center'},
-                {field: 'trainingActivity', rowspan:'2', width:150, title:'Training Activity', halign: 'center'},
+                {field: 'induction', rowspan:'2', width:280, title:'Induction', halign: 'center'},
+                {field: 'trainingActivity', rowspan:'2', width:150, title:'Training Activities', halign: 'center'},
                 {field: 'remarks', rowspan:'2', width:100, title:'Remarks', halign: 'center'},
                 {field: '', colspan:2, title:'Created', width:80, align: 'center'},
                 {field: '', colspan:2, title:'Updated', width:80, align: 'center'},
@@ -328,4 +406,18 @@
             }
         }]
     });
+
+    function filter() {
+        var curiculum_id = $("#competence_id").combogrid('getValue');
+        var training_activity_id = $("#training_activity_id").combogrid('getValue');
+        // debug_to_console(curiculum_id);
+        var params = "?competenceId=" + curiculum_id + "&id=" + training_activity_id;
+
+        $('#dg').datagrid({
+            url: '<?= base_url('lnd/training_activity/datatables') ?>' + params
+        });
+
+        $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
+        $("#printout").attr('src', '<?= base_url('employee/departements/print') ?>' + params);
+    }
 </script>

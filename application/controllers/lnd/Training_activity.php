@@ -35,7 +35,8 @@ class Training_activity extends CI_Controller {
     public function datatables()
     {
         // Ambil parameter dari request
-        $trainingActivityId = $this->input->get('trainingActivityId', true); // Sanitize input GET
+        $competenceId = $this->input->get('competenceId', true); // Sanitize input GET
+        $trainingActivityId = $this->input->get('id', true); // Sanitize input GET
         $page = $this->input->post('page');
         $rows = $this->input->post('rows');
         
@@ -51,7 +52,10 @@ class Training_activity extends CI_Controller {
         $this->db->join('lnd_competence b', 'a.competenceId = b.id');
         
         if (!empty($trainingActivityId)) {
-            $this->db->like('a.trainingActivityId', $trainingActivityId);
+            $this->db->like('a.id', $trainingActivityId);
+        }
+        if (!empty($competenceId)) {
+            $this->db->like('a.competenceId', $competenceId);
         }
         $this->db->stop_cache(); // Stop caching the query
 
@@ -140,7 +144,8 @@ class Training_activity extends CI_Controller {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
         $trainingActivityId = $this->input->get('trainingActivityId') ? $this->input->get('trainingActivityId') : "";
         $send = $this->crud->reads('lnd_training_activity', ["trainingActivityId" => $post, "trainingActivityId" => $trainingActivityId]);
-        echo json_encode($send);
+        $queryTrainingActivity = $this->crud->query("SELECT a.*, b.desc as competenceName FROM lnd_training_activity a JOIN lnd_competence b ON a.competenceId = b.id ");
+        echo json_encode($queryTrainingActivity);
     }
 
     // GET DATA COMPTENCE
