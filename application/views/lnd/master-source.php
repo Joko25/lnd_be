@@ -204,7 +204,7 @@
                     title: 'Competence ID',
                     width: 120
                 }, {
-                    field: 'desc',
+                    field: 'name',
                     title: 'Competence Name',
                     width: 200
                 }]

@@ -146,6 +146,8 @@
 
     function update() {
         var row = $('#dg').datagrid('getSelected');
+        console.log("#row", row);
+        
         if (row) {
             $('#dlg_insert').dialog('open');
             $('#frm_insert').form('load', row);
@@ -273,7 +275,7 @@
                 title: 'Competence ID',
                 width: 120
             }, {
-                field: 'desc',
+                field: 'name',
                 title: 'Competence Name',
                 width: 200
             }]

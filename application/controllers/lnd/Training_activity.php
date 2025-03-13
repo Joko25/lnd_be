@@ -47,7 +47,7 @@ class Training_activity extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, b.desc as competenceName, ROW_NUMBER() OVER (ORDER BY id) AS `indexing`');
+        $this->db->select('a.*, b.name as competenceName, ROW_NUMBER() OVER (ORDER BY id) AS `indexing`');
         $this->db->from('lnd_training_activity a');
         $this->db->join('lnd_competence b', 'a.competenceId = b.id');
         
