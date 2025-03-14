@@ -86,7 +86,7 @@
             url: '<?= base_url('lnd/training_activity/readsCompetence') ?>',
             panelWidth: 450,
             idField: 'id',
-            textField: 'desc',
+            textField: 'name',
             mode: 'remote',
             fitColumns: true,
             prompt: 'Choose Competence',
@@ -102,7 +102,7 @@
                     title: 'Competence ID',
                     width: 120
                 }, {
-                    field: 'desc',
+                    field: 'name',
                     title: 'Competence Name',
                     width: 200
                 }]
@@ -240,7 +240,9 @@
             pagination: true,
             rownumbers: true,
             fit: true,
-            remoteFilter: true,
+            // remoteFilter: true,
+            // sortName: 'index',
+            // sortOrder: 'asc'
             singleSelect:true,
             pageList: [20, 50, 100, 500, 1000],
             pageSize: 20,
@@ -265,7 +267,7 @@
         url: '<?= base_url('lnd/training_activity/readsCompetence') ?>',
         panelWidth: 450,
         idField: 'id',
-        textField: 'desc',
+        textField: 'name',
         mode: 'remote',
         fitColumns: true,
         prompt: 'Choose Competence',
@@ -283,7 +285,7 @@
     });
 
     function download_excel() {
-        window.location.assign('<?= base_url('template/tmp_training_activity2.xls') ?>');
+        window.location.assign('<?= base_url('template/tmp_training_activity3.xls') ?>');
     }
 
     //UPLOAD DATA
