@@ -35,7 +35,8 @@ class Training_activity extends CI_Controller {
     public function datatables()
     {
         // Ambil parameter dari request
-        $trainingActivityId = $this->input->get('trainingActivityId', true); // Sanitize input GET
+        $competenceId = $this->input->get('competenceId', true); // Sanitize input GET
+        $trainingActivityId = $this->input->get('id', true); // Sanitize input GET
         $page = $this->input->post('page');
         $rows = $this->input->post('rows');
         
@@ -46,19 +47,23 @@ class Training_activity extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, b.name as competenceName, ROW_NUMBER() OVER (ORDER BY id) AS `indexing`');
+        $this->db->select('a.*, b.name as competenceName');
         $this->db->from('lnd_training_activity a');
         $this->db->join('lnd_competence b', 'a.competenceId = b.id');
         
         if (!empty($trainingActivityId)) {
-            $this->db->like('a.trainingActivityId', $trainingActivityId);
+            $this->db->like('a.id', $trainingActivityId);
+        }
+        if (!empty($competenceId)) {
+            $this->db->like('a.competenceId', $competenceId);
         }
         $this->db->stop_cache(); // Stop caching the query
-
+        
         // Hitung total data (tanpa limit dan offset)
         $totalRows = $this->db->count_all_results();
-
+        
         // Ambil data dengan limit dan offset
+        $this->db->order_by('a.index', 'ASC');
         $this->db->limit($rows, $offset);
         $records = $this->db->get()->result_array();
         $this->db->flush_cache(); // Hapus cache query
@@ -140,7 +145,8 @@ class Training_activity extends CI_Controller {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
         $trainingActivityId = $this->input->get('trainingActivityId') ? $this->input->get('trainingActivityId') : "";
         $send = $this->crud->reads('lnd_training_activity', ["trainingActivityId" => $post, "trainingActivityId" => $trainingActivityId]);
-        echo json_encode($send);
+        $queryTrainingActivity = $this->crud->query("SELECT a.*, b.name as competenceName FROM lnd_training_activity a JOIN lnd_competence b ON a.competenceId = b.id ");
+        echo json_encode($queryTrainingActivity);
     }
 
     // GET DATA COMPTENCE
@@ -167,7 +173,8 @@ class Training_activity extends CI_Controller {
                 'competenceId' => $data->val($i, 2),
                 'trainingActivity' => $data->val($i, 3),
                 'index' => $data->val($i, 4),
-                'remarks' => $data->val($i, 5)
+                'remarks' => $data->val($i, 5),
+                'induction' => $data->val($i, 6)
             );
         }
 
@@ -195,7 +202,13 @@ class Training_activity extends CI_Controller {
     {
         if ($this->input->post()) {
             $data = $this->input->post('data');
-            $lnd_training_activity = $this->crud->read('lnd_training_activity', ["competenceId" => $data['competenceId'], "trainingActivity" => $data['trainingActivity'], "index" => $data['index'], "remarks" => $data['remarks']]);
+            $tempCompetenceId = $data["competenceId"];
+
+            $queryCompetence = $this->db->query("SELECT a.id FROM lnd_competence AS a WHERE competenceId = '$tempCompetenceId' ");
+            $resCompetence = $queryCompetence->row_array();
+            $data['competenceId'] = $resCompetence ? $resCompetence['id'] : null;
+
+            $lnd_training_activity = $this->crud->read('lnd_training_activity', ["competenceId" => $data['competenceId'], "trainingActivity" => $data['trainingActivity'], "index" => $data['index'], "remarks" => $data['remarks'], "induction" => $data['induction']]);
             $idGenerateDate = $this->crud->autoidPrifix('lnd_training_activity', 'trainingActivityId', 'T'); 
             $data['trainingActivityId'] = $idGenerateDate;
 
@@ -239,7 +252,7 @@ class Training_activity extends CI_Controller {
         $this->db->from('config');
         $config = $this->db->get()->row();
 
-        $this->db->select('a.*, b.desc as competenceName');
+        $this->db->select('a.*, b.name as competenceName');
         $this->db->from('lnd_training_activity a');
         $this->db->join('lnd_competence b', 'a.competenceId = b.id');
         $this->db->order_by('createdTime', 'DESC');
