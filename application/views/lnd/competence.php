@@ -25,12 +25,12 @@
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Form Data</b></legend>
             <div class="fitem">
-                <span style="width:35%; display:inline-block;">Competence Name</span>
-                <input style="width:60%;" name="name" required="" class="easyui-textbox">
-            </div>
-            <div class="fitem">
                 <span style="width:35%; display:inline-block;">Index</span>
                 <input style="width:60%;" name="index" required="" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Competence Name</span>
+                <input style="width:60%;" name="name" required="" class="easyui-textbox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Remarks</span>
@@ -245,11 +245,12 @@
             toolbar: '#toolbar',
             pagination: true,
             rownumbers: true,
+            remoteFilter: true,
             fit: true,
             singleSelect: true,
             pageList: [20, 50, 100, 500, 1000],
             pageSize: 20,
-        });
+        }).datagrid('enableFilter');
     }
 
     function initDialogs() {
