@@ -131,16 +131,25 @@ class Crud extends CI_Model
     function create($table, $values)
     {
         if ($this->session->username != "") {
-            $id = $this->autoid($table);
-            $data = array_merge($values, [
-                "id" => $id,
-                "created_by" => $this->session->username,
-                "created_date" => date('Y-m-d H:i:s')
-            ]);
+            if(substr($table, 0, 3) === 'lnd') {
+                $data = array_merge($values, [
+                    "createdBy" => $this->session->username,
+                    "createdTime" => date('Y-m-d H:i:s')
+                ]);    
+            } else {
+                $id = $this->autoid($table);
+                $data = array_merge($values, [
+                    "id" => $id,
+                    "created_by" => $this->session->username,
+                    "created_date" => date('Y-m-d H:i:s')
+                ]);
+            }
 
             if ($this->db->insert($table, $data)) {
                 $this->logs("Create", json_encode($data), $table);
-                $this->approvals($table, $id);
+                if(substr($table, 0, 3) !== 'lnd') {
+                    $this->approvals($table, $id);
+                }
                 return json_encode(array("title" => "Good Job", "message" => "Data Saved Successfully", "theme" => "success"));
             } else {
                 return log_message('error', 'There is an error in your system or data');
