@@ -44,10 +44,10 @@ class Curiculum extends CI_Controller {
         $offset = ($page - 1) * $rows;
 
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, b.name as departement_name, c.name as sub_department_name');
-        $this->db->from('lnd_curiculum a');
-        $this->db->join('departements b', 'a.departementId = b.id', 'left');
-        $this->db->join('departement_subs c', 'a.subDepartementId = c.id', 'left');
+        $this->db->select('a.*, b.name as compentece_standard, c.trainingActivity as training_activity');
+        $this->db->from('lnd_curriculum a');
+        $this->db->join('lnd_competence b', 'a.competenceId = b.competenceId', 'left');
+        $this->db->join('lnd_training_activity c', 'a.trainingActivityId = c.trainingActivityId', 'left');
         
         if (!empty($curiculum_id)) {
             $this->db->like('a.curiculumId', $curiculum_id);
@@ -93,17 +93,30 @@ class Curiculum extends CI_Controller {
 
     public function create_data() {
         $rawInput = file_get_contents("php://input");
-        parse_str($rawInput, $data);
-        $idGenerateDate = $this->crud->autoidCreatedTime('lnd_curiculum');
+        $data = json_decode($rawInput, true);
         
+        if (!is_array($data)) {
+            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Invalid data format');
+            return;
+        }
+
+        $idGenerateDate = $this->crud->autoidPrifix('lnd_curriculum', 'curiculumId', 'I');
         $data['curiculumId'] = $idGenerateDate;
-        // Validate and process data
-        if (!empty($data)) {
-            $dataTemp = $this->CuriculumModel->insert_data($data);
-            
+
+        // Validasi field yang diperlukan
+        $requiredFields = ['competenceId', 'trainingActivityId', 'indicators'];
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field]) || empty($data[$field])) {
+                $this->response->send(ResponseStatus::BAD_REQUEST, null, $field . ' is required');
+                return;
+            }
+        }
+
+        $dataTemp = $this->CuriculumModel->insert_data($data);
+        if ($dataTemp) {
             $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Curiculum created successfully');
         } else {
-            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Curiculum created failed.');
+            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Failed to create curriculum');
         }
     }
 
@@ -134,7 +147,7 @@ class Curiculum extends CI_Controller {
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
         $curiculumId = $this->input->get('curiculumId') ? $this->input->get('curiculumId') : "";
-        $send = $this->crud->reads('lnd_curiculum', ["curiculumId" => $post, "curiculumId" => $curiculumId]);
+        $send = $this->crud->reads('lnd_curriculum', ["curiculumId" => $post, "curiculumId" => $curiculumId]);
         echo json_encode($send);
     }
 }
