@@ -153,7 +153,7 @@ class Training_activity extends CI_Controller {
     public function readsCompetence() 
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
-        $send = $this->crud->reads('lnd_competence', ["competenceId" => $post]);
+        $send = $this->crud->reads('lnd_competence', [], [], "", "index", "asc");
         echo json_encode($send);
     }
 
@@ -204,7 +204,7 @@ class Training_activity extends CI_Controller {
             $data = $this->input->post('data');
             $tempCompetenceId = $data["competenceId"];
 
-            $queryCompetence = $this->db->query("SELECT a.id FROM lnd_competence AS a WHERE competenceId = '$tempCompetenceId' ");
+            $queryCompetence = $this->db->query("SELECT a.id FROM lnd_competence AS a WHERE a.name = '$tempCompetenceId' ");
             $resCompetence = $queryCompetence->row_array();
             $data['competenceId'] = $resCompetence ? $resCompetence['id'] : null;
 
@@ -212,15 +212,21 @@ class Training_activity extends CI_Controller {
             $idGenerateDate = $this->crud->autoidPrifix('lnd_training_activity', 'trainingActivityId', 'T'); 
             $data['trainingActivityId'] = $idGenerateDate;
 
-            // Validasi dan proses data
-            if (!empty($data)) {
-                $dataTemp = $this->TrainingActivityModel->insert_data($data);
-                echo json_encode(array("title" => "Good Job", "message" => "Data Saved Successfully", "theme" => "success"));
-                // $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Training Activity created successfully');
+            if (empty($resCompetence)) {
+                echo json_encode(array("title" => "Not Found", "message" => "Competence  " . $data['competenceId'] . " Not Found", "theme" => "error"));
             } else {
-                echo json_encode(array("title" => "Available", "message" => "Upload error", "theme" => "error"));
-                // $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Training Activity creation failed.');
+                $send = $this->crud->create('lnd_training_activity', $data);
+                echo $send;
             }
+            // Validasi dan proses data
+            // if (!empty($data)) {
+            //     $dataTemp = $this->TrainingActivityModel->insert_data($data);
+            //     echo json_encode(array("title" => "Good Job", "message" => "Data Saved Successfully", "theme" => "success"));
+            //     // $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Training Activity created successfully');
+            // } else {
+            //     echo json_encode(array("title" => "Available", "message" => "Upload error", "theme" => "error"));
+            //     // $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Training Activity creation failed.');
+            // }
         }
     }
 
@@ -255,7 +261,7 @@ class Training_activity extends CI_Controller {
         $this->db->select('a.*, b.name as competenceName');
         $this->db->from('lnd_training_activity a');
         $this->db->join('lnd_competence b', 'a.competenceId = b.id');
-        $this->db->order_by('createdTime', 'DESC');
+        $this->db->order_by('index', 'ASC');
         $records = $this->db->get()->result_array();
 
         $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
