@@ -160,6 +160,12 @@ class Competence extends CI_Controller {
         // Ambil request body secara manual
         $rawInput = file_get_contents("php://input");
         parse_str($rawInput, $data);
+        $competenceCheck = $this->crud->read('lnd_competence', [], ["LOWER(name)" => strtolower($data["name"])]);
+        if(!empty($competenceCheck)) {
+            // die(json_encode(array("title" => "Duplicate", "message" => "Your Competence Name has been registered", "theme" => "error")));
+            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Your Competence Name has been registered.');
+            return;
+        }
         // Generate competenceId
         $idGenerateDate = $this->crud->autoidPrifix('lnd_competence', 'competenceId', 'C'); 
         $data['competenceId'] = $idGenerateDate;

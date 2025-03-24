@@ -212,6 +212,11 @@
                 toastr.success(data.message, 'Success');
                 $('#dg').datagrid('reload');
                 $('#dlg_insert').dialog('close');
+            } 
+            if(data.code == 400) {
+                toastr.info(data.message, 'Info');
+                $('#dg').datagrid('reload');
+                // $('#dlg_insert').dialog('close');
             }
         } catch(error) {
             toastr.error('Something Error', 'Error');
