@@ -6,7 +6,9 @@ CREATE TABLE lnd_request_training_trainee (
     position TEXT NOT NULL,
     departement TEXT NOT NULL,
     departement_subs TEXT NOT NULL,
-    date_sign DATETIME NOT NULL
+    date_sign DATETIME NOT NULL,
+    createdBy CHAR(30),
+    createdTime DATETIME DEFAULT CURRENT_TIMESTAMP
 )
 
 CREATE TABLE lnd_request_training_approvals_history (
@@ -22,7 +24,6 @@ CREATE TABLE lnd_request_training_approvals_history (
 CREATE TABLE lnd_request_training (
     id CHAR(30) NOT NULL PRIMARY KEY DEFAULT (UUID()),
     requestTrainingId CHAR(30) NOT NULL,
-    traineeId VARCHAR(30), -- Foreign Key ke tabel trainees
     induction TEXT,
     trainingActivities TEXT,
     suggestDateTraining DATETIME,

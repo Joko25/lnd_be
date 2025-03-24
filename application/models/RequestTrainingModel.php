@@ -53,4 +53,35 @@ class RequestTrainingModel extends CI_Model {
         $this->db->where('id', $id);
         $this->db->delete('lnd_request_training');
     }
+
+    public function insert_data_trainee($data) {
+        $data['createdBy'] = $this->session->username;
+        $data['createdTime'] = date('Y-m-d H:i:s');
+        $this->db->insert('lnd_request_training_trainee', $data);
+
+        $query = $this->db->order_by('createdTime', 'fullName')->limit(1)->get('lnd_request_training_trainee');
+    
+        $record = $query->row();
+    
+        return $record; 
+    }
+
+    public function update_data_trainee($id, $data) {
+        $this->db->where('id', $id);
+        // $data['updatedBy'] = $this->session->username;
+        // $data['updatedTime'] = date('Y-m-d H:i:s');
+
+        $this->db->update('lnd_request_training_trainee', $data);
+        
+        $query = $this->db->limit(1)->get('lnd_request_training_trainee');
+    
+        $record = $query->row();
+    
+        return $record; 
+    }
+
+    public function delete_data_trainee($idRequestTraining) {
+        $this->db->where('trainingRequestId', $idRequestTraining);
+        $this->db->delete('lnd_request_training_trainee');
+    }
 }
