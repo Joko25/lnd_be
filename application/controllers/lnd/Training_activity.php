@@ -214,6 +214,12 @@ class Training_activity extends CI_Controller {
 
             if (empty($resCompetence)) {
                 echo json_encode(array("title" => "Not Found", "message" => "Competence  " . $data['competenceId'] . " Not Found", "theme" => "error"));
+            } else if(empty($data['trainingActivity'])) {
+                echo json_encode(array("title" => "Not Found", "message" => "Competence Training Activity cannot be Null", "theme" => "error"));            
+            } else if(empty($data['induction'])) {
+                echo json_encode(array("title" => "Not Found", "message" => "Competence Induction cannot be Null", "theme" => "error"));
+            } else if(empty($data['index'])) {
+                echo json_encode(array("title" => "Not Found", "message" => "Competence Index cannot be Null", "theme" => "error"));
             } else {
                 $send = $this->crud->create('lnd_training_activity', $data);
                 echo $send;
@@ -291,8 +297,9 @@ class Training_activity extends CI_Controller {
                 <th width="20">No</th>
                 <th>Training Activity ID</th>
                 <th>Competence Name</th>
-                <th>Training Activity</th>
                 <th>Index</th>
+                <th>Induction</th>
+                <th>Training Activity</th>
                 <th>Remarks</th>
             </tr>';
         $no = 1;
@@ -301,8 +308,9 @@ class Training_activity extends CI_Controller {
                     <td>' . $no . '</td>
                     <td>' . $data['trainingActivityId'] . '</td>
                     <td>' . $data['competenceName'] . '</td>
-                    <td>' . $data['trainingActivity'] . '</td>
                     <td>' . $data['index'] . '</td>
+                    <td>' . $data['induction'] . '</td>
+                    <td>' . $data['trainingActivity'] . '</td>
                     <td>' . $data['remarks'] . '</td>';
             $no++;
         }
