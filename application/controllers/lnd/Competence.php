@@ -46,16 +46,18 @@ class Competence extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*');
-        $this->db->from('lnd_competence a');
+        $this->db->select('*');
+        $this->db->from('lnd_competence');
         
         if (!empty($competence_id)) {
-            $this->db->like('a.competenceId', $competence_id);
+            $this->db->like('competenceId', $competence_id);
         }
         $this->db->stop_cache(); // Stop caching the query
 
         // Hitung total data (tanpa limit dan offset)
         $totalRows = $this->db->count_all_results();
+        // Ambil data dengan limit dan offset
+        $this->db->order_by('index', 'ASC'); // Pindahkan order_by setelah count_all_results
 
         // Ambil data dengan limit dan offset
         $this->db->limit($rows, $offset);

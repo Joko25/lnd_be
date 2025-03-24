@@ -34,7 +34,7 @@
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Remarks</span>
-                <input style="width:60%;" name="remark" required="" class="easyui-textbox">
+                <input style="width:60%;" name="remark" class="easyui-textbox">
             </div>
         </fieldset>
     </form>
