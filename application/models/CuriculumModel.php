@@ -8,13 +8,13 @@ class CuriculumModel extends CI_Model {
     }
 
     public function get_all_data() {
-        $query = $this->db->get('lnd_curiculum');
+        $query = $this->db->get('lnd_curriculum');
         echo $query;
         return $query->result_array();
     }
 
     public function get_detail_data($id) {
-        $query = $this->db->get_where('lnd_curiculum', ['id' => $id]);
+        $query = $this->db->get_where('lnd_curriculum', ['id' => $id]);
 
         if ($query->num_rows() > 0) {
             return $query->row_array(); 
@@ -24,23 +24,30 @@ class CuriculumModel extends CI_Model {
     }
 
     public function insert_data($data) {
+        if (!is_array($data)) {
+            return false;
+        }
+
         $data['createdBy'] = $this->session->username;
         $data['createdTime'] = date('Y-m-d H:i:s');
-        $this->db->insert('lnd_curiculum', $data);
 
-        $query = $this->db->order_by('createdTime', 'desc')->limit(1)->get('lnd_curiculum');
-    
-        $record = $query->row();
-    
-        return $record; 
+        try {
+            $this->db->insert('lnd_curriculum', $data);
+            $insertedId = $this->db->insert_id();
+
+            $query = $this->db->get_where('lnd_curriculum', ['id' => $insertedId]);
+            return $query->row();
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     public function update_data($id, $data) {
         $this->db->where('id', $id);
 
-        $this->db->update('lnd_curiculum', $data);
+        $this->db->update('lnd_curriculum', $data);
         
-        $query = $this->db->order_by('updatedTime', 'desc')->limit(1)->get('lnd_curiculum');
+        $query = $this->db->order_by('updatedTime', 'desc')->limit(1)->get('lnd_curriculum');
     
         $record = $query->row();
     
@@ -49,6 +56,6 @@ class CuriculumModel extends CI_Model {
 
     public function delete_data($id) {
         $this->db->where('id', $id);
-        $this->db->delete('lnd_curiculum');
+        $this->db->delete('lnd_curriculum');
     }
 }

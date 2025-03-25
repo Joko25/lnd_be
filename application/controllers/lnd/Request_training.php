@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Request_Training extends CI_Controller {
+class Request_training extends CI_Controller {
     
     private $idGenerateDate;
     
