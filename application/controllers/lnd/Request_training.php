@@ -3,6 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Request_training extends CI_Controller {
     
+    private $idGenerateDate;
+    
+
     public function __construct() {
         parent::__construct();
         // Load any models or libraries needed
@@ -35,8 +38,12 @@ class Request_training extends CI_Controller {
     public function datatables()
     {
         // Ambil parameter dari request
-        // $competenceId = $this->input->get('competenceId', true); // Sanitize input GET
-        // $requestTrainingId = $this->input->get('id', true); // Sanitize input GET
+        $trainingMaterial = $this->input->get('trainingActivities', true); // Sanitize input GET
+        $requestTrainingId = $this->input->get('id', true); // Sanitize input GET
+        $reasons = $this->input->get('reasons', true); // Sanitize input GET
+        $departement = $this->input->get('departement', true); // Sanitize input GET
+        $suggestTrainingDate = base64_decode($this->input->get('suggestDateTraining', true)); // Sanitize input GET
+        
         $page = $this->input->post('page');
         $rows = $this->input->post('rows');
         
@@ -49,14 +56,23 @@ class Request_training extends CI_Controller {
         $this->db->start_cache(); // Cache query sebelum count_all_results
         $this->db->select('a.*, a.status as statusTraining, a.status as statusApproval, rth.approvedBy, rth.approvedTime');
         $this->db->from('lnd_request_training a');
-        $this->db->join('lnd_request_training_approvals_history rth', 'a.id = rth.trainingRequestId');
+        $this->db->join('lnd_request_training_approvals_history rth', 'a.id = rth.trainingRequestId', 'left');
         
-        // if (!empty($requestTrainingId)) {
-        //     $this->db->like('a.id', $requestTrainingId);
-        // }
-        // if (!empty($competenceId)) {
-        //     $this->db->like('a.competenceId', $competenceId);
-        // }
+        if (!empty($suggestTrainingDate)) {
+            $this->db->where('a.suggestDateTraining', $suggestTrainingDate);
+        }
+        if (!empty($trainingMaterial)) {
+            $this->db->like('a.trainingActivities', $trainingMaterial);
+        }
+        if (!empty($requestTrainingId)) {
+            $this->db->like('a.id', $requestTrainingId);
+        }
+        if (!empty($reasons)) {
+            $this->db->like('a.reasons', $reasons);
+        }
+        if (!empty($departement)) {
+            $this->db->like('a.id', $departement);
+        }
         $this->db->stop_cache(); // Stop caching the query
         
         // Hitung total data (tanpa limit dan offset)
@@ -99,16 +115,13 @@ class Request_training extends CI_Controller {
     }
 
     public function create_data() {
-        // Ambil request body secara manual
         $rawInput = file_get_contents("php://input");
         parse_str($rawInput, $data);
-        // Generate trainingActivityId
-        $idGenerateDate = $this->crud->autoidPrifix('lnd_request_training', 'requestTrainingId', 'T'); 
-        $data['requestTrainingId'] = $idGenerateDate;
-
-        // Validasi dan proses data
+        $idGenerateDateTemp = $this->crud->autoidPrifix('lnd_request_training', 'requestTrainingId', 'T'); 
+        $data['requestTrainingId'] = $idGenerateDateTemp;
         if (!empty($data)) {
             $dataTemp = $this->RequestTrainingModel->insert_data($data);
+            $this->idGenerateDate = $dataTemp->id;
             $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Request Training created successfully');
         } else {
             $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Request Training creation failed.');
@@ -136,6 +149,7 @@ class Request_training extends CI_Controller {
             $this->response->send(ResponseStatus::NOT_FOUND, null, 'Data not found');
         } else {
             $this->RequestTrainingModel->delete_data($id);
+            $this->RequestTrainingModel->delete_data_trainee($id);
             $this->response->send(200, $id, 'Request Training delete successfully');
         }
     }
@@ -182,5 +196,121 @@ class Request_training extends CI_Controller {
 
         // Kirim sebagai JSON
         echo json_encode($result);
+    }
+
+        // GET DATA EMPLOYEES
+    public function getEmployees() 
+    {
+        $post = isset($_POST['q']) ? $_POST['q'] : "";
+        $search = $this->input->get('full_name', true);
+        // $send = $this->crud->reads('employees', ["id" => $post]);
+        // echo json_encode($send);
+
+        // $this->load->database();
+        $this->db->select('e.id, e.name, e.national_id, p.name as position, d.name as departement, ds.name as departement_subs, e.date_sign');
+        $this->db->from('employees e');
+        $this->db->join('positions p', 'p.id = e.position_id');
+        $this->db->join('departements d', 'd.id = e.departement_id');
+        $this->db->join('departement_subs ds', 'ds.id = e.departement_sub_id');
+        if(!empty($search)) {
+            $this->db->like('name', $search);
+        }
+        $query = $this->db->get();
+        // $query = $this->db->select('id, name, national_id, position_id, departement_id, departement_sub_id, date_sign')
+        //                   ->from('employees')
+        //                   ->get();
+        echo json_encode($query->result_object());
+    }
+
+    public function getTrainee($id) 
+    {
+        // $post = isset($_POST['q']) ? $_POST['q'] : "";
+        // $search = $this->input->get('full_name', true);
+        $send = $this->crud->reads('lnd_request_training_trainee', [], ["trainingRequestId" => $id]);
+        echo json_encode($send);
+
+        // $this->load->database();
+        // $this->db->select('e.id, e.name, e.national_id, p.name as position, d.name as departement, ds.name as departement_subs, e.date_sign');
+        // $this->db->from('employees e');
+        // $this->db->join('positions p', 'p.id = e.position_id');
+        // $this->db->join('departements d', 'd.id = e.departement_id');
+        // $this->db->join('departement_subs ds', 'ds.id = e.departement_sub_id');
+        // if(!empty($search)) {
+        //     $this->db->like('name', $search);
+        // }
+        // $query = $this->db->get();
+        // $query = $this->db->select('id, name, national_id, position_id, departement_id, departement_sub_id, date_sign')
+        //                   ->from('employees')
+        //                   ->get();
+        // echo json_encode($query->result_object());
+    }
+
+    public function create_data_trainee() {
+        // Ambil request body secara manual
+        $rawInput = file_get_contents("php://input");
+        parse_str($rawInput, $data);
+        echo $this->idGenerateDate;
+        
+        if(!empty($this->idGenerateDate)) {
+            $data['trainingRequestId'] = $this->idGenerateDate;
+        } else {
+            $dataRequestTraining = $this->crud->read('lnd_request_training', [], [], "", 'createdTime', 'desc');
+            $data['trainingRequestId'] = $dataRequestTraining->id;
+        }
+
+        // $saveRequestTraining['induction'] = $data['inductionForm'];
+        // Validasi dan proses data
+        if (!empty($data)) {
+            if($data['id'] == '') {
+                $dataTemp = $this->RequestTrainingModel->insert_data_trainee($data);
+                $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Request Training Trainee created successfully');
+                $this->idGenerateDate = null;
+            } else {
+                $dataTemp = $this->RequestTrainingModel->update_data_trainee($data['id'], $data);
+                $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Request Training Trainee created successfully');
+                $this->idGenerateDate = null;
+            }
+        } else {
+            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Request Training Trainee creation failed.');
+            $this->idGenerateDate = null;
+        }
+    }
+
+    public function deleteTrainee()
+    {
+        $data = $this->input->post();
+        $send = $this->crud->delete('lnd_request_training_trainee', $data);
+        echo $send;
+    }
+
+    public function reads() {
+        $post = isset($_POST['q']) ? $_POST['q'] : "";
+        $get = $this->input->get();
+
+        $this->db->select('*');
+        $this->db->from('lnd_request_training');
+        if ($get) {
+            $this->db->like($get);
+        }
+        $this->db->order_by('createdTime', 'desc');
+        $records = $this->db->get()->result_array();
+        echo json_encode($records);
+    }
+
+    public function readsTrainee() {
+        $post = isset($_POST['q']) ? $_POST['q'] : "";
+        $get = $this->input->get();
+
+        // $this->db->distinct();
+        $this->db->select('b.fullName, a.id, b.departement');
+        $this->db->from('lnd_request_training a');
+        $this->db->join('lnd_request_training_trainee b', 'a.id = b.trainingRequestId', 'left');
+        if ($get) {
+            $this->db->like($get);
+        }
+        $this->db->group_by('b.fullName, b.departement'); // Ensure unique name
+        $this->db->order_by('a.createdTime', 'desc');
+        $records = $this->db->get()->result_array();
+        echo json_encode($records);
     }
 }

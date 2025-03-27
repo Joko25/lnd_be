@@ -39,6 +39,7 @@
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Induction</span>
                 <select style="width:60%;" name="induction" required="" class="easyui-combobox" panelHeight="auto">
+                    <option value="Basic Requirement">Basic Requirement</option>
                     <option value="L&D Program: Upgrade Competence">L&D Program: Upgrade Competence</option>
                     <option value="L&D Program: Refresh Training">L&D Program: Refresh Training</option>
                     <option value="L&D Program: Training Activities">L&D Program: Training Activities</option>
