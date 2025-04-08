@@ -57,6 +57,7 @@
                     <option value="change_days">Change Days</option>
                     <option value="setup_salaries">Setup Salary</option>
                     <option value="payrolls">Payrolls</option>
+                    <option value="request_training">Request Training</option>
                 </select>
             </div>
             <div class="fitem">
