@@ -1,0 +1,419 @@
+<table id="dg" class="easyui-datagrid" style="width:100%;">
+</table>
+
+<!-- TOOLBAR DATAGRID -->
+<div id="toolbar">
+    <div class="easyui-accordion" style="width:100%; margin-bottom:5px;">
+        <div title="Click this to hide the filter" data-options="onCollapse: function(){ $('#dg').datagrid('reload'); }" style="padding:10px; background:#F4F4F4;">
+            <fieldset style="width: 100%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
+                <legend><b>Form Filter Data</b></legend>
+                <div style="width:50%; float: left;">
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Register Date</span>
+                        <input style="width:60%;" id="registerDateFilter" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser, editable: false">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Training Date</span>
+                        <input style="width:30%;" id="trainingDateFilter" class="easyui-combogrid">
+                        <input style="width:30%;" id="trainingDateFilter" class="easyui-combogrid">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Training Material</span>
+                        <input style="width:60%;" id="trainingMaterialFilter" class="easyui-combogrid">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;"></span>
+                        <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
+                    </div>
+                </div>
+                <div style="width:50%; float: left;">
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Category</span>
+                        <input style="width:60%;" id="categoryFilter" class="easyui-combogrid">
+                    </div>
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Trainee</span>
+                        <input style="width:60%;" id="traineeFilter" class="easyui-combogrid">
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <?= $button ?>
+    </div>
+</div>
+
+<!-- DIALOG SAVE AND UPDATE -->
+<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 400px; padding:10px; top: 20px;">
+    <form id="frm_insert" method="post" novalidate>
+        <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
+            <legend><b>Form Data</b></legend>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Register Date</span>
+                <input style="width:60%;" id="registerDate" name="registerDate" required="" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser, editable: false">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Training Date</span>
+                <input style="width:60%;" name="" id="" required="" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser, editable: false">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Induction</span>
+                <select style="width:60%;" name="induction" required="" class="easyui-combobox" panelHeight="auto">
+                    <option value="Basic Requirement">Basic Requirement</option>
+                    <option value="L&D Program: Upgrade Competence">L&D Program: Upgrade Competence</option>
+                    <option value="L&D Program: Refresh Training">L&D Program: Refresh Training</option>
+                    <option value="L&D Program: Training Activities">L&D Program: Training Activities</option>
+                </select>
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Training Name</span>
+                <input style="width:60%;" name="trainingName" id="trainingName" required="" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Category</span>
+                <select style="width:60%;" name="category" id="category" required="" class="easyui-combobox" panelHeight="auto">
+                    <option value="New">New</option>
+                    <option value="Mutasi">Mutasi</option>
+                    <option value="Departement">Departement</option>
+                </select>            
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Trainer Name</span>
+                <input style="width:60%;" name="" id="" required="" class="easyui-textbox">
+            </div>
+            <div class="fitem" id="trainee-container">
+                <span style="width:35%; display:inline-block;">Trainee</span>
+                <input style="width:60%;" name="trainee" id="trainee" required="" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Remarks</span>
+                <input style="width:60%;" name="remarks" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Total Trainee</span>
+                <input style="width:60%;" name="totalTrainee" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Duration</span>
+                <input style="width:60%;" name="duration" class="easyui-textbox" required="">
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<!-- DIALOG UPLOAD -->
+<div id="dlg_upload" class="easyui-dialog" title="Upload Data" data-options="closed: true,modal:true" style="width: 500px; padding:10px; top: 20px;">
+    <form id="frm_upload" method="post" enctype="multipart/form-data" novalidate>
+        <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
+            <legend><b>Form Data</b></legend>
+            <div class="fitem">
+                <span style="width:30%; display:inline-block;">File Upload</span>
+                <input name="file_upload" style="width: 60%;" required="" accept=".xls" id="file_excel" class="easyui-filebox">
+            </div>
+        </fieldset>
+    </form>
+    <span style="float: left; color:green;">SUCCESS : <b id="p_success">0</b></span><span style="float: right; color:red;"> FAILED : <b id="p_failed">0</b></span>
+    <div id="p_upload" class="easyui-progressbar" style="width:100%; margin-top: 10px;"></div>
+    <center><b id="p_start">0</b> Of <b id="p_finish">0</b></center>
+    <div id="p_remarks" title="History Upload" class="easyui-panel" style="width:100%; height:200px; padding:10px; margin-top: 10px;">
+        <ul id="remarks">
+
+        </ul>
+    </div>
+</div>
+
+<!-- PDF -->
+<iframe id="printout" src="<?= base_url('lnd/schedule_training/print') ?>" style="width: 100%;" hidden></iframe>
+
+<script>
+    window.onload = function() {
+        $('#trainingName').combogrid({
+            url: '<?= base_url('lnd/training_activity/list') ?>',
+            panelWidth: 450,
+            idField: 'id',
+            textField: 'trainingActivity',
+            mode: 'remote',
+            fitColumns: true,
+            prompt: 'Choose Training Name',
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combogrid('clear').combogrid('textbox').focus();
+                }
+            }],
+            columns: [
+                [{
+                    field: 'competenceName',
+                    title: 'Competence Standard',
+                    width: 120
+                }, {
+                    field: 'trainingActivity',
+                    title: 'Training Activity Name',
+                    width: 200
+                }]
+            ],
+        });
+    }
+
+    function add() {
+        $('#dlg_insert').dialog('open');
+        url_save = '<?= base_url('lnd/schedule_training/create_data') ?>';
+        method = 'POST';
+        $('#frm_insert').form('clear');
+    }
+
+    function update() {
+        var row = $('#dg').datagrid('getSelected');
+        console.log("#row", row);
+        
+        if (row) {
+            $('#dlg_insert').dialog('open');
+            $('#frm_insert').form('load', row);
+            url_save = '<?= base_url('lnd/schedule_training/update_data/') ?>' + row.id;
+            method = 'PUT';
+        } else {
+            toastr.warning("Please select one of the data in the table first!", "Information");
+        }
+    }
+
+    function deleted() {
+        var rows = $('#dg').datagrid('getSelections');
+        if (rows.length > 0) {
+            $.messager.confirm('Warning', 'Are you sure you want to delete this data?', function(r) {
+                if (r) {
+                    for (var i = 0; i < rows.length; i++) {
+                        var row = rows[i];
+                        fetch('<?= base_url('lnd/schedule_training/delete_data/') ?>'+row.id, {
+                            method: 'DELETE', // Metode DELETE
+                        })
+                        .then(response => response.json()) // Konversi response ke JSON
+                        .then(data => {
+                            if (data.code === 200) {
+                                $('#dg').datagrid('reload');
+                                toastr.success(data.message, 'Success');
+                            } else {
+                                toastr.success("Something Wrong", 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Terjadi kesalahan:', error);
+                            toastr.success("Something Wrong", 'error');
+                        });
+                    }
+                }
+            });
+        } else {
+            toastr.warning("Please select one of the data in the table first!", "Information");
+        }
+    }
+
+    function sendDataToServer(requestData) {
+        // Buat body dengan format x-www-form-urlencoded (query string)
+        const formData = new URLSearchParams(requestData).toString();
+
+        fetch(url_save, {
+            method: method, // Metode POST
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded' // Header penting
+            },
+            body: formData // Data body
+        })
+        .then(response => {
+            return response.json()}) // Ubah response ke JSON
+        .then(data => {
+            if(data.code >= 200 && data.code <= 300) {
+                toastr.success(data.message, 'Success');
+                $('#dg').datagrid('reload');
+                $('#dlg_insert').dialog('close');
+                
+            }
+        })
+        .catch(error => {
+            toastr.error('Something Error', 'Error');
+            console.error('Terjadi kesalahan:', error);
+        });
+    }
+
+    const calendarColumns = generateCalendarColumns("2025-01-01", "2025-12-01");
+
+    $(function() {
+        //SETTING DATAGRID EASYUI
+        $('#dg').datagrid({
+            url: '<?= base_url('lnd/schedule_training/datatables') ?>',
+            columns: [[
+                {field: 'ck', rowspan:'2', checkbox: true},
+                {field: 'induction', rowspan:'2', width:280, title:'Induction', halign: 'center'},
+                {field: 'trainingName', rowspan:'2', width:150, title:'Training Name', halign: 'center'},
+                {field: 'trainer', rowspan:'2', width:150, title:'Trainer', halign: 'center'},
+                {field: 'trainee', rowspan:'2', width:150, title:'Trainee', halign: 'center'},
+                {field: 'remarks', rowspan:'2', width:100, title:'Remarks', halign: 'center'},
+                {field: 'totalTrainee', rowspan:'2', width:80, title:'Total Trainee', halign: 'center'},
+                {field: 'duration', rowspan:'2', width:80, title:'Duration (Minute)', halign: 'center'},
+                {field: 'date', rowspan:'2', width:100, title:'Date', halign: 'center',
+                    formatter: function() {
+                        return '<div style="text-align:center;">Plan<hr style="margin:4px 0;">Actual</div>';
+                    },
+                    styler: function() {
+                        return 'white-space: normal;';
+                    }
+                },
+                ...calendarColumns.filter(col => !Array.isArray(col)), // top headers
+
+                {field: '', colspan:2, title:'Created', width:80, align: 'center'},
+                {field: '', colspan:2, title:'Updated', width:80, align: 'center'},
+            ],[
+                ...calendarColumns
+                    .filter(col => Array.isArray(col)) // week fields
+                    .flat(),
+                {field: 'createdBy', title:'By', width:100, align: 'center'},
+                {field: 'createdTime', title:'Date', width:150, align: 'center'},
+                {field: 'updatedBy', title:'By', width:100, align: 'center'},
+                {field: 'updatedTime', title:'Date', width:150, align: 'center'},
+            ]],
+            toolbar: '#toolbar',
+            pagination: true,
+            rownumbers: true,
+            fit: true,
+            nowrap: false,
+            // remoteFilter: true,
+            // sortName: 'index',
+            // sortOrder: 'asc'
+            singleSelect:true,
+            pageList: [20, 50, 100, 500, 1000],
+            pageSize: 20,
+        });
+
+        //SAVE DATA
+        $('#dlg_insert').dialog({
+            buttons: [{
+                text: 'Save',
+                iconCls: 'icon-ok',
+                handler: function() {
+                    if($(this).form('validate')) {
+                        var formData = $('#frm_insert').serialize();
+                        sendDataToServer(formData)
+                    }
+                }
+            }]
+        });
+
+        $('#category').combobox({
+            onSelect: function (record) {
+                const value = record.value;
+
+                // Clear and rebuild the #trainee input
+                let html = '';
+                if (value === 'New' || value === 'Mutasi') {
+                    html = `
+                        <span style="width:35%; display:inline-block;">Trainee</span>
+                        <input style="width:60%;" name="trainee" id="trainee" value="New MP/Mutasi" required class="easyui-textbox" disabled>
+                    `;
+                } else if (value === 'Departement') {
+                    html = `
+                        <span style="width:35%; display:inline-block;">Trainee</span>
+                        <input style="width:60%;" name="trainee" id="trainee" required class="easyui-combobox">
+                    `;
+                }
+
+                // Replace the content inside the container
+                $('#trainee-container').html(html);
+
+                // Re-parse the newly added element
+                $.parser.parse('#trainee-container');
+
+                // If Departement selected, initialize combobox
+                if (value === 'Departement') {
+                    $('#trainee').combogrid({
+                        url: '<?= base_url('lnd/schedule_training/readsDepartements') ?>',
+                        panelWidth: 450,
+                        idField: 'id',
+                        textField: 'name',
+                        mode: 'remote',
+                        fitColumns: true,
+                        prompt: 'Choose Training Name',
+                        icons: [{
+                            iconCls: 'icon-clear',
+                            handler: function(e) {
+                                $(e.data.target).combogrid('clear').combogrid('textbox').focus();
+                            }
+                        }],
+                        columns: [
+                            [{
+                                field: 'name',
+                                title: 'Employee Name',
+                                width: 120
+                            }]
+                        ],
+                    });
+                }
+            }
+        });
+    });
+
+    function generateCalendarColumns(startDateStr, endDateStr) {
+        const startDate = new Date(startDateStr);
+        const endDate = new Date(endDateStr);
+        const columns = [];
+
+        while (startDate <= endDate) {
+            const year = startDate.getFullYear();
+            const month = startDate.getMonth(); // 0-indexed
+            const monthName = startDate.toLocaleString('default', { month: 'long' });
+            const weeks = ['W1', 'W2', 'W3', 'W4'];
+
+            const children = weeks.map((w, i) => ({
+                field: `${monthName}_${year}_W${i + 1}`,
+                title: w,
+                width: 80,
+                align: 'center',
+                formatter: function () {
+                    return `
+                        <div style="text-align:center; white-space: normal;">
+                            <div style="height:50%; border-bottom:1px solid #ccc;">&nbsp;</div>
+                            <div style="height:50%;">&nbsp;</div>
+                        </div>
+                    `;
+                },
+                styler: function () {
+                    return 'white-space: normal;';
+                }
+            }));
+
+            columns.push({
+                title: `${monthName} ${year}`,
+                colspan: weeks.length,
+                align: 'center'
+            });
+
+            // Add a placeholder for child fields
+            columns.push(children);
+
+            // Go to next month
+            startDate.setMonth(month + 1);
+        }
+
+        return columns;
+    }
+
+    //Format Datepicker
+    function myformatter(date) {
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        var d = date.getDate();
+        return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+    }
+
+    //Format Datepicker
+    function myparser(s) {
+        if (!s) return new Date();
+        var ss = (s.split('-'));
+        var y = parseInt(ss[0], 10);
+        var m = parseInt(ss[1], 10);
+        var d = parseInt(ss[2], 10);
+        if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+            return new Date(y, m - 1, d);
+        } else {
+            return new Date();
+        }
+    }
+
+</script>
