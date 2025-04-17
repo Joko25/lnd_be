@@ -141,59 +141,7 @@
 
 <script>
     window.onload = function() {
-        // $('#competence_id').combogrid({
-        //     url: '<?= base_url('lnd/training_activity/readsCompetence') ?>',
-        //     panelWidth: 450,
-        //     idField: 'id',
-        //     textField: 'name',
-        //     mode: 'remote',
-        //     fitColumns: true,
-        //     prompt: 'Choose Competence',
-        //     icons: [{
-        //         iconCls: 'icon-clear',
-        //         handler: function(e) {
-        //             $(e.data.target).combogrid('clear').combogrid('textbox').focus();
-        //         }
-        //     }],
-        //     columns: [
-        //         [{
-        //             field: 'competenceId',
-        //             title: 'Competence ID',
-        //             width: 120
-        //         }, {
-        //             field: 'name',
-        //             title: 'Competence Name',
-        //             width: 200
-        //         }]
-        //     ],
-        // });
-
-        // $('#training_activity_id').combogrid({
-        //     url: '<?= base_url('lnd/training_activity/list') ?>',
-        //     panelWidth: 450,
-        //     idField: 'id',
-        //     textField: 'trainingActivity',
-        //     mode: 'remote',
-        //     fitColumns: true,
-        //     prompt: 'Choose Training Activity',
-        //     icons: [{
-        //         iconCls: 'icon-clear',
-        //         handler: function(e) {
-        //             $(e.data.target).combogrid('clear').combogrid('textbox').focus();
-        //         }
-        //     }],
-        //     columns: [
-        //         [{
-        //             field: 'trainingActivityId',
-        //             title: 'Training Activity ID',
-        //             width: 120
-        //         }, {
-        //             field: 'trainingActivity',
-        //             title: 'Training Activity Name',
-        //             width: 200
-        //         }]
-        //     ],
-        // });
+        
     };
 
     function add() {
@@ -206,7 +154,6 @@
 
     function update() {
         var row = $('#dg').datagrid('getSelected');
-        // console.log("#row", row);
         
         if (row) {
             $('#dlg_insert').dialog('open');
@@ -253,8 +200,6 @@
     function sendDataToServer(requestData) {
         // Buat body dengan format x-www-form-urlencoded (query string)
         const formData = new URLSearchParams(requestData).toString();
-        // console.log(formData);
-        console.log(formData);
         fetch(url_save, {
             method: method, // Metode POST
             headers: {
@@ -263,7 +208,6 @@
             body: formData // Data body
         })
         .then(response => {
-            // console.log('#resp => ', response)
             return response.json()}) // Ubah response ke JSON
         .then(data => {
             if(data.code >= 200 && data.code <= 300) {
@@ -366,57 +310,6 @@
             pageList: [20, 50, 100, 500, 1000],
             pageSize: 20,
         });
-
-        //SAVE DATA
-        // $('#dlg_insert').dialog({
-        //     buttons: [{
-        //         text: 'Save',
-        //         iconCls: 'icon-ok',
-        //         handler: function() {
-        //             event.preventDefault();
-        //             $('#frm_insert').form('submit', {
-        //                 url: url_save,
-        //                 onSubmit: function() {                            
-        //                     return $(this).form('validate');
-        //                 },
-        //                 success: function(result) {
-        //                     var formData = $('#frm_insert').serialize();
-        //                     // console.log(formData);
-        //                     sendDataToServer(formData);
-
-        //                     // $('#dgForm').datagrid('acceptChanges');
-        //                     var rowForm = $('#dgForm').datagrid('getRows');
-        //                     var totalForm = rowForm.length;
-        //                     console.log(result, ' => ', totalForm);
-        //                     if(result.includes('successfully')) {
-        //                         for (let i = 0; i < totalForm; i++) {
-        //                             // console.log(rowForm, totalForm, ' 377');
-        //                             if(rowForm[i].full_name) {
-        //                                 $.ajax({
-        //                                     type: "post",
-        //                                     url: '<?= base_url('lnd/request_training/create_data_trainee') ?>',
-        //                                     data: {
-        //                                         fullName: rowForm[i].full_name,
-        //                                         national_id: rowForm[i].national_id,
-        //                                         position: rowForm[i].position_id,
-        //                                         departement: rowForm[i].departement_id,
-        //                                         departement_subs: rowForm[i].departement_sub_id,
-        //                                         date_sign: rowForm[i].date_sign
-        //                                     },
-        //                                     dataType: "json",
-        //                                     success: function(res) {
-        //                                         console.log(res, ' 392');
-        //                                     }
-        //                                 })
-        //                                 // console.log(rowForm, ' 395');
-        //                             }
-        //                         }
-        //                     }
-        //                 }
-        //             })
-        //         }
-        //     }]
-        // });
 
         $('#dlg_insert').dialog({
             buttons: [{
@@ -575,11 +468,6 @@
                             mode: 'remote',
                             columns: [[
                                 { field: 'name', title: 'Name', width: 280 },
-                                // { field: 'national_id', title: 'National ID', width: 100 },
-                                // { field: 'position_id', title: 'Position', width: 100 },
-                                // { field: 'departement_id', title: 'Department', width: 100 },
-                                // { field: 'departement_sub_id', title: 'Department Sub', width: 100 },
-                                // { field: 'date_sign', title: 'Join Date', width: 100 },
                             ]],
                             onSelect: function(index, row) {
                                 let selectedRow = $('#dgForm').datagrid('getSelected'); // Get the selected row
@@ -659,27 +547,6 @@
             }
         });
     });
-
-    // $('#competenceName').combogrid({
-    //     url: '<?= base_url('lnd/training_activity/readsCompetence') ?>',
-    //     panelWidth: 450,
-    //     idField: 'id',
-    //     textField: 'name',
-    //     mode: 'remote',
-    //     fitColumns: true,
-    //     prompt: 'Choose Competence',
-    //     columns: [
-    //         [{
-    //             field: 'competenceId',
-    //             title: 'Competence ID',
-    //             width: 120
-    //         }, {
-    //             field: 'name',
-    //             title: 'Competence Name',
-    //             width: 200
-    //         }]
-    //     ],
-    // });
 
     // function download_excel() {
     //     window.location.assign('<?= base_url('template/tmp_training_activity3.xls') ?>');
@@ -814,7 +681,6 @@
         var reasons = $("#reasonsFilter").combogrid('getValue');
         var departement = $("#departementFilter").combogrid('getValue');
         var suggestTrainingDate = $("#suggestTrainingDateFilter").datebox('getValue');
-        // debug_to_console(curiculum_id);
         var params = "?trainingActivities=" + trainingMaterial + "&id=" + trainee + "&reasons=" + reasons + "&departement=" + departement + "&suggestDateTraining=" + btoa(suggestTrainingDate);
 
         $('#dg').datagrid({
@@ -822,7 +688,6 @@
         });
 
         $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
-        // $("#printout").attr('src', '<?= base_url('employee/departements/print') ?>' + params);
     }
 
     function tableTrainee(number) {
@@ -862,11 +727,6 @@
                             mode: 'remote',
                             columns: [[
                                 { field: 'name', title: 'Name', width: 280 },
-                                // { field: 'national_id', title: 'National ID', width: 100 },
-                                // { field: 'position_id', title: 'Position', width: 100 },
-                                // { field: 'departement_id', title: 'Department', width: 100 },
-                                // { field: 'departement_sub_id', title: 'Department Sub', width: 100 },
-                                // { field: 'date_sign', title: 'Join Date', width: 100 },
                             ]],
                             onSelect: function(index, row) {
                                 let selectedRow = $('#dgTrainee').datagrid('getSelected'); // Get the selected row

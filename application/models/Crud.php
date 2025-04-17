@@ -287,6 +287,38 @@ class Crud extends CI_Model
         }
     }
 
+    function approvalsLnd($table, $idReference, $idReferenceValue)
+    {
+        $query = $this->db->query("DESCRIBE $table");
+        $fields = $query->result_array();
+
+        $user = $this->read('users', [], ["username" => $this->session->username]);
+        $approval = $this->read('approvals', [], ["table_name" => $table, "departement_id" => @$user->departement_id]);
+
+        $fieldExists = false;
+        foreach ($fields as $field) {
+            if ($field['Field'] == "approved") {
+                $fieldExists = true;
+                break;
+            }
+        }
+
+        if ($fieldExists) {
+            if (!empty($approval)) {
+                $formApprove = [
+                    $idReference => $idReferenceValue,
+                    "approved" => 1,
+                    "approved_to" => $approval->user_approval_1,
+                    "approved_by" => $this->session->username,
+                    "approved_date" => date('Y-m-d H:i:s'),
+                ];
+
+                // $this->db->where(["id" => $table_id]);
+                $this->db->insert($table, $formApprove);
+            }
+        }
+    }
+
     // function approvals($table, $table_id)
     // {
     //     $id = $this->autoid('notifications');

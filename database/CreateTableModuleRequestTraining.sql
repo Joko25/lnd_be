@@ -15,9 +15,11 @@ CREATE TABLE lnd_request_training_approvals_history (
     id CHAR(30) NOT NULL PRIMARY KEY DEFAULT (UUID()),
     trainingRequestId CHAR(30) NOT NULL, -- Foreign Key ke training_requests
     status INT NOT NULL, -- Status approval terbaru dalam bentuk INT
-    approvedBy VARCHAR(100) NOT NULL,
-    approvalNotes TEXT,
-    approvedTime DATETIME DEFAULT CURRENT_TIMESTAMP
+    approved TINYINT(1) NOT NULL DEFAULT 0,
+    approved_to VARCHAR(100),
+    approved_by VARCHAR(100),
+    approved_date TIMESTAMP,
+    approval_data TEXT
 --     FOREIGN KEY (trainingRequestId) REFERENCES lnd_training_requests(id) ON DELETE CASCADE
 );
 
