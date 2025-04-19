@@ -240,8 +240,6 @@
 
     function removeItem(index) {
         var formData = $("#formContainer");
-        console.log("#formData", formData);
-        
         if (index >= 0) {
             $('.form-group[data-index="' + index + '"]').remove();
             // items.splice(index, 1);
@@ -294,9 +292,6 @@
     function renderTrainingActivity(index) {
         var tempalteTraining =  $('#template-training-activity').html();
         var renderedTraining = _.template(tempalteTraining)({ itemsTrainingActivity: itemsTrainingActivity });
-        console.log("#renderedTraining", `#training-activity_${index}`, index, renderedTraining);
-        
-        
         $(`#training-activity_${index}`).html(`${renderedTraining}`);
         $.parser.parse(`#training-activity_${index}`); // Parse EasyUI components
         // $('#frm_insert').form('validate');
@@ -329,7 +324,6 @@
         var row = $('#dg').datagrid('getSelected');
         if (row) {
             generatedSubDept(row.departementId)
-            console.log("#row", row);
             
             $('#dlg_insert').dialog('open');
             $('#frm_insert').form('load', row);
@@ -352,7 +346,6 @@
                         })
                         .then(response => response.json()) // Konversi response ke JSON
                         .then(data => {
-                            console.log('Response dari server:', data);
                             if (data.code === 200) {
                                 $('#dg').datagrid('reload');
                                 toastr.success(data.message, 'Success');
@@ -473,11 +466,8 @@
             body: "data=" + encodeURIComponent(JSON.stringify(nestedData)) //JSON.stringify(nestedData) // Data body
         })
         .then(response => {
-            console.log("resp", response);
-            
             return response.json()}) // Ubah response ke JSON
         .then(data => {
-            console.log('Response dari server:', data);
             if(data.code >= 200 && data.code <= 300) {
                 toastr.success(data.message, 'Success');
                 $('#dg').datagrid('reload');
@@ -604,6 +594,12 @@
                 {field: 'updatedTime', title:'Date', width:150, align: 'center'},
             ]],
             toolbar: '#toolbar',
+            singleSelect: true,
+            view: groupview,
+            groupField:'curriculum_id',
+            groupFormatter:function(value,rows){
+                return value + ' - ' + rows.length + ' Item(s)';
+            },
             pagination: true,
             rownumbers: true,
             fit: true,
@@ -619,7 +615,6 @@
                 handler: function() {
                     if($(this).form('validate')) {
                         var formData = $('#frm_insert'); //.serialize();
-                        console.log("#formData", $('#frm_insert'), formData);
                         
                         sendDataToServer(formData)
                     }

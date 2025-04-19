@@ -109,10 +109,25 @@ class Curiculum extends CI_Controller {
         $data = json_decode($json, true);
         $curriculum_id = $this->crud->autoidPrifix('lnd_curriculum', 'curriculum_id', 'I');
 
-        $this->CuriculumModel->save_curriculum($curriculum_id, $data);
-        echo json_encode(['status' => 'success']);
-
+        $dataTemp = $this->CuriculumModel->save_curriculum($curriculum_id, $data);
         
+        if ($dataTemp) {
+            $response = [
+                'code' => 201,
+                'status' => 'success',
+                'message' => 'Curicullum created successfully',
+                'data' => $dataTemp
+            ];
+        } else {
+            $response = [
+                'code' => 400, 
+                'status' => 'error',
+                'message' => 'Curicullum creation failed',
+                'data' => null
+            ];
+        }
+        
+        echo json_encode($response);
     }
 
     public function get_curriculum_list()

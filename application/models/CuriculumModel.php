@@ -47,14 +47,17 @@ class CuriculumModel extends CI_Model {
         // Hapus dulu data lama
         $this->delete_curriculum($curriculum_id);
 
+        $lastInsertedId = null;
+
         foreach ($data['competence'] as $comp) {
             $curr_id = $this->uuid();
+            $lastInsertedId = $curr_id;
 
             $this->db->insert('lnd_curriculum', [
                 'id' => $curr_id,
-                'curriculum_id' => $curriculum_id,
+                'curriculum_id' => $curriculum_id, 
                 'competence_standard' => $comp['competence_standard'],
-                'createdBy' => $this->session->username, // bisa dari session
+                'createdBy' => $this->session->username,
                 'createdTime' => date('Y-m-d H:i:s')
             ]);
 
@@ -76,6 +79,12 @@ class CuriculumModel extends CI_Model {
                 }
             }
         }
+
+        // Query dijalankan setelah semua foreach selesai
+        $query = $this->db->where('id', $lastInsertedId)->get('lnd_curriculum');
+        $record = $query->row();
+        
+        return $record;
     }
 
     public function delete_curriculum($curriculum_id)
