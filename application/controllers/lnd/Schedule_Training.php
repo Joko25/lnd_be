@@ -47,8 +47,9 @@ class Schedule_Training extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*');
+        $this->db->select('a.*, b.*');
         $this->db->from('lnd_schedule_training a');
+        $this->db->join('lnd_schedule_training_dates b', 'a.id = b.training_id', 'left');
         
         // if (!empty($trainingActivityId)) {
         //     $this->db->like('a.id', $trainingActivityId);

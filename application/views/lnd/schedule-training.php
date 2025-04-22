@@ -60,7 +60,7 @@
                                 <input class="easyui-datebox training-date" style="width:120px;">
                             </td>
                             <td style="padding-bottom:5px;">
-                                <select class="easyui-combobox batch_count" style="width:100px;">
+                                <select class="easyui-combobox batch-count" style="width:100px;">
                                     <option value="">Batch</option>
                                     <?php for ($i = 1; $i <= 10; $i++): ?>
                                         <option value="<?= $i ?>"><?= $i ?> Batch<?= $i > 1 ? 'es' : '' ?></option>
@@ -465,7 +465,7 @@
                     <input class="easyui-datebox training-date" style="width:120px;">
                 </td>
                 <td style="padding-bottom:5px;">
-                    <select class="easyui-combobox batch_count"  style="width:100px;">
+                    <select class="easyui-combobox batch-count"  style="width:100px;">
                         <option value="">Batch</option>
                         ${[...Array(10).keys()].map(i => `<option value="${i+1}">${i+1} Batch${i > 0 ? 'es' : ''}</option>`).join('')}
                     </select>
@@ -481,7 +481,7 @@
         $.parser.parse('#trainingDatesTable'); // Parse new EasyUI widgets
         // Re-initialize EasyUI widgets
         $('#trainingDatesTable tr:last-child input.training-date').datebox();
-        $('#trainingDatesTable tr:last-child select[name="batch_count[]"]').combobox();
+        $('#trainingDatesTable tr:last-child select.batch-count').combobox();
         bindDatePickers(); // Re-bind new training-date input with event
     }
 
@@ -542,15 +542,18 @@
 
         rows.each(function () {
             const dateInput = $(this).find('input.training-date');
-            // const batchSelect = $(this).find('select.batch-count');
+            const batchSelect = $(this).find('select.batch-count');
+            const weekLabel = $(this).find('.week-label').text().replace('Week: ', '').trim();
 
             const trainingDate = dateInput.datebox('getValue'); // get EasyUI datebox value
-            // const batchCount = batchSelect.combobox('getValue'); // get EasyUI combobox value
+            const batchCount = batchSelect.combobox('getValue'); // get EasyUI combobox value
 
             if (trainingDate) {
                 result.push({
                     training_date: trainingDate,
-                    // batch_count: batchCount || null
+                    batch_count: batchCount || null,
+                    week: weekLabel || "-"
+
                 });
             }
         });

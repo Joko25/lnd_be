@@ -56,8 +56,8 @@ class ScheduleTrainingModel extends CI_Model {
                 'id' => $this->uuid->v4(),
                 'training_id' => $training_id,
                 'training_date' => $item['training_date'],
-                'batch_count' => 1,
-                'week_label' => 'W1',
+                'batch_count' => $item['batch_count'],
+                'week_label' => $item['week'],
                 'createdTime' => date('Y-m-d H:i:s')
             ];
             $this->db->insert('lnd_schedule_training_dates', $detail);
