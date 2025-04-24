@@ -57,11 +57,10 @@
                     <table id="trainingDatesTable" style="width:100%;">
                         <tr>
                             <td style="padding-bottom:5px;">
-                                <input class="easyui-datebox training-date" name="training_date[]" style="width:120px;">
-
+                                <input class="easyui-datebox training-date" style="width:120px;">
                             </td>
                             <td style="padding-bottom:5px;">
-                                <select class="easyui-combobox" name="batch_count[]" style="width:100px;">
+                                <select class="easyui-combobox batch-count" style="width:100px;">
                                     <option value="">Batch</option>
                                     <?php for ($i = 1; $i <= 10; $i++): ?>
                                         <option value="<?= $i ?>"><?= $i ?> Batch<?= $i > 1 ? 'es' : '' ?></option>
@@ -76,6 +75,7 @@
                     </table>
                 </div>
             </div>
+            <input type="hidden" name="training_dates" id="training_dates_json">
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Induction</span>
                 <select style="width:60%;" name="induction" required="" class="easyui-combobox" panelHeight="auto">
@@ -309,9 +309,20 @@
                 text: 'Save',
                 iconCls: 'icon-ok',
                 handler: function() {
-                    if($(this).form('validate')) {
-                        var formData = $('#frm_insert').serialize();
-                        sendDataToServer(formData)
+                    if ($('#frm_insert').form('validate')) {
+                        const trainingDates = getTrainingDateRows();
+                        console.log(trainingDates);
+                        
+                        if (trainingDates.length === 0) {
+                            toastr.error("Please select at least one training date.", "Error");
+                            return;
+                        }
+
+                        // Set the value of the hidden input
+                        $('#training_dates_json').val(JSON.stringify(trainingDates));
+
+                        let formData = $('#frm_insert').serialize();
+                        sendDataToServer(formData);
                     }
                 }
             }]
@@ -451,10 +462,10 @@
         let row = `
             <tr>
                 <td style="padding-bottom:5px;">
-                    <input class="easyui-datebox training-date" name="training_date[]" style="width:120px;">
+                    <input class="easyui-datebox training-date" style="width:120px;">
                 </td>
                 <td style="padding-bottom:5px;">
-                    <select class="easyui-combobox" name="batch_count[]" style="width:100px;">
+                    <select class="easyui-combobox batch-count"  style="width:100px;">
                         <option value="">Batch</option>
                         ${[...Array(10).keys()].map(i => `<option value="${i+1}">${i+1} Batch${i > 0 ? 'es' : ''}</option>`).join('')}
                     </select>
@@ -468,6 +479,9 @@
         
         $('#trainingDatesTable').append(row);
         $.parser.parse('#trainingDatesTable'); // Parse new EasyUI widgets
+        // Re-initialize EasyUI widgets
+        $('#trainingDatesTable tr:last-child input.training-date').datebox();
+        $('#trainingDatesTable tr:last-child select.batch-count').combobox();
         bindDatePickers(); // Re-bind new training-date input with event
     }
 
@@ -521,6 +535,33 @@
             }
         });
     }
+
+    function getTrainingDateRows() {
+        const rows = $('#trainingDatesTable tr');
+        const result = [];
+
+        rows.each(function () {
+            const dateInput = $(this).find('input.training-date');
+            const batchSelect = $(this).find('select.batch-count');
+            const weekLabel = $(this).find('.week-label').text().replace('Week: ', '').trim();
+
+            const trainingDate = dateInput.datebox('getValue'); // get EasyUI datebox value
+            const batchCount = batchSelect.combobox('getValue'); // get EasyUI combobox value
+
+            if (trainingDate) {
+                result.push({
+                    training_date: trainingDate,
+                    batch_count: batchCount || null,
+                    week: weekLabel || "-"
+
+                });
+            }
+        });
+
+        return result;
+    }
+
+
 
     // Initial call
     // $(function () {
