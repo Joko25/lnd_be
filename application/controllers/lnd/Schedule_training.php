@@ -47,8 +47,9 @@ class Schedule_training extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*');
+        $this->db->select('a.*, b.*');
         $this->db->from('lnd_schedule_training a');
+        $this->db->join('lnd_schedule_training_dates b', 'a.id = b.training_id', 'left');
         
         // if (!empty($trainingActivityId)) {
         //     $this->db->like('a.id', $trainingActivityId);
@@ -98,13 +99,20 @@ class Schedule_training extends CI_Controller {
     }
 
     public function create_data() {
-        // Ambil request body secara manual
+         // Ambil raw input
         $rawInput = file_get_contents("php://input");
         parse_str($rawInput, $data);
 
+        // Check and decode training_dates (assumed as JSON string in POST)
+        $trainingDates = [];
+        if (!empty($data['training_dates'])) {
+            $trainingDates = json_decode($data['training_dates'], true);
+            unset($data['training_dates']); // Remove from main data to avoid DB issue
+        }
+
         // Validasi dan proses data
         if (!empty($data)) {
-            $dataTemp = $this->ScheduleTrainingModel->insert_data($data);
+            $dataTemp = $this->ScheduleTrainingModel->insert_data($data, $trainingDates);
             $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Schedule Training created successfully');
         } else {
             $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Schedule Training creation failed.');
