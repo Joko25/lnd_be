@@ -77,14 +77,14 @@
     var itemsTrainingActivity = [];
     var itemsIndicator = [];
 
-    function templateCompetence(index) {
+    function templateCompetence(index, initValue = '') {
         var prefix = `competence[${index}]`;
         var template = $(`<div class='form-group' data-index='${index}' id="competence_${index}">
                 <fieldset style="width: 100%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
                     <legend><b class='label-compentece-standard'>No. ${index+1}</b> <a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="removeItem(${index})"><i class="fa fa-times"></i> Hapus</a></legend>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;"><strong>Competence Standard</strong></span>
-                        <select name='${prefix}.competence_standard' class="type easyui-combogrid" style="width:50%" data-options="
+                        <select id='${prefix}.competence_standard' name='${prefix}.competence_standard' value='${initValue}' class="type easyui-combogrid" style="width:50%" data-options="
                             url: '<?= base_url('lnd/competence/list') ?>',
                             idField: 'competenceId',
                             textField: 'name',
@@ -108,12 +108,12 @@
         return template;
     }
 
-    function trainingActivity(parentIndex, index) {
+    function trainingActivity(parentIndex, index, valueTraining='') {
         var prefix = `competence[${parentIndex}].training[${index}]`;
         var template = $(`<div data-index='${index}' data-parent-index='${parentIndex}' id="template-training_${parentIndex}_${index}">
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;"><strong>Training Activity ${index+1}</strong></span>
-                    <select name='${prefix}.training_activity' class="type easyui-combogrid" style="width:50%" data-options="
+                    <select name='${prefix}.training_activity' id='${prefix}.training_activity' class="type easyui-combogrid" value='${valueTraining}' style="width:50%" data-options="
                         url: '<?= base_url('lnd/training_activity/list') ?>',
                         idField: 'id',
                         textField: 'trainingActivity', 
@@ -137,12 +137,12 @@
         return template;
     }
 
-    function indicatorTemplate(competenceIndex, trainingIndex, index){
+    function indicatorTemplate(competenceIndex, trainingIndex, index, valueIndicator=''){
         var prefix = `competence[${competenceIndex}].training[${trainingIndex}].indicator[${index}]`;
         var template = $(`<div data-index='${index}' data-training-index='${trainingIndex}'data-compentence-index='${competenceIndex}' id="template-indicator_${competenceIndex}_${trainingIndex}_${index}">
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Indicator ${index+1}</span>
-                    <input style="width:50%;" name="${prefix}" id="${prefix}" class="easyui-textbox">
+                    <input style="width:50%;" name="${prefix}" id="${prefix}" value='${valueIndicator}' class="easyui-textbox">
                     <a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="removeIndicator(${competenceIndex}, ${trainingIndex}, ${index})"><i class="fa fa-times"></i></a>
                 </div>
             </div>`);
@@ -181,11 +181,13 @@
 
     function add() {
         $('#dlg_insert').dialog('open');
+        $('#dlg_insert').dialog('setTitle', `Add Curriculum`)
         $('#dgForm').datagrid('loadData', []);
         url_save = '<?= base_url('lnd/curiculum/save') ?>';
         method = 'POST';
         $('#frm_insert').form('clear');
         $("#addrow").show();
+        $('#formContainer').empty();
 
         var formContainer = $('#formContainer');
         var totalData = formContainer.children().length;
@@ -218,10 +220,10 @@
         if(trainingContainer.children().length === 0) addTrainingActivity(totalData)
     }
 
-    function addTrainingActivity(index) {
+    function addTrainingActivity(index, initValue='') {
         var trainingContainer = $(`#training-activity_${index}`)
         var totalData = trainingContainer.children().length;
-        var templateTraining = trainingActivity(index, totalData);
+        var templateTraining = trainingActivity(index, totalData, initValue);
 
         trainingContainer.append(templateTraining)
 
@@ -229,10 +231,10 @@
 
     }
 
-    function addIndicator(competenceIndex, trainingIndex) {
+    function addIndicator(competenceIndex, trainingIndex, value='') {
         var indicatorContainer = $(`#indicator_${competenceIndex}_${trainingIndex}`)
         var totalData = indicatorContainer.children().length;
-        var template = indicatorTemplate(competenceIndex, trainingIndex, totalData);
+        var template = indicatorTemplate(competenceIndex, trainingIndex, totalData, value);
         indicatorContainer.append(template)
         $.parser.parse(`#template-indicator_${competenceIndex}_${trainingIndex}_${totalData}`);
         
@@ -323,16 +325,71 @@
     function update() {
         var row = $('#dg').datagrid('getSelected');
         if (row) {
-            generatedSubDept(row.departementId)
+            getDetailData(row.curriculum_id)
             
             $('#dlg_insert').dialog('open');
+            $('#dlg_insert').dialog('setTitle', `Edit Curriculum ${row.curriculum_id}`)
             $('#frm_insert').form('load', row);
-            url_save = '<?= base_url('lnd/curiculum/update_data/') ?>' + row.id;
+            url_save = '<?= base_url('lnd/curiculum/update_data/') ?>' + row.curriculum_id;
             method = 'PUT';
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
         }
     }
+
+    function getDetailData(curriculumId){
+        let url = '<?= base_url('lnd/curiculum/get_curiculum_by_id/') ?>' + curriculumId;
+        fetch(url)
+        .then(response => response.json())
+        .then(response => {
+            if (response.success) {
+                renderForm(response.data);
+            } else {
+                alert("Gagal mengambil data.");
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+        });
+    }
+
+    function renderForm(data) {
+        $('#formContainer').empty();
+
+        data.forEach((competence, compIndex) => {
+            const compTemplate = templateCompetence(compIndex, competence.competence_standard);
+            $('#formContainer').append(compTemplate);
+
+            // STEP 2: Parse EasyUI
+            $.parser.parse(`#competence_${compIndex}`);
+
+            // STEP 3: Tunggu agar parser selesai (agar element EasyUI terbentuk)
+            setTimeout(() => {
+                // STEP 4: Assign nilai setelah parser selesai
+                $(`#competence\\[${compIndex}\\]\\.competence_standard`).combogrid('setValue', competence.competence_standard);
+
+                competence.training.forEach((training, trainIndex) => {
+                    addTrainingActivity(compIndex, training.training_activity); // Generate training-nya
+
+                    setTimeout(() => {
+                        $(`#competence\\[${compIndex}\\]\\.training\\[${trainIndex}\\]\\.training_activity`).combogrid('setValue', training.training_activity);
+                        training.indicator.forEach((indicator, indIndex) => {
+                            addIndicator(compIndex, trainIndex, indicator);
+
+                            setTimeout(() => {
+                                // $(`input[name="competence[${compIndex}].training[${trainIndex}].indicator[${indIndex}]"]`).textbox('setValue', indicator);
+                                $(`#competence\\[${compIndex}\\]\\.training\\[${trainIndex}\\]\\.indicator\\[${indIndex}\\]`).textbox('setValue', indicator);
+                            }, 300);
+                        });
+
+                    }, 300);
+                });
+
+            }, 300); // Delay agar parser selesai
+
+        });
+    }
+
 
     function deleted() {
         var rows = $('#dg').datagrid('getSelections');
@@ -341,7 +398,7 @@
                 if (r) {
                     for (var i = 0; i < rows.length; i++) {
                         var row = rows[i];
-                        fetch('<?= base_url('lnd/curiculum/delete_data/') ?>'+row.id, {
+                        fetch('<?= base_url('lnd/curiculum/delete_data/') ?>'+row.curriculum_id, {
                             method: 'DELETE', // Metode DELETE
                         })
                         .then(response => response.json()) // Konversi response ke JSON

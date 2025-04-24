@@ -170,24 +170,48 @@ class Curiculum extends CI_Controller {
     }
 
     public function update_data($id) {
-        $rawInput = file_get_contents("php://input");
-        parse_str($rawInput, $data);
+        $raw = file_get_contents('php://input');
+        // $json = $this->input->post('data');
+        // Jika isinya dalam bentuk "data=....", decode dari format urlencoded
+        parse_str($raw, $output);
+        $jsonData = isset($output['data']) ? $output['data'] : null;
 
-        if (!empty($data)) {
-            $dataTemp = $this->CuriculumModel->update_data($id, $data);
+        // Fallback: jika format JSON biasa
+        if (!$jsonData) {
+            $jsonData = $raw;
+        }
+        $data = json_decode($jsonData, true);
+
+        if (!$data) {
+            $this->response->send(400, $data, 'Invalid data format');
+            return;
+        }
+
+        $dataTemp = $this->CuriculumModel->update_curriculum($id, $data);
+        if ($dataTemp) {
             $this->response->send(200, $dataTemp, 'Curiculum updated successfully');
         } else {
-            $this->response->send(400, null, 'Curiculum updated failed.');
+            $this->response->send(400, null, 'Curiculum update failed');
         }
     }
 
+    public function get_curiculum_by_id($curriculum_id)
+    {
+        $data = $this->CuriculumModel->get_curriculum_detail($curriculum_id);
+
+        echo json_encode([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
     public function delete_data($id) {
-        $data = $this->CuriculumModel->get_detail_data($id);
+        $data = $this->CuriculumModel->get_curriculum_detail($id);
 
         if(empty($data)) {
             $this->response->send(ResponseStatus::NOT_FOUND, null, 'Data not found');
         } else {
-            $this->CuriculumModel->delete_data($id);
+            $this->CuriculumModel->delete_curriculum($id);
             $this->response->send(200, $id, 'Curiculum delete successfully');
         }
     }
