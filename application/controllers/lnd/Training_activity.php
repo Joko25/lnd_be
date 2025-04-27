@@ -144,9 +144,8 @@ class Training_activity extends CI_Controller {
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
         $trainingActivityId = $this->input->get('trainingActivityId') ? $this->input->get('trainingActivityId') : "";
-        $send = $this->crud->reads('lnd_training_activity', ["trainingActivityId" => $post, "trainingActivityId" => $trainingActivityId]);
-        $queryTrainingActivity = $this->crud->query("SELECT a.*, b.name as competenceName FROM lnd_training_activity a JOIN lnd_competence b ON a.competenceId = b.id ");
-        echo json_encode($queryTrainingActivity);
+        $send = $this->crud->query("SELECT a.*, b.name as competenceName FROM lnd_training_activity a JOIN lnd_competence b ON a.competenceId = b.id ORDER BY a.index ASC");
+        echo json_encode($send);
     }
 
     // GET DATA COMPTENCE

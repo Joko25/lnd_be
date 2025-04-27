@@ -209,7 +209,7 @@ class Competence extends CI_Controller {
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
         $competenceId = $this->input->get('competenceId') ? $this->input->get('competenceId') : "";
-        $send = $this->crud->reads('lnd_competence', ["competenceId" => $post, "competenceId" => $competenceId]);
+        $send = $this->crud->reads('lnd_competence', ["competenceId" => $post, "competenceId" => $competenceId], [], "", "index", "asc");
         echo json_encode($send);
     }
     //UPLOAD DATA

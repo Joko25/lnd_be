@@ -31,35 +31,8 @@
 <div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 750px; height:600px; top: 20px;">
     <form id="frm_insert" method="post" novalidate style="padding:10px">
         <div id="formContainer">
-            <!-- <div class="form-group" id="row_0">
-                <div class="fitem ">
-                    <span style="width:35%; display:inline-block;">Competence Standard</span>
-                    <select class="type" onchange="updateOptions(this)">
-                        <option value="competence">Standard Competence</option>
-                        <option value="training">Training Activity</option>
-                    </select>
-                    <button type="button" onclick="removeRow('0')">Remove</button>
-                </div>
-            </div> -->
         </div>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" id="addrow" onclick="append()"><i class="fa fa-plus"></i> Add Competence</a>
-        <!-- <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="removeCurriculum()"><i class="fa fa-times"></i> Remove</a> -->
-        <!-- <table id="dgForm" class="easyui-datagrid" style="width:100%;" toolbar="#toolbarForm" data-options="
-                iconCls: 'icon-edit',
-                singleSelect: true,
-                method: 'get',
-                onClickCell: onClickCell,
-                onEndEdit: onEndEdit
-            ">
-            <thead>
-                <tr>
-                    <th data-options="field:'competenceId',width:200,
-                            editor:'textbox'">Competence Standard</th>
-                    <th data-options="field:'trainingActivityId',width:200, editor:'textbox'">Training Activities</th>
-                    <th data-options="field:'indicator',width:200, editor:'textbox'">Indicators</th>
-                </tr>
-            </thead>
-        </table> -->
     </form>
 </div>
 
@@ -84,14 +57,16 @@
                     <legend><b class='label-compentece-standard'>No. ${index+1}</b> <a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="removeItem(${index})"><i class="fa fa-times"></i> Hapus</a></legend>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;"><strong>Competence Standard</strong></span>
-                        <select id='${prefix}.competence_standard' name='${prefix}.competence_standard' value='${initValue}' class="type easyui-combogrid" style="width:50%" data-options="
+                        <select id='${prefix}.competence_standard' name='${prefix}.competence_standard' required value='${initValue}' class="type easyui-combogrid" style="width:50%" data-options="
                             url: '<?= base_url('lnd/competence/list') ?>',
                             idField: 'competenceId',
                             textField: 'name',
                             mode: 'remote',
                             fitColumns: true,
+                            panelWidth: 500,
                             columns: [[
-                                {field:'competenceId',title:'ID',width:50},
+                                {field:'index',title:'Index',width:50, align:'center'},
+                                {field:'competenceId',title:'ID',width:150},
                                 {field:'name',title:'Nama Kompetensi',width:200}
                             ]]" onchange="updateOptions(this)">
                         </select>
@@ -113,14 +88,15 @@
         var template = $(`<div data-index='${index}' data-parent-index='${parentIndex}' id="template-training_${parentIndex}_${index}">
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;"><strong>Training Activity ${index+1}</strong></span>
-                    <select name='${prefix}.training_activity' id='${prefix}.training_activity' class="type easyui-combogrid" value='${valueTraining}' style="width:50%" data-options="
+                    <select name='${prefix}.training_activity' id='${prefix}.training_activity' required class="type easyui-combogrid" value='${valueTraining}' style="width:50%" data-options="
                         url: '<?= base_url('lnd/training_activity/list') ?>',
                         idField: 'id',
                         textField: 'trainingActivity', 
                         mode: 'remote',
                         fitColumns: true,
+                        panelWidth: 500,
                         columns: [[
-                            {field:'id',title:'ID',width:50},
+                            {field:'trainingActivityId',title:'ID',width:150},
                             {field:'trainingActivity',title:'Activity Name',width:200},
                             {field:'competenceName',title:'Competence',width:200}
                         ]]">
@@ -142,7 +118,7 @@
         var template = $(`<div data-index='${index}' data-training-index='${trainingIndex}'data-compentence-index='${competenceIndex}' id="template-indicator_${competenceIndex}_${trainingIndex}_${index}">
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Indicator ${index+1}</span>
-                    <input style="width:50%;" name="${prefix}" id="${prefix}" value='${valueIndicator}' class="easyui-textbox">
+                    <input style="width:50%;" name="${prefix}" id="${prefix}" required value="${valueIndicator}" class="easyui-textbox">
                     <a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="removeIndicator(${competenceIndex}, ${trainingIndex}, ${index})"><i class="fa fa-times"></i></a>
                 </div>
             </div>`);
@@ -215,6 +191,8 @@
         var template = templateCompetence(totalData);
         formContainer.append(template);
         $.parser.parse(`#competence_${totalData}`);
+        $(`#competence_${totalData}`).form('validate');
+
 
         var trainingContainer = $(`#training-activity_${totalData}`)
         if(trainingContainer.children().length === 0) addTrainingActivity(totalData)
@@ -227,8 +205,12 @@
 
         trainingContainer.append(templateTraining)
 
-        $.parser.parse(`#template-training_${index}_${totalData}`);
+        var indicatorContainer = $(`#indicator_${index}_${totalData}`)
+        if(indicatorContainer.children().length === 0) addIndicator(index, totalData)
 
+        
+        $.parser.parse(`#template-training_${index}_${totalData}`);
+        $(`#template-training_${index}_${totalData}`).form('validate');
     }
 
     function addIndicator(competenceIndex, trainingIndex, value='') {
@@ -237,7 +219,37 @@
         var template = indicatorTemplate(competenceIndex, trainingIndex, totalData, value);
         indicatorContainer.append(template)
         $.parser.parse(`#template-indicator_${competenceIndex}_${trainingIndex}_${totalData}`);
+        $(`#template-indicator_${competenceIndex}_${trainingIndex}_${totalData}`).form('validate');
         
+    }
+
+    function validateForm() {
+        var isValid = true;
+
+        $('#formContainer').find('input, select, textarea').each(function() {
+            var $input = $(this);
+            var value = $input.val();
+            var required = $input.attr('required');
+
+            console.log("#value", value);
+            
+
+            // Cek hanya field yang required
+            if (required && (value === null || value.trim() === '')) {
+                isValid = false;
+
+                // Bisa kasih efek visual juga
+                $input.addClass('error'); // kasih class error
+            } else {
+                $input.removeClass('error'); // bersihkan kalau sudah diisi
+            }
+        });
+
+        if (!isValid) {
+            alert('Ada field yang belum diisi. Mohon lengkapi form.');
+        }
+
+        return isValid;
     }
 
     function removeItem(index) {
@@ -297,10 +309,6 @@
         $(`#training-activity_${index}`).html(`${renderedTraining}`);
         $.parser.parse(`#training-activity_${index}`); // Parse EasyUI components
         // $('#frm_insert').form('validate');
-    }
-
-    function removeRow(rowId) {
-        $('#' + rowId).remove();
     }
 
     function updateOptions(select) {
@@ -514,28 +522,32 @@
         // Buat body dengan format x-www-form-urlencoded (query string)
         const nestedData = serializeToNestedObject(requestData.serializeArray());
         // const formData = new URLSearchParams(requestData).toString();
+        if(validatePayload(nestedData)) {
+            fetch(url_save, {
+                method: method, // Metode POST
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded' // Header penting
+                },
+                body: "data=" + encodeURIComponent(JSON.stringify(nestedData)) //JSON.stringify(nestedData) // Data body
+            })
+            .then(response => {
+                return response.json()}) // Ubah response ke JSON
+            .then(data => {
+                if(data.code >= 200 && data.code <= 300) {
+                    toastr.success(data.message, 'Success');
+                    $('#dg').datagrid('reload');
+                    $('#dlg_insert').dialog('close');
+                    
+                }
+            })
+            .catch(error => {
+                toastr.error('Something Error', 'Error');
+                console.error('Terjadi kesalahan:', error);
+            });
+        }else{
+            toastr.error('Mohon lengkapi data', 'Error');
+        }
 
-        fetch(url_save, {
-            method: method, // Metode POST
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded' // Header penting
-            },
-            body: "data=" + encodeURIComponent(JSON.stringify(nestedData)) //JSON.stringify(nestedData) // Data body
-        })
-        .then(response => {
-            return response.json()}) // Ubah response ke JSON
-        .then(data => {
-            if(data.code >= 200 && data.code <= 300) {
-                toastr.success(data.message, 'Success');
-                $('#dg').datagrid('reload');
-                $('#dlg_insert').dialog('close');
-                
-            }
-        })
-        .catch(error => {
-            toastr.error('Something Error', 'Error');
-            console.error('Terjadi kesalahan:', error);
-        });
     }
 
     function initDgForm() {
@@ -631,6 +643,50 @@
         });
         row.productname = $(ed.target).combobox('getText');
     }
+
+    function reload() {
+        window.location.reload();
+    }
+
+    function validatePayload(data) {
+        if (!data || !data.competence || !Array.isArray(data.competence)) {
+            alert('Data kompetence tidak valid.');
+            return false;
+        }
+
+        for (let i = 0; i < data.competence.length; i++) {
+            const comp = data.competence[i];
+
+            if (!comp.competence_standard || comp.competence_standard.trim() === '') {
+                return false;
+            }
+
+            if (!comp.training || !Array.isArray(comp.training)) {
+                return false;
+            }
+
+            for (let j = 0; j < comp.training.length; j++) {
+                const training = comp.training[j];
+
+                if (!training.training_activity || training.training_activity.trim() === '') {
+                    return false;
+                }
+
+                if (!training.indicator || !Array.isArray(training.indicator) || training.indicator.length === 0) {
+                    return false;
+                }
+
+                for (let k = 0; k < training.indicator.length; k++) {
+                    const indicator = training.indicator[k];
+                    if (!indicator || indicator.trim() === '') {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
     
     $(function() {
         //SETTING DATAGRID EASYUI
@@ -669,7 +725,7 @@
             buttons: [{
                 text: 'Save',
                 iconCls: 'icon-ok',
-                handler: function() {
+                handler: function() {   q
                     if($(this).form('validate')) {
                         var formData = $('#frm_insert'); //.serialize();
                         
