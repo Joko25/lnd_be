@@ -286,7 +286,7 @@
     });
 
     function download_excel() {
-        window.location.assign('<?= base_url('template/tmp_training_activity3.xls') ?>');
+        window.location.assign('<?= base_url('template/tmp_training_activity_new.xls') ?>');
     }
 
     //UPLOAD DATA

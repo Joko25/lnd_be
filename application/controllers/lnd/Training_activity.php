@@ -201,9 +201,9 @@ class Training_activity extends CI_Controller {
     {
         if ($this->input->post()) {
             $data = $this->input->post('data');
-            $tempCompetenceId = $data["competenceId"];
+            $tempCompetenceName = $data["competenceId"];
 
-            $queryCompetence = $this->db->query("SELECT a.id FROM lnd_competence AS a WHERE a.name = '$tempCompetenceId' ");
+            $queryCompetence = $this->db->query("SELECT a.id FROM lnd_competence AS a WHERE UPPER(a.name) = UPPER('$tempCompetenceName')");
             $resCompetence = $queryCompetence->row_array();
             $data['competenceId'] = $resCompetence ? $resCompetence['id'] : null;
 
