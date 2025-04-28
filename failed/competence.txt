@@ -1,0 +1,2 @@
+Index  4 already exists 
+Competence Name cannot be Null

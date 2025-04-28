@@ -346,14 +346,14 @@
         $('#p_finish').html(total);
     }
 
-    function handleUploadResult(result, total, json, number, value, success, failed) {
+    function handleUploadResult(result, total, json, number, value, success, failed) {   
         if (result.theme == "success") {
             $('#p_success').html(success);
-            const title = "<b style='color: green;'>" + result.title + "</b> | " + result.message;
+            var title = "<b style='color: green;'>" + result.title + "</b> | " + result.message;
             processUploadData(total, json, number + 1, value, success + 1, failed);
         } else {
             $('#p_failed').html(failed);
-            const title = "<b style='color: red;'>" + result.title + "</b> | " + result.message;
+            var title = "<b style='color: red;'>" + result.title + "</b> | " + result.message;
             logFailedUpload(json[number - 1], result.message);
             processUploadData(total, json, number + 1, value, success, failed + 1);
         }
@@ -386,6 +386,6 @@
         }, 5000);
     }
     function download_excel() {
-        window.location.assign('<?= base_url('template/tmp_competence.xls') ?>');
+        window.location.assign('<?= base_url('template/tmp_competence_new.xls') ?>');
     }
 </script>

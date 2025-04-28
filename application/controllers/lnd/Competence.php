@@ -100,7 +100,7 @@ class Competence extends CI_Controller {
 
         $this->db->select('*');
         $this->db->from('lnd_competence');
-        $this->db->order_by('name', 'ASC');
+        $this->db->order_by('index', 'ASC');
         $records = $this->db->get()->result_array();
 
         $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
@@ -228,11 +228,11 @@ class Competence extends CI_Controller {
             $data = new Spreadsheet_Excel_Reader($file, false);
             $total_row = $data->rowcount($sheet_index = 0);
 
-            for ($i = 2; $i <= $total_row; $i++) {
+            for ($i = 3; $i <= $total_row; $i++) {
                 $datas[] = array(
-                    'name' => trim($data->val($i, 1)),
-                    'index' => trim($data->val($i, 2)),
-                    'remark' => trim($data->val($i, 3))
+                    'name' => trim($data->val($i, 2)),
+                    'index' => trim($data->val($i, 3)),
+                    'remark' => trim($data->val($i, 4))
                 );
             }
 
@@ -251,14 +251,20 @@ class Competence extends CI_Controller {
             $data = $this->input->post('data');
             $idGenerateDate = $this->crud->autoidPrifix('lnd_competence', 'competenceId', 'C'); 
             $data['competenceId'] = $idGenerateDate;
-            // Validasi dan proses data
-            if (!empty($data)) {
-                $dataTemp = $this->CompetenceModel->insert_data($data);
-                echo json_encode(array("title" => "Uploaded", "message" => $data['name'] . " Uploaded", "theme" => "success"));
-                // $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Competence created successfully');
+            $tempIndex = $data["index"];
+
+            $queryIndex = $this->db->query("SELECT a.index FROM lnd_competence AS a WHERE a.index = '$tempIndex' ");
+            $resIndex = $queryIndex->row_array();
+
+            if (!empty($resIndex)) {
+                echo json_encode(array("title" => "Not Found", "message" => "Index  " . $data['index'] . " already exists ", "theme" => "error"));
+            } else if(empty($data['name'])) {
+                echo json_encode(array("title" => "Not Found", "message" => "Competence Name cannot be Null", "theme" => "error"));            
+            } else if(empty($data['index'])) {
+                echo json_encode(array("title" => "Not Found", "message" => "Index cannot be Null", "theme" => "error"));
             } else {
-                echo json_encode(array("title" => "Warning", "message" => $data['name'] . " Competence upload failed.", "theme" => "error"));
-                // $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Competence creation failed.');
+                $send = $this->crud->create('lnd_competence', $data);
+                echo $send;
             }
         }
     }
