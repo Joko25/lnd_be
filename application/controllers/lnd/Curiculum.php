@@ -54,11 +54,13 @@ class Curiculum extends CI_Controller {
             c.indicator_name,
             a.*,
             d.trainingActivity AS activityName,
+            e.name AS competenceName
         ');
         $this->db->from('lnd_curriculum a');
         $this->db->join('lnd_curriculum_training_activity b', 'a.id = b.competence_id', 'left');
         $this->db->join('lnd_curriculum_indicator c', 'b.id = c.training_id', 'left');
         $this->db->join('lnd_training_activity d', 'b.training_activity = d.id', 'left'); // join ke master activity
+        $this->db->join('lnd_competence e', 'e.competenceId = a.competence_standard', 'left'); // join ke master activity
 
         if (!empty($curriculum_id)) {
             $this->db->where('a.curriculum_id', $curriculum_id);

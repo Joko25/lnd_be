@@ -696,6 +696,7 @@
             columns: [[
                 {field: 'ck', rowspan:'2', checkbox: true},
                 {field: 'curriculum_id', rowspan:'2', width:150, title:'Curiculum ID', align: 'left'},
+                {field: 'competenceName', rowspan:'2', width:150, title:'Standard Competence', width:150, align: 'left'},
                 {field: 'activityName', rowspan:'2', width:150, title:'Training Activity', align: 'left'},
                 {field: 'indicator_name', rowspan:'2', width:150, title:'Indicator', width:100, align: 'left'},
                 {field: '', colspan:2, title:'Created', width:150, halign: 'center'},
@@ -710,7 +711,7 @@
             singleSelect: true,
             view: groupview,
             groupField:'curriculum_id',
-            groupFormatter:function(value,rows){
+            groupFormatter:function(value, rows){
                 return value + ' - ' + rows.length + ' Item(s)';
             },
             pagination: true,
@@ -725,7 +726,7 @@
             buttons: [{
                 text: 'Save',
                 iconCls: 'icon-ok',
-                handler: function() {   q
+                handler: function() {
                     if($(this).form('validate')) {
                         var formData = $('#frm_insert'); //.serialize();
                         

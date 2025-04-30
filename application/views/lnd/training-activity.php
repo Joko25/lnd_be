@@ -341,6 +341,8 @@
                         });
 
                         var json = eval('(' + result + ')');
+                        console.log("#json", json);
+                        
                         requestData(json.total, json);
 
                         function requestData(total, json, number = 1, value = 0, success = 1, failed = 1) {
@@ -387,6 +389,8 @@
                                         $("#p_remarks").append(title + "<br>");
                                     },
                                     fail: function(jqXHR, textStatus) {
+                                        console.log("#textStatus", textStatus, jqXHR);
+                                        
                                         if (textStatus == "error") {
                                             Swal.fire({
                                                 title: 'Connection Time Out, Check Your Connection',

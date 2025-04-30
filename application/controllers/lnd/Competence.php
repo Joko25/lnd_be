@@ -249,6 +249,17 @@ class Competence extends CI_Controller {
     {
         if ($this->input->post()) {
             $data = $this->input->post('data');
+            // Validasi data duplikat terlebih dahulu
+            $existingData = $this->crud->read('lnd_competence', [
+                "name" => $data['name'],
+                "index" => $data['index']
+            ]);
+
+            if (!empty($existingData)) {
+                echo json_encode(array("title" => "Data Duplicated", "message" => "please check Competene Name => ". $data['trainingActivity'], "theme" => "error"));
+                return;
+            }
+
             $idGenerateDate = $this->crud->autoidPrifix('lnd_competence', 'competenceId', 'C'); 
             $data['competenceId'] = $idGenerateDate;
             $tempIndex = $data["index"];

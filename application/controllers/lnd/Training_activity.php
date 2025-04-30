@@ -142,7 +142,6 @@ class Training_activity extends CI_Controller {
 
     public function list()
     {
-        $post = isset($_POST['q']) ? $_POST['q'] : "";
         $trainingActivityId = $this->input->get('trainingActivityId') ? $this->input->get('trainingActivityId') : "";
         $send = $this->crud->query("SELECT a.*, b.name as competenceName FROM lnd_training_activity a JOIN lnd_competence b ON a.competenceId = b.id ORDER BY a.index ASC");
         echo json_encode($send);
@@ -201,6 +200,18 @@ class Training_activity extends CI_Controller {
     {
         if ($this->input->post()) {
             $data = $this->input->post('data');
+            
+            // Validasi data duplikat terlebih dahulu
+            $existingData = $this->crud->read('lnd_training_activity', [
+                "trainingActivity" => $data['trainingActivity'],
+                "index" => $data['index']
+            ]);
+
+            if (!empty($existingData)) {
+                echo json_encode(array("title" => "Data Duplicated", "message" => "please check Training Activity => ". $data['trainingActivity'], "theme" => "error"));
+                return;
+            }
+
             $tempCompetenceName = $data["competenceId"];
 
             $queryCompetence = $this->db->query("SELECT a.id FROM lnd_competence AS a WHERE UPPER(a.name) = UPPER('$tempCompetenceName')");
@@ -223,15 +234,6 @@ class Training_activity extends CI_Controller {
                 $send = $this->crud->create('lnd_training_activity', $data);
                 echo $send;
             }
-            // Validasi dan proses data
-            // if (!empty($data)) {
-            //     $dataTemp = $this->TrainingActivityModel->insert_data($data);
-            //     echo json_encode(array("title" => "Good Job", "message" => "Data Saved Successfully", "theme" => "success"));
-            //     // $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Training Activity created successfully');
-            // } else {
-            //     echo json_encode(array("title" => "Available", "message" => "Upload error", "theme" => "error"));
-            //     // $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Training Activity creation failed.');
-            // }
         }
     }
 
@@ -258,6 +260,8 @@ class Training_activity extends CI_Controller {
             header("Content-Disposition: attachment; filename=training_activity_$format.xls");
         }
 
+        $induction = ['Basic Requirement', 'L&D Program: Upgrade Competence', 'L&D Program: Refresh Training', 'L&D Program: Training Activities'];
+
         //Config
         $this->db->select('*');
         $this->db->from('config');
@@ -266,7 +270,13 @@ class Training_activity extends CI_Controller {
         $this->db->select('a.*, b.name as competenceName');
         $this->db->from('lnd_training_activity a');
         $this->db->join('lnd_competence b', 'a.competenceId = b.id');
+        // Custom ORDER BY using FIELD for induction column
+        $field_order = "FIELD(a.induction, " . implode(',', array_map(function($val) {
+            return "'" . $val . "'";
+        }, $induction)) . ")";
+
         $this->db->order_by('index', 'ASC');
+        $this->db->order_by($field_order, '', false); // false agar tidak di-escape ulang
         $records = $this->db->get()->result_array();
 
         $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
