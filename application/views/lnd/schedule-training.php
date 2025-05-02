@@ -239,6 +239,7 @@
             body: formData // Data body
         })
         .then(response => {
+            console.log(response.json());
             return response.json()}) // Ubah response ke JSON
         .then(data => {
             if(data.code >= 200 && data.code <= 300) {
@@ -398,13 +399,17 @@
                 title: w,
                 width: 80,
                 align: 'center',
-                formatter: function () {
-                    return `
-                        <div style="text-align:center; white-space: normal;">
-                            <div style="height:50%; border-bottom:1px solid #ccc;">&nbsp;</div>
-                            <div style="height:50%;">&nbsp;</div>
-                        </div>
-                    `;
+                formatter: function (value) {
+					if(value) {
+						// Format the value to show the date in 'dd MMM' format
+						const date = new Date(value); // Assuming value is a valid date string
+						const day = date.getDate();
+						const month = date.toLocaleString('default', { month: 'short' }); // Get short month (e.g., 'Apr')
+                        console.log(value);
+                        
+						return `${day} ${month}`;
+					}
+                    return ``;
                 },
                 styler: function () {
                     return 'white-space: normal;';

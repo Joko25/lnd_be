@@ -44,12 +44,13 @@ class Schedule_training extends CI_Controller {
         $page   = isset($page) ? intval($page) : 1;
         $rows   = isset($rows) ? intval($rows) : 10;
         $offset = ($page - 1) * $rows;
-
-        // Query Builder
+		// Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, b.*');
+        $this->db->select('a.*, b.*, e.name, ta.trainingActivity');
         $this->db->from('lnd_schedule_training a');
         $this->db->join('lnd_schedule_training_dates b', 'a.id = b.training_id', 'left');
+		$this->db->join('employees e', 'e.id = a.trainee', 'left');
+		$this->db->join('lnd_training_activity ta', 'ta.id = a.trainingName', 'left');
         
         // if (!empty($trainingActivityId)) {
         //     $this->db->like('a.id', $trainingActivityId);
@@ -68,10 +69,58 @@ class Schedule_training extends CI_Controller {
         $records = $this->db->get()->result_array();
         $this->db->flush_cache(); // Hapus cache query
 
-        // Mapping Data
+		$data = [];
+		$grouped = [];
+
+		foreach ($records as $row) {
+			// === Grouping key per row ===
+			$key = $row['trainingName'] . '|' . $row['trainee'] . '|' . $row['registerDate']; // You can customize this
+
+			if (!isset($grouped[$key])) {
+				$grouped[$key] = [
+					'induction' => $row['induction'],
+					'trainingName' => $row['trainingActivity'],
+		//          'trainer' => $row['trainer'],
+					'trainee' => $row['name'],
+					'remarks' => $row['remarks'],
+					'totalTrainee' => $row['totalTrainee'],
+					'duration' => $row['duration'],
+					'date' => $row['registerDate'],
+					'createdBy' => $row['createdBy'],
+					'createdTime' => $row['createdTime'],
+					'updatedBy' => $row['updatedBy'],
+					'updatedTime' => $row['updatedTime'],
+				];
+			}
+
+			$trainingDate = $row['training_date'];   // Example: 2025-04-22
+			$batchCount = $row['batch_count'];       // Example: 1
+			$weekLabel = $row['week_label'];         // Example: W1
+
+			if ($trainingDate && $weekLabel) {
+				$date = new DateTime($trainingDate);
+				$monthName = $date->format('F');         // April
+				$year = $date->format('Y');              // 2025
+				$shortDate = $date->format('j M');       // 22 Apr
+
+				$fieldName = "{$monthName}_{$year}_{$weekLabel}"; // April_2025_W1
+
+				// If already exists, append new date
+				if (!empty($grouped[$key][$fieldName])) {
+					$grouped[$key][$fieldName] .= ', ' . $shortDate;
+				} else {
+					$grouped[$key][$fieldName] = $shortDate;
+				}
+			}
+		}
+
+// Push all grouped data to final $data array
+		$data = array_values($grouped);
+
+		// Mapping Data
         $result = [
             'total' => $totalRows,
-            'rows' => $records
+            'rows' => $data
         ];
 
         // Kirim sebagai JSON
