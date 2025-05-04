@@ -290,6 +290,7 @@
         var formData = $('#formContainer .form-group');
         formData.each(function(index) {
             $(this).attr('data-index', index); // Mengatur data-index sesuai urutan
+            $(this).attr('id', `competence_${index}`)
             $(this).find('.label-compentece-standard').text(`No. ${index+1}`)
         });
     }
