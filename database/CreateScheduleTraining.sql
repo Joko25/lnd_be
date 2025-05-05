@@ -25,3 +25,10 @@ CREATE TABLE lnd_schedule_training_dates (
     createdTime DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (training_id) REFERENCES lnd_schedule_training(id) ON DELETE CASCADE
 );
+
+CREATE TABLE lnd_schedule_trainers (
+	id CHAR(36) NOT NULL PRIMARY KEY DEFAULT (UUID()),
+	training_id CHAR(36) NOT NULL, -- FK to master table
+	trainer_name TEXT,
+	trainer_id CHAR(36)
+);
