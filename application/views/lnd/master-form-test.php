@@ -61,7 +61,7 @@
                 
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Question Type</span>
-                    <select class="easyui-combobox" name="questionType" required="" style="width:60%;" data-options="onSelect: onTypeSelect">
+                    <select class="easyui-combobox" name="questionType" required="" style="width:60%;" data-options="onSelect: onTypeSelect, panelHeight:100">
                         <option value="DIFFERENT" selected>Pre-Test & Post Test is Different</option>
                         <option value="SAME">Pre-Test & Post Test is The Same</option>
                     </select>
@@ -457,7 +457,7 @@
         });
     }
 
-    function sendDataToServer(requestData) {
+    function sendDataToServer(requestData, payload) {
         console.log("#data", requestData, requestData.serializeArray());
         
         // Buat body dengan format x-www-form-urlencoded (query string)
@@ -466,27 +466,45 @@
         console.log("#nestedData", payload, validateNestedJson(payload));
         
         if(validateNestedJson(payload).length === 0) {
-            fetch(url_save, {
-                method: method, // Metode POST
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded' // Header penting
+            $.ajax({
+                url: url_save,
+                method: method,
+                data: payload,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    console.log('Upload sukses', response);
+                    if(response.code >= 200 && response.code <= 300) {
+                        toastr.success(response.message, 'Success');
+                        $('#dg').datagrid('reload');
+                        $('#dlg_insert').dialog('close');      
+                    }
                 },
-                body: "data=" + encodeURIComponent(JSON.stringify(payload)) //JSON.stringify(nestedData) // Data body
-            })
-            .then(response => {
-                return response.json()}) // Ubah response ke JSON
-            .then(data => {
-                if(data.code >= 200 && data.code <= 300) {
-                    toastr.success(data.message, 'Success');
-                    $('#dg').datagrid('reload');
-                    $('#dlg_insert').dialog('close');
-                    
+                error: function(xhr) {
+                    console.error('Upload gagal', xhr);
                 }
-            })
-            .catch(error => {
-                toastr.error('Something Error', 'Error');
-                console.error('Terjadi kesalahan:', error);
             });
+            // fetch(url_save, {
+            //     method: method, // Metode POST
+            //     headers: {
+            //         'Content-Type': 'application/x-www-form-urlencoded' // Header penting
+            //     },
+            //     body: payload"data=" + encodeURIComponent(JSON.stringify(payload)) //JSON.stringify(nestedData) // Data body
+            // })
+            // .then(response => {
+            //     return response.json()}) // Ubah response ke JSON
+            // .then(data => {
+            //     if(data.code >= 200 && data.code <= 300) {
+            //         toastr.success(data.message, 'Success');
+            //         $('#dg').datagrid('reload');
+            //         $('#dlg_insert').dialog('close');
+                    
+            //     }
+            // })
+            // .catch(error => {
+            //     toastr.error('Something Error', 'Error');
+            //     console.error('Terjadi kesalahan:', error);
+            // });
         }else{
             toastr.error('Mohon lengkapi data', 'Error');
         }
@@ -668,12 +686,19 @@
                         // $('#frm_insert').form()
                         const form = $('#frm_insert')[0];
                         const formData = new FormData(form);
-                        const result = parseFormDataToJson(formData);
+                        const data = formDataToNestedJsonWithFiles(formData);
+                        
+                        const payload = new FormData();
+                        payload.append('data', JSON.stringify(data.json)); // kirim data JSON
+                        
+                        // Tambahkan file satu per satu
+                        for (const [path, file] of Object.entries(data.files)) {
+                            payload.append(path, file);
+                        }
+                        console.log("#json", data, payload);
+                        
 
-                        console.log(result.data); // JSON data
-                        console.log(result.files); // Semua file yang ada
-
-                        sendDataToServer(formData)
+                        sendDataToServer(formData, payload)
                     }
                 }
             }]
@@ -681,36 +706,22 @@
 
     });
 
-    function parseFormDataToJson(formData) {
-    const result = {};
-    const files = {};
+    function formDataToNestedJsonWithFiles(formData) {
+        const json = {};
+        const files = {};
 
-    for (let [name, value] of formData.entries()) {
-        // Handle file input
-        if (value instanceof File) {
-            files[name] = value;
-        } else {
-            // Tangani nested input seperti question[0].opsion[0].title
-            const keys = name.match(/[^[\]]+/g);
-            let ref = result;
-
-            for (let i = 0; i < keys.length; i++) {
-                const key = keys[i];
-                if (i === keys.length - 1) {
-                    ref[key] = value;
-                } else {
-                    if (!ref[key]) {
-                        // Cek apakah index numerik → array
-                        ref[key] = /^\d+$/.test(keys[i + 1]) ? [] : {};
-                    }
-                    ref = ref[key];
-                }
+        for (let [name, value] of formData.entries()) {
+            if (value instanceof File && value.name) {
+                // File dimasukkan ke files dan referensi path disimpan di json
+                _.set(json, name, value.name); // pakai nama file di JSON
+                _.set(files, name, value);     // simpan file asli di objek files
+            } else {
+                _.set(json, name, value); // Untuk input biasa
             }
         }
-    }
 
-    return { data: result, files: files };
-}
+        return { json, files };
+    }
 
     
 </script>

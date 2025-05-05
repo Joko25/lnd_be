@@ -74,6 +74,59 @@ class Master_form_test extends CI_Controller {
         echo json_encode($result);
     }
 
+    public function storeData() {
+        // Ambil JSON string dari form multipart
+        $json = $this->input->post('data');
+        $data = json_decode($json, true);
+
+        if (!$data) {
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode(['error' => 'Invalid JSON']));
+        }
+
+        // Validasi manual (opsional)
+        if (empty($data['training_name']) || empty($data['department']) || empty($data['questionType'])) {
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(422)
+                ->set_output(json_encode(['error' => 'Missing required fields']));
+        }
+
+        // Handle file upload jika ada
+        $uploadedFiles = [];
+        foreach ($_FILES as $field => $file) {
+            if ($file['error'] == 0) {
+                $uploadPath = './uploads/questions/';
+                if (!is_dir($uploadPath)) {
+                    mkdir($uploadPath, 0755, true);
+                }
+
+                $config['upload_path']   = $uploadPath;
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                $config['file_name']     = uniqid('img_');
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload($field)) {
+                    $uploaded = $this->upload->data();
+                    $uploadedFiles[$field] = 'uploads/questions/' . $uploaded['file_name'];
+                } else {
+                    return $this->output
+                        ->set_content_type('application/json')
+                        ->set_status_header(500)
+                        ->set_output(json_encode(['error' => $this->upload->display_errors('', '')]));
+                }
+            }
+        }
+
+        // Simpan ke DB (pass both JSON data & uploadedFiles)
+        $save = $this->MasterFormTestModel->insertQuestion($data, $uploadedFiles);
+        return $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode(['success' => $save]));
+    }
+
     public function get_data() {
         $data = $this->CompetenceModel->get_all_data();
 
