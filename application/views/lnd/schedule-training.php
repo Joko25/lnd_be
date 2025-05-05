@@ -97,11 +97,18 @@
                     <option value="Departement">Departement</option>
                 </select>            
             </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Trainer Name</span>
-                <input style="width:60%;" name="" id="" required="" class="easyui-textbox">
-            </div>
-            <div class="fitem" id="trainee-container">
+<!--            <div class="fitem">-->
+<!--                <span style="width:35%; display:inline-block;">Trainer Name</span>-->
+<!--                <input style="width:60%;" name="trainerName" id="trainerName" required="" class="easyui-combobox" panelHeight="auto">-->
+<!--            </div>-->
+			<div id="trainers-wrapper">
+				<div class="fitem" id="trainerRow_1">
+					<span style="width:35%; display:inline-block;">Trainer Name</span>
+					<input style="width:60%;" name="trainerName[]" id="trainerName_1" required class="easyui-combobox" panelHeight="auto">
+					<a href="javascript:void(0)" class="easyui-linkbutton" style="margin-left:5px;" onclick="addTrainer()">+</a>
+				</div>
+			</div>
+			<div class="fitem" id="trainee-container">
                 <span style="width:35%; display:inline-block;">Trainee</span>
                 <input style="width:60%;" name="trainee" id="trainee" required="" class="easyui-textbox">
             </div>
@@ -147,6 +154,32 @@
 
 <script>
     window.onload = function() {
+		$(`#trainerName_1`).combogrid({
+			url: '<?= base_url('lnd/schedule_training/readsEmployeesLeaderUp') ?>',
+			panelWidth: 450,
+			idField: 'id',
+			textField: 'name',
+			mode: 'remote',
+			fitColumns: true,
+			prompt: 'Choose Training Name',
+			icons: [{
+				iconCls: 'icon-clear',
+				handler: function(e) {
+					$(e.data.target).combogrid('clear').combogrid('textbox').focus();
+				}
+			}],
+			columns: [
+				[{
+					field: 'name',
+					title: 'Employee Name',
+					width: 120
+				}, {
+					field: 'positionName',
+					title: 'Position',
+					width: 200
+				}]
+			],
+		});
         $('#trainingName').combogrid({
             url: '<?= base_url('lnd/training_activity/list') ?>',
             panelWidth: 450,
@@ -173,6 +206,60 @@
                 }]
             ],
         });
+
+		$('#trainingMaterialFilter').combogrid({
+			url: '<?= base_url('lnd/training_activity/list') ?>',
+			panelWidth: 450,
+			idField: 'id',
+			textField: 'trainingActivity',
+			mode: 'remote',
+			fitColumns: true,
+			prompt: 'Choose Training Material',
+			icons: [{
+				iconCls: 'icon-clear',
+				handler: function(e) {
+					$(e.data.target).combogrid('clear').combogrid('textbox').focus();
+				}
+			}],
+			columns: [
+				[{
+					field: 'competenceName',
+					title: 'Competence Standard',
+					width: 120
+				}, {
+					field: 'trainingActivity',
+					title: 'Training Activity Name',
+					width: 200
+				}]
+			],
+		});
+
+		$('#trainerName').combogrid({
+			url: '<?= base_url('lnd/schedule_training/readsEmployeesLeaderUp') ?>',
+			panelWidth: 450,
+			idField: 'id',
+			textField: 'name',
+			mode: 'remote',
+			fitColumns: true,
+			prompt: 'Choose Training Name',
+			icons: [{
+				iconCls: 'icon-clear',
+				handler: function(e) {
+					$(e.data.target).combogrid('clear').combogrid('textbox').focus();
+				}
+			}],
+			columns: [
+				[{
+					field: 'name',
+					title: 'Employee Name',
+					width: 120
+				}, {
+					field: 'positionName',
+					title: 'Position',
+					width: 200
+				}]
+			],
+		});
     }
 
     function add() {
@@ -318,6 +405,11 @@
                             return;
                         }
 
+						if (trainingDates.length === 0) {
+							toastr.error("Please select at least one training date.", "Error");
+							return;
+						}
+
                         // Set the value of the hidden input
                         $('#training_dates_json').val(JSON.stringify(trainingDates));
 
@@ -398,13 +490,17 @@
                 title: w,
                 width: 80,
                 align: 'center',
-                formatter: function () {
-                    return `
-                        <div style="text-align:center; white-space: normal;">
-                            <div style="height:50%; border-bottom:1px solid #ccc;">&nbsp;</div>
-                            <div style="height:50%;">&nbsp;</div>
-                        </div>
-                    `;
+                formatter: function (value) {
+					if(value) {
+						// Format the value to show the date in 'dd MMM' format
+						const date = new Date(value); // Assuming value is a valid date string
+						const day = date.getDate();
+						const month = date.toLocaleString('default', { month: 'short' }); // Get short month (e.g., 'Apr')
+                        console.log(value);
+                        
+						return `${day} ${month}`;
+					}
+                    return ``;
                 },
                 styler: function () {
                     return 'white-space: normal;';
@@ -561,7 +657,72 @@
         return result;
     }
 
+	let trainerCount = 1;
+	let nextTrainerId = 2; // ensures unique IDs for each new row
 
+	function addTrainer(name = '') {
+		trainerCount++;
+		const wrapper = document.getElementById('trainers-wrapper');
+
+		const div = document.createElement('div');
+		const currentId = nextTrainerId++;
+		div.className = 'fitem';
+		div.id = `trainerRow_${trainerCount}`;
+		div.innerHTML = `
+            <span style="width:35%; display:inline-block;"></span>
+            <input style="width:60%;" name="trainerName[]" id="trainerName_${currentId}" required class="easyui-combobox" panelHeight="auto">
+            <a href="javascript:void(0)" class="easyui-linkbutton" style="margin-left:5px;" onclick="removeTrainer(${currentId})">❌</a>
+        `;
+		wrapper.appendChild(div);
+
+		// Reinitialize EasyUI combobox
+		$(`#trainerName_${trainerCount}`).combogrid({
+			url: '<?= base_url('lnd/schedule_training/readsEmployeesLeaderUp') ?>',
+			panelWidth: 450,
+			idField: 'id',
+			textField: 'name',
+			mode: 'remote',
+			fitColumns: true,
+			prompt: 'Choose Training Name',
+			icons: [{
+				iconCls: 'icon-clear',
+				handler: function(e) {
+					$(e.data.target).combogrid('clear').combogrid('textbox').focus();
+				}
+			}],
+			columns: [
+				[{
+					field: 'name',
+					title: 'Employee Name',
+					width: 120
+				}, {
+					field: 'positionName',
+					title: 'Position',
+					width: 200
+				}]
+			],
+		});
+	}
+
+	function removeTrainer(id) {
+		if (id === 1) return; // prevent deleting the first row
+		const row = document.getElementById(`trainerRow_${id}`);
+		if (row) row.remove();
+	}
+
+	function filter() {
+		var trainingMaterialFilter = $("#trainingMaterialFilter").combogrid('getValue');
+		// var training_activity_id = $("#training_activity_id").combogrid('getValue');
+		// debug_to_console(curiculum_id);
+		var params = "?trainingName=" + trainingMaterialFilter ;
+
+		$('#dg').datagrid({
+			url: '<?= base_url('lnd/schedule_training/datatables') ?>' + params
+		});
+
+		$("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
+		$("#printout").attr('src', '<?= base_url('employee/departements/print') ?>' + params);
+	}
 
     // Initial call
     // $(function () {

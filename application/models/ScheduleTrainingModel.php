@@ -35,7 +35,7 @@ class ScheduleTrainingModel extends CI_Model {
     //     return $record; 
     // }
 
-    public function insert_data($data, $trainingDates = []) {
+    public function insert_data($data, $trainingDates = [], $combineTrainer = []) {
         $data['createdBy'] = $this->session->username ?? 'system';
         $data['createdTime'] = date('Y-m-d H:i:s');
 
@@ -62,6 +62,17 @@ class ScheduleTrainingModel extends CI_Model {
             ];
             $this->db->insert('lnd_schedule_training_dates', $detail);
         }
+
+		foreach ($combineTrainer as $item) {
+
+			$detail = [
+				'id' => $this->uuid->v4(),
+				'training_id' => $training_id,
+				'trainer_name' => $item['name'],
+				'trainer_id' => $item['id'],
+			];
+			$this->db->insert('lnd_schedule_trainers', $detail);
+		}
 
         $this->db->trans_complete(); // Commit or rollback transaction
 

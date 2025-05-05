@@ -35,7 +35,7 @@ class Schedule_training extends CI_Controller {
     public function datatables()
     {
         // Ambil parameter dari request
-        $competenceId = $this->input->get('competenceId', true); // Sanitize input GET
+		$trainingName = $this->input->get('trainingName', true); // Sanitize input GET
         $trainingActivityId = $this->input->get('id', true); // Sanitize input GET
         $page = $this->input->post('page');
         $rows = $this->input->post('rows');
@@ -44,16 +44,18 @@ class Schedule_training extends CI_Controller {
         $page   = isset($page) ? intval($page) : 1;
         $rows   = isset($rows) ? intval($rows) : 10;
         $offset = ($page - 1) * $rows;
-
-        // Query Builder
+		// Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, b.*');
+        $this->db->select('a.*, b.*, e.name, ta.trainingActivity, st.trainer_name, st.trainer_id');
         $this->db->from('lnd_schedule_training a');
         $this->db->join('lnd_schedule_training_dates b', 'a.id = b.training_id', 'left');
-        
-        // if (!empty($trainingActivityId)) {
-        //     $this->db->like('a.id', $trainingActivityId);
-        // }
+		$this->db->join('employees e', 'e.id = a.trainee', 'left');
+		$this->db->join('lnd_training_activity ta', 'ta.id = a.trainingName', 'left');
+		$this->db->join('lnd_schedule_trainers st', 'a.id = st.training_id', 'left');
+
+         if (!empty($trainingName)) {
+             $this->db->like('a.trainingName', $trainingName);
+         }
         // if (!empty($competenceId)) {
         //     $this->db->like('a.competenceId', $competenceId);
         // }
@@ -68,10 +70,67 @@ class Schedule_training extends CI_Controller {
         $records = $this->db->get()->result_array();
         $this->db->flush_cache(); // Hapus cache query
 
-        // Mapping Data
+		$grouped = [];
+
+		foreach ($records as $row) {
+			// === Grouping key per row ===
+			$key = $row['trainingName'] . '|' . $row['trainee'] . '|' . $row['registerDate']; // You can customize this
+
+			if (!isset($grouped[$key])) {
+				$grouped[$key] = [
+					'induction' => $row['induction'],
+					'trainingName' => $row['trainingActivity'],
+		//          'trainer' => $row['trainer'],
+					'trainee' => empty($row['name']) ? $row['category'] : $row['name'],
+					'remarks' => $row['remarks'],
+					'totalTrainee' => $row['totalTrainee'],
+					'duration' => $row['duration'],
+					'date' => $row['registerDate'],
+					'createdBy' => $row['createdBy'],
+					'createdTime' => $row['createdTime'],
+					'updatedBy' => $row['updatedBy'],
+					'updatedTime' => $row['updatedTime'],
+				];
+			}
+
+			$trainingDate = $row['training_date'];   // Example: 2025-04-22
+			$batchCount = $row['batch_count'];       // Example: 1
+			$weekLabel = $row['week_label'];         // Example: W1
+
+			if ($trainingDate && $weekLabel) {
+				$date = new DateTime($trainingDate);
+				$monthName = $date->format('F');         // April
+				$year = $date->format('Y');              // 2025
+				$shortDate = $date->format('j M');       // 22 Apr
+
+				$fieldName = "{$monthName}_{$year}_{$weekLabel}"; // April_2025_W1
+
+				// If already exists, append new date
+				if (!empty($grouped[$key][$fieldName])) {
+					$grouped[$key][$fieldName] .= ', ' . $shortDate;
+				} else {
+					$grouped[$key][$fieldName] = $shortDate;
+				}
+			}
+
+			$trainerName = $row['trainer_name'];
+			$trainerId = $row['trainer_id'];
+			if($trainerName && $trainerId) {
+				if (!empty($grouped[$key]['trainer'])) {
+					$grouped[$key]['trainer'] .= ', ' . $trainerName;
+				} else {
+					$grouped[$key]['trainer'] = $trainerName;
+				}
+			}
+		}
+
+		// Push all grouped data to final $data array
+		$data = array_values($grouped);
+
+		// Mapping Data
         $result = [
             'total' => $totalRows,
-            'rows' => $records
+            'rows' => $data
         ];
 
         // Kirim sebagai JSON
@@ -105,14 +164,26 @@ class Schedule_training extends CI_Controller {
 
         // Check and decode training_dates (assumed as JSON string in POST)
         $trainingDates = [];
+		$combineTrainer = [];
         if (!empty($data['training_dates'])) {
             $trainingDates = json_decode($data['training_dates'], true);
             unset($data['training_dates']); // Remove from main data to avoid DB issue
         }
+		if(!empty($data['trainerName'])) {
+			$trainerId = $data['trainerName'];
+			foreach($trainerId as $value) {
+				$trainer = $this->crud->read('employees', ['id' => $value]);
+				$combineTrainer[] = [
+					'id' => $trainer->id,
+					'name' => $trainer->name,
+				];
+			}
+			unset($data['trainerName']);
+		}
 
         // Validasi dan proses data
         if (!empty($data)) {
-            $dataTemp = $this->ScheduleTrainingModel->insert_data($data, $trainingDates);
+            $dataTemp = $this->ScheduleTrainingModel->insert_data($data, $trainingDates, $combineTrainer);
             $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Schedule Training created successfully');
         } else {
             $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Schedule Training creation failed.');
@@ -168,6 +239,19 @@ class Schedule_training extends CI_Controller {
         $send = $this->crud->reads('employees', [], ["departement_id" => $session_dept], "");
         echo json_encode($send);
     }
+
+	public function readsEmployeesLeaderUp()
+	{
+		$this->db->start_cache();
+		$this->db->select('a.id, a.name, b.name as positionName');
+		$this->db->from('employees a');
+		$this->db->join('positions b', 'b.id = a.position_id', 'left');
+		$this->db->where('b.level <', '05');
+		$this->db->stop_cache();
+		$res = $this->db->get()->result_array();
+		$this->db->flush_cache(); // Hapus cache query
+		echo json_encode($res);
+	}
 
     public function upload()
     {
