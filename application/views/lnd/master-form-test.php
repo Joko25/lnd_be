@@ -458,14 +458,10 @@
     }
 
     function sendDataToServer(requestData, payload) {
-        console.log("#data", requestData, requestData.serializeArray());
-        
         // Buat body dengan format x-www-form-urlencoded (query string)
-        const payload = formArrayToNestedJson(requestData.serializeArray());
+        const payloadArr = formArrayToNestedJson(requestData.serializeArray());
         // const formData = new URLSearchParams(requestData).toString();
-        console.log("#nestedData", payload, validateNestedJson(payload));
-        
-        if(validateNestedJson(payload).length === 0) {
+        if(validateNestedJson(payloadArr).length === 0) {
             $.ajax({
                 url: url_save,
                 method: method,

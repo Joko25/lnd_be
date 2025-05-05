@@ -78,6 +78,7 @@ class Master_form_test extends CI_Controller {
         // Ambil JSON string dari form multipart
         $json = $this->input->post('data');
         $data = json_decode($json, true);
+        
 
         if (!$data) {
             return $this->output
