@@ -49,65 +49,42 @@ class MasterFormTestModel extends CI_Model {
         return $record; 
     }
 
-    public function insertQuestion($data, $files = []) {
-        $this->db->trans_begin();
-
-        // Simpan ke tabel master question
-        $questionHeader = [
-            'training_name' => $data['training_name'],
-            'department' => $data['department'],
-            'question_type' => $data['questionType'],
-            'created_at' => date('Y-m-d H:i:s')
-        ];
-        $this->db->insert('question_header', $questionHeader);
-        $headerId = $this->db->insert_id();
-
-        // Simpan pertanyaan
-        if (!empty($data['post_question'])) {
-            foreach ($data['post_question'] as $qIdx => $q) {
-                $questionData = [
-                    'header_id' => $headerId,
-                    'question' => $q['question'],
-                    'image_position' => $q['imagePosition'],
-                    'correct_answer' => $q['correct_answer'],
-                ];
-
-                // Tambahkan nama file jika ada di path yang cocok
-                $fileKey = "post_question[$qIdx].image";
-                if (isset($files[$fileKey])) {
-                    $questionData['image'] = $files[$fileKey];
-                }
-
-                $this->db->insert('question_detail', $questionData);
-                $questionId = $this->db->insert_id();
-
-                // Simpan opsi jawaban
-                if (!empty($q['opsion'])) {
-                    foreach ($q['opsion'] as $oIdx => $o) {
-                        $optionData = [
-                            'question_id' => $questionId,
-                            'title' => $o['title'],
-                            'point' => $o['point']
-                        ];
-
-                        $fileOptKey = "post_question[$qIdx].opsion[$oIdx].image";
-                        if (isset($files[$fileOptKey])) {
-                            $optionData['image'] = $files[$fileOptKey];
-                        }
-
-                        $this->db->insert('question_option', $optionData);
-                    }
+    public function insertQuestion($data, $uploadedFiles = []) {
+        // Inject image file paths ke dalam $data['question'] dan $data['post_question']
+        if (!empty($uploadedFiles)) {
+            foreach ($uploadedFiles as $field => $path) {
+                // Contoh field: question_0_image atau post_question_1_image
+                if (preg_match('/^(question|post_question)_(\d+)_image$/', $field, $matches)) {
+                    $type = $matches[1];
+                    $index = (int)$matches[2];
+                    $data[$type][$index]['image'] = $path;
                 }
             }
         }
 
-        if ($this->db->trans_status() === FALSE) {
-            $this->db->trans_rollback();
-            return false;
-        } else {
-            $this->db->trans_commit();
-            return true;
-        }
+        $insert = [
+            'id' => $this->uuid(),  // UUID custom generator
+            'training_name' => $data['training_name'],
+            'department' => $data['department'],
+            'question_type' => $data['questionType'],
+            'json_question' => json_encode($data['question']),
+            'json_postquestion' => isset($data['post_question']) ? json_encode($data['post_question']) : null,
+            'createdBy' => $this->session->userdata('user_id') ?? 'system',
+            'createdTime' => date('Y-m-d H:i:s')
+        ];
+
+        return $this->db->insert('lnd_master_form_test', $insert);
+    }
+
+    private function uuid() {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+        );
     }
 
     public function delete_data($id) {

@@ -33,14 +33,15 @@
                     <span style="width:35%; display:inline-block;">Training Name</span>
                     <input style="width:60%;" id="training_name" name="training_name" required="" class="easyui-combogrid"
                     data-options="
-                        url: '<?= base_url('lnd/master_form_test/readsTraining') ?>',
+                        url: '<?= base_url('lnd/master_form_test/readsTrainings') ?>',
                         idField: 'trainingName',
-                        textField: 'trainingName', 
+                        textField: 'name', 
                         mode: 'remote',
                         fitColumns: true,
                         panelWidth: 500,
                         columns: [[
-                            {field:'trainingName',title:'Training Name',width:200}
+                            {field:'name',title:'Training Name',width:200},
+                            {field:'induction',title:'Induction',width:200}
                     ]]">
                 </div>
                 <div class="fitem">
@@ -188,7 +189,7 @@
         $('#dlg_insert').dialog('open');
         $('#dlg_insert').dialog('setTitle', `Add Master Form`)
         
-        url_save = '<?= base_url('lnd/master_form_test/save') ?>';
+        url_save = '<?= base_url('lnd/master_form_test/storeData') ?>';
         method = 'POST';
         $('#frm_insert').form('clear');
         $("#addrow").show();
@@ -313,12 +314,12 @@
     function update() {
         var row = $('#dg').datagrid('getSelected');
         if (row) {
-            getDetailData(row.curriculum_id)
+            getDetailData(row.id)
             
             $('#dlg_insert').dialog('open');
-            $('#dlg_insert').dialog('setTitle', `Edit Curriculum ${row.curriculum_id}`)
+            $('#dlg_insert').dialog('setTitle', `Edit Curriculum ${row.id}`)
             $('#frm_insert').form('load', row);
-            url_save = '<?= base_url('lnd/master_form_test/update_data/') ?>' + row.curriculum_id;
+            url_save = '<?= base_url('lnd/master_form_test/update_data/') ?>' + row.id;
             method = 'PUT';
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
@@ -332,7 +333,7 @@
                 if (r) {
                     for (var i = 0; i < rows.length; i++) {
                         var row = rows[i];
-                        fetch('<?= base_url('lnd/master_form_test/delete_data/') ?>'+row.curriculum_id, {
+                        fetch('<?= base_url('lnd/master_form_test/delete_data/') ?>'+row.id, {
                             method: 'DELETE', // Metode DELETE
                         })
                         .then(response => response.json()) // Konversi response ke JSON
@@ -647,9 +648,9 @@
             url: '<?= base_url('lnd/master_form_test/datatables') ?>',
             columns: [[
                 {field: 'ck', rowspan:'2', checkbox: true},
-                {field: 'training_name', rowspan:'2', width:150, title:'Training Name', align: 'left'},
-                {field: 'departement', rowspan:'2', width:150, title:'Departement', width:150, align: 'left'},
-                {field: 'question_type', rowspan:'2', width:150, title:'Question Type', align: 'left'},
+                {field: 'name', rowspan:'2', width:250, title:'Training Name', align: 'left'},
+                {field: 'departement_name', rowspan:'2', width:150, title:'Departement', width:150, align: 'left'},
+                {field: 'type', rowspan:'2', width:250, title:'Question Type', align: 'left'},
                 {field: 'action', 
                     formatter: function(value,row,index) {
                     return '<a class="button-blue" style="width:100%;"><i class="fa fa-eye"></i> View</a>';;
@@ -694,7 +695,7 @@
                         console.log("#json", data, payload);
                         
 
-                        sendDataToServer(formData, payload)
+                        sendDataToServer(formValue, payload)
                     }
                 }
             }]

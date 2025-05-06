@@ -46,8 +46,17 @@ class Master_form_test extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('*');
-        $this->db->from('lnd_master_form_test');
+        $this->db->select("a.*, 
+            b.name as departement_name,
+            CASE 
+                WHEN a.question_type = 'SAME' THEN 'Pre-Test & Post Test is The Same'
+                WHEN a.question_type = 'DIFFERENT' THEN 'Pre-Test & Post Test is Different'
+                ELSE 'Unknown'
+            END as type, c.trainingActivity as name
+        ");
+        $this->db->from('lnd_master_form_test a');
+        $this->db->join('departements b', 'b.id = a.department', 'left');
+        $this->db->join('lnd_training_activity c', 'c.id = a.training_name', 'left');
         
         if (!empty($competence_id)) {
             $this->db->like('competenceId', $competence_id);
@@ -57,7 +66,7 @@ class Master_form_test extends CI_Controller {
         // Hitung total data (tanpa limit dan offset)
         $totalRows = $this->db->count_all_results();
         // Ambil data dengan limit dan offset
-        $this->db->order_by('index', 'ASC'); // Pindahkan order_by setelah count_all_results
+        // $this->db->order_by('index', 'ASC'); // Pindahkan order_by setelah count_all_results
 
         // Ambil data dengan limit dan offset
         $this->db->limit($rows, $offset);
@@ -123,19 +132,11 @@ class Master_form_test extends CI_Controller {
 
         // Simpan ke DB (pass both JSON data & uploadedFiles)
         $save = $this->MasterFormTestModel->insertQuestion($data, $uploadedFiles);
-        return $this->output
-            ->set_content_type('application/json')
-            ->set_output(json_encode(['success' => $save]));
-    }
-
-    public function get_data() {
-        $data = $this->CompetenceModel->get_all_data();
-
-        if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, [], 'Get Competence data failed');
-        } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Competence data successfully');
-        } 
+        if($save) {
+            return $this->response->send(ResponseStatus::SUCCESS, $save, 'Form test successfully');
+        }else{
+            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Get Competence data failed');
+        }
     }
 
     // GET DATA COMPTENCE
@@ -145,6 +146,18 @@ class Master_form_test extends CI_Controller {
         $send = $this->crud->reads('lnd_schedule_training');
         echo json_encode($send);
     }
+
+    public function readsTrainings()
+	{
+		$this->db->start_cache();
+		$this->db->select('a.*, b.trainingActivity as name');
+		$this->db->from('lnd_schedule_training a');
+		$this->db->join('lnd_training_activity b', 'b.id = a.trainingName', 'left');
+		$this->db->stop_cache();
+		$res = $this->db->get()->result_array();
+		$this->db->flush_cache(); // Hapus cache query
+		echo json_encode($res);
+	}
 
     //PRINT & EXCEL DATA
     public function print($option = "")
@@ -210,37 +223,6 @@ class Master_form_test extends CI_Controller {
         echo $html;
     }
 
-    public function get_detail($id) {
-        $data = $this->CompetenceModel->get_detail_data($id);
-
-        if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get Competence data failed');
-        } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Competence data successfully');
-        } 
-    }
-
-    public function create_data() {
-        // Ambil request body secara manual
-        $rawInput = file_get_contents("php://input");
-        parse_str($rawInput, $data);
-        $competenceCheck = $this->crud->read('lnd_master_form_test', [], ["LOWER(name)" => strtolower($data["name"])]);
-        if(!empty($competenceCheck)) {
-            // die(json_encode(array("title" => "Duplicate", "message" => "Your Competence Name has been registered", "theme" => "error")));
-            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Your Competence Name has been registered.');
-            return;
-        }
-        // Generate competenceId
-        $idGenerateDate = $this->crud->autoidPrifix('lnd_master_form_test', 'competenceId', 'C'); 
-        $data['competenceId'] = $idGenerateDate;
-        // Validasi dan proses data
-        if (!empty($data)) {
-            $dataTemp = $this->CompetenceModel->insert_data($data);
-            $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Competence created successfully');
-        } else {
-            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Competence creation failed.');
-        }
-    }
     
 
     public function update_data($id) {
@@ -249,7 +231,7 @@ class Master_form_test extends CI_Controller {
         // $payloadId   = base64_decode($id);
 
         if (!empty($data)) {
-            $dataTemp = $this->CompetenceModel->update_data($id, $data);
+            $dataTemp = $this->MasterFormTestModel->update_data($id, $data);
             $this->response->send(200, $dataTemp, 'Competence updated successfully');
         } else {
             $this->response->send(400, null, 'Competence updated failed.');
@@ -257,12 +239,12 @@ class Master_form_test extends CI_Controller {
     }
 
     public function delete_data($id) {
-        $data = $this->CompetenceModel->get_detail_data($id);
+        $data = $this->MasterFormTestModel->get_detail_data($id);
 
         if(empty($data)) {
             $this->response->send(ResponseStatus::NOT_FOUND, null, 'Data not found');
         } else {
-            $this->CompetenceModel->delete_data($id);
+            $this->MasterFormTestModel->delete_data($id);
             $this->response->send(200, $id, 'Competence delete successfully');
         }
     }
