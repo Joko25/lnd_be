@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class MasterFormTestModel extends CI_Model {
+class FormTestModel extends CI_Model {
 
     public function __construct() {
         parent::__construct();
@@ -35,54 +35,19 @@ class MasterFormTestModel extends CI_Model {
         return $record; 
     }
 
-    public function updateQuestion($id, $data, $uploadedFiles = []) {
-        // Inject imageQuestion jika ada file baru
-        foreach ($data['question'] as &$question) {
-            if (isset($uploadedFiles[$question['imageQuestion']])) {
-                $question['imageQuestion'] = basename($uploadedFiles[$question['imageQuestion']]);
-            }
+    public function update_data($id, $data) {
+        $this->db->where('id', $id);
+        $data['updatedBy'] = $this->session->username;
+        $data['updatedTime'] = date('Y-m-d H:i:s');
+
+        $this->db->update('lnd_master_form_test', $data);
+        
+        $query = $this->db->order_by('updatedTime', 'name')->limit(1)->get('lnd_master_form_test');
     
-            // Inject image opsion
-            foreach ($question['opsion'] as $optIndex => &$opsion) {
-                if (isset($uploadedFiles[$opsion['image']])) {
-                    $opsion['image'] = [basename($uploadedFiles[$opsion['image']])];
-                } elseif (!isset($opsion['image'])) {
-                    $opsion['image'] = [];
-                }
-            }
-        }
+        $record = $query->row();
     
-        // Proses post_question (jika ada)
-        if (!empty($data['post_question'])) {
-            foreach ($data['post_question'] as &$question) {
-                if (isset($uploadedFiles[$question['imageQuestion']])) {
-                    $question['imageQuestion'] = basename($uploadedFiles[$question['imageQuestion']]);
-                }
-    
-                foreach ($question['opsion'] as $optIndex => &$opsion) {
-                    if (isset($uploadedFiles[$opsion['image']])) {
-                        $opsion['image'] = [basename($uploadedFiles[$opsion['image']])];
-                    } elseif (!isset($opsion['image'])) {
-                        $opsion['image'] = [];
-                    }
-                }
-            }
-        }
-    
-        // Susun data untuk update
-        $updateData = [
-            'training_name'     => $data['training_name'],
-            'department'        => $data['department'],
-            'question_type'     => $data['questionType'],
-            'json_question'     => json_encode($data['question']),
-            'json_postquestion' => isset($data['post_question']) ? json_encode($data['post_question']) : null,
-            'updatedBy'         => $this->session->userdata('user_id') ?? 'system',
-            'updatedTime'       => date('Y-m-d H:i:s')
-        ];
-    
-        // Eksekusi update
-        return $this->db->where('id', $id)->update('lnd_master_form_test', $updateData);
-    }    
+        return $record; 
+    }
 
     public function insertQuestion($data, $uploadedFiles = []) {
         // Inject image file paths ke dalam $data['question'] dan $data['post_question']

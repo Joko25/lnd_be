@@ -64,5 +64,6 @@ $route['curiculum/delete_data/(:any)'] = 'lndCuriculum/curiculum/delete_data/$1'
 $route['default_controller'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+$route['lnd/form-test/(:id)'] = 'lnd/form_test/get_detail/$1';
 
 

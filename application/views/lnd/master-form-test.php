@@ -96,7 +96,7 @@
 <script src="global.js"></script>
 
 <script type="text/javascript">
-    function templateQuestion(index, type) {
+    function templateQuestion(index, type, initValue='') {
         const prefix = `${type}[${index}]`
         const html = `
                     <div class="form-group" id="${type}_${index}" data-index='${index}'>
@@ -104,16 +104,16 @@
                             <legend><b class="label-${type}">${toCappital(type)} ${index+1}</b> <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="removeQuestion(${index}, '${type}')"><i class="fa fa-times"></i> remove</a></legend>
                             <div class="fitem">
                                 <span style="width:35%; display:inline-block;">Question</span>
-                                <input style="width:60%;" name="${prefix}.question" required="" class="easyui-textbox">
+                                <input style="width:60%;" name="${prefix}.question" value="${initValue?.question || ''}" required="" class="easyui-textbox">
                             </div>
                             <div class="fitem">
                                 <span style="width:35%; display:inline-block;">Image Question</span>
-                                <input style="width:60%;" name="${prefix}.imageQuestion" class="easyui-filebox">
+                                <input style="width:60%;" name="${prefix}.imageQuestion" value="${initValue?.imageQuestion || ''}" class="easyui-filebox">
                             </div>
                             <div class="fitem">
                                 <span style="width:35%; display:inline-block;"></span>
-                                <label><input class="easyui-radiobutton" name="${prefix}.imagePosition" id="imagePosition" checked="true" value="UP" style="margin-right:10px;"> Up Question </label>
-                                <label><input class="easyui-radiobutton" name="${prefix}.imagePosition" value="BELOW"> Below Question </label>
+                                <label><input class="easyui-radiobutton" name="${prefix}.imagePosition" id="imagePosition" checked="${initValue?.imagePosition === 'UP'}" value="UP" style="margin-right:10px;"> Up Question </label>
+                                <label><input class="easyui-radiobutton" name="${prefix}.imagePosition" value="BELOW" checked="${initValue?.imagePosition === 'BELOW'}"> Below Question </label>
                             </div>
                             <hr />
                             <div id="answer_${type}_${index}">
@@ -127,22 +127,24 @@
         return html;
     }
 
-    function templateOpsion(parentIndex, index, type) {
+    function templateOpsion(parentIndex, index, type, parentValue='', initValue='') {
+        console.log("###", parentValue, initValue);
+        
         const prefix = `${type}[${parentIndex}].opsion[${index}]`;
         const template = `<div class="form-group" id="${type}_${parentIndex}_opsion_${index}" data-parent-index='${parentIndex}' data-index='${index}'>
                             <div class="fitem">
                                 <span style="width:35%; display:inline-block;" class="label-opsion_${parentIndex}">Opsion ${index+1}</span>
-                                <input style="width:45%;" name="${prefix}.title" required="" data-options="prompt:'Title Opsion ${index+1}'" placeholder="title" class="easyui-textbox">
+                                <input style="width:45%;" name="${prefix}.title" value="${initValue?.title || ''}" required="" data-options="prompt:'Title Opsion ${index+1}'" placeholder="title" class="easyui-textbox">
                                 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="removeOpsion(${parentIndex}, ${index}, '${type}')"><i class="fa fa-times"></i> Remove Opsion</a>
                             </div>
                             <div class="fitem">
                                 <span style="width:35%; display:inline-block;"></span>
-                                <input style="width:60%;" name="${prefix}.image" class="easyui-filebox" data-options="prompt:'Image Opsion ${index+1}'">
+                                <input style="width:60%;" name="${prefix}.image" value="${initValue?.image || ''}" class="easyui-filebox" data-options="prompt:'Image Opsion ${index+1}'">
                             </div>
                             <div class="fitem">
                                 <span style="width:35%; display:inline-block;"></span>
-                                <input style="width:20%;" name="${prefix}.point" class="easyui-numberspinner"> Point
-                                <label><input class="easyui-radiobutton" name="${type}[${parentIndex}].correct_answer" value="${index}"> Correct Answer</label>
+                                <input style="width:20%;" name="${prefix}.point" value="${initValue?.point || ''}" class="easyui-numberspinner"> Point
+                                <label><input class="easyui-radiobutton" name="${type}[${parentIndex}].correct_answer" checked="${parentValue.correct_answer}" value="${index}"> Correct Answer</label>
                             </div>
                         </div>`;
         return template;
@@ -158,7 +160,6 @@
     }
 
     function onTypeSelect(record) {
-        console.log("#RECORD", record);
         if(!record.value) {
             $('#formPostQuestion').hide();
             $('#btnAddPostQuestion').hide();
@@ -179,11 +180,73 @@
             $('#titleQuestion').text(`PRE-Test Question`);
         }
     }
+    function getDetailData(curriculumId){
+        let url = '<?= base_url('lnd/master_form_test/get_detail/') ?>' + curriculumId;
+        fetch(url)
+        .then(response => response.json())
+        .then(response => {
+            console.log("#res", response);
+            
+            if (response.code === 200) {
+                renderForm(response.data);
+            } else {
+                alert("Gagal mengambil data.");
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+        });
+    }
 
-    window.onload = function() {
-        
-        
-    };
+    function renderForm(data) {
+        // $.getJSON(`/lnd/master_form_test/get_detail/${id}`, function(response) {
+            console.log("#response", data);
+        $('#training_name').combogrid('setValue', data.training_name);
+        $('#department').combogrid('setValue', data.department);
+        $('#questionType').combogrid('setValue', data.question_type);
+
+        const questionJson = JSON.parse(data.json_question);
+        questionJson.forEach((value, index) => {
+            $('#formQuestion').append(templateQuestion(index, 'question', value));
+            $.parser.parse(`#question_${index}`);
+            setTimeout(() => {
+                value.opsion.forEach((opt, optIndex) => {
+                    var trainingContainer = $(`#answer_question_${index}`)
+                    console.log("#opt", opt);
+                    if(trainingContainer.children().length === 0) addOpsion(index, 'question', value, opt)
+                    // $(`#answer_question_${index}`).append(templateOpsion(index, optIndex, 'question'));
+                    // $(`input[name="question[${index}].opsion[${optIndex}].title"]`).textbox('setValue', opt.title);
+                    // $(`input[name="question[${index}].opsion[${optIndex}].point"]`).numberspinner('setValue', opt.point);
+                    // if (q.correct_answer == optIndex) {
+                    //     $(`input[name="question[${index}].correct_answer"][value="${optIndex}"]`).radiobutton('check');
+                    // }
+
+                });
+                
+
+            }, 300);
+        });
+
+        if (data.json_postquestion) {
+            const postJson = JSON.parse(data.json_postquestion);
+            postJson.forEach((val, index) => {
+                $('#formPostQuestion').append(templateQuestion(index, 'post_question', val));
+                $.parser.parse(`#post_question_${index}`);
+                // q.opsion.forEach((opt, optIndex) => {
+                //     $(`#answer_post_question_${index}`).append(templateOpsion(index, optIndex, 'post_question'));
+                //     $(`input[name="post_question[${index}].opsion[${optIndex}].title"]`).textbox('setValue', opt.title);
+                //     $(`input[name="post_question[${index}].opsion[${optIndex}].point"]`).numberspinner('setValue', opt.point);
+                //     if (q.correct_answer == optIndex) {
+                //         $(`input[name="post_question[${index}].correct_answer"][value="${optIndex}"]`).radiobutton('check');
+                //     }
+                // });
+                // $(`input[name="post_question[${index}].question"]`).textbox('setValue', q.question);
+                // $(`input[name="post_question[${index}].imageQuestion"]`).filebox('setText', q.imageQuestion);
+                // $(`input[name="post_question[${index}].imagePosition"][value="${q.imagePosition}"]`).radiobutton('check');
+            });
+        }
+    }
+
 
     function add() {
         $('#dlg_insert').dialog('open');
@@ -235,15 +298,14 @@
             toastr.error('Index tidak valid!', 'Error');
         }
     }
-    function addOpsion(parentIndex, type){
+    function addOpsion(parentIndex, type, parentValue='', initValue=''){
         
         var formOpsion = $(`#answer_${type}_${parentIndex}`);
         var totalData = formOpsion.children().length;
 
-        var template = templateOpsion(parentIndex, totalData, type);
+        var template = templateOpsion(parentIndex, totalData, type, parentValue, initValue);
         formOpsion.append(template);
         $.parser.parse(`#${type}_${parentIndex}_opsion_${totalData}`);
-        console.log(`#${type}_${parentIndex}_opsion_${totalData}`);
         
     }
 
@@ -314,11 +376,16 @@
     function update() {
         var row = $('#dg').datagrid('getSelected');
         if (row) {
-            getDetailData(row.id)
+            console.log("#row", row);
+            $('#formQuestion').empty();
+            $('#formPostQuestion').empty();
+            
+            // getDetailData(row.id)
             
             $('#dlg_insert').dialog('open');
-            $('#dlg_insert').dialog('setTitle', `Edit Curriculum ${row.id}`)
-            $('#frm_insert').form('load', row);
+            $('#dlg_insert').dialog('setTitle', `Edit Master Form Test ${row.id}`)
+            getDetailData(row.id);
+            // $('#frm_insert').form('load', row);
             url_save = '<?= base_url('lnd/master_form_test/update_data/') ?>' + row.id;
             method = 'PUT';
         } else {
@@ -653,7 +720,7 @@
                 {field: 'type', rowspan:'2', width:250, title:'Question Type', align: 'left'},
                 {field: 'action', 
                     formatter: function(value,row,index) {
-                    return '<a class="button-blue" style="width:100%;"><i class="fa fa-eye"></i> View</a>';;
+                    return '<a class="button-blue" target="_blank" href="<?= base_url('lnd/form_test/review/') ?>' + row.id + '" style="width:100%;"><i class="fa fa-eye"></i> View</a>';;
                 }, rowspan:'2', width:150, title:'View', width:100, align: 'left'},
                 {field: '', colspan:2, title:'Created', width:150, halign: 'center'},
                 {field: '', colspan:2, title:'Updated', width:80, halign: 'center'},

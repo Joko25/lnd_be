@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Master_form_test extends CI_Controller {
+class Form_test extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
         // Load any models or libraries needed
-        $this->load->model('MasterFormTestModel');
+        $this->load->model('FormTestModel');
         $this->load->helper('url');
         $this->load->library('form_validation');
         $this->load->model('crud');
@@ -26,10 +26,46 @@ class Master_form_test extends CI_Controller {
             $data['button'] = $this->getbutton($this->id_menu());
 
             $this->load->view('template/header');
-            $this->load->view('lnd/master-form-test', $data);
+            $this->load->view('lnd/form-test', $data);
         } else {
             redirect('error_session');
         }
+    }
+
+    public function review($id) {
+        //  Panggil model untuk mendapatkan data produk
+        $data['test_type']="REVIEW";
+        $data['title']="Review";
+        $data['test_id']=$id;
+        $data['data'] = $this->FormTestModel->get_detail_data($id);
+
+        // Load view dengan data
+        $this->load->view('template/header_mobile_lnd');
+        $this->load->view('lnd/form-test', $data);
+    }
+
+    public function post_test($id) {
+        //  Panggil model untuk mendapatkan data produk
+        $data['test_type']="POST_TEST";
+        $data['title']="Post Test";
+        $data['test_id']=$id;
+        $data['data'] = $this->FormTestModel->get_detail_data($id);
+
+        // Load view dengan data
+        $this->load->view('template/header_mobile_lnd');
+        $this->load->view('lnd/form-test', $data);
+    }
+
+    public function pre_test($id) {
+        //  Panggil model untuk mendapatkan data produk
+        $data['test_type']="PRE_TEST";
+        $data['title']="Pre Test";
+        $data['test_id']=$id;
+        $data['data'] = $this->FormTestModel->get_detail_data($id);
+
+        // Load view dengan data
+        $this->load->view('template/header_mobile_lnd');
+        $this->load->view('lnd/form-test', $data);
     }
 
     public function datatables()
@@ -226,67 +262,16 @@ class Master_form_test extends CI_Controller {
     
 
     public function update_data($id) {
-        $json = $this->input->post('data');
-        $data = json_decode($json, true);
-    
-        if (!$data) {
-            return $this->output
-                ->set_content_type('application/json')
-                ->set_status_header(400)
-                ->set_output(json_encode(['error' => 'Invalid JSON']));
-        }
-    
-        if (empty($data['training_name']) || empty($data['department']) || empty($data['questionType'])) {
-            return $this->output
-                ->set_content_type('application/json')
-                ->set_status_header(422)
-                ->set_output(json_encode(['error' => 'Missing required fields']));
-        }
-    
-        // Handle file upload
-        $uploadedFiles = [];
-        foreach ($_FILES as $field => $file) {
-            if ($file['error'] == 0) {
-                $uploadPath = './uploads/questions/';
-                if (!is_dir($uploadPath)) {
-                    mkdir($uploadPath, 0755, true);
-                }
-    
-                $config['upload_path']   = $uploadPath;
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                $config['file_name']     = uniqid('img_');
-                $this->load->library('upload', $config);
-    
-                if ($this->upload->do_upload($field)) {
-                    $uploaded = $this->upload->data();
-                    $uploadedFiles[$field] = 'uploads/questions/' . $uploaded['file_name'];
-                } else {
-                    return $this->output
-                        ->set_content_type('application/json')
-                        ->set_status_header(500)
-                        ->set_output(json_encode(['error' => $this->upload->display_errors('', '')]));
-                }
-            }
-        }
-    
-        // Update ke DB
-        $update = $this->MasterFormTestModel->updateQuestion($id, $data, $uploadedFiles);
-        if ($update) {
-            return $this->response->send(ResponseStatus::SUCCESS, $update, 'Form test updated successfully');
-        } else {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Failed to update form test');
-        }
-    }
-    
+        $rawInput = file_get_contents("php://input");
+        parse_str($rawInput, $data);
+        // $payloadId   = base64_decode($id);
 
-    public function get_detail($id) {
-        $data = $this->MasterFormTestModel->get_detail_data($id);
-
-        if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get data failed');
+        if (!empty($data)) {
+            $dataTemp = $this->MasterFormTestModel->update_data($id, $data);
+            $this->response->send(200, $dataTemp, 'Competence updated successfully');
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get data successfully');
-        } 
+            $this->response->send(400, null, 'Competence updated failed.');
+        }
     }
 
     public function delete_data($id) {
