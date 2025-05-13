@@ -13,7 +13,7 @@
                         <input style="width:60%;" id="suggestTrainingDateFilter" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser, editable:false">
                     </div>
                     <div class="fitem">
-                        <span style="width:35%; display:inline-block;">Training Material</span>
+                        <span style="width:35%; display:inline-block;">Training Activities</span>
                         <input style="width:60%;" id="trainingMaterialFilter" class="easyui-combogrid">
                     </div>
                     <div class="fitem">
@@ -43,7 +43,7 @@
 
 <!-- DIALOG SAVE AND UPDATE -->
 <div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 1100px; padding:10px; top: 20px;">
-    <form id="frm_insert" method="post" novalidate>
+    <form id="frm_insert" method="post" enctype="multipart/form-data" novalidate>
         <fieldset style="width: 100%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
             <div style="width:50%; float: left;">
                 <div class="fitem">
@@ -58,19 +58,19 @@
                     <span style="width:35%; display:inline-block;">Suggest Date Training</span>
                     <input style="width:60%;" id="suggestDateTrainingForm" name="suggestDateTraining" class="easyui-datebox" required="" data-options="formatter:myformatter,parser:myparser, editable: false" >
                 </div>
+				<div class="fitem">
+					<span style="width:35%; display:inline-block;">Reasons</span>
+					<select style="width:60%;" name="reasons" required="" class="easyui-combobox" panelHeight="auto">
+						<option value="Promotion">Promotion</option>
+						<option value="Mutation">Mutation</option>
+						<option value="New Product">New Product</option>
+						<option value="New Technology">New Technology</option>
+						<option value="New System">New System</option>
+						<option value="Skill Upgrades">Skill Upgrades</option>
+					</select>
+				</div>
             </div>
             <div style="width:50%; float: left;">
-                <div class="fitem">
-                    <span style="width:35%; display:inline-block;">Reasons</span>
-                    <select style="width:60%;" name="reasons" required="" class="easyui-combobox" panelHeight="auto">
-                        <option value="Promotion">Promotion</option>
-                        <option value="Mutation">Mutation</option>
-                        <option value="New Product">New Product</option>
-                        <option value="New Technology">New Technology</option>
-                        <option value="New System">New Technology</option>
-                        <option value="Skill Upgrades">Skill Upgrades</option>
-                    </select>                
-                </div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Trainer</span>
                     <select style="width:60%;" name="trainer" required="" class="easyui-combobox" panelHeight="auto">
@@ -78,10 +78,18 @@
                         <option value="External">External</option>
                     </select>  
                 </div>
+				<div class="fitem">
+					<span style="width:35%; display:inline-block;">Trainer Name</span>
+					<input style="width:60%;" id="trainerNameFilter" name="trainer_name" class="easyui-combogrid" required="">
+				</div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Trainer Fees</span>
                     <input style="width:60%;" id="trainerFeesForm" name="trainerFees" class="easyui-textbox">
                 </div>
+				<div class="fitem">
+					<span style="width:35%; display:inline-block;">Attachment</span>
+					<input style="width:60%;" name="attachment" id="attachment" class="easyui-filebox">
+				</div>
             </div>
         </fieldset>
             <div class="easyui-tabs" style="width:100%; float: left;">
@@ -197,33 +205,70 @@
         }
     }
 
-    function sendDataToServer(requestData) {
-        // Buat body dengan format x-www-form-urlencoded (query string)
-        const formData = new URLSearchParams(requestData).toString();
-        fetch(url_save, {
-            method: method, // Metode POST
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded' // Header penting
-            },
-            body: formData // Data body
-        })
-        .then(response => {
-            return response.json()}) // Ubah response ke JSON
-        .then(data => {
-            if(data.code >= 200 && data.code <= 300) {
-                toastr.success(data.message, 'Success');
-                $('#dg').datagrid('reload');
-                $('#dlg_insert').dialog('close');
-                
-            }
-        })
-        .catch(error => {
-            toastr.error('Something Error', 'Error');
-            console.error('Terjadi kesalahan:', error);
-        });
-    }
+    // function sendDataToServer(requestData) {
+    //     // Buat body dengan format x-www-form-urlencoded (query string)
+    //     const formData = new URLSearchParams(requestData).toString();
+    //     fetch(url_save, {
+    //         method: method, // Metode POST
+    //         headers: {
+    //             'Content-Type': 'application/x-www-form-urlencoded' // Header penting
+	// 			multi
+    //         },
+    //         body: formData // Data body
+    //     })
+    //     .then(response => {
+    //         return response.json()}) // Ubah response ke JSON
+    //     .then(data => {
+    //         if(data.code >= 200 && data.code <= 300) {
+    //             toastr.success(data.message, 'Success');
+    //             $('#dg').datagrid('reload');
+    //             $('#dlg_insert').dialog('close');
+    //
+    //         }
+    //     })
+    //     .catch(error => {
+    //         toastr.error('Something Error', 'Error');
+    //         console.error('Terjadi kesalahan:', error);
+    //     });
+    // }
 
-    $(function() {
+	function sendDataToServer(requestData, isFormData) {
+		const options = {
+			method: method // e.g. 'POST'
+		};
+
+		if (isFormData) {
+			options.body = requestData;
+			// Do NOT set Content-Type — browser sets it automatically for FormData
+		} else {
+			const formEncoded = new URLSearchParams(requestData).toString();
+			options.headers = {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			};
+			options.body = formEncoded;
+		}
+
+		fetch(url_save, options)
+			.then(response => response.json())
+			.then(data => {
+				if (data.code >= 200 && data.code <= 300) {
+					toastr.success(data.message, 'Success');
+					$('#dg').datagrid('reload');
+					$('#dlg_insert').dialog('close');
+				} else {
+					toastr.error(data.message || 'Server Error', 'Error');
+				}
+			})
+			.catch(error => {
+				toastr.error('Something went wrong', 'Error');
+				console.error('Request failed:', error);
+			});
+	}
+
+
+
+
+	$(function() {
         //SETTING DATAGRID EASYUI
         $('#dg').datagrid({
             url: '<?= base_url('lnd/request_training/datatables') ?>',
@@ -268,8 +313,14 @@
                 {field: 'trainingActivities', rowspan:'2', width:180, title:'Training Activities', halign: 'center'},
                 {field: 'suggestDateTraining', rowspan:'2', width:150, title:'Suggest Date Training', halign: 'center'},
                 {field: 'reasons', rowspan:'2', width:150, title:'Reasons', halign: 'center'},
-                {field: 'trainer', rowspan:'2', width:100, title:'Trainer', halign: 'center'},
-                {field: 'trainerFees', rowspan:'2', width:100, title:'TrainerFees', halign: 'center'},
+				{field: 'trainer', rowspan:'2', width:100, title:'Trainer', halign: 'center'},
+				{field: 'trainerName', rowspan:'2', width:100, title:'Trainer Name', halign: 'center'},
+				{field: 'trainerFees', rowspan:'2', width:100, title:'TrainerFees', halign: 'center'},
+				{field: 'attachment', rowspan:'2', width:100, title:'Attachment', halign: 'center',
+					formatter: function (value, row, index) {
+						return fileFormatter(value);
+					}
+				},
                 {field: '', colspan:2, title:'Status', width:80, align: 'center'},
                 {field: '', colspan:2, title:'Created', width:80, align: 'center'},
                 {field: '', colspan:2, title:'Updated', width:80, align: 'center'},
@@ -317,14 +368,33 @@
                 iconCls: 'icon-ok',
                 handler: function() {
                     if ($('#frm_insert').form('validate')) {
-                        var formData = $('#frm_insert').serialize();
-                        sendDataToServer(formData); // This handles the first request (url_save)
-                    
+						const formElement = document.getElementById('frm_insert');
+						const formData = new FormData();
+
+						// Append all regular inputs
+						$('#frm_insert').serializeArray().forEach(({ name, value }) => {
+							formData.append(name, value);
+						});
+
+						// Append files manually
+						const fileInputs = formElement.querySelectorAll('input[type="file"]');
+						for (const input of fileInputs) {
+							if (input.files.length > 0) {
+								// You can allow multiple files per field if needed
+								for (let i = 0; i < input.files.length; i++) {
+									formData.append(input.name, input.files[i]);
+								}
+							}
+						}
+
+						// Call with isFormData = true
+						sendDataToServer(formData, true);
+
                         // Wait for sendDataToServer to finish before proceeding
                         setTimeout(() => {
                             var rowForm = $('#dgTrainee').datagrid('getRows');
                             var totalForm = rowForm.length;
-                        
+
                             for (let i = 0; i < totalForm; i++) {
                                 if (rowForm[i].fullName) {
                                     $.ajax({
@@ -380,7 +450,7 @@
             url: '<?= base_url('lnd/request_training/readsTrainee') ?>',
             panelWidth: 450,
             idField: 'id',
-            textField: 'fullName',
+            textField: 'name',
             mode: 'remote',
             fitColumns: true,
             prompt: 'Choose All',
@@ -392,12 +462,43 @@
             }],
             columns: [
                 [{
-                    field: 'fullName',
+					field: 'id',
+					title: 'ID Trainee',
+					width: 120
+				}, {
+                    field: 'name',
                     title: 'Trainee',
                     width: 120
                 }]
             ],
         });
+
+		$('#trainerNameFilter').combogrid({
+			url: '<?= base_url('lnd/request_training/readsEmployeesLeaderUp') ?>',
+			panelWidth: 450,
+			idField: 'id',
+			textField: 'name',
+			mode: 'remote',
+			fitColumns: true,
+			prompt: 'Choose Trainer',
+			icons: [{
+				iconCls: 'icon-clear',
+				handler: function(e) {
+					$(e.data.target).combogrid('clear').combogrid('textbox').focus();
+				}
+			}],
+			columns: [
+				[{
+					field: 'id',
+					title: 'ID Trainer',
+					width: 120
+				}, {
+					field: 'name',
+					title: 'Trainer',
+					width: 120
+				}]
+			],
+		});
 
         $('#reasonsFilter').combogrid({
             url: '<?= base_url('lnd/request_training/reads') ?>',
@@ -932,4 +1033,12 @@
             return new Date();
         }
     }
+
+	function fileFormatter(value) {
+		if (value == "" || value == null) {
+			return '-';
+		} else {
+			return '<a href="' + 'http://localhost/lnd_be/assets/document/request-training/' + value + '" style="text-decoration: none;"><i class="fa fa-download"></i> Download</a>';
+		}
+	};
 </script>

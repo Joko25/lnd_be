@@ -54,9 +54,10 @@ class Request_training extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, a.status as statusTraining, a.status as statusApproval, rth.approved_by, rth.approved_date');
+        $this->db->select('a.*, a.status as statusTraining, a.status as statusApproval, rth.approved_by, rth.approved_date, e.name as trainerName');
         $this->db->from('lnd_request_training a');
         $this->db->join('lnd_request_training_approvals_history rth', 'a.id = rth.trainingRequestId', 'left');
+		$this->db->join('employees e', 'a.trainer_name = e.id', 'left');
         
         if (!empty($suggestTrainingDate)) {
             $this->db->where('a.suggestDateTraining', $suggestTrainingDate);
@@ -114,10 +115,14 @@ class Request_training extends CI_Controller {
     }
 
     public function create_data() {
-        $rawInput = file_get_contents("php://input");
-        parse_str($rawInput, $data);
-        $idGenerateDateTemp = $this->crud->autoidPrifix('lnd_request_training', 'requestTrainingId', 'T'); 
+//        $rawInput = file_get_contents("php://input");
+//        parse_str($rawInput, $data);
+
+        $data = $this->input->post();
+		$idGenerateDateTemp = $this->crud->autoidPrifix('lnd_request_training', 'requestTrainingId', 'T');
         $data['requestTrainingId'] = $idGenerateDateTemp;
+		$attachment = $this->crud->upload('attachment', ['pdf', 'jpg'], 'assets/document/request-training/');
+		$data['attachment'] = $attachment;
         if (!empty($data)) {
             $dataTemp = $this->RequestTrainingModel->insert_data($data);
             $this->idGenerateDate = $dataTemp->id;
@@ -263,17 +268,30 @@ class Request_training extends CI_Controller {
     }
 
     public function readsTrainee() {
-        $post = isset($_POST['q']) ? array("b.fullName" => $_POST['q']) : $this->input->get();
+        $post = isset($_POST['q']) ? array("a.name" => $_POST['q']) : $this->input->get();
 
-        $this->db->select('b.fullName, a.id, b.departement');
-        $this->db->from('lnd_request_training a');
-        $this->db->join('lnd_request_training_trainee b', 'a.id = b.trainingRequestId', 'left');
+        $this->db->select('a.name, a.id');
+        $this->db->from('employees a');
         if ($post) {
             $this->db->like($post);
         }
-        $this->db->group_by('b.fullName, b.departement'); // Ensure unique name
-        $this->db->order_by('a.createdTime', 'desc');
+        $this->db->group_by('a.name'); // Ensure unique name
+        $this->db->order_by('a.created_date', 'desc');
         $records = $this->db->get()->result_array();
         echo json_encode($records);
     }
+
+	public function readsEmployeesLeaderUp() {
+		$post = isset($_POST['q']) ? array("a.name" => $_POST['q']) : $this->input->get();
+
+		$this->db->start_cache();
+		$this->db->select('a.id, a.name, b.name as positionName');
+		$this->db->from('employees a');
+		$this->db->join('positions b', 'b.id = a.position_id', 'left');
+		$this->db->where('b.level <', '05');
+		$this->db->stop_cache();
+		$res = $this->db->get()->result_array();
+		$this->db->flush_cache(); // Hapus cache query
+		echo json_encode($res);
+	}
 }
