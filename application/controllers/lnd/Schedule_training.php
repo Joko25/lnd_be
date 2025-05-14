@@ -46,7 +46,7 @@ class Schedule_training extends CI_Controller {
         $offset = ($page - 1) * $rows;
 		// Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, b.*, e.name, ta.trainingActivity, st.trainer_name, st.trainer_id');
+        $this->db->select('a.*, a.id as id_training, b.*, e.name, ta.trainingActivity, st.trainer_name, st.trainer_id');
         $this->db->from('lnd_schedule_training a');
         $this->db->join('lnd_schedule_training_dates b', 'a.id = b.training_id', 'left');
 		$this->db->join('employees e', 'e.id = a.trainee', 'left');
@@ -78,6 +78,7 @@ class Schedule_training extends CI_Controller {
 
 			if (!isset($grouped[$key])) {
 				$grouped[$key] = [
+                    'id_training' => $row['id_training'],
 					'induction' => $row['induction'],
 					'trainingName' => $row['trainingActivity'],
 		//          'trainer' => $row['trainer'],
@@ -154,6 +155,16 @@ class Schedule_training extends CI_Controller {
             $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get Schedule Training data failed');
         } else {
             $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Schedule Training data successfully');
+        } 
+    }
+
+    public function get_form_test($id) {
+        $data = $this->ScheduleTrainingModel->get_detail_form_test($id);
+
+        if(empty($data)) {
+            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get master form test failed');
+        } else {
+            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Master Form Test successfully');
         } 
     }
 

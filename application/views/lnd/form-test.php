@@ -110,6 +110,20 @@
         $("#postTestContainer").hide();
         $("#resultContainer").hide();
         let data = <?php echo json_encode($data); ?>;
+        if(data) {
+            $("#trainingName").textbox('setValue', data.trainingActivity);
+            $("#trainerName").textbox('setValue', data.trainer_name);
+            $('#trainingNameTitle').text(data.trainingActivity)
+        }
+        if(testType === 'REVIEW') {
+            $("#resultContainer").show();
+            $("#attendanceContainer").hide();
+            let data = <?php echo json_encode($data); ?>;
+            if(data.json_question) {
+                renderFormFromJson('#resultContainer', data.json_question)
+            }
+        }
+        
         $("#employeeId").combogrid({
             url: '<?= base_url('employee/employees/readFulls') ?>',
             panelWidth: 450,
@@ -196,12 +210,15 @@
             html += `</div>`; // end question panel
             html += `</div>`; // end question block
         });
+        if(testType !== 'REVIEW') {
+            html += `
+                <div style="text-align:center;margin-top:30px">
+                    <button type="button" id="submitBtn" class="easyui-linkbutton" onClick="submitTest()" style="width:100%;height:40px">Submit</button>
+                </div>
+            `;
 
-        html += `
-            <div style="text-align:center;margin-top:30px">
-                <button type="button" id="submitBtn" class="easyui-linkbutton" onClick="submitTest()" style="width:100%;height:40px">Submit</button>
-            </div>
-        `;
+        }
+
 
         html += `</form>`;
 
@@ -222,7 +239,8 @@
 
         console.log('Total Point:', result.totalPoint);
         console.log('User Answers:', result.userAnswers);
-        $("#resultContainer").show();
+        $("#titleContainer").show();
+        $("#resultContainer").hide();
         $("#preTestContainer").hide();
         
         $("#btnResultTest").show();
@@ -230,7 +248,17 @@
         $("#finalScoreTitle").show();
         $("#scoreFinalTitle").text(result.totalPoint);
 
+        // renderTestResult(jsonData, result.userAnswers, '#resultContainer');
+
+    }
+
+    function resultTest() {
+        $("#resultContainer").show();
+        $("#titleContainer").hide();
+        const jsonData = JSON.parse(window.originalQuestionJson.json_question); // simpan json awal di variable global sebelumnya
+        const result = evaluateTest(jsonData, '#preTestContainer');
         renderTestResult(jsonData, result.userAnswers, '#resultContainer');
+
 
     }
 
@@ -353,9 +381,17 @@
 
         }else if(testType === 'POST_TEST'){
             $("#postTestContainer").show();
+            let data = <?php echo json_encode($data); ?>;
+            if(data.json_question) {
+                renderFormFromJson('#postTestContainer', data.json_postquestion)
+            }
 
         }else{
             $("#resultContainer").show();
+            let data = <?php echo json_encode($data); ?>;
+            if(data.json_question) {
+                renderFormFromJson('#resultContainer', data.json_question)
+            }
 
         }
 

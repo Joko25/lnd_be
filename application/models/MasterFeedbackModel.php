@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class MasterFormTestModel extends CI_Model {
+class MasterFeedbackModel extends CI_Model {
 
     public function __construct() {
         parent::__construct();
@@ -38,29 +38,16 @@ class MasterFormTestModel extends CI_Model {
     public function updateQuestion($id, $data, $uploadedFiles = []) {
         // Inject imageQuestion jika ada file baru
         foreach ($data['question'] as &$question) {
-            if (isset($question['imageQuestion'])) {
-                if (isset($uploadedFiles[$question['imageQuestion']])) {
-                    $question['imageQuestion'] = basename($uploadedFiles[$question['imageQuestion']]);
-                } elseif (!isset($question['imageQuestion'])) {
-                    $question['imageQuestion'] = null;
-                }
-            } else {
-                // Key 'imageQuestion' tidak ada
-                $question['imageQuestion'] = null; // Atau tindakan lain yang sesuai
-                log_message('debug', 'Question tidak memiliki key imageQuestion: ' . print_r($question, true));
+            if (isset($uploadedFiles[$question['imageQuestion']])) {
+                $question['imageQuestion'] = basename($uploadedFiles[$question['imageQuestion']]);
             }
     
             // Inject image opsion
             foreach ($question['opsion'] as $optIndex => &$opsion) {
-                if (isset($opsion['image'])) {
-                    if (isset($uploadedFiles[$opsion['image']])) {
-                        $opsion['image'] = [basename($uploadedFiles[$opsion['image']])];
-                    } elseif (!isset($opsion['image'])) {
-                        $opsion['image'] = [];
-                    }
-                } else {
+                if (isset($uploadedFiles[$opsion['image']])) {
+                    $opsion['image'] = [basename($uploadedFiles[$opsion['image']])];
+                } elseif (!isset($opsion['image'])) {
                     $opsion['image'] = [];
-                    log_message('debug', 'Opsion tidak memiliki key image: ' . print_r($opsion, true));
                 }
             }
         }
@@ -70,15 +57,13 @@ class MasterFormTestModel extends CI_Model {
             foreach ($data['post_question'] as &$question) {
                 if (isset($uploadedFiles[$question['imageQuestion']])) {
                     $question['imageQuestion'] = basename($uploadedFiles[$question['imageQuestion']]);
-                } elseif (!isset($question['imageQuestion'])) {
-                    $question['imageQuestion'] = null; // Set null jika tidak ada file baru dan tidak ada nilai lama
                 }
     
                 foreach ($question['opsion'] as $optIndex => &$opsion) {
                     if (isset($uploadedFiles[$opsion['image']])) {
                         $opsion['image'] = [basename($uploadedFiles[$opsion['image']])];
                     } elseif (!isset($opsion['image'])) {
-                        $opsion['image'] = []; // Set array kosong jika tidak ada file baru dan tidak ada nilai lama
+                        $opsion['image'] = [];
                     }
                 }
             }
@@ -115,7 +100,7 @@ class MasterFormTestModel extends CI_Model {
         $insert = [
             'id' => $this->uuid(),  // UUID custom generator
             'training_name' => $data['training_name'],
-            'department' => is_array($data['department']) ? implode(', ', $data['department']) : $data['department'],
+            'department' => implode(', ', $data['department']),
             'question_type' => $data['questionType'],
             'json_question' => json_encode($data['question']),
             'json_postquestion' => isset($data['post_question']) ? json_encode($data['post_question']) : null,

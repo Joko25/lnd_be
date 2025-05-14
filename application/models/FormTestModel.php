@@ -14,7 +14,22 @@ class FormTestModel extends CI_Model {
     }
 
     public function get_detail_data($id) {
-        $query = $this->db->get_where('lnd_master_form_test', ['id' => $id]);
+        // $query = $this->db->get_where('lnd_master_form_test', ['id' => $id]);
+        $this->db->select("a.*,
+                        CASE
+                            WHEN a.question_type = 'SAME' THEN 'Pre-Test & Post Test is The Same'
+                            WHEN a.question_type = 'DIFFERENT' THEN 'Pre-Test & Post Test is Different'
+                            ELSE 'Unknown'
+                        END as type, c.trainingActivity as name,
+                        c.*,
+                        d.*
+                     ");
+        $this->db->from('lnd_master_form_test a');
+        $this->db->join('lnd_schedule_training b', 'b.id = a.training_name', 'left');
+        $this->db->join('lnd_training_activity c', 'c.id = b.trainingName', 'left');
+        $this->db->join('lnd_schedule_trainers d', 'd.training_id = b.id', 'left');
+        $this->db->where('a.id', $id);
+        $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
             return $query->row_array(); 
