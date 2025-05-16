@@ -38,7 +38,8 @@
                 </div>
             </fieldset>
         </div>
-        <?= $button ?>
+		<?= $button ?>
+		<a href="javascript:;" class="easyui-linkbutton" data-options="plain:true"><i class="fa fa-cogs"></i> <span id="wa">Generate</span></a>
     </div>
 </div>
 
@@ -314,6 +315,10 @@
         }
     }
 
+	function reload() {
+		window.location.reload();
+	}
+
     function sendDataToServer(requestData) {
         // Buat body dengan format x-www-form-urlencoded (query string)
         const formData = new URLSearchParams(requestData).toString();
@@ -356,7 +361,7 @@
                 {field: 'remarks', rowspan:'2', width:100, title:'Remarks', halign: 'center'},
                 {field: 'totalTrainee', rowspan:'2', width:80, title:'Total Trainee', halign: 'center'},
                 {field: 'duration', rowspan:'2', width:80, title:'Duration (Minute)', halign: 'center'},
-                {field: 'date', rowspan:'2', width:100, title:'Date', halign: 'center',
+                {field: 'registerDate', rowspan:'2', width:100, title:'Date', halign: 'center',
                     formatter: function() {
                         return '<div style="text-align:center;">Plan<hr style="margin:4px 0;">Actual</div>';
                     },
@@ -453,7 +458,7 @@
                         textField: 'name',
                         mode: 'remote',
                         fitColumns: true,
-                        prompt: 'Choose Training Name',
+                        prompt: 'Choose Department Name',
                         icons: [{
                             iconCls: 'icon-clear',
                             handler: function(e) {
@@ -463,7 +468,7 @@
                         columns: [
                             [{
                                 field: 'name',
-                                title: 'Employee Name',
+                                title: 'Department Name',
                                 width: 120
                             }]
                         ],

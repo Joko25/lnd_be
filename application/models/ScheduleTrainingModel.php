@@ -97,7 +97,8 @@ class ScheduleTrainingModel extends CI_Model {
     }
 
     public function delete_data($id) {
-        $this->db->where('id', $id);
-        $this->db->delete('lnd_schedule_training');
+        $this->db->delete('lnd_schedule_training', ['id' => $id]);
+		$this->db->delete('lnd_schedule_training_dates', ['training_id' => $id]);
+		$this->db->delete('lnd_schedule_trainers', ['training_id' => $id]);
     }
 }

@@ -46,10 +46,10 @@ class Schedule_training extends CI_Controller {
         $offset = ($page - 1) * $rows;
 		// Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, b.*, e.name, ta.trainingActivity, st.trainer_name, st.trainer_id');
+        $this->db->select('a.*, a.id as idScheduleTraining, b.*, e.name, ta.trainingActivity, st.trainer_name, st.trainer_id');
         $this->db->from('lnd_schedule_training a');
         $this->db->join('lnd_schedule_training_dates b', 'a.id = b.training_id', 'left');
-		$this->db->join('employees e', 'e.id = a.trainee', 'left');
+		$this->db->join('departements e', 'e.id = a.trainee', 'left');
 		$this->db->join('lnd_training_activity ta', 'ta.id = a.trainingName', 'left');
 		$this->db->join('lnd_schedule_trainers st', 'a.id = st.training_id', 'left');
 
@@ -78,6 +78,7 @@ class Schedule_training extends CI_Controller {
 
 			if (!isset($grouped[$key])) {
 				$grouped[$key] = [
+					'id' => $row['idScheduleTraining'],
 					'induction' => $row['induction'],
 					'trainingName' => $row['trainingActivity'],
 		//          'trainer' => $row['trainer'],
@@ -85,7 +86,7 @@ class Schedule_training extends CI_Controller {
 					'remarks' => $row['remarks'],
 					'totalTrainee' => $row['totalTrainee'],
 					'duration' => $row['duration'],
-					'date' => $row['registerDate'],
+					'registerDate' => $row['registerDate'],
 					'createdBy' => $row['createdBy'],
 					'createdTime' => $row['createdTime'],
 					'updatedBy' => $row['updatedBy'],
@@ -108,8 +109,10 @@ class Schedule_training extends CI_Controller {
 				// If already exists, append new date
 				if (!empty($grouped[$key][$fieldName])) {
 					$grouped[$key][$fieldName] .= ', ' . $shortDate;
+					$grouped[$key]['originalTrainingDate'] .= ', ' . $trainingDate;
 				} else {
 					$grouped[$key][$fieldName] = $shortDate;
+					$grouped[$key]['originalTrainingDate'] = $trainingDate;
 				}
 			}
 
@@ -235,8 +238,8 @@ class Schedule_training extends CI_Controller {
     // GET DATA DEPARTEMENTS
     public function readsDepartements() 
     {
-        $session_dept = $this->session->departement_id;
-        $send = $this->crud->reads('employees', [], ["departement_id" => $session_dept], "");
+//        $session_dept = $this->session->departement_id;
+        $send = $this->crud->reads('departements', [], [], "");
         echo json_encode($send);
     }
 
