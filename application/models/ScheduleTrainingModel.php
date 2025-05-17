@@ -23,6 +23,16 @@ class ScheduleTrainingModel extends CI_Model {
         return null;
     }
 
+    public function get_detail_form_test($id) {
+        $query = $this->db->get_where('lnd_master_form_test', ['training_name' => $id]);
+
+        if($query->num_rows() > 0) {
+            return $query->row_array();
+        }
+
+        return null;
+    }
+
     // public function insert_data($data) {
     //     $data['createdBy'] = $this->session->username;
     //     $data['createdTime'] = date('Y-m-d H:i:s');

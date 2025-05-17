@@ -38,11 +38,23 @@
                 </div>
             </fieldset>
         </div>
-		<?= $button ?>
-		<a href="javascript:;" class="easyui-linkbutton" data-options="plain:true"><i class="fa fa-cogs"></i> <span id="wa">Generate</span></a>
+        <?= $button ?>
+        <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true" onclick="generateQR()"><i class="fa fa-generate"></i> Generate QR</a>
     </div>
 </div>
-
+<div id="dlg_qr" class="easyui-dialog" title="Generated QR Test" data-options="closed: true,modal:true" style="width: 560px; padding:20px; top: 20px;">
+    <div style="display: flex; gap: 50px;">
+        <div>
+            <h1>QR Pre Test</h1>
+            <div id="qrcode-pretest"></div>
+        </div>
+        <div>
+            <h1>QR Post Test</h1>
+            <div id="qrcode-posttest"></div>
+        </div>
+        
+    </div>    
+</div>
 <!-- DIALOG SAVE AND UPDATE -->
 <div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 1400px; padding:10px; top: 20px;">
     <form id="frm_insert" method="post" novalidate>
@@ -282,6 +294,57 @@
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
         }
+    }
+
+    function generateQR() {
+        var row = $('#dg').datagrid('getSelected');
+        console.log("#row", row);
+        
+        if (row) {
+            getDetailData(row.id_training);
+        } else {
+            toastr.warning("Please select one of the data in the table first!", "Information");
+        }
+    }
+
+    function getDetailData(id){
+        let url = '<?= base_url('lnd/schedule_training/get_form_test/') ?>' + id;
+        fetch(url)
+        .then(response => response.json())
+        .then(response => {
+            console.log("#res", response);
+            
+            if (response.code === 200) {
+                $('#dlg_qr').dialog('open');
+                let id = response.data.id;
+                let url = '<?= base_url('lnd/form_test/pre_test/') ?>' + id;
+                let url_post = '<?= base_url('lnd/form_test/post_test/') ?>' + id;
+                $('#qrcode-pretest').empty();
+                var qrcode = new QRCode("qrcode-pretest", {
+                    text: url,
+                    width: 228,
+                    height: 228,
+                    correctLevel: QRCode.CorrectLevel['H']
+                });
+
+                console.log("#pre", url, url_post);
+                
+
+                $('#qrcode-posttest').empty();
+                var qrcodepost = new QRCode("qrcode-posttest", {
+                    text: url_post,
+                    width: 228,
+                    height: 228,
+                    correctLevel: QRCode.CorrectLevel['H']
+                });
+            } else {
+                toastr.warning("Gagal mengambil data. Data training tidak di temukan.", "Warning");
+                // alert("Gagal mengambil data. Data training tidak di temukan.");
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+        });
     }
 
     function deleted() {

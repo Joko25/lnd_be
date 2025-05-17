@@ -34,7 +34,7 @@
                     <input style="width:60%;" id="training_name" name="training_name" required="" class="easyui-combogrid"
                     data-options="
                         url: '<?= base_url('lnd/master_form_test/readsTrainings') ?>',
-                        idField: 'id',
+                        idField: 'trainingName',
                         textField: 'name', 
                         mode: 'remote',
                         fitColumns: true,
@@ -60,21 +60,24 @@
                             {field:'number',title:'Dept. Number',width:200},
                             {field:'name',title:'Dept. Name',width:200},
                         ]],
-                         onSelect: function(index, row) {
+                        onSelect: function(e) {
+                            // Validasi maksimal 2 pilihan
                             var gridInstance = $('#department').combogrid('grid');
                             if (!gridInstance || !gridInstance.length) return;
-
+                            
                             var selections = gridInstance.datagrid('getSelections');
                             if (selections.length > 2) {
-                                // Deselect row yang baru dipilih
-                                
                                 setTimeout(() => {
                                     $('#department').combogrid('hidePanel');
                                     $.messager.alert('Warning','Maksimal 2 pilihan!');
-                                    resetDept();
                                 }, 100);
+                                $('#departement').combogrid('setValue', selections.slice(0,2))
+                                console.log(selections.slice(0,2))
+                                // <!-- gridInstance.datagrid('unselect', selections[selections.length-1].id); -->
                             }
-                            if (selections.length == 2)  $('#department').combogrid('hidePanel');
+
+                            console.log('#e', e, $('#department').combogrid('grid'), selections)
+                            
                         }
                     ">
                 </div>
@@ -216,10 +219,6 @@
         });
     }
 
-    function resetDept(){
-        $('#department').combogrid('setValue', '');
-    }
-
     function renderForm(data) {
         // $.getJSON(`/lnd/master_form_test/get_detail/${id}`, function(response) {
             console.log("#response", data);
@@ -236,6 +235,13 @@
                     var trainingContainer = $(`#answer_question_${index}`)
                     console.log("#opt", opt);
                     if(trainingContainer.children().length === 0) addOpsion(index, 'question', value, opt)
+                    // $(`#answer_question_${index}`).append(templateOpsion(index, optIndex, 'question'));
+                    // $(`input[name="question[${index}].opsion[${optIndex}].title"]`).textbox('setValue', opt.title);
+                    // $(`input[name="question[${index}].opsion[${optIndex}].point"]`).numberspinner('setValue', opt.point);
+                    // if (q.correct_answer == optIndex) {
+                    //     $(`input[name="question[${index}].correct_answer"][value="${optIndex}"]`).radiobutton('check');
+                    // }
+
                 });
                 
 
@@ -247,6 +253,17 @@
             postJson.forEach((val, index) => {
                 $('#formPostQuestion').append(templateQuestion(index, 'post_question', val));
                 $.parser.parse(`#post_question_${index}`);
+                // q.opsion.forEach((opt, optIndex) => {
+                //     $(`#answer_post_question_${index}`).append(templateOpsion(index, optIndex, 'post_question'));
+                //     $(`input[name="post_question[${index}].opsion[${optIndex}].title"]`).textbox('setValue', opt.title);
+                //     $(`input[name="post_question[${index}].opsion[${optIndex}].point"]`).numberspinner('setValue', opt.point);
+                //     if (q.correct_answer == optIndex) {
+                //         $(`input[name="post_question[${index}].correct_answer"][value="${optIndex}"]`).radiobutton('check');
+                //     }
+                // });
+                // $(`input[name="post_question[${index}].question"]`).textbox('setValue', q.question);
+                // $(`input[name="post_question[${index}].imageQuestion"]`).filebox('setText', q.imageQuestion);
+                // $(`input[name="post_question[${index}].imagePosition"][value="${q.imagePosition}"]`).radiobutton('check');
             });
         }
     }
@@ -541,6 +558,7 @@
                 contentType: false,
                 processData: false,
                 success: function(response) {
+                    console.log('Upload sukses', response);
                     if(response.code >= 200 && response.code <= 300) {
                         toastr.success(response.message, 'Success');
                         $('#dg').datagrid('reload');
@@ -698,7 +716,7 @@
             columns: [[
                 {field: 'ck', rowspan:'2', checkbox: true},
                 {field: 'name', rowspan:'2', width:250, title:'Training Name', align: 'left'},
-                {field: 'department', rowspan:'2', width:150, title:'Departement', width:150, align: 'left'},
+                {field: 'departement_name', rowspan:'2', width:150, title:'Departement', width:150, align: 'left'},
                 {field: 'type', rowspan:'2', width:250, title:'Question Type', align: 'left'},
                 {field: 'action', 
                     formatter: function(value,row,index) {
@@ -743,6 +761,10 @@
                         for (const [path, file] of Object.entries(data.files)) {
                             payload.append(path, file);
                         }
+
+                        console.log("#payload", Array.from(formData));
+                        
+                        
 
                         sendDataToServer(formValue, payload)
                     }
