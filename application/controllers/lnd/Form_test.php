@@ -38,6 +38,7 @@ class Form_test extends CI_Controller {
         $data['title']="Review";
         $data['test_id']=$id;
         $data['data'] = $this->FormTestModel->get_detail_data($id);
+        $data['data_feedback'] = $this->FormTestModel->get_detail_feedback($id);
 
         // Load view dengan data
         $this->load->view('template/header_mobile_lnd');
@@ -50,6 +51,7 @@ class Form_test extends CI_Controller {
         $data['title']="Review Feedback";
         $data['test_id']=$id;
         $data['data'] = $this->FormTestModel->get_detail_feedback($id);
+        $data['data_feedback'] = $this->FormTestModel->get_detail_feedback($id);
 
         // Load view dengan data
         $this->load->view('template/header_mobile_lnd');
@@ -75,6 +77,7 @@ class Form_test extends CI_Controller {
         $data['title']="Pre Test";
         $data['test_id']=$id;
         $data['data'] = $this->FormTestModel->get_detail_data($id);
+        $data['data_feedback'] = $this->FormTestModel->get_detail_feedback($id);
 
         // Load view dengan data
         $this->load->view('template/header_mobile_lnd');

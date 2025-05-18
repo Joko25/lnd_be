@@ -156,6 +156,7 @@
         $("#resultContainer").hide();
         $("#feedbackContainer").hide();
         $("#titleFeedbackResultContainer").hide()
+        $("#titleFeedbackContainer").hide()
         let data = <?php echo json_encode($data); ?>;
         let dataFeedback = <?php echo json_encode($data_feedback); ?>;
         if(data) {
@@ -181,8 +182,6 @@
             console.log(dataFeedback);
             $("#attendanceContainer").hide()
             $("#titleFeedbackContainer").show()
-            
-            
         }
         
         $("#employeeId").combogrid({
@@ -229,7 +228,7 @@
             html += `<div class="question-block" style="margin-bottom:20px;">`;
 
             // Panel khusus untuk pertanyaan
-            html += `<div class="easyui-panel" title="Question ${index + 1}" data-options="fit:true" style="padding:10px;">`;
+            html += `<div class="easyui-panel" title="Question ${index + 1}" data-options="fit:false" style="padding:10px;">`;
 
             // Image on TOP
             if (item.imagePosition === 'UP' && item.imageQuestion) {

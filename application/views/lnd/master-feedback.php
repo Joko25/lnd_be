@@ -359,7 +359,7 @@
                 {field: 'title', rowspan:'2', width:250, title:'Training Name', halign:'center', align: 'left'},
                 {field: 'action', halign:'center',
                     formatter: function(value,row,index) {
-                    return '<a class="button-blue" target="_blank" href="<?= base_url('lnd/form_test/review-feedback/') ?>' + row.id + '" style="width:100%;"><i class="fa fa-eye"></i> View</a>';;
+                    return '<a class="button-blue" target="_blank" href="<?= base_url('lnd/form_test/feedback/') ?>' + row.id + '" style="width:100%;"><i class="fa fa-eye"></i> View</a>';;
                 }, rowspan:'2', width:150, title:'View', width:100, align: 'left'},
                 {field: '', colspan:2, title:'Created', width:150, halign: 'center'},
                 {field: '', colspan:2, title:'Updated', width:80, halign: 'center'},
