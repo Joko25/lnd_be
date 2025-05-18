@@ -44,12 +44,25 @@ class Form_test extends CI_Controller {
         $this->load->view('lnd/form-test', $data);
     }
 
+    public function feedback($id) {
+        //  Panggil model untuk mendapatkan data produk
+        $data['test_type']="REVIEW-FEEDBACK";
+        $data['title']="Review Feedback";
+        $data['test_id']=$id;
+        $data['data'] = $this->FormTestModel->get_detail_feedback($id);
+
+        // Load view dengan data
+        $this->load->view('template/header_mobile_lnd');
+        $this->load->view('lnd/form-test', $data);
+    }
+
     public function post_test($id) {
         //  Panggil model untuk mendapatkan data produk
         $data['test_type']="POST_TEST";
         $data['title']="Post Test";
         $data['test_id']=$id;
         $data['data'] = $this->FormTestModel->get_detail_data($id);
+        $data['data_feedback'] = $this->FormTestModel->get_detail_feedback($id);
 
         // Load view dengan data
         $this->load->view('template/header_mobile_lnd');

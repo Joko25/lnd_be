@@ -4,21 +4,6 @@
 <!-- TOOLBAR DATAGRID -->
 <div id="toolbar">
     <div style="width: 100%; padding: 10px;">
-        <fieldset style="width: 50%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
-            <legend><b>Form Filter Data</b></legend>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Training Name</span>
-                <input style="width:60%;" id="name" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Departement</span>
-                <input style="width:60%;" id="training_activity_id" class="easyui-combogrid">
-            </div>
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;"></span>
-                <a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
-            </div>
-        </fieldset>
         <?= $button ?>
     </div>
 </div>
@@ -28,82 +13,23 @@
     <form id="frm_insert" method="post" enctype="multipart/form-data" novalidate style="padding:10px">
         <div id="form_group">
             <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
-                <legend><b>Form Data</b></legend>
+                <legend><b>Form Feedback</b></legend>
                 <div class="fitem">
-                    <span style="width:35%; display:inline-block;">Training Name</span>
-                    <input style="width:60%;" id="training_name" name="training_name" required="" class="easyui-combogrid"
-                    data-options="
-                        url: '<?= base_url('lnd/master_form_test/readsTrainings') ?>',
-                        idField: 'trainingName',
-                        textField: 'name', 
-                        mode: 'remote',
-                        fitColumns: true,
-                        panelWidth: 500,
-                        columns: [[
-                            {field:'name',title:'Training Name',width:200},
-                            {field:'induction',title:'Induction',width:200}
-                    ]]">
+                    <span style="width:35%; display:inline-block;">Title</span>
+                    <input class="easyui-textbox" id="title" name="title" style="width:60%;">
                 </div>
                 <div class="fitem">
-                    <span style="width:35%; display:inline-block;">Department</span>
-                    <input style="width:60%;" id="department" name="department" required="" class="easyui-combogrid"
-                    data-options="
-                        url: '<?= base_url('employee/departements/reads') ?>',
-                        idField: 'name',
-                        textField: 'name', 
-                        mode: 'remote',
-                        fitColumns: true,
-                        multiple: true,
-                        panelWidth: 500,
-                        maxSelections: 2,
-                        columns: [[
-                            {field:'number',title:'Dept. Number',width:200},
-                            {field:'name',title:'Dept. Name',width:200},
-                        ]],
-                        onSelect: function(e) {
-                            // Validasi maksimal 2 pilihan
-                            var gridInstance = $('#department').combogrid('grid');
-                            if (!gridInstance || !gridInstance.length) return;
-                            
-                            var selections = gridInstance.datagrid('getSelections');
-                            if (selections.length > 2) {
-                                setTimeout(() => {
-                                    $('#department').combogrid('hidePanel');
-                                    $.messager.alert('Warning','Maksimal 2 pilihan!');
-                                }, 100);
-                                $('#departement').combogrid('setValue', selections.slice(0,2))
-                                console.log(selections.slice(0,2))
-                                // <!-- gridInstance.datagrid('unselect', selections[selections.length-1].id); -->
-                            }
-
-                            console.log('#e', e, $('#department').combogrid('grid'), selections)
-                            
-                        }
-                    ">
-                </div>
-                
-                <div class="fitem">
-                    <span style="width:35%; display:inline-block;">Question Type</span>
-                    <select class="easyui-combobox" name="questionType" required="" style="width:60%;" data-options="onSelect: onTypeSelect, panelHeight:100">
-                        <option value="DIFFERENT" selected>Pre-Test & Post Test is Different</option>
-                        <option value="SAME">Pre-Test & Post Test is The Same</option>
-                    </select>
+                    <span style="width:35%; display:inline-block;">Instruction</span>
+                    <input class="easyui-textbox" id="instruction" name="instruction" style="width:60%; height:140px;" multiline="true" value="" style="width:100%;height:120px">
                 </div>
             </fieldset>
             <div>
-                <span id="titleQuestion"><b>PRE-Test & POST-Test Question</b></span>
+                <h2><b>Feedback Question</b></h2>
             </div>
 
-            <div id="formQuestion">
+            <div id="formFeedbackQuestion">
             </div>
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" id="addrow" onclick="addQuestion()"><i class="fa fa-plus"></i> Add Question</a>
-            <div style="margin-top-20px;">
-                <span id="titlePostQuestion">POST QUESTION</span>
-            </div>
-            <div id="formPostQuestion">
-            </div>
-            
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" id="btnAddPostQuestion" onclick="addPostQuestion()"><i class="fa fa-plus"></i> Add Post Question</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" id="addrow" onclick="addQuestion()"><i class="fa fa-plus"></i> Add Feedback Question</a>
         </div>
     </form>
 </div>
@@ -128,47 +54,19 @@
                                 <span style="width:35%; display:inline-block;">Question</span>
                                 <input style="width:60%;" name="${prefix}.question" value="${initValue?.question || ''}" required="" class="easyui-textbox">
                             </div>
-                            <div class="fitem">
-                                <span style="width:35%; display:inline-block;">Image Question</span>
-                                <input style="width:60%;" name="${prefix}.imageQuestion" value="${initValue?.imageQuestion || ''}" class="easyui-filebox" data-options="accept: 'image/*'">
+                            <div class="fitem" style="display:flex;">
+                                <span style="width:35%; display:inline-block;">Answer</span>
+                                <div id="answer_${type}_${index}" style="width:60%; display: flex; gap:8%;">
+                                    <label><input class="easyui-radiobutton" name="${prefix}.question_answer" disabled value="10"> Sangat Baik</label>
+                                    <label><input class="easyui-radiobutton" name="${prefix}.question_answer" disabled value="8"> Baik</label>
+                                    <label><input class="easyui-radiobutton" name="${prefix}.question_answer" disabled value="6"> Cukup</label>
+                                    <label><input class="easyui-radiobutton" name="${prefix}.question_answer" disabled value="4"> Kurang Baik</label>
+                                </div>
                             </div>
-                            <div class="fitem">
-                                <span style="width:35%; display:inline-block;"></span>
-                                <label><input class="easyui-radiobutton" name="${prefix}.imagePosition" id="imagePosition" checked="${initValue?.imagePosition === 'UP'}" value="UP" style="margin-right:10px;"> Up Question </label>
-                                <label><input class="easyui-radiobutton" name="${prefix}.imagePosition" value="BELOW" checked="${initValue?.imagePosition === 'BELOW'}"> Below Question </label>
-                            </div>
-                            <hr />
-                            <div id="answer_${type}_${index}">
-                                
-                            </div>
-                            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" id="addrow" onclick="addOpsion(${index}, '${type}')"><i class="fa fa-plus"></i> Add Opsion</a>
-                        
                         </fieldset>
                     </div>`;
 
         return html;
-    }
-
-    function templateOpsion(parentIndex, index, type, parentValue='', initValue='') {
-        
-        const prefix = `${type}[${parentIndex}].opsion[${index}]`;
-        const template = `<div class="form-group" id="${type}_${parentIndex}_opsion_${index}" data-parent-index='${parentIndex}' data-index='${index}'>
-                            <div class="fitem">
-                                <span style="width:35%; display:inline-block;" class="label-opsion_${parentIndex}">Opsion ${index+1}</span>
-                                <input style="width:45%;" name="${prefix}.title" value="${initValue?.title || ''}" required="" data-options="prompt:'Title Opsion ${index+1}'" placeholder="title" class="easyui-textbox">
-                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="removeOpsion(${parentIndex}, ${index}, '${type}')"><i class="fa fa-times"></i> Remove Opsion</a>
-                            </div>
-                            <div class="fitem">
-                                <span style="width:35%; display:inline-block;"></span>
-                                <input style="width:60%;" name="${prefix}.image" value="${initValue?.image || ''}" class="easyui-filebox" data-options="accept: 'image/*', prompt:'Image Opsion ${index+1}'">
-                            </div>
-                            <div class="fitem">
-                                <span style="width:35%; display:inline-block;"></span>
-                                <input style="width:20%;" name="${prefix}.point" value="${initValue?.point || ''}" class="easyui-numberspinner"> Point
-                                <label><input class="easyui-radiobutton" name="${type}[${parentIndex}].correct_answer" checked="${parentValue.correct_answer}" value="${index}"> Correct Answer</label>
-                            </div>
-                        </div>`;
-        return template;
     }
 
     function toCappital(text) {
@@ -180,34 +78,12 @@
         return titleCase
     }
 
-    function onTypeSelect(record) {
-        if(!record.value) {
-            $('#formPostQuestion').hide();
-            $('#btnAddPostQuestion').hide();
-            $('#titleQuestion').text(`PRE-Test & POST-Test Question`);
-            return
-        }
-
-        if (record.value === "SAME") {
-            $('#formPostQuestion').hide();
-            $('#btnAddPostQuestion').hide();
-            $('#titleQuestion').text(`PRE-Test & POST-Test Question`);
-            $('#titlePostQuestion').hide();
-            $('#formPostQuestion').empty();
-        } else {
-            $('#formPostQuestion').show();
-            $('#btnAddPostQuestion').show();
-            $('#titlePostQuestion').show();
-            $('#titleQuestion').text(`PRE-Test Question`);
-        }
-    }
-    function getDetailData(curriculumId){
-        let url = '<?= base_url('lnd/master_form_test/get_detail/') ?>' + curriculumId;
+   
+    function getDetailData(id){
+        let url = '<?= base_url('lnd/master_feedback/get_detail/') ?>' + id;
         fetch(url)
         .then(response => response.json())
         .then(response => {
-            console.log("#res", response);
-            
             if (response.code === 200) {
                 renderForm(response.data);
             } else {
@@ -220,95 +96,54 @@
     }
 
     function renderForm(data) {
-        // $.getJSON(`/lnd/master_form_test/get_detail/${id}`, function(response) {
-            console.log("#response", data);
-        $('#training_name').combogrid('setValue', data.training_name);
-        $('#department').combogrid('setValue', data.department);
-        $('#questionType').combogrid('setValue', data.question_type);
+        $('#title').textbox('setValue', data.title);
+        $('#instruction').textbox('setValue', data.instruction);
 
-        const questionJson = JSON.parse(data.json_question);
+        const questionJson = JSON.parse(data.json_feedback);
+        
         questionJson.forEach((value, index) => {
-            $('#formQuestion').append(templateQuestion(index, 'question', value));
+            $('#formFeedbackQuestion').append(templateQuestion(index, 'question', value));
             $.parser.parse(`#question_${index}`);
-            setTimeout(() => {
-                value.opsion.forEach((opt, optIndex) => {
-                    var trainingContainer = $(`#answer_question_${index}`)
-                    console.log("#opt", opt);
-                    if(trainingContainer.children().length === 0) addOpsion(index, 'question', value, opt)
-                    // $(`#answer_question_${index}`).append(templateOpsion(index, optIndex, 'question'));
-                    // $(`input[name="question[${index}].opsion[${optIndex}].title"]`).textbox('setValue', opt.title);
-                    // $(`input[name="question[${index}].opsion[${optIndex}].point"]`).numberspinner('setValue', opt.point);
-                    // if (q.correct_answer == optIndex) {
-                    //     $(`input[name="question[${index}].correct_answer"][value="${optIndex}"]`).radiobutton('check');
-                    // }
 
-                });
-                
-
-            }, 300);
         });
-
-        if (data.json_postquestion) {
-            const postJson = JSON.parse(data.json_postquestion);
-            postJson.forEach((val, index) => {
-                $('#formPostQuestion').append(templateQuestion(index, 'post_question', val));
-                $.parser.parse(`#post_question_${index}`);
-                // q.opsion.forEach((opt, optIndex) => {
-                //     $(`#answer_post_question_${index}`).append(templateOpsion(index, optIndex, 'post_question'));
-                //     $(`input[name="post_question[${index}].opsion[${optIndex}].title"]`).textbox('setValue', opt.title);
-                //     $(`input[name="post_question[${index}].opsion[${optIndex}].point"]`).numberspinner('setValue', opt.point);
-                //     if (q.correct_answer == optIndex) {
-                //         $(`input[name="post_question[${index}].correct_answer"][value="${optIndex}"]`).radiobutton('check');
-                //     }
-                // });
-                // $(`input[name="post_question[${index}].question"]`).textbox('setValue', q.question);
-                // $(`input[name="post_question[${index}].imageQuestion"]`).filebox('setText', q.imageQuestion);
-                // $(`input[name="post_question[${index}].imagePosition"][value="${q.imagePosition}"]`).radiobutton('check');
-            });
-        }
     }
 
 
     function add() {
-        $('#dlg_insert').dialog('open');
-        $('#dlg_insert').dialog('setTitle', `Add Master Form`)
-        
-        url_save = '<?= base_url('lnd/master_form_test/storeData') ?>';
-        method = 'POST';
-        $('#frm_insert').form('clear');
-        $("#addrow").show();
-        $('#formQuestion').empty();
-        $('#formPostQuestion').empty();
-
-        var formContainer = $('#formQuestion');
-        var totalData = formContainer.children().length;
-        if(formContainer.children().length === 0) addQuestion();
+        const rowData  = $("#dg").datagrid('getData');
+        if(rowData.total === 0) {
+            $('#dlg_insert').dialog('open');
+            $('#dlg_insert').dialog('setTitle', `Add Master Feedback`)
+            
+            url_save = '<?= base_url('lnd/master_feedback/storeData') ?>';
+            method = 'POST';
+            $('#frm_insert').form('clear');
+            $("#addrow").show();
+            $('#formFeedbackQuestion').empty();
+            $('#formPostQuestion').empty();
+            $('#title').textbox('setValue', 'Questioner Feedback Trainer');
+            $('#instruction').textbox('setValue', `Pilih satu jawaban untuk satu pertanyaan.
+    Setiap pertanyaan memiliki lima pilihan jawaban dengan skala berikut:
+        Baik Sekali: 10
+         Baik: 8
+         Cukup: 6
+         Kurang Baik: 4`);
+    
+            var formContainer = $('#formFeedbackQuestion');
+            var totalData = formContainer.children().length;
+            if(formContainer.children().length === 0) addQuestion();
+        }else{
+            toastr.info('Just only one feedback, please edit existing feedback', 'warning');
+        }
     }
 
     function addQuestion() {
-        var formQuestion = $('#formQuestion');
-        var totalData = formQuestion.children().length;
+        var formFeedbackQuestion = $('#formFeedbackQuestion');
+        var totalData = formFeedbackQuestion.children().length;
 
         var template = templateQuestion(totalData, 'question');
-        formQuestion.append(template);
+        formFeedbackQuestion.append(template);
         $.parser.parse(`#question_${totalData}`);
-
-
-        var trainingContainer = $(`#answer_question_${totalData}`)
-        if(trainingContainer.children().length === 0) addOpsion(totalData, 'question')
-    }
-
-    function addPostQuestion() {
-        var formQuestion = $('#formPostQuestion');
-        var totalData = formQuestion.children().length;
-
-        var template = templateQuestion(totalData, 'post_question');
-        formQuestion.append(template);
-        $.parser.parse(`#post_question_${totalData}`);
-
-
-        var trainingContainer = $(`#answer_post_question_${totalData}`)
-        if(trainingContainer.children().length === 0) addOpsion(totalData, 'post_question')
     }
     function removeQuestion(index, type){
         var formData = $(`#${type}_${index}`);
@@ -319,95 +154,51 @@
             toastr.error('Index tidak valid!', 'Error');
         }
     }
-    function addOpsion(parentIndex, type, parentValue='', initValue=''){
-        
-        var formOpsion = $(`#answer_${type}_${parentIndex}`);
-        var totalData = formOpsion.children().length;
-
-        var template = templateOpsion(parentIndex, totalData, type, parentValue, initValue);
-        formOpsion.append(template);
-        $.parser.parse(`#${type}_${parentIndex}_opsion_${totalData}`);
-        
-    }
-
-    function removeOpsion(parentIndex, opsionIndex, type) {
-        const $parentEl = $(`#answer_${type}_${parentIndex}`);
-        if ($parentEl.length === 0) {
-            console.warn(`Elemen #answer_${type}_${parentIndex} tidak ditemukan.`);
-            return;
-        }
-
-        // Remove opsion
-        $parentEl.find(`.form-group[data-index="${opsionIndex}"]`).remove();
-
-        // Reindex ulang
-        $parentEl.find('.form-group').each(function(newIndex) {
-            $(this).attr('data-index', newIndex);
-            $(this).attr('id', `${type}_${parentIndex}_opsion_${newIndex}`);
-
-            // Update label
-            $(this).find('.label-opsion_0').text(`Opsion ${newIndex + 1}`);
-
-            // Update name/textboxname/radiobuttonname
-            $(this).find('[name], [textboxname], [radiobuttonname], [numberboxname], [spinnername]').each(function () {
-            const attrs = ['name', 'textboxname', 'radiobuttonname', 'numberboxname', 'spinnername'];
-            for (const attr of attrs) {
-                const val = $(this).attr(attr);
-                if (val) {
-                const updated = val.replace(/\[.*?\]\.opsion\[\d+\]/g, `[${parentIndex}].opsion[${newIndex}]`);
-                $(this).attr(attr, updated);
-                }
-            }
-
-            // Update radio value
-            if ($(this).attr('type') === 'radio') {
-                $(this).val(newIndex);
-            }
-            });
-        });
-
-        // Re-parse if needed
-        $.parser.parse($parentEl);
-    }
 
     function rerenderTemplate(type){
-        var formData = $('#formQuestion .form-group');
-        formData.each(function(index) {
-            $(this).attr('data-index', index); // Mengatur data-index sesuai urutan
-            $(this).attr('id', `${type}_${index}`)
-            $(this).find(`.label-${type}`).text(`Question ${index+1}`)
+        var formGroups = $('#formFeedbackQuestion .form-group');
+        formGroups.each(function(newIndex) {
+            var $formGroup = $(this);
+            $formGroup.attr({
+                'data-index': newIndex,
+                'id': `${type}_${newIndex}`
+            });
+            
+            $formGroup.find(`.label-${type}`).text(`Question ${newIndex + 1}`);
+            
+            updateInputFields($formGroup, type, newIndex, 'question');
+            $formGroup.find('.easyui-linkbutton').attr('onclick', `removeQuestion(${newIndex}, '${type}')`);
         });
     }
 
-    var editIndex = undefined;
-
-    function endEditing() {
-        if (editIndex == undefined) {
-            return true
-        }
-        if ($('#dgForm').datagrid('validateRow', editIndex)) {
-            $('#dgForm').datagrid('endEdit', editIndex);
-            editIndex = undefined;
-            return true;
-        } else {
-            return false;
-        }
+    function updateInputFields($container, type, newIndex, fieldName) {
+        $container.find(`input[name^="${type}"][name$="${fieldName}"]`).each(function() {
+            var $input = $(this);
+            var newName = `${type}[${newIndex}].${fieldName}`;
+            
+            // Update all related elements
+            $input.attr('name', newName);
+            $input.attr('textboxname', newName);
+            
+            // Update the corresponding textbox-value hidden input
+            $input.siblings('.textbox').find('.textbox-value').attr('name', newName);
+        });
     }
+
     
     function update() {
         var row = $('#dg').datagrid('getSelected');
         if (row) {
             console.log("#row", row);
-            $('#formQuestion').empty();
-            $('#formPostQuestion').empty();
+            $('#formFeedbackQuestion').empty();
             
             // getDetailData(row.id)
             
             $('#dlg_insert').dialog('open');
-            $('#dlg_insert').dialog('setTitle', `Edit Master Form Test ${row.id}`)
+            $('#dlg_insert').dialog('setTitle', `Edit Master Form Feedback`)
             getDetailData(row.id);
             // $('#frm_insert').form('load', row);
-            url_save = '<?= base_url('lnd/master_form_test/update_data/') ?>' + row.id;
+            url_save = '<?= base_url('lnd/master_feedback/update_data/') ?>' + row.id;
             method = 'POST';
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
@@ -421,7 +212,7 @@
                 if (r) {
                     for (var i = 0; i < rows.length; i++) {
                         var row = rows[i];
-                        fetch('<?= base_url('lnd/master_form_test/delete_data/') ?>'+row.id, {
+                        fetch('<?= base_url('lnd/master_feedback/delete_data/') ?>'+row.id, {
                             method: 'DELETE', // Metode DELETE
                         })
                         .then(response => response.json()) // Konversi response ke JSON
@@ -447,6 +238,9 @@
 
     function formArrayToNestedJson(arrayData) {
         let result = {};
+
+        console.log("#arrayData", arrayData);
+        
 
         arrayData.forEach(item => {
             let keys = item.name.replace(/\]/g, '').split(/[\.\[]/);
@@ -487,65 +281,6 @@
         return result;
     }
 
-
-    function filter() {
-        var master_form_test_id = $("#master_form_test_id").combogrid('getValue');
-
-        var params = "?master_form_testId=" + master_form_test_id ;
-
-        $('#dg').datagrid({
-            url: '<?= base_url('lnd/master_form_test/datatables') ?>' + params
-        });
-
-        $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
-        $("#printout").attr('src', '<?= base_url('employee/departements/print') ?>' + params);
-    }
-
-    function generatedSubDept(dept_id) {
-        $('#sub_departement_id').combobox({
-            url: '<?php echo base_url('employee/departement_subs/reads'); ?>?departement_id=' + dept_id,
-            valueField: 'id',
-            textField: 'name',
-            prompt: 'Choose All',
-            icons: [{
-                iconCls: 'icon-clear',
-                handler: function(e) {
-                    $(e.data.target).combobox('clear').combobox('textbox').focus();
-                }
-            }],
-        });
-    }
-
-
-
-    function generatedDepList(){
-        $('#departement_id').combogrid({
-            url: '<?= base_url('employee/departements/reads') ?>',
-            panelWidth: 420,
-            idField: 'id',
-            textField: 'name',
-            mode: 'remote',
-            fitColumns: true,
-            valueField: 'id',
-            prompt: "Choose Departement",
-            columns: [
-                [{
-                    field: 'number',
-                    title: 'Departement No',
-                    width: 80
-                }, {
-                    field: 'name',
-                    title: 'Departement Name',
-                    width: 250
-                }, ]
-            ],
-            onSelect: function(dept) {
-                var departement_id = $('#departement_id').combogrid('getValue');
-                generatedSubDept(departement_id)
-            }
-        });
-    }
-
     function sendDataToServer(requestData, payload) {
         // Buat body dengan format x-www-form-urlencoded (query string)
         const payloadArr = formArrayToNestedJson(requestData.serializeArray());
@@ -573,100 +308,6 @@
             toastr.error('Mohon lengkapi data', 'Error');
         }
 
-    }
-
-    function initDgForm() {
-        var dg = $('#dgForm').datagrid({
-            columns: [
-                [{
-                    field: 'competenceId',
-                    width: 250,
-                    halign: 'center',
-                    title: "Competence Standard",
-                }, {
-                    field: 'trainingActivityId',
-                    width: 100,
-                    halign: 'center',
-                    title: "Training Activities",
-                    editor: {
-                        type: 'textbox'
-                    }
-                }, {
-                    field: 'indicators',
-                    width: 100,
-                    halign: 'center',
-                    title: "Indicators",
-                    editor: {
-                        type: 'textbox',
-                    }
-                }]
-            ],
-            fit: true,
-            singleSelect: true,
-            method: 'get',
-            onClickCell: function(index, field){
-                if (editIndex != index){
-                    if (endEditing()){
-                        $(this).datagrid('selectRow', index)
-                                .datagrid('beginEdit', index);
-                        var ed = $(this).datagrid('getEditor', {index:index,field:field});
-                        if (ed){
-                            ($(ed.target).data('textbox') ? $(ed.target).textbox('textbox') : $(ed.target)).focus();
-                        }
-                        editIndex = index;
-                    } else {
-                        setTimeout(function(){
-                            $(this).datagrid('selectRow', editIndex);
-                        },0);
-                    }
-                }
-            },
-            onEndEdit: function(index, row){
-                var ed = $(this).datagrid('getEditor', {
-                    index: index,
-                    field: 'competenceId'
-                });
-                row.productname = $(ed.target).combobox('getText');
-            },
-            onBeforeEdit: function(index, row) {
-                row.editing = true;
-                $(this).datagrid('refreshRow', index);
-            },
-            onAfterEdit: function(index, row) {
-                row.editing = false;
-                $(this).datagrid('refreshRow', index);
-            },
-            onCancelEdit: function(index, row) {
-                row.editing = false;
-                $(this).datagrid('refreshRow', index);
-            },
-        });
-    }
-
-    function onClickCell(index, field){
-        if (editIndex != index){
-            if (endEditing()){
-                $('#dgForm').datagrid('selectRow', index)
-                        .datagrid('beginEdit', index);
-                var ed = $('#dgForm').datagrid('getEditor', {index:index,field:field});
-                if (ed){
-                    ($(ed.target).data('textbox') ? $(ed.target).textbox('textbox') : $(ed.target)).focus();
-                }
-                editIndex = index;
-            } else {
-                setTimeout(function(){
-                    $('#dgForm').datagrid('selectRow', editIndex);
-                },0);
-            }
-        }
-    }
-
-    function onEndEdit(index, row){
-        var ed = $(this).datagrid('getEditor', {
-            index: index,
-            field: 'competenceId'
-        });
-        row.productname = $(ed.target).combobox('getText');
     }
 
     function reload() {
@@ -712,15 +353,13 @@
         //SETTING DATAGRID EASYUI
         // initDgForm()
         $('#dg').datagrid({
-            url: '<?= base_url('lnd/master_form_test/datatables') ?>',
+            url: '<?= base_url('lnd/master_feedback/datatables') ?>',
             columns: [[
                 {field: 'ck', rowspan:'2', checkbox: true},
-                {field: 'name', rowspan:'2', width:250, title:'Training Name', align: 'left'},
-                {field: 'departement_name', rowspan:'2', width:150, title:'Departement', width:150, align: 'left'},
-                {field: 'type', rowspan:'2', width:250, title:'Question Type', align: 'left'},
-                {field: 'action', 
+                {field: 'title', rowspan:'2', width:250, title:'Training Name', halign:'center', align: 'left'},
+                {field: 'action', halign:'center',
                     formatter: function(value,row,index) {
-                    return '<a class="button-blue" target="_blank" href="<?= base_url('lnd/form_test/review/') ?>' + row.id + '" style="width:100%;"><i class="fa fa-eye"></i> View</a>';;
+                    return '<a class="button-blue" target="_blank" href="<?= base_url('lnd/form_test/review-feedback/') ?>' + row.id + '" style="width:100%;"><i class="fa fa-eye"></i> View</a>';;
                 }, rowspan:'2', width:150, title:'View', width:100, align: 'left'},
                 {field: '', colspan:2, title:'Created', width:150, halign: 'center'},
                 {field: '', colspan:2, title:'Updated', width:80, halign: 'center'},
@@ -731,13 +370,14 @@
                 {field: 'updatedTime', title:'Date', width:150, align: 'center'},
             ]],
             toolbar: '#toolbar',
+            remoteFilter: true,
             singleSelect: true,
             pagination: true,
             rownumbers: true,
             fit: true,
             pageList: [20, 50, 100, 500, 1000],
             pageSize: 20,
-        });
+        }).datagrid('enableFilter');
 
         //SAVE DATA
         $('#dlg_insert').dialog({
@@ -753,16 +393,15 @@
                         const data = formDataToNestedJsonWithFiles(formData);
 
                         const sanitizedJson = sanitizeEmptyFileFields(data.json);
+
+                        console.log("#sanitizedJson", formArrayToNestedJson(formValue.serializeArray()));
+                        
                         
                         const payload = new FormData();
                         payload.append('data', JSON.stringify(sanitizedJson)); // kirim data JSON
                         
-                        // Tambahkan file satu per satu
-                        for (const [path, file] of Object.entries(data.files)) {
-                            payload.append(path, file);
-                        }
 
-                        console.log("#payload", Array.from(formData));
+                        console.log("#payload", payload, Array.from(payload));
                         
                         
 

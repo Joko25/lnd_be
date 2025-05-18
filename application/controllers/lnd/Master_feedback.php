@@ -35,7 +35,6 @@ class Master_feedback extends CI_Controller {
     public function datatables()
     {
         // Ambil parameter dari request
-        $competence_id = $this->input->get('competenceId', true); // Sanitize input GET
         $page = $this->input->post('page');
         $rows = $this->input->post('rows');
         
@@ -46,21 +45,9 @@ class Master_feedback extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select("a.*, 
-            b.name as departement_name,
-            CASE 
-                WHEN a.question_type = 'SAME' THEN 'Pre-Test & Post Test is The Same'
-                WHEN a.question_type = 'DIFFERENT' THEN 'Pre-Test & Post Test is Different'
-                ELSE 'Unknown'
-            END as type, c.trainingActivity as name
-        ");
-        $this->db->from('lnd_master_form_test a');
-        $this->db->join('departements b', 'b.id = a.department', 'left');
-        $this->db->join('lnd_training_activity c', 'c.id = a.training_name', 'left');
+        $this->db->select("a.*");
+        $this->db->from('lnd_master_feedback a');
         
-        if (!empty($competence_id)) {
-            $this->db->like('competenceId', $competence_id);
-        }
         $this->db->stop_cache(); // Stop caching the query
 
         // Hitung total data (tanpa limit dan offset)
@@ -97,7 +84,7 @@ class Master_feedback extends CI_Controller {
         }
 
         // Validasi manual (opsional)
-        if (empty($data['training_name']) || empty($data['department']) || empty($data['questionType'])) {
+        if (empty($data['title']) || empty($data['instruction'])) {
             return $this->output
                 ->set_content_type('application/json')
                 ->set_status_header(422)
@@ -105,33 +92,9 @@ class Master_feedback extends CI_Controller {
         }
 
         // Handle file upload jika ada
-        $uploadedFiles = [];
-        foreach ($_FILES as $field => $file) {
-            if ($file['error'] == 0) {
-                $uploadPath = './uploads/questions/';
-                if (!is_dir($uploadPath)) {
-                    mkdir($uploadPath, 0755, true);
-                }
-
-                $config['upload_path']   = $uploadPath;
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                $config['file_name']     = uniqid('img_');
-                $this->load->library('upload', $config);
-
-                if ($this->upload->do_upload($field)) {
-                    $uploaded = $this->upload->data();
-                    $uploadedFiles[$field] = 'uploads/questions/' . $uploaded['file_name'];
-                } else {
-                    return $this->output
-                        ->set_content_type('application/json')
-                        ->set_status_header(500)
-                        ->set_output(json_encode(['error' => $this->upload->display_errors('', '')]));
-                }
-            }
-        }
 
         // Simpan ke DB (pass both JSON data & uploadedFiles)
-        $save = $this->MasterFeedbackModel->insertQuestion($data, $uploadedFiles);
+        $save = $this->MasterFeedbackModel->insertQuestion($data);
         if($save) {
             return $this->response->send(ResponseStatus::SUCCESS, $save, 'Form test successfully');
         }else{
@@ -226,17 +189,6 @@ class Master_feedback extends CI_Controller {
     
 
     public function update_data($id) {
-        // $json = $this->input->post('data');
-        // $raw = file_get_contents('php://input');
-        // // $json = $this->input->post('data');
-        // // Jika isinya dalam bentuk "data=....", decode dari format urlencoded
-        // parse_str($raw, $_REQUEST);
-        // $jsonData = isset($_REQUEST['data']) ? $_REQUEST['data'] : null;
-        
-        // // Fallback: jika format JSON biasa
-        // if (!$jsonData) {
-        //     $jsonData = $raw;
-        // }
         $json = $this->input->post('data');
         $data = json_decode($json, true);
     
@@ -247,41 +199,15 @@ class Master_feedback extends CI_Controller {
                 ->set_output(json_encode(['error' => 'Invalid JSON']));
         }
     
-        if (empty($data['training_name']) || empty($data['department']) || empty($data['questionType'])) {
+        if (empty($data['title']) || empty($data['instruction'])) {
             return $this->output
                 ->set_content_type('application/json')
                 ->set_status_header(422)
                 ->set_output(json_encode(['error' => 'Missing required fields']));
         }
     
-        // Handle file upload
-        $uploadedFiles = [];
-        foreach ($_FILES as $field => $file) {
-            if ($file['error'] == 0) {
-                $uploadPath = './uploads/questions/';
-                if (!is_dir($uploadPath)) {
-                    mkdir($uploadPath, 0755, true);
-                }
-    
-                $config['upload_path']   = $uploadPath;
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                $config['file_name']     = uniqid('img_');
-                $this->load->library('upload', $config);
-    
-                if ($this->upload->do_upload($field)) {
-                    $uploaded = $this->upload->data();
-                    $uploadedFiles[$field] = 'uploads/questions/' . $uploaded['file_name'];
-                } else {
-                    return $this->output
-                        ->set_content_type('application/json')
-                        ->set_status_header(500)
-                        ->set_output(json_encode(['error' => $this->upload->display_errors('', '')]));
-                }
-            }
-        }
-    
         // Update ke DB
-        $update = $this->MasterFeedbackModel->updateQuestion($id, $data, $uploadedFiles);
+        $update = $this->MasterFeedbackModel->updateQuestion($id, $data);
         if ($update) {
             return $this->response->send(ResponseStatus::SUCCESS, $update, 'Form test updated successfully');
         } else {
