@@ -1,6 +1,7 @@
 CREATE TABLE lnd_master_feedback (
     id CHAR(36) NOT NULL PRIMARY KEY DEFAULT (UUID()),
     title VARCHAR(50) NOT NULL,
+    instruction TEXT,
     json_feedback TEXT,
     createdBy CHAR(36),
     createdTime DATETIME DEFAULT CURRENT_TIMESTAMP,

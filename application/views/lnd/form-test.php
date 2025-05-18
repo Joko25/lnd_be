@@ -604,7 +604,9 @@
             }
 
         }else if(testType === 'POST_TEST'){
+            $('#titleFeedbackResultContainer').hide();
             $("#postTestContainer").show();
+
             console.log(window.feedbackResult);
             
             let data = <?php echo json_encode($data); ?>;
