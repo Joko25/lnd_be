@@ -92,19 +92,57 @@ class ScheduleTrainingModel extends CI_Model {
     }
 
 
-    public function update_data($id, $data) {
-        $this->db->where('id', $id);
-        $data['updatedBy'] = $this->session->username;
-        $data['updatedTime'] = date('Y-m-d H:i:s');
+	public function update_data($id, $data, $trainingDates = [], $combineTrainer = []) {
+		$this->db->trans_start(); // Begin transaction
 
-        $this->db->update('lnd_schedule_training', $data);
-        
-        $query = $this->db->order_by('updatedTime', 'activityName')->limit(1)->get('lnd_schedule_training');
-    
-        $record = $query->row();
-    
-        return $record; 
-    }
+		// Update metadata
+		$data['updatedBy'] = $this->session->username ?? 'system';
+		$data['updatedTime'] = date('Y-m-d H:i:s');
+
+		// Update master table
+		$this->db->where('id', $id);
+		$this->db->update('lnd_schedule_training', $data);
+
+		// Delete existing training dates
+		$this->db->where('training_id', $id);
+		$this->db->delete('lnd_schedule_training_dates');
+
+		// Insert new training dates
+		foreach ($trainingDates as $item) {
+			if (empty($item['training_date'])) continue;
+
+			$detail = [
+				'id' => $this->uuid->v4(),
+				'training_id' => $id,
+				'training_date' => $item['training_date'],
+				'batch_count' => $item['batch_count'],
+				'week_label' => $item['week'],
+				'createdTime' => date('Y-m-d H:i:s')
+			];
+			$this->db->insert('lnd_schedule_training_dates', $detail);
+		}
+
+		// Delete existing trainers
+		$this->db->where('training_id', $id);
+		$this->db->delete('lnd_schedule_trainers');
+
+		// Insert new trainers
+		foreach ($combineTrainer as $item) {
+			$detail = [
+				'id' => $this->uuid->v4(),
+				'training_id' => $id,
+				'trainer_name' => $item['trainer_name'],
+				'trainer_id' => $item['id'],
+			];
+			$this->db->insert('lnd_schedule_trainers', $detail);
+		}
+
+		$this->db->trans_complete(); // Commit or rollback transaction
+
+		// Return the updated record
+		$query = $this->db->get_where('lnd_schedule_training', ['id' => $id]);
+		return $query->row();
+	}
 
     public function delete_data($id) {
         $this->db->delete('lnd_schedule_training', ['id' => $id]);
