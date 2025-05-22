@@ -46,7 +46,7 @@ class Schedule_training extends CI_Controller {
         $offset = ($page - 1) * $rows;
 		// Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, a.id as id_training, b.*, e.name, ta.trainingActivity, st.trainer_name, st.trainer_id');
+        $this->db->select('a.*, a.id as id_training, b.*, e.name, e.id as departementId, ta.id as trainingActivityId, ta.trainingActivity, st.trainer_name, st.trainer_id, st.id as trainingTrainerId');
         $this->db->from('lnd_schedule_training a');
         $this->db->join('lnd_schedule_training_dates b', 'a.id = b.training_id', 'left');
 		$this->db->join('departements e', 'e.id = a.trainee', 'left');
@@ -87,6 +87,9 @@ class Schedule_training extends CI_Controller {
 					'totalTrainee' => $row['totalTrainee'],
 					'duration' => $row['duration'],
 					'registerDate' => $row['registerDate'],
+					'category' => $row['category'],
+					'trainingActivityId' => $row['trainingActivityId'],
+					'departementId' => $row['departementId'],
 					'createdBy' => $row['createdBy'],
 					'createdTime' => $row['createdTime'],
 					'updatedBy' => $row['updatedBy'],
@@ -108,8 +111,12 @@ class Schedule_training extends CI_Controller {
 
 				// If already exists, append new date
 				if (!empty($grouped[$key][$fieldName])) {
-					$grouped[$key][$fieldName] .= ', ' . $shortDate;
-					$grouped[$key]['originalTrainingDate'] .= ', ' . $trainingDate;
+					$existingTrainingDates = explode(', ', $grouped[$key][$fieldName]);
+
+					if(!in_array($shortDate, $existingTrainingDates)) {
+						$grouped[$key][$fieldName] .= ', ' . $shortDate;
+						$grouped[$key]['originalTrainingDate'] .= ', ' . $trainingDate;
+					}
 				} else {
 					$grouped[$key][$fieldName] = $shortDate;
 					$grouped[$key]['originalTrainingDate'] = $trainingDate;
@@ -118,11 +125,19 @@ class Schedule_training extends CI_Controller {
 
 			$trainerName = $row['trainer_name'];
 			$trainerId = $row['trainer_id'];
+			$trainingTrainerid = $row['trainingTrainerId'];
 			if($trainerName && $trainerId) {
 				if (!empty($grouped[$key]['trainer'])) {
-					$grouped[$key]['trainer'] .= ', ' . $trainerName;
+					$existingTrainers = explode(', ', $grouped[$key]['trainer']);
+
+					// Only add if not already in the list
+					if (!in_array($trainerName, $existingTrainers)) {
+						$grouped[$key]['trainer'] .= ', ' . $trainerName;
+						$grouped[$key]['trainingTrainerId'] .= ', ' . $trainingTrainerid;
+					}
 				} else {
 					$grouped[$key]['trainer'] = $trainerName;
+					$grouped[$key]['trainingTrainerId'] = $trainingTrainerid;
 				}
 			}
 		}
@@ -205,16 +220,41 @@ class Schedule_training extends CI_Controller {
     
 
     public function update_data($id) {
-        $rawInput = file_get_contents("php://input");
-        parse_str($rawInput, $data);
-        // $payloadId   = base64_decode($id);
+		$rawInput = file_get_contents("php://input");
+		parse_str($rawInput, $data);
 
-        if (!empty($data)) {
-            $dataTemp = $this->ScheduleTrainingModel->update_data($id, $data);
-            $this->response->send(200, $dataTemp, 'Schedule Training updated successfully');
-        } else {
-            $this->response->send(400, null, 'Schedule Training updated failed.');
-        }
+		$trainingDates = [];
+		$combineTrainer = [];
+
+		// Extract training dates
+		if (!empty($data['training_dates'])) {
+			$trainingDates = json_decode($data['training_dates'], true);
+			unset($data['training_dates']); // Prevent DB insert issue
+		}
+
+		// Extract and enrich trainer data
+		if (!empty($data['trainingTrainerId'])) {
+			$trainerIdArray = $data['trainingTrainerId'];
+			foreach ($trainerIdArray as $value) {
+				$trainer = $this->crud->read('lnd_schedule_trainers', ['id' => $value]);
+				if ($trainer) {
+					$combineTrainer[] = [
+						'id' => $trainer->id,
+						'trainer_name' => $trainer->trainer_name,
+					];
+				}
+			}
+			unset($data['trainerName']);
+			unset($data['trainingTrainerId']);
+		}
+
+		// Proceed with update
+		if (!empty($data)) {
+			$dataTemp = $this->ScheduleTrainingModel->update_data($id, $data, $trainingDates, $combineTrainer);
+			$this->response->send(200, $dataTemp, 'Schedule Training updated successfully');
+		} else {
+			$this->response->send(400, null, 'Schedule Training update failed.');
+		}
     }
 
     public function delete_data($id) {
@@ -253,6 +293,12 @@ class Schedule_training extends CI_Controller {
         echo json_encode($send);
     }
 
+	public function readsTrainingActivity()
+	{
+		$induction = $this->input->get('induction') ? $this->input->get('induction') : "";
+		$send = $this->crud->query("SELECT a.*, b.name as competenceName FROM lnd_training_activity a JOIN lnd_competence b ON a.competenceId = b.id WHERE a.induction = '$induction' ORDER BY a.index ASC");
+		echo json_encode($send);
+	}
 	public function readsEmployeesLeaderUp()
 	{
 		$this->db->start_cache();

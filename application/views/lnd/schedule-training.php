@@ -89,16 +89,17 @@
                 </div>
             </div>
             <input type="hidden" name="training_dates" id="training_dates_json">
-            <div class="fitem">
-                <span style="width:35%; display:inline-block;">Induction</span>
-                <select style="width:60%;" name="induction" required="" class="easyui-combobox" panelHeight="auto">
-                    <option value="Basic Requirement">Basic Requirement</option>
-                    <option value="L&D Program: Upgrade Competence">L&D Program: Upgrade Competence</option>
-                    <option value="L&D Program: Refresh Training">L&D Program: Refresh Training</option>
-                    <option value="L&D Program: Training Activities">L&D Program: Training Activities</option>
-                </select>
-            </div>
-            <div class="fitem">
+			<div class="fitem">
+				<span style="width:35%; display:inline-block;">Induction</span>
+				<select id="inductionSelect" style="width:60%;" name="induction" required="" class="easyui-combobox" panelHeight="auto">
+					<option value="Basic Requirement">Basic Requirement</option>
+					<option value="L&D Program: Upgrade Competence">L&D Program: Upgrade Competence</option>
+					<option value="L&D Program: Refresh Training">L&D Program: Refresh Training</option>
+					<option value="L&D Program: Training Activities">L&D Program: Training Activities</option>
+				</select>
+			</div>
+
+			<div class="fitem">
                 <span style="width:35%; display:inline-block;">Training Name</span>
                 <input style="width:60%;" name="trainingName" id="trainingName" required="" class="easyui-textbox">
             </div>
@@ -193,32 +194,6 @@
 				}]
 			],
 		});
-        $('#trainingName').combogrid({
-            url: '<?= base_url('lnd/training_activity/list') ?>',
-            panelWidth: 450,
-            idField: 'id',
-            textField: 'trainingActivity',
-            mode: 'remote',
-            fitColumns: true,
-            prompt: 'Choose Training Name',
-            icons: [{
-                iconCls: 'icon-clear',
-                handler: function(e) {
-                    $(e.data.target).combogrid('clear').combogrid('textbox').focus();
-                }
-            }],
-            columns: [
-                [{
-                    field: 'competenceName',
-                    title: 'Competence Standard',
-                    width: 120
-                }, {
-                    field: 'trainingActivity',
-                    title: 'Training Activity Name',
-                    width: 200
-                }]
-            ],
-        });
 
 		$('#trainingMaterialFilter').combogrid({
 			url: '<?= base_url('lnd/training_activity/list') ?>',
@@ -277,8 +252,10 @@
 
     function add() {
         $('#dlg_insert').dialog('open');
+		// $('#frm_insert').form('clear');
         url_save = '<?= base_url('lnd/schedule_training/create_data') ?>';
         method = 'POST';
+
         $('#frm_insert').form('clear');
     }
 
@@ -289,14 +266,222 @@
         if (row) {
             $('#dlg_insert').dialog('open');
             $('#frm_insert').form('load', row);
-            url_save = '<?= base_url('lnd/schedule_training/update_data/') ?>' + row.id;
+            url_save = '<?= base_url('lnd/schedule_training/update_data/') ?>' + row.id_training;
             method = 'PUT';
+
+			populateFormFields(row);
+			populateTrainerFields(row); // Set trainers dynamically
+			const trainingDates = extractTrainingDates(row);
+
+			// Clear all but first row
+			$('#trainingDatesTable tr:not(:first)').remove();
+
+			trainingDates.forEach((item, index) => {
+				if (index === 0) {
+					$('#trainingDatesTable .training-date').datebox('setValue', item.date);
+					$('#trainingDatesTable .batch-count').combobox('setValue', item.batch);
+					const tt = $('#trainingDatesTable .week-label');
+					updateWeekLabel($('#trainingDatesTable .training-date'), $('#trainingDatesTable .week-label'));
+				}
+				else if (index < 4) {
+					addTrainingDate(item.date, item.batch);
+				}
+			});
+
+			// $('#trainingName').combobox('setValue', row.trainingActivityId);
+			// $('#trainee').combobox('setValue', row.departementId)
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
         }
     }
 
-    function generateQR() {
+	function updateWeekLabel($dateInput, $label) {
+		const dateStr = $dateInput.datebox('getValue');
+		if (dateStr) {
+			const date = new Date(dateStr);
+			const getDay = date.getDate();
+			const week = getWeekByDay(getDay);
+			const month = date.toLocaleString('default', { month: 'long' });
+			const year = date.getFullYear();
+			$label.text(`Week: ${week}`);
+		} else {
+			$label.text('Week: -');
+		}
+	}
+
+	function extractTrainingDates(row) {
+		const trainingDates = [];
+		let batch = 1;
+
+		for (const key in row) {
+			// Match keys like "May_2025_W2", "Jun_2025_W1", etc.
+			const match = key.match(/^([A-Za-z]+)_(\d{4})_W\d$/);
+
+			if (match && row[key]) {
+				const [, , year] = match; // Destructure month (ignored), year
+				const value = row[key]; // e.g., "15 May", "02 Jun"
+
+				// Combine the date string with the year
+				const fullDateStr = `${value} ${year}`; // e.g., "15 May 2025"
+
+				// Parse and convert to YYYY-MM-DD
+				const parsedDate = new Date(fullDateStr);
+				if (!isNaN(parsedDate)) {
+					const yyyy = parsedDate.getFullYear();
+					const mm = String(parsedDate.getMonth() + 1).padStart(2, '0');
+					const dd = String(parsedDate.getDate()).padStart(2, '0');
+					const formattedDate = `${yyyy}-${mm}-${dd}`;
+
+					trainingDates.push({
+						date: formattedDate,
+						batch: batch++
+					});
+				}
+			}
+		}
+
+		return trainingDates;
+	}
+
+	function populateFormFields(row) {
+		// Set induction value
+		$('#inductionSelect').combobox('setValue', row.induction);
+		$('#category').combobox('setValue', row.category);
+
+		// Setup trainingName combogrid with existing values
+		setupTrainingNameComboGrid(
+			row.induction,
+			row.trainingActivityId,        // This should be the UUID of the selected training
+			row.trainingName       // Displayed name (text) of training
+		);
+
+		// Setup trainee combogrid if 'Departement'
+		setupTraineeCombogridTraineeType(
+			row.category,
+			row.departementId,     // UUID of selected department
+			row.trainee    // Name of selected department
+		);
+		// Other form population logic...
+	}
+
+	function populateTrainerFields(row) {
+		const trainerStr = row.trainer || '';
+		const trainerIdsStr = row.trainingTrainerId || '';
+		const trainerList = trainerStr.split(',').map(name => name.trim()).filter(Boolean);
+		const trainerIdList = trainerIdsStr.split(',').map(id => id.trim()).filter(Boolean);
+		const wrapper = $('#trainers-wrapper');
+
+		wrapper.empty(); // Clear existing trainers
+
+		trainerList.forEach((trainerName, index) => {
+			const trainerId = index + 1;
+			const trainerUuid = trainerIdList[index] || '';
+
+			const buttonHtml = trainerId === 1
+				? `<a href="javascript:void(0)" class="easyui-linkbutton" style="margin-left:5px;" onclick="addTrainer()">+</a>`
+				: `<a href="javascript:void(0)" class="easyui-linkbutton" style="margin-left:5px;" onclick="removeTrainer(${trainerId})">−</a>`;
+
+			const trainerRow = $(`
+			<div class="fitem" id="trainerRow_${trainerId}">
+				<span style="width:35%; display:inline-block;">Trainer Name</span>
+				<input style="width:60%;" name="trainerName[]" id="trainerName_${trainerId}" required class="easyui-combogrid" panelHeight="auto">
+				<input type="hidden" name="trainingTrainerId[]" id="trainingTrainerId_${trainerId}" value="${trainerUuid}">
+				${buttonHtml}
+			</div>
+		`);
+
+			wrapper.append(trainerRow);
+
+			// Initialize EasyUI combogrid and set value
+			$(`#trainerName_${trainerId}`).combogrid({
+				url: '<?= base_url('lnd/schedule_training/readsEmployeesLeaderUp') ?>',
+				panelWidth: 450,
+				idField: 'id',
+				textField: 'name',
+				mode: 'remote',
+				fitColumns: true,
+				prompt: 'Choose Trainer',
+				icons: [{
+					iconCls: 'icon-clear',
+					handler: function (e) {
+						$(e.data.target).combogrid('clear').combogrid('textbox').focus();
+					}
+				}],
+				columns: [[
+					{ field: 'name', title: 'Employee Name', width: 120 },
+					{ field: 'positionName', title: 'Position', width: 200 }
+				]]
+			});
+
+			$(`#trainerName_${trainerId}`).combogrid('setValue', trainerName);
+		});
+	}
+
+	function setupTrainingNameComboGrid(inductionVal, selectedTrainingId, selectedTrainingText) {
+		if (inductionVal) {
+			$('#trainingName').combogrid({
+				url: '<?= base_url('lnd/schedule_training/readsTrainingActivity'); ?>?induction=' + encodeURIComponent(inductionVal),
+				panelWidth: 450,
+				idField: 'id',
+				textField: 'trainingActivity',
+				mode: 'remote',
+				fitColumns: true,
+				prompt: 'Choose Training Name',
+				icons: [{
+					iconCls: 'icon-clear',
+					handler: function (e) {
+						$(e.data.target).combogrid('clear').combogrid('textbox').focus();
+					}
+				}],
+				columns: [[
+					{ field: 'competenceName', title: 'Competence Standard', width: 120 },
+					{ field: 'trainingActivity', title: 'Training Activity Name', width: 200 }
+				]],
+				onLoadSuccess: function () {
+					// Set value after options are loaded
+					if (selectedTrainingId && selectedTrainingText) {
+						$('#trainingName').combogrid('setValue', selectedTrainingId);
+						$('#trainingName').combogrid('setText', selectedTrainingText);
+					}
+				}
+			});
+		} else {
+			$('#trainingName').combogrid('clear').combogrid('disable');
+		}
+	}
+
+	function setupTraineeCombogridTraineeType(value, selectedTraineeId, selectedTraineeName) {
+		if (value === 'Departement') {
+			$('#trainee').combogrid({
+				url: '<?= base_url('lnd/schedule_training/readsDepartements') ?>',
+				panelWidth: 450,
+				idField: 'id',
+				textField: 'name',
+				mode: 'remote',
+				fitColumns: true,
+				prompt: 'Choose Department Name',
+				icons: [{
+					iconCls: 'icon-clear',
+					handler: function(e) {
+						$(e.data.target).combogrid('clear').combogrid('textbox').focus();
+					}
+				}],
+				columns: [[
+					{ field: 'name', title: 'Department Name', width: 120 }
+				]],
+				onLoadSuccess: function () {
+					if (selectedTraineeId && selectedTraineeName) {
+						$('#trainee').combogrid('setValue', selectedTraineeId);
+						$('#trainee').combogrid('setText', selectedTraineeName);
+					}
+				}
+			});
+		} else {
+			$('#trainee').combogrid('clear').combogrid('disable');
+		}
+	}
+
+	function generateQR() {
         var row = $('#dg').datagrid('getSelected');
         console.log("#row", row);
         
@@ -354,7 +539,7 @@
                 if (r) {
                     for (var i = 0; i < rows.length; i++) {
                         var row = rows[i];
-                        fetch('<?= base_url('lnd/schedule_training/delete_data/') ?>'+row.id, {
+                        fetch('<?= base_url('lnd/schedule_training/delete_data/') ?>'+row.id_training, {
                             method: 'DELETE', // Metode DELETE
                         })
                         .then(response => response.json()) // Konversi response ke JSON
@@ -454,8 +639,8 @@
             // sortName: 'index',
             // sortOrder: 'asc'
             singleSelect:true,
-            pageList: [20, 50, 100, 500, 1000],
-            pageSize: 20,
+            pageList: [40, 50, 100, 500, 1000],
+            pageSize: 40,
         });
 
         //SAVE DATA
@@ -539,6 +724,43 @@
                 }
             }
         });
+
+		// Initialize combogrid but leave URL empty
+
+
+		// Handle change on induction combobox
+		$('#inductionSelect').combobox({
+			onChange: function (newVal) {
+				if (newVal) {
+					// Enable the combogrid
+					// $('#trainingName').combogrid('enable');
+
+					$('#trainingName').combogrid({
+						url: '<?= base_url('lnd/schedule_training/readsTrainingActivity'); ?>?induction=' + encodeURIComponent(newVal),
+						panelWidth: 450,
+						idField: 'id',
+						textField: 'trainingActivity',
+						mode: 'remote',
+						fitColumns: true,
+						prompt: 'Choose Training Name',
+						icons: [{
+							iconCls: 'icon-clear',
+							handler: function (e) {
+								$(e.data.target).combogrid('clear').combogrid('textbox').focus();
+							}
+						}],
+						columns: [[
+							{ field: 'competenceName', title: 'Competence Standard', width: 120 },
+							{ field: 'trainingActivity', title: 'Training Activity Name', width: 200 }
+						]]
+					});
+				} else {
+					// Clear and disable if no induction selected
+					$('#trainingName').combogrid('clear');
+					$('#trainingName').combogrid('disable');
+				}
+			}
+		});
         bindDatePickers();
     });
 
@@ -564,8 +786,7 @@
 						const date = new Date(value); // Assuming value is a valid date string
 						const day = date.getDate();
 						const month = date.toLocaleString('default', { month: 'short' }); // Get short month (e.g., 'Apr')
-                        console.log(value);
-                        
+
 						return `${day} ${month}`;
 					}
                     return ``;
@@ -615,39 +836,87 @@
 
     let maxDates = 3;
 
-    function addTrainingDate() {
-        let rowCount = document.querySelectorAll('#trainingDatesTable tr').length;
+    // function addTrainingDate() {
+    //     let rowCount = document.querySelectorAll('#trainingDatesTable tr').length;
+	//
+    //     if (rowCount >= maxDates) {
+    //         alert("Maximum 3 training dates allowed.");
+    //         return;
+    //     }
+	//
+    //     let row = `
+    //         <tr>
+    //             <td style="padding-bottom:5px;">
+    //                 <input class="easyui-datebox training-date" style="width:120px;">
+    //             </td>
+    //             <td style="padding-bottom:5px;">
+    //                 <select class="easyui-combobox batch-count"  style="width:100px;">
+    //                     <option value="">Batch</option>
+    //                     ${[...Array(10).keys()].map(i => `<option value="${i+1}">${i+1} Batch${i > 0 ? 'es' : ''}</option>`).join('')}
+    //                 </select>
+    //             </td>
+    //             <td class="week-label" style="padding-left:5px;">Week: -</td>
+    //             <td style="padding-left:5px;">
+    //                 <a href="javascript:void(0);" class="easyui-linkbutton" onclick="removeRow(this)">-</a>
+    //             </td>
+    //         </tr>
+    //     `;
+    //
+    //     $('#trainingDatesTable').append(row);
+    //     $.parser.parse('#trainingDatesTable'); // Parse new EasyUI widgets
+    //     // Re-initialize EasyUI widgets
+    //     $('#trainingDatesTable tr:last-child input.training-date').datebox();
+    //     $('#trainingDatesTable tr:last-child select.batch-count').combobox();
+    //     bindDatePickers(); // Re-bind new training-date input with event
+    // }
+	function addTrainingDate(dateValue = '', batchValue = '') {
+		const rowCount = $('#trainingDatesTable tr').length;
+		if (rowCount >= 4) return; // 1 original row + 3 more = max 4 rows
 
-        if (rowCount >= maxDates) {
-            alert("Maximum 3 training dates allowed.");
-            return;
-        }
+		const newRow = `
+        <tr>
+            <td style="padding-bottom:5px;">
+                <input class="easyui-datebox training-date" style="width:120px;">
+            </td>
+            <td style="padding-bottom:5px;">
+                <select class="easyui-combobox batch-count" style="width:100px;">
+                    <option value="">Batch</option>
+                    <?php for ($i = 1; $i <= 10; $i++): ?>
+                        <option value="<?= $i ?>"><?= $i ?> Batch<?= $i > 1 ? 'es' : '' ?></option>
+                    <?php endfor; ?>
+                </select>
+            </td>
+            <td class="week-label" style="padding-left:5px;">Week: -</td>
+            <td style="padding-left:5px;">
+                <a href="javascript:void(0);" class="easyui-linkbutton" onclick="removeRow(this)">-</a>
+            </td>
+        </tr>
+    `;
 
-        let row = `
-            <tr>
-                <td style="padding-bottom:5px;">
-                    <input class="easyui-datebox training-date" style="width:120px;">
-                </td>
-                <td style="padding-bottom:5px;">
-                    <select class="easyui-combobox batch-count"  style="width:100px;">
-                        <option value="">Batch</option>
-                        ${[...Array(10).keys()].map(i => `<option value="${i+1}">${i+1} Batch${i > 0 ? 'es' : ''}</option>`).join('')}
-                    </select>
-                </td>
-                <td class="week-label" style="padding-left:5px;">Week: -</td>
-                <td style="padding-left:5px;">
-                    <a href="javascript:void(0);" class="easyui-linkbutton" onclick="removeRow(this)">-</a>
-                </td>
-            </tr>
-        `;
-        
-        $('#trainingDatesTable').append(row);
-        $.parser.parse('#trainingDatesTable'); // Parse new EasyUI widgets
-        // Re-initialize EasyUI widgets
-        $('#trainingDatesTable tr:last-child input.training-date').datebox();
-        $('#trainingDatesTable tr:last-child select.batch-count').combobox();
-        bindDatePickers(); // Re-bind new training-date input with event
-    }
+		$('#trainingDatesTable').append(newRow);
+
+		// Apply EasyUI
+		const lastRow = $('#trainingDatesTable tr:last');
+		const dateInput = lastRow.find('.training-date');
+		const batchSelect = lastRow.find('.batch-count');
+		const weekLabel = lastRow.find('.week-label');
+
+		dateInput.datebox({
+			formatter: myformatter,
+			parser: myparser,
+			onSelect: function(date) {
+				updateWeekLabel($(this), weekLabel);
+			}
+		}).datebox('setValue', dateValue);
+
+		batchSelect.combobox();
+		batchSelect.combobox('setValue', batchValue);
+		if(dateValue === '' && batchValue === '') {
+			bindDatePickers()
+		} else {
+			updateWeekLabel(dateInput, weekLabel);
+		}
+	}
 
     function removeRow(link) {
         $(link).closest('tr').remove();
