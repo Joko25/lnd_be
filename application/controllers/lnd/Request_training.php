@@ -54,7 +54,7 @@ class Request_training extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, a.status as statusTraining, a.status as statusApproval, rth.approved_by, rth.approved_date, e.name as trainerName');
+        $this->db->select('a.*, a.status as statusTraining, a.status as statusApproval, rth.approvedBy, rth.approvedTime, e.name as trainerName');
         $this->db->from('lnd_request_training a');
         $this->db->join('lnd_request_training_approvals_history rth', 'a.id = rth.trainingRequestId', 'left');
 		$this->db->join('employees e', 'a.trainer_name = e.id', 'left');
@@ -121,8 +121,8 @@ class Request_training extends CI_Controller {
         $data = $this->input->post();
 		$idGenerateDateTemp = $this->crud->autoidPrifix('lnd_request_training', 'requestTrainingId', 'T');
         $data['requestTrainingId'] = $idGenerateDateTemp;
-		$attachment = $this->crud->upload('attachment', ['pdf', 'jpg'], 'assets/document/request-training/');
-		$data['attachment'] = $attachment;
+		// $attachment = $this->crud->upload('attachment', ['pdf', 'jpg'], 'assets/document/request-training/');
+		// $data['attachment'] = $attachment;
         if (!empty($data)) {
             $dataTemp = $this->RequestTrainingModel->insert_data($data);
             $this->idGenerateDate = $dataTemp->id;

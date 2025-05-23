@@ -73,22 +73,31 @@
             <div style="width:50%; float: left;">
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Trainer</span>
-                    <select style="width:60%;" name="trainer" required="" class="easyui-combobox" panelHeight="auto">
+                    <select style="width:60%;" name="trainer" id="trainer" required="" class="easyui-combobox" panelHeight="auto">
                         <option value="Internal">Internal</option>
                         <option value="External">External</option>
                     </select>  
                 </div>
-				<div class="fitem">
-					<span style="width:35%; display:inline-block;">Trainer Name</span>
-					<input style="width:60%;" id="trainerNameFilter" name="trainer_name" class="easyui-combogrid" required="">
+				<div class="fitem" id="trainerNameContainer">
+					<!-- <span style="width:35%; display:inline-block;">Trainer Name</span>
+					<input style="width:60%;" id="trainerNameText" name="trainer_name_internal" class="easyui-textbox" required=""> -->
+				</div>
+                <div class="fitem" id="trainerNameExternalContainer">
+					<!-- <span style="width:35%; display:inline-block;">Trainer Name</span>
+					<input style="width:60%;" id="trainerNameFilter" name="trainer_name_external" class="easyui-combogrid" required=""> -->
 				</div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Trainer Fees</span>
                     <input style="width:60%;" id="trainerFeesForm" name="trainerFees" class="easyui-textbox">
                 </div>
-				<div class="fitem">
-					<span style="width:35%; display:inline-block;">Attachment</span>
-					<input style="width:60%;" name="attachment" id="attachment" class="easyui-filebox">
+				<div class="fitem" style="display: flex">
+					<span style="width:35%;">Attachment</span>
+                    <div style="width:60%;">
+                        <input style="width:100%;" name="attachment" id="attachment" class="easyui-filebox"  data-options="
+                            accept: 'image/jpeg,image/png,image/gif,application/pdf',
+                            prompt: 'Only PDF and image files are allowed for data attachment upload'">
+                        <span>Only PDF and image files are allowed for data attachment upload</span>
+                    </div>
 				</div>
             </div>
         </fieldset>
@@ -103,23 +112,6 @@
                     <table id="dgTrainee" class="easyui-datagrid" style="width:100%;" toolbar="#toolbarTrainee"></table>
                 </div>
             </div>
-        <!-- <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
-            <legend><b>Form Data</b></legend>
-            <a href="javascript:;" id="btnAdd" class="easyui-linkbutton" ><i class="fa fa-plus"></i> Add</a>
-            <a href="javascript:;" id="btnRemove" class="easyui-linkbutton"><i class="fa fa-trash"></i> Remove</a>
-            <table id="dgForm" class="easyui-datagrid" style="width:100%;">
-                <thead>
-                    <tr>
-                        <th data-options="field:'number',width:180,align:'center',editor:{type:'combogrid',options:{panelWidth:300,url:'<?= base_url('lnd/request_training/getEmployees') ?>',idField:'name',textField:'name',columns:[[{field:'name',title:'Name',width:280}]]}}">Full Name</th>
-                        <th data-options="field:'name',width:200,halign:'center'">National ID</th>
-                        <th data-options="field:'type',width:120,halign:'center'">Position</th>
-                        <th data-options="field:'description',width:150,halign:'center'">Departement</th>
-                        <th data-options="field:'description',width:150,halign:'center'"> Sub Departement</th>
-                        <th data-options="field:'description',width:150,halign:'center'"> Join Date</th>
-                    </tr>
-                </thead>
-            </table>
-        </fieldset> -->
     </form>
 </div>
 
@@ -499,7 +491,6 @@
 				}]
 			],
 		});
-
         $('#reasonsFilter').combogrid({
             url: '<?= base_url('lnd/request_training/reads') ?>',
             panelWidth: 450,
@@ -647,6 +638,29 @@
                 alert("Please select a row to remove.");
             }
         });
+
+        $("#trainer").combobox({
+            onSelect:function(record){
+                updateTrainerName(record.value);
+            }
+        })
+
+
+
+        function updateTrainerName(type) {
+            var containerTrainer = $('#trainerNameContainer');
+            containerTrainer.empty();
+            
+            
+            var template = "";
+            if (type === 'Internal') {
+                template = templateInternal();
+            } else if (type === 'External') {
+                template = templateExternal();
+            }
+            containerTrainer.append(template);
+            $.parser.parse(`#trainerNameContainer`);
+        }
     });
 
     // function download_excel() {
@@ -662,6 +676,41 @@
     function reload() {
         window.location.reload();
     }
+
+    function templateExternal() {
+        const html = `<span style="width:35%; display:inline-block;">Trainer Name</span>
+					<input style="width:60%;" id="trainerNameText" name="trainer_name" class="easyui-textbox" required="">`;
+        return html;
+    } 
+
+    function templateInternal() {
+        const html = `<span style="width:35%; display:inline-block;">Trainer Name</span>
+					<input style="width:60%;" id="trainerNameFilter" name="trainer_name" class="easyui-combogrid" data-options="url: '<?= base_url('lnd/request_training/readsEmployeesLeaderUp') ?>',
+                        panelWidth: 450,
+                        idField: 'id',
+                        textField: 'name',
+                        mode: 'remote',
+                        fitColumns: true,
+                        prompt: 'Choose Trainer',
+                        icons: [{
+                            iconCls: 'icon-clear',
+                            handler: function(e) {
+                                $(e.data.target).combogrid('clear').combogrid('textbox').focus();
+                            }
+                        }],
+                        columns: [
+                            [{
+                                field: 'id',
+                                title: 'ID Trainer',
+                                width: 120
+                            }, {
+                                field: 'name',
+                                title: 'Trainer',
+                                width: 120
+                            }]
+                        ]" required="">`;
+        return html;
+    } 
 
     //PRINT PDF
     // function pdf() {

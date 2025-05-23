@@ -54,6 +54,19 @@ class FormTestModel extends CI_Model {
     public function insert_data($data) {
         $data['createdBy'] = $this->session->username;
         $data['createdTime'] = date('Y-m-d H:i:s');
+
+        $id = $this->uuid();
+
+        $insert = [
+            'id' => $id,
+            'feedback_id' => $data['feedback_id'],
+            'user_id' => $data['user_id'],
+            'json_response' => json_encode($data['json_response']),
+            'createdBy' => $this->session->username ?? 'system',
+            'createdTime' => date('Y-m-d H:i:s')
+        ];
+
+        
         $this->db->insert('lnd_master_form_test', $data);
 
         $query = $this->db->order_by('createdTime', 'name')->limit(1)->get('lnd_master_form_test');
@@ -61,6 +74,26 @@ class FormTestModel extends CI_Model {
         $record = $query->row();
     
         return $record; 
+    }
+
+    public function insert_feedback_history($data) {
+        $id = $this->uuid();
+
+        $insert = [
+            'id' => $id,
+            'feedback_id' => $data['feedback_id'],
+            'user_id' => $data['user_id'],
+            'json_response' => json_encode($data['json_response']),
+            'createdBy' => $this->session->username ?? 'system',
+            'createdTime' => date('Y-m-d H:i:s')
+        ];
+
+        $this->db->insert('lnd_feedback_history', $insert);
+        $query = $this->db->order_by('createdTime')->limit(1)->get('lnd_feedback_history');
+    
+        $record = $query->row();
+    
+        return $record;
     }
 
     public function update_data($id, $data) {
