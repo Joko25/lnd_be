@@ -46,7 +46,7 @@ class Schedule_training extends CI_Controller {
         $offset = ($page - 1) * $rows;
 		// Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, a.id as id_training, b.*, e.name, e.id as departementId, ta.id as trainingActivityId, ta.trainingActivity, st.trainer_name, st.trainer_id, st.id as trainingTrainerId');
+        $this->db->select('a.*, a.id as id_training, b.*, e.name, e.id as departementId, ta.id as trainingActivityId, ta.trainingActivity, st.trainer_name, st.trainer_id, st.trainer_id as trainingTrainerId');
         $this->db->from('lnd_schedule_training a');
         $this->db->join('lnd_schedule_training_dates b', 'a.id = b.training_id', 'left');
 		$this->db->join('departements e', 'e.id = a.trainee', 'left');
@@ -233,14 +233,14 @@ class Schedule_training extends CI_Controller {
 		}
 
 		// Extract and enrich trainer data
-		if (!empty($data['trainingTrainerId'])) {
-			$trainerIdArray = $data['trainingTrainerId'];
+		if (!empty($data['trainerName'])) {
+			$trainerIdArray = $data['trainerName'];
 			foreach ($trainerIdArray as $value) {
-				$trainer = $this->crud->read('lnd_schedule_trainers', ['id' => $value]);
+				$trainer = $this->crud->read('employees', ['id' => $value]);
 				if ($trainer) {
 					$combineTrainer[] = [
 						'id' => $trainer->id,
-						'trainer_name' => $trainer->trainer_name,
+						'trainer_name' => $trainer->name,
 					];
 				}
 			}
@@ -325,11 +325,29 @@ class Schedule_training extends CI_Controller {
 
         for ($i = 3; $i <= $total_row; $i++) {
             $datas[] = array(
-                'competenceId' => $data->val($i, 2),
-                'trainingActivity' => $data->val($i, 3),
-                'index' => $data->val($i, 4),
-                'remarks' => $data->val($i, 5),
-                'induction' => $data->val($i, 6)
+                'registerDate' => $data->val($i, 2),
+				'trainingDates' => array_filter([
+					$data->val($i, 3),
+					$data->val($i, 5),
+					$data->val($i, 7),
+				]),
+				'batchTrainingDates' => array_filter([
+					$data->val($i, 4),
+					$data->val($i, 6),
+					$data->val($i, 8),
+				]),
+				'induction' => $data->val($i, 9),
+				'trainingName' => $data->val($i, 10),
+				'category' => $data->val($i, 11),
+				'trainerNames' => array_filter([
+					$data->val($i, 12),
+					$data->val($i, 13),
+					$data->val($i, 14)
+				]),
+				'trainee' => $data->val($i, 15),
+				'remarks' => $data->val($i, 16),
+				'totalTrainee' => $data->val($i, 17),
+				'duration' => $data->val($i, 18),
             );
         }
 
@@ -357,28 +375,95 @@ class Schedule_training extends CI_Controller {
     {
         if ($this->input->post()) {
             $data = $this->input->post('data');
-            $tempCompetenceId = $data["competenceId"];
+            $trainingNameId = $data["trainingName"];
 
-            $queryCompetence = $this->db->query("SELECT a.id FROM lnd_competence AS a WHERE a.name = '$tempCompetenceId' ");
-            $resCompetence = $queryCompetence->row_array();
-            $data['competenceId'] = $resCompetence ? $resCompetence['id'] : null;
+            $queryTrainingActivity = $this->db->query("SELECT a.id FROM lnd_training_activity AS a WHERE a.trainingActivityId = '$trainingNameId' ");
+            $resTrainingActivity = $queryTrainingActivity->row_array();
+            $data['trainingName'] = $resTrainingActivity ? $resTrainingActivity['id'] : null;
+			$dataTrainingDates = [];
+			$dataTrainers = [];
 
-            $lnd_schedule_training = $this->crud->read('lnd_schedule_training', ["competenceId" => $data['competenceId'], "trainingActivity" => $data['trainingActivity'], "index" => $data['index'], "remarks" => $data['remarks'], "induction" => $data['induction']]);
-            $idGenerateDate = $this->crud->autoidPrifix('lnd_schedule_training', 'trainingActivityId', 'T'); 
-            $data['trainingActivityId'] = $idGenerateDate;
+			if(!empty($data['trainingDates'])){
+				for ($i = 0; $i < count($data['trainingDates']); $i++) {
+					$value = $data['trainingDates'][$i];
 
-            if (empty($resCompetence)) {
-                echo json_encode(array("title" => "Not Found", "message" => "Competence  " . $data['competenceId'] . " Not Found", "theme" => "error"));
-            } else if(empty($data['trainingActivity'])) {
-                echo json_encode(array("title" => "Not Found", "message" => "Competence Schedule Training cannot be Null", "theme" => "error"));            
-            } else if(empty($data['induction'])) {
-                echo json_encode(array("title" => "Not Found", "message" => "Competence Induction cannot be Null", "theme" => "error"));
-            } else if(empty($data['index'])) {
-                echo json_encode(array("title" => "Not Found", "message" => "Competence Index cannot be Null", "theme" => "error"));
-            } else {
-                $send = $this->crud->create('lnd_schedule_training', $data);
-                echo $send;
-            }
+					$day = (int)date('j', strtotime($value)); // Extract day from date (1–31)
+					if ($day >= 1 && $day <= 8) {
+						$displayWeekType = 'W1';
+					} elseif ($day >= 9 && $day <= 16) {
+						$displayWeekType = 'W2';
+					} elseif ($day >= 17 && $day <= 24) {
+						$displayWeekType = 'W3';
+					} elseif ($day >= 25 && $day <= 31) {
+						$displayWeekType = 'W4';
+					} else {
+						$displayWeekType = 'Unknown'; // fallback in case of invalid day
+					}
+					$dataTrainingDates[$i]['training_date'] = $value;
+					$dataTrainingDates[$i]['week'] = $displayWeekType;
+					$dataTrainingDates[$i]['batch_count'] = $data['batchTrainingDates'][$i];
+				}
+
+				unset($data['batchTrainingDates']);
+				unset($data['trainingDates']);
+			}
+
+			if(!empty($data['trainerNames'])){
+				for ($i = 0; $i < count($data['trainerNames']); $i++) {
+					$value = $data['trainerNames'][$i];
+					$tempTrainerName = $this->crud->read('employees', ['id' => $value]);
+					if ($tempTrainerName) {
+						$dataTrainers[] = [
+							'id' => $tempTrainerName->id,
+							'name' => $tempTrainerName->name,
+						];
+					}
+				}
+				unset($data['trainerNames']);
+			}
+
+//			if($data["category"] != "Department") {
+//				$data['trainee'] = "New MP/Mutasi";
+//			}
+
+			if(empty($dataTrainingDates)){
+				echo json_encode(array("title" => "Not Found", "message" => "Training Date Not Found", "theme" => "error"));
+			} else if(empty($dataTrainers)){
+				echo json_encode(array("title" => "Not Found", "message" => "Trainer Name Not Found", "theme" => "error"));
+			} else if(empty($data['registerDate'])){
+				echo json_encode(array("title" => "Not Found", "message" => "Register Date Not Found", "theme" => "error"));
+			} else if(empty($data['induction'])){
+				echo json_encode(array("title" => "Not Found", "message" => "Induction Not Found", "theme" => "error"));
+			} else if(empty($data['trainingName'])){
+				echo json_encode(array("title" => "Not Found", "message" => "Training Name Not Found", "theme" => "error"));
+			} else if(empty($data['category'])){
+				echo json_encode(array("title" => "Not Found", "message" => "Category Not Found", "theme" => "error"));
+			} else if(empty($data['duration'])){
+				echo json_encode(array("title" => "Not Found", "message" => "Duration Not Found", "theme" => "error"));
+			} else {
+				$dataTemp = $this->ScheduleTrainingModel->insert_data($data, $dataTrainingDates, $dataTrainers);
+//				$dataTemp = true;
+				if($dataTemp) {
+					echo json_encode(array("title" => "Good Job", "message" => "Data Saved Successfully", "theme" => "success"));;
+				}
+			}
+
+//            $lnd_schedule_training = $this->crud->read('lnd_schedule_training', ["competenceId" => $data['competenceId'], "trainingActivity" => $data['trainingActivity'], "index" => $data['index'], "remarks" => $data['remarks'], "induction" => $data['induction']]);
+//            $idGenerateDate = $this->crud->autoidPrifix('lnd_schedule_training', 'trainingActivityId', 'T');
+//            $data['trainingActivityId'] = $idGenerateDate;
+
+//            if (empty($resCompetence)) {
+//                echo json_encode(array("title" => "Not Found", "message" => "Competence  " . $data['competenceId'] . " Not Found", "theme" => "error"));
+//            } else if(empty($data['trainingActivity'])) {
+//                echo json_encode(array("title" => "Not Found", "message" => "Competence Schedule Training cannot be Null", "theme" => "error"));
+//            } else if(empty($data['induction'])) {
+//                echo json_encode(array("title" => "Not Found", "message" => "Competence Induction cannot be Null", "theme" => "error"));
+//            } else if(empty($data['index'])) {
+//                echo json_encode(array("title" => "Not Found", "message" => "Competence Index cannot be Null", "theme" => "error"));
+//            } else {
+//                $send = $this->crud->create('lnd_schedule_training', $data);
+//                echo $send;
+//            }
             // Validasi dan proses data
             // if (!empty($data)) {
             //     $dataTemp = $this->ScheduleTrainingModel->insert_data($data);
