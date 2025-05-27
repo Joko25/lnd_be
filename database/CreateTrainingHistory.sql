@@ -1,21 +1,3 @@
-CREATE TABLE lnd_test_form_detail (
-    id CHAR(36) NOT NULL PRIMARY KEY DEFAULT (UUID()),
-    test_id CHAR(36) NOT NULL,
-    employee_id VARCHAR(30) NOT NULL,
-    type_training CHAR(36),
-    json_response JSON NOT NULL,
-    grade DECIMAL(10,2),
-    test_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    test_completed_date DATETIME NULL,
-    createdBy CHAR(36),
-    createdTime DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedBy CHAR(36),
-    updatedTime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    INDEX idx_test_id (test_id),
-    INDEX idx_employee_id (employee_id),
-    INDEX idx_test_date (test_date)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 CREATE TABLE lnd_feedback_history (
     id CHAR(36) NOT NULL PRIMARY KEY DEFAULT (UUID()),
     feedback_id CHAR(36) NOT NULL,
@@ -29,22 +11,35 @@ CREATE TABLE lnd_feedback_history (
 );
 
 CREATE TABLE lnd_training_history (
-    id CHAR(36) NOT NULL PRIMARY KEY DEFAULT (UUID()),
+    id CHAR(36) NOT NULL PRIMARY KEY,
     test_id CHAR(36) NOT NULL,
     employee_id VARCHAR(30) NOT NULL,
     trainer TEXT,
-    date_test DATETIME DEFAULT CURRENT_TIMESTAMP,
+    history_feedback_id CHAR(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+    createdBy CHAR(36),
+    createdTime DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedBy CHAR(36),
+    updatedTime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_test_id (test_id),
+    INDEX idx_employee_id (employee_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE lnd_test_form_detail (
+    id CHAR(36) NOT NULL PRIMARY KEY DEFAULT (UUID()),
+    test_id CHAR(36) NOT NULL,
+    employee_id VARCHAR(30) NOT NULL,
     type_training CHAR(36),
-    json_result JSON,
+    json_response TEXT NOT NULL,
+    grade DECIMAL(10,2),
     score_pre_test DECIMAL(5,2),
     score_post_test DECIMAL(5,2),
-    history_feedback_id CHAR(36),
+    test_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    test_completed_date DATETIME NULL,
     createdBy CHAR(36),
     createdTime DATETIME DEFAULT CURRENT_TIMESTAMP,
     updatedBy CHAR(36),
     updatedTime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_test_id (test_id),
     INDEX idx_employee_id (employee_id),
-    INDEX idx_date_test (date_test),
-    INDEX idx_type_training (type_training)
+    INDEX idx_test_date (test_date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

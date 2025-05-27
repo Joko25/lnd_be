@@ -256,7 +256,7 @@
         $('#dlg_insert').dialog('open');
         $('#dlg_insert').dialog('setTitle', `Add Master Form`)
         
-        url_save = '<?= base_url('lnd/master_form_test/storeData') ?>';
+        url_save = '<?= base_url('lnd/master_form_test/storeData_v2') ?>';
         method = 'POST';
         $('#frm_insert').form('clear');
         $("#addrow").show();

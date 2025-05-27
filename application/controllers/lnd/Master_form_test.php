@@ -131,82 +131,89 @@ class Master_form_test extends CI_Controller {
 
     public function storeData_v2() {
         // Ambil JSON string dari form multipart
-        $jsonData = $this->input->post('data');
-        $postData = $this->input->post();
-        $data = json_decode($jsonData, true);
-    
+        $json = $this->input->post('data');
+        $data = json_decode($json, true);
+        
         if (!$data) {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Invalid JSON data');
+            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Invalid JSON');
         }
     
-        // Validasi manual (opsional, tapi sangat disarankan)
+        // Validasi manual
         if (empty($data['training_name']) || empty($data['department']) || empty($data['questionType'])) {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Missing required fields: training_name, department, questionType');
+            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Missing required fields');
         }
     
         // Handle file upload jika ada
         $uploadedFiles = [];
-    
-        // Pastikan ada file yang diupload
-        $uploadError = null; // Tambahkan variabel untuk menyimpan pesan error upload
-        $upload_path = 'assets/image/lnd/questions/';
         
-        if (!is_dir($upload_path)) {
-            mkdir($upload_path, 0777, true);
-        }
-
-        // Pastikan ada file yang diupload
-        if (!empty($_FILES)) {
-            foreach ($_FILES as $field => $fileData) { // Loop through each file input
-                log_message('debug', 'Processing file field: ' . $field); // Tambahkan log
-                log_message('debug', 'File data: ' . print_r($fileData, true)); // Tambahkan log
-
-                if ($fileData['error'] == 0) {
-                    $uploadResult = $this->uploadv2(
-                        $field, // Nama field file
-                        ['jpg', 'jpeg', 'png', 'gif'], // Allowed extensions
-                        $upload_path, // Upload path
-                        [], // ID (jika ada, untuk update)
-                        '',    // Table name
-                        ''    // Field name
-                    );
-
-                    if (is_string($uploadResult)) {
-                        // Upload berhasil, $uploadResult berisi nama file yang baru
-                        $uploadedFiles[$field] = $upload_path . $uploadResult;
-                        log_message('debug', 'File uploaded successfully. New file name: ' . $uploadedResult);
-                    } else {
-                        // Upload gagal, $uploadResult berisi response object dari fungsi upload
-                        $uploadError = json_decode($this->output->get_output(), true)['error'];
-                        log_message('error', 'File upload failed: ' . $uploadError);
-                        break; // Keluar dari loop foreach, stop upload lainnya
-                    }
-                }  else {
-                    $uploadError = $this->getUploadErrorMessage($fileData['error']);
-                    log_message('error', 'File upload error for field ' . $field . ': ' . $uploadError);
-                    return $this->response->send(ResponseStatus::BAD_REQUEST, [], $uploadError);
-                }
+        // Pastikan folder upload ada dan bisa ditulisi
+        $uploadPath = FCPATH . 'assets/image/lnd/'; // Gunakan FCPATH untuk path absolut
+        
+        if (!is_dir($uploadPath)) {
+            if (!mkdir($uploadPath, 0755, true)) {
+                return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Failed to create upload directory');
             }
-        }else{
-            log_message('debug', '$_FILES is empty');
-        }
-
-        // Jika ada error upload, kembalikan response error
-        if ($uploadError) {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], $uploadError);
         }
     
+        // Periksa apakah folder writable
+        if (!is_writable($uploadPath)) {
+            return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Upload directory is not writable');
+        }
     
-        // Gabungkan data yang diupload dengan data lainnya
-        $data = $this->processUploadedFiles($data, $uploadedFiles);
+        foreach ($_FILES as $field => $file) {
+            if ($file['error'] == UPLOAD_ERR_OK) {
+                $config = [
+                    'upload_path'   => $uploadPath,
+                    'allowed_types' => 'jpg|jpeg|png|gif',
+                    'file_name'     => uniqid('img_'),
+                    'max_size'      => 2048, // 2MB
+                    'overwrite'     => false
+                ];
     
-        // Simpan ke DB (pass both JSON data & uploadedFiles)
+                $this->upload->initialize($config); // Initialize untuk setiap file
+                
+                if ($this->upload->do_upload($field)) {
+                    $uploaded = $this->upload->data();
+                    $uploadedFiles[$field] = 'assets/image/lnd/' . $uploaded['file_name'];
+                } else {
+                    // Hapus file yang sudah terupload jika ada error
+                    foreach ($uploadedFiles as $filePath) {
+                        @unlink(FCPATH . $filePath);
+                    }
+                    return $this->response->send(ResponseStatus::BAD_REQUEST, [], $this->upload->display_errors('', ''));
+                }
+            } elseif ($file['error'] != UPLOAD_ERR_NO_FILE) {
+                // Handle error upload selain "no file"
+                return $this->response->send(ResponseStatus::BAD_REQUEST, [], $this->getUploadError($file['error']));
+            }
+        }
+    
+        // Simpan ke DB
         $save = $this->MasterFormTestModel->insertQuestion($data, $uploadedFiles);
         if($save) {
-            return $this->response->send(ResponseStatus::SUCCESS, $save, 'Form test successfully');
-        }else{
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Failed to save data to database');
+            return $this->response->send(ResponseStatus::SUCCESS, $save, 'Form test saved successfully');
+        } else {
+            // Hapus file yang sudah terupload jika gagal simpan ke DB
+            foreach ($uploadedFiles as $filePath) {
+                @unlink(FCPATH . $filePath);
+            }
+            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Failed to save form data');
         }
+    }
+    
+    // Helper untuk mendapatkan pesan error upload
+    private function getUploadError($errorCode) {
+        $errors = [
+            UPLOAD_ERR_INI_SIZE   => 'File exceeds upload_max_filesize in php.ini',
+            UPLOAD_ERR_FORM_SIZE  => 'File exceeds MAX_FILE_SIZE in form',
+            UPLOAD_ERR_PARTIAL    => 'File was only partially uploaded',
+            UPLOAD_ERR_NO_FILE    => 'No file was uploaded',
+            UPLOAD_ERR_NO_TMP_DIR => 'Missing temporary folder',
+            UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
+            UPLOAD_ERR_EXTENSION  => 'File upload stopped by PHP extension'
+        ];
+        
+        return $errors[$errorCode] ?? 'Unknown upload error';
     }
 
     private function processUploadedFiles($data, $uploadedFiles) {

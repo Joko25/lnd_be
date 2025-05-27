@@ -5,6 +5,14 @@
         </div>
     </header>
 
+    <div class="alert alert-danger mt-4" role="alert" id="alertErrorContainer">
+        <center>
+            <h4 id="alertErrorTitle"></h4>
+            <hr>
+            <p class="m-0" id="alertErrorMessage"><b></b></p>
+        </center>
+    </div>
+
     <div class="alert alert-primary mt-4" role="alert" id="alertContainer">
         <center>
             <p class="m-0" id="alertMessage"><b></b></p>
@@ -38,7 +46,7 @@
                 <input class="easyui-textbox" label="Trainer Name" prompt="Trainer Name" name="trainerName" id="trainerName" disabled style="width:100%" labelPosition="top">
             </div>
             <div style="margin-bottom:5px">
-                <input class="easyui-datebox" label="Training Date" prompt="Training Date" name="trainingDate" id="trainingDate" labelPosition="top" data-options="editable:false,panelWidth:220,panelHeight:240,iconWidth:30" style="width:100%">
+                <input class="easyui-datebox" label="Training Date" prompt="Training Date" name="trainingDate" id="trainingDate" labelPosition="top" required="" data-options="editable:false,panelWidth:220,panelHeight:240,iconWidth:30" style="width:100%">
             </div>
             <div style="margin-bottom:5px">
                 <input class="easyui-textbox" label="Location" prompt="Location" style="width:100%" name="trainingLocation" value="PT. PIRANTI TEKNIK INDONESIA" labelPosition="top">
@@ -140,7 +148,8 @@
 <script type="text/javascript">
 
     // STAG: 1. Absence, 2. Info Test, 3. Form test, 4. Finish Test, 5. Review Test;
-    let testType = `<?php echo $test_type?>`
+    let testType = `<?php echo $test_type?>`;
+    let test_id = `<?php echo $test_id?>`;
 
     let absenceData = $('#formAbsen').serialize();
     window.originalQuestionJson = <?php echo json_encode($data); ?>;
@@ -149,6 +158,7 @@
 
     $(function() {
         $("#alertContainer").hide();
+        $("#alertErrorContainer").hide();
         $("#attendanceContainer").show();
         $("#titleContainer").hide();
         $("#preTestContainer").hide();
@@ -179,9 +189,9 @@
 
         if(testType === 'POST_TEST') {
             let dataFeedback = <?php echo json_encode($data_feedback); ?>;
-            console.log(dataFeedback);
-            $("#attendanceContainer").hide()
-            $("#titleFeedbackContainer").show()
+            // console.log(dataFeedback);
+            // $("#attendanceContainer").show()
+            // $("#titleFeedbackContainer").hide()
         }
         
         $("#employeeId").combogrid({
@@ -368,22 +378,162 @@
         }, 100); // Delay agar elemen benar-benar terlihat
     }
 
+    function validateTest(jsonData) {
+        let isValid = true;
+        let errorMessage = '';
+
+        jsonData.forEach((item, index) => {
+            if (item.selectedIndex === null || item.selectedText === null) {
+                isValid = false;
+                errorMessage += `Pertanyaan nomor ${index + 1} belum dijawab.`;
+            }
+        });
+
+        if (!isValid) {
+            $("#alertErrorMessage").text(errorMessage);
+            $("#alertErrorContainer").show();
+            return false;
+        }
+
+        $("#alertErrorContainer").hide();
+        $("#alertErrorMessage").text('');
+
+        return true;
+    }
+
+    function validateFeedback(jsonData) {
+        let isValid = true;
+        let errorMessage = '';
+
+        jsonData.forEach((item, index) => {
+            if (item.selectedValue === null || item.selectedValue === undefined) {
+                isValid = false;
+                errorMessage += `Pertanyaan nomor ${index + 1} belum dijawab.`;
+            }
+        });
+
+        if (!isValid) {
+            $("#alertErrorMessage").text(errorMessage);
+            $("#alertErrorContainer").show();
+            return false;
+        }
+
+        $("#alertErrorContainer").hide();
+        $("#alertErrorMessage").text('');
+
+        return true;
+    }
+
+    function checkEmployeeTestStatus() {
+        let url_check = '<?= base_url('lnd/form_test/check_employee_test_status') ?>';
+        $.ajax({
+            url: url_check,
+            method: 'GET',
+            data: {
+                test_id: test_id,
+                employee_id: $('#employeeId').combogrid('getValue'),
+                test_type: testType
+            },
+            dataType: 'json',
+            success: function(response) {
+                console.log('response', response);
+                if(!response.completed) {
+                    if(testType === 'POST_TEST') {
+                        $("#titleFeedbackContainer").show()
+
+                    }else{
+                        $("#titleContainer").show();
+                    }
+                    $('#attendanceContainer').hide();
+                    $("#btnResultTest").hide();
+                    $("#finalScoreTitle").hide();
+                    $("#alertErrorContainer").hide();
+                    $("#alertErrorMessage").text('');
+                    $("#alertErrorTitle").text('');
+                } else {
+                    $('#attendanceContainer').show();
+                    $("#titleContainer").hide();
+                    $("#alertErrorContainer").show();
+                    $("#alertErrorMessage").text(response.message);
+                    $("#alertErrorTitle").text('Warning');
+                }
+            },
+            error: function(xhr) {
+                console.error('gagal check employee test status', xhr);
+            }
+        })
+    }
+
 
 
     function submitTest() {
-        const jsonData = JSON.parse(window.originalQuestionJson.json_question); // simpan json awal di variable global sebelumnya
-        const result = evaluateTest(jsonData, '#preTestContainer');
-
-        console.log('Total Point:', result.totalPoint);
-        console.log('User Answers:', result.userAnswers);
-        $("#titleContainer").show();
-        $("#resultContainer").hide();
-        $("#preTestContainer").hide();
+        var jsonData;
+        var result;
+        if(testType === 'PRE_TEST') {
+            jsonData = JSON.parse(window.originalQuestionJson.json_question);
+            result = evaluateTest(jsonData, '#preTestContainer');
+        }else{
+            jsonData = JSON.parse(window.originalQuestionJson.json_postquestion);
+            result = evaluateTest(jsonData, '#postTestContainer');
+        }
         
-        $("#btnResultTest").show();
-        $("#btnStartTest").hide();
-        $("#finalScoreTitle").show();
-        $("#scoreFinalTitle").text(result.totalPoint);
+
+        let payload = {
+            test_id: test_id,
+            training_activity: $('#trainingNameTitle').text(),
+            trainer_name: $('#trainerName').textbox('getValue'),
+            employee_id: $('#employeeId').combogrid('getValue'),
+            type_training: testType,
+            json_response_detail: JSON.stringify(jsonData),
+            grade: result.totalPoint,
+            test_date: $('#trainingDate').datebox('getValue'),
+            trainer: $('#trainerName').textbox('getValue'),
+            json_result_history: JSON.stringify(result.userAnswers),
+            score_pre_test: result.totalPoint,
+            score_post_test: typeof testType === 'POST_TEST' ? result.totalPoint : null,
+            history_feedback_id: typeof testType === 'POST_TEST' ? window.feedbackResult.feedbackItems[0].id : null,
+            createdBy: $("#employeeName").textbox('getValue')
+        };
+        
+
+        if(validateTest(result.userAnswers)) {
+            let url_save = '<?= base_url('lnd/form_test/insert_data') ?>';
+            $.ajax({
+                url: url_save,
+                method: 'POST',
+                data: payload,
+                dataType: 'json',
+                success: function(response) {
+                    if(response.code >= 200 && response.code <= 300) {
+                        toastr.success(response.message, 'Success'); 
+                        $("#titleContainer").show();
+                        $("#resultContainer").hide();
+                        if(testType === 'PRE_TEST') {
+                            $("#preTestContainer").hide();
+
+                        }else{
+                            $("#postTestContainer").hide();
+                        }
+                        
+                        $("#btnResultTest").show();
+                        $("#btnStartTest").hide();
+                        $("#finalScoreTitle").show();
+                        $("#scoreFinalTitle").text(result.totalPoint);
+                    } else {
+                        
+                        $("#alertErrorTitle").text(response.message);
+                        $("#alertErrorMessage").text(response.errors);
+                        $("#alertErrorContainer").show();
+                    }
+                },
+                error: function(xhr) {
+                    console.error('gagal submit test', xhr);
+                    $("#alertErrorMessage").text(xhr.responseJSON.message);
+                    $("#alertErrorContainer").show();
+                }
+            });
+
+        }
 
         // renderTestResult(jsonData, result.userAnswers, '#resultContainer');
 
@@ -392,21 +542,50 @@
     function submitFeedback() {
         const jsonData = JSON.parse(window.originalFeedbackQuestionJson.json_feedback); // simpan json awal di variable global sebelumnya
         const result = evaluateFeedback(jsonData, '#feedbackContainer');
+        let dataFeedback = <?php echo json_encode($data_feedback); ?>;
 
-        console.log('Total Point:', result);
-        window.feedbackResult = result;
-        console.log('User Answers:', result.userAnswers);
-        $("#titleFeedbackResultContainer").show();
-        $("#resultContainer").hide();
-        $("#preTestContainer").hide();
-        $("#feedbackContainer").hide();
-        
-        $("#btnResultTest").show();
-        $("#btnStartTest").hide();
-        $("#finalScoreTitle").show();
-        $("#scoreFinalTitle").text(result.totalPoint);
+        let payload = {
+            test_id: test_id,
+            feedback_id: dataFeedback.id,
+            user_id: $('#employeeId').combogrid('getValue'),
+            json_response: JSON.stringify(result),
+            createdBy: $('#employeeId').combogrid('getValue')
+        }
 
-        // renderTestResult(jsonData, result.userAnswers, '#resultContainer');
+        if(validateFeedback(result.feedbackItems)) {
+            let url_save = '<?= base_url('lnd/form_test/storeFeedback') ?>';
+            $.ajax({
+                url: url_save,
+                method: 'POST',
+                data: payload,
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                    
+                    if(response.code >= 200 && response.code <= 300) {
+                        $("#titleFeedbackResultContainer").show();
+                        $("#resultContainer").hide();
+                        $("#preTestContainer").hide();
+                        $("#feedbackContainer").hide();
+                        
+                        $("#btnResultTest").show();
+                        $("#btnStartTest").hide();
+                        $("#finalScoreTitle").show();
+                        $("#scoreFinalTitle").text(result.totalPoint);
+                    } else {
+                        $("#alertErrorTitle").text(response.message);
+                        $("#alertErrorMessage").text(response.errors);
+                        $("#alertErrorContainer").show();
+                    }
+                },
+                error: function(xhr) {
+                    console.error('gagal submit test', xhr);
+                    $("#alertErrorMessage").text(xhr.responseJSON.message);
+                    $("#alertErrorContainer").show();
+                }
+            });
+
+        }
 
     }
 
@@ -436,17 +615,17 @@
 
             let point = 0;
             if (selectedIndex !== null && item.opsion[selectedIndex]) {
-            point = parseInt(item.opsion[selectedIndex].point || 0);
-            totalPoint += point;
+                point = parseInt(item.opsion[selectedIndex].point || 0);
+                totalPoint += point;
             }
 
             userAnswers.push({
-            question: item.question,
-            selectedIndex,
-            correctIndex,
-            selectedText: selectedIndex !== null ? item.opsion[selectedIndex].title : null,
-            isCorrect: selectedIndex === correctIndex,
-            point
+                question: item.question,
+                selectedIndex,
+                correctIndex,
+                selectedText: selectedIndex !== null ? item.opsion[selectedIndex].title : null,
+                isCorrect: selectedIndex === correctIndex,
+                point
             });
         });
 
@@ -464,10 +643,6 @@
         let totalScore = 0;
         let maxPossibleScore = 0;
         let feedbackItems = [];
-
-        console.log("#data", data);
-        
-
         // Process each feedback question
         data.forEach((question, index) => {
             const questionName = `opt_${index}`;
@@ -496,6 +671,7 @@
         const overallFeedback = getOverallFeedback(percentageScore);
 
         return {
+            id: '',
             totalScore,
             maxPossibleScore,
             percentageScore,
@@ -583,13 +759,7 @@
     function submitAbsence(){
         $("#formAbsen").on('submit', function (e){
             e.preventDefault();
-            let formData = 
-            console.log($(this).serializeArray());
-            let deptName = $("#employeeDe")
-            $('#attendanceContainer').hide();
-            $("#titleContainer").show();
-            $("#btnResultTest").hide();
-            $("#finalScoreTitle").hide();
+            checkEmployeeTestStatus();
         })
     }
 

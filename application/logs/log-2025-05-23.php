@@ -27349,3 +27349,10548 @@ INFO - 2025-05-23 07:02:24 --> Database Driver Class Initialized
 INFO - 2025-05-23 07:02:24 --> Model "Crud" initialized
 INFO - 2025-05-23 07:02:24 --> Final output sent to browser
 DEBUG - 2025-05-23 07:02:24 --> Total execution time: 0.0348
+INFO - 2025-05-23 07:02:34 --> Config Class Initialized
+INFO - 2025-05-23 07:02:34 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:02:34 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:02:34 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:02:34 --> URI Class Initialized
+INFO - 2025-05-23 07:02:34 --> Router Class Initialized
+INFO - 2025-05-23 07:02:34 --> Output Class Initialized
+INFO - 2025-05-23 07:02:34 --> Security Class Initialized
+DEBUG - 2025-05-23 07:02:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:02:34 --> Input Class Initialized
+INFO - 2025-05-23 07:02:34 --> Language Class Initialized
+INFO - 2025-05-23 07:02:34 --> Loader Class Initialized
+INFO - 2025-05-23 07:02:34 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:02:34 --> Config Class Initialized
+INFO - 2025-05-23 07:02:34 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:02:34 --> Hooks Class Initialized
+INFO - 2025-05-23 07:02:34 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 07:02:34 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:02:34 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:02:34 --> URI Class Initialized
+INFO - 2025-05-23 07:02:34 --> Router Class Initialized
+INFO - 2025-05-23 07:02:34 --> Output Class Initialized
+INFO - 2025-05-23 07:02:34 --> Security Class Initialized
+DEBUG - 2025-05-23 07:02:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:02:34 --> Input Class Initialized
+INFO - 2025-05-23 07:02:34 --> Language Class Initialized
+INFO - 2025-05-23 07:02:34 --> Loader Class Initialized
+INFO - 2025-05-23 07:02:34 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:02:34 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:02:34 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:02:34 --> Email Class Initialized
+DEBUG - 2025-05-23 07:02:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:02:34 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:02:34 --> Controller Class Initialized
+INFO - 2025-05-23 07:02:34 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:02:34 --> Email Class Initialized
+INFO - 2025-05-23 07:02:34 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:02:34 --> Session class already loaded. Second attempt ignored.
+DEBUG - 2025-05-23 07:02:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:02:34 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:02:34 --> Model "Crud" initialized
+INFO - 2025-05-23 07:02:34 --> Final output sent to browser
+DEBUG - 2025-05-23 07:02:34 --> Total execution time: 0.0211
+INFO - 2025-05-23 07:02:34 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:02:34 --> Controller Class Initialized
+INFO - 2025-05-23 07:02:34 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:02:34 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:02:34 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:02:34 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:02:34 --> Model "Crud" initialized
+INFO - 2025-05-23 07:02:34 --> Final output sent to browser
+DEBUG - 2025-05-23 07:02:34 --> Total execution time: 0.0334
+INFO - 2025-05-23 07:02:44 --> Config Class Initialized
+INFO - 2025-05-23 07:02:44 --> Config Class Initialized
+INFO - 2025-05-23 07:02:44 --> Hooks Class Initialized
+INFO - 2025-05-23 07:02:44 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:02:44 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:02:44 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 07:02:44 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:02:44 --> URI Class Initialized
+INFO - 2025-05-23 07:02:44 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:02:44 --> Router Class Initialized
+INFO - 2025-05-23 07:02:44 --> Output Class Initialized
+INFO - 2025-05-23 07:02:44 --> URI Class Initialized
+INFO - 2025-05-23 07:02:44 --> Security Class Initialized
+INFO - 2025-05-23 07:02:44 --> Router Class Initialized
+DEBUG - 2025-05-23 07:02:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:02:44 --> Output Class Initialized
+INFO - 2025-05-23 07:02:44 --> Input Class Initialized
+INFO - 2025-05-23 07:02:44 --> Security Class Initialized
+INFO - 2025-05-23 07:02:44 --> Language Class Initialized
+DEBUG - 2025-05-23 07:02:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:02:44 --> Input Class Initialized
+INFO - 2025-05-23 07:02:44 --> Loader Class Initialized
+INFO - 2025-05-23 07:02:44 --> Language Class Initialized
+INFO - 2025-05-23 07:02:44 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:02:44 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:02:44 --> Loader Class Initialized
+INFO - 2025-05-23 07:02:44 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:02:44 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:02:44 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:02:44 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:02:44 --> Email Class Initialized
+INFO - 2025-05-23 07:02:44 --> Email Class Initialized
+DEBUG - 2025-05-23 07:02:44 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 07:02:44 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:02:44 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:02:44 --> Controller Class Initialized
+INFO - 2025-05-23 07:02:44 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:02:44 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:02:44 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:02:44 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:02:44 --> Model "Crud" initialized
+INFO - 2025-05-23 07:02:44 --> Final output sent to browser
+DEBUG - 2025-05-23 07:02:44 --> Total execution time: 0.0195
+INFO - 2025-05-23 07:02:44 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:02:44 --> Controller Class Initialized
+INFO - 2025-05-23 07:02:44 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:02:44 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:02:44 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:02:44 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:02:44 --> Model "Crud" initialized
+INFO - 2025-05-23 07:02:44 --> Final output sent to browser
+DEBUG - 2025-05-23 07:02:44 --> Total execution time: 0.0363
+INFO - 2025-05-23 07:02:54 --> Config Class Initialized
+INFO - 2025-05-23 07:02:54 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:02:54 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:02:54 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:02:54 --> URI Class Initialized
+INFO - 2025-05-23 07:02:54 --> Router Class Initialized
+INFO - 2025-05-23 07:02:54 --> Output Class Initialized
+INFO - 2025-05-23 07:02:54 --> Security Class Initialized
+DEBUG - 2025-05-23 07:02:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:02:54 --> Input Class Initialized
+INFO - 2025-05-23 07:02:54 --> Language Class Initialized
+INFO - 2025-05-23 07:02:54 --> Loader Class Initialized
+INFO - 2025-05-23 07:02:54 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:02:54 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:02:54 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:02:54 --> Email Class Initialized
+DEBUG - 2025-05-23 07:02:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:02:54 --> Config Class Initialized
+INFO - 2025-05-23 07:02:54 --> Hooks Class Initialized
+INFO - 2025-05-23 07:02:54 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:02:54 --> Controller Class Initialized
+DEBUG - 2025-05-23 07:02:54 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:02:54 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:02:54 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:02:54 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:02:54 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:02:54 --> URI Class Initialized
+INFO - 2025-05-23 07:02:54 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:02:54 --> Router Class Initialized
+INFO - 2025-05-23 07:02:54 --> Output Class Initialized
+INFO - 2025-05-23 07:02:54 --> Security Class Initialized
+DEBUG - 2025-05-23 07:02:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:02:54 --> Input Class Initialized
+INFO - 2025-05-23 07:02:54 --> Language Class Initialized
+INFO - 2025-05-23 07:02:54 --> Loader Class Initialized
+INFO - 2025-05-23 07:02:54 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:02:54 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:02:54 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:02:54 --> Model "Crud" initialized
+INFO - 2025-05-23 07:02:54 --> Email Class Initialized
+DEBUG - 2025-05-23 07:02:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:02:54 --> Final output sent to browser
+DEBUG - 2025-05-23 07:02:54 --> Total execution time: 0.0449
+INFO - 2025-05-23 07:02:54 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:02:54 --> Controller Class Initialized
+INFO - 2025-05-23 07:02:54 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:02:54 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:02:54 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:02:54 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:02:54 --> Model "Crud" initialized
+INFO - 2025-05-23 07:02:54 --> Final output sent to browser
+DEBUG - 2025-05-23 07:02:54 --> Total execution time: 0.0652
+INFO - 2025-05-23 07:03:05 --> Config Class Initialized
+INFO - 2025-05-23 07:03:05 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:03:05 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:03:05 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:03:05 --> URI Class Initialized
+INFO - 2025-05-23 07:03:05 --> Config Class Initialized
+INFO - 2025-05-23 07:03:05 --> Router Class Initialized
+INFO - 2025-05-23 07:03:05 --> Hooks Class Initialized
+INFO - 2025-05-23 07:03:05 --> Output Class Initialized
+DEBUG - 2025-05-23 07:03:05 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:03:05 --> Security Class Initialized
+INFO - 2025-05-23 07:03:05 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 07:03:05 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:03:05 --> Input Class Initialized
+INFO - 2025-05-23 07:03:05 --> URI Class Initialized
+INFO - 2025-05-23 07:03:05 --> Language Class Initialized
+INFO - 2025-05-23 07:03:05 --> Router Class Initialized
+INFO - 2025-05-23 07:03:05 --> Loader Class Initialized
+INFO - 2025-05-23 07:03:05 --> Output Class Initialized
+INFO - 2025-05-23 07:03:05 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:03:05 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:03:05 --> Security Class Initialized
+DEBUG - 2025-05-23 07:03:05 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:03:05 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:05 --> Input Class Initialized
+INFO - 2025-05-23 07:03:05 --> Language Class Initialized
+INFO - 2025-05-23 07:03:05 --> Loader Class Initialized
+INFO - 2025-05-23 07:03:05 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:03:05 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:03:05 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:05 --> Email Class Initialized
+INFO - 2025-05-23 07:03:05 --> Email Class Initialized
+DEBUG - 2025-05-23 07:03:05 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 07:03:05 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:03:05 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:03:05 --> Controller Class Initialized
+INFO - 2025-05-23 07:03:05 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:03:05 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:03:05 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:03:05 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:05 --> Model "Crud" initialized
+INFO - 2025-05-23 07:03:05 --> Final output sent to browser
+DEBUG - 2025-05-23 07:03:05 --> Total execution time: 0.0250
+INFO - 2025-05-23 07:03:05 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:03:05 --> Controller Class Initialized
+INFO - 2025-05-23 07:03:05 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:03:05 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:03:05 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:03:05 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:05 --> Model "Crud" initialized
+INFO - 2025-05-23 07:03:05 --> Final output sent to browser
+DEBUG - 2025-05-23 07:03:05 --> Total execution time: 0.0453
+INFO - 2025-05-23 07:03:15 --> Config Class Initialized
+INFO - 2025-05-23 07:03:15 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:03:15 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:03:15 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:03:15 --> URI Class Initialized
+INFO - 2025-05-23 07:03:15 --> Router Class Initialized
+INFO - 2025-05-23 07:03:15 --> Output Class Initialized
+INFO - 2025-05-23 07:03:15 --> Security Class Initialized
+DEBUG - 2025-05-23 07:03:15 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:03:15 --> Input Class Initialized
+INFO - 2025-05-23 07:03:15 --> Language Class Initialized
+INFO - 2025-05-23 07:03:15 --> Loader Class Initialized
+INFO - 2025-05-23 07:03:15 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:03:15 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:03:15 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:15 --> Email Class Initialized
+DEBUG - 2025-05-23 07:03:15 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:03:15 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:03:15 --> Controller Class Initialized
+INFO - 2025-05-23 07:03:15 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:03:15 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:03:15 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:03:15 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:15 --> Model "Crud" initialized
+INFO - 2025-05-23 07:03:15 --> Final output sent to browser
+DEBUG - 2025-05-23 07:03:15 --> Total execution time: 0.0281
+INFO - 2025-05-23 07:03:15 --> Config Class Initialized
+INFO - 2025-05-23 07:03:15 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:03:15 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:03:15 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:03:15 --> URI Class Initialized
+INFO - 2025-05-23 07:03:15 --> Router Class Initialized
+INFO - 2025-05-23 07:03:15 --> Output Class Initialized
+INFO - 2025-05-23 07:03:15 --> Security Class Initialized
+DEBUG - 2025-05-23 07:03:15 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:03:15 --> Input Class Initialized
+INFO - 2025-05-23 07:03:15 --> Language Class Initialized
+INFO - 2025-05-23 07:03:15 --> Loader Class Initialized
+INFO - 2025-05-23 07:03:15 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:03:15 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:03:15 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:15 --> Email Class Initialized
+DEBUG - 2025-05-23 07:03:15 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:03:15 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:03:15 --> Controller Class Initialized
+INFO - 2025-05-23 07:03:15 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:03:15 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:03:15 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:03:15 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:15 --> Model "Crud" initialized
+INFO - 2025-05-23 07:03:15 --> Final output sent to browser
+DEBUG - 2025-05-23 07:03:15 --> Total execution time: 0.0702
+INFO - 2025-05-23 07:03:25 --> Config Class Initialized
+INFO - 2025-05-23 07:03:25 --> Hooks Class Initialized
+INFO - 2025-05-23 07:03:25 --> Config Class Initialized
+INFO - 2025-05-23 07:03:25 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:03:25 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 07:03:25 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:03:25 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:03:25 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:03:25 --> URI Class Initialized
+INFO - 2025-05-23 07:03:25 --> URI Class Initialized
+INFO - 2025-05-23 07:03:25 --> Router Class Initialized
+INFO - 2025-05-23 07:03:25 --> Router Class Initialized
+INFO - 2025-05-23 07:03:25 --> Output Class Initialized
+INFO - 2025-05-23 07:03:25 --> Output Class Initialized
+INFO - 2025-05-23 07:03:25 --> Security Class Initialized
+INFO - 2025-05-23 07:03:25 --> Security Class Initialized
+DEBUG - 2025-05-23 07:03:25 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 07:03:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:03:25 --> Input Class Initialized
+INFO - 2025-05-23 07:03:25 --> Input Class Initialized
+INFO - 2025-05-23 07:03:25 --> Language Class Initialized
+INFO - 2025-05-23 07:03:25 --> Language Class Initialized
+INFO - 2025-05-23 07:03:25 --> Loader Class Initialized
+INFO - 2025-05-23 07:03:25 --> Loader Class Initialized
+INFO - 2025-05-23 07:03:25 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:03:25 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:03:25 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:03:25 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:03:25 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:25 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:25 --> Email Class Initialized
+INFO - 2025-05-23 07:03:25 --> Email Class Initialized
+DEBUG - 2025-05-23 07:03:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 07:03:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:03:25 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:03:25 --> Controller Class Initialized
+INFO - 2025-05-23 07:03:25 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:03:25 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:03:25 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:03:25 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:25 --> Model "Crud" initialized
+INFO - 2025-05-23 07:03:25 --> Final output sent to browser
+DEBUG - 2025-05-23 07:03:25 --> Total execution time: 0.0161
+INFO - 2025-05-23 07:03:25 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:03:25 --> Controller Class Initialized
+INFO - 2025-05-23 07:03:25 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:03:25 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:03:25 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:03:25 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:25 --> Model "Crud" initialized
+INFO - 2025-05-23 07:03:25 --> Final output sent to browser
+DEBUG - 2025-05-23 07:03:25 --> Total execution time: 0.0337
+INFO - 2025-05-23 07:03:35 --> Config Class Initialized
+INFO - 2025-05-23 07:03:35 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:03:35 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:03:35 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:03:35 --> Config Class Initialized
+INFO - 2025-05-23 07:03:35 --> URI Class Initialized
+INFO - 2025-05-23 07:03:35 --> Hooks Class Initialized
+INFO - 2025-05-23 07:03:35 --> Router Class Initialized
+DEBUG - 2025-05-23 07:03:35 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:03:35 --> Output Class Initialized
+INFO - 2025-05-23 07:03:35 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:03:35 --> Security Class Initialized
+DEBUG - 2025-05-23 07:03:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:03:35 --> Input Class Initialized
+INFO - 2025-05-23 07:03:35 --> Language Class Initialized
+INFO - 2025-05-23 07:03:35 --> URI Class Initialized
+INFO - 2025-05-23 07:03:35 --> Loader Class Initialized
+INFO - 2025-05-23 07:03:35 --> Router Class Initialized
+INFO - 2025-05-23 07:03:35 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:03:35 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:03:35 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:35 --> Output Class Initialized
+INFO - 2025-05-23 07:03:35 --> Security Class Initialized
+DEBUG - 2025-05-23 07:03:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:03:35 --> Input Class Initialized
+INFO - 2025-05-23 07:03:35 --> Language Class Initialized
+INFO - 2025-05-23 07:03:35 --> Loader Class Initialized
+INFO - 2025-05-23 07:03:35 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:03:35 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:03:35 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:35 --> Email Class Initialized
+DEBUG - 2025-05-23 07:03:35 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:03:35 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:03:35 --> Email Class Initialized
+INFO - 2025-05-23 07:03:35 --> Controller Class Initialized
+INFO - 2025-05-23 07:03:35 --> Helper loaded: form_helper
+DEBUG - 2025-05-23 07:03:35 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:03:35 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:03:35 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:03:35 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:35 --> Model "Crud" initialized
+INFO - 2025-05-23 07:03:35 --> Final output sent to browser
+DEBUG - 2025-05-23 07:03:35 --> Total execution time: 0.0177
+INFO - 2025-05-23 07:03:35 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:03:35 --> Controller Class Initialized
+INFO - 2025-05-23 07:03:35 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:03:35 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:03:35 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:03:35 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:35 --> Model "Crud" initialized
+INFO - 2025-05-23 07:03:35 --> Final output sent to browser
+DEBUG - 2025-05-23 07:03:35 --> Total execution time: 0.0309
+INFO - 2025-05-23 07:03:45 --> Config Class Initialized
+INFO - 2025-05-23 07:03:45 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:03:45 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:03:45 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:03:45 --> URI Class Initialized
+INFO - 2025-05-23 07:03:45 --> Router Class Initialized
+INFO - 2025-05-23 07:03:45 --> Config Class Initialized
+INFO - 2025-05-23 07:03:45 --> Hooks Class Initialized
+INFO - 2025-05-23 07:03:45 --> Output Class Initialized
+DEBUG - 2025-05-23 07:03:45 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:03:45 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:03:45 --> Security Class Initialized
+INFO - 2025-05-23 07:03:45 --> URI Class Initialized
+DEBUG - 2025-05-23 07:03:45 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:03:45 --> Router Class Initialized
+INFO - 2025-05-23 07:03:45 --> Input Class Initialized
+INFO - 2025-05-23 07:03:45 --> Output Class Initialized
+INFO - 2025-05-23 07:03:45 --> Language Class Initialized
+INFO - 2025-05-23 07:03:45 --> Security Class Initialized
+DEBUG - 2025-05-23 07:03:45 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:03:45 --> Loader Class Initialized
+INFO - 2025-05-23 07:03:45 --> Input Class Initialized
+INFO - 2025-05-23 07:03:45 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:03:45 --> Language Class Initialized
+INFO - 2025-05-23 07:03:45 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:03:45 --> Loader Class Initialized
+INFO - 2025-05-23 07:03:45 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:45 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:03:45 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:03:45 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:45 --> Email Class Initialized
+INFO - 2025-05-23 07:03:45 --> Email Class Initialized
+DEBUG - 2025-05-23 07:03:45 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 07:03:45 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:03:45 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:03:45 --> Controller Class Initialized
+INFO - 2025-05-23 07:03:45 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:03:45 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:03:45 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:03:45 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:45 --> Model "Crud" initialized
+INFO - 2025-05-23 07:03:45 --> Final output sent to browser
+DEBUG - 2025-05-23 07:03:45 --> Total execution time: 0.0203
+INFO - 2025-05-23 07:03:45 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:03:45 --> Controller Class Initialized
+INFO - 2025-05-23 07:03:45 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:03:45 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:03:45 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:03:45 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:45 --> Model "Crud" initialized
+INFO - 2025-05-23 07:03:45 --> Final output sent to browser
+DEBUG - 2025-05-23 07:03:45 --> Total execution time: 0.0381
+INFO - 2025-05-23 07:03:55 --> Config Class Initialized
+INFO - 2025-05-23 07:03:55 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:03:55 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:03:55 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:03:55 --> Config Class Initialized
+INFO - 2025-05-23 07:03:55 --> URI Class Initialized
+INFO - 2025-05-23 07:03:55 --> Hooks Class Initialized
+INFO - 2025-05-23 07:03:55 --> Router Class Initialized
+DEBUG - 2025-05-23 07:03:55 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:03:55 --> Output Class Initialized
+INFO - 2025-05-23 07:03:55 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:03:55 --> Security Class Initialized
+INFO - 2025-05-23 07:03:55 --> URI Class Initialized
+DEBUG - 2025-05-23 07:03:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:03:55 --> Input Class Initialized
+INFO - 2025-05-23 07:03:55 --> Router Class Initialized
+INFO - 2025-05-23 07:03:55 --> Language Class Initialized
+INFO - 2025-05-23 07:03:55 --> Output Class Initialized
+INFO - 2025-05-23 07:03:55 --> Security Class Initialized
+INFO - 2025-05-23 07:03:55 --> Loader Class Initialized
+DEBUG - 2025-05-23 07:03:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:03:55 --> Input Class Initialized
+INFO - 2025-05-23 07:03:55 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:03:55 --> Language Class Initialized
+INFO - 2025-05-23 07:03:55 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:03:55 --> Loader Class Initialized
+INFO - 2025-05-23 07:03:55 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:03:55 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:55 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:03:55 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:55 --> Email Class Initialized
+INFO - 2025-05-23 07:03:55 --> Email Class Initialized
+DEBUG - 2025-05-23 07:03:55 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 07:03:55 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:03:55 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:03:55 --> Controller Class Initialized
+INFO - 2025-05-23 07:03:55 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:03:55 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:03:55 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:03:55 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:55 --> Model "Crud" initialized
+INFO - 2025-05-23 07:03:55 --> Final output sent to browser
+DEBUG - 2025-05-23 07:03:55 --> Total execution time: 0.0241
+INFO - 2025-05-23 07:03:55 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:03:55 --> Controller Class Initialized
+INFO - 2025-05-23 07:03:55 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:03:55 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:03:55 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:03:55 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:03:55 --> Model "Crud" initialized
+INFO - 2025-05-23 07:03:55 --> Final output sent to browser
+DEBUG - 2025-05-23 07:03:55 --> Total execution time: 0.0418
+INFO - 2025-05-23 07:04:05 --> Config Class Initialized
+INFO - 2025-05-23 07:04:05 --> Config Class Initialized
+INFO - 2025-05-23 07:04:05 --> Hooks Class Initialized
+INFO - 2025-05-23 07:04:05 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:04:05 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:04:05 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 07:04:05 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:04:05 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:04:05 --> URI Class Initialized
+INFO - 2025-05-23 07:04:05 --> URI Class Initialized
+INFO - 2025-05-23 07:04:05 --> Router Class Initialized
+INFO - 2025-05-23 07:04:05 --> Router Class Initialized
+INFO - 2025-05-23 07:04:05 --> Output Class Initialized
+INFO - 2025-05-23 07:04:05 --> Output Class Initialized
+INFO - 2025-05-23 07:04:05 --> Security Class Initialized
+INFO - 2025-05-23 07:04:05 --> Security Class Initialized
+DEBUG - 2025-05-23 07:04:05 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 07:04:05 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:04:05 --> Input Class Initialized
+INFO - 2025-05-23 07:04:05 --> Input Class Initialized
+INFO - 2025-05-23 07:04:05 --> Language Class Initialized
+INFO - 2025-05-23 07:04:05 --> Language Class Initialized
+INFO - 2025-05-23 07:04:05 --> Loader Class Initialized
+INFO - 2025-05-23 07:04:05 --> Loader Class Initialized
+INFO - 2025-05-23 07:04:05 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:04:05 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:04:05 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:04:05 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:04:05 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:04:05 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:04:05 --> Email Class Initialized
+INFO - 2025-05-23 07:04:05 --> Email Class Initialized
+DEBUG - 2025-05-23 07:04:05 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 07:04:05 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:04:05 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:04:05 --> Controller Class Initialized
+INFO - 2025-05-23 07:04:05 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:04:05 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:04:05 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:04:05 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:04:05 --> Model "Crud" initialized
+INFO - 2025-05-23 07:04:05 --> Final output sent to browser
+DEBUG - 2025-05-23 07:04:05 --> Total execution time: 0.0233
+INFO - 2025-05-23 07:04:05 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:04:05 --> Controller Class Initialized
+INFO - 2025-05-23 07:04:05 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:04:05 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:04:05 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:04:05 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:04:05 --> Model "Crud" initialized
+INFO - 2025-05-23 07:04:05 --> Final output sent to browser
+DEBUG - 2025-05-23 07:04:05 --> Total execution time: 0.0435
+INFO - 2025-05-23 07:04:15 --> Config Class Initialized
+INFO - 2025-05-23 07:04:15 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:04:15 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:04:15 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:04:15 --> URI Class Initialized
+INFO - 2025-05-23 07:04:15 --> Router Class Initialized
+INFO - 2025-05-23 07:04:15 --> Output Class Initialized
+INFO - 2025-05-23 07:04:15 --> Security Class Initialized
+DEBUG - 2025-05-23 07:04:15 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:04:15 --> Input Class Initialized
+INFO - 2025-05-23 07:04:15 --> Language Class Initialized
+INFO - 2025-05-23 07:04:15 --> Config Class Initialized
+INFO - 2025-05-23 07:04:15 --> Loader Class Initialized
+INFO - 2025-05-23 07:04:15 --> Hooks Class Initialized
+INFO - 2025-05-23 07:04:15 --> Helper loaded: url_helper
+DEBUG - 2025-05-23 07:04:15 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:04:15 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:04:15 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:04:15 --> URI Class Initialized
+INFO - 2025-05-23 07:04:15 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:04:15 --> Router Class Initialized
+INFO - 2025-05-23 07:04:15 --> Output Class Initialized
+INFO - 2025-05-23 07:04:15 --> Security Class Initialized
+DEBUG - 2025-05-23 07:04:15 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:04:15 --> Input Class Initialized
+INFO - 2025-05-23 07:04:15 --> Language Class Initialized
+INFO - 2025-05-23 07:04:15 --> Loader Class Initialized
+INFO - 2025-05-23 07:04:15 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:04:15 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:04:15 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:04:15 --> Email Class Initialized
+DEBUG - 2025-05-23 07:04:15 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:04:15 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:04:15 --> Controller Class Initialized
+INFO - 2025-05-23 07:04:15 --> Email Class Initialized
+INFO - 2025-05-23 07:04:15 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:04:15 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:04:15 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 07:04:15 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:04:15 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:04:15 --> Model "Crud" initialized
+INFO - 2025-05-23 07:04:15 --> Final output sent to browser
+DEBUG - 2025-05-23 07:04:15 --> Total execution time: 0.0257
+INFO - 2025-05-23 07:04:15 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:04:15 --> Controller Class Initialized
+INFO - 2025-05-23 07:04:15 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:04:15 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:04:15 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:04:15 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:04:15 --> Model "Crud" initialized
+INFO - 2025-05-23 07:04:15 --> Final output sent to browser
+DEBUG - 2025-05-23 07:04:15 --> Total execution time: 0.0522
+INFO - 2025-05-23 07:04:33 --> Config Class Initialized
+INFO - 2025-05-23 07:04:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:04:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:04:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:04:33 --> URI Class Initialized
+INFO - 2025-05-23 07:04:33 --> Router Class Initialized
+INFO - 2025-05-23 07:04:33 --> Output Class Initialized
+INFO - 2025-05-23 07:04:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:04:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:04:33 --> Input Class Initialized
+INFO - 2025-05-23 07:04:33 --> Language Class Initialized
+INFO - 2025-05-23 07:04:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:04:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:04:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:04:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:04:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:04:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:04:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:04:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:04:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:04:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:04:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:04:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:04:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:04:33 --> Config Class Initialized
+INFO - 2025-05-23 07:04:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:04:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:04:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:04:33 --> URI Class Initialized
+INFO - 2025-05-23 07:04:33 --> Router Class Initialized
+INFO - 2025-05-23 07:04:33 --> Output Class Initialized
+INFO - 2025-05-23 07:04:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:04:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:04:33 --> Input Class Initialized
+INFO - 2025-05-23 07:04:33 --> Language Class Initialized
+INFO - 2025-05-23 07:04:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:04:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:04:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:04:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:04:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:04:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:04:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:04:33 --> Total execution time: 0.0328
+INFO - 2025-05-23 07:04:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:04:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:04:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:04:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:04:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:04:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:04:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:04:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:04:33 --> Total execution time: 0.0415
+INFO - 2025-05-23 07:05:33 --> Config Class Initialized
+INFO - 2025-05-23 07:05:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:05:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:05:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:05:33 --> URI Class Initialized
+INFO - 2025-05-23 07:05:33 --> Router Class Initialized
+INFO - 2025-05-23 07:05:33 --> Output Class Initialized
+INFO - 2025-05-23 07:05:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:05:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:05:33 --> Input Class Initialized
+INFO - 2025-05-23 07:05:33 --> Language Class Initialized
+INFO - 2025-05-23 07:05:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:05:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:05:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:05:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:05:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:05:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:05:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:05:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:05:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:05:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:05:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:05:33 --> Config Class Initialized
+INFO - 2025-05-23 07:05:33 --> Hooks Class Initialized
+INFO - 2025-05-23 07:05:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 07:05:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:05:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:05:33 --> URI Class Initialized
+INFO - 2025-05-23 07:05:33 --> Router Class Initialized
+INFO - 2025-05-23 07:05:33 --> Output Class Initialized
+INFO - 2025-05-23 07:05:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:05:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:05:33 --> Input Class Initialized
+INFO - 2025-05-23 07:05:33 --> Language Class Initialized
+INFO - 2025-05-23 07:05:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:05:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:05:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:05:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:05:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:05:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:05:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:05:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:05:33 --> Total execution time: 0.0549
+INFO - 2025-05-23 07:05:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:05:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:05:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:05:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:05:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:05:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:05:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:05:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:05:33 --> Total execution time: 0.0699
+INFO - 2025-05-23 07:06:33 --> Config Class Initialized
+INFO - 2025-05-23 07:06:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:06:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:06:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:06:33 --> URI Class Initialized
+INFO - 2025-05-23 07:06:33 --> Router Class Initialized
+INFO - 2025-05-23 07:06:33 --> Output Class Initialized
+INFO - 2025-05-23 07:06:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:06:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:06:33 --> Input Class Initialized
+INFO - 2025-05-23 07:06:33 --> Language Class Initialized
+INFO - 2025-05-23 07:06:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:06:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:06:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:06:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:06:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:06:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:06:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:06:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:06:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:06:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:06:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:06:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:06:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:06:33 --> Config Class Initialized
+INFO - 2025-05-23 07:06:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:06:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:06:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:06:33 --> URI Class Initialized
+INFO - 2025-05-23 07:06:33 --> Router Class Initialized
+INFO - 2025-05-23 07:06:33 --> Output Class Initialized
+INFO - 2025-05-23 07:06:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:06:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:06:33 --> Input Class Initialized
+INFO - 2025-05-23 07:06:33 --> Language Class Initialized
+INFO - 2025-05-23 07:06:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:06:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:06:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:06:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:06:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:06:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:06:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:06:33 --> Total execution time: 0.0539
+INFO - 2025-05-23 07:06:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:06:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:06:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:06:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:06:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:06:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:06:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:06:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:06:33 --> Total execution time: 0.0630
+INFO - 2025-05-23 07:07:33 --> Config Class Initialized
+INFO - 2025-05-23 07:07:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:07:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:07:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:07:33 --> URI Class Initialized
+INFO - 2025-05-23 07:07:33 --> Router Class Initialized
+INFO - 2025-05-23 07:07:33 --> Output Class Initialized
+INFO - 2025-05-23 07:07:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:07:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:07:33 --> Input Class Initialized
+INFO - 2025-05-23 07:07:33 --> Language Class Initialized
+INFO - 2025-05-23 07:07:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:07:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:07:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:07:33 --> Config Class Initialized
+INFO - 2025-05-23 07:07:33 --> Hooks Class Initialized
+INFO - 2025-05-23 07:07:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 07:07:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:07:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:07:33 --> URI Class Initialized
+INFO - 2025-05-23 07:07:33 --> Router Class Initialized
+INFO - 2025-05-23 07:07:33 --> Output Class Initialized
+INFO - 2025-05-23 07:07:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:07:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:07:33 --> Input Class Initialized
+INFO - 2025-05-23 07:07:33 --> Language Class Initialized
+INFO - 2025-05-23 07:07:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:07:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:07:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:07:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:07:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:07:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:07:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:07:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:07:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:07:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 07:07:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:07:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:07:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 07:07:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:07:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:07:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:07:33 --> Total execution time: 0.0238
+INFO - 2025-05-23 07:07:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:07:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:07:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:07:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:07:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:07:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:07:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:07:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:07:33 --> Total execution time: 0.0443
+INFO - 2025-05-23 07:08:33 --> Config Class Initialized
+INFO - 2025-05-23 07:08:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:08:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:08:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:08:33 --> URI Class Initialized
+INFO - 2025-05-23 07:08:33 --> Router Class Initialized
+INFO - 2025-05-23 07:08:33 --> Output Class Initialized
+INFO - 2025-05-23 07:08:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:08:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:08:33 --> Input Class Initialized
+INFO - 2025-05-23 07:08:33 --> Language Class Initialized
+INFO - 2025-05-23 07:08:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:08:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:08:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:08:33 --> Config Class Initialized
+INFO - 2025-05-23 07:08:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:08:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:08:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:08:33 --> Email Class Initialized
+INFO - 2025-05-23 07:08:33 --> URI Class Initialized
+INFO - 2025-05-23 07:08:33 --> Router Class Initialized
+DEBUG - 2025-05-23 07:08:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:08:33 --> Output Class Initialized
+INFO - 2025-05-23 07:08:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:08:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:08:33 --> Input Class Initialized
+INFO - 2025-05-23 07:08:33 --> Language Class Initialized
+INFO - 2025-05-23 07:08:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:08:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:08:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:08:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:08:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:08:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:08:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 07:08:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 07:08:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:08:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:08:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:08:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:08:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:08:33 --> Total execution time: 0.0610
+INFO - 2025-05-23 07:08:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:08:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:08:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:08:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:08:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:08:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:08:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:08:33 --> Total execution time: 0.0772
+INFO - 2025-05-23 07:09:33 --> Config Class Initialized
+INFO - 2025-05-23 07:09:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:09:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:09:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:09:33 --> URI Class Initialized
+INFO - 2025-05-23 07:09:33 --> Router Class Initialized
+INFO - 2025-05-23 07:09:33 --> Output Class Initialized
+INFO - 2025-05-23 07:09:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:09:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:09:33 --> Input Class Initialized
+INFO - 2025-05-23 07:09:33 --> Language Class Initialized
+INFO - 2025-05-23 07:09:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:09:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:09:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:09:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:09:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:09:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:09:33 --> Config Class Initialized
+INFO - 2025-05-23 07:09:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:09:33 --> Hooks Class Initialized
+INFO - 2025-05-23 07:09:33 --> Helper loaded: form_helper
+DEBUG - 2025-05-23 07:09:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:09:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 07:09:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 07:09:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:09:33 --> URI Class Initialized
+INFO - 2025-05-23 07:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:09:33 --> Router Class Initialized
+INFO - 2025-05-23 07:09:33 --> Output Class Initialized
+INFO - 2025-05-23 07:09:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:09:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:09:33 --> Input Class Initialized
+INFO - 2025-05-23 07:09:33 --> Language Class Initialized
+INFO - 2025-05-23 07:09:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:09:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:09:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:09:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:09:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:09:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:09:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:09:33 --> Total execution time: 0.0300
+INFO - 2025-05-23 07:09:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:09:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:09:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:09:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:09:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:09:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:09:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:09:33 --> Total execution time: 0.0443
+INFO - 2025-05-23 07:10:33 --> Config Class Initialized
+INFO - 2025-05-23 07:10:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:10:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:10:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:10:33 --> URI Class Initialized
+INFO - 2025-05-23 07:10:33 --> Router Class Initialized
+INFO - 2025-05-23 07:10:33 --> Output Class Initialized
+INFO - 2025-05-23 07:10:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:10:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:10:33 --> Input Class Initialized
+INFO - 2025-05-23 07:10:33 --> Language Class Initialized
+INFO - 2025-05-23 07:10:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:10:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:10:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:10:33 --> Email Class Initialized
+INFO - 2025-05-23 07:10:33 --> Config Class Initialized
+DEBUG - 2025-05-23 07:10:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:10:33 --> Hooks Class Initialized
+INFO - 2025-05-23 07:10:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 07:10:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:10:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:10:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:10:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:10:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 07:10:33 --> URI Class Initialized
+DEBUG - 2025-05-23 07:10:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:10:33 --> Router Class Initialized
+INFO - 2025-05-23 07:10:33 --> Output Class Initialized
+INFO - 2025-05-23 07:10:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:10:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:10:33 --> Input Class Initialized
+INFO - 2025-05-23 07:10:33 --> Language Class Initialized
+INFO - 2025-05-23 07:10:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:10:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:10:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:10:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:10:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:10:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:10:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:10:33 --> Total execution time: 0.0306
+INFO - 2025-05-23 07:10:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:10:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:10:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:10:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:10:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:10:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:10:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:10:33 --> Total execution time: 0.0447
+INFO - 2025-05-23 07:11:33 --> Config Class Initialized
+INFO - 2025-05-23 07:11:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:11:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:11:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:11:33 --> URI Class Initialized
+INFO - 2025-05-23 07:11:33 --> Router Class Initialized
+INFO - 2025-05-23 07:11:33 --> Output Class Initialized
+INFO - 2025-05-23 07:11:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:11:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:11:33 --> Input Class Initialized
+INFO - 2025-05-23 07:11:33 --> Language Class Initialized
+INFO - 2025-05-23 07:11:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:11:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:11:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:11:33 --> Config Class Initialized
+INFO - 2025-05-23 07:11:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:11:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:11:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:11:33 --> URI Class Initialized
+INFO - 2025-05-23 07:11:33 --> Router Class Initialized
+INFO - 2025-05-23 07:11:33 --> Output Class Initialized
+INFO - 2025-05-23 07:11:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:11:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:11:33 --> Input Class Initialized
+INFO - 2025-05-23 07:11:33 --> Language Class Initialized
+INFO - 2025-05-23 07:11:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:11:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:11:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:11:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:11:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:11:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:11:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:11:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:11:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:11:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:11:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:11:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:11:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:11:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:11:33 --> Total execution time: 0.0345
+INFO - 2025-05-23 07:11:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:11:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:11:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:11:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:11:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:11:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:11:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:11:33 --> Total execution time: 0.0616
+INFO - 2025-05-23 07:12:31 --> Config Class Initialized
+INFO - 2025-05-23 07:12:31 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:12:31 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:12:31 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:12:31 --> URI Class Initialized
+INFO - 2025-05-23 07:12:31 --> Router Class Initialized
+INFO - 2025-05-23 07:12:31 --> Output Class Initialized
+INFO - 2025-05-23 07:12:31 --> Security Class Initialized
+DEBUG - 2025-05-23 07:12:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:12:31 --> Input Class Initialized
+INFO - 2025-05-23 07:12:31 --> Language Class Initialized
+INFO - 2025-05-23 07:12:31 --> Loader Class Initialized
+INFO - 2025-05-23 07:12:31 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:12:31 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:12:31 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:12:31 --> Config Class Initialized
+INFO - 2025-05-23 07:12:31 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:12:31 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:12:31 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:12:31 --> URI Class Initialized
+INFO - 2025-05-23 07:12:31 --> Router Class Initialized
+INFO - 2025-05-23 07:12:31 --> Output Class Initialized
+INFO - 2025-05-23 07:12:31 --> Security Class Initialized
+DEBUG - 2025-05-23 07:12:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:12:31 --> Input Class Initialized
+INFO - 2025-05-23 07:12:31 --> Language Class Initialized
+INFO - 2025-05-23 07:12:31 --> Loader Class Initialized
+INFO - 2025-05-23 07:12:31 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:12:31 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:12:31 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:12:31 --> Email Class Initialized
+DEBUG - 2025-05-23 07:12:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:12:31 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:12:31 --> Controller Class Initialized
+INFO - 2025-05-23 07:12:31 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:12:31 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:12:31 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:12:31 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:12:31 --> Email Class Initialized
+DEBUG - 2025-05-23 07:12:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:12:31 --> Model "Crud" initialized
+INFO - 2025-05-23 07:12:31 --> Final output sent to browser
+DEBUG - 2025-05-23 07:12:31 --> Total execution time: 0.0390
+INFO - 2025-05-23 07:12:31 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:12:31 --> Controller Class Initialized
+INFO - 2025-05-23 07:12:31 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:12:31 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:12:31 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:12:31 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:12:31 --> Model "Crud" initialized
+INFO - 2025-05-23 07:12:31 --> Final output sent to browser
+DEBUG - 2025-05-23 07:12:31 --> Total execution time: 0.0583
+INFO - 2025-05-23 07:13:33 --> Config Class Initialized
+INFO - 2025-05-23 07:13:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:13:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:13:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:13:33 --> URI Class Initialized
+INFO - 2025-05-23 07:13:33 --> Router Class Initialized
+INFO - 2025-05-23 07:13:33 --> Output Class Initialized
+INFO - 2025-05-23 07:13:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:13:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:13:33 --> Input Class Initialized
+INFO - 2025-05-23 07:13:33 --> Language Class Initialized
+INFO - 2025-05-23 07:13:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:13:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:13:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:13:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:13:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:13:33 --> Config Class Initialized
+INFO - 2025-05-23 07:13:33 --> Hooks Class Initialized
+INFO - 2025-05-23 07:13:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 07:13:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:13:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:13:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:13:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:13:33 --> URI Class Initialized
+INFO - 2025-05-23 07:13:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:13:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:13:33 --> Router Class Initialized
+INFO - 2025-05-23 07:13:33 --> Output Class Initialized
+INFO - 2025-05-23 07:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:13:33 --> Security Class Initialized
+DEBUG - 2025-05-23 07:13:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:13:33 --> Input Class Initialized
+INFO - 2025-05-23 07:13:33 --> Language Class Initialized
+INFO - 2025-05-23 07:13:33 --> Loader Class Initialized
+INFO - 2025-05-23 07:13:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:13:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:13:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:13:33 --> Email Class Initialized
+DEBUG - 2025-05-23 07:13:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:13:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:13:33 --> Total execution time: 0.0287
+INFO - 2025-05-23 07:13:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:13:33 --> Controller Class Initialized
+INFO - 2025-05-23 07:13:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:13:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:13:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:13:33 --> Model "Crud" initialized
+INFO - 2025-05-23 07:13:33 --> Final output sent to browser
+DEBUG - 2025-05-23 07:13:33 --> Total execution time: 0.0386
+INFO - 2025-05-23 07:14:34 --> Config Class Initialized
+INFO - 2025-05-23 07:14:34 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:14:34 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:14:34 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:14:34 --> URI Class Initialized
+INFO - 2025-05-23 07:14:34 --> Router Class Initialized
+INFO - 2025-05-23 07:14:34 --> Output Class Initialized
+INFO - 2025-05-23 07:14:34 --> Security Class Initialized
+DEBUG - 2025-05-23 07:14:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:14:34 --> Input Class Initialized
+INFO - 2025-05-23 07:14:34 --> Language Class Initialized
+INFO - 2025-05-23 07:14:34 --> Loader Class Initialized
+INFO - 2025-05-23 07:14:34 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:14:34 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:14:34 --> Config Class Initialized
+INFO - 2025-05-23 07:14:34 --> Hooks Class Initialized
+DEBUG - 2025-05-23 07:14:34 --> UTF-8 Support Enabled
+INFO - 2025-05-23 07:14:34 --> Utf8 Class Initialized
+INFO - 2025-05-23 07:14:34 --> URI Class Initialized
+INFO - 2025-05-23 07:14:34 --> Router Class Initialized
+INFO - 2025-05-23 07:14:34 --> Output Class Initialized
+INFO - 2025-05-23 07:14:34 --> Security Class Initialized
+DEBUG - 2025-05-23 07:14:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 07:14:34 --> Input Class Initialized
+INFO - 2025-05-23 07:14:34 --> Language Class Initialized
+INFO - 2025-05-23 07:14:34 --> Loader Class Initialized
+INFO - 2025-05-23 07:14:34 --> Helper loaded: url_helper
+INFO - 2025-05-23 07:14:34 --> Helper loaded: file_helper
+INFO - 2025-05-23 07:14:34 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:14:34 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:14:34 --> Email Class Initialized
+DEBUG - 2025-05-23 07:14:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:14:34 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:14:34 --> Controller Class Initialized
+INFO - 2025-05-23 07:14:34 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:14:34 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:14:34 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:14:34 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:14:34 --> Model "Crud" initialized
+INFO - 2025-05-23 07:14:34 --> Final output sent to browser
+DEBUG - 2025-05-23 07:14:34 --> Total execution time: 0.0567
+INFO - 2025-05-23 07:14:34 --> Email Class Initialized
+DEBUG - 2025-05-23 07:14:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 07:14:34 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 07:14:34 --> Controller Class Initialized
+INFO - 2025-05-23 07:14:34 --> Helper loaded: form_helper
+INFO - 2025-05-23 07:14:34 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 07:14:34 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 07:14:34 --> Database Driver Class Initialized
+INFO - 2025-05-23 07:14:34 --> Model "Crud" initialized
+INFO - 2025-05-23 07:14:34 --> Final output sent to browser
+DEBUG - 2025-05-23 07:14:34 --> Total execution time: 0.1948
+INFO - 2025-05-23 08:30:33 --> Config Class Initialized
+INFO - 2025-05-23 08:30:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:30:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:30:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:30:33 --> URI Class Initialized
+INFO - 2025-05-23 08:30:33 --> Router Class Initialized
+INFO - 2025-05-23 08:30:33 --> Output Class Initialized
+INFO - 2025-05-23 08:30:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:30:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:30:33 --> Input Class Initialized
+INFO - 2025-05-23 08:30:33 --> Language Class Initialized
+INFO - 2025-05-23 08:30:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:30:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:30:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:30:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:30:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:30:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:30:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:30:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:30:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:30:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:30:33 --> Config Class Initialized
+INFO - 2025-05-23 08:30:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:30:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:30:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:30:33 --> URI Class Initialized
+INFO - 2025-05-23 08:30:33 --> Router Class Initialized
+INFO - 2025-05-23 08:30:33 --> Output Class Initialized
+INFO - 2025-05-23 08:30:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:30:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:30:33 --> Input Class Initialized
+INFO - 2025-05-23 08:30:33 --> Language Class Initialized
+INFO - 2025-05-23 08:30:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:30:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:30:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:30:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:30:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:30:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:30:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:30:33 --> Total execution time: 0.0272
+INFO - 2025-05-23 08:30:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:30:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:30:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:30:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:30:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:30:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:30:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:30:33 --> Total execution time: 0.0413
+INFO - 2025-05-23 08:31:33 --> Config Class Initialized
+INFO - 2025-05-23 08:31:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:31:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:31:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:31:33 --> URI Class Initialized
+INFO - 2025-05-23 08:31:33 --> Router Class Initialized
+INFO - 2025-05-23 08:31:33 --> Output Class Initialized
+INFO - 2025-05-23 08:31:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:31:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:31:33 --> Input Class Initialized
+INFO - 2025-05-23 08:31:33 --> Language Class Initialized
+INFO - 2025-05-23 08:31:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:31:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:31:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:31:33 --> Config Class Initialized
+INFO - 2025-05-23 08:31:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:31:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:31:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:31:33 --> URI Class Initialized
+INFO - 2025-05-23 08:31:33 --> Router Class Initialized
+INFO - 2025-05-23 08:31:33 --> Output Class Initialized
+INFO - 2025-05-23 08:31:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:31:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:31:33 --> Input Class Initialized
+INFO - 2025-05-23 08:31:33 --> Language Class Initialized
+INFO - 2025-05-23 08:31:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:31:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:31:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:31:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:31:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:31:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:31:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:31:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:31:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:31:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:31:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:31:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:31:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:31:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:31:33 --> Total execution time: 0.0401
+INFO - 2025-05-23 08:31:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:31:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:31:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:31:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:31:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:31:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:31:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:31:33 --> Total execution time: 0.0629
+INFO - 2025-05-23 08:32:33 --> Config Class Initialized
+INFO - 2025-05-23 08:32:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:32:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:32:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:32:33 --> URI Class Initialized
+INFO - 2025-05-23 08:32:33 --> Router Class Initialized
+INFO - 2025-05-23 08:32:33 --> Output Class Initialized
+INFO - 2025-05-23 08:32:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:32:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:32:33 --> Input Class Initialized
+INFO - 2025-05-23 08:32:33 --> Language Class Initialized
+INFO - 2025-05-23 08:32:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:32:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:32:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:32:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:32:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:32:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:32:33 --> Config Class Initialized
+INFO - 2025-05-23 08:32:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:32:33 --> Hooks Class Initialized
+INFO - 2025-05-23 08:32:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:32:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:32:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:32:33 --> Session class already loaded. Second attempt ignored.
+DEBUG - 2025-05-23 08:32:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:32:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:32:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:32:33 --> URI Class Initialized
+INFO - 2025-05-23 08:32:33 --> Router Class Initialized
+INFO - 2025-05-23 08:32:33 --> Output Class Initialized
+INFO - 2025-05-23 08:32:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:32:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:32:33 --> Input Class Initialized
+INFO - 2025-05-23 08:32:33 --> Language Class Initialized
+INFO - 2025-05-23 08:32:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:32:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:32:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:32:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:32:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:32:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:32:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:32:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:32:33 --> Total execution time: 0.0296
+INFO - 2025-05-23 08:32:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:32:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:32:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:32:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:32:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:32:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:32:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:32:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:32:33 --> Total execution time: 0.0370
+INFO - 2025-05-23 08:33:30 --> Config Class Initialized
+INFO - 2025-05-23 08:33:30 --> Config Class Initialized
+INFO - 2025-05-23 08:33:30 --> Hooks Class Initialized
+INFO - 2025-05-23 08:33:30 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:33:30 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 08:33:30 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:33:30 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:33:30 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:33:30 --> URI Class Initialized
+INFO - 2025-05-23 08:33:30 --> URI Class Initialized
+INFO - 2025-05-23 08:33:30 --> Router Class Initialized
+INFO - 2025-05-23 08:33:30 --> Output Class Initialized
+INFO - 2025-05-23 08:33:30 --> Security Class Initialized
+INFO - 2025-05-23 08:33:30 --> Router Class Initialized
+INFO - 2025-05-23 08:33:30 --> Output Class Initialized
+INFO - 2025-05-23 08:33:30 --> Security Class Initialized
+DEBUG - 2025-05-23 08:33:30 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 08:33:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:33:30 --> Input Class Initialized
+INFO - 2025-05-23 08:33:30 --> Input Class Initialized
+INFO - 2025-05-23 08:33:30 --> Language Class Initialized
+INFO - 2025-05-23 08:33:30 --> Language Class Initialized
+INFO - 2025-05-23 08:33:30 --> Loader Class Initialized
+INFO - 2025-05-23 08:33:30 --> Loader Class Initialized
+INFO - 2025-05-23 08:33:30 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:33:30 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:33:30 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:33:30 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:33:30 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:33:30 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:33:30 --> Email Class Initialized
+DEBUG - 2025-05-23 08:33:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:33:30 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:33:30 --> Controller Class Initialized
+INFO - 2025-05-23 08:33:30 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:33:30 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:33:30 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:33:30 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:33:30 --> Model "Crud" initialized
+INFO - 2025-05-23 08:33:30 --> Final output sent to browser
+DEBUG - 2025-05-23 08:33:30 --> Total execution time: 0.1203
+INFO - 2025-05-23 08:33:30 --> Email Class Initialized
+DEBUG - 2025-05-23 08:33:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:33:30 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:33:30 --> Controller Class Initialized
+INFO - 2025-05-23 08:33:30 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:33:30 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:33:30 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:33:30 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:33:30 --> Model "Crud" initialized
+INFO - 2025-05-23 08:33:30 --> Final output sent to browser
+DEBUG - 2025-05-23 08:33:30 --> Total execution time: 0.2203
+INFO - 2025-05-23 08:35:33 --> Config Class Initialized
+INFO - 2025-05-23 08:35:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:35:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:35:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:35:33 --> URI Class Initialized
+INFO - 2025-05-23 08:35:33 --> Router Class Initialized
+INFO - 2025-05-23 08:35:33 --> Output Class Initialized
+INFO - 2025-05-23 08:35:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:35:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:35:33 --> Config Class Initialized
+INFO - 2025-05-23 08:35:33 --> Input Class Initialized
+INFO - 2025-05-23 08:35:33 --> Hooks Class Initialized
+INFO - 2025-05-23 08:35:33 --> Language Class Initialized
+DEBUG - 2025-05-23 08:35:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:35:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:35:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:35:33 --> URI Class Initialized
+INFO - 2025-05-23 08:35:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:35:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:35:33 --> Router Class Initialized
+INFO - 2025-05-23 08:35:33 --> Output Class Initialized
+INFO - 2025-05-23 08:35:33 --> Security Class Initialized
+INFO - 2025-05-23 08:35:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 08:35:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:35:33 --> Input Class Initialized
+INFO - 2025-05-23 08:35:33 --> Language Class Initialized
+INFO - 2025-05-23 08:35:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:35:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:35:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:35:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:35:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:35:33 --> Email Class Initialized
+INFO - 2025-05-23 08:35:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:35:33 --> Controller Class Initialized
+DEBUG - 2025-05-23 08:35:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:35:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:35:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:35:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:35:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:35:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:35:33 --> Total execution time: 0.0241
+INFO - 2025-05-23 08:35:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:35:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:35:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:35:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:35:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:35:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:35:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:35:33 --> Total execution time: 0.0365
+INFO - 2025-05-23 08:36:33 --> Config Class Initialized
+INFO - 2025-05-23 08:36:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:36:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:36:33 --> Config Class Initialized
+INFO - 2025-05-23 08:36:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:36:33 --> Hooks Class Initialized
+INFO - 2025-05-23 08:36:33 --> URI Class Initialized
+DEBUG - 2025-05-23 08:36:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:36:33 --> Router Class Initialized
+INFO - 2025-05-23 08:36:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:36:33 --> Output Class Initialized
+INFO - 2025-05-23 08:36:33 --> URI Class Initialized
+INFO - 2025-05-23 08:36:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:36:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:36:33 --> Router Class Initialized
+INFO - 2025-05-23 08:36:33 --> Input Class Initialized
+INFO - 2025-05-23 08:36:33 --> Output Class Initialized
+INFO - 2025-05-23 08:36:33 --> Language Class Initialized
+INFO - 2025-05-23 08:36:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:36:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:36:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:36:33 --> Input Class Initialized
+INFO - 2025-05-23 08:36:33 --> Language Class Initialized
+INFO - 2025-05-23 08:36:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:36:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:36:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:36:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:36:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:36:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:36:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:36:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:36:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:36:33 --> Email Class Initialized
+INFO - 2025-05-23 08:36:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:36:33 --> Controller Class Initialized
+DEBUG - 2025-05-23 08:36:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:36:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:36:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:36:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:36:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:36:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:36:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:36:33 --> Total execution time: 0.0248
+INFO - 2025-05-23 08:36:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:36:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:36:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:36:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:36:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:36:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:36:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:36:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:36:33 --> Total execution time: 0.0410
+INFO - 2025-05-23 08:37:33 --> Config Class Initialized
+INFO - 2025-05-23 08:37:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:37:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:37:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:37:33 --> URI Class Initialized
+INFO - 2025-05-23 08:37:33 --> Router Class Initialized
+INFO - 2025-05-23 08:37:33 --> Output Class Initialized
+INFO - 2025-05-23 08:37:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:37:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:37:33 --> Input Class Initialized
+INFO - 2025-05-23 08:37:33 --> Language Class Initialized
+INFO - 2025-05-23 08:37:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:37:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:37:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:37:33 --> Config Class Initialized
+INFO - 2025-05-23 08:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:37:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:37:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:37:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:37:33 --> URI Class Initialized
+INFO - 2025-05-23 08:37:33 --> Router Class Initialized
+INFO - 2025-05-23 08:37:33 --> Output Class Initialized
+INFO - 2025-05-23 08:37:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:37:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:37:33 --> Input Class Initialized
+INFO - 2025-05-23 08:37:33 --> Language Class Initialized
+INFO - 2025-05-23 08:37:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:37:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:37:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:37:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:37:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:37:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:37:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:37:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:37:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:37:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:37:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:37:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:37:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:37:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:37:33 --> Total execution time: 0.0275
+INFO - 2025-05-23 08:37:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:37:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:37:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:37:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:37:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:37:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:37:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:37:33 --> Total execution time: 0.0541
+INFO - 2025-05-23 08:38:33 --> Config Class Initialized
+INFO - 2025-05-23 08:38:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:38:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:38:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:38:33 --> URI Class Initialized
+INFO - 2025-05-23 08:38:33 --> Router Class Initialized
+INFO - 2025-05-23 08:38:33 --> Output Class Initialized
+INFO - 2025-05-23 08:38:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:38:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:38:33 --> Input Class Initialized
+INFO - 2025-05-23 08:38:33 --> Language Class Initialized
+INFO - 2025-05-23 08:38:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:38:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:38:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:38:33 --> Config Class Initialized
+INFO - 2025-05-23 08:38:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:38:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:38:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:38:33 --> URI Class Initialized
+INFO - 2025-05-23 08:38:33 --> Router Class Initialized
+INFO - 2025-05-23 08:38:33 --> Output Class Initialized
+INFO - 2025-05-23 08:38:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:38:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:38:33 --> Input Class Initialized
+INFO - 2025-05-23 08:38:33 --> Language Class Initialized
+INFO - 2025-05-23 08:38:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:38:33 --> Email Class Initialized
+INFO - 2025-05-23 08:38:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:38:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 08:38:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:38:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:38:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:38:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:38:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:38:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:38:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:38:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:38:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:38:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:38:33 --> Total execution time: 0.0302
+INFO - 2025-05-23 08:38:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:38:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:38:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:38:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:38:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:38:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:38:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:38:33 --> Total execution time: 0.0485
+INFO - 2025-05-23 08:39:33 --> Config Class Initialized
+INFO - 2025-05-23 08:39:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:39:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:39:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:39:33 --> URI Class Initialized
+INFO - 2025-05-23 08:39:33 --> Router Class Initialized
+INFO - 2025-05-23 08:39:33 --> Output Class Initialized
+INFO - 2025-05-23 08:39:33 --> Config Class Initialized
+INFO - 2025-05-23 08:39:33 --> Security Class Initialized
+INFO - 2025-05-23 08:39:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:39:33 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 08:39:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:39:33 --> Input Class Initialized
+INFO - 2025-05-23 08:39:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:39:33 --> Language Class Initialized
+INFO - 2025-05-23 08:39:33 --> URI Class Initialized
+INFO - 2025-05-23 08:39:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:39:33 --> Router Class Initialized
+INFO - 2025-05-23 08:39:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:39:33 --> Output Class Initialized
+INFO - 2025-05-23 08:39:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:39:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:39:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:39:33 --> Input Class Initialized
+INFO - 2025-05-23 08:39:33 --> Language Class Initialized
+INFO - 2025-05-23 08:39:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:39:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:39:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:39:33 --> Email Class Initialized
+INFO - 2025-05-23 08:39:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:39:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 08:39:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:39:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:39:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:39:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:39:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:39:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:39:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:39:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:39:33 --> Total execution time: 0.0309
+INFO - 2025-05-23 08:39:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:39:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:39:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:39:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:39:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:39:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:39:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:39:33 --> Total execution time: 0.0509
+INFO - 2025-05-23 08:40:33 --> Config Class Initialized
+INFO - 2025-05-23 08:40:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:40:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:40:33 --> Config Class Initialized
+INFO - 2025-05-23 08:40:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:40:33 --> Hooks Class Initialized
+INFO - 2025-05-23 08:40:33 --> URI Class Initialized
+DEBUG - 2025-05-23 08:40:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:40:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:40:33 --> Router Class Initialized
+INFO - 2025-05-23 08:40:33 --> URI Class Initialized
+INFO - 2025-05-23 08:40:33 --> Output Class Initialized
+INFO - 2025-05-23 08:40:33 --> Security Class Initialized
+INFO - 2025-05-23 08:40:33 --> Router Class Initialized
+DEBUG - 2025-05-23 08:40:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:40:33 --> Input Class Initialized
+INFO - 2025-05-23 08:40:33 --> Output Class Initialized
+INFO - 2025-05-23 08:40:33 --> Language Class Initialized
+INFO - 2025-05-23 08:40:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:40:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:40:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:40:33 --> Input Class Initialized
+INFO - 2025-05-23 08:40:33 --> Language Class Initialized
+INFO - 2025-05-23 08:40:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:40:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:40:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:40:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:40:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:40:33 --> Email Class Initialized
+INFO - 2025-05-23 08:40:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:40:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 08:40:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:40:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:40:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:40:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:40:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:40:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:40:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:40:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:40:33 --> Total execution time: 0.0304
+INFO - 2025-05-23 08:40:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:40:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:40:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:40:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:40:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:40:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:40:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:40:33 --> Total execution time: 0.0479
+INFO - 2025-05-23 08:41:33 --> Config Class Initialized
+INFO - 2025-05-23 08:41:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:41:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:41:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:41:33 --> URI Class Initialized
+INFO - 2025-05-23 08:41:33 --> Config Class Initialized
+INFO - 2025-05-23 08:41:33 --> Router Class Initialized
+INFO - 2025-05-23 08:41:33 --> Hooks Class Initialized
+INFO - 2025-05-23 08:41:33 --> Output Class Initialized
+DEBUG - 2025-05-23 08:41:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:41:33 --> Security Class Initialized
+INFO - 2025-05-23 08:41:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 08:41:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:41:33 --> URI Class Initialized
+INFO - 2025-05-23 08:41:33 --> Input Class Initialized
+INFO - 2025-05-23 08:41:33 --> Language Class Initialized
+INFO - 2025-05-23 08:41:33 --> Router Class Initialized
+INFO - 2025-05-23 08:41:33 --> Output Class Initialized
+INFO - 2025-05-23 08:41:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:41:33 --> Security Class Initialized
+INFO - 2025-05-23 08:41:33 --> Helper loaded: url_helper
+DEBUG - 2025-05-23 08:41:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:41:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:41:33 --> Input Class Initialized
+INFO - 2025-05-23 08:41:33 --> Language Class Initialized
+INFO - 2025-05-23 08:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:41:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:41:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:41:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:41:33 --> Email Class Initialized
+INFO - 2025-05-23 08:41:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:41:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 08:41:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:41:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:41:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:41:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:41:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:41:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:41:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:41:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:41:33 --> Total execution time: 0.0403
+INFO - 2025-05-23 08:41:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:41:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:41:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:41:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:41:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:41:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:41:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:41:33 --> Total execution time: 0.0595
+INFO - 2025-05-23 08:42:33 --> Config Class Initialized
+INFO - 2025-05-23 08:42:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:42:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:42:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:42:33 --> URI Class Initialized
+INFO - 2025-05-23 08:42:33 --> Router Class Initialized
+INFO - 2025-05-23 08:42:33 --> Output Class Initialized
+INFO - 2025-05-23 08:42:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:42:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:42:33 --> Input Class Initialized
+INFO - 2025-05-23 08:42:33 --> Language Class Initialized
+INFO - 2025-05-23 08:42:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:42:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:42:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:42:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:42:33 --> Config Class Initialized
+INFO - 2025-05-23 08:42:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:42:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:42:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:42:33 --> URI Class Initialized
+INFO - 2025-05-23 08:42:33 --> Router Class Initialized
+INFO - 2025-05-23 08:42:33 --> Output Class Initialized
+INFO - 2025-05-23 08:42:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:42:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:42:33 --> Input Class Initialized
+INFO - 2025-05-23 08:42:33 --> Language Class Initialized
+INFO - 2025-05-23 08:42:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:42:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:42:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:42:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:42:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:42:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:42:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:42:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:42:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:42:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:42:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:42:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:42:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:42:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:42:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:42:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:42:33 --> Total execution time: 0.0277
+INFO - 2025-05-23 08:42:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:42:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:42:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:42:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:42:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:42:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:42:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:42:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:42:33 --> Total execution time: 0.0545
+INFO - 2025-05-23 08:43:33 --> Config Class Initialized
+INFO - 2025-05-23 08:43:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:43:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:43:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:43:33 --> URI Class Initialized
+INFO - 2025-05-23 08:43:33 --> Router Class Initialized
+INFO - 2025-05-23 08:43:33 --> Output Class Initialized
+INFO - 2025-05-23 08:43:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:43:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:43:33 --> Input Class Initialized
+INFO - 2025-05-23 08:43:33 --> Language Class Initialized
+INFO - 2025-05-23 08:43:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:43:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:43:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:43:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:43:33 --> Config Class Initialized
+INFO - 2025-05-23 08:43:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:43:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:43:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:43:33 --> URI Class Initialized
+INFO - 2025-05-23 08:43:33 --> Router Class Initialized
+INFO - 2025-05-23 08:43:33 --> Output Class Initialized
+INFO - 2025-05-23 08:43:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:43:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:43:33 --> Input Class Initialized
+INFO - 2025-05-23 08:43:33 --> Language Class Initialized
+INFO - 2025-05-23 08:43:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:43:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:43:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:43:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:43:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:43:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:43:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:43:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:43:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:43:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:43:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:43:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:43:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:43:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:43:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:43:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:43:33 --> Total execution time: 0.0360
+INFO - 2025-05-23 08:43:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:43:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:43:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:43:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:43:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:43:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:43:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:43:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:43:33 --> Total execution time: 0.0557
+INFO - 2025-05-23 08:44:33 --> Config Class Initialized
+INFO - 2025-05-23 08:44:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:44:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:44:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:44:33 --> URI Class Initialized
+INFO - 2025-05-23 08:44:33 --> Router Class Initialized
+INFO - 2025-05-23 08:44:33 --> Output Class Initialized
+INFO - 2025-05-23 08:44:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:44:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:44:33 --> Input Class Initialized
+INFO - 2025-05-23 08:44:33 --> Language Class Initialized
+INFO - 2025-05-23 08:44:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:44:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:44:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:44:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:44:33 --> Config Class Initialized
+INFO - 2025-05-23 08:44:33 --> Email Class Initialized
+INFO - 2025-05-23 08:44:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:44:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 08:44:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:44:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:44:33 --> URI Class Initialized
+INFO - 2025-05-23 08:44:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:44:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:44:33 --> Router Class Initialized
+INFO - 2025-05-23 08:44:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:44:33 --> Output Class Initialized
+INFO - 2025-05-23 08:44:33 --> Security Class Initialized
+INFO - 2025-05-23 08:44:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:44:33 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 08:44:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:44:33 --> Input Class Initialized
+INFO - 2025-05-23 08:44:33 --> Language Class Initialized
+INFO - 2025-05-23 08:44:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:44:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:44:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:44:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:44:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:44:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:44:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:44:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:44:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:44:33 --> Total execution time: 0.0346
+INFO - 2025-05-23 08:44:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:44:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:44:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:44:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:44:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:44:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:44:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:44:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:44:33 --> Total execution time: 0.0461
+INFO - 2025-05-23 08:45:33 --> Config Class Initialized
+INFO - 2025-05-23 08:45:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:45:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:45:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:45:33 --> URI Class Initialized
+INFO - 2025-05-23 08:45:33 --> Router Class Initialized
+INFO - 2025-05-23 08:45:33 --> Output Class Initialized
+INFO - 2025-05-23 08:45:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:45:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:45:33 --> Input Class Initialized
+INFO - 2025-05-23 08:45:33 --> Language Class Initialized
+INFO - 2025-05-23 08:45:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:45:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:45:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:45:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:45:33 --> Config Class Initialized
+INFO - 2025-05-23 08:45:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:45:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:45:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:45:33 --> URI Class Initialized
+INFO - 2025-05-23 08:45:33 --> Router Class Initialized
+INFO - 2025-05-23 08:45:33 --> Output Class Initialized
+INFO - 2025-05-23 08:45:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:45:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:45:33 --> Input Class Initialized
+INFO - 2025-05-23 08:45:33 --> Language Class Initialized
+INFO - 2025-05-23 08:45:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:45:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:45:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:45:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:45:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:45:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:45:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:45:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:45:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:45:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:45:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:45:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:45:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:45:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:45:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:45:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:45:33 --> Total execution time: 0.0341
+INFO - 2025-05-23 08:45:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:45:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:45:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:45:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:45:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:45:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:45:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:45:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:45:33 --> Total execution time: 0.0555
+INFO - 2025-05-23 08:46:33 --> Config Class Initialized
+INFO - 2025-05-23 08:46:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:46:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:46:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:46:33 --> URI Class Initialized
+INFO - 2025-05-23 08:46:33 --> Router Class Initialized
+INFO - 2025-05-23 08:46:33 --> Output Class Initialized
+INFO - 2025-05-23 08:46:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:46:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:46:33 --> Input Class Initialized
+INFO - 2025-05-23 08:46:33 --> Language Class Initialized
+INFO - 2025-05-23 08:46:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:46:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:46:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:46:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:46:33 --> Config Class Initialized
+INFO - 2025-05-23 08:46:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:46:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:46:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:46:33 --> URI Class Initialized
+INFO - 2025-05-23 08:46:33 --> Router Class Initialized
+INFO - 2025-05-23 08:46:33 --> Output Class Initialized
+INFO - 2025-05-23 08:46:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:46:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:46:33 --> Input Class Initialized
+INFO - 2025-05-23 08:46:33 --> Language Class Initialized
+INFO - 2025-05-23 08:46:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:46:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:46:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:46:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:46:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:46:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:46:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:46:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:46:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:46:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:46:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:46:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:46:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:46:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:46:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:46:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:46:33 --> Total execution time: 0.0275
+INFO - 2025-05-23 08:46:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:46:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:46:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:46:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:46:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:46:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:46:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:46:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:46:33 --> Total execution time: 0.0447
+INFO - 2025-05-23 08:47:33 --> Config Class Initialized
+INFO - 2025-05-23 08:47:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:47:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:47:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:47:33 --> URI Class Initialized
+INFO - 2025-05-23 08:47:33 --> Router Class Initialized
+INFO - 2025-05-23 08:47:33 --> Output Class Initialized
+INFO - 2025-05-23 08:47:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:47:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:47:33 --> Input Class Initialized
+INFO - 2025-05-23 08:47:33 --> Language Class Initialized
+INFO - 2025-05-23 08:47:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:47:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:47:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:47:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:47:33 --> Config Class Initialized
+INFO - 2025-05-23 08:47:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:47:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:47:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:47:33 --> URI Class Initialized
+INFO - 2025-05-23 08:47:33 --> Router Class Initialized
+INFO - 2025-05-23 08:47:33 --> Output Class Initialized
+INFO - 2025-05-23 08:47:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:47:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:47:33 --> Input Class Initialized
+INFO - 2025-05-23 08:47:33 --> Language Class Initialized
+INFO - 2025-05-23 08:47:33 --> Email Class Initialized
+INFO - 2025-05-23 08:47:33 --> Loader Class Initialized
+DEBUG - 2025-05-23 08:47:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:47:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:47:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:47:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:47:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:47:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:47:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:47:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:47:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:47:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:47:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:47:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:47:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:47:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:47:33 --> Total execution time: 0.0310
+INFO - 2025-05-23 08:47:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:47:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:47:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:47:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:47:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:47:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:47:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:47:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:47:33 --> Total execution time: 0.0464
+INFO - 2025-05-23 08:48:33 --> Config Class Initialized
+INFO - 2025-05-23 08:48:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:48:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:48:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:48:33 --> URI Class Initialized
+INFO - 2025-05-23 08:48:33 --> Router Class Initialized
+INFO - 2025-05-23 08:48:33 --> Output Class Initialized
+INFO - 2025-05-23 08:48:33 --> Security Class Initialized
+DEBUG - 2025-05-23 08:48:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:48:33 --> Input Class Initialized
+INFO - 2025-05-23 08:48:33 --> Language Class Initialized
+INFO - 2025-05-23 08:48:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:48:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:48:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:48:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:48:33 --> Config Class Initialized
+INFO - 2025-05-23 08:48:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:48:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:48:33 --> Email Class Initialized
+INFO - 2025-05-23 08:48:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:48:33 --> URI Class Initialized
+DEBUG - 2025-05-23 08:48:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:48:33 --> Router Class Initialized
+INFO - 2025-05-23 08:48:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:48:33 --> Output Class Initialized
+INFO - 2025-05-23 08:48:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:48:33 --> Security Class Initialized
+INFO - 2025-05-23 08:48:33 --> Helper loaded: form_helper
+DEBUG - 2025-05-23 08:48:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:48:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 08:48:33 --> Input Class Initialized
+DEBUG - 2025-05-23 08:48:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:48:33 --> Language Class Initialized
+INFO - 2025-05-23 08:48:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:48:33 --> Loader Class Initialized
+INFO - 2025-05-23 08:48:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:48:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:48:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:48:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:48:33 --> Email Class Initialized
+DEBUG - 2025-05-23 08:48:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:48:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:48:33 --> Total execution time: 0.0414
+INFO - 2025-05-23 08:48:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:48:33 --> Controller Class Initialized
+INFO - 2025-05-23 08:48:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:48:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:48:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:48:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:48:33 --> Model "Crud" initialized
+INFO - 2025-05-23 08:48:33 --> Final output sent to browser
+DEBUG - 2025-05-23 08:48:33 --> Total execution time: 0.0461
+INFO - 2025-05-23 08:48:39 --> Config Class Initialized
+INFO - 2025-05-23 08:48:39 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:48:39 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:48:39 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:48:39 --> URI Class Initialized
+INFO - 2025-05-23 08:48:39 --> Router Class Initialized
+INFO - 2025-05-23 08:48:39 --> Output Class Initialized
+INFO - 2025-05-23 08:48:39 --> Security Class Initialized
+DEBUG - 2025-05-23 08:48:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:48:39 --> Input Class Initialized
+INFO - 2025-05-23 08:48:39 --> Language Class Initialized
+INFO - 2025-05-23 08:48:39 --> Loader Class Initialized
+INFO - 2025-05-23 08:48:39 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:48:39 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:48:39 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:48:39 --> Email Class Initialized
+DEBUG - 2025-05-23 08:48:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:48:39 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:48:39 --> Controller Class Initialized
+INFO - 2025-05-23 08:48:39 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:48:39 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:48:39 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:48:39 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:48:39 --> Config Class Initialized
+INFO - 2025-05-23 08:48:39 --> Hooks Class Initialized
+DEBUG - 2025-05-23 08:48:39 --> UTF-8 Support Enabled
+INFO - 2025-05-23 08:48:39 --> Utf8 Class Initialized
+INFO - 2025-05-23 08:48:39 --> URI Class Initialized
+INFO - 2025-05-23 08:48:39 --> Router Class Initialized
+INFO - 2025-05-23 08:48:39 --> Output Class Initialized
+INFO - 2025-05-23 08:48:39 --> Security Class Initialized
+DEBUG - 2025-05-23 08:48:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 08:48:39 --> Input Class Initialized
+INFO - 2025-05-23 08:48:39 --> Language Class Initialized
+INFO - 2025-05-23 08:48:39 --> Loader Class Initialized
+INFO - 2025-05-23 08:48:39 --> Helper loaded: url_helper
+INFO - 2025-05-23 08:48:39 --> Helper loaded: file_helper
+INFO - 2025-05-23 08:48:39 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:48:39 --> Email Class Initialized
+DEBUG - 2025-05-23 08:48:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 08:48:39 --> Model "Crud" initialized
+INFO - 2025-05-23 08:48:39 --> Final output sent to browser
+DEBUG - 2025-05-23 08:48:39 --> Total execution time: 0.2002
+INFO - 2025-05-23 08:48:39 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 08:48:39 --> Controller Class Initialized
+INFO - 2025-05-23 08:48:39 --> Helper loaded: form_helper
+INFO - 2025-05-23 08:48:39 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 08:48:39 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 08:48:39 --> Database Driver Class Initialized
+INFO - 2025-05-23 08:48:39 --> Model "Crud" initialized
+INFO - 2025-05-23 08:48:40 --> Final output sent to browser
+DEBUG - 2025-05-23 08:48:40 --> Total execution time: 0.2720
+INFO - 2025-05-23 09:07:33 --> Config Class Initialized
+INFO - 2025-05-23 09:07:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:07:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:07:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:07:33 --> URI Class Initialized
+INFO - 2025-05-23 09:07:33 --> Router Class Initialized
+INFO - 2025-05-23 09:07:33 --> Output Class Initialized
+INFO - 2025-05-23 09:07:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:07:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:07:33 --> Input Class Initialized
+INFO - 2025-05-23 09:07:33 --> Language Class Initialized
+INFO - 2025-05-23 09:07:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:07:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:07:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:07:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:07:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:07:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:07:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:07:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:07:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:07:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:07:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:07:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:07:33 --> Config Class Initialized
+INFO - 2025-05-23 09:07:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:07:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:07:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:07:33 --> URI Class Initialized
+INFO - 2025-05-23 09:07:33 --> Router Class Initialized
+INFO - 2025-05-23 09:07:33 --> Output Class Initialized
+INFO - 2025-05-23 09:07:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:07:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:07:33 --> Input Class Initialized
+INFO - 2025-05-23 09:07:33 --> Language Class Initialized
+INFO - 2025-05-23 09:07:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:07:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:07:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:07:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:07:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:07:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:07:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:07:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:07:33 --> Total execution time: 0.0349
+INFO - 2025-05-23 09:07:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:07:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:07:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:07:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:07:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:07:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:07:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:07:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:07:33 --> Total execution time: 0.0533
+INFO - 2025-05-23 09:08:33 --> Config Class Initialized
+INFO - 2025-05-23 09:08:33 --> Config Class Initialized
+INFO - 2025-05-23 09:08:33 --> Hooks Class Initialized
+INFO - 2025-05-23 09:08:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:08:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 09:08:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:08:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:08:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:08:33 --> URI Class Initialized
+INFO - 2025-05-23 09:08:33 --> URI Class Initialized
+INFO - 2025-05-23 09:08:33 --> Router Class Initialized
+INFO - 2025-05-23 09:08:33 --> Router Class Initialized
+INFO - 2025-05-23 09:08:33 --> Output Class Initialized
+INFO - 2025-05-23 09:08:33 --> Output Class Initialized
+INFO - 2025-05-23 09:08:33 --> Security Class Initialized
+INFO - 2025-05-23 09:08:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:08:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:08:33 --> Input Class Initialized
+DEBUG - 2025-05-23 09:08:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:08:33 --> Language Class Initialized
+INFO - 2025-05-23 09:08:33 --> Input Class Initialized
+INFO - 2025-05-23 09:08:33 --> Language Class Initialized
+INFO - 2025-05-23 09:08:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:08:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:08:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:08:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:08:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:08:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:08:33 --> Email Class Initialized
+INFO - 2025-05-23 09:08:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:08:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 09:08:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:08:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:08:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:08:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:08:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:08:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:08:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:08:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:08:33 --> Total execution time: 0.0303
+INFO - 2025-05-23 09:08:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:08:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:08:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:08:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:08:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:08:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:08:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:08:33 --> Total execution time: 0.0565
+INFO - 2025-05-23 09:09:33 --> Config Class Initialized
+INFO - 2025-05-23 09:09:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:09:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:09:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:09:33 --> URI Class Initialized
+INFO - 2025-05-23 09:09:33 --> Router Class Initialized
+INFO - 2025-05-23 09:09:33 --> Output Class Initialized
+INFO - 2025-05-23 09:09:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:09:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:09:33 --> Input Class Initialized
+INFO - 2025-05-23 09:09:33 --> Language Class Initialized
+INFO - 2025-05-23 09:09:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:09:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:09:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:09:33 --> Config Class Initialized
+INFO - 2025-05-23 09:09:33 --> Email Class Initialized
+INFO - 2025-05-23 09:09:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:09:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 09:09:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:09:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:09:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:09:33 --> URI Class Initialized
+INFO - 2025-05-23 09:09:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:09:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:09:33 --> Router Class Initialized
+INFO - 2025-05-23 09:09:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 09:09:33 --> Output Class Initialized
+DEBUG - 2025-05-23 09:09:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:09:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:09:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:09:33 --> Input Class Initialized
+INFO - 2025-05-23 09:09:33 --> Language Class Initialized
+INFO - 2025-05-23 09:09:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:09:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:09:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:09:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:09:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:09:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:09:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:09:33 --> Total execution time: 0.0347
+INFO - 2025-05-23 09:09:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:09:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:09:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:09:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:09:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:09:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:09:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:09:33 --> Total execution time: 0.0523
+INFO - 2025-05-23 09:10:33 --> Config Class Initialized
+INFO - 2025-05-23 09:10:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:10:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:10:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:10:33 --> URI Class Initialized
+INFO - 2025-05-23 09:10:33 --> Router Class Initialized
+INFO - 2025-05-23 09:10:33 --> Output Class Initialized
+INFO - 2025-05-23 09:10:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:10:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:10:33 --> Input Class Initialized
+INFO - 2025-05-23 09:10:33 --> Language Class Initialized
+INFO - 2025-05-23 09:10:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:10:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:10:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:10:33 --> Config Class Initialized
+INFO - 2025-05-23 09:10:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:10:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:10:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:10:33 --> URI Class Initialized
+INFO - 2025-05-23 09:10:33 --> Email Class Initialized
+INFO - 2025-05-23 09:10:33 --> Router Class Initialized
+DEBUG - 2025-05-23 09:10:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:10:33 --> Output Class Initialized
+INFO - 2025-05-23 09:10:33 --> Security Class Initialized
+INFO - 2025-05-23 09:10:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 09:10:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:10:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:10:33 --> Input Class Initialized
+INFO - 2025-05-23 09:10:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:10:33 --> Language Class Initialized
+INFO - 2025-05-23 09:10:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:10:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:10:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:10:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:10:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:10:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:10:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:10:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:10:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:10:33 --> Total execution time: 0.0463
+INFO - 2025-05-23 09:10:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:10:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:10:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:10:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:10:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:10:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:10:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:10:33 --> Total execution time: 0.0625
+INFO - 2025-05-23 09:11:33 --> Config Class Initialized
+INFO - 2025-05-23 09:11:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:11:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:11:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:11:33 --> URI Class Initialized
+INFO - 2025-05-23 09:11:33 --> Router Class Initialized
+INFO - 2025-05-23 09:11:33 --> Output Class Initialized
+INFO - 2025-05-23 09:11:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:11:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:11:33 --> Input Class Initialized
+INFO - 2025-05-23 09:11:33 --> Language Class Initialized
+INFO - 2025-05-23 09:11:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:11:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:11:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:11:33 --> Config Class Initialized
+INFO - 2025-05-23 09:11:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:11:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:11:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:11:33 --> URI Class Initialized
+INFO - 2025-05-23 09:11:33 --> Router Class Initialized
+INFO - 2025-05-23 09:11:33 --> Output Class Initialized
+INFO - 2025-05-23 09:11:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:11:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:11:33 --> Input Class Initialized
+INFO - 2025-05-23 09:11:33 --> Language Class Initialized
+INFO - 2025-05-23 09:11:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:11:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:11:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:11:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:11:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:11:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:11:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:11:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:11:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:11:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:11:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:11:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:11:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:11:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:11:33 --> Total execution time: 0.0261
+INFO - 2025-05-23 09:11:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:11:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:11:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:11:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:11:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:11:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:11:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:11:33 --> Total execution time: 0.0425
+INFO - 2025-05-23 09:12:33 --> Config Class Initialized
+INFO - 2025-05-23 09:12:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:12:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:12:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:12:33 --> URI Class Initialized
+INFO - 2025-05-23 09:12:33 --> Router Class Initialized
+INFO - 2025-05-23 09:12:33 --> Output Class Initialized
+INFO - 2025-05-23 09:12:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:12:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:12:33 --> Input Class Initialized
+INFO - 2025-05-23 09:12:33 --> Language Class Initialized
+INFO - 2025-05-23 09:12:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:12:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:12:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:12:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:12:33 --> Config Class Initialized
+INFO - 2025-05-23 09:12:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:12:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:12:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:12:33 --> URI Class Initialized
+INFO - 2025-05-23 09:12:33 --> Router Class Initialized
+INFO - 2025-05-23 09:12:33 --> Output Class Initialized
+INFO - 2025-05-23 09:12:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:12:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:12:33 --> Input Class Initialized
+INFO - 2025-05-23 09:12:33 --> Language Class Initialized
+INFO - 2025-05-23 09:12:33 --> Email Class Initialized
+INFO - 2025-05-23 09:12:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:12:33 --> Helper loaded: url_helper
+DEBUG - 2025-05-23 09:12:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:12:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:12:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:12:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:12:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:12:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:12:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:12:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:12:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:12:33 --> Email Class Initialized
+INFO - 2025-05-23 09:12:33 --> Model "Crud" initialized
+DEBUG - 2025-05-23 09:12:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:12:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:12:33 --> Total execution time: 0.0355
+INFO - 2025-05-23 09:12:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:12:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:12:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:12:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:12:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:12:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:12:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:12:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:12:33 --> Total execution time: 0.0725
+INFO - 2025-05-23 09:13:33 --> Config Class Initialized
+INFO - 2025-05-23 09:13:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:13:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:13:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:13:33 --> URI Class Initialized
+INFO - 2025-05-23 09:13:33 --> Router Class Initialized
+INFO - 2025-05-23 09:13:33 --> Output Class Initialized
+INFO - 2025-05-23 09:13:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:13:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:13:33 --> Input Class Initialized
+INFO - 2025-05-23 09:13:33 --> Language Class Initialized
+INFO - 2025-05-23 09:13:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:13:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:13:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:13:33 --> Config Class Initialized
+INFO - 2025-05-23 09:13:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:13:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:13:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:13:33 --> URI Class Initialized
+INFO - 2025-05-23 09:13:33 --> Router Class Initialized
+INFO - 2025-05-23 09:13:33 --> Output Class Initialized
+INFO - 2025-05-23 09:13:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:13:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:13:33 --> Input Class Initialized
+INFO - 2025-05-23 09:13:33 --> Language Class Initialized
+INFO - 2025-05-23 09:13:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:13:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:13:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:13:33 --> Email Class Initialized
+INFO - 2025-05-23 09:13:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:13:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 09:13:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:13:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:13:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:13:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:13:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:13:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:13:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:13:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:13:33 --> Total execution time: 0.0289
+INFO - 2025-05-23 09:13:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:13:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:13:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:13:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:13:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:13:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:13:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:13:33 --> Total execution time: 0.0443
+INFO - 2025-05-23 09:14:33 --> Config Class Initialized
+INFO - 2025-05-23 09:14:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:14:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:14:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:14:33 --> URI Class Initialized
+INFO - 2025-05-23 09:14:33 --> Router Class Initialized
+INFO - 2025-05-23 09:14:33 --> Output Class Initialized
+INFO - 2025-05-23 09:14:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:14:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:14:33 --> Input Class Initialized
+INFO - 2025-05-23 09:14:33 --> Language Class Initialized
+INFO - 2025-05-23 09:14:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:14:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:14:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:14:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:14:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:14:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:14:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:14:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:14:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:14:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:14:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:14:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:14:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:14:33 --> Config Class Initialized
+INFO - 2025-05-23 09:14:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:14:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:14:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:14:33 --> URI Class Initialized
+INFO - 2025-05-23 09:14:33 --> Router Class Initialized
+INFO - 2025-05-23 09:14:33 --> Output Class Initialized
+INFO - 2025-05-23 09:14:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:14:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:14:33 --> Input Class Initialized
+INFO - 2025-05-23 09:14:33 --> Language Class Initialized
+INFO - 2025-05-23 09:14:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:14:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:14:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:14:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:14:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:14:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:14:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:14:33 --> Total execution time: 0.0366
+INFO - 2025-05-23 09:14:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:14:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:14:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:14:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:14:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:14:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:14:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:14:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:14:33 --> Total execution time: 0.0601
+INFO - 2025-05-23 09:15:33 --> Config Class Initialized
+INFO - 2025-05-23 09:15:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:15:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:15:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:15:33 --> URI Class Initialized
+INFO - 2025-05-23 09:15:33 --> Router Class Initialized
+INFO - 2025-05-23 09:15:33 --> Output Class Initialized
+INFO - 2025-05-23 09:15:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:15:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:15:33 --> Input Class Initialized
+INFO - 2025-05-23 09:15:33 --> Language Class Initialized
+INFO - 2025-05-23 09:15:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:15:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:15:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:15:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:15:33 --> Config Class Initialized
+INFO - 2025-05-23 09:15:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:15:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:15:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:15:33 --> URI Class Initialized
+INFO - 2025-05-23 09:15:33 --> Router Class Initialized
+INFO - 2025-05-23 09:15:33 --> Output Class Initialized
+INFO - 2025-05-23 09:15:33 --> Email Class Initialized
+INFO - 2025-05-23 09:15:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:15:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:15:33 --> Input Class Initialized
+DEBUG - 2025-05-23 09:15:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:15:33 --> Language Class Initialized
+INFO - 2025-05-23 09:15:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:15:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:15:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:15:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:15:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:15:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:15:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 09:15:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 09:15:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:15:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:15:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:15:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:15:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:15:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:15:33 --> Total execution time: 0.0317
+INFO - 2025-05-23 09:15:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:15:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:15:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:15:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:15:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:15:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:15:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:15:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:15:33 --> Total execution time: 0.0445
+INFO - 2025-05-23 09:16:33 --> Config Class Initialized
+INFO - 2025-05-23 09:16:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:16:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:16:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:16:33 --> URI Class Initialized
+INFO - 2025-05-23 09:16:33 --> Router Class Initialized
+INFO - 2025-05-23 09:16:33 --> Output Class Initialized
+INFO - 2025-05-23 09:16:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:16:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:16:33 --> Input Class Initialized
+INFO - 2025-05-23 09:16:33 --> Language Class Initialized
+INFO - 2025-05-23 09:16:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:16:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:16:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:16:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:16:33 --> Email Class Initialized
+INFO - 2025-05-23 09:16:33 --> Config Class Initialized
+INFO - 2025-05-23 09:16:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:16:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 09:16:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:16:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:16:33 --> URI Class Initialized
+INFO - 2025-05-23 09:16:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:16:33 --> Router Class Initialized
+INFO - 2025-05-23 09:16:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:16:33 --> Output Class Initialized
+INFO - 2025-05-23 09:16:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:16:33 --> Security Class Initialized
+INFO - 2025-05-23 09:16:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:16:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:16:33 --> Input Class Initialized
+DEBUG - 2025-05-23 09:16:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:16:33 --> Language Class Initialized
+INFO - 2025-05-23 09:16:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:16:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:16:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:16:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:16:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:16:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:16:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:16:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:16:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:16:33 --> Total execution time: 0.0398
+INFO - 2025-05-23 09:16:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:16:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:16:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:16:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:16:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:16:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:16:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:16:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:16:33 --> Total execution time: 0.0605
+INFO - 2025-05-23 09:17:33 --> Config Class Initialized
+INFO - 2025-05-23 09:17:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:17:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:17:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:17:33 --> URI Class Initialized
+INFO - 2025-05-23 09:17:33 --> Router Class Initialized
+INFO - 2025-05-23 09:17:33 --> Output Class Initialized
+INFO - 2025-05-23 09:17:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:17:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:17:33 --> Input Class Initialized
+INFO - 2025-05-23 09:17:33 --> Language Class Initialized
+INFO - 2025-05-23 09:17:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:17:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:17:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:17:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:17:33 --> Config Class Initialized
+INFO - 2025-05-23 09:17:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:17:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:17:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:17:33 --> URI Class Initialized
+INFO - 2025-05-23 09:17:33 --> Router Class Initialized
+INFO - 2025-05-23 09:17:33 --> Output Class Initialized
+INFO - 2025-05-23 09:17:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:17:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:17:33 --> Input Class Initialized
+INFO - 2025-05-23 09:17:33 --> Language Class Initialized
+INFO - 2025-05-23 09:17:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:17:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:17:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:17:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:17:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:17:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:17:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:17:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:17:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:17:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:17:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:17:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:17:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:17:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:17:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:17:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:17:33 --> Total execution time: 0.0397
+INFO - 2025-05-23 09:17:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:17:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:17:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:17:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:17:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:17:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:17:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:17:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:17:33 --> Total execution time: 0.0637
+INFO - 2025-05-23 09:18:33 --> Config Class Initialized
+INFO - 2025-05-23 09:18:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:18:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:18:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:18:33 --> URI Class Initialized
+INFO - 2025-05-23 09:18:33 --> Router Class Initialized
+INFO - 2025-05-23 09:18:33 --> Output Class Initialized
+INFO - 2025-05-23 09:18:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:18:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:18:33 --> Input Class Initialized
+INFO - 2025-05-23 09:18:33 --> Language Class Initialized
+INFO - 2025-05-23 09:18:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:18:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:18:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:18:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:18:33 --> Config Class Initialized
+INFO - 2025-05-23 09:18:33 --> Hooks Class Initialized
+INFO - 2025-05-23 09:18:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:18:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:18:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 09:18:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:18:33 --> URI Class Initialized
+INFO - 2025-05-23 09:18:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:18:33 --> Router Class Initialized
+INFO - 2025-05-23 09:18:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:18:33 --> Output Class Initialized
+INFO - 2025-05-23 09:18:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:18:33 --> Security Class Initialized
+INFO - 2025-05-23 09:18:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:18:33 --> Session class already loaded. Second attempt ignored.
+DEBUG - 2025-05-23 09:18:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:18:33 --> Input Class Initialized
+INFO - 2025-05-23 09:18:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:18:33 --> Language Class Initialized
+INFO - 2025-05-23 09:18:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:18:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:18:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:18:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:18:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:18:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:18:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:18:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:18:33 --> Total execution time: 0.0330
+INFO - 2025-05-23 09:18:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:18:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:18:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:18:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:18:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:18:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:18:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:18:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:18:33 --> Total execution time: 0.0602
+INFO - 2025-05-23 09:19:33 --> Config Class Initialized
+INFO - 2025-05-23 09:19:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:19:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:19:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:19:33 --> URI Class Initialized
+INFO - 2025-05-23 09:19:33 --> Router Class Initialized
+INFO - 2025-05-23 09:19:33 --> Output Class Initialized
+INFO - 2025-05-23 09:19:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:19:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:19:33 --> Input Class Initialized
+INFO - 2025-05-23 09:19:33 --> Language Class Initialized
+INFO - 2025-05-23 09:19:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:19:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:19:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:19:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:19:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:19:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:19:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:19:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:19:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:19:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:19:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:19:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:19:33 --> Config Class Initialized
+INFO - 2025-05-23 09:19:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:19:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:19:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:19:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:19:33 --> URI Class Initialized
+INFO - 2025-05-23 09:19:33 --> Router Class Initialized
+INFO - 2025-05-23 09:19:33 --> Output Class Initialized
+INFO - 2025-05-23 09:19:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:19:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:19:33 --> Input Class Initialized
+INFO - 2025-05-23 09:19:33 --> Language Class Initialized
+INFO - 2025-05-23 09:19:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:19:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:19:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:19:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:19:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:19:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:19:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:19:33 --> Total execution time: 0.0307
+INFO - 2025-05-23 09:19:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:19:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:19:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:19:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:19:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:19:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:19:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:19:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:19:33 --> Total execution time: 0.0450
+INFO - 2025-05-23 09:20:33 --> Config Class Initialized
+INFO - 2025-05-23 09:20:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:20:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:20:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:20:33 --> URI Class Initialized
+INFO - 2025-05-23 09:20:33 --> Router Class Initialized
+INFO - 2025-05-23 09:20:33 --> Output Class Initialized
+INFO - 2025-05-23 09:20:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:20:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:20:33 --> Input Class Initialized
+INFO - 2025-05-23 09:20:33 --> Language Class Initialized
+INFO - 2025-05-23 09:20:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:20:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:20:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:20:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:20:33 --> Config Class Initialized
+INFO - 2025-05-23 09:20:33 --> Email Class Initialized
+INFO - 2025-05-23 09:20:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:20:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 09:20:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:20:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:20:33 --> URI Class Initialized
+INFO - 2025-05-23 09:20:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:20:33 --> Router Class Initialized
+INFO - 2025-05-23 09:20:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:20:33 --> Output Class Initialized
+INFO - 2025-05-23 09:20:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:20:33 --> Security Class Initialized
+INFO - 2025-05-23 09:20:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:20:33 --> Session class already loaded. Second attempt ignored.
+DEBUG - 2025-05-23 09:20:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:20:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:20:33 --> Input Class Initialized
+INFO - 2025-05-23 09:20:33 --> Language Class Initialized
+INFO - 2025-05-23 09:20:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:20:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:20:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:20:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:20:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:20:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:20:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:20:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:20:33 --> Total execution time: 0.0420
+INFO - 2025-05-23 09:20:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:20:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:20:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:20:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:20:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:20:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:20:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:20:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:20:33 --> Total execution time: 0.0694
+INFO - 2025-05-23 09:21:33 --> Config Class Initialized
+INFO - 2025-05-23 09:21:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:21:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:21:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:21:33 --> URI Class Initialized
+INFO - 2025-05-23 09:21:33 --> Router Class Initialized
+INFO - 2025-05-23 09:21:33 --> Output Class Initialized
+INFO - 2025-05-23 09:21:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:21:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:21:33 --> Input Class Initialized
+INFO - 2025-05-23 09:21:33 --> Language Class Initialized
+INFO - 2025-05-23 09:21:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:21:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:21:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:21:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:21:33 --> Config Class Initialized
+INFO - 2025-05-23 09:21:33 --> Hooks Class Initialized
+INFO - 2025-05-23 09:21:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:21:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:21:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 09:21:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:21:33 --> URI Class Initialized
+INFO - 2025-05-23 09:21:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:21:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:21:33 --> Router Class Initialized
+INFO - 2025-05-23 09:21:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:21:33 --> Output Class Initialized
+INFO - 2025-05-23 09:21:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:21:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:21:33 --> Security Class Initialized
+INFO - 2025-05-23 09:21:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 09:21:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:21:33 --> Input Class Initialized
+INFO - 2025-05-23 09:21:33 --> Language Class Initialized
+INFO - 2025-05-23 09:21:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:21:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:21:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:21:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:21:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:21:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:21:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:21:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:21:33 --> Total execution time: 0.0327
+INFO - 2025-05-23 09:21:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:21:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:21:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:21:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:21:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:21:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:21:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:21:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:21:33 --> Total execution time: 0.0477
+INFO - 2025-05-23 09:22:33 --> Config Class Initialized
+INFO - 2025-05-23 09:22:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:22:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:22:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:22:33 --> URI Class Initialized
+INFO - 2025-05-23 09:22:33 --> Router Class Initialized
+INFO - 2025-05-23 09:22:33 --> Output Class Initialized
+INFO - 2025-05-23 09:22:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:22:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:22:33 --> Input Class Initialized
+INFO - 2025-05-23 09:22:33 --> Language Class Initialized
+INFO - 2025-05-23 09:22:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:22:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:22:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:22:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:22:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:22:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:22:33 --> Config Class Initialized
+INFO - 2025-05-23 09:22:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:22:33 --> Hooks Class Initialized
+INFO - 2025-05-23 09:22:33 --> Controller Class Initialized
+DEBUG - 2025-05-23 09:22:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:22:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:22:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:22:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:22:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:22:33 --> URI Class Initialized
+INFO - 2025-05-23 09:22:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:22:33 --> Router Class Initialized
+INFO - 2025-05-23 09:22:33 --> Output Class Initialized
+INFO - 2025-05-23 09:22:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:22:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:22:33 --> Input Class Initialized
+INFO - 2025-05-23 09:22:33 --> Language Class Initialized
+INFO - 2025-05-23 09:22:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:22:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:22:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:22:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:22:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:22:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:22:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:22:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:22:33 --> Total execution time: 0.0427
+INFO - 2025-05-23 09:22:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:22:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:22:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:22:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:22:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:22:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:22:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:22:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:22:33 --> Total execution time: 0.0721
+INFO - 2025-05-23 09:23:33 --> Config Class Initialized
+INFO - 2025-05-23 09:23:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:23:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:23:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:23:33 --> URI Class Initialized
+INFO - 2025-05-23 09:23:33 --> Router Class Initialized
+INFO - 2025-05-23 09:23:33 --> Output Class Initialized
+INFO - 2025-05-23 09:23:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:23:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:23:33 --> Input Class Initialized
+INFO - 2025-05-23 09:23:33 --> Language Class Initialized
+INFO - 2025-05-23 09:23:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:23:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:23:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:23:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:23:33 --> Config Class Initialized
+INFO - 2025-05-23 09:23:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:23:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:23:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:23:33 --> URI Class Initialized
+INFO - 2025-05-23 09:23:33 --> Email Class Initialized
+INFO - 2025-05-23 09:23:33 --> Router Class Initialized
+INFO - 2025-05-23 09:23:33 --> Output Class Initialized
+DEBUG - 2025-05-23 09:23:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:23:33 --> Security Class Initialized
+INFO - 2025-05-23 09:23:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 09:23:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:23:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:23:33 --> Input Class Initialized
+INFO - 2025-05-23 09:23:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:23:33 --> Language Class Initialized
+INFO - 2025-05-23 09:23:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:23:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:23:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:23:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:23:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:23:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:23:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:23:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:23:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:23:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:23:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:23:33 --> Total execution time: 0.0342
+INFO - 2025-05-23 09:23:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:23:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:23:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:23:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:23:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:23:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:23:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:23:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:23:33 --> Total execution time: 0.0565
+INFO - 2025-05-23 09:24:33 --> Config Class Initialized
+INFO - 2025-05-23 09:24:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:24:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:24:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:24:33 --> URI Class Initialized
+INFO - 2025-05-23 09:24:33 --> Router Class Initialized
+INFO - 2025-05-23 09:24:33 --> Output Class Initialized
+INFO - 2025-05-23 09:24:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:24:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:24:33 --> Input Class Initialized
+INFO - 2025-05-23 09:24:33 --> Language Class Initialized
+INFO - 2025-05-23 09:24:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:24:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:24:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:24:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:24:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:24:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:24:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:24:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:24:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:24:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:24:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:24:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:24:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:24:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:24:33 --> Total execution time: 0.0363
+INFO - 2025-05-23 09:24:33 --> Config Class Initialized
+INFO - 2025-05-23 09:24:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:24:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:24:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:24:33 --> URI Class Initialized
+INFO - 2025-05-23 09:24:33 --> Router Class Initialized
+INFO - 2025-05-23 09:24:33 --> Output Class Initialized
+INFO - 2025-05-23 09:24:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:24:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:24:33 --> Input Class Initialized
+INFO - 2025-05-23 09:24:33 --> Language Class Initialized
+INFO - 2025-05-23 09:24:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:24:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:24:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:24:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:24:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:24:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:24:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:24:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:24:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:24:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:24:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:24:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:24:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:24:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:24:33 --> Total execution time: 0.0309
+INFO - 2025-05-23 09:25:33 --> Config Class Initialized
+INFO - 2025-05-23 09:25:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:25:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:25:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:25:33 --> URI Class Initialized
+INFO - 2025-05-23 09:25:33 --> Router Class Initialized
+INFO - 2025-05-23 09:25:33 --> Output Class Initialized
+INFO - 2025-05-23 09:25:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:25:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:25:33 --> Input Class Initialized
+INFO - 2025-05-23 09:25:33 --> Language Class Initialized
+INFO - 2025-05-23 09:25:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:25:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:25:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:25:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:25:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:25:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:25:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:25:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:25:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:25:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:25:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:25:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:25:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:25:33 --> Config Class Initialized
+INFO - 2025-05-23 09:25:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:25:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:25:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:25:33 --> URI Class Initialized
+INFO - 2025-05-23 09:25:33 --> Router Class Initialized
+INFO - 2025-05-23 09:25:33 --> Output Class Initialized
+INFO - 2025-05-23 09:25:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:25:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:25:33 --> Input Class Initialized
+INFO - 2025-05-23 09:25:33 --> Language Class Initialized
+INFO - 2025-05-23 09:25:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:25:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:25:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:25:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:25:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:25:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:25:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:25:33 --> Total execution time: 0.0299
+INFO - 2025-05-23 09:25:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:25:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:25:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:25:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:25:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:25:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:25:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:25:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:25:33 --> Total execution time: 0.0427
+INFO - 2025-05-23 09:26:33 --> Config Class Initialized
+INFO - 2025-05-23 09:26:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:26:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:26:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:26:33 --> URI Class Initialized
+INFO - 2025-05-23 09:26:33 --> Router Class Initialized
+INFO - 2025-05-23 09:26:33 --> Output Class Initialized
+INFO - 2025-05-23 09:26:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:26:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:26:33 --> Input Class Initialized
+INFO - 2025-05-23 09:26:33 --> Language Class Initialized
+INFO - 2025-05-23 09:26:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:26:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:26:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:26:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:26:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:26:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:26:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:26:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:26:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:26:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:26:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:26:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:26:33 --> Config Class Initialized
+INFO - 2025-05-23 09:26:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:26:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:26:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:26:33 --> URI Class Initialized
+INFO - 2025-05-23 09:26:33 --> Router Class Initialized
+INFO - 2025-05-23 09:26:33 --> Output Class Initialized
+INFO - 2025-05-23 09:26:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:26:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:26:33 --> Input Class Initialized
+INFO - 2025-05-23 09:26:33 --> Language Class Initialized
+INFO - 2025-05-23 09:26:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:26:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:26:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:26:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:26:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:26:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:26:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:26:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:26:33 --> Total execution time: 0.0306
+INFO - 2025-05-23 09:26:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:26:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:26:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:26:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:26:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:26:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:26:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:26:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:26:33 --> Total execution time: 0.0445
+INFO - 2025-05-23 09:27:33 --> Config Class Initialized
+INFO - 2025-05-23 09:27:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:27:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:27:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:27:33 --> URI Class Initialized
+INFO - 2025-05-23 09:27:33 --> Config Class Initialized
+INFO - 2025-05-23 09:27:33 --> Router Class Initialized
+INFO - 2025-05-23 09:27:33 --> Hooks Class Initialized
+INFO - 2025-05-23 09:27:33 --> Output Class Initialized
+DEBUG - 2025-05-23 09:27:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:27:33 --> Security Class Initialized
+INFO - 2025-05-23 09:27:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 09:27:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:27:33 --> URI Class Initialized
+INFO - 2025-05-23 09:27:33 --> Input Class Initialized
+INFO - 2025-05-23 09:27:33 --> Language Class Initialized
+INFO - 2025-05-23 09:27:33 --> Router Class Initialized
+INFO - 2025-05-23 09:27:33 --> Output Class Initialized
+INFO - 2025-05-23 09:27:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:27:33 --> Security Class Initialized
+INFO - 2025-05-23 09:27:33 --> Helper loaded: url_helper
+DEBUG - 2025-05-23 09:27:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:27:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:27:33 --> Input Class Initialized
+INFO - 2025-05-23 09:27:33 --> Language Class Initialized
+INFO - 2025-05-23 09:27:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:27:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:27:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:27:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:27:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:27:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:27:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:27:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:27:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:27:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:27:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:27:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:27:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:27:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:27:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:27:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:27:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:27:33 --> Total execution time: 0.0385
+INFO - 2025-05-23 09:27:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:27:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:27:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:27:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:27:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:27:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:27:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:27:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:27:33 --> Total execution time: 0.0847
+INFO - 2025-05-23 09:28:33 --> Config Class Initialized
+INFO - 2025-05-23 09:28:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:28:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:28:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:28:33 --> URI Class Initialized
+INFO - 2025-05-23 09:28:33 --> Router Class Initialized
+INFO - 2025-05-23 09:28:33 --> Output Class Initialized
+INFO - 2025-05-23 09:28:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:28:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:28:33 --> Input Class Initialized
+INFO - 2025-05-23 09:28:33 --> Language Class Initialized
+INFO - 2025-05-23 09:28:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:28:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:28:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:28:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:28:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:28:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:28:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:28:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:28:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:28:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 09:28:33 --> Config Class Initialized
+INFO - 2025-05-23 09:28:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:28:33 --> Session class already loaded. Second attempt ignored.
+DEBUG - 2025-05-23 09:28:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:28:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:28:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:28:33 --> URI Class Initialized
+INFO - 2025-05-23 09:28:33 --> Router Class Initialized
+INFO - 2025-05-23 09:28:33 --> Output Class Initialized
+INFO - 2025-05-23 09:28:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:28:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:28:33 --> Input Class Initialized
+INFO - 2025-05-23 09:28:33 --> Language Class Initialized
+INFO - 2025-05-23 09:28:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:28:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:28:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:28:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:28:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:28:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:28:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:28:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:28:33 --> Total execution time: 0.0338
+INFO - 2025-05-23 09:28:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:28:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:28:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:28:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:28:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:28:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:28:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:28:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:28:33 --> Total execution time: 0.0590
+INFO - 2025-05-23 09:29:33 --> Config Class Initialized
+INFO - 2025-05-23 09:29:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:29:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:29:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:29:33 --> URI Class Initialized
+INFO - 2025-05-23 09:29:33 --> Router Class Initialized
+INFO - 2025-05-23 09:29:33 --> Output Class Initialized
+INFO - 2025-05-23 09:29:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:29:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:29:33 --> Input Class Initialized
+INFO - 2025-05-23 09:29:33 --> Language Class Initialized
+INFO - 2025-05-23 09:29:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:29:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:29:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:29:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:29:33 --> Config Class Initialized
+INFO - 2025-05-23 09:29:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:29:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:29:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:29:33 --> URI Class Initialized
+INFO - 2025-05-23 09:29:33 --> Router Class Initialized
+INFO - 2025-05-23 09:29:33 --> Output Class Initialized
+INFO - 2025-05-23 09:29:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:29:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:29:33 --> Input Class Initialized
+INFO - 2025-05-23 09:29:33 --> Language Class Initialized
+INFO - 2025-05-23 09:29:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:29:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:29:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:29:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:29:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:29:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:29:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:29:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:29:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:29:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:29:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:29:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:29:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:29:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:29:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:29:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:29:33 --> Total execution time: 0.0327
+INFO - 2025-05-23 09:29:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:29:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:29:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:29:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:29:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:29:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:29:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:29:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:29:33 --> Total execution time: 0.0488
+INFO - 2025-05-23 09:30:33 --> Config Class Initialized
+INFO - 2025-05-23 09:30:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:30:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:30:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:30:33 --> URI Class Initialized
+INFO - 2025-05-23 09:30:33 --> Router Class Initialized
+INFO - 2025-05-23 09:30:33 --> Output Class Initialized
+INFO - 2025-05-23 09:30:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:30:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:30:33 --> Input Class Initialized
+INFO - 2025-05-23 09:30:33 --> Language Class Initialized
+INFO - 2025-05-23 09:30:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:30:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:30:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:30:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:30:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:30:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:30:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:30:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:30:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:30:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:30:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:30:33 --> Config Class Initialized
+INFO - 2025-05-23 09:30:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:30:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:30:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:30:33 --> URI Class Initialized
+INFO - 2025-05-23 09:30:33 --> Router Class Initialized
+INFO - 2025-05-23 09:30:33 --> Output Class Initialized
+INFO - 2025-05-23 09:30:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:30:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:30:33 --> Input Class Initialized
+INFO - 2025-05-23 09:30:33 --> Language Class Initialized
+INFO - 2025-05-23 09:30:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:30:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:30:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:30:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:30:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:30:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:30:33 --> Total execution time: 0.0411
+INFO - 2025-05-23 09:30:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:30:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:30:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:30:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:30:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:30:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:30:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:30:33 --> Total execution time: 0.0575
+INFO - 2025-05-23 09:31:33 --> Config Class Initialized
+INFO - 2025-05-23 09:31:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:31:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:31:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:31:33 --> URI Class Initialized
+INFO - 2025-05-23 09:31:33 --> Router Class Initialized
+INFO - 2025-05-23 09:31:33 --> Output Class Initialized
+INFO - 2025-05-23 09:31:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:31:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:31:33 --> Input Class Initialized
+INFO - 2025-05-23 09:31:33 --> Language Class Initialized
+INFO - 2025-05-23 09:31:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:31:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:31:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:31:33 --> Config Class Initialized
+INFO - 2025-05-23 09:31:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:31:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:31:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:31:33 --> Email Class Initialized
+INFO - 2025-05-23 09:31:33 --> URI Class Initialized
+INFO - 2025-05-23 09:31:33 --> Router Class Initialized
+DEBUG - 2025-05-23 09:31:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:31:33 --> Output Class Initialized
+INFO - 2025-05-23 09:31:33 --> Security Class Initialized
+INFO - 2025-05-23 09:31:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 09:31:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:31:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:31:33 --> Input Class Initialized
+INFO - 2025-05-23 09:31:33 --> Language Class Initialized
+INFO - 2025-05-23 09:31:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:31:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:31:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:31:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:31:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:31:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:31:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:31:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:31:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:31:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:31:33 --> Total execution time: 0.0307
+INFO - 2025-05-23 09:31:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:31:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:31:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:31:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:31:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:31:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:31:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:31:33 --> Total execution time: 0.0508
+INFO - 2025-05-23 09:32:33 --> Config Class Initialized
+INFO - 2025-05-23 09:32:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:32:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:32:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:32:33 --> URI Class Initialized
+INFO - 2025-05-23 09:32:33 --> Router Class Initialized
+INFO - 2025-05-23 09:32:33 --> Output Class Initialized
+INFO - 2025-05-23 09:32:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:32:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:32:33 --> Input Class Initialized
+INFO - 2025-05-23 09:32:33 --> Language Class Initialized
+INFO - 2025-05-23 09:32:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:32:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:32:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:32:33 --> Config Class Initialized
+INFO - 2025-05-23 09:32:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:32:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:32:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:32:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:32:33 --> URI Class Initialized
+INFO - 2025-05-23 09:32:33 --> Router Class Initialized
+INFO - 2025-05-23 09:32:33 --> Output Class Initialized
+INFO - 2025-05-23 09:32:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:32:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:32:33 --> Input Class Initialized
+INFO - 2025-05-23 09:32:33 --> Language Class Initialized
+INFO - 2025-05-23 09:32:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:32:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:32:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:32:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:32:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:32:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:32:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:32:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:32:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:32:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:32:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:32:33 --> Email Class Initialized
+INFO - 2025-05-23 09:32:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 09:32:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:32:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:32:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:32:33 --> Total execution time: 0.0394
+INFO - 2025-05-23 09:32:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:32:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:32:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:32:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:32:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:32:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:32:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:32:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:32:33 --> Total execution time: 0.0638
+INFO - 2025-05-23 09:33:33 --> Config Class Initialized
+INFO - 2025-05-23 09:33:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:33:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:33:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:33:33 --> URI Class Initialized
+INFO - 2025-05-23 09:33:33 --> Router Class Initialized
+INFO - 2025-05-23 09:33:33 --> Output Class Initialized
+INFO - 2025-05-23 09:33:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:33:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:33:33 --> Input Class Initialized
+INFO - 2025-05-23 09:33:33 --> Language Class Initialized
+INFO - 2025-05-23 09:33:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:33:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:33:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:33:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:33:33 --> Config Class Initialized
+INFO - 2025-05-23 09:33:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:33:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:33:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:33:33 --> URI Class Initialized
+INFO - 2025-05-23 09:33:33 --> Router Class Initialized
+INFO - 2025-05-23 09:33:33 --> Output Class Initialized
+INFO - 2025-05-23 09:33:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:33:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:33:33 --> Input Class Initialized
+INFO - 2025-05-23 09:33:33 --> Language Class Initialized
+INFO - 2025-05-23 09:33:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:33:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:33:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:33:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:33:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:33:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:33:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:33:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:33:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:33:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:33:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:33:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:33:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:33:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:33:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:33:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:33:33 --> Total execution time: 0.0310
+INFO - 2025-05-23 09:33:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:33:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:33:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:33:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:33:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:33:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:33:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:33:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:33:33 --> Total execution time: 0.0479
+INFO - 2025-05-23 09:34:33 --> Config Class Initialized
+INFO - 2025-05-23 09:34:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:34:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:34:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:34:33 --> URI Class Initialized
+INFO - 2025-05-23 09:34:33 --> Router Class Initialized
+INFO - 2025-05-23 09:34:33 --> Output Class Initialized
+INFO - 2025-05-23 09:34:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:34:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:34:33 --> Input Class Initialized
+INFO - 2025-05-23 09:34:33 --> Language Class Initialized
+INFO - 2025-05-23 09:34:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:34:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:34:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:34:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:34:33 --> Config Class Initialized
+INFO - 2025-05-23 09:34:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:34:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:34:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:34:33 --> URI Class Initialized
+INFO - 2025-05-23 09:34:33 --> Router Class Initialized
+INFO - 2025-05-23 09:34:33 --> Output Class Initialized
+INFO - 2025-05-23 09:34:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:34:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:34:33 --> Input Class Initialized
+INFO - 2025-05-23 09:34:33 --> Language Class Initialized
+INFO - 2025-05-23 09:34:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:34:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:34:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:34:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:34:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:34:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:34:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:34:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:34:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:34:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:34:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:34:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:34:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:34:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:34:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:34:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:34:33 --> Total execution time: 0.0298
+INFO - 2025-05-23 09:34:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:34:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:34:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:34:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:34:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:34:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:34:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:34:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:34:33 --> Total execution time: 0.0612
+INFO - 2025-05-23 09:35:33 --> Config Class Initialized
+INFO - 2025-05-23 09:35:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:35:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:35:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:35:33 --> URI Class Initialized
+INFO - 2025-05-23 09:35:33 --> Router Class Initialized
+INFO - 2025-05-23 09:35:33 --> Output Class Initialized
+INFO - 2025-05-23 09:35:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:35:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:35:33 --> Input Class Initialized
+INFO - 2025-05-23 09:35:33 --> Language Class Initialized
+INFO - 2025-05-23 09:35:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:35:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:35:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:35:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:35:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:35:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:35:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:35:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:35:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:35:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:35:33 --> Config Class Initialized
+INFO - 2025-05-23 09:35:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:35:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:35:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:35:33 --> URI Class Initialized
+INFO - 2025-05-23 09:35:33 --> Router Class Initialized
+INFO - 2025-05-23 09:35:33 --> Output Class Initialized
+INFO - 2025-05-23 09:35:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:35:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:35:33 --> Input Class Initialized
+INFO - 2025-05-23 09:35:33 --> Language Class Initialized
+INFO - 2025-05-23 09:35:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:35:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:35:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:35:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:35:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:35:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:35:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:35:33 --> Total execution time: 0.0295
+INFO - 2025-05-23 09:35:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:35:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:35:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:35:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:35:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:35:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:35:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:35:33 --> Total execution time: 0.0509
+INFO - 2025-05-23 09:36:33 --> Config Class Initialized
+INFO - 2025-05-23 09:36:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:36:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:36:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:36:33 --> URI Class Initialized
+INFO - 2025-05-23 09:36:33 --> Router Class Initialized
+INFO - 2025-05-23 09:36:33 --> Output Class Initialized
+INFO - 2025-05-23 09:36:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:36:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:36:33 --> Input Class Initialized
+INFO - 2025-05-23 09:36:33 --> Language Class Initialized
+INFO - 2025-05-23 09:36:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:36:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:36:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:36:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:36:33 --> Config Class Initialized
+INFO - 2025-05-23 09:36:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:36:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:36:33 --> Email Class Initialized
+INFO - 2025-05-23 09:36:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 09:36:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:36:33 --> URI Class Initialized
+INFO - 2025-05-23 09:36:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:36:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:36:33 --> Router Class Initialized
+INFO - 2025-05-23 09:36:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:36:33 --> Output Class Initialized
+INFO - 2025-05-23 09:36:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:36:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:36:33 --> Security Class Initialized
+INFO - 2025-05-23 09:36:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 09:36:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:36:33 --> Input Class Initialized
+INFO - 2025-05-23 09:36:33 --> Language Class Initialized
+INFO - 2025-05-23 09:36:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:36:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:36:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:36:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:36:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:36:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:36:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:36:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:36:33 --> Total execution time: 0.0395
+INFO - 2025-05-23 09:36:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:36:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:36:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:36:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:36:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:36:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:36:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:36:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:36:33 --> Total execution time: 0.0676
+INFO - 2025-05-23 09:37:33 --> Config Class Initialized
+INFO - 2025-05-23 09:37:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:37:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:37:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:37:33 --> URI Class Initialized
+INFO - 2025-05-23 09:37:33 --> Router Class Initialized
+INFO - 2025-05-23 09:37:33 --> Output Class Initialized
+INFO - 2025-05-23 09:37:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:37:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:37:33 --> Input Class Initialized
+INFO - 2025-05-23 09:37:33 --> Language Class Initialized
+INFO - 2025-05-23 09:37:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:37:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:37:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:37:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:37:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:37:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:37:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:37:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:37:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:37:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:37:33 --> Config Class Initialized
+INFO - 2025-05-23 09:37:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:37:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:37:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:37:33 --> URI Class Initialized
+INFO - 2025-05-23 09:37:33 --> Router Class Initialized
+INFO - 2025-05-23 09:37:33 --> Output Class Initialized
+INFO - 2025-05-23 09:37:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:37:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:37:33 --> Input Class Initialized
+INFO - 2025-05-23 09:37:33 --> Language Class Initialized
+INFO - 2025-05-23 09:37:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:37:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:37:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:37:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:37:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:37:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:37:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:37:33 --> Total execution time: 0.0369
+INFO - 2025-05-23 09:37:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:37:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:37:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:37:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:37:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:37:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:37:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:37:33 --> Total execution time: 0.0585
+INFO - 2025-05-23 09:38:33 --> Config Class Initialized
+INFO - 2025-05-23 09:38:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:38:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:38:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:38:33 --> URI Class Initialized
+INFO - 2025-05-23 09:38:33 --> Router Class Initialized
+INFO - 2025-05-23 09:38:33 --> Output Class Initialized
+INFO - 2025-05-23 09:38:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:38:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:38:33 --> Input Class Initialized
+INFO - 2025-05-23 09:38:33 --> Language Class Initialized
+INFO - 2025-05-23 09:38:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:38:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:38:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:38:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:38:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:38:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:38:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:38:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:38:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:38:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:38:33 --> Config Class Initialized
+INFO - 2025-05-23 09:38:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:38:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:38:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:38:33 --> URI Class Initialized
+INFO - 2025-05-23 09:38:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:38:33 --> Router Class Initialized
+INFO - 2025-05-23 09:38:33 --> Output Class Initialized
+INFO - 2025-05-23 09:38:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:38:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:38:33 --> Input Class Initialized
+INFO - 2025-05-23 09:38:33 --> Language Class Initialized
+INFO - 2025-05-23 09:38:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:38:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:38:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:38:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:38:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:38:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:38:33 --> Total execution time: 0.0420
+INFO - 2025-05-23 09:38:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:38:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:38:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:38:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:38:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:38:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:38:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:38:33 --> Total execution time: 0.0637
+INFO - 2025-05-23 09:39:33 --> Config Class Initialized
+INFO - 2025-05-23 09:39:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:39:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:39:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:39:33 --> URI Class Initialized
+INFO - 2025-05-23 09:39:33 --> Router Class Initialized
+INFO - 2025-05-23 09:39:33 --> Output Class Initialized
+INFO - 2025-05-23 09:39:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:39:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:39:33 --> Input Class Initialized
+INFO - 2025-05-23 09:39:33 --> Language Class Initialized
+INFO - 2025-05-23 09:39:33 --> Config Class Initialized
+INFO - 2025-05-23 09:39:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:39:33 --> Hooks Class Initialized
+INFO - 2025-05-23 09:39:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:39:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 09:39:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:39:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:39:33 --> URI Class Initialized
+INFO - 2025-05-23 09:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:39:33 --> Router Class Initialized
+INFO - 2025-05-23 09:39:33 --> Output Class Initialized
+INFO - 2025-05-23 09:39:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:39:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:39:33 --> Input Class Initialized
+INFO - 2025-05-23 09:39:33 --> Language Class Initialized
+INFO - 2025-05-23 09:39:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:39:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:39:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:39:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:39:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:39:33 --> Email Class Initialized
+INFO - 2025-05-23 09:39:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:39:33 --> Controller Class Initialized
+DEBUG - 2025-05-23 09:39:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:39:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:39:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:39:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:39:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:39:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:39:33 --> Total execution time: 0.0393
+INFO - 2025-05-23 09:39:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:39:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:39:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:39:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:39:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:39:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:39:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:39:33 --> Total execution time: 0.0614
+INFO - 2025-05-23 09:40:33 --> Config Class Initialized
+INFO - 2025-05-23 09:40:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:40:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:40:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:40:33 --> URI Class Initialized
+INFO - 2025-05-23 09:40:33 --> Router Class Initialized
+INFO - 2025-05-23 09:40:33 --> Output Class Initialized
+INFO - 2025-05-23 09:40:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:40:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:40:33 --> Input Class Initialized
+INFO - 2025-05-23 09:40:33 --> Language Class Initialized
+INFO - 2025-05-23 09:40:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:40:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:40:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:40:33 --> Email Class Initialized
+INFO - 2025-05-23 09:40:33 --> Config Class Initialized
+INFO - 2025-05-23 09:40:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:40:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 09:40:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:40:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:40:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:40:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:40:33 --> URI Class Initialized
+INFO - 2025-05-23 09:40:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:40:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 09:40:33 --> Router Class Initialized
+DEBUG - 2025-05-23 09:40:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:40:33 --> Output Class Initialized
+INFO - 2025-05-23 09:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:40:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:40:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:40:33 --> Input Class Initialized
+INFO - 2025-05-23 09:40:33 --> Language Class Initialized
+INFO - 2025-05-23 09:40:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:40:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:40:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:40:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:40:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:40:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:40:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:40:33 --> Total execution time: 0.0338
+INFO - 2025-05-23 09:40:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:40:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:40:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:40:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:40:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:40:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:40:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:40:33 --> Total execution time: 0.0635
+INFO - 2025-05-23 09:41:33 --> Config Class Initialized
+INFO - 2025-05-23 09:41:33 --> Hooks Class Initialized
+INFO - 2025-05-23 09:41:33 --> Config Class Initialized
+DEBUG - 2025-05-23 09:41:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:41:33 --> Hooks Class Initialized
+INFO - 2025-05-23 09:41:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 09:41:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:41:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:41:33 --> URI Class Initialized
+INFO - 2025-05-23 09:41:33 --> URI Class Initialized
+INFO - 2025-05-23 09:41:33 --> Router Class Initialized
+INFO - 2025-05-23 09:41:33 --> Router Class Initialized
+INFO - 2025-05-23 09:41:33 --> Output Class Initialized
+INFO - 2025-05-23 09:41:33 --> Output Class Initialized
+INFO - 2025-05-23 09:41:33 --> Security Class Initialized
+INFO - 2025-05-23 09:41:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:41:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:41:33 --> Input Class Initialized
+DEBUG - 2025-05-23 09:41:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:41:33 --> Language Class Initialized
+INFO - 2025-05-23 09:41:33 --> Input Class Initialized
+INFO - 2025-05-23 09:41:33 --> Language Class Initialized
+INFO - 2025-05-23 09:41:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:41:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:41:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:41:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:41:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:41:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:41:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:41:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:41:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:41:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:41:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:41:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:41:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:41:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:41:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:41:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:41:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:41:33 --> Total execution time: 0.0394
+INFO - 2025-05-23 09:41:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:41:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:41:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:41:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:41:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:41:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:41:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:41:33 --> Total execution time: 0.0665
+INFO - 2025-05-23 09:42:33 --> Config Class Initialized
+INFO - 2025-05-23 09:42:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:42:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:42:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:42:33 --> URI Class Initialized
+INFO - 2025-05-23 09:42:33 --> Router Class Initialized
+INFO - 2025-05-23 09:42:33 --> Output Class Initialized
+INFO - 2025-05-23 09:42:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:42:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:42:33 --> Input Class Initialized
+INFO - 2025-05-23 09:42:33 --> Language Class Initialized
+INFO - 2025-05-23 09:42:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:42:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:42:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:42:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:42:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:42:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:42:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:42:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:42:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:42:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:42:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:42:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:42:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:42:33 --> Config Class Initialized
+INFO - 2025-05-23 09:42:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:42:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:42:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:42:33 --> URI Class Initialized
+INFO - 2025-05-23 09:42:33 --> Router Class Initialized
+INFO - 2025-05-23 09:42:33 --> Output Class Initialized
+INFO - 2025-05-23 09:42:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:42:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:42:33 --> Input Class Initialized
+INFO - 2025-05-23 09:42:33 --> Language Class Initialized
+INFO - 2025-05-23 09:42:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:42:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:42:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:42:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:42:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:42:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:42:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:42:33 --> Total execution time: 0.0379
+INFO - 2025-05-23 09:42:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:42:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:42:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:42:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:42:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:42:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:42:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:42:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:42:33 --> Total execution time: 0.0488
+INFO - 2025-05-23 09:43:33 --> Config Class Initialized
+INFO - 2025-05-23 09:43:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:43:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:43:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:43:33 --> URI Class Initialized
+INFO - 2025-05-23 09:43:33 --> Router Class Initialized
+INFO - 2025-05-23 09:43:33 --> Output Class Initialized
+INFO - 2025-05-23 09:43:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:43:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:43:33 --> Input Class Initialized
+INFO - 2025-05-23 09:43:33 --> Language Class Initialized
+INFO - 2025-05-23 09:43:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:43:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:43:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:43:33 --> Config Class Initialized
+INFO - 2025-05-23 09:43:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:43:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:43:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:43:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:43:33 --> URI Class Initialized
+INFO - 2025-05-23 09:43:33 --> Router Class Initialized
+INFO - 2025-05-23 09:43:33 --> Output Class Initialized
+INFO - 2025-05-23 09:43:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:43:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:43:33 --> Input Class Initialized
+INFO - 2025-05-23 09:43:33 --> Language Class Initialized
+INFO - 2025-05-23 09:43:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:43:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:43:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:43:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:43:33 --> Email Class Initialized
+INFO - 2025-05-23 09:43:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:43:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 09:43:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:43:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:43:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:43:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:43:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:43:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:43:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:43:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:43:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:43:33 --> Total execution time: 0.0328
+INFO - 2025-05-23 09:43:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:43:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:43:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:43:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:43:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:43:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:43:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:43:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:43:33 --> Total execution time: 0.0566
+INFO - 2025-05-23 09:44:33 --> Config Class Initialized
+INFO - 2025-05-23 09:44:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:44:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:44:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:44:33 --> URI Class Initialized
+INFO - 2025-05-23 09:44:33 --> Router Class Initialized
+INFO - 2025-05-23 09:44:33 --> Output Class Initialized
+INFO - 2025-05-23 09:44:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:44:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:44:33 --> Input Class Initialized
+INFO - 2025-05-23 09:44:33 --> Language Class Initialized
+INFO - 2025-05-23 09:44:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:44:33 --> Config Class Initialized
+INFO - 2025-05-23 09:44:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:44:33 --> Hooks Class Initialized
+INFO - 2025-05-23 09:44:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 09:44:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:44:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:44:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:44:33 --> URI Class Initialized
+INFO - 2025-05-23 09:44:33 --> Router Class Initialized
+INFO - 2025-05-23 09:44:33 --> Output Class Initialized
+INFO - 2025-05-23 09:44:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:44:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:44:33 --> Input Class Initialized
+INFO - 2025-05-23 09:44:33 --> Language Class Initialized
+INFO - 2025-05-23 09:44:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:44:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:44:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:44:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:44:33 --> Email Class Initialized
+INFO - 2025-05-23 09:44:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:44:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 09:44:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:44:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:44:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:44:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:44:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:44:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:44:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:44:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:44:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:44:33 --> Total execution time: 0.0366
+INFO - 2025-05-23 09:44:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:44:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:44:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:44:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:44:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:44:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:44:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:44:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:44:33 --> Total execution time: 0.0531
+INFO - 2025-05-23 09:45:33 --> Config Class Initialized
+INFO - 2025-05-23 09:45:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:45:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:45:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:45:33 --> URI Class Initialized
+INFO - 2025-05-23 09:45:33 --> Router Class Initialized
+INFO - 2025-05-23 09:45:33 --> Output Class Initialized
+INFO - 2025-05-23 09:45:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:45:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:45:33 --> Input Class Initialized
+INFO - 2025-05-23 09:45:33 --> Language Class Initialized
+INFO - 2025-05-23 09:45:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:45:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:45:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:45:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:45:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:45:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:45:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:45:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:45:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:45:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:45:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:45:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:45:33 --> Config Class Initialized
+INFO - 2025-05-23 09:45:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:45:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:45:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:45:33 --> URI Class Initialized
+INFO - 2025-05-23 09:45:33 --> Router Class Initialized
+INFO - 2025-05-23 09:45:33 --> Output Class Initialized
+INFO - 2025-05-23 09:45:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:45:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:45:33 --> Input Class Initialized
+INFO - 2025-05-23 09:45:33 --> Language Class Initialized
+INFO - 2025-05-23 09:45:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:45:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:45:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:45:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:45:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:45:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:45:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:45:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:45:33 --> Total execution time: 0.0329
+INFO - 2025-05-23 09:45:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:45:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:45:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:45:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:45:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:45:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:45:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:45:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:45:33 --> Total execution time: 0.0465
+INFO - 2025-05-23 09:46:33 --> Config Class Initialized
+INFO - 2025-05-23 09:46:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:46:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:46:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:46:33 --> URI Class Initialized
+INFO - 2025-05-23 09:46:33 --> Router Class Initialized
+INFO - 2025-05-23 09:46:33 --> Output Class Initialized
+INFO - 2025-05-23 09:46:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:46:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:46:33 --> Input Class Initialized
+INFO - 2025-05-23 09:46:33 --> Language Class Initialized
+INFO - 2025-05-23 09:46:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:46:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:46:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:46:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:46:33 --> Config Class Initialized
+INFO - 2025-05-23 09:46:33 --> Email Class Initialized
+INFO - 2025-05-23 09:46:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:46:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 09:46:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:46:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:46:33 --> URI Class Initialized
+INFO - 2025-05-23 09:46:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:46:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:46:33 --> Router Class Initialized
+INFO - 2025-05-23 09:46:33 --> Output Class Initialized
+INFO - 2025-05-23 09:46:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:46:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 09:46:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:46:33 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 09:46:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:46:33 --> Input Class Initialized
+INFO - 2025-05-23 09:46:33 --> Language Class Initialized
+INFO - 2025-05-23 09:46:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:46:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:46:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:46:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:46:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:46:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:46:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:46:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:46:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:46:33 --> Total execution time: 0.0383
+INFO - 2025-05-23 09:46:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:46:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:46:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:46:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:46:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:46:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:46:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:46:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:46:33 --> Total execution time: 0.0493
+INFO - 2025-05-23 09:47:33 --> Config Class Initialized
+INFO - 2025-05-23 09:47:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:47:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:47:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:47:33 --> URI Class Initialized
+INFO - 2025-05-23 09:47:33 --> Router Class Initialized
+INFO - 2025-05-23 09:47:33 --> Output Class Initialized
+INFO - 2025-05-23 09:47:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:47:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:47:33 --> Input Class Initialized
+INFO - 2025-05-23 09:47:33 --> Language Class Initialized
+INFO - 2025-05-23 09:47:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:47:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:47:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:47:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:47:33 --> Config Class Initialized
+INFO - 2025-05-23 09:47:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:47:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:47:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:47:33 --> URI Class Initialized
+INFO - 2025-05-23 09:47:33 --> Router Class Initialized
+INFO - 2025-05-23 09:47:33 --> Output Class Initialized
+INFO - 2025-05-23 09:47:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:47:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:47:33 --> Input Class Initialized
+INFO - 2025-05-23 09:47:33 --> Language Class Initialized
+INFO - 2025-05-23 09:47:33 --> Email Class Initialized
+INFO - 2025-05-23 09:47:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:47:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:47:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 09:47:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:47:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:47:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:47:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:47:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:47:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:47:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:47:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:47:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:47:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:47:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:47:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:47:33 --> Total execution time: 0.0345
+INFO - 2025-05-23 09:47:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:47:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:47:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:47:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:47:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:47:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:47:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:47:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:47:33 --> Total execution time: 0.0542
+INFO - 2025-05-23 09:48:33 --> Config Class Initialized
+INFO - 2025-05-23 09:48:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:48:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:48:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:48:33 --> URI Class Initialized
+INFO - 2025-05-23 09:48:33 --> Router Class Initialized
+INFO - 2025-05-23 09:48:33 --> Output Class Initialized
+INFO - 2025-05-23 09:48:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:48:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:48:33 --> Input Class Initialized
+INFO - 2025-05-23 09:48:33 --> Language Class Initialized
+INFO - 2025-05-23 09:48:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:48:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:48:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:48:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:48:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:48:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:48:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:48:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:48:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:48:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:48:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:48:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:48:33 --> Config Class Initialized
+INFO - 2025-05-23 09:48:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:48:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:48:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:48:33 --> URI Class Initialized
+INFO - 2025-05-23 09:48:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:48:33 --> Router Class Initialized
+INFO - 2025-05-23 09:48:33 --> Output Class Initialized
+INFO - 2025-05-23 09:48:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:48:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:48:33 --> Input Class Initialized
+INFO - 2025-05-23 09:48:33 --> Language Class Initialized
+INFO - 2025-05-23 09:48:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:48:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:48:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:48:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:48:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:48:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:48:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:48:33 --> Total execution time: 0.0330
+INFO - 2025-05-23 09:48:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:48:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:48:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:48:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:48:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:48:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:48:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:48:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:48:33 --> Total execution time: 0.0473
+INFO - 2025-05-23 09:49:33 --> Config Class Initialized
+INFO - 2025-05-23 09:49:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:49:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:49:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:49:33 --> URI Class Initialized
+INFO - 2025-05-23 09:49:33 --> Router Class Initialized
+INFO - 2025-05-23 09:49:33 --> Output Class Initialized
+INFO - 2025-05-23 09:49:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:49:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:49:33 --> Input Class Initialized
+INFO - 2025-05-23 09:49:33 --> Language Class Initialized
+INFO - 2025-05-23 09:49:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:49:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:49:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:49:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:49:33 --> Config Class Initialized
+INFO - 2025-05-23 09:49:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:49:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:49:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:49:33 --> URI Class Initialized
+INFO - 2025-05-23 09:49:33 --> Router Class Initialized
+INFO - 2025-05-23 09:49:33 --> Output Class Initialized
+INFO - 2025-05-23 09:49:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:49:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:49:33 --> Input Class Initialized
+INFO - 2025-05-23 09:49:33 --> Language Class Initialized
+INFO - 2025-05-23 09:49:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:49:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:49:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:49:33 --> Email Class Initialized
+INFO - 2025-05-23 09:49:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 09:49:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:49:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:49:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:49:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:49:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:49:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:49:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:49:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:49:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:49:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:49:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:49:33 --> Total execution time: 0.0464
+INFO - 2025-05-23 09:49:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:49:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:49:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:49:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:49:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:49:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:49:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:49:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:49:33 --> Total execution time: 0.0638
+INFO - 2025-05-23 09:50:33 --> Config Class Initialized
+INFO - 2025-05-23 09:50:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:50:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:50:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:50:33 --> URI Class Initialized
+INFO - 2025-05-23 09:50:33 --> Router Class Initialized
+INFO - 2025-05-23 09:50:33 --> Output Class Initialized
+INFO - 2025-05-23 09:50:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:50:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:50:33 --> Input Class Initialized
+INFO - 2025-05-23 09:50:33 --> Language Class Initialized
+INFO - 2025-05-23 09:50:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:50:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:50:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:50:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:50:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:50:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:50:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:50:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:50:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:50:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:50:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:50:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:50:33 --> Config Class Initialized
+INFO - 2025-05-23 09:50:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:50:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:50:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:50:33 --> URI Class Initialized
+INFO - 2025-05-23 09:50:33 --> Router Class Initialized
+INFO - 2025-05-23 09:50:33 --> Output Class Initialized
+INFO - 2025-05-23 09:50:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:50:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:50:33 --> Input Class Initialized
+INFO - 2025-05-23 09:50:33 --> Language Class Initialized
+INFO - 2025-05-23 09:50:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:50:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:50:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:50:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:50:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:50:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:50:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:50:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:50:33 --> Total execution time: 0.0333
+INFO - 2025-05-23 09:50:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:50:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:50:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:50:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:50:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:50:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:50:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:50:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:50:33 --> Total execution time: 0.0494
+INFO - 2025-05-23 09:51:33 --> Config Class Initialized
+INFO - 2025-05-23 09:51:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:51:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:51:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:51:33 --> URI Class Initialized
+INFO - 2025-05-23 09:51:33 --> Router Class Initialized
+INFO - 2025-05-23 09:51:33 --> Output Class Initialized
+INFO - 2025-05-23 09:51:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:51:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:51:33 --> Input Class Initialized
+INFO - 2025-05-23 09:51:33 --> Language Class Initialized
+INFO - 2025-05-23 09:51:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:51:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:51:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:51:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:51:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:51:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:51:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:51:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:51:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:51:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:51:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:51:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:51:33 --> Config Class Initialized
+INFO - 2025-05-23 09:51:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:51:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:51:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:51:33 --> URI Class Initialized
+INFO - 2025-05-23 09:51:33 --> Router Class Initialized
+INFO - 2025-05-23 09:51:33 --> Output Class Initialized
+INFO - 2025-05-23 09:51:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:51:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:51:33 --> Input Class Initialized
+INFO - 2025-05-23 09:51:33 --> Language Class Initialized
+INFO - 2025-05-23 09:51:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:51:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:51:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:51:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:51:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:51:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:51:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:51:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:51:33 --> Total execution time: 0.0306
+INFO - 2025-05-23 09:51:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:51:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:51:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:51:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:51:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:51:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:51:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:51:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:51:33 --> Total execution time: 0.0479
+INFO - 2025-05-23 09:52:33 --> Config Class Initialized
+INFO - 2025-05-23 09:52:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:52:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:52:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:52:33 --> URI Class Initialized
+INFO - 2025-05-23 09:52:33 --> Router Class Initialized
+INFO - 2025-05-23 09:52:33 --> Output Class Initialized
+INFO - 2025-05-23 09:52:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:52:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:52:33 --> Input Class Initialized
+INFO - 2025-05-23 09:52:33 --> Language Class Initialized
+INFO - 2025-05-23 09:52:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:52:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:52:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:52:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:52:33 --> Config Class Initialized
+INFO - 2025-05-23 09:52:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:52:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:52:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:52:33 --> URI Class Initialized
+INFO - 2025-05-23 09:52:33 --> Router Class Initialized
+INFO - 2025-05-23 09:52:33 --> Output Class Initialized
+INFO - 2025-05-23 09:52:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:52:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:52:33 --> Input Class Initialized
+INFO - 2025-05-23 09:52:33 --> Language Class Initialized
+INFO - 2025-05-23 09:52:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:52:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:52:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:52:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:52:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:52:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:52:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:52:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:52:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:52:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:52:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:52:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:52:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:52:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:52:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:52:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:52:33 --> Total execution time: 0.0326
+INFO - 2025-05-23 09:52:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:52:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:52:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:52:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:52:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:52:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:52:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:52:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:52:33 --> Total execution time: 0.0474
+INFO - 2025-05-23 09:53:33 --> Config Class Initialized
+INFO - 2025-05-23 09:53:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:53:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:53:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:53:33 --> URI Class Initialized
+INFO - 2025-05-23 09:53:33 --> Router Class Initialized
+INFO - 2025-05-23 09:53:33 --> Output Class Initialized
+INFO - 2025-05-23 09:53:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:53:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:53:33 --> Input Class Initialized
+INFO - 2025-05-23 09:53:33 --> Language Class Initialized
+INFO - 2025-05-23 09:53:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:53:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:53:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:53:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:53:33 --> Config Class Initialized
+INFO - 2025-05-23 09:53:33 --> Hooks Class Initialized
+INFO - 2025-05-23 09:53:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:53:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:53:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 09:53:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:53:33 --> URI Class Initialized
+INFO - 2025-05-23 09:53:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:53:33 --> Router Class Initialized
+INFO - 2025-05-23 09:53:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:53:33 --> Output Class Initialized
+INFO - 2025-05-23 09:53:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:53:33 --> Security Class Initialized
+INFO - 2025-05-23 09:53:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:53:33 --> Session class already loaded. Second attempt ignored.
+DEBUG - 2025-05-23 09:53:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:53:33 --> Input Class Initialized
+INFO - 2025-05-23 09:53:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:53:33 --> Language Class Initialized
+INFO - 2025-05-23 09:53:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:53:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:53:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:53:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:53:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:53:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:53:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:53:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:53:33 --> Total execution time: 0.0312
+INFO - 2025-05-23 09:53:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:53:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:53:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:53:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:53:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:53:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:53:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:53:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:53:33 --> Total execution time: 0.0461
+INFO - 2025-05-23 09:54:33 --> Config Class Initialized
+INFO - 2025-05-23 09:54:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:54:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:54:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:54:33 --> URI Class Initialized
+INFO - 2025-05-23 09:54:33 --> Router Class Initialized
+INFO - 2025-05-23 09:54:33 --> Output Class Initialized
+INFO - 2025-05-23 09:54:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:54:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:54:33 --> Input Class Initialized
+INFO - 2025-05-23 09:54:33 --> Language Class Initialized
+INFO - 2025-05-23 09:54:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:54:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:54:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:54:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:54:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:54:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:54:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:54:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:54:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:54:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:54:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:54:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:54:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:54:33 --> Config Class Initialized
+INFO - 2025-05-23 09:54:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:54:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:54:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:54:33 --> URI Class Initialized
+INFO - 2025-05-23 09:54:33 --> Router Class Initialized
+INFO - 2025-05-23 09:54:33 --> Output Class Initialized
+INFO - 2025-05-23 09:54:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:54:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:54:33 --> Input Class Initialized
+INFO - 2025-05-23 09:54:33 --> Language Class Initialized
+INFO - 2025-05-23 09:54:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:54:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:54:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:54:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:54:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:54:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:54:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:54:33 --> Total execution time: 0.0311
+INFO - 2025-05-23 09:54:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:54:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:54:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:54:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:54:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:54:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:54:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:54:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:54:33 --> Total execution time: 0.0354
+INFO - 2025-05-23 09:55:33 --> Config Class Initialized
+INFO - 2025-05-23 09:55:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:55:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:55:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:55:33 --> URI Class Initialized
+INFO - 2025-05-23 09:55:33 --> Router Class Initialized
+INFO - 2025-05-23 09:55:33 --> Output Class Initialized
+INFO - 2025-05-23 09:55:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:55:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:55:33 --> Input Class Initialized
+INFO - 2025-05-23 09:55:33 --> Language Class Initialized
+INFO - 2025-05-23 09:55:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:55:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:55:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:55:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:55:33 --> Config Class Initialized
+INFO - 2025-05-23 09:55:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:55:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:55:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:55:33 --> URI Class Initialized
+INFO - 2025-05-23 09:55:33 --> Router Class Initialized
+INFO - 2025-05-23 09:55:33 --> Output Class Initialized
+INFO - 2025-05-23 09:55:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:55:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:55:33 --> Input Class Initialized
+INFO - 2025-05-23 09:55:33 --> Language Class Initialized
+INFO - 2025-05-23 09:55:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:55:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:55:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:55:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:55:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:55:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:55:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:55:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:55:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:55:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:55:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:55:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:55:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:55:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:55:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:55:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:55:33 --> Total execution time: 0.0287
+INFO - 2025-05-23 09:55:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:55:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:55:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:55:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:55:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:55:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:55:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:55:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:55:33 --> Total execution time: 0.0493
+INFO - 2025-05-23 09:56:33 --> Config Class Initialized
+INFO - 2025-05-23 09:56:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:56:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:56:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:56:33 --> URI Class Initialized
+INFO - 2025-05-23 09:56:33 --> Router Class Initialized
+INFO - 2025-05-23 09:56:33 --> Output Class Initialized
+INFO - 2025-05-23 09:56:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:56:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:56:33 --> Input Class Initialized
+INFO - 2025-05-23 09:56:33 --> Language Class Initialized
+INFO - 2025-05-23 09:56:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:56:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:56:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:56:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:56:33 --> Config Class Initialized
+INFO - 2025-05-23 09:56:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:56:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:56:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:56:33 --> URI Class Initialized
+INFO - 2025-05-23 09:56:33 --> Router Class Initialized
+INFO - 2025-05-23 09:56:33 --> Output Class Initialized
+INFO - 2025-05-23 09:56:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:56:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:56:33 --> Input Class Initialized
+INFO - 2025-05-23 09:56:33 --> Language Class Initialized
+INFO - 2025-05-23 09:56:33 --> Email Class Initialized
+INFO - 2025-05-23 09:56:33 --> Loader Class Initialized
+DEBUG - 2025-05-23 09:56:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:56:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:56:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:56:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:56:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:56:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:56:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:56:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:56:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:56:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:56:33 --> Email Class Initialized
+INFO - 2025-05-23 09:56:33 --> Model "Crud" initialized
+DEBUG - 2025-05-23 09:56:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:56:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:56:33 --> Total execution time: 0.0329
+INFO - 2025-05-23 09:56:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:56:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:56:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:56:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:56:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:56:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:56:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:56:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:56:33 --> Total execution time: 0.0497
+INFO - 2025-05-23 09:57:33 --> Config Class Initialized
+INFO - 2025-05-23 09:57:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:57:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:57:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:57:33 --> URI Class Initialized
+INFO - 2025-05-23 09:57:33 --> Router Class Initialized
+INFO - 2025-05-23 09:57:33 --> Output Class Initialized
+INFO - 2025-05-23 09:57:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:57:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:57:33 --> Input Class Initialized
+INFO - 2025-05-23 09:57:33 --> Language Class Initialized
+INFO - 2025-05-23 09:57:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:57:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:57:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:57:33 --> Config Class Initialized
+INFO - 2025-05-23 09:57:33 --> Hooks Class Initialized
+INFO - 2025-05-23 09:57:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 09:57:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:57:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:57:33 --> URI Class Initialized
+INFO - 2025-05-23 09:57:33 --> Router Class Initialized
+INFO - 2025-05-23 09:57:33 --> Output Class Initialized
+INFO - 2025-05-23 09:57:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:57:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:57:33 --> Input Class Initialized
+INFO - 2025-05-23 09:57:33 --> Language Class Initialized
+INFO - 2025-05-23 09:57:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:57:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:57:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:57:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:57:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:57:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:57:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:57:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:57:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:57:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:57:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:57:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:57:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:57:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:57:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:57:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:57:33 --> Total execution time: 0.0328
+INFO - 2025-05-23 09:57:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:57:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:57:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:57:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:57:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:57:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:57:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:57:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:57:33 --> Total execution time: 0.0567
+INFO - 2025-05-23 09:58:33 --> Config Class Initialized
+INFO - 2025-05-23 09:58:33 --> Config Class Initialized
+INFO - 2025-05-23 09:58:33 --> Hooks Class Initialized
+INFO - 2025-05-23 09:58:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:58:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 09:58:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:58:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:58:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:58:33 --> URI Class Initialized
+INFO - 2025-05-23 09:58:33 --> URI Class Initialized
+INFO - 2025-05-23 09:58:33 --> Router Class Initialized
+INFO - 2025-05-23 09:58:33 --> Router Class Initialized
+INFO - 2025-05-23 09:58:33 --> Output Class Initialized
+INFO - 2025-05-23 09:58:33 --> Output Class Initialized
+INFO - 2025-05-23 09:58:33 --> Security Class Initialized
+INFO - 2025-05-23 09:58:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:58:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:58:33 --> Input Class Initialized
+DEBUG - 2025-05-23 09:58:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:58:33 --> Language Class Initialized
+INFO - 2025-05-23 09:58:33 --> Input Class Initialized
+INFO - 2025-05-23 09:58:33 --> Language Class Initialized
+INFO - 2025-05-23 09:58:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:58:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:58:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:58:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:58:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:58:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:58:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:58:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:58:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:58:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:58:33 --> Email Class Initialized
+INFO - 2025-05-23 09:58:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 09:58:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:58:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:58:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:58:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:58:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:58:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:58:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:58:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:58:33 --> Total execution time: 0.0310
+INFO - 2025-05-23 09:58:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:58:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:58:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:58:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:58:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:58:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:58:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:58:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:58:33 --> Total execution time: 0.0521
+INFO - 2025-05-23 09:59:33 --> Config Class Initialized
+INFO - 2025-05-23 09:59:33 --> Config Class Initialized
+INFO - 2025-05-23 09:59:33 --> Hooks Class Initialized
+INFO - 2025-05-23 09:59:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 09:59:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 09:59:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 09:59:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:59:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 09:59:33 --> URI Class Initialized
+INFO - 2025-05-23 09:59:33 --> URI Class Initialized
+INFO - 2025-05-23 09:59:33 --> Router Class Initialized
+INFO - 2025-05-23 09:59:33 --> Router Class Initialized
+INFO - 2025-05-23 09:59:33 --> Output Class Initialized
+INFO - 2025-05-23 09:59:33 --> Output Class Initialized
+INFO - 2025-05-23 09:59:33 --> Security Class Initialized
+INFO - 2025-05-23 09:59:33 --> Security Class Initialized
+DEBUG - 2025-05-23 09:59:33 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 09:59:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 09:59:33 --> Input Class Initialized
+INFO - 2025-05-23 09:59:33 --> Input Class Initialized
+INFO - 2025-05-23 09:59:33 --> Language Class Initialized
+INFO - 2025-05-23 09:59:33 --> Language Class Initialized
+INFO - 2025-05-23 09:59:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:59:33 --> Loader Class Initialized
+INFO - 2025-05-23 09:59:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:59:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 09:59:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:59:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 09:59:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:59:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:59:33 --> Email Class Initialized
+INFO - 2025-05-23 09:59:33 --> Email Class Initialized
+DEBUG - 2025-05-23 09:59:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 09:59:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 09:59:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:59:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:59:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:59:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:59:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:59:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:59:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:59:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:59:33 --> Total execution time: 0.0340
+INFO - 2025-05-23 09:59:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 09:59:33 --> Controller Class Initialized
+INFO - 2025-05-23 09:59:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 09:59:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 09:59:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 09:59:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 09:59:33 --> Model "Crud" initialized
+INFO - 2025-05-23 09:59:33 --> Final output sent to browser
+DEBUG - 2025-05-23 09:59:33 --> Total execution time: 0.0531
+INFO - 2025-05-23 10:00:33 --> Config Class Initialized
+INFO - 2025-05-23 10:00:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:00:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:00:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:00:33 --> URI Class Initialized
+INFO - 2025-05-23 10:00:33 --> Router Class Initialized
+INFO - 2025-05-23 10:00:33 --> Output Class Initialized
+INFO - 2025-05-23 10:00:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:00:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:00:33 --> Input Class Initialized
+INFO - 2025-05-23 10:00:33 --> Language Class Initialized
+INFO - 2025-05-23 10:00:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:00:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:00:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:00:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:00:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:00:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:00:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:00:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:00:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:00:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:00:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:00:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:00:33 --> Config Class Initialized
+INFO - 2025-05-23 10:00:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:00:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:00:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:00:33 --> URI Class Initialized
+INFO - 2025-05-23 10:00:33 --> Router Class Initialized
+INFO - 2025-05-23 10:00:33 --> Output Class Initialized
+INFO - 2025-05-23 10:00:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:00:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:00:33 --> Input Class Initialized
+INFO - 2025-05-23 10:00:33 --> Language Class Initialized
+INFO - 2025-05-23 10:00:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:00:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:00:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:00:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:00:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:00:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:00:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:00:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:00:33 --> Total execution time: 0.0342
+INFO - 2025-05-23 10:00:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:00:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:00:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:00:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:00:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:00:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:00:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:00:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:00:33 --> Total execution time: 0.0535
+INFO - 2025-05-23 10:01:33 --> Config Class Initialized
+INFO - 2025-05-23 10:01:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:01:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:01:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:01:33 --> URI Class Initialized
+INFO - 2025-05-23 10:01:33 --> Router Class Initialized
+INFO - 2025-05-23 10:01:33 --> Output Class Initialized
+INFO - 2025-05-23 10:01:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:01:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:01:33 --> Input Class Initialized
+INFO - 2025-05-23 10:01:33 --> Language Class Initialized
+INFO - 2025-05-23 10:01:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:01:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:01:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:01:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:01:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:01:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:01:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:01:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:01:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:01:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:01:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:01:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:01:33 --> Config Class Initialized
+INFO - 2025-05-23 10:01:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:01:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:01:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:01:33 --> URI Class Initialized
+INFO - 2025-05-23 10:01:33 --> Router Class Initialized
+INFO - 2025-05-23 10:01:33 --> Output Class Initialized
+INFO - 2025-05-23 10:01:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:01:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:01:33 --> Input Class Initialized
+INFO - 2025-05-23 10:01:33 --> Language Class Initialized
+INFO - 2025-05-23 10:01:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:01:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:01:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:01:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:01:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:01:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:01:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:01:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:01:33 --> Total execution time: 0.0287
+INFO - 2025-05-23 10:01:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:01:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:01:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:01:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:01:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:01:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:01:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:01:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:01:33 --> Total execution time: 0.0360
+INFO - 2025-05-23 10:02:33 --> Config Class Initialized
+INFO - 2025-05-23 10:02:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:02:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:02:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:02:33 --> URI Class Initialized
+INFO - 2025-05-23 10:02:33 --> Router Class Initialized
+INFO - 2025-05-23 10:02:33 --> Output Class Initialized
+INFO - 2025-05-23 10:02:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:02:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:02:33 --> Input Class Initialized
+INFO - 2025-05-23 10:02:33 --> Language Class Initialized
+INFO - 2025-05-23 10:02:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:02:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:02:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:02:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:02:33 --> Config Class Initialized
+INFO - 2025-05-23 10:02:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:02:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:02:33 --> Email Class Initialized
+INFO - 2025-05-23 10:02:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:02:33 --> URI Class Initialized
+DEBUG - 2025-05-23 10:02:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:02:33 --> Router Class Initialized
+INFO - 2025-05-23 10:02:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:02:33 --> Output Class Initialized
+INFO - 2025-05-23 10:02:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:02:33 --> Security Class Initialized
+INFO - 2025-05-23 10:02:33 --> Helper loaded: form_helper
+DEBUG - 2025-05-23 10:02:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:02:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 10:02:33 --> Input Class Initialized
+DEBUG - 2025-05-23 10:02:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:02:33 --> Language Class Initialized
+INFO - 2025-05-23 10:02:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:02:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:02:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:02:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:02:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:02:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:02:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:02:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:02:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:02:33 --> Total execution time: 0.0274
+INFO - 2025-05-23 10:02:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:02:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:02:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:02:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:02:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:02:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:02:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:02:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:02:33 --> Total execution time: 0.0462
+INFO - 2025-05-23 10:03:33 --> Config Class Initialized
+INFO - 2025-05-23 10:03:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:03:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:03:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:03:33 --> URI Class Initialized
+INFO - 2025-05-23 10:03:33 --> Router Class Initialized
+INFO - 2025-05-23 10:03:33 --> Output Class Initialized
+INFO - 2025-05-23 10:03:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:03:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:03:33 --> Input Class Initialized
+INFO - 2025-05-23 10:03:33 --> Language Class Initialized
+INFO - 2025-05-23 10:03:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:03:33 --> Config Class Initialized
+INFO - 2025-05-23 10:03:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:03:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:03:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 10:03:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:03:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:03:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:03:33 --> URI Class Initialized
+INFO - 2025-05-23 10:03:33 --> Router Class Initialized
+INFO - 2025-05-23 10:03:33 --> Output Class Initialized
+INFO - 2025-05-23 10:03:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:03:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:03:33 --> Input Class Initialized
+INFO - 2025-05-23 10:03:33 --> Language Class Initialized
+INFO - 2025-05-23 10:03:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:03:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:03:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:03:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:03:33 --> Email Class Initialized
+INFO - 2025-05-23 10:03:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:03:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:03:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:03:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:03:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:03:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:03:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:03:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:03:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:03:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:03:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:03:33 --> Total execution time: 0.0331
+INFO - 2025-05-23 10:03:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:03:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:03:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:03:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:03:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:03:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:03:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:03:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:03:33 --> Total execution time: 0.0516
+INFO - 2025-05-23 10:04:33 --> Config Class Initialized
+INFO - 2025-05-23 10:04:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:04:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:04:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:04:33 --> URI Class Initialized
+INFO - 2025-05-23 10:04:33 --> Router Class Initialized
+INFO - 2025-05-23 10:04:33 --> Output Class Initialized
+INFO - 2025-05-23 10:04:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:04:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:04:33 --> Input Class Initialized
+INFO - 2025-05-23 10:04:33 --> Language Class Initialized
+INFO - 2025-05-23 10:04:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:04:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:04:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:04:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:04:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:04:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:04:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:04:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:04:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:04:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:04:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:04:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:04:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:04:33 --> Config Class Initialized
+INFO - 2025-05-23 10:04:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:04:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:04:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:04:33 --> URI Class Initialized
+INFO - 2025-05-23 10:04:33 --> Router Class Initialized
+INFO - 2025-05-23 10:04:33 --> Output Class Initialized
+INFO - 2025-05-23 10:04:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:04:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:04:33 --> Input Class Initialized
+INFO - 2025-05-23 10:04:33 --> Language Class Initialized
+INFO - 2025-05-23 10:04:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:04:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:04:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:04:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:04:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:04:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:04:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:04:33 --> Total execution time: 0.0303
+INFO - 2025-05-23 10:04:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:04:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:04:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:04:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:04:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:04:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:04:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:04:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:04:33 --> Total execution time: 0.0346
+INFO - 2025-05-23 10:05:33 --> Config Class Initialized
+INFO - 2025-05-23 10:05:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:05:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:05:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:05:33 --> URI Class Initialized
+INFO - 2025-05-23 10:05:33 --> Router Class Initialized
+INFO - 2025-05-23 10:05:33 --> Output Class Initialized
+INFO - 2025-05-23 10:05:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:05:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:05:33 --> Input Class Initialized
+INFO - 2025-05-23 10:05:33 --> Language Class Initialized
+INFO - 2025-05-23 10:05:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:05:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:05:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:05:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:05:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:05:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:05:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:05:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:05:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:05:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:05:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:05:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:05:33 --> Config Class Initialized
+INFO - 2025-05-23 10:05:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:05:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:05:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:05:33 --> URI Class Initialized
+INFO - 2025-05-23 10:05:33 --> Router Class Initialized
+INFO - 2025-05-23 10:05:33 --> Output Class Initialized
+INFO - 2025-05-23 10:05:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:05:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:05:33 --> Input Class Initialized
+INFO - 2025-05-23 10:05:33 --> Language Class Initialized
+INFO - 2025-05-23 10:05:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:05:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:05:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:05:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:05:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:05:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:05:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:05:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:05:33 --> Total execution time: 0.0311
+INFO - 2025-05-23 10:05:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:05:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:05:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:05:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:05:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:05:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:05:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:05:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:05:33 --> Total execution time: 0.0470
+INFO - 2025-05-23 10:06:33 --> Config Class Initialized
+INFO - 2025-05-23 10:06:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:06:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:06:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:06:33 --> URI Class Initialized
+INFO - 2025-05-23 10:06:33 --> Router Class Initialized
+INFO - 2025-05-23 10:06:33 --> Output Class Initialized
+INFO - 2025-05-23 10:06:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:06:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:06:33 --> Input Class Initialized
+INFO - 2025-05-23 10:06:33 --> Language Class Initialized
+INFO - 2025-05-23 10:06:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:06:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:06:33 --> Config Class Initialized
+INFO - 2025-05-23 10:06:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:06:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:06:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:06:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:06:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:06:33 --> URI Class Initialized
+INFO - 2025-05-23 10:06:33 --> Router Class Initialized
+INFO - 2025-05-23 10:06:33 --> Output Class Initialized
+INFO - 2025-05-23 10:06:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:06:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:06:33 --> Input Class Initialized
+INFO - 2025-05-23 10:06:33 --> Language Class Initialized
+INFO - 2025-05-23 10:06:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:06:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:06:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:06:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:06:33 --> Email Class Initialized
+INFO - 2025-05-23 10:06:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:06:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:06:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:06:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:06:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:06:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:06:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:06:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:06:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:06:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:06:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:06:33 --> Total execution time: 0.0297
+INFO - 2025-05-23 10:06:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:06:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:06:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:06:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:06:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:06:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:06:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:06:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:06:33 --> Total execution time: 0.0574
+INFO - 2025-05-23 10:07:33 --> Config Class Initialized
+INFO - 2025-05-23 10:07:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:07:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:07:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:07:33 --> URI Class Initialized
+INFO - 2025-05-23 10:07:33 --> Router Class Initialized
+INFO - 2025-05-23 10:07:33 --> Output Class Initialized
+INFO - 2025-05-23 10:07:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:07:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:07:33 --> Input Class Initialized
+INFO - 2025-05-23 10:07:33 --> Language Class Initialized
+INFO - 2025-05-23 10:07:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:07:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:07:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:07:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:07:33 --> Config Class Initialized
+INFO - 2025-05-23 10:07:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:07:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:07:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:07:33 --> URI Class Initialized
+INFO - 2025-05-23 10:07:33 --> Router Class Initialized
+INFO - 2025-05-23 10:07:33 --> Output Class Initialized
+INFO - 2025-05-23 10:07:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:07:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:07:33 --> Input Class Initialized
+INFO - 2025-05-23 10:07:33 --> Language Class Initialized
+INFO - 2025-05-23 10:07:33 --> Email Class Initialized
+INFO - 2025-05-23 10:07:33 --> Loader Class Initialized
+DEBUG - 2025-05-23 10:07:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:07:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:07:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:07:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:07:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:07:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:07:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:07:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:07:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:07:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:07:33 --> Email Class Initialized
+INFO - 2025-05-23 10:07:33 --> Model "Crud" initialized
+DEBUG - 2025-05-23 10:07:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:07:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:07:33 --> Total execution time: 0.0368
+INFO - 2025-05-23 10:07:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:07:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:07:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:07:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:07:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:07:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:07:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:07:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:07:33 --> Total execution time: 0.0619
+INFO - 2025-05-23 10:08:33 --> Config Class Initialized
+INFO - 2025-05-23 10:08:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:08:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:08:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:08:33 --> URI Class Initialized
+INFO - 2025-05-23 10:08:33 --> Router Class Initialized
+INFO - 2025-05-23 10:08:33 --> Output Class Initialized
+INFO - 2025-05-23 10:08:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:08:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:08:33 --> Input Class Initialized
+INFO - 2025-05-23 10:08:33 --> Language Class Initialized
+INFO - 2025-05-23 10:08:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:08:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:08:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:08:33 --> Config Class Initialized
+INFO - 2025-05-23 10:08:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:08:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:08:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:08:33 --> URI Class Initialized
+INFO - 2025-05-23 10:08:33 --> Router Class Initialized
+INFO - 2025-05-23 10:08:33 --> Output Class Initialized
+INFO - 2025-05-23 10:08:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:08:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:08:33 --> Input Class Initialized
+INFO - 2025-05-23 10:08:33 --> Language Class Initialized
+INFO - 2025-05-23 10:08:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:08:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:08:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:08:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:08:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:08:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:08:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:08:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:08:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:08:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:08:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:08:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:08:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:08:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:08:33 --> Total execution time: 0.0334
+INFO - 2025-05-23 10:08:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:08:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:08:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:08:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:08:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:08:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:08:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:08:33 --> Total execution time: 0.0534
+INFO - 2025-05-23 10:09:33 --> Config Class Initialized
+INFO - 2025-05-23 10:09:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:09:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:09:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:09:33 --> URI Class Initialized
+INFO - 2025-05-23 10:09:33 --> Router Class Initialized
+INFO - 2025-05-23 10:09:33 --> Output Class Initialized
+INFO - 2025-05-23 10:09:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:09:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:09:33 --> Input Class Initialized
+INFO - 2025-05-23 10:09:33 --> Language Class Initialized
+INFO - 2025-05-23 10:09:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:09:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:09:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:09:33 --> Config Class Initialized
+INFO - 2025-05-23 10:09:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:09:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:09:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:09:33 --> URI Class Initialized
+INFO - 2025-05-23 10:09:33 --> Router Class Initialized
+INFO - 2025-05-23 10:09:33 --> Output Class Initialized
+INFO - 2025-05-23 10:09:33 --> Security Class Initialized
+INFO - 2025-05-23 10:09:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:09:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:09:33 --> Input Class Initialized
+DEBUG - 2025-05-23 10:09:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:09:33 --> Language Class Initialized
+INFO - 2025-05-23 10:09:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:09:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:09:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:09:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:09:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:09:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:09:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:09:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:09:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:09:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:09:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:09:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:09:33 --> Total execution time: 0.0407
+INFO - 2025-05-23 10:09:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:09:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:09:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:09:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:09:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:09:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:09:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:09:33 --> Total execution time: 0.0513
+INFO - 2025-05-23 10:10:33 --> Config Class Initialized
+INFO - 2025-05-23 10:10:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:10:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:10:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:10:33 --> URI Class Initialized
+INFO - 2025-05-23 10:10:33 --> Router Class Initialized
+INFO - 2025-05-23 10:10:33 --> Output Class Initialized
+INFO - 2025-05-23 10:10:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:10:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:10:33 --> Input Class Initialized
+INFO - 2025-05-23 10:10:33 --> Language Class Initialized
+INFO - 2025-05-23 10:10:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:10:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:10:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:10:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:10:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:10:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:10:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:10:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:10:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:10:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:10:33 --> Config Class Initialized
+INFO - 2025-05-23 10:10:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:10:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:10:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:10:33 --> URI Class Initialized
+INFO - 2025-05-23 10:10:33 --> Router Class Initialized
+INFO - 2025-05-23 10:10:33 --> Output Class Initialized
+INFO - 2025-05-23 10:10:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:10:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:10:33 --> Input Class Initialized
+INFO - 2025-05-23 10:10:33 --> Language Class Initialized
+INFO - 2025-05-23 10:10:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:10:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:10:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:10:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:10:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:10:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:10:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:10:33 --> Total execution time: 0.0296
+INFO - 2025-05-23 10:10:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:10:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:10:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:10:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:10:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:10:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:10:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:10:33 --> Total execution time: 0.0416
+INFO - 2025-05-23 10:11:33 --> Config Class Initialized
+INFO - 2025-05-23 10:11:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:11:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:11:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:11:33 --> URI Class Initialized
+INFO - 2025-05-23 10:11:33 --> Router Class Initialized
+INFO - 2025-05-23 10:11:33 --> Output Class Initialized
+INFO - 2025-05-23 10:11:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:11:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:11:33 --> Input Class Initialized
+INFO - 2025-05-23 10:11:33 --> Language Class Initialized
+INFO - 2025-05-23 10:11:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:11:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:11:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:11:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:11:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:11:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:11:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:11:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:11:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:11:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:11:33 --> Config Class Initialized
+INFO - 2025-05-23 10:11:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:11:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:11:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:11:33 --> URI Class Initialized
+INFO - 2025-05-23 10:11:33 --> Router Class Initialized
+INFO - 2025-05-23 10:11:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:11:33 --> Output Class Initialized
+INFO - 2025-05-23 10:11:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:11:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:11:33 --> Input Class Initialized
+INFO - 2025-05-23 10:11:33 --> Language Class Initialized
+INFO - 2025-05-23 10:11:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:11:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:11:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:11:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:11:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:11:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:11:33 --> Total execution time: 0.0306
+INFO - 2025-05-23 10:11:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:11:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:11:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:11:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:11:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:11:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:11:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:11:33 --> Total execution time: 0.0469
+INFO - 2025-05-23 10:12:33 --> Config Class Initialized
+INFO - 2025-05-23 10:12:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:12:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:12:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:12:33 --> URI Class Initialized
+INFO - 2025-05-23 10:12:33 --> Router Class Initialized
+INFO - 2025-05-23 10:12:33 --> Output Class Initialized
+INFO - 2025-05-23 10:12:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:12:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:12:33 --> Input Class Initialized
+INFO - 2025-05-23 10:12:33 --> Language Class Initialized
+INFO - 2025-05-23 10:12:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:12:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:12:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:12:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:12:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:12:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:12:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:12:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:12:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:12:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:12:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:12:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:12:33 --> Config Class Initialized
+INFO - 2025-05-23 10:12:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:12:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:12:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:12:33 --> URI Class Initialized
+INFO - 2025-05-23 10:12:33 --> Router Class Initialized
+INFO - 2025-05-23 10:12:33 --> Output Class Initialized
+INFO - 2025-05-23 10:12:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:12:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:12:33 --> Input Class Initialized
+INFO - 2025-05-23 10:12:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:12:33 --> Language Class Initialized
+INFO - 2025-05-23 10:12:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:12:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:12:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:12:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:12:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:12:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:12:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:12:33 --> Total execution time: 0.0435
+INFO - 2025-05-23 10:12:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:12:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:12:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:12:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:12:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:12:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:12:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:12:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:12:33 --> Total execution time: 0.0653
+INFO - 2025-05-23 10:13:33 --> Config Class Initialized
+INFO - 2025-05-23 10:13:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:13:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:13:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:13:33 --> URI Class Initialized
+INFO - 2025-05-23 10:13:33 --> Router Class Initialized
+INFO - 2025-05-23 10:13:33 --> Output Class Initialized
+INFO - 2025-05-23 10:13:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:13:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:13:33 --> Input Class Initialized
+INFO - 2025-05-23 10:13:33 --> Language Class Initialized
+INFO - 2025-05-23 10:13:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:13:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:13:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:13:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:13:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:13:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:13:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:13:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:13:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:13:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:13:33 --> Config Class Initialized
+INFO - 2025-05-23 10:13:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:13:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:13:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:13:33 --> URI Class Initialized
+INFO - 2025-05-23 10:13:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:13:33 --> Router Class Initialized
+INFO - 2025-05-23 10:13:33 --> Output Class Initialized
+INFO - 2025-05-23 10:13:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:13:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:13:33 --> Input Class Initialized
+INFO - 2025-05-23 10:13:33 --> Language Class Initialized
+INFO - 2025-05-23 10:13:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:13:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:13:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:13:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:13:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:13:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:13:33 --> Total execution time: 0.0263
+INFO - 2025-05-23 10:13:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:13:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:13:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:13:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:13:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:13:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:13:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:13:33 --> Total execution time: 0.0345
+INFO - 2025-05-23 10:14:33 --> Config Class Initialized
+INFO - 2025-05-23 10:14:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:14:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:14:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:14:33 --> URI Class Initialized
+INFO - 2025-05-23 10:14:33 --> Router Class Initialized
+INFO - 2025-05-23 10:14:33 --> Output Class Initialized
+INFO - 2025-05-23 10:14:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:14:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:14:33 --> Input Class Initialized
+INFO - 2025-05-23 10:14:33 --> Language Class Initialized
+INFO - 2025-05-23 10:14:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:14:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:14:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:14:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:14:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:14:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:14:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:14:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:14:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:14:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:14:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:14:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:14:33 --> Config Class Initialized
+INFO - 2025-05-23 10:14:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:14:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:14:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:14:33 --> URI Class Initialized
+INFO - 2025-05-23 10:14:33 --> Router Class Initialized
+INFO - 2025-05-23 10:14:33 --> Output Class Initialized
+INFO - 2025-05-23 10:14:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:14:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:14:33 --> Input Class Initialized
+INFO - 2025-05-23 10:14:33 --> Language Class Initialized
+INFO - 2025-05-23 10:14:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:14:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:14:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:14:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:14:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:14:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:14:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:14:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:14:33 --> Total execution time: 0.0309
+INFO - 2025-05-23 10:14:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:14:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:14:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:14:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:14:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:14:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:14:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:14:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:14:33 --> Total execution time: 0.0411
+INFO - 2025-05-23 10:15:33 --> Config Class Initialized
+INFO - 2025-05-23 10:15:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:15:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:15:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:15:33 --> URI Class Initialized
+INFO - 2025-05-23 10:15:33 --> Router Class Initialized
+INFO - 2025-05-23 10:15:33 --> Output Class Initialized
+INFO - 2025-05-23 10:15:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:15:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:15:33 --> Input Class Initialized
+INFO - 2025-05-23 10:15:33 --> Language Class Initialized
+INFO - 2025-05-23 10:15:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:15:33 --> Config Class Initialized
+INFO - 2025-05-23 10:15:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:15:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:15:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 10:15:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:15:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:15:33 --> URI Class Initialized
+INFO - 2025-05-23 10:15:33 --> Router Class Initialized
+INFO - 2025-05-23 10:15:33 --> Output Class Initialized
+INFO - 2025-05-23 10:15:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:15:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:15:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:15:33 --> Input Class Initialized
+INFO - 2025-05-23 10:15:33 --> Language Class Initialized
+INFO - 2025-05-23 10:15:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:15:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:15:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:15:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:15:33 --> Email Class Initialized
+INFO - 2025-05-23 10:15:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:15:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:15:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:15:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:15:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:15:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:15:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:15:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:15:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:15:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:15:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:15:33 --> Total execution time: 0.0271
+INFO - 2025-05-23 10:15:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:15:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:15:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:15:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:15:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:15:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:15:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:15:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:15:33 --> Total execution time: 0.0451
+INFO - 2025-05-23 10:16:33 --> Config Class Initialized
+INFO - 2025-05-23 10:16:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:16:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:16:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:16:33 --> URI Class Initialized
+INFO - 2025-05-23 10:16:33 --> Router Class Initialized
+INFO - 2025-05-23 10:16:33 --> Output Class Initialized
+INFO - 2025-05-23 10:16:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:16:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:16:33 --> Input Class Initialized
+INFO - 2025-05-23 10:16:33 --> Language Class Initialized
+INFO - 2025-05-23 10:16:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:16:33 --> Config Class Initialized
+INFO - 2025-05-23 10:16:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:16:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:16:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 10:16:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:16:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:16:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:16:33 --> URI Class Initialized
+INFO - 2025-05-23 10:16:33 --> Router Class Initialized
+INFO - 2025-05-23 10:16:33 --> Output Class Initialized
+INFO - 2025-05-23 10:16:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:16:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:16:33 --> Input Class Initialized
+INFO - 2025-05-23 10:16:33 --> Language Class Initialized
+INFO - 2025-05-23 10:16:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:16:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:16:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:16:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:16:33 --> Email Class Initialized
+INFO - 2025-05-23 10:16:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:16:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:16:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:16:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:16:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:16:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:16:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:16:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:16:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:16:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:16:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:16:33 --> Total execution time: 0.0258
+INFO - 2025-05-23 10:16:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:16:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:16:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:16:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:16:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:16:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:16:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:16:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:16:33 --> Total execution time: 0.0440
+INFO - 2025-05-23 10:17:33 --> Config Class Initialized
+INFO - 2025-05-23 10:17:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:17:33 --> Config Class Initialized
+DEBUG - 2025-05-23 10:17:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:17:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:17:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 10:17:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:17:33 --> URI Class Initialized
+INFO - 2025-05-23 10:17:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:17:33 --> URI Class Initialized
+INFO - 2025-05-23 10:17:33 --> Router Class Initialized
+INFO - 2025-05-23 10:17:33 --> Router Class Initialized
+INFO - 2025-05-23 10:17:33 --> Output Class Initialized
+INFO - 2025-05-23 10:17:33 --> Output Class Initialized
+INFO - 2025-05-23 10:17:33 --> Security Class Initialized
+INFO - 2025-05-23 10:17:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:17:33 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 10:17:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:17:33 --> Input Class Initialized
+INFO - 2025-05-23 10:17:33 --> Input Class Initialized
+INFO - 2025-05-23 10:17:33 --> Language Class Initialized
+INFO - 2025-05-23 10:17:33 --> Language Class Initialized
+INFO - 2025-05-23 10:17:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:17:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:17:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:17:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:17:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:17:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:17:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:17:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:17:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:17:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:17:33 --> Email Class Initialized
+INFO - 2025-05-23 10:17:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:17:33 --> Controller Class Initialized
+DEBUG - 2025-05-23 10:17:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:17:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:17:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:17:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:17:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:17:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:17:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:17:33 --> Total execution time: 0.0384
+INFO - 2025-05-23 10:17:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:17:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:17:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:17:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:17:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:17:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:17:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:17:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:17:33 --> Total execution time: 0.0537
+INFO - 2025-05-23 10:18:33 --> Config Class Initialized
+INFO - 2025-05-23 10:18:33 --> Config Class Initialized
+INFO - 2025-05-23 10:18:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:18:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:18:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 10:18:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:18:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:18:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:18:33 --> URI Class Initialized
+INFO - 2025-05-23 10:18:33 --> URI Class Initialized
+INFO - 2025-05-23 10:18:33 --> Router Class Initialized
+INFO - 2025-05-23 10:18:33 --> Output Class Initialized
+INFO - 2025-05-23 10:18:33 --> Router Class Initialized
+INFO - 2025-05-23 10:18:33 --> Security Class Initialized
+INFO - 2025-05-23 10:18:33 --> Output Class Initialized
+INFO - 2025-05-23 10:18:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:18:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:18:33 --> Input Class Initialized
+DEBUG - 2025-05-23 10:18:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:18:33 --> Language Class Initialized
+INFO - 2025-05-23 10:18:33 --> Input Class Initialized
+INFO - 2025-05-23 10:18:33 --> Language Class Initialized
+INFO - 2025-05-23 10:18:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:18:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:18:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:18:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:18:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:18:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:18:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:18:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:18:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:18:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:18:33 --> Email Class Initialized
+INFO - 2025-05-23 10:18:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 10:18:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:18:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:18:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:18:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:18:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:18:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:18:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:18:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:18:33 --> Total execution time: 0.0273
+INFO - 2025-05-23 10:18:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:18:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:18:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:18:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:18:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:18:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:18:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:18:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:18:33 --> Total execution time: 0.0396
+INFO - 2025-05-23 10:19:33 --> Config Class Initialized
+INFO - 2025-05-23 10:19:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:19:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:19:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:19:33 --> URI Class Initialized
+INFO - 2025-05-23 10:19:33 --> Router Class Initialized
+INFO - 2025-05-23 10:19:33 --> Output Class Initialized
+INFO - 2025-05-23 10:19:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:19:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:19:33 --> Input Class Initialized
+INFO - 2025-05-23 10:19:33 --> Language Class Initialized
+INFO - 2025-05-23 10:19:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:19:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:19:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:19:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:19:33 --> Config Class Initialized
+INFO - 2025-05-23 10:19:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:19:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:19:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:19:33 --> URI Class Initialized
+INFO - 2025-05-23 10:19:33 --> Router Class Initialized
+INFO - 2025-05-23 10:19:33 --> Output Class Initialized
+INFO - 2025-05-23 10:19:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:19:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:19:33 --> Input Class Initialized
+INFO - 2025-05-23 10:19:33 --> Language Class Initialized
+INFO - 2025-05-23 10:19:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:19:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:19:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:19:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:19:33 --> Email Class Initialized
+INFO - 2025-05-23 10:19:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:19:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:19:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:19:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:19:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:19:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:19:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:19:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:19:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:19:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:19:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:19:33 --> Total execution time: 0.0307
+INFO - 2025-05-23 10:19:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:19:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:19:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:19:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:19:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:19:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:19:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:19:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:19:33 --> Total execution time: 0.0554
+INFO - 2025-05-23 10:20:33 --> Config Class Initialized
+INFO - 2025-05-23 10:20:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:20:33 --> Config Class Initialized
+DEBUG - 2025-05-23 10:20:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:20:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:20:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 10:20:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:20:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:20:33 --> URI Class Initialized
+INFO - 2025-05-23 10:20:33 --> URI Class Initialized
+INFO - 2025-05-23 10:20:33 --> Router Class Initialized
+INFO - 2025-05-23 10:20:33 --> Router Class Initialized
+INFO - 2025-05-23 10:20:33 --> Output Class Initialized
+INFO - 2025-05-23 10:20:33 --> Output Class Initialized
+INFO - 2025-05-23 10:20:33 --> Security Class Initialized
+INFO - 2025-05-23 10:20:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:20:33 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 10:20:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:20:33 --> Input Class Initialized
+INFO - 2025-05-23 10:20:33 --> Input Class Initialized
+INFO - 2025-05-23 10:20:33 --> Language Class Initialized
+INFO - 2025-05-23 10:20:33 --> Language Class Initialized
+INFO - 2025-05-23 10:20:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:20:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:20:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:20:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:20:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:20:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:20:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:20:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:20:33 --> Email Class Initialized
+INFO - 2025-05-23 10:20:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:20:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:20:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:20:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:20:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:20:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:20:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:20:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:20:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:20:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:20:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:20:33 --> Total execution time: 0.0240
+INFO - 2025-05-23 10:20:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:20:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:20:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:20:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:20:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:20:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:20:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:20:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:20:33 --> Total execution time: 0.0421
+INFO - 2025-05-23 10:21:33 --> Config Class Initialized
+INFO - 2025-05-23 10:21:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:21:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:21:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:21:33 --> URI Class Initialized
+INFO - 2025-05-23 10:21:33 --> Router Class Initialized
+INFO - 2025-05-23 10:21:33 --> Output Class Initialized
+INFO - 2025-05-23 10:21:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:21:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:21:33 --> Input Class Initialized
+INFO - 2025-05-23 10:21:33 --> Language Class Initialized
+INFO - 2025-05-23 10:21:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:21:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:21:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:21:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:21:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:21:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:21:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:21:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:21:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:21:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:21:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:21:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:21:33 --> Config Class Initialized
+INFO - 2025-05-23 10:21:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:21:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:21:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:21:33 --> URI Class Initialized
+INFO - 2025-05-23 10:21:33 --> Router Class Initialized
+INFO - 2025-05-23 10:21:33 --> Output Class Initialized
+INFO - 2025-05-23 10:21:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:21:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:21:33 --> Input Class Initialized
+INFO - 2025-05-23 10:21:33 --> Language Class Initialized
+INFO - 2025-05-23 10:21:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:21:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:21:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:21:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:21:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:21:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:21:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:21:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:21:33 --> Total execution time: 0.0287
+INFO - 2025-05-23 10:21:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:21:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:21:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:21:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:21:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:21:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:21:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:21:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:21:33 --> Total execution time: 0.0452
+INFO - 2025-05-23 10:22:33 --> Config Class Initialized
+INFO - 2025-05-23 10:22:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:22:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:22:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:22:33 --> URI Class Initialized
+INFO - 2025-05-23 10:22:33 --> Router Class Initialized
+INFO - 2025-05-23 10:22:33 --> Output Class Initialized
+INFO - 2025-05-23 10:22:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:22:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:22:33 --> Input Class Initialized
+INFO - 2025-05-23 10:22:33 --> Language Class Initialized
+INFO - 2025-05-23 10:22:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:22:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:22:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:22:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:22:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:22:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:22:33 --> Config Class Initialized
+INFO - 2025-05-23 10:22:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:22:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:22:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:22:33 --> Helper loaded: form_helper
+DEBUG - 2025-05-23 10:22:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:22:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 10:22:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 10:22:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:22:33 --> URI Class Initialized
+INFO - 2025-05-23 10:22:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:22:33 --> Router Class Initialized
+INFO - 2025-05-23 10:22:33 --> Output Class Initialized
+INFO - 2025-05-23 10:22:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:22:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:22:33 --> Input Class Initialized
+INFO - 2025-05-23 10:22:33 --> Language Class Initialized
+INFO - 2025-05-23 10:22:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:22:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:22:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:22:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:22:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:22:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:22:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:22:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:22:33 --> Total execution time: 0.0341
+INFO - 2025-05-23 10:22:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:22:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:22:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:22:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:22:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:22:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:22:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:22:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:22:33 --> Total execution time: 0.0548
+INFO - 2025-05-23 10:23:33 --> Config Class Initialized
+INFO - 2025-05-23 10:23:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:23:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:23:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:23:33 --> URI Class Initialized
+INFO - 2025-05-23 10:23:33 --> Config Class Initialized
+INFO - 2025-05-23 10:23:33 --> Router Class Initialized
+INFO - 2025-05-23 10:23:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:23:33 --> Output Class Initialized
+DEBUG - 2025-05-23 10:23:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:23:33 --> Security Class Initialized
+INFO - 2025-05-23 10:23:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 10:23:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:23:33 --> Input Class Initialized
+INFO - 2025-05-23 10:23:33 --> URI Class Initialized
+INFO - 2025-05-23 10:23:33 --> Language Class Initialized
+INFO - 2025-05-23 10:23:33 --> Router Class Initialized
+INFO - 2025-05-23 10:23:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:23:33 --> Output Class Initialized
+INFO - 2025-05-23 10:23:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:23:33 --> Security Class Initialized
+INFO - 2025-05-23 10:23:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 10:23:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:23:33 --> Input Class Initialized
+INFO - 2025-05-23 10:23:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:23:33 --> Language Class Initialized
+INFO - 2025-05-23 10:23:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:23:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:23:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:23:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:23:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:23:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:23:33 --> Email Class Initialized
+INFO - 2025-05-23 10:23:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 10:23:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:23:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:23:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:23:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:23:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:23:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:23:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:23:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:23:33 --> Total execution time: 0.0271
+INFO - 2025-05-23 10:23:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:23:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:23:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:23:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:23:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:23:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:23:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:23:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:23:33 --> Total execution time: 0.0411
+INFO - 2025-05-23 10:24:33 --> Config Class Initialized
+INFO - 2025-05-23 10:24:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:24:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:24:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:24:33 --> URI Class Initialized
+INFO - 2025-05-23 10:24:33 --> Router Class Initialized
+INFO - 2025-05-23 10:24:33 --> Output Class Initialized
+INFO - 2025-05-23 10:24:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:24:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:24:33 --> Input Class Initialized
+INFO - 2025-05-23 10:24:33 --> Language Class Initialized
+INFO - 2025-05-23 10:24:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:24:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:24:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:24:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:24:33 --> Config Class Initialized
+INFO - 2025-05-23 10:24:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:24:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:24:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:24:33 --> URI Class Initialized
+INFO - 2025-05-23 10:24:33 --> Router Class Initialized
+INFO - 2025-05-23 10:24:33 --> Output Class Initialized
+INFO - 2025-05-23 10:24:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:24:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:24:33 --> Input Class Initialized
+INFO - 2025-05-23 10:24:33 --> Language Class Initialized
+INFO - 2025-05-23 10:24:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:24:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:24:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:24:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:24:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:24:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:24:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:24:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:24:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:24:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:24:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:24:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:24:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:24:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:24:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:24:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:24:33 --> Total execution time: 0.0285
+INFO - 2025-05-23 10:24:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:24:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:24:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:24:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:24:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:24:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:24:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:24:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:24:33 --> Total execution time: 0.0407
+INFO - 2025-05-23 10:25:33 --> Config Class Initialized
+INFO - 2025-05-23 10:25:33 --> Config Class Initialized
+INFO - 2025-05-23 10:25:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:25:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:25:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 10:25:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:25:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:25:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:25:33 --> URI Class Initialized
+INFO - 2025-05-23 10:25:33 --> URI Class Initialized
+INFO - 2025-05-23 10:25:33 --> Router Class Initialized
+INFO - 2025-05-23 10:25:33 --> Router Class Initialized
+INFO - 2025-05-23 10:25:33 --> Output Class Initialized
+INFO - 2025-05-23 10:25:33 --> Output Class Initialized
+INFO - 2025-05-23 10:25:33 --> Security Class Initialized
+INFO - 2025-05-23 10:25:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:25:33 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 10:25:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:25:33 --> Input Class Initialized
+INFO - 2025-05-23 10:25:33 --> Input Class Initialized
+INFO - 2025-05-23 10:25:33 --> Language Class Initialized
+INFO - 2025-05-23 10:25:33 --> Language Class Initialized
+INFO - 2025-05-23 10:25:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:25:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:25:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:25:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:25:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:25:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:25:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:25:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:25:33 --> Email Class Initialized
+INFO - 2025-05-23 10:25:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:25:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:25:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:25:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:25:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:25:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:25:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:25:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:25:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:25:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:25:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:25:33 --> Total execution time: 0.0259
+INFO - 2025-05-23 10:25:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:25:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:25:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:25:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:25:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:25:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:25:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:25:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:25:33 --> Total execution time: 0.0453
+INFO - 2025-05-23 10:26:33 --> Config Class Initialized
+INFO - 2025-05-23 10:26:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:26:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:26:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:26:33 --> URI Class Initialized
+INFO - 2025-05-23 10:26:33 --> Router Class Initialized
+INFO - 2025-05-23 10:26:33 --> Output Class Initialized
+INFO - 2025-05-23 10:26:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:26:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:26:33 --> Config Class Initialized
+INFO - 2025-05-23 10:26:33 --> Input Class Initialized
+INFO - 2025-05-23 10:26:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:26:33 --> Language Class Initialized
+DEBUG - 2025-05-23 10:26:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:26:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:26:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:26:33 --> URI Class Initialized
+INFO - 2025-05-23 10:26:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:26:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:26:33 --> Router Class Initialized
+INFO - 2025-05-23 10:26:33 --> Output Class Initialized
+INFO - 2025-05-23 10:26:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:26:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:26:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:26:33 --> Input Class Initialized
+INFO - 2025-05-23 10:26:33 --> Language Class Initialized
+INFO - 2025-05-23 10:26:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:26:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:26:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:26:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:26:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:26:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:26:33 --> Email Class Initialized
+INFO - 2025-05-23 10:26:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 10:26:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:26:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:26:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:26:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:26:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:26:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:26:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:26:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:26:33 --> Total execution time: 0.0277
+INFO - 2025-05-23 10:26:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:26:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:26:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:26:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:26:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:26:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:26:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:26:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:26:33 --> Total execution time: 0.0424
+INFO - 2025-05-23 10:27:33 --> Config Class Initialized
+INFO - 2025-05-23 10:27:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:27:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:27:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:27:33 --> URI Class Initialized
+INFO - 2025-05-23 10:27:33 --> Router Class Initialized
+INFO - 2025-05-23 10:27:33 --> Output Class Initialized
+INFO - 2025-05-23 10:27:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:27:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:27:33 --> Input Class Initialized
+INFO - 2025-05-23 10:27:33 --> Language Class Initialized
+INFO - 2025-05-23 10:27:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:27:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:27:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:27:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:27:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:27:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:27:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:27:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:27:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:27:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:27:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:27:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:27:33 --> Config Class Initialized
+INFO - 2025-05-23 10:27:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:27:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:27:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:27:33 --> URI Class Initialized
+INFO - 2025-05-23 10:27:33 --> Router Class Initialized
+INFO - 2025-05-23 10:27:33 --> Output Class Initialized
+INFO - 2025-05-23 10:27:33 --> Security Class Initialized
+INFO - 2025-05-23 10:27:33 --> Model "Crud" initialized
+DEBUG - 2025-05-23 10:27:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:27:33 --> Input Class Initialized
+INFO - 2025-05-23 10:27:33 --> Language Class Initialized
+INFO - 2025-05-23 10:27:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:27:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:27:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:27:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:27:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:27:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:27:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:27:33 --> Total execution time: 0.0315
+INFO - 2025-05-23 10:27:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:27:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:27:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:27:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:27:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:27:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:27:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:27:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:27:33 --> Total execution time: 0.0458
+INFO - 2025-05-23 10:28:33 --> Config Class Initialized
+INFO - 2025-05-23 10:28:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:28:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:28:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:28:33 --> URI Class Initialized
+INFO - 2025-05-23 10:28:33 --> Router Class Initialized
+INFO - 2025-05-23 10:28:33 --> Output Class Initialized
+INFO - 2025-05-23 10:28:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:28:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:28:33 --> Input Class Initialized
+INFO - 2025-05-23 10:28:33 --> Language Class Initialized
+INFO - 2025-05-23 10:28:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:28:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:28:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:28:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:28:33 --> Config Class Initialized
+INFO - 2025-05-23 10:28:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:28:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:28:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:28:33 --> URI Class Initialized
+INFO - 2025-05-23 10:28:33 --> Email Class Initialized
+INFO - 2025-05-23 10:28:33 --> Router Class Initialized
+INFO - 2025-05-23 10:28:33 --> Output Class Initialized
+DEBUG - 2025-05-23 10:28:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:28:33 --> Security Class Initialized
+INFO - 2025-05-23 10:28:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 10:28:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:28:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:28:33 --> Input Class Initialized
+INFO - 2025-05-23 10:28:33 --> Language Class Initialized
+INFO - 2025-05-23 10:28:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:28:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 10:28:33 --> Loader Class Initialized
+DEBUG - 2025-05-23 10:28:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:28:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:28:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:28:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:28:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:28:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:28:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:28:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:28:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:28:33 --> Total execution time: 0.0275
+INFO - 2025-05-23 10:28:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:28:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:28:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:28:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:28:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:28:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:28:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:28:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:28:33 --> Total execution time: 0.0399
+INFO - 2025-05-23 10:29:33 --> Config Class Initialized
+INFO - 2025-05-23 10:29:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:29:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:29:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:29:33 --> URI Class Initialized
+INFO - 2025-05-23 10:29:33 --> Router Class Initialized
+INFO - 2025-05-23 10:29:33 --> Output Class Initialized
+INFO - 2025-05-23 10:29:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:29:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:29:33 --> Input Class Initialized
+INFO - 2025-05-23 10:29:33 --> Config Class Initialized
+INFO - 2025-05-23 10:29:33 --> Language Class Initialized
+INFO - 2025-05-23 10:29:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:29:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:29:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:29:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:29:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:29:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:29:33 --> URI Class Initialized
+INFO - 2025-05-23 10:29:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:29:33 --> Router Class Initialized
+INFO - 2025-05-23 10:29:33 --> Output Class Initialized
+INFO - 2025-05-23 10:29:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:29:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:29:33 --> Input Class Initialized
+INFO - 2025-05-23 10:29:33 --> Language Class Initialized
+INFO - 2025-05-23 10:29:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:29:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:29:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:29:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:29:33 --> Email Class Initialized
+INFO - 2025-05-23 10:29:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:29:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:29:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:29:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:29:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:29:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:29:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:29:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:29:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:29:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:29:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:29:33 --> Total execution time: 0.0276
+INFO - 2025-05-23 10:29:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:29:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:29:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:29:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:29:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:29:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:29:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:29:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:29:33 --> Total execution time: 0.0452
+INFO - 2025-05-23 10:30:33 --> Config Class Initialized
+INFO - 2025-05-23 10:30:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:30:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:30:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:30:33 --> URI Class Initialized
+INFO - 2025-05-23 10:30:33 --> Router Class Initialized
+INFO - 2025-05-23 10:30:33 --> Output Class Initialized
+INFO - 2025-05-23 10:30:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:30:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:30:33 --> Input Class Initialized
+INFO - 2025-05-23 10:30:33 --> Language Class Initialized
+INFO - 2025-05-23 10:30:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:30:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:30:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:30:33 --> Config Class Initialized
+INFO - 2025-05-23 10:30:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:30:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:30:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:30:33 --> URI Class Initialized
+INFO - 2025-05-23 10:30:33 --> Router Class Initialized
+INFO - 2025-05-23 10:30:33 --> Output Class Initialized
+INFO - 2025-05-23 10:30:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:30:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:30:33 --> Input Class Initialized
+INFO - 2025-05-23 10:30:33 --> Language Class Initialized
+INFO - 2025-05-23 10:30:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:30:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:30:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:30:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:30:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:30:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:30:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:30:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:30:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 10:30:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:30:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:30:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 10:30:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:30:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:30:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:30:33 --> Total execution time: 0.0347
+INFO - 2025-05-23 10:30:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:30:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:30:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:30:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:30:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:30:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:30:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:30:33 --> Total execution time: 0.0575
+INFO - 2025-05-23 10:31:33 --> Config Class Initialized
+INFO - 2025-05-23 10:31:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:31:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:31:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:31:33 --> URI Class Initialized
+INFO - 2025-05-23 10:31:33 --> Router Class Initialized
+INFO - 2025-05-23 10:31:33 --> Output Class Initialized
+INFO - 2025-05-23 10:31:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:31:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:31:33 --> Input Class Initialized
+INFO - 2025-05-23 10:31:33 --> Language Class Initialized
+INFO - 2025-05-23 10:31:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:31:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:31:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:31:33 --> Config Class Initialized
+INFO - 2025-05-23 10:31:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:31:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:31:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:31:33 --> URI Class Initialized
+INFO - 2025-05-23 10:31:33 --> Router Class Initialized
+INFO - 2025-05-23 10:31:33 --> Output Class Initialized
+INFO - 2025-05-23 10:31:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:31:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:31:33 --> Input Class Initialized
+INFO - 2025-05-23 10:31:33 --> Language Class Initialized
+INFO - 2025-05-23 10:31:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:31:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:31:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:31:33 --> Email Class Initialized
+INFO - 2025-05-23 10:31:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 10:31:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:31:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:31:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:31:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:31:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:31:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:31:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:31:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:31:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:31:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:31:33 --> Total execution time: 0.0329
+INFO - 2025-05-23 10:31:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:31:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:31:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:31:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:31:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:31:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:31:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:31:33 --> Total execution time: 0.0500
+INFO - 2025-05-23 10:32:33 --> Config Class Initialized
+INFO - 2025-05-23 10:32:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:32:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:32:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:32:33 --> URI Class Initialized
+INFO - 2025-05-23 10:32:33 --> Router Class Initialized
+INFO - 2025-05-23 10:32:33 --> Output Class Initialized
+INFO - 2025-05-23 10:32:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:32:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:32:33 --> Input Class Initialized
+INFO - 2025-05-23 10:32:33 --> Language Class Initialized
+INFO - 2025-05-23 10:32:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:32:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:32:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:32:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:32:33 --> Config Class Initialized
+INFO - 2025-05-23 10:32:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:32:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:32:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:32:33 --> URI Class Initialized
+INFO - 2025-05-23 10:32:33 --> Router Class Initialized
+INFO - 2025-05-23 10:32:33 --> Output Class Initialized
+INFO - 2025-05-23 10:32:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:32:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:32:33 --> Input Class Initialized
+INFO - 2025-05-23 10:32:33 --> Language Class Initialized
+INFO - 2025-05-23 10:32:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:32:33 --> Email Class Initialized
+INFO - 2025-05-23 10:32:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:32:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 10:32:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:32:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:32:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:32:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:32:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:32:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:32:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:32:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:32:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:32:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:32:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:32:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:32:33 --> Total execution time: 0.0309
+INFO - 2025-05-23 10:32:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:32:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:32:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:32:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:32:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:32:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:32:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:32:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:32:33 --> Total execution time: 0.0443
+INFO - 2025-05-23 10:33:33 --> Config Class Initialized
+INFO - 2025-05-23 10:33:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:33:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:33:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:33:33 --> URI Class Initialized
+INFO - 2025-05-23 10:33:33 --> Router Class Initialized
+INFO - 2025-05-23 10:33:33 --> Output Class Initialized
+INFO - 2025-05-23 10:33:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:33:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:33:33 --> Input Class Initialized
+INFO - 2025-05-23 10:33:33 --> Language Class Initialized
+INFO - 2025-05-23 10:33:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:33:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:33:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:33:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:33:33 --> Config Class Initialized
+INFO - 2025-05-23 10:33:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:33:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:33:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:33:33 --> URI Class Initialized
+INFO - 2025-05-23 10:33:33 --> Router Class Initialized
+INFO - 2025-05-23 10:33:33 --> Output Class Initialized
+INFO - 2025-05-23 10:33:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:33:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:33:33 --> Input Class Initialized
+INFO - 2025-05-23 10:33:33 --> Language Class Initialized
+INFO - 2025-05-23 10:33:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:33:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:33:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:33:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:33:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:33:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:33:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:33:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:33:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:33:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:33:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:33:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:33:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:33:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:33:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:33:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:33:33 --> Total execution time: 0.0308
+INFO - 2025-05-23 10:33:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:33:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:33:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:33:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:33:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:33:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:33:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:33:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:33:33 --> Total execution time: 0.0480
+INFO - 2025-05-23 10:34:33 --> Config Class Initialized
+INFO - 2025-05-23 10:34:33 --> Config Class Initialized
+INFO - 2025-05-23 10:34:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:34:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:34:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 10:34:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:34:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:34:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:34:33 --> URI Class Initialized
+INFO - 2025-05-23 10:34:33 --> URI Class Initialized
+INFO - 2025-05-23 10:34:33 --> Router Class Initialized
+INFO - 2025-05-23 10:34:33 --> Output Class Initialized
+INFO - 2025-05-23 10:34:33 --> Security Class Initialized
+INFO - 2025-05-23 10:34:33 --> Router Class Initialized
+DEBUG - 2025-05-23 10:34:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:34:33 --> Input Class Initialized
+INFO - 2025-05-23 10:34:33 --> Language Class Initialized
+INFO - 2025-05-23 10:34:33 --> Output Class Initialized
+INFO - 2025-05-23 10:34:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:34:33 --> Security Class Initialized
+INFO - 2025-05-23 10:34:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:34:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 10:34:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:34:33 --> Input Class Initialized
+INFO - 2025-05-23 10:34:33 --> Language Class Initialized
+INFO - 2025-05-23 10:34:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:34:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:34:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:34:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:34:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:34:33 --> Email Class Initialized
+INFO - 2025-05-23 10:34:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:34:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:34:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:34:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:34:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:34:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:34:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:34:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:34:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:34:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:34:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:34:33 --> Total execution time: 0.0247
+INFO - 2025-05-23 10:34:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:34:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:34:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:34:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:34:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:34:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:34:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:34:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:34:33 --> Total execution time: 0.0412
+INFO - 2025-05-23 10:35:33 --> Config Class Initialized
+INFO - 2025-05-23 10:35:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:35:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:35:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:35:33 --> URI Class Initialized
+INFO - 2025-05-23 10:35:33 --> Router Class Initialized
+INFO - 2025-05-23 10:35:33 --> Output Class Initialized
+INFO - 2025-05-23 10:35:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:35:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:35:33 --> Input Class Initialized
+INFO - 2025-05-23 10:35:33 --> Language Class Initialized
+INFO - 2025-05-23 10:35:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:35:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:35:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:35:33 --> Config Class Initialized
+INFO - 2025-05-23 10:35:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:35:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:35:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:35:33 --> Email Class Initialized
+INFO - 2025-05-23 10:35:33 --> URI Class Initialized
+INFO - 2025-05-23 10:35:33 --> Router Class Initialized
+INFO - 2025-05-23 10:35:33 --> Output Class Initialized
+INFO - 2025-05-23 10:35:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:35:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:35:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:35:33 --> Input Class Initialized
+INFO - 2025-05-23 10:35:33 --> Language Class Initialized
+INFO - 2025-05-23 10:35:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:35:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:35:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:35:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:35:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:35:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:35:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:35:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:35:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:35:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:35:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:35:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:35:33 --> Total execution time: 0.0289
+INFO - 2025-05-23 10:35:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:35:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:35:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:35:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:35:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:35:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:35:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:35:33 --> Total execution time: 0.0414
+INFO - 2025-05-23 10:36:33 --> Config Class Initialized
+INFO - 2025-05-23 10:36:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:36:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:36:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:36:33 --> URI Class Initialized
+INFO - 2025-05-23 10:36:33 --> Router Class Initialized
+INFO - 2025-05-23 10:36:33 --> Output Class Initialized
+INFO - 2025-05-23 10:36:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:36:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:36:33 --> Input Class Initialized
+INFO - 2025-05-23 10:36:33 --> Language Class Initialized
+INFO - 2025-05-23 10:36:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:36:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:36:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:36:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:36:33 --> Config Class Initialized
+INFO - 2025-05-23 10:36:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:36:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:36:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:36:33 --> URI Class Initialized
+INFO - 2025-05-23 10:36:33 --> Router Class Initialized
+INFO - 2025-05-23 10:36:33 --> Output Class Initialized
+INFO - 2025-05-23 10:36:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:36:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:36:33 --> Input Class Initialized
+INFO - 2025-05-23 10:36:33 --> Language Class Initialized
+INFO - 2025-05-23 10:36:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:36:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:36:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:36:33 --> Email Class Initialized
+INFO - 2025-05-23 10:36:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 10:36:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:36:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:36:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:36:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:36:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:36:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:36:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:36:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:36:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:36:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:36:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:36:33 --> Total execution time: 0.0273
+INFO - 2025-05-23 10:36:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:36:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:36:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:36:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:36:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:36:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:36:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:36:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:36:33 --> Total execution time: 0.0396
+INFO - 2025-05-23 10:37:33 --> Config Class Initialized
+INFO - 2025-05-23 10:37:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:37:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:37:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:37:33 --> URI Class Initialized
+INFO - 2025-05-23 10:37:33 --> Config Class Initialized
+INFO - 2025-05-23 10:37:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:37:33 --> Router Class Initialized
+DEBUG - 2025-05-23 10:37:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:37:33 --> Output Class Initialized
+INFO - 2025-05-23 10:37:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:37:33 --> Security Class Initialized
+INFO - 2025-05-23 10:37:33 --> URI Class Initialized
+DEBUG - 2025-05-23 10:37:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:37:33 --> Input Class Initialized
+INFO - 2025-05-23 10:37:33 --> Router Class Initialized
+INFO - 2025-05-23 10:37:33 --> Language Class Initialized
+INFO - 2025-05-23 10:37:33 --> Output Class Initialized
+INFO - 2025-05-23 10:37:33 --> Security Class Initialized
+INFO - 2025-05-23 10:37:33 --> Loader Class Initialized
+DEBUG - 2025-05-23 10:37:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:37:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:37:33 --> Input Class Initialized
+INFO - 2025-05-23 10:37:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:37:33 --> Language Class Initialized
+INFO - 2025-05-23 10:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:37:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:37:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:37:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:37:33 --> Email Class Initialized
+INFO - 2025-05-23 10:37:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:37:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:37:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:37:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:37:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:37:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:37:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:37:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:37:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:37:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:37:33 --> Total execution time: 0.0306
+INFO - 2025-05-23 10:37:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:37:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:37:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:37:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:37:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:37:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:37:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:37:33 --> Total execution time: 0.0533
+INFO - 2025-05-23 10:38:33 --> Config Class Initialized
+INFO - 2025-05-23 10:38:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:38:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:38:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:38:33 --> URI Class Initialized
+INFO - 2025-05-23 10:38:33 --> Router Class Initialized
+INFO - 2025-05-23 10:38:33 --> Output Class Initialized
+INFO - 2025-05-23 10:38:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:38:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:38:33 --> Input Class Initialized
+INFO - 2025-05-23 10:38:33 --> Language Class Initialized
+INFO - 2025-05-23 10:38:33 --> Config Class Initialized
+INFO - 2025-05-23 10:38:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:38:33 --> Loader Class Initialized
+DEBUG - 2025-05-23 10:38:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:38:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:38:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:38:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:38:33 --> URI Class Initialized
+INFO - 2025-05-23 10:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:38:33 --> Router Class Initialized
+INFO - 2025-05-23 10:38:33 --> Output Class Initialized
+INFO - 2025-05-23 10:38:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:38:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:38:33 --> Input Class Initialized
+INFO - 2025-05-23 10:38:33 --> Language Class Initialized
+INFO - 2025-05-23 10:38:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:38:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:38:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:38:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:38:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:38:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:38:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:38:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:38:33 --> Email Class Initialized
+INFO - 2025-05-23 10:38:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:38:33 --> Session class already loaded. Second attempt ignored.
+DEBUG - 2025-05-23 10:38:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:38:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:38:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:38:33 --> Total execution time: 0.0224
+INFO - 2025-05-23 10:38:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:38:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:38:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:38:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:38:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:38:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:38:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:38:33 --> Total execution time: 0.0337
+INFO - 2025-05-23 10:39:33 --> Config Class Initialized
+INFO - 2025-05-23 10:39:33 --> Config Class Initialized
+INFO - 2025-05-23 10:39:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:39:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:39:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 10:39:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:39:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:39:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:39:33 --> URI Class Initialized
+INFO - 2025-05-23 10:39:33 --> URI Class Initialized
+INFO - 2025-05-23 10:39:33 --> Router Class Initialized
+INFO - 2025-05-23 10:39:33 --> Router Class Initialized
+INFO - 2025-05-23 10:39:33 --> Output Class Initialized
+INFO - 2025-05-23 10:39:33 --> Output Class Initialized
+INFO - 2025-05-23 10:39:33 --> Security Class Initialized
+INFO - 2025-05-23 10:39:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:39:33 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 10:39:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:39:33 --> Input Class Initialized
+INFO - 2025-05-23 10:39:33 --> Input Class Initialized
+INFO - 2025-05-23 10:39:33 --> Language Class Initialized
+INFO - 2025-05-23 10:39:33 --> Language Class Initialized
+INFO - 2025-05-23 10:39:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:39:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:39:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:39:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:39:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:39:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:39:33 --> Email Class Initialized
+INFO - 2025-05-23 10:39:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:39:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:39:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:39:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:39:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:39:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:39:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:39:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:39:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:39:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:39:33 --> Total execution time: 0.0269
+INFO - 2025-05-23 10:39:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:39:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:39:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:39:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:39:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:39:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:39:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:39:33 --> Total execution time: 0.0467
+INFO - 2025-05-23 10:40:33 --> Config Class Initialized
+INFO - 2025-05-23 10:40:33 --> Config Class Initialized
+INFO - 2025-05-23 10:40:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:40:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:40:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:40:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 10:40:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:40:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:40:33 --> URI Class Initialized
+INFO - 2025-05-23 10:40:33 --> URI Class Initialized
+INFO - 2025-05-23 10:40:33 --> Router Class Initialized
+INFO - 2025-05-23 10:40:33 --> Router Class Initialized
+INFO - 2025-05-23 10:40:33 --> Output Class Initialized
+INFO - 2025-05-23 10:40:33 --> Output Class Initialized
+INFO - 2025-05-23 10:40:33 --> Security Class Initialized
+INFO - 2025-05-23 10:40:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:40:33 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 10:40:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:40:33 --> Input Class Initialized
+INFO - 2025-05-23 10:40:33 --> Input Class Initialized
+INFO - 2025-05-23 10:40:33 --> Language Class Initialized
+INFO - 2025-05-23 10:40:33 --> Language Class Initialized
+INFO - 2025-05-23 10:40:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:40:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:40:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:40:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:40:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:40:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:40:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:40:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:40:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:40:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:40:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:40:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:40:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:40:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:40:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:40:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:40:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:40:33 --> Total execution time: 0.0295
+INFO - 2025-05-23 10:40:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:40:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:40:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:40:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:40:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:40:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:40:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:40:33 --> Total execution time: 0.0471
+INFO - 2025-05-23 10:41:33 --> Config Class Initialized
+INFO - 2025-05-23 10:41:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:41:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:41:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:41:33 --> URI Class Initialized
+INFO - 2025-05-23 10:41:33 --> Router Class Initialized
+INFO - 2025-05-23 10:41:33 --> Output Class Initialized
+INFO - 2025-05-23 10:41:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:41:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:41:33 --> Input Class Initialized
+INFO - 2025-05-23 10:41:33 --> Language Class Initialized
+INFO - 2025-05-23 10:41:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:41:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:41:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:41:33 --> Config Class Initialized
+INFO - 2025-05-23 10:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:41:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:41:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:41:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:41:33 --> URI Class Initialized
+INFO - 2025-05-23 10:41:33 --> Router Class Initialized
+INFO - 2025-05-23 10:41:33 --> Output Class Initialized
+INFO - 2025-05-23 10:41:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:41:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:41:33 --> Input Class Initialized
+INFO - 2025-05-23 10:41:33 --> Language Class Initialized
+INFO - 2025-05-23 10:41:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:41:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:41:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:41:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:41:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:41:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:41:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:41:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:41:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:41:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:41:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:41:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:41:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:41:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:41:33 --> Total execution time: 0.0298
+INFO - 2025-05-23 10:41:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:41:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:41:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:41:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:41:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:41:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:41:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:41:33 --> Total execution time: 0.0462
+INFO - 2025-05-23 10:42:33 --> Config Class Initialized
+INFO - 2025-05-23 10:42:33 --> Config Class Initialized
+INFO - 2025-05-23 10:42:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:42:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:42:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 10:42:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:42:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:42:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:42:33 --> URI Class Initialized
+INFO - 2025-05-23 10:42:33 --> URI Class Initialized
+INFO - 2025-05-23 10:42:33 --> Router Class Initialized
+INFO - 2025-05-23 10:42:33 --> Router Class Initialized
+INFO - 2025-05-23 10:42:33 --> Output Class Initialized
+INFO - 2025-05-23 10:42:33 --> Security Class Initialized
+INFO - 2025-05-23 10:42:33 --> Output Class Initialized
+DEBUG - 2025-05-23 10:42:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:42:33 --> Input Class Initialized
+INFO - 2025-05-23 10:42:33 --> Security Class Initialized
+INFO - 2025-05-23 10:42:33 --> Language Class Initialized
+DEBUG - 2025-05-23 10:42:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:42:33 --> Input Class Initialized
+INFO - 2025-05-23 10:42:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:42:33 --> Language Class Initialized
+INFO - 2025-05-23 10:42:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:42:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:42:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:42:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:42:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:42:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:42:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:42:33 --> Email Class Initialized
+INFO - 2025-05-23 10:42:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:42:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:42:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:42:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:42:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:42:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:42:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:42:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:42:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:42:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:42:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:42:33 --> Total execution time: 0.0297
+INFO - 2025-05-23 10:42:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:42:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:42:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:42:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:42:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:42:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:42:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:42:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:42:33 --> Total execution time: 0.0593
+INFO - 2025-05-23 10:43:33 --> Config Class Initialized
+INFO - 2025-05-23 10:43:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:43:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:43:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:43:33 --> URI Class Initialized
+INFO - 2025-05-23 10:43:33 --> Router Class Initialized
+INFO - 2025-05-23 10:43:33 --> Output Class Initialized
+INFO - 2025-05-23 10:43:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:43:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:43:33 --> Input Class Initialized
+INFO - 2025-05-23 10:43:33 --> Language Class Initialized
+INFO - 2025-05-23 10:43:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:43:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:43:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:43:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:43:33 --> Config Class Initialized
+INFO - 2025-05-23 10:43:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:43:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:43:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:43:33 --> URI Class Initialized
+INFO - 2025-05-23 10:43:33 --> Router Class Initialized
+INFO - 2025-05-23 10:43:33 --> Email Class Initialized
+INFO - 2025-05-23 10:43:33 --> Output Class Initialized
+INFO - 2025-05-23 10:43:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:43:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:43:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:43:33 --> Input Class Initialized
+INFO - 2025-05-23 10:43:33 --> Language Class Initialized
+INFO - 2025-05-23 10:43:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:43:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:43:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:43:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:43:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:43:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 10:43:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 10:43:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:43:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:43:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:43:33 --> Email Class Initialized
+INFO - 2025-05-23 10:43:33 --> Model "Crud" initialized
+DEBUG - 2025-05-23 10:43:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:43:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:43:33 --> Total execution time: 0.0228
+INFO - 2025-05-23 10:43:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:43:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:43:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:43:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:43:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:43:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:43:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:43:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:43:33 --> Total execution time: 0.0301
+INFO - 2025-05-23 10:44:33 --> Config Class Initialized
+INFO - 2025-05-23 10:44:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:44:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:44:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:44:33 --> URI Class Initialized
+INFO - 2025-05-23 10:44:33 --> Config Class Initialized
+INFO - 2025-05-23 10:44:33 --> Router Class Initialized
+INFO - 2025-05-23 10:44:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:44:33 --> Output Class Initialized
+DEBUG - 2025-05-23 10:44:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:44:33 --> Security Class Initialized
+INFO - 2025-05-23 10:44:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 10:44:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:44:33 --> Input Class Initialized
+INFO - 2025-05-23 10:44:33 --> URI Class Initialized
+INFO - 2025-05-23 10:44:33 --> Language Class Initialized
+INFO - 2025-05-23 10:44:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:44:33 --> Router Class Initialized
+INFO - 2025-05-23 10:44:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:44:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:44:33 --> Output Class Initialized
+INFO - 2025-05-23 10:44:33 --> Security Class Initialized
+INFO - 2025-05-23 10:44:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 10:44:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:44:33 --> Input Class Initialized
+INFO - 2025-05-23 10:44:33 --> Language Class Initialized
+INFO - 2025-05-23 10:44:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:44:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:44:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:44:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:44:33 --> Email Class Initialized
+INFO - 2025-05-23 10:44:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:44:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:44:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:44:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:44:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:44:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:44:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:44:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:44:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:44:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:44:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:44:33 --> Total execution time: 0.0298
+INFO - 2025-05-23 10:44:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:44:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:44:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:44:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:44:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:44:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:44:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:44:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:44:33 --> Total execution time: 0.0479
+INFO - 2025-05-23 10:45:33 --> Config Class Initialized
+INFO - 2025-05-23 10:45:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:45:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:45:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:45:33 --> URI Class Initialized
+INFO - 2025-05-23 10:45:33 --> Config Class Initialized
+INFO - 2025-05-23 10:45:33 --> Router Class Initialized
+INFO - 2025-05-23 10:45:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:45:33 --> Output Class Initialized
+INFO - 2025-05-23 10:45:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:45:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 10:45:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:45:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:45:33 --> Input Class Initialized
+INFO - 2025-05-23 10:45:33 --> URI Class Initialized
+INFO - 2025-05-23 10:45:33 --> Language Class Initialized
+INFO - 2025-05-23 10:45:33 --> Router Class Initialized
+INFO - 2025-05-23 10:45:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:45:33 --> Output Class Initialized
+INFO - 2025-05-23 10:45:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:45:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:45:33 --> Security Class Initialized
+INFO - 2025-05-23 10:45:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 10:45:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:45:33 --> Input Class Initialized
+INFO - 2025-05-23 10:45:33 --> Language Class Initialized
+INFO - 2025-05-23 10:45:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:45:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:45:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:45:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:45:33 --> Email Class Initialized
+INFO - 2025-05-23 10:45:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:45:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:45:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:45:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:45:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:45:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:45:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:45:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:45:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:45:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:45:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:45:33 --> Total execution time: 0.0282
+INFO - 2025-05-23 10:45:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:45:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:45:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:45:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:45:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:45:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:45:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:45:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:45:33 --> Total execution time: 0.0465
+INFO - 2025-05-23 10:46:33 --> Config Class Initialized
+INFO - 2025-05-23 10:46:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:46:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:46:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:46:33 --> URI Class Initialized
+INFO - 2025-05-23 10:46:33 --> Router Class Initialized
+INFO - 2025-05-23 10:46:33 --> Output Class Initialized
+INFO - 2025-05-23 10:46:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:46:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:46:33 --> Input Class Initialized
+INFO - 2025-05-23 10:46:33 --> Language Class Initialized
+INFO - 2025-05-23 10:46:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:46:33 --> Config Class Initialized
+INFO - 2025-05-23 10:46:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:46:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:46:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 10:46:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:46:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:46:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:46:33 --> URI Class Initialized
+INFO - 2025-05-23 10:46:33 --> Router Class Initialized
+INFO - 2025-05-23 10:46:33 --> Output Class Initialized
+INFO - 2025-05-23 10:46:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:46:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:46:33 --> Input Class Initialized
+INFO - 2025-05-23 10:46:33 --> Language Class Initialized
+INFO - 2025-05-23 10:46:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:46:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:46:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:46:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:46:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:46:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:46:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:46:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:46:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:46:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:46:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:46:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:46:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:46:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:46:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:46:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:46:33 --> Total execution time: 0.0281
+INFO - 2025-05-23 10:46:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:46:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:46:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:46:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:46:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:46:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:46:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:46:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:46:33 --> Total execution time: 0.0492
+INFO - 2025-05-23 10:47:33 --> Config Class Initialized
+INFO - 2025-05-23 10:47:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:47:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:47:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:47:33 --> URI Class Initialized
+INFO - 2025-05-23 10:47:33 --> Router Class Initialized
+INFO - 2025-05-23 10:47:33 --> Output Class Initialized
+INFO - 2025-05-23 10:47:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:47:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:47:33 --> Input Class Initialized
+INFO - 2025-05-23 10:47:33 --> Config Class Initialized
+INFO - 2025-05-23 10:47:33 --> Language Class Initialized
+INFO - 2025-05-23 10:47:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:47:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:47:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:47:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:47:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:47:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:47:33 --> URI Class Initialized
+INFO - 2025-05-23 10:47:33 --> Router Class Initialized
+INFO - 2025-05-23 10:47:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:47:33 --> Output Class Initialized
+INFO - 2025-05-23 10:47:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:47:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:47:33 --> Input Class Initialized
+INFO - 2025-05-23 10:47:33 --> Language Class Initialized
+INFO - 2025-05-23 10:47:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:47:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:47:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:47:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:47:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:47:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:47:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:47:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:47:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:47:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:47:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:47:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:47:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:47:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:47:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:47:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:47:33 --> Total execution time: 0.0267
+INFO - 2025-05-23 10:47:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:47:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:47:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:47:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:47:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:47:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:47:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:47:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:47:33 --> Total execution time: 0.0422
+INFO - 2025-05-23 10:48:33 --> Config Class Initialized
+INFO - 2025-05-23 10:48:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:48:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:48:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:48:33 --> URI Class Initialized
+INFO - 2025-05-23 10:48:33 --> Router Class Initialized
+INFO - 2025-05-23 10:48:33 --> Output Class Initialized
+INFO - 2025-05-23 10:48:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:48:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:48:33 --> Input Class Initialized
+INFO - 2025-05-23 10:48:33 --> Language Class Initialized
+INFO - 2025-05-23 10:48:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:48:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:48:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:48:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:48:33 --> Config Class Initialized
+INFO - 2025-05-23 10:48:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:48:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:48:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:48:33 --> URI Class Initialized
+INFO - 2025-05-23 10:48:33 --> Router Class Initialized
+INFO - 2025-05-23 10:48:33 --> Output Class Initialized
+INFO - 2025-05-23 10:48:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:48:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:48:33 --> Input Class Initialized
+INFO - 2025-05-23 10:48:33 --> Language Class Initialized
+INFO - 2025-05-23 10:48:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:48:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:48:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:48:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:48:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:48:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:48:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:48:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:48:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:48:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:48:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:48:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:48:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:48:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:48:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:48:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:48:33 --> Total execution time: 0.0251
+INFO - 2025-05-23 10:48:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:48:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:48:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:48:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:48:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:48:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:48:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:48:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:48:33 --> Total execution time: 0.0345
+INFO - 2025-05-23 10:49:33 --> Config Class Initialized
+INFO - 2025-05-23 10:49:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:49:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:49:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:49:33 --> URI Class Initialized
+INFO - 2025-05-23 10:49:33 --> Router Class Initialized
+INFO - 2025-05-23 10:49:33 --> Output Class Initialized
+INFO - 2025-05-23 10:49:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:49:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:49:33 --> Input Class Initialized
+INFO - 2025-05-23 10:49:33 --> Language Class Initialized
+INFO - 2025-05-23 10:49:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:49:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:49:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:49:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:49:33 --> Config Class Initialized
+INFO - 2025-05-23 10:49:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:49:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:49:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:49:33 --> URI Class Initialized
+INFO - 2025-05-23 10:49:33 --> Router Class Initialized
+INFO - 2025-05-23 10:49:33 --> Output Class Initialized
+INFO - 2025-05-23 10:49:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:49:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:49:33 --> Input Class Initialized
+INFO - 2025-05-23 10:49:33 --> Language Class Initialized
+INFO - 2025-05-23 10:49:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:49:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:49:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:49:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:49:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:49:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:49:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:49:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:49:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:49:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:49:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:49:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:49:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:49:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:49:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:49:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:49:33 --> Total execution time: 0.0274
+INFO - 2025-05-23 10:49:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:49:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:49:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:49:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:49:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:49:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:49:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:49:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:49:33 --> Total execution time: 0.0417
+INFO - 2025-05-23 10:50:33 --> Config Class Initialized
+INFO - 2025-05-23 10:50:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:50:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:50:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:50:33 --> URI Class Initialized
+INFO - 2025-05-23 10:50:33 --> Router Class Initialized
+INFO - 2025-05-23 10:50:33 --> Output Class Initialized
+INFO - 2025-05-23 10:50:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:50:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:50:33 --> Input Class Initialized
+INFO - 2025-05-23 10:50:33 --> Language Class Initialized
+INFO - 2025-05-23 10:50:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:50:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:50:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:50:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:50:33 --> Email Class Initialized
+INFO - 2025-05-23 10:50:33 --> Config Class Initialized
+INFO - 2025-05-23 10:50:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:50:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:50:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:50:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:50:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:50:33 --> URI Class Initialized
+INFO - 2025-05-23 10:50:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:50:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:50:33 --> Router Class Initialized
+INFO - 2025-05-23 10:50:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 10:50:33 --> Output Class Initialized
+DEBUG - 2025-05-23 10:50:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:50:33 --> Security Class Initialized
+INFO - 2025-05-23 10:50:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 10:50:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:50:33 --> Input Class Initialized
+INFO - 2025-05-23 10:50:33 --> Language Class Initialized
+INFO - 2025-05-23 10:50:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:50:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:50:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:50:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:50:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:50:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:50:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:50:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:50:33 --> Total execution time: 0.0278
+INFO - 2025-05-23 10:50:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:50:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:50:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:50:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:50:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:50:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:50:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:50:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:50:33 --> Total execution time: 0.0415
+INFO - 2025-05-23 10:51:33 --> Config Class Initialized
+INFO - 2025-05-23 10:51:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:51:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:51:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:51:33 --> URI Class Initialized
+INFO - 2025-05-23 10:51:33 --> Router Class Initialized
+INFO - 2025-05-23 10:51:33 --> Output Class Initialized
+INFO - 2025-05-23 10:51:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:51:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:51:33 --> Input Class Initialized
+INFO - 2025-05-23 10:51:33 --> Language Class Initialized
+INFO - 2025-05-23 10:51:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:51:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:51:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:51:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:51:33 --> Config Class Initialized
+INFO - 2025-05-23 10:51:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:51:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:51:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:51:33 --> URI Class Initialized
+INFO - 2025-05-23 10:51:33 --> Router Class Initialized
+INFO - 2025-05-23 10:51:33 --> Output Class Initialized
+INFO - 2025-05-23 10:51:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:51:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:51:33 --> Input Class Initialized
+INFO - 2025-05-23 10:51:33 --> Email Class Initialized
+INFO - 2025-05-23 10:51:33 --> Language Class Initialized
+DEBUG - 2025-05-23 10:51:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:51:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:51:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:51:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:51:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:51:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:51:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:51:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:51:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:51:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:51:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:51:33 --> Email Class Initialized
+INFO - 2025-05-23 10:51:33 --> Model "Crud" initialized
+DEBUG - 2025-05-23 10:51:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:51:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:51:33 --> Total execution time: 0.0257
+INFO - 2025-05-23 10:51:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:51:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:51:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:51:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:51:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:51:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:51:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:51:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:51:33 --> Total execution time: 0.0361
+INFO - 2025-05-23 10:52:33 --> Config Class Initialized
+INFO - 2025-05-23 10:52:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:52:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:52:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:52:33 --> URI Class Initialized
+INFO - 2025-05-23 10:52:33 --> Router Class Initialized
+INFO - 2025-05-23 10:52:33 --> Output Class Initialized
+INFO - 2025-05-23 10:52:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:52:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:52:33 --> Input Class Initialized
+INFO - 2025-05-23 10:52:33 --> Language Class Initialized
+INFO - 2025-05-23 10:52:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:52:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:52:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:52:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:52:33 --> Config Class Initialized
+INFO - 2025-05-23 10:52:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:52:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:52:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:52:33 --> URI Class Initialized
+INFO - 2025-05-23 10:52:33 --> Router Class Initialized
+INFO - 2025-05-23 10:52:33 --> Output Class Initialized
+INFO - 2025-05-23 10:52:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:52:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:52:33 --> Input Class Initialized
+INFO - 2025-05-23 10:52:33 --> Language Class Initialized
+INFO - 2025-05-23 10:52:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:52:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:52:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:52:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:52:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:52:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:52:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:52:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:52:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:52:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:52:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:52:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:52:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:52:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:52:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:52:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:52:33 --> Total execution time: 0.0264
+INFO - 2025-05-23 10:52:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:52:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:52:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:52:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:52:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:52:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:52:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:52:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:52:33 --> Total execution time: 0.0450
+INFO - 2025-05-23 10:53:33 --> Config Class Initialized
+INFO - 2025-05-23 10:53:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:53:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:53:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:53:33 --> URI Class Initialized
+INFO - 2025-05-23 10:53:33 --> Router Class Initialized
+INFO - 2025-05-23 10:53:33 --> Output Class Initialized
+INFO - 2025-05-23 10:53:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:53:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:53:33 --> Input Class Initialized
+INFO - 2025-05-23 10:53:33 --> Language Class Initialized
+INFO - 2025-05-23 10:53:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:53:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:53:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:53:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:53:33 --> Config Class Initialized
+INFO - 2025-05-23 10:53:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:53:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:53:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:53:33 --> URI Class Initialized
+INFO - 2025-05-23 10:53:33 --> Router Class Initialized
+INFO - 2025-05-23 10:53:33 --> Output Class Initialized
+INFO - 2025-05-23 10:53:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:53:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:53:33 --> Input Class Initialized
+INFO - 2025-05-23 10:53:33 --> Language Class Initialized
+INFO - 2025-05-23 10:53:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:53:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:53:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:53:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:53:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:53:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:53:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:53:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:53:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:53:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:53:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:53:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:53:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:53:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:53:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:53:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:53:33 --> Total execution time: 0.0260
+INFO - 2025-05-23 10:53:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:53:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:53:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:53:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:53:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:53:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:53:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:53:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:53:33 --> Total execution time: 0.0354
+INFO - 2025-05-23 10:54:33 --> Config Class Initialized
+INFO - 2025-05-23 10:54:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:54:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:54:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:54:33 --> URI Class Initialized
+INFO - 2025-05-23 10:54:33 --> Router Class Initialized
+INFO - 2025-05-23 10:54:33 --> Output Class Initialized
+INFO - 2025-05-23 10:54:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:54:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:54:33 --> Input Class Initialized
+INFO - 2025-05-23 10:54:33 --> Language Class Initialized
+INFO - 2025-05-23 10:54:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:54:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:54:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:54:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:54:33 --> Config Class Initialized
+INFO - 2025-05-23 10:54:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:54:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:54:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:54:33 --> URI Class Initialized
+INFO - 2025-05-23 10:54:33 --> Router Class Initialized
+INFO - 2025-05-23 10:54:33 --> Output Class Initialized
+INFO - 2025-05-23 10:54:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:54:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:54:33 --> Input Class Initialized
+INFO - 2025-05-23 10:54:33 --> Language Class Initialized
+INFO - 2025-05-23 10:54:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:54:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:54:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:54:33 --> Email Class Initialized
+INFO - 2025-05-23 10:54:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 10:54:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:54:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:54:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:54:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:54:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:54:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:54:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:54:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:54:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:54:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:54:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:54:33 --> Total execution time: 0.0244
+INFO - 2025-05-23 10:54:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:54:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:54:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:54:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:54:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:54:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:54:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:54:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:54:33 --> Total execution time: 0.0369
+INFO - 2025-05-23 10:55:33 --> Config Class Initialized
+INFO - 2025-05-23 10:55:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:55:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:55:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:55:33 --> Config Class Initialized
+INFO - 2025-05-23 10:55:33 --> URI Class Initialized
+INFO - 2025-05-23 10:55:33 --> Hooks Class Initialized
+INFO - 2025-05-23 10:55:33 --> Router Class Initialized
+DEBUG - 2025-05-23 10:55:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:55:33 --> Output Class Initialized
+INFO - 2025-05-23 10:55:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:55:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:55:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:55:33 --> URI Class Initialized
+INFO - 2025-05-23 10:55:33 --> Input Class Initialized
+INFO - 2025-05-23 10:55:33 --> Language Class Initialized
+INFO - 2025-05-23 10:55:33 --> Router Class Initialized
+INFO - 2025-05-23 10:55:33 --> Output Class Initialized
+INFO - 2025-05-23 10:55:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:55:33 --> Security Class Initialized
+INFO - 2025-05-23 10:55:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:55:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 10:55:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:55:33 --> Input Class Initialized
+INFO - 2025-05-23 10:55:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:55:33 --> Language Class Initialized
+INFO - 2025-05-23 10:55:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:55:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:55:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:55:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:55:33 --> Email Class Initialized
+INFO - 2025-05-23 10:55:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:55:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 10:55:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:55:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:55:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:55:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:55:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:55:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:55:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:55:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:55:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:55:33 --> Total execution time: 0.0281
+INFO - 2025-05-23 10:55:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:55:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:55:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:55:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:55:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:55:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:55:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:55:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:55:33 --> Total execution time: 0.0466
+INFO - 2025-05-23 10:56:33 --> Config Class Initialized
+INFO - 2025-05-23 10:56:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:56:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:56:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:56:33 --> URI Class Initialized
+INFO - 2025-05-23 10:56:33 --> Router Class Initialized
+INFO - 2025-05-23 10:56:33 --> Output Class Initialized
+INFO - 2025-05-23 10:56:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:56:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:56:33 --> Input Class Initialized
+INFO - 2025-05-23 10:56:33 --> Language Class Initialized
+INFO - 2025-05-23 10:56:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:56:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:56:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:56:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:56:33 --> Config Class Initialized
+INFO - 2025-05-23 10:56:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:56:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:56:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:56:33 --> URI Class Initialized
+INFO - 2025-05-23 10:56:33 --> Router Class Initialized
+INFO - 2025-05-23 10:56:33 --> Output Class Initialized
+INFO - 2025-05-23 10:56:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:56:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:56:33 --> Input Class Initialized
+INFO - 2025-05-23 10:56:33 --> Language Class Initialized
+INFO - 2025-05-23 10:56:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:56:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:56:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:56:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:56:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:56:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:56:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:56:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:56:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:56:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:56:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:56:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:56:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:56:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:56:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:56:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:56:33 --> Total execution time: 0.0273
+INFO - 2025-05-23 10:56:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:56:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:56:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:56:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:56:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:56:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:56:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:56:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:56:33 --> Total execution time: 0.0412
+INFO - 2025-05-23 10:57:33 --> Config Class Initialized
+INFO - 2025-05-23 10:57:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:57:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:57:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:57:33 --> URI Class Initialized
+INFO - 2025-05-23 10:57:33 --> Router Class Initialized
+INFO - 2025-05-23 10:57:33 --> Output Class Initialized
+INFO - 2025-05-23 10:57:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:57:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:57:33 --> Input Class Initialized
+INFO - 2025-05-23 10:57:33 --> Language Class Initialized
+INFO - 2025-05-23 10:57:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:57:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:57:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:57:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:57:33 --> Config Class Initialized
+INFO - 2025-05-23 10:57:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:57:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:57:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:57:33 --> URI Class Initialized
+INFO - 2025-05-23 10:57:33 --> Router Class Initialized
+INFO - 2025-05-23 10:57:33 --> Output Class Initialized
+INFO - 2025-05-23 10:57:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:57:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:57:33 --> Input Class Initialized
+INFO - 2025-05-23 10:57:33 --> Language Class Initialized
+INFO - 2025-05-23 10:57:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:57:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:57:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:57:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:57:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:57:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:57:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:57:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:57:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:57:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:57:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:57:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:57:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:57:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:57:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:57:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:57:33 --> Total execution time: 0.0278
+INFO - 2025-05-23 10:57:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:57:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:57:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:57:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:57:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:57:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:57:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:57:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:57:33 --> Total execution time: 0.0485
+INFO - 2025-05-23 10:58:33 --> Config Class Initialized
+INFO - 2025-05-23 10:58:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:58:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:58:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:58:33 --> URI Class Initialized
+INFO - 2025-05-23 10:58:33 --> Router Class Initialized
+INFO - 2025-05-23 10:58:33 --> Output Class Initialized
+INFO - 2025-05-23 10:58:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:58:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:58:33 --> Input Class Initialized
+INFO - 2025-05-23 10:58:33 --> Language Class Initialized
+INFO - 2025-05-23 10:58:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:58:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:58:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:58:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:58:33 --> Config Class Initialized
+INFO - 2025-05-23 10:58:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:58:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:58:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:58:33 --> URI Class Initialized
+INFO - 2025-05-23 10:58:33 --> Router Class Initialized
+INFO - 2025-05-23 10:58:33 --> Output Class Initialized
+INFO - 2025-05-23 10:58:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:58:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:58:33 --> Input Class Initialized
+INFO - 2025-05-23 10:58:33 --> Language Class Initialized
+INFO - 2025-05-23 10:58:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:58:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:58:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:58:33 --> Email Class Initialized
+INFO - 2025-05-23 10:58:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 10:58:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:58:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:58:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:58:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:58:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:58:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:58:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:58:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:58:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:58:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:58:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:58:33 --> Total execution time: 0.0300
+INFO - 2025-05-23 10:58:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:58:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:58:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:58:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:58:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:58:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:58:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:58:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:58:33 --> Total execution time: 0.0409
+INFO - 2025-05-23 10:59:33 --> Config Class Initialized
+INFO - 2025-05-23 10:59:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:59:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:59:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:59:33 --> URI Class Initialized
+INFO - 2025-05-23 10:59:33 --> Router Class Initialized
+INFO - 2025-05-23 10:59:33 --> Output Class Initialized
+INFO - 2025-05-23 10:59:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:59:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:59:33 --> Input Class Initialized
+INFO - 2025-05-23 10:59:33 --> Language Class Initialized
+INFO - 2025-05-23 10:59:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:59:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:59:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:59:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:59:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:59:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:59:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:59:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:59:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:59:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:59:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:59:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:59:33 --> Config Class Initialized
+INFO - 2025-05-23 10:59:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 10:59:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 10:59:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 10:59:33 --> URI Class Initialized
+INFO - 2025-05-23 10:59:33 --> Router Class Initialized
+INFO - 2025-05-23 10:59:33 --> Output Class Initialized
+INFO - 2025-05-23 10:59:33 --> Security Class Initialized
+DEBUG - 2025-05-23 10:59:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 10:59:33 --> Input Class Initialized
+INFO - 2025-05-23 10:59:33 --> Language Class Initialized
+INFO - 2025-05-23 10:59:33 --> Loader Class Initialized
+INFO - 2025-05-23 10:59:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 10:59:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 10:59:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:59:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:59:33 --> Email Class Initialized
+DEBUG - 2025-05-23 10:59:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 10:59:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:59:33 --> Total execution time: 0.0269
+INFO - 2025-05-23 10:59:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 10:59:33 --> Controller Class Initialized
+INFO - 2025-05-23 10:59:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 10:59:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 10:59:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 10:59:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 10:59:33 --> Model "Crud" initialized
+INFO - 2025-05-23 10:59:33 --> Final output sent to browser
+DEBUG - 2025-05-23 10:59:33 --> Total execution time: 0.0321
+INFO - 2025-05-23 11:00:33 --> Config Class Initialized
+INFO - 2025-05-23 11:00:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:00:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:00:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:00:33 --> URI Class Initialized
+INFO - 2025-05-23 11:00:33 --> Router Class Initialized
+INFO - 2025-05-23 11:00:33 --> Output Class Initialized
+INFO - 2025-05-23 11:00:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:00:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:00:33 --> Config Class Initialized
+INFO - 2025-05-23 11:00:33 --> Input Class Initialized
+INFO - 2025-05-23 11:00:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:00:33 --> Language Class Initialized
+DEBUG - 2025-05-23 11:00:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:00:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:00:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:00:33 --> URI Class Initialized
+INFO - 2025-05-23 11:00:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:00:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:00:33 --> Router Class Initialized
+INFO - 2025-05-23 11:00:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:00:33 --> Output Class Initialized
+INFO - 2025-05-23 11:00:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:00:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:00:33 --> Input Class Initialized
+INFO - 2025-05-23 11:00:33 --> Language Class Initialized
+INFO - 2025-05-23 11:00:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:00:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:00:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:00:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:00:33 --> Email Class Initialized
+INFO - 2025-05-23 11:00:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:00:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:00:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 11:00:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:00:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:00:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:00:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:00:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:00:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:00:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:00:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:00:33 --> Total execution time: 0.0284
+INFO - 2025-05-23 11:00:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:00:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:00:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:00:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:00:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:00:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:00:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:00:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:00:33 --> Total execution time: 0.0437
+INFO - 2025-05-23 11:01:33 --> Config Class Initialized
+INFO - 2025-05-23 11:01:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:01:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:01:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:01:33 --> URI Class Initialized
+INFO - 2025-05-23 11:01:33 --> Router Class Initialized
+INFO - 2025-05-23 11:01:33 --> Output Class Initialized
+INFO - 2025-05-23 11:01:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:01:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:01:33 --> Input Class Initialized
+INFO - 2025-05-23 11:01:33 --> Language Class Initialized
+INFO - 2025-05-23 11:01:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:01:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:01:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:01:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:01:33 --> Config Class Initialized
+INFO - 2025-05-23 11:01:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:01:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:01:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:01:33 --> URI Class Initialized
+INFO - 2025-05-23 11:01:33 --> Email Class Initialized
+INFO - 2025-05-23 11:01:33 --> Router Class Initialized
+DEBUG - 2025-05-23 11:01:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:01:33 --> Output Class Initialized
+INFO - 2025-05-23 11:01:33 --> Security Class Initialized
+INFO - 2025-05-23 11:01:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 11:01:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:01:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:01:33 --> Input Class Initialized
+INFO - 2025-05-23 11:01:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:01:33 --> Language Class Initialized
+INFO - 2025-05-23 11:01:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:01:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:01:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:01:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:01:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:01:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:01:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:01:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:01:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:01:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:01:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:01:33 --> Total execution time: 0.0260
+INFO - 2025-05-23 11:01:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:01:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:01:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:01:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:01:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:01:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:01:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:01:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:01:33 --> Total execution time: 0.0394
+INFO - 2025-05-23 11:02:33 --> Config Class Initialized
+INFO - 2025-05-23 11:02:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:02:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:02:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:02:33 --> URI Class Initialized
+INFO - 2025-05-23 11:02:33 --> Router Class Initialized
+INFO - 2025-05-23 11:02:33 --> Output Class Initialized
+INFO - 2025-05-23 11:02:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:02:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:02:33 --> Input Class Initialized
+INFO - 2025-05-23 11:02:33 --> Language Class Initialized
+INFO - 2025-05-23 11:02:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:02:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:02:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:02:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:02:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:02:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:02:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:02:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:02:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:02:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 11:02:33 --> Config Class Initialized
+DEBUG - 2025-05-23 11:02:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:02:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:02:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 11:02:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:02:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:02:33 --> URI Class Initialized
+INFO - 2025-05-23 11:02:33 --> Router Class Initialized
+INFO - 2025-05-23 11:02:33 --> Output Class Initialized
+INFO - 2025-05-23 11:02:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:02:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:02:33 --> Input Class Initialized
+INFO - 2025-05-23 11:02:33 --> Language Class Initialized
+INFO - 2025-05-23 11:02:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:02:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:02:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:02:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:02:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:02:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:02:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:02:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:02:33 --> Total execution time: 0.0275
+INFO - 2025-05-23 11:02:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:02:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:02:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:02:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:02:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:02:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:02:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:02:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:02:33 --> Total execution time: 0.0365
+INFO - 2025-05-23 11:03:33 --> Config Class Initialized
+INFO - 2025-05-23 11:03:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:03:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:03:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:03:33 --> URI Class Initialized
+INFO - 2025-05-23 11:03:33 --> Router Class Initialized
+INFO - 2025-05-23 11:03:33 --> Output Class Initialized
+INFO - 2025-05-23 11:03:33 --> Config Class Initialized
+INFO - 2025-05-23 11:03:33 --> Security Class Initialized
+INFO - 2025-05-23 11:03:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:03:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:03:33 --> Input Class Initialized
+DEBUG - 2025-05-23 11:03:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:03:33 --> Language Class Initialized
+INFO - 2025-05-23 11:03:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:03:33 --> URI Class Initialized
+INFO - 2025-05-23 11:03:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:03:33 --> Router Class Initialized
+INFO - 2025-05-23 11:03:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:03:33 --> Output Class Initialized
+INFO - 2025-05-23 11:03:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:03:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:03:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:03:33 --> Input Class Initialized
+INFO - 2025-05-23 11:03:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:03:33 --> Language Class Initialized
+INFO - 2025-05-23 11:03:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:03:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:03:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:03:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:03:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:03:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:03:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:03:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:03:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:03:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:03:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:03:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:03:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:03:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:03:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:03:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:03:33 --> Total execution time: 0.0277
+INFO - 2025-05-23 11:03:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:03:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:03:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:03:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:03:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:03:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:03:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:03:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:03:33 --> Total execution time: 0.0497
+INFO - 2025-05-23 11:04:33 --> Config Class Initialized
+INFO - 2025-05-23 11:04:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:04:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:04:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:04:33 --> URI Class Initialized
+INFO - 2025-05-23 11:04:33 --> Router Class Initialized
+INFO - 2025-05-23 11:04:33 --> Output Class Initialized
+INFO - 2025-05-23 11:04:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:04:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:04:33 --> Input Class Initialized
+INFO - 2025-05-23 11:04:33 --> Language Class Initialized
+INFO - 2025-05-23 11:04:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:04:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:04:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:04:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:04:33 --> Config Class Initialized
+INFO - 2025-05-23 11:04:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:04:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:04:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:04:33 --> URI Class Initialized
+INFO - 2025-05-23 11:04:33 --> Router Class Initialized
+INFO - 2025-05-23 11:04:33 --> Output Class Initialized
+INFO - 2025-05-23 11:04:33 --> Email Class Initialized
+INFO - 2025-05-23 11:04:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:04:33 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 11:04:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:04:33 --> Input Class Initialized
+INFO - 2025-05-23 11:04:33 --> Language Class Initialized
+INFO - 2025-05-23 11:04:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:04:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:04:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:04:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:04:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:04:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:04:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:04:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:04:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:04:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:04:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:04:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:04:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:04:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:04:33 --> Total execution time: 0.0211
+INFO - 2025-05-23 11:04:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:04:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:04:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:04:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:04:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:04:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:04:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:04:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:04:33 --> Total execution time: 0.0321
+INFO - 2025-05-23 11:05:33 --> Config Class Initialized
+INFO - 2025-05-23 11:05:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:05:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:05:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:05:33 --> URI Class Initialized
+INFO - 2025-05-23 11:05:33 --> Router Class Initialized
+INFO - 2025-05-23 11:05:33 --> Config Class Initialized
+INFO - 2025-05-23 11:05:33 --> Output Class Initialized
+INFO - 2025-05-23 11:05:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:05:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:05:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 11:05:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:05:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:05:33 --> Input Class Initialized
+INFO - 2025-05-23 11:05:33 --> Language Class Initialized
+INFO - 2025-05-23 11:05:33 --> URI Class Initialized
+INFO - 2025-05-23 11:05:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:05:33 --> Router Class Initialized
+INFO - 2025-05-23 11:05:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:05:33 --> Output Class Initialized
+INFO - 2025-05-23 11:05:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:05:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:05:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:05:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:05:33 --> Input Class Initialized
+INFO - 2025-05-23 11:05:33 --> Language Class Initialized
+INFO - 2025-05-23 11:05:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:05:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:05:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:05:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:05:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:05:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:05:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:05:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:05:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:05:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:05:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:05:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:05:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:05:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:05:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:05:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:05:33 --> Total execution time: 0.0280
+INFO - 2025-05-23 11:05:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:05:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:05:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:05:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:05:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:05:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:05:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:05:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:05:33 --> Total execution time: 0.0488
+INFO - 2025-05-23 11:06:33 --> Config Class Initialized
+INFO - 2025-05-23 11:06:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:06:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:06:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:06:33 --> URI Class Initialized
+INFO - 2025-05-23 11:06:33 --> Router Class Initialized
+INFO - 2025-05-23 11:06:33 --> Output Class Initialized
+INFO - 2025-05-23 11:06:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:06:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:06:33 --> Input Class Initialized
+INFO - 2025-05-23 11:06:33 --> Language Class Initialized
+INFO - 2025-05-23 11:06:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:06:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:06:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:06:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:06:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:06:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:06:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:06:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:06:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:06:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:06:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:06:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:06:33 --> Config Class Initialized
+INFO - 2025-05-23 11:06:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:06:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:06:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:06:33 --> URI Class Initialized
+INFO - 2025-05-23 11:06:33 --> Router Class Initialized
+INFO - 2025-05-23 11:06:33 --> Output Class Initialized
+INFO - 2025-05-23 11:06:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:06:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:06:33 --> Input Class Initialized
+INFO - 2025-05-23 11:06:33 --> Language Class Initialized
+INFO - 2025-05-23 11:06:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:06:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:06:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:06:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:06:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:06:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:06:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:06:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:06:33 --> Total execution time: 0.0251
+INFO - 2025-05-23 11:06:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:06:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:06:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:06:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:06:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:06:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:06:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:06:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:06:33 --> Total execution time: 0.0337
+INFO - 2025-05-23 11:07:33 --> Config Class Initialized
+INFO - 2025-05-23 11:07:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:07:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:07:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:07:33 --> URI Class Initialized
+INFO - 2025-05-23 11:07:33 --> Router Class Initialized
+INFO - 2025-05-23 11:07:33 --> Output Class Initialized
+INFO - 2025-05-23 11:07:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:07:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:07:33 --> Input Class Initialized
+INFO - 2025-05-23 11:07:33 --> Language Class Initialized
+INFO - 2025-05-23 11:07:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:07:33 --> Config Class Initialized
+INFO - 2025-05-23 11:07:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:07:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:07:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 11:07:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:07:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:07:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:07:33 --> URI Class Initialized
+INFO - 2025-05-23 11:07:33 --> Router Class Initialized
+INFO - 2025-05-23 11:07:33 --> Output Class Initialized
+INFO - 2025-05-23 11:07:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:07:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:07:33 --> Input Class Initialized
+INFO - 2025-05-23 11:07:33 --> Language Class Initialized
+INFO - 2025-05-23 11:07:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:07:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:07:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:07:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:07:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:07:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:07:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:07:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:07:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:07:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:07:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:07:33 --> Email Class Initialized
+INFO - 2025-05-23 11:07:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 11:07:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:07:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:07:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:07:33 --> Total execution time: 0.0337
+INFO - 2025-05-23 11:07:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:07:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:07:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:07:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:07:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:07:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:07:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:07:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:07:33 --> Total execution time: 0.0547
+INFO - 2025-05-23 11:08:33 --> Config Class Initialized
+INFO - 2025-05-23 11:08:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:08:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:08:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:08:33 --> URI Class Initialized
+INFO - 2025-05-23 11:08:33 --> Router Class Initialized
+INFO - 2025-05-23 11:08:33 --> Output Class Initialized
+INFO - 2025-05-23 11:08:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:08:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:08:33 --> Input Class Initialized
+INFO - 2025-05-23 11:08:33 --> Language Class Initialized
+INFO - 2025-05-23 11:08:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:08:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:08:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:08:33 --> Config Class Initialized
+INFO - 2025-05-23 11:08:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:08:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:08:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:08:33 --> URI Class Initialized
+INFO - 2025-05-23 11:08:33 --> Router Class Initialized
+INFO - 2025-05-23 11:08:33 --> Output Class Initialized
+INFO - 2025-05-23 11:08:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:08:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:08:33 --> Input Class Initialized
+INFO - 2025-05-23 11:08:33 --> Language Class Initialized
+INFO - 2025-05-23 11:08:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:08:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:08:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:08:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:08:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:08:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:08:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:08:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:08:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:08:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:08:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:08:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:08:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:08:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:08:33 --> Total execution time: 0.0266
+INFO - 2025-05-23 11:08:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:08:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:08:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:08:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:08:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:08:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:08:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:08:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:08:33 --> Total execution time: 0.0392
+INFO - 2025-05-23 11:09:33 --> Config Class Initialized
+INFO - 2025-05-23 11:09:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:09:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:09:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:09:33 --> URI Class Initialized
+INFO - 2025-05-23 11:09:33 --> Router Class Initialized
+INFO - 2025-05-23 11:09:33 --> Output Class Initialized
+INFO - 2025-05-23 11:09:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:09:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:09:33 --> Input Class Initialized
+INFO - 2025-05-23 11:09:33 --> Config Class Initialized
+INFO - 2025-05-23 11:09:33 --> Language Class Initialized
+INFO - 2025-05-23 11:09:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:09:33 --> Loader Class Initialized
+DEBUG - 2025-05-23 11:09:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:09:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:09:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:09:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:09:33 --> URI Class Initialized
+INFO - 2025-05-23 11:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:09:33 --> Router Class Initialized
+INFO - 2025-05-23 11:09:33 --> Output Class Initialized
+INFO - 2025-05-23 11:09:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:09:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:09:33 --> Input Class Initialized
+INFO - 2025-05-23 11:09:33 --> Language Class Initialized
+INFO - 2025-05-23 11:09:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:09:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:09:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:09:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:09:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:09:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:09:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:09:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:09:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:09:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:09:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:09:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:09:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:09:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:09:33 --> Total execution time: 0.0275
+INFO - 2025-05-23 11:09:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:09:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:09:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:09:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:09:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:09:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:09:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:09:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:09:33 --> Total execution time: 0.0440
+INFO - 2025-05-23 11:10:33 --> Config Class Initialized
+INFO - 2025-05-23 11:10:33 --> Config Class Initialized
+INFO - 2025-05-23 11:10:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:10:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:10:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 11:10:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:10:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:10:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:10:33 --> URI Class Initialized
+INFO - 2025-05-23 11:10:33 --> URI Class Initialized
+INFO - 2025-05-23 11:10:33 --> Router Class Initialized
+INFO - 2025-05-23 11:10:33 --> Router Class Initialized
+INFO - 2025-05-23 11:10:33 --> Output Class Initialized
+INFO - 2025-05-23 11:10:33 --> Output Class Initialized
+INFO - 2025-05-23 11:10:33 --> Security Class Initialized
+INFO - 2025-05-23 11:10:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:10:33 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 11:10:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:10:33 --> Input Class Initialized
+INFO - 2025-05-23 11:10:33 --> Input Class Initialized
+INFO - 2025-05-23 11:10:33 --> Language Class Initialized
+INFO - 2025-05-23 11:10:33 --> Language Class Initialized
+INFO - 2025-05-23 11:10:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:10:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:10:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:10:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:10:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:10:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:10:33 --> Email Class Initialized
+INFO - 2025-05-23 11:10:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:10:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 11:10:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:10:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:10:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:10:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:10:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:10:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:10:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:10:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:10:33 --> Total execution time: 0.0242
+INFO - 2025-05-23 11:10:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:10:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:10:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:10:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:10:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:10:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:10:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:10:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:10:33 --> Total execution time: 0.0372
+INFO - 2025-05-23 11:11:33 --> Config Class Initialized
+INFO - 2025-05-23 11:11:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:11:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:11:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:11:33 --> URI Class Initialized
+INFO - 2025-05-23 11:11:33 --> Router Class Initialized
+INFO - 2025-05-23 11:11:33 --> Config Class Initialized
+INFO - 2025-05-23 11:11:33 --> Output Class Initialized
+INFO - 2025-05-23 11:11:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:11:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:11:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 11:11:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:11:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:11:33 --> Input Class Initialized
+INFO - 2025-05-23 11:11:33 --> URI Class Initialized
+INFO - 2025-05-23 11:11:33 --> Language Class Initialized
+INFO - 2025-05-23 11:11:33 --> Router Class Initialized
+INFO - 2025-05-23 11:11:33 --> Output Class Initialized
+INFO - 2025-05-23 11:11:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:11:33 --> Security Class Initialized
+INFO - 2025-05-23 11:11:33 --> Helper loaded: url_helper
+DEBUG - 2025-05-23 11:11:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:11:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:11:33 --> Input Class Initialized
+INFO - 2025-05-23 11:11:33 --> Language Class Initialized
+INFO - 2025-05-23 11:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:11:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:11:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:11:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:11:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:11:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:11:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:11:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:11:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:11:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:11:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:11:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:11:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:11:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:11:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:11:33 --> Total execution time: 0.0288
+INFO - 2025-05-23 11:11:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:11:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:11:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:11:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:11:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:11:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:11:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:11:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:11:33 --> Total execution time: 0.0470
+INFO - 2025-05-23 11:12:33 --> Config Class Initialized
+INFO - 2025-05-23 11:12:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:12:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:12:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:12:33 --> URI Class Initialized
+INFO - 2025-05-23 11:12:33 --> Router Class Initialized
+INFO - 2025-05-23 11:12:33 --> Output Class Initialized
+INFO - 2025-05-23 11:12:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:12:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:12:33 --> Input Class Initialized
+INFO - 2025-05-23 11:12:33 --> Language Class Initialized
+INFO - 2025-05-23 11:12:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:12:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:12:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:12:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:12:33 --> Config Class Initialized
+INFO - 2025-05-23 11:12:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:12:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:12:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:12:33 --> URI Class Initialized
+INFO - 2025-05-23 11:12:33 --> Router Class Initialized
+INFO - 2025-05-23 11:12:33 --> Email Class Initialized
+INFO - 2025-05-23 11:12:33 --> Output Class Initialized
+INFO - 2025-05-23 11:12:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:12:33 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 11:12:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:12:33 --> Input Class Initialized
+INFO - 2025-05-23 11:12:33 --> Language Class Initialized
+INFO - 2025-05-23 11:12:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:12:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:12:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:12:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:12:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:12:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:12:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:12:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:12:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:12:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:12:33 --> Email Class Initialized
+INFO - 2025-05-23 11:12:33 --> Model "Crud" initialized
+DEBUG - 2025-05-23 11:12:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:12:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:12:33 --> Total execution time: 0.0297
+INFO - 2025-05-23 11:12:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:12:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:12:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:12:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:12:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:12:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:12:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:12:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:12:33 --> Total execution time: 0.0478
+INFO - 2025-05-23 11:13:33 --> Config Class Initialized
+INFO - 2025-05-23 11:13:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:13:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:13:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:13:33 --> URI Class Initialized
+INFO - 2025-05-23 11:13:33 --> Router Class Initialized
+INFO - 2025-05-23 11:13:33 --> Output Class Initialized
+INFO - 2025-05-23 11:13:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:13:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:13:33 --> Input Class Initialized
+INFO - 2025-05-23 11:13:33 --> Language Class Initialized
+INFO - 2025-05-23 11:13:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:13:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:13:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:13:33 --> Config Class Initialized
+INFO - 2025-05-23 11:13:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:13:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:13:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:13:33 --> URI Class Initialized
+INFO - 2025-05-23 11:13:33 --> Router Class Initialized
+INFO - 2025-05-23 11:13:33 --> Email Class Initialized
+INFO - 2025-05-23 11:13:33 --> Output Class Initialized
+INFO - 2025-05-23 11:13:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:13:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 11:13:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:13:33 --> Input Class Initialized
+INFO - 2025-05-23 11:13:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:13:33 --> Language Class Initialized
+INFO - 2025-05-23 11:13:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:13:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:13:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:13:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:13:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 11:13:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 11:13:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:13:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:13:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:13:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:13:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:13:33 --> Total execution time: 0.0257
+INFO - 2025-05-23 11:13:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:13:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:13:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:13:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:13:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:13:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:13:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:13:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:13:33 --> Total execution time: 0.0377
+INFO - 2025-05-23 11:14:33 --> Config Class Initialized
+INFO - 2025-05-23 11:14:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:14:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:14:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:14:33 --> URI Class Initialized
+INFO - 2025-05-23 11:14:33 --> Router Class Initialized
+INFO - 2025-05-23 11:14:33 --> Output Class Initialized
+INFO - 2025-05-23 11:14:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:14:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:14:33 --> Input Class Initialized
+INFO - 2025-05-23 11:14:33 --> Language Class Initialized
+INFO - 2025-05-23 11:14:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:14:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:14:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:14:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:14:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:14:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:14:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:14:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:14:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:14:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:14:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:14:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:14:33 --> Config Class Initialized
+INFO - 2025-05-23 11:14:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:14:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:14:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:14:33 --> URI Class Initialized
+INFO - 2025-05-23 11:14:33 --> Router Class Initialized
+INFO - 2025-05-23 11:14:33 --> Output Class Initialized
+INFO - 2025-05-23 11:14:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:14:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:14:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:14:33 --> Input Class Initialized
+INFO - 2025-05-23 11:14:33 --> Language Class Initialized
+INFO - 2025-05-23 11:14:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:14:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:14:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:14:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:14:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:14:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:14:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:14:33 --> Total execution time: 0.0249
+INFO - 2025-05-23 11:14:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:14:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:14:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:14:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:14:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:14:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:14:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:14:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:14:33 --> Total execution time: 0.0366
+INFO - 2025-05-23 11:15:33 --> Config Class Initialized
+INFO - 2025-05-23 11:15:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:15:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:15:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:15:33 --> URI Class Initialized
+INFO - 2025-05-23 11:15:33 --> Router Class Initialized
+INFO - 2025-05-23 11:15:33 --> Output Class Initialized
+INFO - 2025-05-23 11:15:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:15:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:15:33 --> Input Class Initialized
+INFO - 2025-05-23 11:15:33 --> Language Class Initialized
+INFO - 2025-05-23 11:15:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:15:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:15:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:15:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:15:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:15:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:15:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:15:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:15:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:15:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:15:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:15:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:15:33 --> Config Class Initialized
+INFO - 2025-05-23 11:15:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:15:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:15:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:15:33 --> URI Class Initialized
+INFO - 2025-05-23 11:15:33 --> Router Class Initialized
+INFO - 2025-05-23 11:15:33 --> Output Class Initialized
+INFO - 2025-05-23 11:15:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:15:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:15:33 --> Input Class Initialized
+INFO - 2025-05-23 11:15:33 --> Language Class Initialized
+INFO - 2025-05-23 11:15:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:15:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:15:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:15:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:15:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:15:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:15:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:15:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:15:33 --> Total execution time: 0.0295
+INFO - 2025-05-23 11:15:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:15:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:15:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:15:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:15:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:15:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:15:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:15:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:15:33 --> Total execution time: 0.0381
+INFO - 2025-05-23 11:16:33 --> Config Class Initialized
+INFO - 2025-05-23 11:16:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:16:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:16:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:16:33 --> URI Class Initialized
+INFO - 2025-05-23 11:16:33 --> Router Class Initialized
+INFO - 2025-05-23 11:16:33 --> Output Class Initialized
+INFO - 2025-05-23 11:16:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:16:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:16:33 --> Input Class Initialized
+INFO - 2025-05-23 11:16:33 --> Language Class Initialized
+INFO - 2025-05-23 11:16:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:16:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:16:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:16:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:16:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:16:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:16:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:16:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:16:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:16:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:16:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:16:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:16:33 --> Config Class Initialized
+INFO - 2025-05-23 11:16:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:16:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:16:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:16:33 --> URI Class Initialized
+INFO - 2025-05-23 11:16:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:16:33 --> Router Class Initialized
+INFO - 2025-05-23 11:16:33 --> Output Class Initialized
+INFO - 2025-05-23 11:16:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:16:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:16:33 --> Input Class Initialized
+INFO - 2025-05-23 11:16:33 --> Language Class Initialized
+INFO - 2025-05-23 11:16:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:16:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:16:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:16:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:16:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:16:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:16:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:16:33 --> Total execution time: 0.0303
+INFO - 2025-05-23 11:16:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:16:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:16:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:16:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:16:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:16:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:16:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:16:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:16:33 --> Total execution time: 0.0418
+INFO - 2025-05-23 11:17:33 --> Config Class Initialized
+INFO - 2025-05-23 11:17:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:17:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:17:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:17:33 --> URI Class Initialized
+INFO - 2025-05-23 11:17:33 --> Router Class Initialized
+INFO - 2025-05-23 11:17:33 --> Output Class Initialized
+INFO - 2025-05-23 11:17:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:17:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:17:33 --> Input Class Initialized
+INFO - 2025-05-23 11:17:33 --> Language Class Initialized
+INFO - 2025-05-23 11:17:33 --> Config Class Initialized
+INFO - 2025-05-23 11:17:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:17:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:17:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:17:33 --> Helper loaded: file_helper
+DEBUG - 2025-05-23 11:17:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:17:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:17:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:17:33 --> URI Class Initialized
+INFO - 2025-05-23 11:17:33 --> Router Class Initialized
+INFO - 2025-05-23 11:17:33 --> Output Class Initialized
+INFO - 2025-05-23 11:17:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:17:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:17:33 --> Input Class Initialized
+INFO - 2025-05-23 11:17:33 --> Language Class Initialized
+INFO - 2025-05-23 11:17:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:17:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:17:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:17:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:17:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:17:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:17:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:17:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:17:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:17:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:17:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:17:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:17:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:17:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:17:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:17:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:17:33 --> Total execution time: 0.0259
+INFO - 2025-05-23 11:17:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:17:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:17:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:17:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:17:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:17:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:17:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:17:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:17:33 --> Total execution time: 0.0451
+INFO - 2025-05-23 11:18:33 --> Config Class Initialized
+INFO - 2025-05-23 11:18:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:18:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:18:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:18:33 --> URI Class Initialized
+INFO - 2025-05-23 11:18:33 --> Router Class Initialized
+INFO - 2025-05-23 11:18:33 --> Output Class Initialized
+INFO - 2025-05-23 11:18:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:18:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:18:33 --> Input Class Initialized
+INFO - 2025-05-23 11:18:33 --> Language Class Initialized
+INFO - 2025-05-23 11:18:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:18:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:18:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:18:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:18:33 --> Config Class Initialized
+INFO - 2025-05-23 11:18:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:18:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:18:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:18:33 --> URI Class Initialized
+INFO - 2025-05-23 11:18:33 --> Router Class Initialized
+INFO - 2025-05-23 11:18:33 --> Output Class Initialized
+INFO - 2025-05-23 11:18:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:18:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:18:33 --> Input Class Initialized
+INFO - 2025-05-23 11:18:33 --> Language Class Initialized
+INFO - 2025-05-23 11:18:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:18:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:18:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:18:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:18:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:18:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:18:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:18:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:18:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:18:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:18:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:18:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:18:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:18:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:18:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:18:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:18:33 --> Total execution time: 0.0259
+INFO - 2025-05-23 11:18:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:18:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:18:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:18:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:18:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:18:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:18:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:18:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:18:33 --> Total execution time: 0.0407
+INFO - 2025-05-23 11:19:33 --> Config Class Initialized
+INFO - 2025-05-23 11:19:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:19:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:19:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:19:33 --> URI Class Initialized
+INFO - 2025-05-23 11:19:33 --> Router Class Initialized
+INFO - 2025-05-23 11:19:33 --> Output Class Initialized
+INFO - 2025-05-23 11:19:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:19:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:19:33 --> Input Class Initialized
+INFO - 2025-05-23 11:19:33 --> Language Class Initialized
+INFO - 2025-05-23 11:19:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:19:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:19:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:19:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:19:33 --> Config Class Initialized
+INFO - 2025-05-23 11:19:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:19:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:19:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:19:33 --> URI Class Initialized
+INFO - 2025-05-23 11:19:33 --> Router Class Initialized
+INFO - 2025-05-23 11:19:33 --> Output Class Initialized
+INFO - 2025-05-23 11:19:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:19:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:19:33 --> Input Class Initialized
+INFO - 2025-05-23 11:19:33 --> Language Class Initialized
+INFO - 2025-05-23 11:19:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:19:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:19:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:19:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:19:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:19:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:19:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:19:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:19:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:19:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:19:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:19:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:19:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:19:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:19:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:19:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:19:33 --> Total execution time: 0.0261
+INFO - 2025-05-23 11:19:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:19:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:19:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:19:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:19:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:19:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:19:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:19:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:19:33 --> Total execution time: 0.0428
+INFO - 2025-05-23 11:20:33 --> Config Class Initialized
+INFO - 2025-05-23 11:20:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:20:33 --> Config Class Initialized
+INFO - 2025-05-23 11:20:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:20:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 11:20:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:20:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:20:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:20:33 --> URI Class Initialized
+INFO - 2025-05-23 11:20:33 --> URI Class Initialized
+INFO - 2025-05-23 11:20:33 --> Router Class Initialized
+INFO - 2025-05-23 11:20:33 --> Router Class Initialized
+INFO - 2025-05-23 11:20:33 --> Output Class Initialized
+INFO - 2025-05-23 11:20:33 --> Output Class Initialized
+INFO - 2025-05-23 11:20:33 --> Security Class Initialized
+INFO - 2025-05-23 11:20:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:20:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:20:33 --> Input Class Initialized
+DEBUG - 2025-05-23 11:20:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:20:33 --> Language Class Initialized
+INFO - 2025-05-23 11:20:33 --> Input Class Initialized
+INFO - 2025-05-23 11:20:33 --> Language Class Initialized
+INFO - 2025-05-23 11:20:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:20:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:20:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:20:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:20:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:20:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:20:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:20:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:20:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:20:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:20:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:20:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:20:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:20:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:20:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:20:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:20:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:20:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:20:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:20:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:20:33 --> Total execution time: 0.0235
+INFO - 2025-05-23 11:20:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:20:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:20:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:20:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:20:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:20:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:20:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:20:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:20:33 --> Total execution time: 0.0362
+INFO - 2025-05-23 11:21:33 --> Config Class Initialized
+INFO - 2025-05-23 11:21:33 --> Config Class Initialized
+INFO - 2025-05-23 11:21:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:21:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:21:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 11:21:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:21:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:21:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:21:33 --> URI Class Initialized
+INFO - 2025-05-23 11:21:33 --> URI Class Initialized
+INFO - 2025-05-23 11:21:33 --> Router Class Initialized
+INFO - 2025-05-23 11:21:33 --> Router Class Initialized
+INFO - 2025-05-23 11:21:33 --> Output Class Initialized
+INFO - 2025-05-23 11:21:33 --> Security Class Initialized
+INFO - 2025-05-23 11:21:33 --> Output Class Initialized
+DEBUG - 2025-05-23 11:21:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:21:33 --> Security Class Initialized
+INFO - 2025-05-23 11:21:33 --> Input Class Initialized
+DEBUG - 2025-05-23 11:21:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:21:33 --> Language Class Initialized
+INFO - 2025-05-23 11:21:33 --> Input Class Initialized
+INFO - 2025-05-23 11:21:33 --> Language Class Initialized
+INFO - 2025-05-23 11:21:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:21:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:21:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:21:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:21:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:21:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:21:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:21:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:21:33 --> Email Class Initialized
+INFO - 2025-05-23 11:21:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:21:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 11:21:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:21:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:21:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:21:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:21:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:21:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:21:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:21:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:21:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:21:33 --> Total execution time: 0.0234
+INFO - 2025-05-23 11:21:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:21:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:21:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:21:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:21:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:21:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:21:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:21:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:21:33 --> Total execution time: 0.0388
+INFO - 2025-05-23 11:22:33 --> Config Class Initialized
+INFO - 2025-05-23 11:22:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:22:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:22:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:22:33 --> URI Class Initialized
+INFO - 2025-05-23 11:22:33 --> Router Class Initialized
+INFO - 2025-05-23 11:22:33 --> Output Class Initialized
+INFO - 2025-05-23 11:22:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:22:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:22:33 --> Input Class Initialized
+INFO - 2025-05-23 11:22:33 --> Language Class Initialized
+INFO - 2025-05-23 11:22:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:22:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:22:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:22:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:22:33 --> Config Class Initialized
+INFO - 2025-05-23 11:22:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:22:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:22:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:22:33 --> URI Class Initialized
+INFO - 2025-05-23 11:22:33 --> Router Class Initialized
+INFO - 2025-05-23 11:22:33 --> Output Class Initialized
+INFO - 2025-05-23 11:22:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:22:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:22:33 --> Input Class Initialized
+INFO - 2025-05-23 11:22:33 --> Language Class Initialized
+INFO - 2025-05-23 11:22:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:22:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:22:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:22:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:22:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:22:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:22:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:22:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:22:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:22:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:22:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:22:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:22:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:22:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:22:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:22:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:22:33 --> Total execution time: 0.0260
+INFO - 2025-05-23 11:22:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:22:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:22:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:22:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:22:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:22:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:22:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:22:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:22:33 --> Total execution time: 0.0440
+INFO - 2025-05-23 11:23:33 --> Config Class Initialized
+INFO - 2025-05-23 11:23:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:23:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:23:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:23:33 --> URI Class Initialized
+INFO - 2025-05-23 11:23:33 --> Router Class Initialized
+INFO - 2025-05-23 11:23:33 --> Output Class Initialized
+INFO - 2025-05-23 11:23:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:23:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:23:33 --> Input Class Initialized
+INFO - 2025-05-23 11:23:33 --> Language Class Initialized
+INFO - 2025-05-23 11:23:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:23:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:23:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:23:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:23:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:23:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:23:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:23:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:23:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:23:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:23:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:23:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:23:33 --> Config Class Initialized
+INFO - 2025-05-23 11:23:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:23:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:23:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:23:33 --> URI Class Initialized
+INFO - 2025-05-23 11:23:33 --> Router Class Initialized
+INFO - 2025-05-23 11:23:33 --> Output Class Initialized
+INFO - 2025-05-23 11:23:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:23:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:23:33 --> Input Class Initialized
+INFO - 2025-05-23 11:23:33 --> Language Class Initialized
+INFO - 2025-05-23 11:23:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:23:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:23:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:23:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:23:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:23:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:23:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:23:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:23:33 --> Total execution time: 0.0253
+INFO - 2025-05-23 11:23:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:23:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:23:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:23:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:23:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:23:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:23:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:23:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:23:33 --> Total execution time: 0.0344
+INFO - 2025-05-23 11:24:21 --> Config Class Initialized
+INFO - 2025-05-23 11:24:21 --> Config Class Initialized
+INFO - 2025-05-23 11:24:21 --> Hooks Class Initialized
+INFO - 2025-05-23 11:24:21 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:24:21 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:24:21 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:24:21 --> URI Class Initialized
+INFO - 2025-05-23 11:24:21 --> Router Class Initialized
+INFO - 2025-05-23 11:24:21 --> Output Class Initialized
+INFO - 2025-05-23 11:24:21 --> Security Class Initialized
+DEBUG - 2025-05-23 11:24:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:24:21 --> Input Class Initialized
+INFO - 2025-05-23 11:24:21 --> Language Class Initialized
+INFO - 2025-05-23 11:24:21 --> Loader Class Initialized
+INFO - 2025-05-23 11:24:21 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:24:21 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:24:21 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 11:24:21 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:24:21 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:24:21 --> URI Class Initialized
+INFO - 2025-05-23 11:24:21 --> Router Class Initialized
+INFO - 2025-05-23 11:24:21 --> Output Class Initialized
+INFO - 2025-05-23 11:24:21 --> Security Class Initialized
+DEBUG - 2025-05-23 11:24:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:24:21 --> Input Class Initialized
+INFO - 2025-05-23 11:24:21 --> Language Class Initialized
+INFO - 2025-05-23 11:24:21 --> Loader Class Initialized
+INFO - 2025-05-23 11:24:21 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:24:21 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:24:21 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:24:21 --> Email Class Initialized
+DEBUG - 2025-05-23 11:24:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:24:21 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:24:21 --> Controller Class Initialized
+INFO - 2025-05-23 11:24:21 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:24:21 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:24:21 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:24:21 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:24:21 --> Model "Crud" initialized
+INFO - 2025-05-23 11:24:21 --> Email Class Initialized
+DEBUG - 2025-05-23 11:24:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:24:21 --> Final output sent to browser
+DEBUG - 2025-05-23 11:24:21 --> Total execution time: 0.1004
+INFO - 2025-05-23 11:24:21 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:24:21 --> Controller Class Initialized
+INFO - 2025-05-23 11:24:21 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:24:21 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:24:21 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:24:21 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:24:21 --> Model "Crud" initialized
+INFO - 2025-05-23 11:24:21 --> Final output sent to browser
+DEBUG - 2025-05-23 11:24:21 --> Total execution time: 0.1572
+INFO - 2025-05-23 11:27:33 --> Config Class Initialized
+INFO - 2025-05-23 11:27:33 --> Config Class Initialized
+INFO - 2025-05-23 11:27:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:27:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:27:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 11:27:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:27:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:27:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:27:33 --> URI Class Initialized
+INFO - 2025-05-23 11:27:33 --> URI Class Initialized
+INFO - 2025-05-23 11:27:33 --> Router Class Initialized
+INFO - 2025-05-23 11:27:33 --> Router Class Initialized
+INFO - 2025-05-23 11:27:33 --> Output Class Initialized
+INFO - 2025-05-23 11:27:33 --> Output Class Initialized
+INFO - 2025-05-23 11:27:33 --> Security Class Initialized
+INFO - 2025-05-23 11:27:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:27:33 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 11:27:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:27:33 --> Input Class Initialized
+INFO - 2025-05-23 11:27:33 --> Input Class Initialized
+INFO - 2025-05-23 11:27:33 --> Language Class Initialized
+INFO - 2025-05-23 11:27:33 --> Language Class Initialized
+INFO - 2025-05-23 11:27:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:27:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:27:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:27:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:27:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:27:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:27:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:27:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:27:33 --> Email Class Initialized
+INFO - 2025-05-23 11:27:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:27:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 11:27:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:27:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:27:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:27:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:27:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:27:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:27:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:27:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:27:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:27:33 --> Total execution time: 0.0332
+INFO - 2025-05-23 11:27:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:27:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:27:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:27:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:27:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:27:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:27:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:27:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:27:33 --> Total execution time: 0.0531
+INFO - 2025-05-23 11:28:33 --> Config Class Initialized
+INFO - 2025-05-23 11:28:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:28:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:28:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:28:33 --> URI Class Initialized
+INFO - 2025-05-23 11:28:33 --> Router Class Initialized
+INFO - 2025-05-23 11:28:33 --> Output Class Initialized
+INFO - 2025-05-23 11:28:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:28:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:28:33 --> Input Class Initialized
+INFO - 2025-05-23 11:28:33 --> Language Class Initialized
+INFO - 2025-05-23 11:28:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:28:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:28:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:28:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:28:33 --> Config Class Initialized
+INFO - 2025-05-23 11:28:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:28:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:28:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:28:33 --> URI Class Initialized
+INFO - 2025-05-23 11:28:33 --> Email Class Initialized
+INFO - 2025-05-23 11:28:33 --> Router Class Initialized
+DEBUG - 2025-05-23 11:28:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:28:33 --> Output Class Initialized
+INFO - 2025-05-23 11:28:33 --> Security Class Initialized
+INFO - 2025-05-23 11:28:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 11:28:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:28:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:28:33 --> Input Class Initialized
+INFO - 2025-05-23 11:28:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:28:33 --> Language Class Initialized
+INFO - 2025-05-23 11:28:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:28:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:28:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:28:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:28:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:28:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:28:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:28:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:28:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:28:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:28:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:28:33 --> Total execution time: 0.0242
+INFO - 2025-05-23 11:28:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:28:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:28:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:28:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:28:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:28:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:28:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:28:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:28:33 --> Total execution time: 0.0365
+INFO - 2025-05-23 11:29:33 --> Config Class Initialized
+INFO - 2025-05-23 11:29:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:29:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:29:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:29:33 --> URI Class Initialized
+INFO - 2025-05-23 11:29:33 --> Router Class Initialized
+INFO - 2025-05-23 11:29:33 --> Output Class Initialized
+INFO - 2025-05-23 11:29:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:29:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:29:33 --> Input Class Initialized
+INFO - 2025-05-23 11:29:33 --> Language Class Initialized
+INFO - 2025-05-23 11:29:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:29:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:29:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:29:33 --> Config Class Initialized
+INFO - 2025-05-23 11:29:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:29:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:29:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:29:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:29:33 --> URI Class Initialized
+INFO - 2025-05-23 11:29:33 --> Router Class Initialized
+INFO - 2025-05-23 11:29:33 --> Output Class Initialized
+INFO - 2025-05-23 11:29:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:29:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:29:33 --> Input Class Initialized
+INFO - 2025-05-23 11:29:33 --> Language Class Initialized
+INFO - 2025-05-23 11:29:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:29:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:29:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:29:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:29:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:29:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:29:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:29:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:29:33 --> Email Class Initialized
+INFO - 2025-05-23 11:29:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:29:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:29:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 11:29:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:29:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:29:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:29:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:29:33 --> Total execution time: 0.0220
+INFO - 2025-05-23 11:29:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:29:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:29:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:29:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:29:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:29:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:29:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:29:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:29:33 --> Total execution time: 0.0323
+INFO - 2025-05-23 11:30:33 --> Config Class Initialized
+INFO - 2025-05-23 11:30:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:30:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:30:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:30:33 --> URI Class Initialized
+INFO - 2025-05-23 11:30:33 --> Router Class Initialized
+INFO - 2025-05-23 11:30:33 --> Output Class Initialized
+INFO - 2025-05-23 11:30:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:30:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:30:33 --> Input Class Initialized
+INFO - 2025-05-23 11:30:33 --> Config Class Initialized
+INFO - 2025-05-23 11:30:33 --> Language Class Initialized
+INFO - 2025-05-23 11:30:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:30:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:30:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:30:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:30:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:30:33 --> URI Class Initialized
+INFO - 2025-05-23 11:30:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:30:33 --> Router Class Initialized
+INFO - 2025-05-23 11:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:30:33 --> Output Class Initialized
+INFO - 2025-05-23 11:30:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:30:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:30:33 --> Input Class Initialized
+INFO - 2025-05-23 11:30:33 --> Language Class Initialized
+INFO - 2025-05-23 11:30:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:30:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:30:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:30:33 --> Email Class Initialized
+INFO - 2025-05-23 11:30:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:30:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 11:30:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:30:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:30:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:30:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:30:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:30:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:30:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:30:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:30:33 --> Total execution time: 0.0234
+INFO - 2025-05-23 11:30:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:30:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:30:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:30:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:30:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:30:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:30:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:30:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:30:33 --> Total execution time: 0.0403
+INFO - 2025-05-23 11:31:33 --> Config Class Initialized
+INFO - 2025-05-23 11:31:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:31:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:31:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:31:33 --> URI Class Initialized
+INFO - 2025-05-23 11:31:33 --> Router Class Initialized
+INFO - 2025-05-23 11:31:33 --> Output Class Initialized
+INFO - 2025-05-23 11:31:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:31:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:31:33 --> Input Class Initialized
+INFO - 2025-05-23 11:31:33 --> Language Class Initialized
+INFO - 2025-05-23 11:31:33 --> Config Class Initialized
+INFO - 2025-05-23 11:31:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:31:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:31:33 --> Helper loaded: url_helper
+DEBUG - 2025-05-23 11:31:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:31:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:31:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:31:33 --> URI Class Initialized
+INFO - 2025-05-23 11:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:31:33 --> Router Class Initialized
+INFO - 2025-05-23 11:31:33 --> Output Class Initialized
+INFO - 2025-05-23 11:31:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:31:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:31:33 --> Input Class Initialized
+INFO - 2025-05-23 11:31:33 --> Language Class Initialized
+INFO - 2025-05-23 11:31:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:31:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:31:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:31:33 --> Email Class Initialized
+INFO - 2025-05-23 11:31:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:31:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 11:31:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:31:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:31:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:31:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:31:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:31:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:31:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:31:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:31:33 --> Total execution time: 0.0260
+INFO - 2025-05-23 11:31:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:31:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:31:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:31:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:31:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:31:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:31:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:31:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:31:33 --> Total execution time: 0.0467
+INFO - 2025-05-23 11:32:33 --> Config Class Initialized
+INFO - 2025-05-23 11:32:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:32:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:32:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:32:33 --> URI Class Initialized
+INFO - 2025-05-23 11:32:33 --> Router Class Initialized
+INFO - 2025-05-23 11:32:33 --> Output Class Initialized
+INFO - 2025-05-23 11:32:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:32:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:32:33 --> Input Class Initialized
+INFO - 2025-05-23 11:32:33 --> Language Class Initialized
+INFO - 2025-05-23 11:32:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:32:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:32:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:32:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:32:33 --> Config Class Initialized
+INFO - 2025-05-23 11:32:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:32:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:32:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:32:33 --> URI Class Initialized
+INFO - 2025-05-23 11:32:33 --> Router Class Initialized
+INFO - 2025-05-23 11:32:33 --> Output Class Initialized
+INFO - 2025-05-23 11:32:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:32:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:32:33 --> Input Class Initialized
+INFO - 2025-05-23 11:32:33 --> Language Class Initialized
+INFO - 2025-05-23 11:32:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:32:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:32:33 --> Email Class Initialized
+INFO - 2025-05-23 11:32:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:32:33 --> Database Driver Class Initialized
+DEBUG - 2025-05-23 11:32:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:32:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:32:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:32:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:32:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:32:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:32:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:32:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:32:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:32:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:32:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:32:33 --> Total execution time: 0.0314
+INFO - 2025-05-23 11:32:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:32:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:32:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:32:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:32:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:32:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:32:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:32:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:32:33 --> Total execution time: 0.0593
+INFO - 2025-05-23 11:33:33 --> Config Class Initialized
+INFO - 2025-05-23 11:33:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:33:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:33:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:33:33 --> URI Class Initialized
+INFO - 2025-05-23 11:33:33 --> Router Class Initialized
+INFO - 2025-05-23 11:33:33 --> Output Class Initialized
+INFO - 2025-05-23 11:33:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:33:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:33:33 --> Input Class Initialized
+INFO - 2025-05-23 11:33:33 --> Language Class Initialized
+INFO - 2025-05-23 11:33:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:33:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:33:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:33:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:33:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:33:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:33:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:33:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:33:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:33:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:33:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:33:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:33:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:33:33 --> Config Class Initialized
+INFO - 2025-05-23 11:33:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:33:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:33:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:33:33 --> URI Class Initialized
+INFO - 2025-05-23 11:33:33 --> Router Class Initialized
+INFO - 2025-05-23 11:33:33 --> Output Class Initialized
+INFO - 2025-05-23 11:33:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:33:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:33:33 --> Input Class Initialized
+INFO - 2025-05-23 11:33:33 --> Language Class Initialized
+INFO - 2025-05-23 11:33:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:33:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:33:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:33:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:33:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:33:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:33:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:33:33 --> Total execution time: 0.0299
+INFO - 2025-05-23 11:33:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:33:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:33:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:33:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:33:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:33:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:33:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:33:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:33:33 --> Total execution time: 0.0338
+INFO - 2025-05-23 11:34:33 --> Config Class Initialized
+INFO - 2025-05-23 11:34:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:34:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:34:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:34:33 --> URI Class Initialized
+INFO - 2025-05-23 11:34:33 --> Router Class Initialized
+INFO - 2025-05-23 11:34:33 --> Output Class Initialized
+INFO - 2025-05-23 11:34:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:34:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:34:33 --> Input Class Initialized
+INFO - 2025-05-23 11:34:33 --> Language Class Initialized
+INFO - 2025-05-23 11:34:33 --> Config Class Initialized
+INFO - 2025-05-23 11:34:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:34:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:34:33 --> Helper loaded: url_helper
+DEBUG - 2025-05-23 11:34:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:34:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:34:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:34:33 --> URI Class Initialized
+INFO - 2025-05-23 11:34:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:34:33 --> Router Class Initialized
+INFO - 2025-05-23 11:34:33 --> Output Class Initialized
+INFO - 2025-05-23 11:34:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:34:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:34:33 --> Input Class Initialized
+INFO - 2025-05-23 11:34:33 --> Language Class Initialized
+INFO - 2025-05-23 11:34:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:34:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:34:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:34:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:34:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:34:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:34:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:34:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:34:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:34:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:34:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:34:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:34:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:34:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:34:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:34:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:34:33 --> Total execution time: 0.0249
+INFO - 2025-05-23 11:34:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:34:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:34:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:34:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:34:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:34:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:34:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:34:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:34:33 --> Total execution time: 0.0418
+INFO - 2025-05-23 11:35:33 --> Config Class Initialized
+INFO - 2025-05-23 11:35:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:35:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:35:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:35:33 --> URI Class Initialized
+INFO - 2025-05-23 11:35:33 --> Router Class Initialized
+INFO - 2025-05-23 11:35:33 --> Output Class Initialized
+INFO - 2025-05-23 11:35:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:35:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:35:33 --> Input Class Initialized
+INFO - 2025-05-23 11:35:33 --> Language Class Initialized
+INFO - 2025-05-23 11:35:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:35:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:35:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:35:33 --> Config Class Initialized
+INFO - 2025-05-23 11:35:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:35:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:35:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:35:33 --> Email Class Initialized
+INFO - 2025-05-23 11:35:33 --> URI Class Initialized
+INFO - 2025-05-23 11:35:33 --> Router Class Initialized
+DEBUG - 2025-05-23 11:35:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:35:33 --> Output Class Initialized
+INFO - 2025-05-23 11:35:33 --> Security Class Initialized
+INFO - 2025-05-23 11:35:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 11:35:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:35:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:35:33 --> Input Class Initialized
+INFO - 2025-05-23 11:35:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:35:33 --> Language Class Initialized
+INFO - 2025-05-23 11:35:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 11:35:33 --> Loader Class Initialized
+DEBUG - 2025-05-23 11:35:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:35:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:35:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:35:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:35:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:35:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:35:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:35:33 --> Total execution time: 0.0298
+INFO - 2025-05-23 11:35:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:35:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:35:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:35:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:35:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:35:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:35:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:35:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:35:33 --> Total execution time: 0.0450
+INFO - 2025-05-23 11:36:33 --> Config Class Initialized
+INFO - 2025-05-23 11:36:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:36:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:36:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:36:33 --> URI Class Initialized
+INFO - 2025-05-23 11:36:33 --> Router Class Initialized
+INFO - 2025-05-23 11:36:33 --> Output Class Initialized
+INFO - 2025-05-23 11:36:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:36:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:36:33 --> Input Class Initialized
+INFO - 2025-05-23 11:36:33 --> Language Class Initialized
+INFO - 2025-05-23 11:36:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:36:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:36:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:36:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:36:33 --> Config Class Initialized
+INFO - 2025-05-23 11:36:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:36:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:36:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:36:33 --> URI Class Initialized
+INFO - 2025-05-23 11:36:33 --> Router Class Initialized
+INFO - 2025-05-23 11:36:33 --> Output Class Initialized
+INFO - 2025-05-23 11:36:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:36:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:36:33 --> Input Class Initialized
+INFO - 2025-05-23 11:36:33 --> Language Class Initialized
+INFO - 2025-05-23 11:36:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:36:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:36:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:36:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:36:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:36:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:36:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:36:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:36:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:36:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:36:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:36:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:36:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:36:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:36:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:36:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:36:33 --> Total execution time: 0.0259
+INFO - 2025-05-23 11:36:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:36:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:36:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:36:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:36:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:36:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:36:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:36:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:36:33 --> Total execution time: 0.0362
+INFO - 2025-05-23 11:37:33 --> Config Class Initialized
+INFO - 2025-05-23 11:37:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:37:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:37:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:37:33 --> URI Class Initialized
+INFO - 2025-05-23 11:37:33 --> Router Class Initialized
+INFO - 2025-05-23 11:37:33 --> Output Class Initialized
+INFO - 2025-05-23 11:37:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:37:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:37:33 --> Input Class Initialized
+INFO - 2025-05-23 11:37:33 --> Language Class Initialized
+INFO - 2025-05-23 11:37:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:37:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:37:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:37:33 --> Config Class Initialized
+INFO - 2025-05-23 11:37:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:37:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:37:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:37:33 --> URI Class Initialized
+INFO - 2025-05-23 11:37:33 --> Router Class Initialized
+INFO - 2025-05-23 11:37:33 --> Output Class Initialized
+INFO - 2025-05-23 11:37:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:37:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:37:33 --> Input Class Initialized
+INFO - 2025-05-23 11:37:33 --> Language Class Initialized
+INFO - 2025-05-23 11:37:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:37:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:37:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:37:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:37:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:37:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:37:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:37:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:37:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:37:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:37:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:37:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:37:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:37:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:37:33 --> Total execution time: 0.0322
+INFO - 2025-05-23 11:37:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:37:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:37:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:37:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:37:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:37:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:37:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:37:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:37:33 --> Total execution time: 0.0481
+INFO - 2025-05-23 11:38:33 --> Config Class Initialized
+INFO - 2025-05-23 11:38:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:38:33 --> Config Class Initialized
+INFO - 2025-05-23 11:38:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:38:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:38:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 11:38:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:38:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:38:33 --> URI Class Initialized
+INFO - 2025-05-23 11:38:33 --> URI Class Initialized
+INFO - 2025-05-23 11:38:33 --> Router Class Initialized
+INFO - 2025-05-23 11:38:33 --> Router Class Initialized
+INFO - 2025-05-23 11:38:33 --> Output Class Initialized
+INFO - 2025-05-23 11:38:33 --> Output Class Initialized
+INFO - 2025-05-23 11:38:33 --> Security Class Initialized
+INFO - 2025-05-23 11:38:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:38:33 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-05-23 11:38:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:38:33 --> Input Class Initialized
+INFO - 2025-05-23 11:38:33 --> Input Class Initialized
+INFO - 2025-05-23 11:38:33 --> Language Class Initialized
+INFO - 2025-05-23 11:38:33 --> Language Class Initialized
+INFO - 2025-05-23 11:38:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:38:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:38:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:38:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:38:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:38:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:38:33 --> Email Class Initialized
+INFO - 2025-05-23 11:38:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:38:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:38:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 11:38:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:38:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:38:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:38:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:38:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:38:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:38:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:38:33 --> Total execution time: 0.0279
+INFO - 2025-05-23 11:38:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:38:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:38:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:38:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:38:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:38:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:38:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:38:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:38:33 --> Total execution time: 0.0431
+INFO - 2025-05-23 11:39:33 --> Config Class Initialized
+INFO - 2025-05-23 11:39:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:39:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:39:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:39:33 --> URI Class Initialized
+INFO - 2025-05-23 11:39:33 --> Router Class Initialized
+INFO - 2025-05-23 11:39:33 --> Output Class Initialized
+INFO - 2025-05-23 11:39:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:39:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:39:33 --> Input Class Initialized
+INFO - 2025-05-23 11:39:33 --> Language Class Initialized
+INFO - 2025-05-23 11:39:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:39:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:39:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:39:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:39:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:39:33 --> Config Class Initialized
+INFO - 2025-05-23 11:39:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:39:33 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-05-23 11:39:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:39:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:39:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:39:33 --> URI Class Initialized
+INFO - 2025-05-23 11:39:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:39:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 11:39:33 --> Router Class Initialized
+DEBUG - 2025-05-23 11:39:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:39:33 --> Output Class Initialized
+INFO - 2025-05-23 11:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:39:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:39:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:39:33 --> Input Class Initialized
+INFO - 2025-05-23 11:39:33 --> Language Class Initialized
+INFO - 2025-05-23 11:39:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:39:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:39:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:39:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:39:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:39:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:39:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:39:33 --> Total execution time: 0.0286
+INFO - 2025-05-23 11:39:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:39:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:39:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:39:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:39:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:39:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:39:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:39:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:39:33 --> Total execution time: 0.0381
+INFO - 2025-05-23 11:40:33 --> Config Class Initialized
+INFO - 2025-05-23 11:40:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:40:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:40:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:40:33 --> URI Class Initialized
+INFO - 2025-05-23 11:40:33 --> Router Class Initialized
+INFO - 2025-05-23 11:40:33 --> Config Class Initialized
+INFO - 2025-05-23 11:40:33 --> Output Class Initialized
+INFO - 2025-05-23 11:40:33 --> Hooks Class Initialized
+INFO - 2025-05-23 11:40:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:40:33 --> UTF-8 Support Enabled
+DEBUG - 2025-05-23 11:40:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:40:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:40:33 --> Input Class Initialized
+INFO - 2025-05-23 11:40:33 --> Language Class Initialized
+INFO - 2025-05-23 11:40:33 --> URI Class Initialized
+INFO - 2025-05-23 11:40:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:40:33 --> Router Class Initialized
+INFO - 2025-05-23 11:40:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:40:33 --> Output Class Initialized
+INFO - 2025-05-23 11:40:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:40:33 --> Security Class Initialized
+DEBUG - 2025-05-23 11:40:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:40:33 --> Input Class Initialized
+INFO - 2025-05-23 11:40:33 --> Language Class Initialized
+INFO - 2025-05-23 11:40:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:40:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:40:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:40:33 --> Email Class Initialized
+INFO - 2025-05-23 11:40:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:40:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 11:40:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:40:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:40:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:40:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:40:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:40:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:40:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:40:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:40:33 --> Total execution time: 0.0220
+INFO - 2025-05-23 11:40:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:40:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:40:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:40:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:40:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:40:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:40:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:40:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:40:33 --> Total execution time: 0.0335
+INFO - 2025-05-23 11:41:33 --> Config Class Initialized
+INFO - 2025-05-23 11:41:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:41:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:41:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:41:33 --> Config Class Initialized
+INFO - 2025-05-23 11:41:33 --> URI Class Initialized
+INFO - 2025-05-23 11:41:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 11:41:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 11:41:33 --> Router Class Initialized
+INFO - 2025-05-23 11:41:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 11:41:33 --> Output Class Initialized
+INFO - 2025-05-23 11:41:33 --> Security Class Initialized
+INFO - 2025-05-23 11:41:33 --> URI Class Initialized
+DEBUG - 2025-05-23 11:41:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:41:33 --> Input Class Initialized
+INFO - 2025-05-23 11:41:33 --> Router Class Initialized
+INFO - 2025-05-23 11:41:33 --> Language Class Initialized
+INFO - 2025-05-23 11:41:33 --> Output Class Initialized
+INFO - 2025-05-23 11:41:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:41:33 --> Security Class Initialized
+INFO - 2025-05-23 11:41:33 --> Helper loaded: url_helper
+DEBUG - 2025-05-23 11:41:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 11:41:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:41:33 --> Input Class Initialized
+INFO - 2025-05-23 11:41:33 --> Language Class Initialized
+INFO - 2025-05-23 11:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:41:33 --> Loader Class Initialized
+INFO - 2025-05-23 11:41:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 11:41:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 11:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:41:33 --> Email Class Initialized
+INFO - 2025-05-23 11:41:33 --> Email Class Initialized
+DEBUG - 2025-05-23 11:41:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 11:41:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 11:41:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:41:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:41:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:41:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:41:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:41:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:41:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:41:33 --> Total execution time: 0.0253
+INFO - 2025-05-23 11:41:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 11:41:33 --> Controller Class Initialized
+INFO - 2025-05-23 11:41:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 11:41:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 11:41:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 11:41:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 11:41:33 --> Model "Crud" initialized
+INFO - 2025-05-23 11:41:33 --> Final output sent to browser
+DEBUG - 2025-05-23 11:41:33 --> Total execution time: 0.0422
+INFO - 2025-05-23 13:51:22 --> Config Class Initialized
+INFO - 2025-05-23 13:51:22 --> Hooks Class Initialized
+DEBUG - 2025-05-23 13:51:22 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:51:22 --> Utf8 Class Initialized
+INFO - 2025-05-23 13:51:22 --> URI Class Initialized
+INFO - 2025-05-23 13:51:22 --> Router Class Initialized
+INFO - 2025-05-23 13:51:22 --> Output Class Initialized
+INFO - 2025-05-23 13:51:22 --> Security Class Initialized
+DEBUG - 2025-05-23 13:51:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:51:22 --> Input Class Initialized
+INFO - 2025-05-23 13:51:22 --> Language Class Initialized
+INFO - 2025-05-23 13:51:22 --> Loader Class Initialized
+INFO - 2025-05-23 13:51:22 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:51:22 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:51:22 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:51:22 --> Email Class Initialized
+DEBUG - 2025-05-23 13:51:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 13:51:22 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:51:22 --> Controller Class Initialized
+INFO - 2025-05-23 13:51:22 --> Helper loaded: form_helper
+INFO - 2025-05-23 13:51:22 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 13:51:22 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:51:22 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:51:22 --> Model "Crud" initialized
+ERROR - 2025-05-23 13:51:22 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-05-23 13:51:22 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-05-23 13:51:23 --> Config Class Initialized
+INFO - 2025-05-23 13:51:23 --> Hooks Class Initialized
+DEBUG - 2025-05-23 13:51:23 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:51:23 --> Utf8 Class Initialized
+INFO - 2025-05-23 13:51:23 --> URI Class Initialized
+INFO - 2025-05-23 13:51:23 --> Router Class Initialized
+INFO - 2025-05-23 13:51:23 --> Output Class Initialized
+INFO - 2025-05-23 13:51:23 --> Security Class Initialized
+DEBUG - 2025-05-23 13:51:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:51:23 --> Input Class Initialized
+INFO - 2025-05-23 13:51:23 --> Language Class Initialized
+INFO - 2025-05-23 13:51:23 --> Loader Class Initialized
+INFO - 2025-05-23 13:51:23 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:51:23 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:51:23 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:51:23 --> Email Class Initialized
+DEBUG - 2025-05-23 13:51:23 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 13:51:23 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:51:23 --> Controller Class Initialized
+INFO - 2025-05-23 13:51:23 --> Helper loaded: form_helper
+INFO - 2025-05-23 13:51:23 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 13:51:23 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:51:23 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:51:23 --> Model "Crud" initialized
+ERROR - 2025-05-23 13:51:23 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-05-23 13:51:23 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-05-23 13:51:23 --> Config Class Initialized
+INFO - 2025-05-23 13:51:23 --> Hooks Class Initialized
+DEBUG - 2025-05-23 13:51:23 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:51:23 --> Utf8 Class Initialized
+INFO - 2025-05-23 13:51:23 --> URI Class Initialized
+INFO - 2025-05-23 13:51:23 --> Router Class Initialized
+INFO - 2025-05-23 13:51:23 --> Output Class Initialized
+INFO - 2025-05-23 13:51:23 --> Security Class Initialized
+DEBUG - 2025-05-23 13:51:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:51:23 --> Input Class Initialized
+INFO - 2025-05-23 13:51:23 --> Language Class Initialized
+INFO - 2025-05-23 13:51:23 --> Loader Class Initialized
+INFO - 2025-05-23 13:51:23 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:51:23 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:51:23 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:51:24 --> Email Class Initialized
+DEBUG - 2025-05-23 13:51:24 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 13:51:24 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:51:24 --> Controller Class Initialized
+INFO - 2025-05-23 13:51:24 --> Helper loaded: form_helper
+INFO - 2025-05-23 13:51:24 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 13:51:24 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:51:24 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:51:24 --> Model "Crud" initialized
+ERROR - 2025-05-23 13:51:24 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-05-23 13:51:24 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-05-23 13:52:33 --> Config Class Initialized
+INFO - 2025-05-23 13:52:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 13:52:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:52:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 13:52:33 --> URI Class Initialized
+INFO - 2025-05-23 13:52:33 --> Router Class Initialized
+INFO - 2025-05-23 13:52:33 --> Output Class Initialized
+INFO - 2025-05-23 13:52:33 --> Security Class Initialized
+DEBUG - 2025-05-23 13:52:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:52:33 --> Input Class Initialized
+INFO - 2025-05-23 13:52:33 --> Language Class Initialized
+INFO - 2025-05-23 13:52:33 --> Loader Class Initialized
+INFO - 2025-05-23 13:52:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:52:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:52:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:52:33 --> Email Class Initialized
+DEBUG - 2025-05-23 13:52:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 13:52:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:52:33 --> Controller Class Initialized
+INFO - 2025-05-23 13:52:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 13:52:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 13:52:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:52:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:52:33 --> Model "Crud" initialized
+ERROR - 2025-05-23 13:52:33 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-05-23 13:52:33 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-05-23 13:52:33 --> Config Class Initialized
+INFO - 2025-05-23 13:52:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 13:52:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:52:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 13:52:33 --> URI Class Initialized
+INFO - 2025-05-23 13:52:33 --> Router Class Initialized
+INFO - 2025-05-23 13:52:33 --> Output Class Initialized
+INFO - 2025-05-23 13:52:33 --> Security Class Initialized
+DEBUG - 2025-05-23 13:52:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:52:33 --> Input Class Initialized
+INFO - 2025-05-23 13:52:33 --> Language Class Initialized
+INFO - 2025-05-23 13:52:33 --> Loader Class Initialized
+INFO - 2025-05-23 13:52:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:52:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:52:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:52:33 --> Email Class Initialized
+DEBUG - 2025-05-23 13:52:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 13:52:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:52:33 --> Controller Class Initialized
+INFO - 2025-05-23 13:52:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 13:52:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 13:52:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:52:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:52:33 --> Model "Crud" initialized
+ERROR - 2025-05-23 13:52:33 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-05-23 13:52:33 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-05-23 13:53:33 --> Config Class Initialized
+INFO - 2025-05-23 13:53:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 13:53:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:53:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 13:53:33 --> Config Class Initialized
+INFO - 2025-05-23 13:53:33 --> URI Class Initialized
+INFO - 2025-05-23 13:53:33 --> Hooks Class Initialized
+INFO - 2025-05-23 13:53:33 --> Router Class Initialized
+DEBUG - 2025-05-23 13:53:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:53:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 13:53:33 --> Output Class Initialized
+INFO - 2025-05-23 13:53:33 --> URI Class Initialized
+INFO - 2025-05-23 13:53:33 --> Security Class Initialized
+DEBUG - 2025-05-23 13:53:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:53:33 --> Router Class Initialized
+INFO - 2025-05-23 13:53:33 --> Input Class Initialized
+INFO - 2025-05-23 13:53:33 --> Output Class Initialized
+INFO - 2025-05-23 13:53:33 --> Security Class Initialized
+INFO - 2025-05-23 13:53:33 --> Language Class Initialized
+DEBUG - 2025-05-23 13:53:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:53:33 --> Input Class Initialized
+INFO - 2025-05-23 13:53:33 --> Language Class Initialized
+INFO - 2025-05-23 13:53:33 --> Loader Class Initialized
+INFO - 2025-05-23 13:53:33 --> Loader Class Initialized
+INFO - 2025-05-23 13:53:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:53:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:53:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:53:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:53:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:53:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:53:33 --> Email Class Initialized
+INFO - 2025-05-23 13:53:33 --> Email Class Initialized
+DEBUG - 2025-05-23 13:53:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 13:53:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 13:53:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:53:33 --> Controller Class Initialized
+INFO - 2025-05-23 13:53:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 13:53:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 13:53:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:53:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:53:33 --> Model "Crud" initialized
+ERROR - 2025-05-23 13:53:33 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-05-23 13:53:33 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-05-23 13:53:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:53:33 --> Controller Class Initialized
+INFO - 2025-05-23 13:53:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 13:53:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 13:53:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:53:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:53:33 --> Model "Crud" initialized
+ERROR - 2025-05-23 13:53:33 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-05-23 13:53:33 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-05-23 13:54:33 --> Config Class Initialized
+INFO - 2025-05-23 13:54:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 13:54:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:54:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 13:54:33 --> URI Class Initialized
+INFO - 2025-05-23 13:54:33 --> Router Class Initialized
+INFO - 2025-05-23 13:54:33 --> Output Class Initialized
+INFO - 2025-05-23 13:54:33 --> Security Class Initialized
+DEBUG - 2025-05-23 13:54:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:54:33 --> Input Class Initialized
+INFO - 2025-05-23 13:54:33 --> Language Class Initialized
+INFO - 2025-05-23 13:54:33 --> Loader Class Initialized
+INFO - 2025-05-23 13:54:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:54:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:54:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:54:33 --> Email Class Initialized
+DEBUG - 2025-05-23 13:54:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 13:54:33 --> Config Class Initialized
+INFO - 2025-05-23 13:54:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:54:33 --> Hooks Class Initialized
+INFO - 2025-05-23 13:54:33 --> Controller Class Initialized
+INFO - 2025-05-23 13:54:33 --> Helper loaded: form_helper
+DEBUG - 2025-05-23 13:54:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:54:33 --> Form Validation Class Initialized
+INFO - 2025-05-23 13:54:33 --> Utf8 Class Initialized
+DEBUG - 2025-05-23 13:54:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:54:33 --> URI Class Initialized
+INFO - 2025-05-23 13:54:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:54:33 --> Router Class Initialized
+INFO - 2025-05-23 13:54:33 --> Output Class Initialized
+INFO - 2025-05-23 13:54:33 --> Security Class Initialized
+DEBUG - 2025-05-23 13:54:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:54:33 --> Input Class Initialized
+INFO - 2025-05-23 13:54:33 --> Language Class Initialized
+INFO - 2025-05-23 13:54:33 --> Loader Class Initialized
+INFO - 2025-05-23 13:54:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:54:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:54:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:54:33 --> Model "Crud" initialized
+INFO - 2025-05-23 13:54:33 --> Email Class Initialized
+DEBUG - 2025-05-23 13:54:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+ERROR - 2025-05-23 13:54:33 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-05-23 13:54:33 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-05-23 13:54:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:54:33 --> Controller Class Initialized
+INFO - 2025-05-23 13:54:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 13:54:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 13:54:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:54:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:54:33 --> Model "Crud" initialized
+ERROR - 2025-05-23 13:54:33 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-05-23 13:54:33 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-05-23 13:55:33 --> Config Class Initialized
+INFO - 2025-05-23 13:55:33 --> Hooks Class Initialized
+DEBUG - 2025-05-23 13:55:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:55:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 13:55:33 --> URI Class Initialized
+INFO - 2025-05-23 13:55:33 --> Router Class Initialized
+INFO - 2025-05-23 13:55:33 --> Output Class Initialized
+INFO - 2025-05-23 13:55:33 --> Security Class Initialized
+DEBUG - 2025-05-23 13:55:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:55:33 --> Input Class Initialized
+INFO - 2025-05-23 13:55:33 --> Language Class Initialized
+INFO - 2025-05-23 13:55:33 --> Config Class Initialized
+INFO - 2025-05-23 13:55:33 --> Hooks Class Initialized
+INFO - 2025-05-23 13:55:33 --> Loader Class Initialized
+DEBUG - 2025-05-23 13:55:33 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:55:33 --> Utf8 Class Initialized
+INFO - 2025-05-23 13:55:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:55:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:55:33 --> URI Class Initialized
+INFO - 2025-05-23 13:55:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:55:33 --> Router Class Initialized
+INFO - 2025-05-23 13:55:33 --> Output Class Initialized
+INFO - 2025-05-23 13:55:33 --> Security Class Initialized
+DEBUG - 2025-05-23 13:55:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:55:33 --> Input Class Initialized
+INFO - 2025-05-23 13:55:33 --> Language Class Initialized
+INFO - 2025-05-23 13:55:33 --> Loader Class Initialized
+INFO - 2025-05-23 13:55:33 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:55:33 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:55:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:55:33 --> Email Class Initialized
+DEBUG - 2025-05-23 13:55:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 13:55:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:55:33 --> Controller Class Initialized
+INFO - 2025-05-23 13:55:33 --> Email Class Initialized
+INFO - 2025-05-23 13:55:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 13:55:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 13:55:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-05-23 13:55:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:55:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:55:33 --> Model "Crud" initialized
+ERROR - 2025-05-23 13:55:33 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-05-23 13:55:33 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-05-23 13:55:33 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:55:33 --> Controller Class Initialized
+INFO - 2025-05-23 13:55:33 --> Helper loaded: form_helper
+INFO - 2025-05-23 13:55:33 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 13:55:33 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:55:33 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:55:33 --> Model "Crud" initialized
+ERROR - 2025-05-23 13:55:33 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-05-23 13:55:33 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-05-23 13:56:12 --> Config Class Initialized
+INFO - 2025-05-23 13:56:12 --> Hooks Class Initialized
+DEBUG - 2025-05-23 13:56:12 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:56:12 --> Utf8 Class Initialized
+INFO - 2025-05-23 13:56:12 --> URI Class Initialized
+INFO - 2025-05-23 13:56:12 --> Router Class Initialized
+INFO - 2025-05-23 13:56:12 --> Output Class Initialized
+INFO - 2025-05-23 13:56:12 --> Security Class Initialized
+DEBUG - 2025-05-23 13:56:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:56:12 --> Input Class Initialized
+INFO - 2025-05-23 13:56:12 --> Language Class Initialized
+INFO - 2025-05-23 13:56:12 --> Loader Class Initialized
+INFO - 2025-05-23 13:56:12 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:56:12 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:56:12 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:56:12 --> Email Class Initialized
+DEBUG - 2025-05-23 13:56:12 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 13:56:12 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:56:12 --> Controller Class Initialized
+INFO - 2025-05-23 13:56:12 --> Helper loaded: form_helper
+INFO - 2025-05-23 13:56:12 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 13:56:12 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:56:12 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:56:12 --> Model "Crud" initialized
+ERROR - 2025-05-23 13:56:12 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-05-23 13:56:12 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-05-23 13:56:12 --> Config Class Initialized
+INFO - 2025-05-23 13:56:12 --> Hooks Class Initialized
+DEBUG - 2025-05-23 13:56:12 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:56:12 --> Utf8 Class Initialized
+INFO - 2025-05-23 13:56:12 --> URI Class Initialized
+INFO - 2025-05-23 13:56:12 --> Router Class Initialized
+INFO - 2025-05-23 13:56:12 --> Output Class Initialized
+INFO - 2025-05-23 13:56:12 --> Security Class Initialized
+DEBUG - 2025-05-23 13:56:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:56:12 --> Input Class Initialized
+INFO - 2025-05-23 13:56:12 --> Language Class Initialized
+INFO - 2025-05-23 13:56:12 --> Loader Class Initialized
+INFO - 2025-05-23 13:56:12 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:56:12 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:56:12 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:56:12 --> Email Class Initialized
+DEBUG - 2025-05-23 13:56:12 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 13:56:12 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:56:12 --> Controller Class Initialized
+INFO - 2025-05-23 13:56:12 --> Helper loaded: form_helper
+INFO - 2025-05-23 13:56:12 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 13:56:12 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:56:12 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:56:12 --> Model "Crud" initialized
+ERROR - 2025-05-23 13:56:12 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-05-23 13:56:12 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-05-23 13:56:14 --> Config Class Initialized
+INFO - 2025-05-23 13:56:14 --> Hooks Class Initialized
+DEBUG - 2025-05-23 13:56:14 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:56:14 --> Utf8 Class Initialized
+INFO - 2025-05-23 13:56:14 --> URI Class Initialized
+INFO - 2025-05-23 13:56:14 --> Router Class Initialized
+INFO - 2025-05-23 13:56:14 --> Output Class Initialized
+INFO - 2025-05-23 13:56:14 --> Security Class Initialized
+DEBUG - 2025-05-23 13:56:14 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:56:14 --> Input Class Initialized
+INFO - 2025-05-23 13:56:14 --> Language Class Initialized
+INFO - 2025-05-23 13:56:14 --> Loader Class Initialized
+INFO - 2025-05-23 13:56:14 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:56:14 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:56:14 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:56:14 --> Email Class Initialized
+DEBUG - 2025-05-23 13:56:14 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 13:56:14 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:56:14 --> Controller Class Initialized
+INFO - 2025-05-23 13:56:14 --> Helper loaded: form_helper
+INFO - 2025-05-23 13:56:14 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 13:56:14 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:56:14 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:56:14 --> Model "Crud" initialized
+INFO - 2025-05-23 13:56:14 --> Config Class Initialized
+INFO - 2025-05-23 13:56:14 --> Hooks Class Initialized
+DEBUG - 2025-05-23 13:56:14 --> UTF-8 Support Enabled
+INFO - 2025-05-23 13:56:14 --> Utf8 Class Initialized
+INFO - 2025-05-23 13:56:14 --> URI Class Initialized
+INFO - 2025-05-23 13:56:14 --> Router Class Initialized
+INFO - 2025-05-23 13:56:14 --> Output Class Initialized
+INFO - 2025-05-23 13:56:14 --> Security Class Initialized
+DEBUG - 2025-05-23 13:56:14 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-23 13:56:14 --> Input Class Initialized
+INFO - 2025-05-23 13:56:14 --> Language Class Initialized
+INFO - 2025-05-23 13:56:14 --> Loader Class Initialized
+INFO - 2025-05-23 13:56:14 --> Helper loaded: url_helper
+INFO - 2025-05-23 13:56:14 --> Helper loaded: file_helper
+INFO - 2025-05-23 13:56:14 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:56:14 --> Email Class Initialized
+DEBUG - 2025-05-23 13:56:14 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-23 13:56:14 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-23 13:56:14 --> Controller Class Initialized
+INFO - 2025-05-23 13:56:14 --> Helper loaded: form_helper
+INFO - 2025-05-23 13:56:14 --> Form Validation Class Initialized
+DEBUG - 2025-05-23 13:56:14 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:56:14 --> Database Driver Class Initialized
+INFO - 2025-05-23 13:56:14 --> Model "Crud" initialized
+DEBUG - 2025-05-23 13:56:14 --> Email class already loaded. Second attempt ignored.
+INFO - 2025-05-23 13:56:14 --> Model "Emails" initialized
+ERROR - 2025-05-23 13:56:14 --> Unable to delete cache file for login
+INFO - 2025-05-23 13:56:14 --> File loaded: /var/www/html/hris_lnd/application/views/login.php
+INFO - 2025-05-23 13:56:14 --> Final output sent to browser
+DEBUG - 2025-05-23 13:56:14 --> Total execution time: 0.0321

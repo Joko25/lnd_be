@@ -84,55 +84,174 @@ class Form_test extends CI_Controller {
         $this->load->view('lnd/form-test', $data);
     }
 
-    public function datatables()
-    {
-        // Ambil parameter dari request
-        $competence_id = $this->input->get('competenceId', true); // Sanitize input GET
-        $page = $this->input->post('page');
-        $rows = $this->input->post('rows');
-        
-        // Pagination
-        $page   = isset($page) ? intval($page) : 1;
-        $rows   = isset($rows) ? intval($rows) : 10;
-        $offset = ($page - 1) * $rows;
+    public function storeAbsence() {
 
-        // Query Builder
-        $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select("a.*, 
-            b.name as departement_name,
-            CASE 
-                WHEN a.question_type = 'SAME' THEN 'Pre-Test & Post Test is The Same'
-                WHEN a.question_type = 'DIFFERENT' THEN 'Pre-Test & Post Test is Different'
-                ELSE 'Unknown'
-            END as type, c.trainingActivity as name
-        ");
-        $this->db->from('lnd_master_form_test a');
-        $this->db->join('departements b', 'b.id = a.department', 'left');
-        $this->db->join('lnd_training_activity c', 'c.id = a.training_name', 'left');
+    }
+
+    public function storeFeedback() {
         
-        if (!empty($competence_id)) {
-            $this->db->like('competenceId', $competence_id);
+        $this->output->set_content_type('application/json');
+        if ($this->input->method() !== 'post') {
+            $response = [
+                'status' => 'error',
+                'message' => 'Metode permintaan tidak diizinkan. Hanya POST yang diterima.'
+            ];
+            echo json_encode($response);
+            return;
         }
-        $this->db->stop_cache(); // Stop caching the query
 
-        // Hitung total data (tanpa limit dan offset)
-        $totalRows = $this->db->count_all_results();
-        // Ambil data dengan limit dan offset
-        // $this->db->order_by('index', 'ASC'); // Pindahkan order_by setelah count_all_results
-
-        // Ambil data dengan limit dan offset
-        $this->db->limit($rows, $offset);
-        $records = $this->db->get()->result_array();
-        $this->db->flush_cache(); // Hapus cache query
-
-        // Mapping Data
-        $result = [
-            'total' => $totalRows,
-            'rows' => $records
+        $data_to_insert = [
+            'test_id'       => $this->input->post('test_id'),
+            'feedback_id'       => $this->input->post('feedback_id'),
+            'user_id'           => $this->input->post('user_id'),
+            'json_response'     => $this->input->post('json_response'),
+            'createdBy'         => $this->input->post('createdBy') ?? ($this->session->username ?? 'system')
         ];
 
-        // Kirim sebagai JSON
-        echo json_encode($result);
+        $insert_success = $this->FormTestModel->insert_feedback($data_to_insert);
+        if ($insert_success) {
+            return $this->response->send(ResponseStatus::SUCCESS, $insert_success, 'feedback test successfully');
+        } else {
+            return $this->response->send(ResponseStatus::BAD_REQUEST, $this->db->error()['message'], 'feedback test data failed');
+        }
+    }
+
+    public function insert_data() {
+        // Mengatur header respons sebagai JSON
+        $this->output->set_content_type('application/json');
+
+        // Pastikan permintaan adalah POST
+        if ($this->input->method() !== 'post') {
+            $response = [
+                'status' => 'error',
+                'message' => 'Metode permintaan tidak diizinkan. Hanya POST yang diterima.'
+            ];
+            echo json_encode($response);
+            return;
+        }
+        // --- Aturan Validasi Form ---
+        // Sesuaikan aturan validasi ini sesuai dengan kebutuhan form Anda
+        // Nama field di sini harus sesuai dengan nama parameter POST yang dikirim
+        $this->form_validation->set_rules('test_id', 'Test ID', 'required|max_length[36]');
+        $this->form_validation->set_rules('employee_id', 'Employee ID', 'required|max_length[30]');
+        // Perhatikan: 'type_training' di payload Anda adalah 'test_type'. Sesuaikan atau pastikan frontend mengirim 'type_training'.
+        // Saya akan menggunakan 'type_training' sesuai skema DB dan menambahkan 'test_type' sebagai fallback atau mapping.
+        $this->form_validation->set_rules('type_training', 'Type Training', 'required|max_length[36]');
+        $this->form_validation->set_rules('grade', 'Grade', 'numeric|less_than_equal_to[99999999.99]|greater_than_equal_to[0]');
+        $this->form_validation->set_rules('trainer', 'Trainer Name', 'required|max_length[255]'); // Batasi panjang untuk POST
+        $this->form_validation->set_rules('score_pre_test', 'Pre-Test Score', 'numeric|less_than_equal_to[99.99]|greater_than_equal_to[0]');
+        $this->form_validation->set_rules('score_post_test', 'Post-Test Score', 'numeric|less_than_equal_to[99.99]|greater_than_equal_to[0]');
+        // $this->form_validation->set_rules('json_response_detail', 'JSON Response Detail', 'callback_is_json');
+        // $this->form_validation->set_rules('json_result_history', 'JSON Result History', 'callback_is_json');
+        $this->form_validation->set_rules('test_completed_date', 'Test Completed Date', 'valid_datetime'); // Tambahkan jika Anda ingin validasi tanggal
+
+        // Menjalankan validasi
+        if ($this->form_validation->run() == FALSE) {
+            // Validasi gagal, kirim respons error
+            $response = [
+                'status' => 'error',
+                'message' => 'Validasi data gagal.',
+                'errors' => validation_errors() // Mengambil pesan error validasi
+            ];
+            echo json_encode($response);
+            return;
+        }
+
+        // --- Menyiapkan Data Gabungan untuk Model ---
+        // Ambil nilai langsung dari $this->input->post()
+        $data_to_insert = [
+            'test_id'               => $this->input->post('test_id'),
+            'employee_id'           => $this->input->post('employee_id'),
+            // Menggunakan 'test_type' dari payload jika 'type_training' tidak ada
+            'type_training'         => $this->input->post('type_training') ?? $this->input->post('test_type'),
+            // json_decode string JSON yang diterima dari POST
+            'json_response_detail'  => $this->input->post('json_response_detail'),
+            'grade'                 => $this->input->post('grade'),
+            // test_completed_date dari frontend mungkin dalam format ISO (misal: "2025-05-26T03:55:51.347Z")
+            // Kita perlu membersihkannya agar sesuai dengan format DATETIME MySQL (YYYY-MM-DD HH:MM:SS)
+            'test_date'             => null,
+            'test_completed_date'   => $this->input->post('test_completed_date') ? date('Y-m-d H:i:s', strtotime($this->input->post('test_completed_date'))) : null,
+            'trainer'               => $this->input->post('trainer'),
+            'json_result_history'   => $this->input->post('json_result_history'),
+            'score_pre_test'        => $this->input->post('score_pre_test'),
+            'score_post_test'       => $this->input->post('score_post_test'),
+            'history_feedback_id'   => $this->input->post('history_feedback_id') ? $this->input->post('history_feedback_id') : null,
+            // Ambil createdBy/updatedBy dari POST jika ada, jika tidak, dari session, jika tidak ada juga, default 'system'
+            'createdBy'             => $this->input->post('createdBy') ?? ($this->session->username ?? 'system'),
+            'updatedBy'             => $this->input->post('updatedBy') ?? ($this->session->username ?? 'system')
+        ];
+
+        if ($this->input->post('test_date')) {
+            $date_obj = DateTime::createFromFormat('m/d/Y', $this->input->post('test_date'));
+            if ($date_obj) {
+                $data_to_insert['test_date'] = $date_obj->format('Y-m-d H:i:s');
+            } else {
+                // Fallback jika format MM/DD/YYYY tidak cocok, coba strtotime
+                $data_to_insert['test_date'] = date('Y-m-d H:i:s', strtotime($this->input->post('test_date')));
+            }
+        }
+
+        if($data_to_insert['type_training'] === 'PRE_TEST') {
+            // Panggil fungsi baru di model untuk memasukkan data ke kedua tabel
+            $insert_success = $this->FormTestModel->insert_lnd_data($data_to_insert);
+        }else{
+            $insert_success = $this->FormTestModel->update_lnd_data($data_to_insert);
+        }
+
+
+        if ($insert_success) {
+            return $this->response->send(ResponseStatus::SUCCESS, $insert_success, 'Form test successfully');
+        } else {
+            return $this->response->send(ResponseStatus::BAD_REQUEST, $this->db->error()['message'], 'Form test data failed');
+        }
+
+        // Mengirim respons JSON
+        // echo json_encode($response);
+    }
+
+    public function check_employee_test_status() {
+        $this->output->set_content_type('application/json');
+
+        $test_id = $this->input->get('test_id');
+        $employee_id = $this->input->get('employee_id');
+        $test_type = $this->input->get('test_type');
+
+        $has_completed = $this->FormTestModel->check_employee_test_status($test_id, $employee_id, $test_type);
+
+        if ($has_completed) {
+            $response = [
+                'status' => 'success',
+                'completed' => true,
+                'message' => 'Karyawan sudah mengisi tes ini.'
+            ];
+        } else {
+            
+            if($test_type === 'POST_TEST'){
+                $check_has_pre_test = $this->FormTestModel->employe_has_pre_test($test_id, $employee_id);
+                if($check_has_pre_test) {
+                    $response = [
+                        'status' => 'success',
+                        'completed' => false,
+                        'message' => 'Karyawan belum mengisi tes ini.'
+                    ];
+                }else{
+                    $response = [
+                        'status' => 'success',
+                        'completed' => true,
+                        'message' => 'Karyawan belum mengisi pre-test.'
+                    ];
+                }
+
+            }else{
+                $response = [
+                    'status' => 'success',
+                    'completed' => false,
+                    'message' => 'Karyawan belum mengisi tes ini.'
+                ];
+            }
+        }
+
+        echo json_encode($response);
     }
 
     public function storeData() {
@@ -156,250 +275,12 @@ class Form_test extends CI_Controller {
                 ->set_output(json_encode(['error' => 'Missing required fields']));
         }
 
-        // Handle file upload jika ada
-        $uploadedFiles = [];
-        foreach ($_FILES as $field => $file) {
-            if ($file['error'] == 0) {
-                $uploadPath = './uploads/questions/';
-                if (!is_dir($uploadPath)) {
-                    mkdir($uploadPath, 0755, true);
-                }
-
-                $config['upload_path']   = $uploadPath;
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                $config['file_name']     = uniqid('img_');
-                $this->load->library('upload', $config);
-
-                if ($this->upload->do_upload($field)) {
-                    $uploaded = $this->upload->data();
-                    $uploadedFiles[$field] = 'uploads/questions/' . $uploaded['file_name'];
-                } else {
-                    return $this->output
-                        ->set_content_type('application/json')
-                        ->set_status_header(500)
-                        ->set_output(json_encode(['error' => $this->upload->display_errors('', '')]));
-                }
-            }
-        }
-
         // Simpan ke DB (pass both JSON data & uploadedFiles)
-        $save = $this->MasterFormTestModel->insertQuestion($data, $uploadedFiles);
+        $save = $this->FormTestModel->insert_lnd_data($data);
         if($save) {
             return $this->response->send(ResponseStatus::SUCCESS, $save, 'Form test successfully');
         }else{
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Get Competence data failed');
+            return $this->response->send(ResponseStatus::BAD_REQUEST, $data, 'Form test data failed');
         }
-    }
-
-    // GET DATA COMPTENCE
-    public function readsTraining() 
-    {
-        $post = isset($_POST['q']) ? $_POST['q'] : "";
-        $send = $this->crud->reads('lnd_schedule_training');
-        echo json_encode($send);
-    }
-
-    public function readsTrainings()
-	{
-		$this->db->start_cache();
-		$this->db->select('a.*, b.trainingActivity as name');
-		$this->db->from('lnd_schedule_training a');
-		$this->db->join('lnd_training_activity b', 'b.id = a.trainingName', 'left');
-		$this->db->stop_cache();
-		$res = $this->db->get()->result_array();
-		$this->db->flush_cache(); // Hapus cache query
-		echo json_encode($res);
-	}
-
-    //PRINT & EXCEL DATA
-    public function print($option = "")
-    {
-        if ($option == "excel") {
-            $format  = date("Ymd");
-            header("Content-type: application/vnd-ms-excel");
-            header("Content-Disposition: attachment; filename=competence_$format.xls");
-        }
-
-        //Config
-        $this->db->select('*');
-        $this->db->from('config');
-        $config = $this->db->get()->row();
-
-        $this->db->select('*');
-        $this->db->from('lnd_master_form_test');
-        $this->db->order_by('index', 'ASC');
-        $records = $this->db->get()->result_array();
-
-        $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
-        <center>
-            <div style="float: left; font-size: 12px; text-align: left;">
-                <table style="width: 100%;">
-                    <tr>
-                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
-                            <img src="' . $config->favicon . '" width="30">
-                        </td>
-                        <td style="font-size: 14px; text-align: left; margin:2px;">
-                            <b>' . $config->name . '</b><br>
-                            <small>MASTER DIVISION</small>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div style="float: right; font-size: 12px; text-align: right;">
-                Print Date ' . date("d M Y H:m:s") . ' <br>
-                Print By ' . $this->session->username . '  
-            </div>
-        </center>
-        <br><br><br>
-        
-        <table id="customers" border="1">
-            <tr>
-                <th width="20">No</th>
-                <th>Competence Id</th>
-                <th>Index</th>
-                <th>Competence Name</th>
-                <th>Remark</th>
-            </tr>';
-        $no = 1;
-        foreach ($records as $data) {
-            $html .= '<tr>
-                    <td>' . $no . '</td>
-                    <td>' . $data['competenceId'] . '</td>
-                    <td>' . $data['index'] . '</td>
-                    <td>' . $data['name'] . '</td>
-                    <td>' . $data['remark'] . '</td>';
-            $no++;
-        }
-
-        $html .= '</table></body></html>';
-        echo $html;
-    }
-
-    
-
-    public function update_data($id) {
-        $rawInput = file_get_contents("php://input");
-        parse_str($rawInput, $data);
-        // $payloadId   = base64_decode($id);
-
-        if (!empty($data)) {
-            $dataTemp = $this->MasterFormTestModel->update_data($id, $data);
-            $this->response->send(200, $dataTemp, 'Competence updated successfully');
-        } else {
-            $this->response->send(400, null, 'Competence updated failed.');
-        }
-    }
-
-    public function delete_data($id) {
-        $data = $this->MasterFormTestModel->get_detail_data($id);
-
-        if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Data not found');
-        } else {
-            $this->MasterFormTestModel->delete_data($id);
-            $this->response->send(200, $id, 'Competence delete successfully');
-        }
-    }
-
-    public function list()
-    {
-        $post = isset($_POST['q']) ? $_POST['q'] : "";
-        $competenceId = $this->input->get('competenceId') ? $this->input->get('competenceId') : "";
-        $send = $this->crud->reads('lnd_master_form_test', ["competenceId" => $post, "competenceId" => $competenceId], [], "", "index", "asc");
-        echo json_encode($send);
-    }
-    //UPLOAD DATA
-    public function generatedata()
-    {
-        error_reporting(0);
-
-        if ($this->input->post('file_type') == "text") {
-            
-        } elseif ($this->input->post('file_type') == "excel") {
-            require_once 'assets/vendors/excel_reader2.php';
-            $target = basename($_FILES['file_upload']['name']);
-            move_uploaded_file($_FILES['file_upload']['tmp_name'], $target);
-            chmod($_FILES['file_upload']['name'], 0777);
-            $file = $_FILES['file_upload']['name'];
-            $data = new Spreadsheet_Excel_Reader($file, false);
-            $total_row = $data->rowcount($sheet_index = 0);
-
-            for ($i = 3; $i <= $total_row; $i++) {
-                $datas[] = array(
-                    'name' => trim($data->val($i, 2)),
-                    'index' => trim($data->val($i, 3)),
-                    'remark' => trim($data->val($i, 4))
-                );
-            }
-
-            $datas['total'] = count($datas);
-            echo json_encode($datas);
-
-            unlink($_FILES['file_upload']['name']);
-        } else {
-            echo json_encode("Format File Error");
-        }
-    }
-
-    public function upload()
-    {
-        if ($this->input->post()) {
-            $data = $this->input->post('data');
-            // Validasi data duplikat terlebih dahulu
-            $existingData = $this->crud->read('lnd_master_form_test', [
-                "name" => $data['name'],
-                "index" => $data['index']
-            ]);
-
-            if (!empty($existingData)) {
-                echo json_encode(array("title" => "Data Duplicated", "message" => "please check Competene Name => ". $data['trainingActivity'], "theme" => "error"));
-                return;
-            }
-
-            $idGenerateDate = $this->crud->autoidPrifix('lnd_master_form_test', 'competenceId', 'C'); 
-            $data['competenceId'] = $idGenerateDate;
-            $tempIndex = $data["index"];
-
-            $queryIndex = $this->db->query("SELECT a.index FROM lnd_master_form_test AS a WHERE a.index = '$tempIndex' ");
-            $resIndex = $queryIndex->row_array();
-
-            if (!empty($resIndex)) {
-                echo json_encode(array("title" => "Not Found", "message" => "Index  " . $data['index'] . " already exists ", "theme" => "error"));
-            } else if(empty($data['name'])) {
-                echo json_encode(array("title" => "Not Found", "message" => "Competence Name cannot be Null", "theme" => "error"));            
-            } else if(empty($data['index'])) {
-                echo json_encode(array("title" => "Not Found", "message" => "Index cannot be Null", "theme" => "error"));
-            } else {
-                $send = $this->crud->create('lnd_master_form_test', $data);
-                echo $send;
-            }
-        }
-    }
-
-    public function uploadFailed()
-    {
-        if ($this->input->post()) {
-            $message = $this->input->post('message');
-            $textFailed = fopen('failed/competence.txt', 'a');
-            fwrite($textFailed, $message . "\n");
-            fclose($textFailed);
-        }
-    }
-    public function uploadclearFailed()
-    {
-        @unlink('failed/competence.txt');
-    }
-    public function uploadDownloadFailed()
-    {
-        $file = "failed/competence.txt";
-
-        header('Content-Description: File Failed');
-        header('Content-Disposition: attachment; filename=' . basename($file));
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate');
-        header('Pragma: public');
-        header('Content-Length: ' . @filesize($file));
-        header("Content-Type: text/plain");
-        @readfile($file);
     }
 }
