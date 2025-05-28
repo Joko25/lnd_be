@@ -446,7 +446,9 @@
 				}
 			});
 		} else {
-			$('#trainingName').combogrid('clear').combogrid('disable');
+			if ($('#trainingName').data('combogrid')) {
+				$('#trainingName').combogrid('clear');
+			}
 		}
 	}
 
@@ -477,7 +479,10 @@
 				}
 			});
 		} else {
-			$('#trainee').combogrid('clear').combogrid('disable');
+			if($('#trainee').data('combogrid')) {
+				$('#trainee').combogrid('setValue', "New/Mutasi").combogrid('disable');
+				$('#trainee').combogrid('setText', "New/Mutasi").combogrid('disable');
+			}
 		}
 	}
 
@@ -565,6 +570,11 @@
 
 	function reload() {
 		window.location.reload();
+	}
+
+	//DOWNLOAD EXCEL TEMPLATE
+	function download_excel() {
+		window.location.assign('<?= base_url('template/tmp_schedule_training.xls') ?>');
 	}
 
     function sendDataToServer(requestData) {
@@ -756,8 +766,10 @@
 					});
 				} else {
 					// Clear and disable if no induction selected
-					$('#trainingName').combogrid('clear');
-					$('#trainingName').combogrid('disable');
+					if ($('#trainingName').data('combogrid')) {
+						$('#trainingName').combogrid('clear');
+						// $('#trainingName').combogrid('disable');
+					}
 				}
 			}
 		});
@@ -836,39 +848,6 @@
 
     let maxDates = 3;
 
-    // function addTrainingDate() {
-    //     let rowCount = document.querySelectorAll('#trainingDatesTable tr').length;
-	//
-    //     if (rowCount >= maxDates) {
-    //         alert("Maximum 3 training dates allowed.");
-    //         return;
-    //     }
-	//
-    //     let row = `
-    //         <tr>
-    //             <td style="padding-bottom:5px;">
-    //                 <input class="easyui-datebox training-date" style="width:120px;">
-    //             </td>
-    //             <td style="padding-bottom:5px;">
-    //                 <select class="easyui-combobox batch-count"  style="width:100px;">
-    //                     <option value="">Batch</option>
-    //                     ${[...Array(10).keys()].map(i => `<option value="${i+1}">${i+1} Batch${i > 0 ? 'es' : ''}</option>`).join('')}
-    //                 </select>
-    //             </td>
-    //             <td class="week-label" style="padding-left:5px;">Week: -</td>
-    //             <td style="padding-left:5px;">
-    //                 <a href="javascript:void(0);" class="easyui-linkbutton" onclick="removeRow(this)">-</a>
-    //             </td>
-    //         </tr>
-    //     `;
-    //
-    //     $('#trainingDatesTable').append(row);
-    //     $.parser.parse('#trainingDatesTable'); // Parse new EasyUI widgets
-    //     // Re-initialize EasyUI widgets
-    //     $('#trainingDatesTable tr:last-child input.training-date').datebox();
-    //     $('#trainingDatesTable tr:last-child select.batch-count').combobox();
-    //     bindDatePickers(); // Re-bind new training-date input with event
-    // }
 	function addTrainingDate(dateValue = '', batchValue = '') {
 		const rowCount = $('#trainingDatesTable tr').length;
 		if (rowCount >= 4) return; // 1 original row + 3 more = max 4 rows
@@ -1061,6 +1040,117 @@
 		$("#printout").attr('src', '<?= base_url('employee/departements/print') ?>' + params);
 	}
 
+	//UPLOAD DATA
+	function upload() {
+		$('#dlg_upload').dialog('open');
+	}
+
+	//UPLOAD DATA
+	$('#dlg_upload').dialog({
+		buttons: [{
+			text: 'List Failed',
+			handler: function() {
+				window.open('<?= base_url('lnd/schedule_training/uploadDownloadFailed') ?>', '_blank');
+			}
+		}, {
+			text: 'Upload',
+			iconCls: 'icon-ok',
+			handler: function() {
+				$('#frm_upload').form('submit', {
+					url: '<?= base_url('lnd/schedule_training/upload') ?>',
+					onSubmit: function() {
+						if ($(this).form('validate') == false) {
+							return $(this).form('validate');
+						} else {
+							$.messager.progress({
+								title: 'Please Wait',
+								msg: 'Importing Excel to Database'
+							});
+						}
+					},
+					success: function(result) {
+						$.messager.progress('close');
+
+						//Clear File
+						$.ajax({
+							url: "<?= base_url('lnd/schedule_training/uploadclearFailed') ?>"
+						});
+
+						var json = eval('(' + result + ')');
+						console.log("#json", json);
+
+						requestData(json.total, json);
+
+						function requestData(total, json, number = 1, value = 0, success = 1, failed = 1) {
+							if (value < 100) {
+								value = Math.floor((number / total) * 100);
+								$('#p_upload').progressbar('setValue', value);
+								$('#p_start').html(number);
+								$('#p_finish').html(total);
+
+								$.ajax({
+									type: "POST",
+									async: true,
+									url: "<?= base_url('lnd/schedule_training/uploadCreate') ?>",
+									data: {
+										"data": json[number - 1]
+									},
+									cache: false,
+									dataType: "json",
+									success: function(result) {
+										console.log(result);
+										if (result.theme == "success") {
+											$('#p_success').html(success);
+											var title = "<b style='color: green;'>" + result.title + "</b> | " + result.message;
+											requestData(total, json, number + 1, value, success + 1, failed + 0);
+										} else {
+											$('#p_failed').html(failed);
+											var title = "<b style='color: red;'>" + result.title + "</b> | " + result.message;
+
+											//Json Failed
+											$.ajax({
+												type: "POST",
+												async: true,
+												url: "<?= base_url('lnd/schedule_training/uploadcreateFailed') ?>",
+												data: {
+													data: json[number - 1],
+													message: result.message
+												},
+												cache: false
+											});
+
+											requestData(total, json, number + 1, value, success + 0, failed + 1);
+										}
+
+										$("#p_remarks").append(title + "<br>");
+									},
+									fail: function(jqXHR, textStatus) {
+										console.log("#textStatus", textStatus, jqXHR);
+
+										if (textStatus == "error") {
+											Swal.fire({
+												title: 'Connection Time Out, Check Your Connection',
+												showConfirmButton: false,
+												allowOutsideClick: false,
+												allowEscapeKey: false,
+												didOpen: () => {
+													Swal.showLoading();
+												},
+											});
+
+											setTimeout(function() {
+												requestData(total, json, number, value, success + 0, failed + 0);
+											}, 5000);
+										}
+									}
+								});
+							}
+						}
+					}
+				});
+			}
+		}]
+	});
     // Initial call
     // $(function () {
     //     bindDatePickers();

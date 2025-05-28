@@ -55,6 +55,9 @@ class ScheduleTrainingModel extends CI_Model {
 
         $this->db->trans_start(); // Begin transaction
 
+		if(!empty($data['trainingTrainerId'])) {
+			unset($data['trainingTrainerId']);
+		}
         // Insert into master table
         $this->db->insert('lnd_schedule_training', $data);
 
