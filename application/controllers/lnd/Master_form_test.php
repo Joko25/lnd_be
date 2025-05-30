@@ -139,6 +139,7 @@ class Master_form_test extends CI_Controller {
         }
     
         // Validasi manual
+        if (isset($data['allDept'])) $data['department'] = $data['allDept'];
         if (empty($data['training_name']) || empty($data['department']) || empty($data['questionType'])) {
             return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Missing required fields');
         }
@@ -341,6 +342,8 @@ class Master_form_test extends CI_Controller {
         if (!$data) {
             return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Invalid JSON');
         }
+
+        if (isset($data['allDept'])) $data['department'] = $data['allDept'];
     
         if (empty($data['training_name']) || empty($data['department']) || empty($data['questionType'])) {
             return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Missing required fields');

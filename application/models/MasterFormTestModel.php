@@ -87,7 +87,7 @@ class MasterFormTestModel extends CI_Model {
         // Susun data untuk update
         $updateData = [
             'training_name'     => $data['training_name'],
-            'department'        => $data['department'],
+            'department'        => is_array($data['department']) ? implode(', ', $data['department']) : $data['department'],
             'question_type'     => $data['questionType'],
             'json_question'     => json_encode($data['question']),
             'json_postquestion' => isset($data['post_question']) ? json_encode($data['post_question']) : null,

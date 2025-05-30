@@ -356,7 +356,7 @@
             url: '<?= base_url('lnd/master_feedback/datatables') ?>',
             columns: [[
                 {field: 'ck', rowspan:'2', checkbox: true},
-                {field: 'title', rowspan:'2', width:250, title:'Training Name', halign:'center', align: 'left'},
+                {field: 'title', rowspan:'2', width:250, title:'Question Type', halign:'center', align: 'left'},
                 {field: 'action', halign:'center',
                     formatter: function(value,row,index) {
                     return '<a class="button-blue" target="_blank" href="<?= base_url('lnd/form_test/feedback/') ?>' + row.id + '" style="width:100%;"><i class="fa fa-eye"></i> View</a>';;

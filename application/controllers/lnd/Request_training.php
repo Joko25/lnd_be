@@ -224,16 +224,16 @@ class Request_training extends CI_Controller {
         
         if(!empty($this->idGenerateDate)) {
             $data['trainingRequestId'] = $this->idGenerateDate;
-        } else {
+        } else if(empty($data['trainingRequestId'])) {
             $dataRequestTraining = $this->crud->read('lnd_request_training', [], [], "", 'createdTime', 'desc');
             $data['trainingRequestId'] = $dataRequestTraining->id;
         }
 
         // Validasi dan proses data
         if (!empty($data)) {
-            if($data['id'] == '') {
+            if(!isset($data['id']) || $data['id'] == '') {
                 $dataTemp = $this->RequestTrainingModel->insert_data_trainee($data);
-                $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Request Training Trainee created successfully');
+                $this->response->send(ResponseStatus::CREATED, $this->idGenerateDate, 'Request Training Trainee created successfully');
                 $this->idGenerateDate = null;
             } else {
                 $dataTemp = $this->RequestTrainingModel->update_data_trainee($data['id'], $data);
@@ -275,7 +275,7 @@ class Request_training extends CI_Controller {
         if ($post) {
             $this->db->like($post);
         }
-        $this->db->group_by('a.name'); // Ensure unique name
+        $this->db->group_by('a.name, a.id'); // Tambahkan a.id ke GROUP BY
         $this->db->order_by('a.created_date', 'desc');
         $records = $this->db->get()->result_array();
         echo json_encode($records);

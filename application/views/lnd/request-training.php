@@ -94,9 +94,8 @@
 					<span style="width:35%;">Attachment</span>
                     <div style="width:60%;">
                         <input style="width:100%;" name="attachment" id="attachment" class="easyui-filebox"  data-options="
-                            accept: 'image/jpeg,image/png,image/gif,application/pdf',
-                            prompt: 'Only PDF and image files are allowed for data attachment upload'">
-                        <span>Only PDF and image files are allowed for data attachment upload</span>
+                            accept: 'image/jpeg,image/png,image/gif,application/pdf',">
+                        <span style="color:red;">Only PDF and image files are allowed for data attachment upload</span>
                     </div>
 				</div>
             </div>
@@ -244,9 +243,7 @@
 			.then(response => response.json())
 			.then(data => {
 				if (data.code >= 200 && data.code <= 300) {
-					toastr.success(data.message, 'Success');
-					$('#dg').datagrid('reload');
-					$('#dlg_insert').dialog('close');
+                    insertTraine(data);
 				} else {
 					toastr.error(data.message || 'Server Error', 'Error');
 				}
@@ -256,6 +253,82 @@
 				console.error('Request failed:', error);
 			});
 	}
+
+    function insertTraine(data) {
+
+        var rowForm = $('#dgTrainee').datagrid('getRows');
+        var totalForm = rowForm.length;
+        const id = url_save.split('/').pop();
+        var completedRequests = 0;
+
+        for (let i = 0; i < totalForm; i++) {
+            if (rowForm[i].fullName) {
+                $.ajax({
+                    type: "POST", 
+                    url: '<?= base_url('lnd/request_training/create_data_trainee') ?>',
+                    data: {
+                        id: rowForm[i].id,
+                        fullName: rowForm[i].fullName,
+                        trainingRequestId: method === 'PUT' ? id: null,
+                        national_id: rowForm[i].national_id,
+                        position: rowForm[i].position,
+                        departement: rowForm[i].departement,
+                        departement_subs: rowForm[i].departement_subs,
+                        date_sign: rowForm[i].date_sign
+                    },
+                    dataType: "json",
+                    success: function(res) {
+                        console.log(res, ' 392');
+                        completedRequests++;
+                        if (completedRequests === totalForm) {
+                            toastr.success(data.message, 'Success');
+                            $('#dg').datagrid('reload');
+                            $('#dlg_insert').dialog('close');
+                        }
+                    }
+                });
+            }
+        }
+
+    }
+
+    function updateTraine(id) {
+        var rowForm = $('#dgTrainee').datagrid('getRows');
+        var totalForm = rowForm.length;
+        var completedRequests = 0;
+
+        for (let i = 0; i < totalForm; i++) {
+            if (rowForm[i].fullName) {
+                $.ajax({
+                    type: "POST",
+                    url: '<?= base_url('lnd/request_training/create_data_trainee') ?>',
+                    data: {
+                        id: rowForm[i].id,
+                        fullName: rowForm[i].fullName,
+                        national_id: rowForm[i].national_id,
+                        position: rowForm[i].position,
+                        departement: rowForm[i].departement,
+                        departement_subs: rowForm[i].departement_subs,
+                        date_sign: rowForm[i].date_sign
+                    },
+                    dataType: "json",
+                    success: function(res) {
+                        console.log(res, ' update trainee');
+                        completedRequests++;
+                        if (completedRequests === totalForm) {
+                            toastr.success('Data berhasil diupdate', 'Success');
+                            $('#dg').datagrid('reload');
+                            $('#dlg_insert').dialog('close');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.error('Gagal mengupdate data', 'Error');
+                        console.error('Request failed:', error);
+                    }
+                });
+            }
+        }
+    }
 
 
 
@@ -379,37 +452,41 @@
 							}
 						}
 
+                        var rowForm = $('#dgTrainee').datagrid('getRows');
+                        console.log("#fromData", formData, rowForm);
+                        
+
 						// Call with isFormData = true
-						sendDataToServer(formData, true);
+						sendDataToServer(formData, method === 'POST');
 
                         // Wait for sendDataToServer to finish before proceeding
-                        setTimeout(() => {
-                            var rowForm = $('#dgTrainee').datagrid('getRows');
-                            var totalForm = rowForm.length;
+                        // setTimeout(() => {
+                        //     var rowForm = $('#dgTrainee').datagrid('getRows');
+                        //     var totalForm = rowForm.length;
 
-                            for (let i = 0; i < totalForm; i++) {
-                                if (rowForm[i].fullName) {
-                                    $.ajax({
-                                        type: "POST",
-                                        url: '<?= base_url('lnd/request_training/create_data_trainee') ?>',
-                                        data: {
-                                            id: rowForm[i].id,
-                                            fullName: rowForm[i].fullName,
-                                            national_id: rowForm[i].national_id,
-                                            position: rowForm[i].position,
-                                            departement: rowForm[i].departement,
-                                            departement_subs: rowForm[i].departement_subs,
-                                            date_sign: rowForm[i].date_sign
-                                        },
-                                        dataType: "json",
-                                        success: function(res) {
-                                            console.log(res, ' 392');
-                                            $('#dgTrainee').datagrid('reload');
-                                        }
-                                    });
-                                }
-                            }
-                        }, 500); // Small delay to ensure sendDataToServer executes first
+                        //     for (let i = 0; i < totalForm; i++) {
+                        //         if (rowForm[i].fullName) {
+                        //             $.ajax({
+                        //                 type: "POST",
+                        //                 url: '<?= base_url('lnd/request_training/create_data_trainee') ?>',
+                        //                 data: {
+                        //                     id: rowForm[i].id,
+                        //                     fullName: rowForm[i].fullName,
+                        //                     national_id: rowForm[i].national_id,
+                        //                     position: rowForm[i].position,
+                        //                     departement: rowForm[i].departement,
+                        //                     departement_subs: rowForm[i].departement_subs,
+                        //                     date_sign: rowForm[i].date_sign
+                        //                 },
+                        //                 dataType: "json",
+                        //                 success: function(res) {
+                        //                     console.log(res, ' 392');
+                        //                     $('#dgTrainee').datagrid('reload');
+                        //                 }
+                        //             });
+                        //         }
+                        //     }
+                        // }, 500); // Small delay to ensure sendDataToServer executes first
                     }
                 }
             }]
@@ -882,33 +959,22 @@
                                 let selectedRow = $('#dgTrainee').datagrid('getSelected'); // Get the selected row
                                 if (selectedRow) {
                                     let rowIndex = $('#dgTrainee').datagrid('getRowIndex', selectedRow); // Find row index
-                                    $('#dgTrainee').datagrid('updateRow', {
-                                        index: rowIndex,
-                                        row: {
-                                            fullName: row.name,
-                                            national_id: row.national_id,
-                                            position: row.position,
-                                            departement: row.departement,
-                                            departement_subs: row.departement_subs,
-                                            date_sign: row.date_sign
-                                        }
-                                    });
                                     $('#dgTrainee').datagrid('endEdit', rowIndex);
                                     $('#dgTrainee').datagrid('unselectRow', rowIndex); // Unselect previous row
                                     
-                                    // Close the combogrid dropdown
                                     setTimeout(() => {
-                                        let ed = $('#dgTrainee').datagrid('getEditor', { index: rowIndex, field: 'full_name' });
-                                        if (ed) {
-                                            let $input = $(ed.target);
-                                            $input.combogrid('grid').datagrid('clearSelections'); // 🔥 Clear selection
-                                            $input.combogrid('hidePanel'); // 🔥 Hide panel
-                                            $input.combogrid('clear'); // 🔥 Reset selection
-                                            $input.combogrid('textbox').blur(); // 🔥 Force blur
-                                            $('.panel').hide(); // 🔥 Destroy ALL panels
-                                            $('body').trigger('click'); // 🔥 Fake click to refresh UI
-                                            $('.panel-body').hide();  // Hide all combogrid panels
-                                        }
+                                        $('#dgTrainee').datagrid('updateRow', {
+                                            index: rowIndex,
+                                            row: {
+                                                fullName: row.name,
+                                                national_id: row.national_id,
+                                                position: row.position,
+                                                departement: row.departement,
+                                                departement_subs: row.departement_subs,
+                                                date_sign: row.date_sign
+                                            }
+                                        });
+                                        
                                     }, 50);
                                 }
                             }

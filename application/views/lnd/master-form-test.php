@@ -44,39 +44,45 @@
                             {field:'induction',title:'Induction',width:200}
                     ]]">
                 </div>
-                <div class="fitem">
+                <div class="fitem" style="display: flex">
                     <span style="width:35%; display:inline-block;">Department</span>
-                    <input style="width:60%;" id="department" name="department" required="" class="easyui-combogrid"
-                    data-options="
-                        url: '<?= base_url('employee/departements/reads') ?>',
-                        idField: 'name',
-                        textField: 'name', 
-                        mode: 'remote',
-                        fitColumns: true,
-                        multiple: true,
-                        panelWidth: 500,
-                        maxSelections: 2,
-                        columns: [[
-                            {field:'number',title:'Dept. Number',width:200},
-                            {field:'name',title:'Dept. Name',width:200},
-                        ]],
-                         onSelect: function(index, row) {
-                            var gridInstance = $('#department').combogrid('grid');
-                            if (!gridInstance || !gridInstance.length) return;
-
-                            var selections = gridInstance.datagrid('getSelections');
-                            if (selections.length > 2) {
-                                // Deselect row yang baru dipilih
-                                
-                                setTimeout(() => {
-                                    $('#department').combogrid('hidePanel');
-                                    $.messager.alert('Warning','Maksimal 2 pilihan!');
-                                    resetDept();
-                                }, 100);
+                    <div style="width: 60%; margin-left: 2px">
+                        <input style="width:100%;" id="department" name="department" required="" class="easyui-combogrid"
+                        data-options="
+                            url: '<?= base_url('employee/departements/reads') ?>',
+                            idField: 'name',
+                            textField: 'name', 
+                            mode: 'remote',
+                            fitColumns: true,
+                            multiple: true,
+                            panelWidth: 500,
+                            maxSelections: 2,
+                            columns: [[
+                                {field:'number',title:'Dept. Number',width:200},
+                                {field:'name',title:'Dept. Name',width:200},
+                            ]],
+                             onSelect: function(index, row) {
+                                var gridInstance = $('#department').combogrid('grid');
+                                if (!gridInstance || !gridInstance.length) return;
+    
+                                var selections = gridInstance.datagrid('getSelections');
+                                if (selections.length > 2) {
+                                    setTimeout(() => {
+                                        $('#department').combogrid('hidePanel');
+                                        $.messager.alert('Warning','Maksimal 2 pilihan!');
+                                        resetDept();
+                                    }, 100);
+                                }
+                                if (selections.length == 2)  $('#department').combogrid('hidePanel');
                             }
-                            if (selections.length == 2)  $('#department').combogrid('hidePanel');
-                        }
-                    ">
+                        ">
+                    <div style="margin-top: 10px;">
+                        <input class="easyui-checkbox" id="allDept" name="allDept" value="All Dept" data-options="onChange:function(event) {
+                                toggleDepartment(event);
+                        }" >
+                        <label for="allDept">All Department</label>
+                    </div>
+                    </div>
                 </div>
                 
                 <div class="fitem">
@@ -115,6 +121,16 @@
 <script src="global.js"></script>
 
 <script type="text/javascript">
+
+    function toggleDepartment(event) {
+        if (event) {
+            $('#department').combogrid('setValue', 'All Dept');
+            $('#department').combogrid('disable');
+        } else {
+            $('#department').combogrid('clear');
+            $('#department').combogrid('enable');
+        }
+    }
     function templateQuestion(index, type, initValue='') {
         const prefix = `${type}[${index}]`
         const html = `
@@ -161,7 +177,7 @@
                             </div>
                             <div class="fitem">
                                 <span style="width:35%; display:inline-block;"></span>
-                                <input style="width:20%;" name="${prefix}.point" value="${initValue?.point || ''}" class="easyui-numberspinner"> Point
+                                <input style="width:20%;" name="${prefix}.point" value="${initValue?.point || ''}" class="easyui-numberspinner" required=""> Point
                                 <label><input class="easyui-radiobutton" name="${type}[${parentIndex}].correct_answer" checked="${parentValue.correct_answer}" value="${index}"> Correct Answer</label>
                             </div>
                         </div>`;
@@ -203,8 +219,6 @@
         fetch(url)
         .then(response => response.json())
         .then(response => {
-            console.log("#res", response);
-            
             if (response.code === 200) {
                 renderForm(response.data);
             } else {
@@ -221,11 +235,13 @@
     }
 
     function renderForm(data) {
-        // $.getJSON(`/lnd/master_form_test/get_detail/${id}`, function(response) {
-            console.log("#response", data);
         $('#training_name').combogrid('setValue', data.training_name);
         $('#department').combogrid('setValue', data.department);
         $('#questionType').combogrid('setValue', data.question_type);
+        if(data.department === 'All Dept') {
+            toggleDepartment(true);
+            $('#allDept').checkbox('check');
+        }
 
         const questionJson = JSON.parse(data.json_question);
         questionJson.forEach((value, index) => {
@@ -234,7 +250,6 @@
             setTimeout(() => {
                 value.opsion.forEach((opt, optIndex) => {
                     var trainingContainer = $(`#answer_question_${index}`)
-                    console.log("#opt", opt);
                     if(trainingContainer.children().length === 0) addOpsion(index, 'question', value, opt)
                 });
                 
@@ -380,11 +395,12 @@
     function update() {
         var row = $('#dg').datagrid('getSelected');
         if (row) {
-            console.log("#row", row);
             $('#formQuestion').empty();
             $('#formPostQuestion').empty();
             
             // getDetailData(row.id)
+            
+            $('#allDept').checkbox('uncheck');
             
             $('#dlg_insert').dialog('open');
             $('#dlg_insert').dialog('setTitle', `Edit Master Form Test ${row.id}`)
@@ -773,11 +789,9 @@
                     }
                 }
             }
-            console.log("#resu", result);
             
             return result;
         }
-        console.log("#jss", json);
         
         return json;
     }
