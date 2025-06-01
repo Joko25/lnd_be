@@ -122,8 +122,12 @@ class Request_training extends CI_Controller {
         $data = $this->input->post();
 		$idGenerateDateTemp = $this->crud->autoidPrifix('lnd_request_training', 'requestTrainingId', 'T');
         $data['requestTrainingId'] = $idGenerateDateTemp;
-		$attachment = $this->LndModel->upload_v2('attachment', ['jpg', 'pdf', 'jpeg', 'png', 'gif'], 'assets/document/request-training/');
-		$data['attachment'] = $attachment;
+		if (!empty($_FILES['attachment']['name'])) {
+            $attachment = $this->LndModel->upload_v2('attachment', ['jpg', 'pdf', 'jpeg', 'png', 'gif'], 'assets/document/request-training/');
+            if ($attachment) {
+                $data['attachment'] = $attachment;
+            }
+        }
         if (!empty($data)) {
             $dataTemp = $this->RequestTrainingModel->insert_data($data);
             // $this->idGenerateDate = $dataTemp->id;
@@ -136,14 +140,23 @@ class Request_training extends CI_Controller {
     
 
     public function update_data($id) {
-        $rawInput = file_get_contents("php://input");
-        parse_str($rawInput, $data);
-
+        // $rawInput = file_get_contents("php://input");
+        // parse_str($rawInput, $data);
+        $data = $this->input->post();
+        
         if (!empty($data)) {
+            // Upload attachment jika ada file baru
+            if (!empty($_FILES['attachment']['name'])) {
+                $attachment = $this->LndModel->upload_v2('attachment', ['jpg', 'pdf', 'jpeg', 'png', 'gif'], 'assets/document/request-training/');
+                if ($attachment) {
+                    $data['attachment'] = $attachment;
+                }
+            }
+            
             $dataTemp = $this->RequestTrainingModel->update_data($id, $data);
-            $this->response->send(200, $dataTemp, 'Request Training updated successfully');
+            $this->response->send(ResponseStatus::SUCCESS, $dataTemp, 'Request Training updated successfully');
         } else {
-            $this->response->send(400, null, 'Request Training updated failed.');
+            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Request Training updated failed.');
         }
     }
 

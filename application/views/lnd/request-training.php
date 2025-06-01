@@ -143,12 +143,15 @@
         
     };
 
+    var isUpdate;
+
     function add() {
         $('#dlg_insert').dialog('open');
         url_save = '<?= base_url('lnd/request_training/create_data') ?>';
         method = 'POST';
         $('#frm_insert').form('clear');
         tableTrainee();
+        isUpdate = false;
     }
 
     function update() {
@@ -159,7 +162,8 @@
             $('#frm_insert').form('load', row);
             tableTrainee(row.id);
             url_save = '<?= base_url('lnd/request_training/update_data/') ?>' + row.id;
-            method = 'PUT';
+            method = 'POST';
+            isUpdate = true;
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
         }
@@ -270,7 +274,7 @@
                     data: {
                         id: rowForm[i].id,
                         fullName: rowForm[i].fullName,
-                        trainingRequestId: method === 'PUT' ? updateId: id,
+                        trainingRequestId: isUpdate ? updateId: id,
                         national_id: rowForm[i].national_id,
                         position: rowForm[i].position,
                         departement: rowForm[i].departement,
