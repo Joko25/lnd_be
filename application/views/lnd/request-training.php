@@ -259,7 +259,7 @@
 
         var rowForm = $('#dgTrainee').datagrid('getRows');
         var totalForm = rowForm.length;
-        // const id = url_save.split('/').pop();
+        const updateId = url_save.split('/').pop();
         var completedRequests = 0;
 
         for (let i = 0; i < totalForm; i++) {
@@ -270,7 +270,7 @@
                     data: {
                         id: rowForm[i].id,
                         fullName: rowForm[i].fullName,
-                        trainingRequestId: id, // method === 'PUT' ? id: null,
+                        trainingRequestId: method === 'PUT' ? updateId: id,
                         national_id: rowForm[i].national_id,
                         position: rowForm[i].position,
                         departement: rowForm[i].departement,

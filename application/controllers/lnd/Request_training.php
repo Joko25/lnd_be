@@ -121,11 +121,11 @@ class Request_training extends CI_Controller {
         $data = $this->input->post();
 		$idGenerateDateTemp = $this->crud->autoidPrifix('lnd_request_training', 'requestTrainingId', 'T');
         $data['requestTrainingId'] = $idGenerateDateTemp;
-		// $attachment = $this->crud->upload('attachment', ['pdf', 'jpg'], 'assets/document/request-training/');
-		// $data['attachment'] = $attachment;
+		$attachment = $this->crud->upload('attachment', ['pdf', 'jpeg', 'png', 'gif'], 'assets/document/request-training/');
+		$data['attachment'] = $attachment;
         if (!empty($data)) {
             $dataTemp = $this->RequestTrainingModel->insert_data($data);
-            $this->idGenerateDate = $dataTemp->id;
+            // $this->idGenerateDate = $dataTemp->id;
             $this->crud->approvals('lnd_request_training_approvals_history', 'trainingRequestId', $data['requestTrainingId']);
             $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Request Training created successfully');
         } else {
@@ -233,11 +233,11 @@ class Request_training extends CI_Controller {
         if (!empty($data)) {
             if(!isset($data['id']) || $data['id'] == '') {
                 $dataTemp = $this->RequestTrainingModel->insert_data_trainee($data);
-                $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Request Training Trainee created successfully');
+                $this->response->send(ResponseStatus::CREATED, $data, 'Request Training Trainee created successfully');
                 $this->idGenerateDate = null;
             } else {
                 $dataTemp = $this->RequestTrainingModel->update_data_trainee($data['id'], $data);
-                $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Request Training Trainee created successfully');
+                $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Request Training Trainee updated successfully');
                 $this->idGenerateDate = null;
             }
         } else {

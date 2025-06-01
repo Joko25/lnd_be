@@ -26,13 +26,14 @@ class RequestTrainingModel extends CI_Model {
     public function insert_data($data) {
         $data['createdBy'] = $this->session->username;
         $data['createdTime'] = date('Y-m-d H:i:s');
+        $data['id'] = $this->uuid();
         $this->db->insert('lnd_request_training', $data);
 
-        $query = $this->db->order_by('createdTime', 'activityName')->limit(1)->get('lnd_request_training');
+        $query = $this->db->order_by('createdTime')->limit(1)->get('lnd_request_training');
     
         $record = $query->row();
     
-        return $record; 
+        return $data; 
     }
 
     public function update_data($id, $data) {
@@ -83,5 +84,16 @@ class RequestTrainingModel extends CI_Model {
     public function delete_data_trainee($idRequestTraining) {
         $this->db->where('trainingRequestId', $idRequestTraining);
         $this->db->delete('lnd_request_training_trainee');
+    }
+
+    private function uuid() {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+        );
     }
 }
