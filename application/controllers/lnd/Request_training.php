@@ -13,6 +13,7 @@ class Request_training extends CI_Controller {
         $this->load->helper('url');
         $this->load->library('form_validation');
         $this->load->model('crud');
+        $this->load->model('LndModel');
 
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
@@ -121,7 +122,7 @@ class Request_training extends CI_Controller {
         $data = $this->input->post();
 		$idGenerateDateTemp = $this->crud->autoidPrifix('lnd_request_training', 'requestTrainingId', 'T');
         $data['requestTrainingId'] = $idGenerateDateTemp;
-		$attachment = $this->crud->upload('attachment', ['pdf', 'jpeg', 'png', 'gif'], 'assets/document/request-training/');
+		$attachment = $this->LndModel->upload_v2('attachment', ['jpg', 'pdf', 'jpeg', 'png', 'gif'], 'assets/document/request-training/');
 		$data['attachment'] = $attachment;
         if (!empty($data)) {
             $dataTemp = $this->RequestTrainingModel->insert_data($data);

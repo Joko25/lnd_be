@@ -1151,10 +1151,11 @@
     }
 
 	function fileFormatter(value) {
-		if (value == "" || value == null) {
-			return '-';
+        if (value == "" || value == null) {
+            return '-';
 		} else {
-			return '<a href="' + 'http://localhost/lnd_be/assets/document/request-training/' + value + '" style="text-decoration: none;"><i class="fa fa-download"></i> Download</a>';
+            const baseUrl = '<?= base_url('assets/document/request-training/') ?>';
+			return `<a href="${baseUrl}${value}" style="text-decoration: none;"><i class="fa fa-download"></i> Download</a>`;
 		}
 	};
 </script>
