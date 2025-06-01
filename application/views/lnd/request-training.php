@@ -243,7 +243,8 @@
 			.then(response => response.json())
 			.then(data => {
 				if (data.code >= 200 && data.code <= 300) {
-                    insertTraine(data);
+                    let id = data.data.id;
+                    insertTraine(data, id);
 				} else {
 					toastr.error(data.message || 'Server Error', 'Error');
 				}
@@ -254,11 +255,11 @@
 			});
 	}
 
-    function insertTraine(data) {
+    function insertTraine(data, id) {
 
         var rowForm = $('#dgTrainee').datagrid('getRows');
         var totalForm = rowForm.length;
-        const id = url_save.split('/').pop();
+        // const id = url_save.split('/').pop();
         var completedRequests = 0;
 
         for (let i = 0; i < totalForm; i++) {
@@ -269,7 +270,7 @@
                     data: {
                         id: rowForm[i].id,
                         fullName: rowForm[i].fullName,
-                        trainingRequestId: method === 'PUT' ? id: null,
+                        trainingRequestId: id, // method === 'PUT' ? id: null,
                         national_id: rowForm[i].national_id,
                         position: rowForm[i].position,
                         departement: rowForm[i].departement,
