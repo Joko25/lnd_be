@@ -220,8 +220,8 @@ class Request_training extends CI_Controller {
         // Ambil request body secara manual
         $rawInput = file_get_contents("php://input");
         parse_str($rawInput, $data);
-        echo $this->idGenerateDate;
         
+        // Cek jika idGenerateDate ada, gunakan sebagai trainingRequestId
         if(!empty($this->idGenerateDate)) {
             $data['trainingRequestId'] = $this->idGenerateDate;
         } else if(empty($data['trainingRequestId'])) {
@@ -233,7 +233,7 @@ class Request_training extends CI_Controller {
         if (!empty($data)) {
             if(!isset($data['id']) || $data['id'] == '') {
                 $dataTemp = $this->RequestTrainingModel->insert_data_trainee($data);
-                $this->response->send(ResponseStatus::CREATED, $this->idGenerateDate, 'Request Training Trainee created successfully');
+                $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Request Training Trainee created successfully');
                 $this->idGenerateDate = null;
             } else {
                 $dataTemp = $this->RequestTrainingModel->update_data_trainee($data['id'], $data);
