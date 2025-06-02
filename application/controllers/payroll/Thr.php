@@ -175,6 +175,11 @@ class Thr extends CI_Controller
             $filter_employee_type = $this->input->get('filter_employee_type');
             $filter_group = $this->input->get('filter_group');
             $filter_cutoff = base64_decode($this->input->get('filter_cutoff'));
+            $search_date = date("d", strtotime($filter_cutoff));
+            if($search_date == "31"){
+                $filter_cutoff = date("Y-m-d", strtotime('-10 days', strtotime($filter_cutoff)));
+            }
+            
             $filter_period = date("Y-m", strtotime("-1 month", strtotime($filter_cutoff)));
 
             $username = $this->session->username;
@@ -200,7 +205,8 @@ class Thr extends CI_Controller
                     a.tax_id,
                     o.thr_fee,
                     e.total_all_allowance,
-                    e.bpjs_company
+                    e.bpjs_company,
+                    e.ter
                 FROM employees a
                 JOIN divisions b ON a.division_id = b.id
                 JOIN departements c ON a.departement_id = c.id
@@ -242,11 +248,11 @@ class Thr extends CI_Controller
             $cutoff = base64_decode($this->input->get('filter_cutoff'));
             $salary = empty($record['salary']) ? 0 : $record['salary'];
 
-            $this->db->select('*');
-            $this->db->from('cutoff');
-            $this->db->order_by('start', 'desc');
-            $cutoffperiod = $this->db->get()->row();
-            $days = date("d", strtotime($cutoffperiod->start));
+            // $this->db->select('*');
+            // $this->db->from('cutoff');
+            // $this->db->order_by('start', 'desc');
+            // $cutoffperiod = $this->db->get()->row();
+            // $days = date("d", strtotime($cutoffperiod->start));
             
             $filter_year = $this->input->get('filter_year');
             $employee_id = $record['id'];
@@ -280,7 +286,7 @@ class Thr extends CI_Controller
             $numTahun = ($service['year'] * 12);
             $numBulan = ($numTahun + $service['month']);
 
-            if($service['day'] >= $days){
+            if($service['day'] >= 20){
                 $numBulan += 1;
             }
 
@@ -348,7 +354,7 @@ class Thr extends CI_Controller
             if(empty($marital_category)){
                 $ter = 0;
             }else{
-                $ter = (($income_thr * $marital_category->ter) / 100);
+                $ter = ((($income_thr * $marital_category->ter) / 100) - $record['ter']);
             }
 
             if($numBulan >= 1){

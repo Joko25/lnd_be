@@ -103,17 +103,21 @@ class Payroll_pkl extends CI_Controller
             $rows   = isset($rows) ? intval($rows) : 10;
             $offset = ($page - 1) * $rows;
             $result = array();
+            
             //Select Query
-
-            $this->db->select('a.*, b.national_id');
+            $this->db->select('a.*, b.national_id, d.number as account_coa, e.name as division_name');
             $this->db->from('payroll_pkl a');
-            $this->db->join('employees b', 'a.employee_id = b.id');
+            $this->db->join('employees b', 'a.employee_id = b.id and b.status = 0');
+            $this->db->join('account_coa c', 'b.division_id = c.division_id and b.departement_id = c.departement_id and b.position_id = c.position_id and b.contract_id = c.contract_id', 'left');
+            $this->db->join('accounts d', "c.account_id = d.id and d.category = 'payroll'", 'left');
+            $this->db->join('divisions e', 'b.division_id = e.id');
             if ($filter_from != "" && $filter_to != "") {
                 $this->db->where('period_start =', $filter_from);
-                // $this->db->where('period_end =', $filter_to);
             }
             $this->db->like('a.employee_id', $filter_employee);
             $this->db->like('a.source_id', $filter_source);
+            $this->db->group_by('a.employee_number');
+            $this->db->having('COUNT(a.employee_number) = 1 OR (COUNT(a.employee_number) > 1 AND d.number IS NOT NULL)');
             $this->db->order_by('a.departement_name', 'ASC');
             $this->db->order_by('a.departement_sub_name', 'ASC');
             $this->db->order_by('a.employee_name', 'ASC');
@@ -424,15 +428,20 @@ class Payroll_pkl extends CI_Controller
         $config = $this->db->get()->row();
 
         //Select Query
-        $this->db->select('a.*, b.national_id');
+        $this->db->select('a.*, b.national_id, d.number as coa, e.name as division_name');
         $this->db->from('payroll_pkl a');
         $this->db->join('employees b', 'a.employee_id = b.id');
+        $this->db->join('account_coa c', 'b.division_id = c.division_id and b.departement_id = c.departement_id and b.position_id = c.position_id and b.contract_id = c.contract_id', 'left');
+        $this->db->join('accounts d', "c.account_id = d.id and d.category = 'payroll'", 'left');
+        $this->db->join('divisions e', 'b.division_id = e.id');
         if ($filter_from != "" && $filter_to != "") {
             $this->db->where('a.period_start =', $filter_from);
-            // $this->db->where('period_end =', $filter_to);
         }
+
         $this->db->like('a.employee_id', $filter_employee);
         $this->db->like('a.source_id', $filter_source);
+        $this->db->group_by('a.employee_number');
+        $this->db->having('COUNT(a.employee_number) = 1 OR (COUNT(a.employee_number) > 1 AND d.number IS NOT NULL)');
         $this->db->order_by('a.departement_name', 'ASC');
         $this->db->order_by('a.departement_sub_name', 'ASC');
         $this->db->order_by('a.employee_name', 'ASC');
@@ -466,8 +475,10 @@ class Payroll_pkl extends CI_Controller
                 <th>Employee ID</th>
                 <th>NIK</th>
                 <th>Employee Name</th>
+                <th>COA No</th>
                 <th>Join Date</th>
                 <th>Fit of Services</th>
+                <th>Division</th>
                 <th>Departement</th>
                 <th>Departement Sub</th>
                 <th>Sources</th>
@@ -484,8 +495,10 @@ class Payroll_pkl extends CI_Controller
                             <td style="mso-number-format:\@;">' . $data['employee_number'] . '</td>
                             <td style="mso-number-format:\@;">' . $data['national_id'] . '</td>
                             <td>' . $data['employee_name'] . '</td>
+                            <td>' . $data['coa'] . '</td>
                             <td>' . date("d F Y", strtotime($data['date_sign'])) . '</td>
                             <td>' . $data['services'] . '</td>
+                            <td>' . $data['division_name'] . '</td>
                             <td>' . $data['departement_name'] . '</td>
                             <td>' . $data['departement_sub_name'] . '</td>
                             <td>' . $data['source_name'] . '</td>

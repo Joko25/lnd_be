@@ -286,6 +286,7 @@
                                 "&filter_departement=" + filter_departement +
                                 "&filter_departement_sub=" + filter_departement_sub +
                                 '&filter_year=' + filter_year +
+                                '&filter_cutoff=' + btoa(filter_cutoff) +
                                 '&filter_employee_type=' + filter_employee_type +
                                 '&filter_group=' + filter_group +
                                 '&filter_source=' + filter_source +

@@ -257,6 +257,7 @@ class Approvals extends CI_Controller
         $this->db->where('b.group_id', $id);
         $this->db->where('a.period_start', $period_start);
         $this->db->where('a.period_end', $period_end);
+        $this->db->where('a.approved_to', $this->session->username);
         $this->db->where('b.deleted', 0);
         $this->db->where('b.status', 0);
         $this->db->where('a.status', 0);

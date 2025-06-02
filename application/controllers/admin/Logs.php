@@ -28,7 +28,7 @@ class Logs extends CI_Controller
     //GET DATATABLES
     public function datatables()
     {
-        if ($this->input->post()) {
+        // if ($this->input->post()) {
             $filters = json_decode($this->input->post('filterRules'));
             $page   = $this->input->post('page');
             $rows   = $this->input->post('rows');
@@ -46,17 +46,17 @@ class Logs extends CI_Controller
                 }
             }
             $this->db->order_by('created_date', 'DESC');
+            //Limit 1 - 10
+            $this->db->limit(50);
             //Total Data
             $totalRows = $this->db->count_all_results('', false);
-            //Limit 1 - 10
-            $this->db->limit($rows, $offset);
             //Get Data Array
             $records = $this->db->get()->result_array();
             //Mapping Data
             $result['total'] = $totalRows;
             $result = array_merge($result, ['rows' => $records]);
             echo json_encode($result);
-        }
+        // }
     }
 
     //DELETE DATA

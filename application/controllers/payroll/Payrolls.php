@@ -822,7 +822,7 @@ class Payrolls extends CI_Controller
 
             //Total Pendapatan Gaji (Gaji + Tunjangan + BPJS dari perusahaan + Koreksi plus + lembur hari biasa + lembur hari libur)
             $total_all_allowance = ($record['salary'] + $arr_allowance_amount_total + $arr_bpjs_com_amount_total + @$correction_plus_amount);
-            $total_all_allowance_ter = ($record['salary'] + $arr_allowance_amount_total + $arr_bpjs_com_amount_total_ter + @$correction_plus_amount);
+            $total_all_allowance_ter = ($record['salary'] + $arr_allowance_amount_total + $arr_bpjs_com_amount_total_ter + @$correction_plus_amount - $absence_amount);
 
             //Total Potongan Gaji (Ijin/Sakit + Koreksi Minus + alpha)
             $total_all_deduction = ($arr_permit_type_amount_b_total + @$correction_minus_amount + $absence_amount);
@@ -1238,7 +1238,7 @@ class Payrolls extends CI_Controller
                     <td>' . $record['ter_number'] . '</td>
                     <td>' . $record['group_name'] . '</td>
                     <td class="str">' . $record['national_id'] . '</td>
-                    <td class="str">' . $record['tax_id'] . '</td>
+                    <td>' . $record['tax_id'] . '</td>
                     <td>' . $record['account_no'] . '</td>';
             foreach (json_decode($record['attandance'], true) as $attandance => $val_attandance) {
                 $html .= '<td>' . $val_attandance . '</td>';

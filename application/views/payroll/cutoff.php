@@ -5,6 +5,7 @@
             <th rowspan="2" field="ck" checkbox="true"></th>
             <th rowspan="2" data-options="field:'start',width:150,align:'center'">Start</th>
             <th rowspan="2" data-options="field:'finish',width:150,align:'center'">Finish</th>
+            <th rowspan="2" data-options="field:'payroll',width:100,align:'center', styler:stylePayroll, formatter:formatterPayroll">Payroll</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
@@ -31,9 +32,14 @@
                 <span style="width:30%; display:inline-block;">Cutoff Start</span>
                 <input style="width:60%;" name="start" id="start" required data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
             </div>
-            <div class="fitem">
+            <div class="fitem" style="margin-bottom: 5px;">
                 <span style="width:30%; display:inline-block;">Cutoff Finish</span>
                 <input style="width:60%;" name="finish" id="finish" required data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
+            </div>
+            <div class="fitem" style="margin-bottom: 5px;">
+                <span style="width:35%; display:inline-block;">Payroll</span>
+                <input class="easyui-radiobutton" name="payroll" value="0"> Unlock &nbsp;
+                <input class="easyui-radiobutton" name="payroll" value="1"> Lock
             </div>
         </fieldset>
     </form>
@@ -140,7 +146,7 @@
                                 toastr.error(result.message, result.title);
                             }
 
-                            // $('#dlg_insert').dialog('close');
+                            $('#dlg_insert').dialog('close');
                             $('#dg').datagrid('reload');
                         }
                     });
@@ -170,4 +176,22 @@
             return new Date();
         }
     }
+
+    //CELLSTYLE STATUS
+    function stylePayroll(value, row, index) {
+        if (value == 0) {
+            return 'background: #53D636; color:white;';
+        } else {
+            return 'background: #FF5F5F; color:white;';
+        }
+    }
+
+    //FORMATTER STATUS
+    function formatterPayroll(value) {
+        if (value == 0) {
+            return 'Unlock';
+        } else {
+            return 'Locked';
+        }
+    };
 </script>

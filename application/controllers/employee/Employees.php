@@ -311,7 +311,7 @@ class Employees extends CI_Controller
                 c.name as division_name, 
                 d.name as departement_name, 
                 e.name as departement_sub_name,
-                e.type, 
+                (case when a.job_type is null then e.type else a.job_type end) as type, 
                 g.name as position_name,
                 h.name as contract_name,
                 i.resign_date,
@@ -1008,7 +1008,7 @@ class Employees extends CI_Controller
                 d.name as departement_name, 
                 e.number as departement_sub_number, 
                 e.name as departement_sub_name,
-                e.type, 
+                (case when a.job_type is null then e.type else a.job_type end) as type,
                 g.level,
                 g.number as position_number,
                 g.name as position_name,
@@ -1091,6 +1091,7 @@ class Employees extends CI_Controller
                 <th>Departement</th>
                 <th>ID Departement Sub</th>
                 <th>Departement Sub</th>
+                <th>Job Type</th>
                 <th>ID Position</th>
                 <th>Position</th>
                 <th>Level</th>
@@ -1151,6 +1152,7 @@ class Employees extends CI_Controller
                     <td>' . $data['departement_name'] . '</td>
                     <td><b style="color:red;">' . $data['departement_sub_number'] . '</b></td>
                     <td>' . $data['departement_sub_name'] . '</td>
+                    <td>' . $data['type'] . '</td>
                     <td><b style="color:red;">' . $data['position_number'] . '</b></td>
                     <td>' . $data['position_name'] . '</td>
                     <td>' . $data['level'] . '</td>
@@ -1175,7 +1177,7 @@ class Employees extends CI_Controller
                     <td class="str">' . $data['tax_id'] . '</td>
                     <td class="str">' . $data['jamsostek'] . '</td>
                     <td>' . $data['jamsostek_date'] . '</td>
-                    <td>' . $data['jkn'] . '</td>
+                    <td class="str">' . $data['jkn'] . '</td>
                     <td>' . $data['jkn_date'] . '</td>
                     <td>' . $data['telphone'] . '</td>
                     <td class="str">' . $data['mobile_phone'] . '</td>

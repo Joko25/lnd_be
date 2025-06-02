@@ -98,7 +98,7 @@ class Sourcing_fee extends CI_Controller
                             LEFT JOIN allowances e ON d.allowance_id = e.id
                             WHERE a.period_start = '$period_start' and a.period_end = '$period_end' and (e.type != 'TEMPORARY' or e.type is null)
                             AND b.status = 0
-                            
+                            AND b.group_id = '$record[group_id]'
                             AND b.source_id = '$record[source_id]'
                             ORDER BY a.`name` ASC");
                 $employees = $query->result_array();

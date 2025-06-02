@@ -122,6 +122,10 @@
                         <input style="width:28%;" name="filter_from" id="filter_from" class="easyui-combogrid"> To
                         <input style="width:28%;" name="filter_to" id="filter_to" data-options="prompt:'Date To'" readonly class="easyui-textbox">
                     </div>
+                    <div class="fitem" hidden>
+                        <span style="width:30%; display:inline-block;">Locked</span>
+                        <input style="width:28%;" name="filter_lock" id="filter_lock" readonly class="easyui-numberbox">
+                    </div>
                     <div class="fitem">
                         <span style="width:30%; display:inline-block;">Division</span>
                         <input style="width:60%;" id="filter_division" class="easyui-combobox">
@@ -248,6 +252,7 @@
     function add() {
         var filter_from = $("#filter_from").combogrid('getValue');
         var filter_to = $("#filter_to").textbox('getValue');
+        var filter_lock = $("#filter_lock").numberbox('getValue');
         var filter_division = $("#filter_division").combobox('getValue');
         var filter_departement = $("#filter_departement").combobox('getValue');
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
@@ -257,205 +262,215 @@
 
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Enter Cut Off Period", "Filter Date");
+        } else if(filter_lock == 1){
+            Swal.fire(
+                'Locked Payroll',
+                'Payroll is locked for this period, if you want to repeat generate payroll please confirmation to your Manager',
+                'error'
+            );
         } else {
-            $.ajax({
-                url: "<?= base_url('payroll/payrolls/read') ?>",
-                type: 'get',
-                data: 'filter_from=' + filter_from,
-                success: function(message) {
-                    var message_read = eval('(' + message + ')');
+            $.messager.confirm('Warning', 'Are you sure you want to generate payroll?', function(x) {
+                if (x) {
+                    $.ajax({
+                        url: "<?= base_url('payroll/payrolls/read') ?>",
+                        type: 'get',
+                        data: 'filter_from=' + filter_from,
+                        success: function(message) {
+                            var message_read = eval('(' + message + ')');
 
-                    if (message_read['status'] != "1") {
-                        if (message_read['generate'] == "EXIST") {
-                            $.messager.confirm('Warning', 'Are you sure you want to repeat generate data?', function(r) {
-                                if (r) {
-                                    $.ajax({
-                                        method: 'post',
-                                        url: '<?= base_url('payroll/payrolls/delete') ?>',
-                                        data: {
-                                            filter_from: filter_from,
-                                            filter_to: filter_to,
-                                            filter_division: filter_division,
-                                            filter_departement: filter_departement,
-                                            filter_departement_sub: filter_departement_sub,
-                                            filter_employee: filter_employee,
-                                            filter_employee_type: filter_employee_type,
-                                            filter_group: filter_group
-                                        },
-                                        success: function(deleted) {
-                                            Swal.fire({
-                                                title: 'Please Wait for Generating Data',
-                                                showConfirmButton: false,
-                                                allowOutsideClick: false,
-                                                allowEscapeKey: false,
-                                                didOpen: () => {
-                                                    Swal.showLoading();
-                                                },
-                                            });
-
-                                            var url = "filter_division=" + filter_division +
-                                                "&filter_departement=" + filter_departement +
-                                                "&filter_departement_sub=" + filter_departement_sub +
-                                                '&filter_from=' + filter_from +
-                                                '&filter_to=' + filter_to +
-                                                '&filter_employee_type=' + filter_employee_type +
-                                                '&filter_group=' + filter_group +
-                                                '&filter_employee=' + filter_employee;
+                            if (message_read['status'] != "1") {
+                                if (message_read['generate'] == "EXIST") {
+                                    $.messager.confirm('Warning', 'Are you sure you want to repeat generate data?', function(r) {
+                                        if (r) {
                                             $.ajax({
-                                                url: "<?= base_url('payroll/payrolls/generatePayroll') ?>",
-                                                type: 'get',
-                                                data: url,
-                                                success: function(result) {
-                                                    $('#dlg_generate').dialog('open');
-                                                    Swal.close();
-                                                    var json = eval('(' + result + ')');
-                                                    requestData(json.total, json);
+                                                method: 'post',
+                                                url: '<?= base_url('payroll/payrolls/delete') ?>',
+                                                data: {
+                                                    filter_from: filter_from,
+                                                    filter_to: filter_to,
+                                                    filter_division: filter_division,
+                                                    filter_departement: filter_departement,
+                                                    filter_departement_sub: filter_departement_sub,
+                                                    filter_employee: filter_employee,
+                                                    filter_employee_type: filter_employee_type,
+                                                    filter_group: filter_group
+                                                },
+                                                success: function(deleted) {
+                                                    Swal.fire({
+                                                        title: 'Please Wait for Generating Data',
+                                                        showConfirmButton: false,
+                                                        allowOutsideClick: false,
+                                                        allowEscapeKey: false,
+                                                        didOpen: () => {
+                                                            Swal.showLoading();
+                                                        },
+                                                    });
 
-                                                    function requestData(total, json, number = 1, value = 0) {
-                                                        if (value < 100) {
-                                                            value = Math.floor((number / total) * 100);
-                                                            $('#p_upload').progressbar('setValue', value);
-                                                            $('#p_start').html(number);
-                                                            $('#p_finish').html(total);
+                                                    var url = "filter_division=" + filter_division +
+                                                        "&filter_departement=" + filter_departement +
+                                                        "&filter_departement_sub=" + filter_departement_sub +
+                                                        '&filter_from=' + filter_from +
+                                                        '&filter_to=' + filter_to +
+                                                        '&filter_employee_type=' + filter_employee_type +
+                                                        '&filter_group=' + filter_group +
+                                                        '&filter_employee=' + filter_employee;
+                                                    $.ajax({
+                                                        url: "<?= base_url('payroll/payrolls/generatePayroll') ?>",
+                                                        type: 'get',
+                                                        data: url,
+                                                        success: function(result) {
+                                                            $('#dlg_generate').dialog('open');
+                                                            Swal.close();
+                                                            var json = eval('(' + result + ')');
+                                                            requestData(json.total, json);
 
-                                                            $.ajax({
-                                                                url: "<?= base_url('payroll/payrolls/create') ?>?" + url,
-                                                                type: 'post',
-                                                                data: json['rows'][number - 1],
-                                                                success: function(note) {
-                                                                    var result = eval('(' + note + ')');
-                                                                    if (result.theme == "success") {
-                                                                        var title = "<b style='color: green;'>" + result.title + "</b> | " + result.message;
-                                                                    } else {
-                                                                        var title = "<b style='color: red;'>" + result.title + "</b> | " + result.message;
-                                                                    }
-                                                                    $("#p_remarks").append(title + "<br>");
-                                                                    requestData(total, json, number + 1, value);
+                                                            function requestData(total, json, number = 1, value = 0) {
+                                                                if (value < 100) {
+                                                                    value = Math.floor((number / total) * 100);
+                                                                    $('#p_upload').progressbar('setValue', value);
+                                                                    $('#p_start').html(number);
+                                                                    $('#p_finish').html(total);
 
-                                                                    if (number == total) {
-                                                                        $('#dlg_generate').dialog('close');
-                                                                        Swal.fire(
-                                                                            'Generate Completed',
-                                                                            'Generate payroll has been completed, please check the generated payroll data, if an error occurs, please generate it again before the data is approved',
-                                                                            'success'
-                                                                        );
-                                                                    }
-                                                                },
-                                                                fail: function(jqXHR, textStatus) {
-                                                                    if (textStatus == "error") {
-                                                                        Swal.fire({
-                                                                            title: 'Connection Time Out, Check Your Connection',
-                                                                            showConfirmButton: false,
-                                                                            allowOutsideClick: false,
-                                                                            allowEscapeKey: false,
-                                                                            didOpen: () => {
-                                                                                Swal.showLoading();
-                                                                            },
-                                                                        });
+                                                                    $.ajax({
+                                                                        url: "<?= base_url('payroll/payrolls/create') ?>?" + url,
+                                                                        type: 'post',
+                                                                        data: json['rows'][number - 1],
+                                                                        success: function(note) {
+                                                                            var result = eval('(' + note + ')');
+                                                                            if (result.theme == "success") {
+                                                                                var title = "<b style='color: green;'>" + result.title + "</b> | " + result.message;
+                                                                            } else {
+                                                                                var title = "<b style='color: red;'>" + result.title + "</b> | " + result.message;
+                                                                            }
+                                                                            $("#p_remarks").append(title + "<br>");
+                                                                            requestData(total, json, number + 1, value);
 
-                                                                        setTimeout(function() {
-                                                                            requestData(total, json, number, value);
-                                                                        }, 5000);
-                                                                    }
+                                                                            if (number == total) {
+                                                                                $('#dlg_generate').dialog('close');
+                                                                                Swal.fire(
+                                                                                    'Generate Completed',
+                                                                                    'Generate payroll has been completed, please check the generated payroll data, if an error occurs, please generate it again before the data is approved',
+                                                                                    'success'
+                                                                                );
+                                                                            }
+                                                                        },
+                                                                        fail: function(jqXHR, textStatus) {
+                                                                            if (textStatus == "error") {
+                                                                                Swal.fire({
+                                                                                    title: 'Connection Time Out, Check Your Connection',
+                                                                                    showConfirmButton: false,
+                                                                                    allowOutsideClick: false,
+                                                                                    allowEscapeKey: false,
+                                                                                    didOpen: () => {
+                                                                                        Swal.showLoading();
+                                                                                    },
+                                                                                });
+
+                                                                                setTimeout(function() {
+                                                                                    requestData(total, json, number, value);
+                                                                                }, 5000);
+                                                                            }
+                                                                        }
+                                                                    });
                                                                 }
-                                                            });
+                                                            }
                                                         }
-                                                    }
-                                                }
-                                            });
-                                        },
-                                    });
-                                }
-                            });
-                        } else {
-                            Swal.fire({
-                                title: 'Please Wait for Generating Data',
-                                showConfirmButton: false,
-                                allowOutsideClick: false,
-                                allowEscapeKey: false,
-                                didOpen: () => {
-                                    Swal.showLoading();
-                                },
-                            });
-
-                            var url = "filter_division=" + filter_division +
-                                "&filter_departement=" + filter_departement +
-                                "&filter_departement_sub=" + filter_departement_sub +
-                                '&filter_from=' + filter_from +
-                                '&filter_to=' + filter_to +
-                                '&filter_employee_type=' + filter_employee_type +
-                                '&filter_group=' + filter_group +
-                                '&filter_employee=' + filter_employee;
-                            $.ajax({
-                                url: "<?= base_url('payroll/payrolls/generatePayroll') ?>",
-                                type: 'get',
-                                data: url,
-                                success: function(result) {
-                                    $('#dlg_generate').dialog('open');
-                                    Swal.close();
-                                    var json = eval('(' + result + ')');
-                                    requestData(json.total, json);
-
-                                    function requestData(total, json, number = 1, value = 0) {
-                                        if (value < 100) {
-                                            value = Math.floor((number / total) * 100);
-                                            $('#p_upload').progressbar('setValue', value);
-                                            $('#p_start').html(number);
-                                            $('#p_finish').html(total);
-
-                                            $.ajax({
-                                                url: "<?= base_url('payroll/payrolls/create') ?>?" + url,
-                                                type: 'post',
-                                                data: json['rows'][number - 1],
-                                                success: function(note) {
-                                                    var result = eval('(' + note + ')');
-                                                    if (result.theme == "success") {
-                                                        var title = "<b style='color: green;'>" + result.title + "</b> | " + result.message;
-                                                    } else {
-                                                        var title = "<b style='color: red;'>" + result.title + "</b> | " + result.message;
-                                                    }
-                                                    $("#p_remarks").append(title + "<br>");
-                                                    requestData(total, json, number + 1, value);
-
-                                                    if (number == total) {
-                                                        $('#dlg_generate').dialog('close');
-                                                        Swal.fire(
-                                                            'Generate Completed',
-                                                            'Generate payroll has been completed, please check the generated payroll data, if an error occurs, please generate it again before the data is approved',
-                                                            'success'
-                                                        );
-                                                    }
+                                                    });
                                                 },
-                                                fail: function(jqXHR, textStatus) {
-                                                    if (textStatus == "error") {
-                                                        Swal.fire({
-                                                            title: 'Connection Time Out, Check Your Connection',
-                                                            showConfirmButton: false,
-                                                            allowOutsideClick: false,
-                                                            allowEscapeKey: false,
-                                                            didOpen: () => {
-                                                                Swal.showLoading();
-                                                            },
-                                                        });
-
-                                                        setTimeout(function() {
-                                                            requestData(total, json, number, value);
-                                                        }, 5000);
-                                                    }
-                                                }
                                             });
                                         }
-                                    }
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Please Wait for Generating Data',
+                                        showConfirmButton: false,
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                        didOpen: () => {
+                                            Swal.showLoading();
+                                        },
+                                    });
+
+                                    var url = "filter_division=" + filter_division +
+                                        "&filter_departement=" + filter_departement +
+                                        "&filter_departement_sub=" + filter_departement_sub +
+                                        '&filter_from=' + filter_from +
+                                        '&filter_to=' + filter_to +
+                                        '&filter_employee_type=' + filter_employee_type +
+                                        '&filter_group=' + filter_group +
+                                        '&filter_employee=' + filter_employee;
+                                    $.ajax({
+                                        url: "<?= base_url('payroll/payrolls/generatePayroll') ?>",
+                                        type: 'get',
+                                        data: url,
+                                        success: function(result) {
+                                            $('#dlg_generate').dialog('open');
+                                            Swal.close();
+                                            var json = eval('(' + result + ')');
+                                            requestData(json.total, json);
+
+                                            function requestData(total, json, number = 1, value = 0) {
+                                                if (value < 100) {
+                                                    value = Math.floor((number / total) * 100);
+                                                    $('#p_upload').progressbar('setValue', value);
+                                                    $('#p_start').html(number);
+                                                    $('#p_finish').html(total);
+
+                                                    $.ajax({
+                                                        url: "<?= base_url('payroll/payrolls/create') ?>?" + url,
+                                                        type: 'post',
+                                                        data: json['rows'][number - 1],
+                                                        success: function(note) {
+                                                            var result = eval('(' + note + ')');
+                                                            if (result.theme == "success") {
+                                                                var title = "<b style='color: green;'>" + result.title + "</b> | " + result.message;
+                                                            } else {
+                                                                var title = "<b style='color: red;'>" + result.title + "</b> | " + result.message;
+                                                            }
+                                                            $("#p_remarks").append(title + "<br>");
+                                                            requestData(total, json, number + 1, value);
+
+                                                            if (number == total) {
+                                                                $('#dlg_generate').dialog('close');
+                                                                Swal.fire(
+                                                                    'Generate Completed',
+                                                                    'Generate payroll has been completed, please check the generated payroll data, if an error occurs, please generate it again before the data is approved',
+                                                                    'success'
+                                                                );
+                                                            }
+                                                        },
+                                                        fail: function(jqXHR, textStatus) {
+                                                            if (textStatus == "error") {
+                                                                Swal.fire({
+                                                                    title: 'Connection Time Out, Check Your Connection',
+                                                                    showConfirmButton: false,
+                                                                    allowOutsideClick: false,
+                                                                    allowEscapeKey: false,
+                                                                    didOpen: () => {
+                                                                        Swal.showLoading();
+                                                                    },
+                                                                });
+
+                                                                setTimeout(function() {
+                                                                    requestData(total, json, number, value);
+                                                                }, 5000);
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        }
+                                    });
                                 }
-                            });
+                            } else {
+                                Swal.fire(
+                                    'Cannot Generate!',
+                                    'the payroll data that you entered has been approved, please contact the relevant admin if you want to repeat generate payroll again',
+                                    'warning'
+                                );
+                            }
                         }
-                    } else {
-                        Swal.fire(
-                            'Cannot Generate!',
-                            'the payroll data that you entered has been approved, please contact the relevant admin if you want to repeat generate payroll again',
-                            'warning'
-                        );
-                    }
+                    });
                 }
             });
         }
@@ -565,6 +580,7 @@
             ],
             onSelect: function(val, row) {
                 $("#filter_to").textbox('setValue', row.finish);
+                $("#filter_lock").numberbox('setValue', row.payroll);
             }
         });
 

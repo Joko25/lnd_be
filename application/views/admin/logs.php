@@ -60,13 +60,13 @@
     $(function() {
         $('#dg').datagrid({
             url: '<?= base_url('admin/logs/datatables') ?>',
-            pagination: true,
+            pagination: false,
             clientPaging: false,
             remoteFilter: true,
             rownumbers: true,
             fit: true,
-            pageList: [20, 50, 100, 500, 1000],
-            pageSize: 20,
+            // pageList: [20, 50, 100, 500, 1000],
+            // pageSize: 20,
         }).datagrid('enableFilter');
     });
     //PRINT PDF

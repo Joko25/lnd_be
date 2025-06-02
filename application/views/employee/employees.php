@@ -136,7 +136,7 @@
 </div>
 
 <!-- DIALOG SAVE AND UPDATE -->
-<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 80%; height: 600px; padding:10px; top: 20px;">
+<div id="dlg_insert" class="easyui-dialog" title="Add New" data-options="closed: true,modal:true" style="width: 80%; height: 550px; padding:10px; top: 20px;">
     <form id="frm_insert" method="post" enctype="multipart/form-data" novalidate>
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Basic Information</b></legend>
@@ -182,7 +182,13 @@
                 </div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Departement Sub</span>
-                    <input style="width:60%;" name="departement_sub_id" id="departement_sub_id" required="" class="easyui-combobox">
+                    <input style="width:40%;" name="departement_sub_id" id="departement_sub_id" required="" class="easyui-combobox">
+                    <select style="width:20%;" name="job_type" id="job_type" required="" class="easyui-combobox" panelHeight="auto">
+                        <option value="DIRECT">DIRECT</option>
+                        <option value="INDIRECT">INDIRECT</option>
+                        <option value="ADM & GENERAL">ADM & GENERAL</option>
+                        <option value="OTHER">OTHER</option>
+                    </select>
                 </div>
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Employee Type</span>
@@ -588,6 +594,9 @@
                                     onLoadSuccess: function() {
                                         $("#departement_sub_id").combobox('setValue', row.departement_sub_id);
                                     },
+                                    onSelect: function(deptsub) {
+                                        $("#job_type").combobox('setValue', deptsub.type);
+                                    }
                                 });
                             }
                         });
@@ -2404,6 +2413,9 @@
                             valueField: 'id',
                             textField: 'name',
                             prompt: 'Choose Department Sub',
+                            onSelect: function(deptsub) {
+                                $('#job_type').combobox('setValue', deptsub.type);
+                            }
                         });
                     }
                 });

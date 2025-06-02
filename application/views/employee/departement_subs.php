@@ -75,8 +75,9 @@
                 <span style="width:35%; display:inline-block;">Job Type</span>
                 <select style="width:60%;" name="type" required="" class="easyui-combobox" panelHeight="auto">
                     <option value="DIRECT">DIRECT</option>
-                    <option value="INDIRECT">INDIRECT</option>
-                    <option value="ADMINISTRATION">ADMINISTRATION</option>
+                    <option value="IN DIRECT">IN DIRECT</option>
+                    <option value="ADM & GENERAL">ADM & GENERAL</option>
+                    <option value="OTHER">OTHER</option>
                 </select>
             </div>
         </fieldset>

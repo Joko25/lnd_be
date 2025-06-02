@@ -189,16 +189,30 @@ class Salary_slips extends CI_Controller
         $total_allowence = 0;
         $total_allowence_temp = 0;
         $total_allowence_fix = 0;
+        $html_allowence_temp = "";
+        $html_allowence_fix = "";
         foreach (json_decode($record['allowence'], true) as $allowence => $val_allowence) {
             $allTemp = $this->crud->read("allowances", ["number" => $allowence], ["type" => "TEMPORARY"]);
             $allFix = $this->crud->read("allowances", ["number" => $allowence], ["type" => "FIX"]);
             
             if(!empty($allTemp)){
                 $total_allowence_temp += (int) $val_allowence;
+                if((int) $val_allowence > 0){
+                    $html_allowence_temp .= '<tr>
+                                                <td style="text-align:left;">'.$allTemp->name.'</td>
+                                                <td style="text-align:right;"><b>'.number_format((int) $val_allowence).'</b></td>
+                                            </tr>';
+                }
             }
 
             if(!empty($allFix)){
                 $total_allowence_fix += (int) $val_allowence;
+                if((int) $val_allowence > 0){
+                    $html_allowence_fix .= '<tr>
+                                                <td style="text-align:left;">'.$allFix->name.'</td>
+                                                <td style="text-align:right;"><b>'.number_format((int) $val_allowence).'</b></td>
+                                            </tr>';
+                }
             }
 
             $total_allowence += (int)$val_allowence;
@@ -344,13 +358,15 @@ class Salary_slips extends CI_Controller
                                     <td style="text-align:right;" width="150"><b>' . number_format($record['salary']) . '</b></td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align:left;">Allowance (Fix)</td>
-                                    <td style="text-align:right;"><b>'.number_format($total_allowence_fix).'</b></td>
+                                    <td style="text-align:left;"><b>Allowance (Fix)</b></td>
+                                    <td style="text-align:right;"></td>
                                 </tr>
+                                '.$html_allowence_fix.'
                                 <tr>
-                                    <td style="text-align:left;">Allowance (Tmp)</td>
-                                    <td style="text-align:right;"><b>'.number_format($total_allowence_temp).'</b></td>
+                                    <td style="text-align:left;"><b>Allowance (Tmp)</b></td>
+                                    <td style="text-align:right;"></td>
                                 </tr>
+                                '.$html_allowence_temp.'
                                 <tr>
                                     <td style="text-align:left;">Overtime</td>
                                     <td style="text-align:right;">(<b>' . ($record['overtime_weekday'] + $record['overtime_holiday']) . '</b> Hour) <b>' . number_format(($record['overtime_amount_weekday'] + $record['overtime_amount_holiday'])) . '</b></td>
@@ -555,16 +571,30 @@ class Salary_slips extends CI_Controller
                 $total_allowence = 0;
                 $total_allowence_temp = 0;
                 $total_allowence_fix = 0;
+                $html_allowence_temp = "";
+                $html_allowence_fix = "";
                 foreach (json_decode($record['allowence'], true) as $allowence => $val_allowence) {
                     $allTemp = $this->crud->read("allowances", ["number" => $allowence], ["type" => "TEMPORARY"]);
                     $allFix = $this->crud->read("allowances", ["number" => $allowence], ["type" => "FIX"]);
                     
                     if(!empty($allTemp)){
                         $total_allowence_temp += (int) $val_allowence;
+                        if((int) $val_allowence > 0){
+                            $html_allowence_temp .= '<tr>
+                                                        <td style="text-align:left;">'.$allTemp->name.'</td>
+                                                        <td style="text-align:right;"><b>'.number_format((int) $val_allowence).'</b></td>
+                                                    </tr>';
+                        }
                     }
 
                     if(!empty($allFix)){
                         $total_allowence_fix += (int) $val_allowence;
+                        if((int) $val_allowence > 0){
+                            $html_allowence_fix .= '<tr>
+                                                        <td style="text-align:left;">'.$allFix->name.'</td>
+                                                        <td style="text-align:right;"><b>'.number_format((int) $val_allowence).'</b></td>
+                                                    </tr>';
+                        }
                     }
 
                     $total_allowence += (int)$val_allowence;
@@ -721,13 +751,15 @@ class Salary_slips extends CI_Controller
                                                         <td style="text-align:right;" width="150"><b>' . number_format($record['salary']) . '</b></td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="text-align:left;">Allowance (Fix)</td>
-                                                        <td style="text-align:right;"><b>'.number_format($total_allowence_fix).'</b></td>
+                                                        <td style="text-align:left;"><b>Allowance (Fix)</b></td>
+                                                        <td style="text-align:right;"></td>
                                                     </tr>
+                                                    '.$html_allowence_fix.'
                                                     <tr>
-                                                        <td style="text-align:left;">Allowance (Tmp)</td>
-                                                        <td style="text-align:right;"><b>'.number_format($total_allowence_temp).'</b></td>
+                                                        <td style="text-align:left;"><b>Allowance (Tmp)</b></td>
+                                                        <td style="text-align:right;"></td>
                                                     </tr>
+                                                    '.$html_allowence_temp.'
                                                     <tr>
                                                         <td style="text-align:left;">Overtime</td>
                                                         <td style="text-align:right;">(<b>' . ($record['overtime_weekday'] + $record['overtime_holiday']) . '</b> Hour) <b>' . number_format(($record['overtime_amount_weekday'] + $record['overtime_amount_holiday'])) . '</b></td>

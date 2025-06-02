@@ -176,7 +176,6 @@ class Attandance_summary extends CI_Controller
                 $total_days = 0;
 
                 foreach ($employees as $data) {
-
                     $weekday = [];
                     $weekday2 = [];
                     $weekend = [];
@@ -228,8 +227,8 @@ class Attandance_summary extends CI_Controller
                     //Tanggal merah di master calendar
                     $this->db->select('trans_date');
                     $this->db->from('calendars');
-                    $this->db->where('trans_date >=', $filter_from);
-                    $this->db->where('trans_date <=', $filter_to);
+                    $this->db->where('trans_date >=', $data['date_sign']);
+                    $this->db->where("trans_date between '$filter_from' and '$filter_to'");
                     $this->db->where('description !=', "Weekend");
                     if (count($weekend2) > 0) {
                         $this->db->where_not_in('trans_date', $weekend2);

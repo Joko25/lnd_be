@@ -9,6 +9,8 @@
     </thead>
     <thead>
         <tr>
+            <th data-options="field:'account_coa',width:100,halign:'center'">COA No</th>
+            <th data-options="field:'division_name',width:200,halign:'center'">Division</th>
             <th data-options="field:'departement_name',width:200,halign:'center'">Departement</th>
             <th data-options="field:'departement_sub_name',width:200,halign:'center'">Departement Sub</th>
             <th data-options="field:'source_name',width:200,halign:'center'">Source</th>
