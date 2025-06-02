@@ -122,6 +122,8 @@
 
 <script type="text/javascript">
 
+    var isUpdate = false;
+
     function toggleDepartment(event) {
         if (event) {
             $('#department').combogrid('setValue', 'All Dept');
@@ -245,23 +247,31 @@
 
         const questionJson = JSON.parse(data.json_question);
         questionJson.forEach((value, index) => {
+            
             $('#formQuestion').append(templateQuestion(index, 'question', value));
             $.parser.parse(`#question_${index}`);
             setTimeout(() => {
                 value.opsion.forEach((opt, optIndex) => {
                     var trainingContainer = $(`#answer_question_${index}`)
-                    if(trainingContainer.children().length === 0) addOpsion(index, 'question', value, opt)
+                    addOpsion(index, 'question', value, opt)
                 });
-                
-
             }, 300);
         });
-
+        
         if (data.json_postquestion) {
             const postJson = JSON.parse(data.json_postquestion);
             postJson.forEach((val, index) => {
+                console.log("#value", val);
                 $('#formPostQuestion').append(templateQuestion(index, 'post_question', val));
                 $.parser.parse(`#post_question_${index}`);
+                if(val.opsion) {
+                    setTimeout(() => {
+                        val.opsion.forEach((opt, optIndex) => {
+                            var trainingContainer = $(`#answer_question_${index}`)
+                            addOpsion(index, 'post_question', val, opt)
+                        });
+                    }, 300);
+                }
             });
         }
     }
@@ -277,6 +287,7 @@
         $("#addrow").show();
         $('#formQuestion').empty();
         $('#formPostQuestion').empty();
+        isUpdate = false;
 
         var formContainer = $('#formQuestion');
         var totalData = formContainer.children().length;
@@ -408,6 +419,7 @@
             // $('#frm_insert').form('load', row);
             url_save = '<?= base_url('lnd/master_form_test/update_data/') ?>' + row.id;
             method = 'POST';
+            isUpdate = true;
         } else {
             toastr.warning("Please select one of the data in the table first!", "Information");
         }
@@ -545,7 +557,7 @@
         });
     }
 
-    function sendDataToServer(requestData, payload) {
+    function sendDataToServer(requestData, finalFormData) {
         // Buat body dengan format x-www-form-urlencoded (query string)
         const payloadArr = formArrayToNestedJson(requestData.serializeArray());
         // const formData = new URLSearchParams(requestData).toString();
@@ -553,7 +565,7 @@
             $.ajax({
                 url: url_save,
                 method: method,
-                data: payload,
+                data: finalFormData,
                 contentType: false,
                 processData: false,
                 success: function(response) {
@@ -754,10 +766,8 @@
                         
                         const payload = new FormData();
                         payload.append('data', JSON.stringify(sanitizedJson)); // kirim data JSON
-                        
-                        // Tambahkan file satu per satu
-                        for (const [path, file] of Object.entries(data.files)) {
-                            payload.append(path, file);
+                        for (const name in data.files) {
+                            payload.append(name, data.files[name]);
                         }
 
                         sendDataToServer(formValue, payload)

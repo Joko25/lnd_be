@@ -1,7 +1,7 @@
 <div class="p-4 easyui-navpanel" style="margin-bottom: 50px;">
     <header>
         <div class="m-toolbar">
-            <div class="m-title">Form <?php echo $title?></div>
+            <div class="m-title" ><span id="titleLable">Form <?php echo $title?></span></div>
         </div>
     </header>
 
@@ -139,7 +139,14 @@
     </div>
 
     <div id="resultContainer" style="width:100%">
-    REVIEW TEST
+        <h4 id="titleReviewQuestion">Form Review Pre Quesiton</h4>
+        <div id="resultQuestion"></div>
+    </div>
+    
+    <div id="resultPostContainer">
+        <hr />
+        <h4 >Form Review Post Quesiton</h4>
+        <div id="resultPostQuestion"></div>
     </div>
 
     
@@ -166,7 +173,9 @@
         $("#resultContainer").hide();
         $("#feedbackContainer").hide();
         $("#titleFeedbackResultContainer").hide()
-        $("#titleFeedbackContainer").hide()
+        $("#titleFeedbackContainer").hide();
+        $("#resultPostContainer").hide();
+        $("#titleReviewQuestion").hide();
         let data = <?php echo json_encode($data); ?>;
         let dataFeedback = <?php echo json_encode($data_feedback); ?>;
         if(data) {
@@ -178,13 +187,29 @@
             $("#resultContainer").show();
             $("#attendanceContainer").hide();
             let data = <?php echo json_encode($data); ?>;
+            if(data.question_type === 'DIFFERENT') {
+                $("#titleLable").text('Form Review Pre-Test, Form Review Post Test')
+                if(data.json_question) {
+                    $("#titleReviewQuestion").show();
+                    renderFormFromJson('#resultQuestion', data.json_question)
+                }
+                if(data.json_postquestion) {
+                    $("#resultPostContainer").show();
+                    renderFormFromJson('#resultPostQuestion', data.json_postquestion)
+                }
+            }
+
+            if(data.question_type === 'SAME') {
+                $("#titleReviewQuestion").hide();
+                $("#titleLable").text('Form Review Pre-Test & Post Test');
+                if(data.json_question) {
+                    renderFormFromJson('#resultQuestion', data.json_question)
+                }
+            }
             if(data.json_feedback) {
                 renderFeedbackFromJson('#resultContainer', data.json_feedback)
             }
 
-            if(data.json_question) {
-                renderFormFromJson('#resultContainer', data.json_question)
-            }
         }
 
         if(testType === 'POST_TEST') {
@@ -242,7 +267,7 @@
 
             // Image on TOP
             if (item.imagePosition === 'UP' && item.imageQuestion) {
-                html += `<div><img src="/uploads/questions/${item.imageQuestion}" style="max-width:100%; margin-bottom:10px;"></div>`;
+                html += `<div><img src="/assets/image/lnd/${item.imageQuestion}" style="max-width:100%; margin-bottom:10px;"></div>`;
             }
 
             // Question Text
@@ -253,7 +278,7 @@
 
             // Image on BOTTOM
             if (item.imagePosition === 'BELOW' && item.imageQuestion) {
-                html += `<div><img src="/uploads/questions/${item.imageQuestion}" style="max-width:100%; margin-top:10px;"></div>`;
+                html += `<div><img src="/assets/image/lnd/${item.imageQuestion}" style="max-width:100%; margin-top:10px;"></div>`;
             }
 
             // Options Panel
@@ -269,7 +294,7 @@
 
                 if (opt.image && Array.isArray(opt.image) && opt.image.length > 0) {
                     opt.image.forEach(img => {
-                        html += `<div><img src="/uploads/questions/${img}" style="max-width:150px; margin-top:5px;"></div>`;
+                        html += `<div><img src="/assets/image/lnd/${img}" style="max-width:150px; margin-top:5px;"></div>`;
                     });
                 }
 
@@ -711,13 +736,13 @@
             let html = `<div class="easyui-panel" title="Result for Question ${index + 1}" style="margin-bottom:15px;padding:10px;">`;
 
             if (item.imagePosition === 'UP' && item.imageQuestion) {
-            html += `<div><img src="/uploads/questions/${item.imageQuestion}" style="max-width:100%; margin-bottom:10px;"></div>`;
+            html += `<div><img src="/assets/image/lnd/${item.imageQuestion}" style="max-width:100%; margin-bottom:10px;"></div>`;
             }
 
             html += `<div style="font-weight:bold; margin-bottom:5px;">${item.question}</div>`;
 
             if (item.imagePosition === 'BELLOW' && item.imageQuestion) {
-            html += `<div><img src="/uploads/questions/${item.imageQuestion}" style="max-width:100%; margin-top:10px;"></div>`;
+            html += `<div><img src="/assets/image/lnd/${item.imageQuestion}" style="max-width:100%; margin-top:10px;"></div>`;
             }
 
             html += `<div>`;

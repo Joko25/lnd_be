@@ -10,6 +10,7 @@ class Master_form_test extends CI_Controller {
         $this->load->helper('url');
         $this->load->library('form_validation');
         $this->load->model('crud');
+        $this->load->model('LndModel');
 
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
@@ -130,6 +131,10 @@ class Master_form_test extends CI_Controller {
     }
 
     public function storeData_v2() {
+        log_message('debug', 'ISI $_FILES SEBELUM LOOP: ' . print_r($_FILES, true));
+        log_message('debug', 'ISI $_FILES: ' . print_r($_FILES, true));
+        // Tambahkan juga ini untuk melihat isi $_POST
+        log_message('debug', 'ISI $_POST: ' . print_r($_POST, true));
         // Ambil JSON string dari form multipart
         $json = $this->input->post('data');
         $data = json_decode($json, true);
@@ -148,7 +153,7 @@ class Master_form_test extends CI_Controller {
         $uploadedFiles = [];
         
         // Pastikan folder upload ada dan bisa ditulisi
-        $uploadPath = FCPATH . 'assets/image/lnd/'; // Gunakan FCPATH untuk path absolut
+        $uploadPath = 'assets/image/lnd/'; // Gunakan FCPATH untuk path absolut
         
         if (!is_dir($uploadPath)) {
             if (!mkdir($uploadPath, 0755, true)) {
@@ -160,31 +165,22 @@ class Master_form_test extends CI_Controller {
         if (!is_writable($uploadPath)) {
             return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Upload directory is not writable');
         }
+
+        log_message('error', 'FORM TEST: FILES: ' . print_r($_FILES, true));
     
         foreach ($_FILES as $field => $file) {
+            log_message('debug', 'FORM TEST: Field yang diproses: ' . $field);
             if ($file['error'] == UPLOAD_ERR_OK) {
-                $config = [
-                    'upload_path'   => $uploadPath,
-                    'allowed_types' => 'jpg|jpeg|png|gif',
-                    'file_name'     => uniqid('img_'),
-                    'max_size'      => 2048, // 2MB
-                    'overwrite'     => false
-                ];
-    
-                $this->upload->initialize($config); // Initialize untuk setiap file
-                
-                if ($this->upload->do_upload($field)) {
-                    $uploaded = $this->upload->data();
-                    $uploadedFiles[$field] = 'assets/image/lnd/' . $uploaded['file_name'];
+                $image = $this->LndModel->upload_v2($field, ['jpg', 'jpeg', 'png', 'gif'], $uploadPath);
+
+                if ($image) {
+                    $data[$field] = $image;
                 } else {
-                    // Hapus file yang sudah terupload jika ada error
-                    foreach ($uploadedFiles as $filePath) {
-                        @unlink(FCPATH . $filePath);
-                    }
-                    return $this->response->send(ResponseStatus::BAD_REQUEST, [], $this->upload->display_errors('', ''));
+                    log_message('error', 'FORM TEST: Upload gagal untuk field: ' . $field . ' - ' . $this->getUploadError($file['error']));
+                    return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Upload file gagal');
                 }
             } elseif ($file['error'] != UPLOAD_ERR_NO_FILE) {
-                // Handle error upload selain "no file"
+                log_message('error', 'FORM TEST: Error upload untuk field: ' . $field . ' - ' . $this->getUploadError($file['error']));
                 return $this->response->send(ResponseStatus::BAD_REQUEST, [], $this->getUploadError($file['error']));
             }
         }
@@ -192,7 +188,7 @@ class Master_form_test extends CI_Controller {
         // Simpan ke DB
         $save = $this->MasterFormTestModel->insertQuestion($data, $uploadedFiles);
         if($save) {
-            return $this->response->send(ResponseStatus::SUCCESS, $save, 'Form test saved successfully');
+            return $this->response->send(ResponseStatus::SUCCESS, $data, 'Form test saved successfully');
         } else {
             // Hapus file yang sudah terupload jika gagal simpan ke DB
             foreach ($uploadedFiles as $filePath) {

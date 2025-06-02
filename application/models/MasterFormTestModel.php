@@ -68,14 +68,18 @@ class MasterFormTestModel extends CI_Model {
         // Proses post_question (jika ada)
         if (!empty($data['post_question'])) {
             foreach ($data['post_question'] as &$question) {
-                if (isset($uploadedFiles[$question['imageQuestion']])) {
-                    $question['imageQuestion'] = basename($uploadedFiles[$question['imageQuestion']]);
-                } elseif (!isset($question['imageQuestion'])) {
-                    $question['imageQuestion'] = null; // Set null jika tidak ada file baru dan tidak ada nilai lama
+                if(isset($question['imageQuestion'])) {
+                    if (isset($uploadedFiles[$question['imageQuestion']])) {
+                        $question['imageQuestion'] = basename($uploadedFiles[$question['imageQuestion']]);
+                    } elseif (!isset($question['imageQuestion'])) {
+                        $question['imageQuestion'] = null; // Set null jika tidak ada file baru dan tidak ada nilai lama
+                    }
+                }else{
+                    $question['imageQuestion'] = null;
                 }
     
                 foreach ($question['opsion'] as $optIndex => &$opsion) {
-                    if (isset($uploadedFiles[$opsion['image']])) {
+                    if (isset($opsion['image']) && isset($uploadedFiles[$opsion['image']])) {
                         $opsion['image'] = [basename($uploadedFiles[$opsion['image']])];
                     } elseif (!isset($opsion['image'])) {
                         $opsion['image'] = []; // Set array kosong jika tidak ada file baru dan tidak ada nilai lama
