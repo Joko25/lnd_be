@@ -1198,6 +1198,16 @@
 			}
 		}]
 	});
+
+	//PRINT PDF
+	function pdf() {
+		$("#printout").get(0).contentWindow.print();
+	}
+
+	//PRINT EXCEL
+	function excel() {
+		window.location.assign('<?= base_url('lnd/schedule_training/print/excel') ?>');
+	}
     // Initial call
     // $(function () {
     //     bindDatePickers();
