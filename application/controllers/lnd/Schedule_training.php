@@ -193,7 +193,7 @@ class Schedule_training extends CI_Controller {
         // Check and decode training_dates (assumed as JSON string in POST)
         $trainingDates = [];
 		$combineTrainer = [];
-        if (!empty($data['training_dates'])) {
+	        if (!empty($data['training_dates'])) {
             $trainingDates = json_decode($data['training_dates'], true);
             unset($data['training_dates']); // Remove from main data to avoid DB issue
         }
@@ -411,7 +411,7 @@ class Schedule_training extends CI_Controller {
 			if(!empty($data['trainerNames'])){
 				for ($i = 0; $i < count($data['trainerNames']); $i++) {
 					$value = $data['trainerNames'][$i];
-					$tempTrainerName = $this->crud->read('employees', ['id' => $value]);
+					$tempTrainerName = $this->crud->read('employees', ['number' => $value]);
 					if ($tempTrainerName) {
 						$dataTrainers[] = [
 							'id' => $tempTrainerName->id,

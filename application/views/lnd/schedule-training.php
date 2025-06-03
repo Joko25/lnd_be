@@ -251,12 +251,60 @@
     }
 
     function add() {
-        $('#dlg_insert').dialog('open');
-		// $('#frm_insert').form('clear');
-        url_save = '<?= base_url('lnd/schedule_training/create_data') ?>';
-        method = 'POST';
+		$('#dlg_insert').dialog('open');
 
-        $('#frm_insert').form('clear');
+		$('#frm_insert').form('clear');
+		url_save = '<?= base_url('lnd/schedule_training/create_data') ?>';
+		method = 'POST';
+
+		// === Clear dynamically added training dates (keep the first row only) ===
+		$('#trainingDatesTable tr:not(:first)').remove(); // remove all extra rows
+
+		// Clear the first row fields
+		$('#trainingDatesTable .training-date').datebox('setValue', '');
+		$('#trainingDatesTable .batch-count').combobox('clear');
+		$('#trainingDatesTable .week-label').text(''); // or '-' if default
+
+		// === Clear all dynamically added trainer name rows ===
+		$('#trainerTable tbody').empty(); // assuming you append dynamically into tbody
+
+		// === Reset trainer fields ===
+		const wrapper = $('#trainers-wrapper');
+		wrapper.empty(); // Remove all existing trainer fields
+
+		// Add default empty trainer row (just like in update for first one)
+		const defaultTrainerId = 1;
+		const trainerRow = $(`
+        <div class="fitem" id="trainerRow_${defaultTrainerId}">
+            <span style="width:35%; display:inline-block;">Trainer Name</span>
+            <input style="width:60%;" name="trainerName[]" id="trainerName_${defaultTrainerId}" required class="easyui-combogrid" panelHeight="auto">
+            <input type="hidden" name="trainingTrainerId[]" id="trainingTrainerId_${defaultTrainerId}" value="">
+            <a href="javascript:void(0)" class="easyui-linkbutton" style="margin-left:5px;" onclick="addTrainer()">+</a>
+        </div>
+    	`);
+
+		wrapper.append(trainerRow);
+
+		// Re-initialize EasyUI combogrid on the default trainer
+		$(`#trainerName_${defaultTrainerId}`).combogrid({
+			url: '<?= base_url('lnd/schedule_training/readsEmployeesLeaderUp') ?>',
+			panelWidth: 450,
+			idField: 'id',
+			textField: 'name',
+			mode: 'remote',
+			fitColumns: true,
+			prompt: 'Choose Trainer Name',
+			icons: [{
+				iconCls: 'icon-clear',
+				handler: function (e) {
+					$(e.data.target).combogrid('clear').combogrid('textbox').focus();
+				}
+			}],
+			columns: [[
+				{ field: 'name', title: 'Employee Name', width: 120 },
+				{ field: 'positionName', title: 'Position', width: 200 }
+			]]
+		});
     }
 
     function update() {
@@ -367,13 +415,12 @@
 	function populateTrainerFields(row) {
 		const trainerStr = row.trainer || '';
 		const trainerIdsStr = row.trainingTrainerId || '';
-		const trainerList = trainerStr.split(',').map(name => name.trim()).filter(Boolean);
 		const trainerIdList = trainerIdsStr.split(',').map(id => id.trim()).filter(Boolean);
 		const wrapper = $('#trainers-wrapper');
 
 		wrapper.empty(); // Clear existing trainers
 
-		trainerList.forEach((trainerName, index) => {
+		trainerIdList.forEach((trainerName, index) => {
 			const trainerId = index + 1;
 			const trainerUuid = trainerIdList[index] || '';
 
@@ -400,7 +447,7 @@
 				textField: 'name',
 				mode: 'remote',
 				fitColumns: true,
-				prompt: 'Choose Trainer',
+				prompt: 'Choose Trainer Name',
 				icons: [{
 					iconCls: 'icon-clear',
 					handler: function (e) {
