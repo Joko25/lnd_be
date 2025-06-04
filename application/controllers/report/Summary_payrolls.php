@@ -458,6 +458,9 @@ class Summary_payrolls extends CI_Controller
             $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid black;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>';
             $no = 1;
             $hal = 1;
+
+            $grandtotalEmployee = 0;
+            $grandtotalIncome = 0;
             for ($i = 0; $i < $page; $i++) {
                 $offset = ($i * 40);
                 //Select Query
@@ -545,17 +548,29 @@ class Summary_payrolls extends CI_Controller
                 }
 
                 $html .= '  <tr>
-                                <th style="text-align:right;" colspan="4">GRAND TOTAL</th>
+                                <th style="text-align:right;" colspan="4">TOTAL SUB</th>
                                 <th style="text-align:right;">' . number_format($totalEmployee) . '</th>
                                 <th style="text-align:right;">' . number_format($totalIncome) . '</th>
-                            </tr>
-                            </table>';
+                            </tr>';
+                $grandtotalEmployee += $totalEmployee;
+                $grandtotalIncome += $totalIncome;
+                // Jika halaman terakhir, tambahkan baris TOTAL (grand total seluruh halaman)
+                if (($i + 1) == $page) {
+                    $html .= '  <tr>
+                                    <th style="text-align:right;" colspan="4">GRAND TOTAL</th>
+                                    <th style="text-align:right;">' . number_format($grandtotalEmployee) . '</th>
+                                    <th style="text-align:right;">' . number_format($grandtotalIncome) . '</th>
+                                </tr>';
+                }
+                $html .= '</table>';
+
 
                 $hal++;
                 if (($i + 1) != $page) {
                     $html .= '<div style="page-break-after:always;"></div>';
                 }
             }
+
 
             $html .= '</body></html>';
             echo $html;
