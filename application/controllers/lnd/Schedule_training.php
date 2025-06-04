@@ -193,7 +193,7 @@ class Schedule_training extends CI_Controller {
         // Check and decode training_dates (assumed as JSON string in POST)
         $trainingDates = [];
 		$combineTrainer = [];
-        if (!empty($data['training_dates'])) {
+	        if (!empty($data['training_dates'])) {
             $trainingDates = json_decode($data['training_dates'], true);
             unset($data['training_dates']); // Remove from main data to avoid DB issue
         }
@@ -217,7 +217,6 @@ class Schedule_training extends CI_Controller {
             $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Schedule Training creation failed.');
         }
     }
-    
 
     public function update_data($id) {
 		$rawInput = file_get_contents("php://input");
@@ -299,6 +298,7 @@ class Schedule_training extends CI_Controller {
 		$send = $this->crud->query("SELECT a.*, b.name as competenceName FROM lnd_training_activity a JOIN lnd_competence b ON a.competenceId = b.id WHERE a.induction = '$induction' ORDER BY a.index ASC");
 		echo json_encode($send);
 	}
+
 	public function readsEmployeesLeaderUp()
 	{
 		$this->db->start_cache();
@@ -411,7 +411,7 @@ class Schedule_training extends CI_Controller {
 			if(!empty($data['trainerNames'])){
 				for ($i = 0; $i < count($data['trainerNames']); $i++) {
 					$value = $data['trainerNames'][$i];
-					$tempTrainerName = $this->crud->read('employees', ['id' => $value]);
+					$tempTrainerName = $this->crud->read('employees', ['number' => $value]);
 					if ($tempTrainerName) {
 						$dataTrainers[] = [
 							'id' => $tempTrainerName->id,
@@ -421,10 +421,6 @@ class Schedule_training extends CI_Controller {
 				}
 				unset($data['trainerNames']);
 			}
-
-//			if($data["category"] != "Department") {
-//				$data['trainee'] = "New MP/Mutasi";
-//			}
 
 			if(empty($dataTrainingDates)){
 				echo json_encode(array("title" => "Not Found", "message" => "Training Date Not Found", "theme" => "error"));
@@ -442,37 +438,10 @@ class Schedule_training extends CI_Controller {
 				echo json_encode(array("title" => "Not Found", "message" => "Duration Not Found", "theme" => "error"));
 			} else {
 				$dataTemp = $this->ScheduleTrainingModel->insert_data($data, $dataTrainingDates, $dataTrainers);
-//				$dataTemp = true;
 				if($dataTemp) {
 					echo json_encode(array("title" => "Good Job", "message" => "Data Saved Successfully", "theme" => "success"));;
 				}
 			}
-
-//            $lnd_schedule_training = $this->crud->read('lnd_schedule_training', ["competenceId" => $data['competenceId'], "trainingActivity" => $data['trainingActivity'], "index" => $data['index'], "remarks" => $data['remarks'], "induction" => $data['induction']]);
-//            $idGenerateDate = $this->crud->autoidPrifix('lnd_schedule_training', 'trainingActivityId', 'T');
-//            $data['trainingActivityId'] = $idGenerateDate;
-
-//            if (empty($resCompetence)) {
-//                echo json_encode(array("title" => "Not Found", "message" => "Competence  " . $data['competenceId'] . " Not Found", "theme" => "error"));
-//            } else if(empty($data['trainingActivity'])) {
-//                echo json_encode(array("title" => "Not Found", "message" => "Competence Schedule Training cannot be Null", "theme" => "error"));
-//            } else if(empty($data['induction'])) {
-//                echo json_encode(array("title" => "Not Found", "message" => "Competence Induction cannot be Null", "theme" => "error"));
-//            } else if(empty($data['index'])) {
-//                echo json_encode(array("title" => "Not Found", "message" => "Competence Index cannot be Null", "theme" => "error"));
-//            } else {
-//                $send = $this->crud->create('lnd_schedule_training', $data);
-//                echo $send;
-//            }
-            // Validasi dan proses data
-            // if (!empty($data)) {
-            //     $dataTemp = $this->ScheduleTrainingModel->insert_data($data);
-            //     echo json_encode(array("title" => "Good Job", "message" => "Data Saved Successfully", "theme" => "success"));
-            //     // $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Schedule Training created successfully');
-            // } else {
-            //     echo json_encode(array("title" => "Available", "message" => "Upload error", "theme" => "error"));
-            //     // $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Schedule Training creation failed.');
-            // }
         }
     }
 
@@ -504,10 +473,22 @@ class Schedule_training extends CI_Controller {
         $this->db->from('config');
         $config = $this->db->get()->row();
 
-        $this->db->select('a.*, b.name as competenceName');
-        $this->db->from('lnd_schedule_training a');
-        $this->db->join('lnd_competence b', 'a.competenceId = b.id');
-        $this->db->order_by('index', 'ASC');
+		$this->db->select("
+		    a.*, 
+		    a.id as id_training, 
+		    GROUP_CONCAT(DISTINCT st.trainer_name SEPARATOR ', ') as trainers, 
+		    GROUP_CONCAT(DISTINCT b.training_date SEPARATOR ', ') as training_dates, 
+		    e.name as trainee_name, 
+		    e.id as departementId, 
+		    ta.id as trainingActivityId, 
+		    ta.trainingActivity
+		");
+		$this->db->from('lnd_schedule_training a');
+		$this->db->join('lnd_schedule_training_dates b', 'a.id = b.training_id', 'left');
+		$this->db->join('departements e', 'e.id = a.trainee', 'left');
+		$this->db->join('lnd_training_activity ta', 'ta.id = a.trainingName', 'left');
+		$this->db->join('lnd_schedule_trainers st', 'a.id = st.training_id', 'left');
+		$this->db->group_by('a.id');
         $records = $this->db->get()->result_array();
 
         $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
@@ -517,10 +498,6 @@ class Schedule_training extends CI_Controller {
                     <tr>
                         <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
                             <img src="' . $config->favicon . '" width="30">
-                        </td>
-                        <td style="font-size: 14px; text-align: left; margin:2px;">
-                            <b>' . $config->name . '</b><br>
-                            <small>TER CATEGORIES</small>
                         </td>
                     </tr>
                 </table>
@@ -534,26 +511,30 @@ class Schedule_training extends CI_Controller {
         
         <table id="customers" border="1">
             <tr>
-                <th width="20">No</th>
-                <th>Schedule Training ID</th>
-                <th>Competence Name</th>
-                <th>Index</th>
-                <th>Induction</th>
-                <th>Schedule Training</th>
-                <th>Remarks</th>
+                <th>No</th>
+				<th>Induction</th>
+				<th>Training Name</th>
+				<th>Trainer</th>
+				<th>Trainee</th>
+				<th>Remarks</th>
+				<th>Total Trainees</th>
+				<th>Duration</th>
+				<th>Training Date</th>
             </tr>';
         $no = 1;
-        foreach ($records as $data) {
-            $html .= '<tr>
-                    <td>' . $no . '</td>
-                    <td>' . $data['trainingActivityId'] . '</td>
-                    <td>' . $data['competenceName'] . '</td>
-                    <td>' . $data['index'] . '</td>
-                    <td>' . $data['induction'] . '</td>
-                    <td>' . $data['trainingActivity'] . '</td>
-                    <td>' . $data['remarks'] . '</td>';
-            $no++;
-        }
+		foreach ($records as $data) {
+			$html .= '<tr>
+                <td>' . $no . '</td>
+                <td>' . $data['induction'] . '</td>
+                <td>' . $data['trainingActivity'] . '</td>
+                <td>' . $data['trainers'] . '</td>
+                <td>' . (!empty($data['trainee_name']) ? $data['trainee_name'] : $data['category']) . '</td>
+                <td>' . $data['remarks'] . '</td>
+                <td>' . $data['totalTrainee'] . '</td>
+                <td>' . $data['duration'] . '</td>
+                <td>' . $data['training_dates'] . '</td>';
+			$no++;
+		}
 
         $html .= '</table></body></html>';
         echo $html;
