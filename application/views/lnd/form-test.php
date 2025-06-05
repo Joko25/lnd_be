@@ -222,8 +222,8 @@
         $("#employeeId").combogrid({
             url: '<?= base_url('employee/employees/readFulls') ?>',
             panelWidth: 450,
-            idField: 'number',
-            textField: 'name',
+            idField: 'id',
+            textField: 'id',
             mode: 'remote',
             fitColumns: true,
             prompt: 'Choose All',
@@ -236,7 +236,7 @@
             }],
             columns: [
                 [{
-                    field: 'number',
+                    field: 'id',
                     title: 'Employee ID',
                     width: 120
                 }, {
@@ -530,7 +530,6 @@
                 dataType: 'json',
                 success: function(response) {
                     if(response.code >= 200 && response.code <= 300) {
-                        toastr.success(response.message, 'Success'); 
                         $("#titleContainer").show();
                         $("#resultContainer").hide();
                         if(testType === 'PRE_TEST') {
@@ -617,11 +616,15 @@
     function resultTest() {
         $("#resultContainer").show();
         $("#titleContainer").hide();
-        const jsonData = JSON.parse(window.originalQuestionJson.json_question); // simpan json awal di variable global sebelumnya
-        const result = evaluateTest(jsonData, '#preTestContainer');
-        renderTestResult(jsonData, result.userAnswers, '#resultContainer');
-
-
+        if(testType === 'POST_TEST') {
+            const jsonData = JSON.parse(window.originalQuestionJson.json_postquestion); // simpan json awal di variable global sebelumnya
+            const result = evaluateTest(jsonData, '#postTestContainer');
+            renderTestResult(jsonData, result.userAnswers, '#resultContainer');
+        } else{
+            const jsonData = JSON.parse(window.originalQuestionJson.json_question); // simpan json awal di variable global sebelumnya
+            const result = evaluateTest(jsonData, '#preTestContainer');
+            renderTestResult(jsonData, result.userAnswers, '#resultContainer');
+        }
     }
 
     function evaluateTest(jsonData, containerSelector) {
@@ -800,8 +803,6 @@
         }else if(testType === 'POST_TEST'){
             $('#titleFeedbackResultContainer').hide();
             $("#postTestContainer").show();
-
-            console.log(window.feedbackResult);
             
             let data = <?php echo json_encode($data); ?>;
             if(data.json_question) {

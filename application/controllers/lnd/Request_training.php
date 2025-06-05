@@ -55,10 +55,10 @@ class Request_training extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, a.status as statusTraining, a.status as statusApproval, rth.approvedBy, rth.approvedTime, e.name as trainerName');
+        $this->db->select('a.*, a.status as statusTraining, a.status as statusApproval, rth.approved_by, rth.approved_date, COALESCE(e.name, a.trainer_name) as trainerName');
         $this->db->from('lnd_request_training a');
         $this->db->join('lnd_request_training_approvals_history rth', 'a.id = rth.trainingRequestId', 'left');
-		$this->db->join('employees e', 'a.trainer_name = e.id', 'left');
+        $this->db->join('employees e', 'a.trainer_name = e.id', 'left');
         
         if (!empty($suggestTrainingDate)) {
             $this->db->where('a.suggestDateTraining', $suggestTrainingDate);
@@ -129,9 +129,15 @@ class Request_training extends CI_Controller {
             }
         }
         if (!empty($data)) {
-            $dataTemp = $this->RequestTrainingModel->insert_data($data);
             // $this->idGenerateDate = $dataTemp->id;
-            $this->crud->approvals('lnd_request_training_approvals_history', 'trainingRequestId', $data['requestTrainingId']);
+            $dataTemp = $this->RequestTrainingModel->insert_data($data);
+            $approval = $this->crud->approvalsLnd('lnd_request_training_approvals_history', 'trainingRequestId', $data['requestTrainingId']);
+
+            if ($approval) {
+                log_message('error', 'Approval berhasil dibuat: ' . json_encode($approval));
+            } else {
+                log_message('error', 'Gagal membuat approval: ' . json_encode($approval));
+            }
             $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Request Training created successfully');
         } else {
             $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Request Training creation failed.');

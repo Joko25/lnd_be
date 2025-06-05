@@ -46,7 +46,10 @@ class Trainee_Training_History extends CI_Controller {
 				die('<h3 style="color:red;">PLEASE CHOOSE DISPLAY COLUMN</h3>');
 			} else {
 				$this->db->select("a.*, 
-                        (case when a.date_expired = '0000-00-00' then '-' else a.date_expired end) as date_expired,
+                        (CASE
+                                WHEN CAST(a.date_expired AS CHAR) = '0000-00-00' THEN '-'
+                                ELSE CAST(a.date_expired AS CHAR)
+                            END) as date_expired,
                         b.users_id_from as status_check,
                         b.users_id_to as status_notification, 
                         c.name as division_name, 

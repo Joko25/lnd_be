@@ -105,14 +105,14 @@
 		var url = form;
 
 		$("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
-		$("#printout").attr('src', '<?= base_url('lnd/trainer_training_history/print?') ?>' + url);
+		$("#printout").attr('src', '<?= base_url('lnd/Trainer_Training_History/print?') ?>' + url);
 	}
 
 	function excel() {
 		var form = $("#frm_search").serialize()
 		var url = form;
 
-		window.location.assign('<?= base_url('lnd/trainer_training_history/print/excel?') ?>' + url);
+		window.location.assign('<?= base_url('lnd/Trainer_Training_History/print/excel?') ?>' + url);
 	}
 
 	$(function() {

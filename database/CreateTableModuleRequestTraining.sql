@@ -48,3 +48,26 @@ ALTER TABLE lnd_request_training
 	ADD trainer_name CHAR(36);
 
 
+-- Add the new 'approved' column
+ALTER TABLE lnd_request_training_approvals_history
+ADD COLUMN approved TINYINT(1) NOT NULL DEFAULT 0;
+
+-- Add the new 'approved_to' column
+ALTER TABLE lnd_request_training_approvals_history
+ADD COLUMN approved_to VARCHAR(100) NULL;
+
+-- Rename 'approvedBy' to 'approved_by' and adjust nullability (if needed)
+-- Note: Based on your desired schema, 'approved_by' is implied to be nullable,
+-- even if 'approvedBy' was previously NOT NULL.
+ALTER TABLE lnd_request_training_approvals_history
+CHANGE COLUMN approvedBy approved_by VARCHAR(100) NULL;
+
+-- Rename 'approvedTime' to 'approved_date' and change its data type to TIMESTAMP
+-- Note: 'approved_date' is implied to be nullable based on your desired schema.
+ALTER TABLE lnd_request_training_approvals_history
+CHANGE COLUMN approvedTime approved_date TIMESTAMP NULL;
+
+-- Rename 'approvalNotes' to 'approval_data'
+ALTER TABLE lnd_request_training_approvals_history
+CHANGE COLUMN approvalNotes approval_data TEXT NULL;
+
