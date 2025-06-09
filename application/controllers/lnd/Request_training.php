@@ -126,7 +126,7 @@ class Request_training extends CI_Controller {
         if (!empty($data)) {
             $dataTemp = $this->RequestTrainingModel->insert_data($data);
             $this->idGenerateDate = $dataTemp->id;
-            $this->crud->approvals('lnd_request_training_approvals_history', 'trainingRequestId', $data['requestTrainingId']);
+            $this->crud->approvalsLnd('lnd_request_training_approvals_history', 'trainingRequestId', $data['requestTrainingId']);
             $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Request Training created successfully');
         } else {
             $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Request Training creation failed.');
