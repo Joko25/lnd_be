@@ -149,7 +149,7 @@ class Request_training extends CI_Controller {
         // $rawInput = file_get_contents("php://input");
         // parse_str($rawInput, $data);
         $data = $this->input->post();
-        
+
         if (!empty($data)) {
             // Upload attachment jika ada file baru
             if (!empty($_FILES['attachment']['name'])) {
@@ -158,7 +158,7 @@ class Request_training extends CI_Controller {
                     $data['attachment'] = $attachment;
                 }
             }
-            
+
             $dataTemp = $this->RequestTrainingModel->update_data($id, $data);
             $this->response->send(ResponseStatus::SUCCESS, $dataTemp, 'Request Training updated successfully');
         } else {

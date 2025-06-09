@@ -1476,6 +1476,62 @@
 						}]
 					],
 				}).datagrid('enableFilter');
+			} else if (table == "lnd_request_training_approvals_history"){
+				$('#dg_approval').datagrid({
+					singleSelect: true,
+					rownumbers: true,
+					url: '<?= base_url('approvals/approvalRequestTraining/') ?>' + approved_to + "/" + approved_by,
+					columns: [
+						[{
+							field: 'requestTrainingId',
+							width: 120,
+							halign: 'center',
+							title: "Request Training ID",
+						}, {
+							field: 'induction',
+							width: 200,
+							halign: 'center',
+							title: "Induction",
+						}, {
+							field: 'trainingActivities',
+							width: 150,
+							halign: 'center',
+							title: "Training Activities",
+						}, {
+							field: 'suggestDateTraining',
+							width: 150,
+							halign: 'center',
+							title: "Suggest Date Training",
+						}, {
+							field: 'reasons',
+							width: 150,
+							halign: 'center',
+							title: "Reasons",
+						}, {
+							field: 'trainer',
+							width: 120,
+							halign: 'center',
+							title: "Trainer",
+						}, {
+							field: 'trainerName',
+							width: 100,
+							halign: 'center',
+							title: "Trainer Name",
+						}, {
+							field: 'action',
+							width: 80,
+							align: 'center',
+							title: "Action",
+							formatter: function(val, row) {
+								var approve = "approve('" + row.id + "','" + table + "')";
+								var disapprove = "disapprove('" + row.id + "','" + table + "')";
+								var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
+								var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
+								return a + " " + b;
+							}
+						}]
+					],
+				}).datagrid('enableFilter');
 			}
 		}
 	}

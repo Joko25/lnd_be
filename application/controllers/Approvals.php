@@ -313,7 +313,16 @@ class Approvals extends CI_Controller
         $this->db->group_by('a.approved_by');
         $change_days = $this->db->get()->result_object();
 
-        $totalRows = (count($cash_carries) + count($payrolls) + count($setup_salaries) + count($permits) + count($change_days));
+		$this->db->select('b.name as fullname, a.approved_to, a.approved_by, b.avatar');
+		$this->db->from('lnd_request_training_approvals_history a');
+		$this->db->join('users b', 'a.approved_by = b.username');
+		$this->db->join('users c', 'a.approved_to = c.username');
+		$this->db->where('a.approved_to', $this->session->username);
+		$this->db->where('a.approved', 1);
+		$this->db->group_by('a.approved_by');
+		$lnd_request_training_approvals_history = $this->db->get()->result_object();
+
+        $totalRows = (count($cash_carries) + count($payrolls) + count($setup_salaries) + count($permits) + count($change_days) + count($lnd_request_training_approvals_history));
         if ($totalRows > 0) {
             echo '<span class="badge">' . $totalRows . '</span>';
         } else {
@@ -368,6 +377,15 @@ class Approvals extends CI_Controller
         $this->db->group_by('a.approved_by');
         $change_days = $this->db->get()->result_object();
 
+		$this->db->select('b.name as fullname, a.approved_to, a.approved_by, b.avatar');
+		$this->db->from('lnd_request_training_approvals_history a');
+		$this->db->join('users b', 'a.approved_by = b.username');
+		$this->db->join('users c', 'a.approved_to = c.username');
+		$this->db->where('a.approved_to', $this->session->username);
+		$this->db->where('a.approved', 1);
+		$this->db->group_by('a.approved_by');
+		$lnd_request_training_approvals_history = $this->db->get()->result_object();
+
         if (count($cash_carries) > 0) {
             foreach ($cash_carries as $cash_carry) {
                 $this->approvalMessage($cash_carry->avatar, $cash_carry->fullname, $cash_carry->approved_to, $cash_carry->approved_by, "cash_carries");
@@ -397,6 +415,12 @@ class Approvals extends CI_Controller
                 $this->approvalMessage($change_day->avatar, $change_day->fullname, $change_day->approved_to, $change_day->approved_by, "change_days");
             }
         }
+
+		if(count($lnd_request_training_approvals_history) > 0) {
+			foreach ($lnd_request_training_approvals_history as $val) {
+				$this->approvalMessage($val->avatar, $val->fullname, $val->approved_to, $val->approved_by, "lnd_request_training_approvals_history");
+			}
+		}
     }
 
     public function approvalMessage($foto, $fullname, $approved_to, $approved_by, $table){
@@ -723,4 +747,25 @@ class Approvals extends CI_Controller
 
         die(json_encode($records));
     }
+
+	public function approvalRequestTraining($approved_to, $approved_by)
+	{
+		$this->db->select('a.*, 
+			a.status as statusTraining, 
+			a.status as statusApproval, 
+			rth.approved_by, 
+			rth.approved_date, 
+			e.name as trainerName'
+		);
+		$this->db->from('lnd_request_training a');
+		$this->db->join('lnd_request_training_approvals_history rth', 'a.requestTrainingId = rth.trainingRequestId', 'left');
+		$this->db->join('employees e', 'a.trainer_name = e.id', 'left');
+		$this->db->where('rth.status', 0);
+		$this->db->where('rth.approved', 1);
+		$this->db->where('rth.approved_to', $approved_to);
+		$this->db->where('rth.approved_by', $approved_by);
+		$records = $this->db->get()->result_array();
+
+		die(json_encode($records));
+	}
 }
