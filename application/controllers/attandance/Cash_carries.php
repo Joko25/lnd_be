@@ -680,8 +680,15 @@ class Cash_carries extends CI_Controller
     {
         if ($this->input->post()) {
             $data = $this->input->post('data');
-            if ($data['trans_date'] == "") {
-                echo json_encode(array("title" => "Format Date", "message" => $data['number'] . " Format Date is Null", "theme" => "error"));
+
+            // Tambahkan validasi format tanggal (YYYY-MM-DD)
+            function isValidDate($date, $format = 'Y-m-d') {
+                $d = DateTime::createFromFormat($format, $date);
+                return $d && $d->format($format) === $date;
+            }
+
+            if ($data['trans_date'] == "" || !isValidDate($data['trans_date'])) {
+                echo json_encode(array("title" => "Format Date", "message" => $data['number'] . " Format Date is not valid (should be YYYY-MM-DD)", "theme" => "error"));
             } else {
                 $employee = $this->crud->read('employees', [], ["number" => $data['number'], "status" => 0]);
 

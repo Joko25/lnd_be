@@ -91,8 +91,10 @@
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_group = $("#filter_group").combobox('getText');
 
-        if (filter_from == "" || filter_to == "" || filter_division == "") {
-            toastr.warning("Please Choose Filter Date & Division");
+        // if (filter_from == "" || filter_to == "" || filter_division == "") {
+        //     toastr.warning("Please Choose Filter Date & Division");
+        if (filter_from == "" || filter_to == "") {
+            toastr.warning("Please Choose Filter Date");
         } else {
             var url = "?filter_division=" + filter_division +
                 "&filter_departement=" + filter_departement +
@@ -163,8 +165,10 @@
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_group = $("#filter_group").combobox('getText');
 
-        if (filter_from == "" || filter_to == "" || filter_division == "") {
-            toastr.warning("Please Choose Filter Date & Division");
+        // if (filter_from == "" || filter_to == "" || filter_division == "") {
+        //     toastr.warning("Please Choose Filter Date & Division");
+        if (filter_from == "" || filter_to == "") {
+            toastr.warning("Please Choose Filter Date");
         } else {
             var url = "?filter_division=" + filter_division +
                 "&filter_departement=" + filter_departement +
@@ -187,8 +191,10 @@
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_group = $("#filter_group").combobox('getText');
 
-        if (filter_from == "" || filter_to == "" || filter_division == "") {
-            toastr.warning("Please Choose Filter Date & Division");
+        // if (filter_from == "" || filter_to == "" || filter_division == "") {
+        //     toastr.warning("Please Choose Filter Date & Division");
+        if (filter_from == "" || filter_to == "") {
+            toastr.warning("Please Choose Filter Date");
         } else {
             var url = "?filter_division=" + filter_division +
                 "&filter_departement=" + filter_departement +
