@@ -63,5 +63,18 @@ class LndModel extends CI_Model
         }
     }
 
+    public function upload_v2_direct($file, $allowed_types = [], $path = './uploads/') {
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        if (!in_array($ext, $allowed_types)) return false;
+    
+        $fileName = uniqid() . '-' . basename($file['name']);
+        $destPath = $path . $fileName;
+    
+        if (move_uploaded_file($file['tmp_name'], FCPATH . $destPath)) {
+            return $fileName;
+        } else {
+            return false;
+        }
+    }
    
 }

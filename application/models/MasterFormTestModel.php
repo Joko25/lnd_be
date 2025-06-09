@@ -35,6 +35,60 @@ class MasterFormTestModel extends CI_Model {
         return $record; 
     }
 
+    public function updateQuestion_v2($id, $data, $uploadedFiles = []) {
+        // Update imageQuestion dan opsion hanya jika ada file baru
+        foreach ($data['question'] as &$question) {
+            // Image question
+            if (isset($question['imageQuestion']) && isset($uploadedFiles[$question['imageQuestion']])) {
+                $question['imageQuestion'] = basename($uploadedFiles[$question['imageQuestion']]);
+            } elseif (!isset($question['imageQuestion'])) {
+                unset($question['imageQuestion']); // Jangan ganggu kalau tidak ada
+            }
+    
+            // Image opsion
+            foreach ($question['opsion'] as &$opsion) {
+                if (isset($opsion['image']) && isset($uploadedFiles[$opsion['image']])) {
+                    $opsion['image'] = [basename($uploadedFiles[$opsion['image']])];
+                } elseif (!isset($opsion['image'])) {
+                    unset($opsion['image']); // biarkan seperti sebelumnya
+                }
+            }
+        }
+    
+        // Post Question
+        if (!empty($data['post_question'])) {
+            foreach ($data['post_question'] as &$question) {
+                if (isset($question['imageQuestion']) && isset($uploadedFiles[$question['imageQuestion']])) {
+                    $question['imageQuestion'] = basename($uploadedFiles[$question['imageQuestion']]);
+                } elseif (!isset($question['imageQuestion'])) {
+                    unset($question['imageQuestion']);
+                }
+    
+                foreach ($question['opsion'] as &$opsion) {
+                    if (isset($opsion['image']) && isset($uploadedFiles[$opsion['image']])) {
+                        $opsion['image'] = [basename($uploadedFiles[$opsion['image']])];
+                    } elseif (!isset($opsion['image'])) {
+                        unset($opsion['image']);
+                    }
+                }
+            }
+        }
+    
+        // Persiapan untuk update
+        $updateData = [
+            'training_name'     => $data['training_name'],
+            'department'        => is_array($data['department']) ? implode(', ', $data['department']) : $data['department'],
+            'question_type'     => $data['questionType'],
+            'json_question'     => json_encode($data['question']),
+            'json_postquestion' => isset($data['post_question']) ? json_encode($data['post_question']) : null,
+            'updatedBy'         => $this->session->username ?? 'system',
+            'updatedTime'       => date('Y-m-d H:i:s')
+        ];
+    
+        return $this->db->where('id', $id)->update('lnd_master_form_test', $updateData);
+    }
+    
+
     public function updateQuestion($id, $data, $uploadedFiles = []) {
         // Inject imageQuestion jika ada file baru
         foreach ($data['question'] as &$question) {
@@ -107,7 +161,6 @@ class MasterFormTestModel extends CI_Model {
         // Inject image file paths ke dalam $data['question'] dan $data['post_question']
         if (!empty($uploadedFiles)) {
             foreach ($uploadedFiles as $field => $path) {
-                // Contoh field: question_0_image atau post_question_1_image
                 if (preg_match('/^(question|post_question)_(\d+)_image$/', $field, $matches)) {
                     $type = $matches[1];
                     $index = (int)$matches[2];

@@ -131,14 +131,75 @@ class Master_form_test extends CI_Controller {
     }
 
     public function storeData_v2() {
-        log_message('debug', 'ISI $_FILES SEBELUM LOOP: ' . print_r($_FILES, true));
         log_message('debug', 'ISI $_FILES: ' . print_r($_FILES, true));
-        // Tambahkan juga ini untuk melihat isi $_POST
         log_message('debug', 'ISI $_POST: ' . print_r($_POST, true));
-        // Ambil JSON string dari form multipart
+    
         $json = $this->input->post('data');
         $data = json_decode($json, true);
-        
+    
+        if (!$data) return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Invalid JSON');
+    
+        if (isset($data['allDept'])) $data['department'] = $data['allDept'];
+        if (empty($data['training_name']) || empty($data['department']) || empty($data['questionType'])) {
+            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Missing required fields');
+        }
+    
+        $uploadPath = 'assets/image/lnd/';
+        if (!is_dir($uploadPath) && !mkdir($uploadPath, 0755, true)) {
+            return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Failed to create upload directory');
+        }
+        if (!is_writable($uploadPath)) {
+            return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Upload directory is not writable');
+        }
+    
+        $uploadedFiles = [];
+    
+        foreach ($_FILES as $field => $fileGroup) {
+            $files = $this->traverseFiles($field, $fileGroup); // get all nested files
+            foreach ($files as $fileEntry) {
+                $path = $fileEntry['field_path']; // e.g. ['question', 0, 'imageQuestion']
+                $file = $fileEntry['file'];
+                $path = is_array($fileEntry['field_path']) ? implode('.', $fileEntry['field_path']) : $fileEntry['field_path'];
+                log_message('debug', 'Row PATH: ' . print_r($fileEntry['field_path'], true));
+    
+                if ($file['error'] === UPLOAD_ERR_OK) {
+                    $fileName = $this->LndModel->upload_v2_direct($file, ['jpg', 'jpeg', 'png', 'gif'], $uploadPath);
+                    if ($fileName) {
+                        $this->setNestedValue($data, $path, $fileName);
+                        $uploadedFiles[] = $uploadPath . $fileName;
+                    } else {
+                        log_message('error', 'FORM TEST: Upload gagal untuk ' . implode(' -> ', $path));
+                        return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Upload gagal');
+                    }
+                } elseif ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+                    $errMsg = $this->getUploadError($file['error']);
+                    log_message('error', 'FORM TEST: Error upload ' . implode(' -> ', $path) . " - $errMsg");
+                    return $this->response->send(ResponseStatus::BAD_REQUEST, [], $errMsg);
+                }
+            }
+        }
+    
+        log_message('debug', 'DATA AKHIR SETELAH PROSES UPLOAD: ' . print_r($data, true));
+    
+        $save = $this->MasterFormTestModel->insertQuestion($data, $uploadedFiles);
+        if ($save) {
+            return $this->response->send(ResponseStatus::SUCCESS, $data, 'Form test saved successfully');
+        } else {
+            foreach ($uploadedFiles as $filePath) @unlink(FCPATH . $filePath);
+            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Failed to save form data');
+        }
+    }
+    
+
+    public function storeData_v2_backup() {
+        // Logging awal
+        log_message('debug', 'ISI $_FILES: ' . print_r($_FILES, true));
+        log_message('debug', 'ISI $_POST: ' . print_r($_POST, true));
+    
+        // Ambil JSON string dari multipart field 'data'
+        $json = $this->input->post('data');
+        $data = json_decode($json, true);
+    
         if (!$data) {
             return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Invalid JSON');
         }
@@ -149,54 +210,81 @@ class Master_form_test extends CI_Controller {
             return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Missing required fields');
         }
     
-        // Handle file upload jika ada
-        $uploadedFiles = [];
-        
-        // Pastikan folder upload ada dan bisa ditulisi
-        $uploadPath = 'assets/image/lnd/'; // Gunakan FCPATH untuk path absolut
-        
+        // Persiapan direktori upload
+        $uploadPath = 'assets/image/lnd/';
         if (!is_dir($uploadPath)) {
             if (!mkdir($uploadPath, 0755, true)) {
                 return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Failed to create upload directory');
             }
         }
-    
-        // Periksa apakah folder writable
         if (!is_writable($uploadPath)) {
             return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Upload directory is not writable');
         }
-
-        log_message('error', 'FORM TEST: FILES: ' . print_r($_FILES, true));
+    
+        // Proses file upload
+        $uploadedFiles = [];
     
         foreach ($_FILES as $field => $file) {
-            log_message('debug', 'FORM TEST: Field yang diproses: ' . $field);
-            if ($file['error'] == UPLOAD_ERR_OK) {
+            log_message('debug', 'FORM TEST: Memproses field file: ' . $field);
+    
+            if ($file['error'] === UPLOAD_ERR_OK) {
                 $image = $this->LndModel->upload_v2($field, ['jpg', 'jpeg', 'png', 'gif'], $uploadPath);
-
+    
                 if ($image) {
-                    $data[$field] = $image;
+                    $this->setNestedValue($data, $field, $image); // <-- set ke posisi nested sesuai nama field
+                    $uploadedFiles[] = $uploadPath . $image;
                 } else {
                     log_message('error', 'FORM TEST: Upload gagal untuk field: ' . $field . ' - ' . $this->getUploadError($file['error']));
                     return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Upload file gagal');
                 }
-            } elseif ($file['error'] != UPLOAD_ERR_NO_FILE) {
+    
+            } elseif ($file['error'] !== UPLOAD_ERR_NO_FILE) {
                 log_message('error', 'FORM TEST: Error upload untuk field: ' . $field . ' - ' . $this->getUploadError($file['error']));
                 return $this->response->send(ResponseStatus::BAD_REQUEST, [], $this->getUploadError($file['error']));
             }
         }
     
-        // Simpan ke DB
+        log_message('debug', 'DATA AKHIR SETELAH PROSES UPLOAD: ' . print_r($data, true));
+    
+        // Simpan ke database
         $save = $this->MasterFormTestModel->insertQuestion($data, $uploadedFiles);
-        if($save) {
+        if ($save) {
             return $this->response->send(ResponseStatus::SUCCESS, $data, 'Form test saved successfully');
         } else {
-            // Hapus file yang sudah terupload jika gagal simpan ke DB
+            // Cleanup jika gagal
             foreach ($uploadedFiles as $filePath) {
                 @unlink(FCPATH . $filePath);
             }
             return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Failed to save form data');
         }
     }
+    
+    /**
+     * Helper untuk set nilai nested array dari path seperti question[0].imageQuestion
+     */
+    private function setNestedValue(&$array, $path, $value) {
+        if (!is_string($path)) {
+            log_message('error', 'setNestedValue expects string path, got: ' . print_r($path, true));
+            return;
+        }
+    
+        $keys = preg_split('/(?<!\\\)\./', $path); // untuk key seperti 'question.0..imageQuestion'
+        foreach ($keys as &$key) {
+            $key = str_replace('..', '.', $key);
+        }
+        unset($key);
+    
+        $temp = &$array;
+        foreach ($keys as $key) {
+            if (!isset($temp[$key]) || !is_array($temp[$key])) {
+                $temp[$key] = [];
+            }
+            $temp = &$temp[$key];
+        }
+        $temp = $value;
+    }
+    
+    
     
     // Helper untuk mendapatkan pesan error upload
     private function getUploadError($errorCode) {
@@ -212,6 +300,28 @@ class Master_form_test extends CI_Controller {
         
         return $errors[$errorCode] ?? 'Unknown upload error';
     }
+
+    private function traverseFiles($fieldName, $fileArray, $path = [], &$results = []) {
+        if (isset($fileArray['name']) && is_array($fileArray['name'])) {
+            foreach ($fileArray['name'] as $key => $value) {
+                $this->traverseFiles($fieldName, [
+                    'name' => $fileArray['name'][$key],
+                    'type' => $fileArray['type'][$key],
+                    'tmp_name' => $fileArray['tmp_name'][$key],
+                    'error' => $fileArray['error'][$key],
+                    'size' => $fileArray['size'][$key]
+                ], array_merge($path, [$key]), $results);
+            }
+        } else {
+            $results[] = [
+                'field_path' => array_merge([$fieldName], $path),
+                'file' => $fileArray
+            ];
+        }
+    
+        return $results;
+    }
+    
 
     private function processUploadedFiles($data, $uploadedFiles) {
         // Inject uploaded file paths into the data array
@@ -332,6 +442,11 @@ class Master_form_test extends CI_Controller {
     
 
     public function update_data($id) {
+        log_message('debug', 'ISI $_FILES SEBELUM LOOP: ' . print_r($_FILES, true));
+        log_message('debug', 'ISI $_FILES: ' . print_r($_FILES, true));
+        // Tambahkan juga ini untuk melihat isi $_POST
+        log_message('debug', 'ISI $_POST: ' . print_r($_POST, true));
+
         $json = $this->input->post('data');
         $data = json_decode($json, true);
     
@@ -376,6 +491,71 @@ class Master_form_test extends CI_Controller {
             return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Failed to update form test');
         }
     }
+
+    public function update_data_v2($id) {
+        log_message('debug', 'ISI $_FILES: ' . print_r($_FILES, true));
+        log_message('debug', 'ISI $_POST: ' . print_r($_POST, true));
+    
+        $json = $this->input->post('data');
+        $data = json_decode($json, true);
+    
+        if (!$data) {
+            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Invalid JSON');
+        }
+    
+        if (isset($data['allDept'])) {
+            $data['department'] = $data['allDept'];
+        }
+    
+        if (empty($data['training_name']) || empty($data['department']) || empty($data['questionType'])) {
+            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Missing required fields');
+        }
+    
+        $uploadPath = 'assets/image/lnd/';
+        if (!is_dir($uploadPath) && !mkdir($uploadPath, 0755, true)) {
+            return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Failed to create upload directory');
+        }
+        if (!is_writable($uploadPath)) {
+            return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Upload directory is not writable');
+        }
+    
+        $uploadedFiles = [];
+    
+        foreach ($_FILES as $field => $fileGroup) {
+            $files = $this->traverseFiles($field, $fileGroup); // Ambil semua file nested
+            foreach ($files as $fileEntry) {
+                $path = $fileEntry['field_path']; // array path: ['question', 0, 'imageQuestion']
+                $file = $fileEntry['file'];
+                $flatPath = is_array($path) ? implode('.', $path) : $path;
+    
+                if ($file['error'] === UPLOAD_ERR_OK) {
+                    $fileName = $this->LndModel->upload_v2_direct($file, ['jpg', 'jpeg', 'png', 'gif'], $uploadPath);
+                    if ($fileName) {
+                        $this->setNestedValue($data, $flatPath, $fileName);
+                        $uploadedFiles[] = $uploadPath . $fileName;
+                    } else {
+                        log_message('error', 'FORM TEST: Upload gagal untuk ' . $flatPath);
+                        return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Upload gagal');
+                    }
+                } elseif ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+                    $errMsg = $this->getUploadError($file['error']);
+                    log_message('error', 'FORM TEST: Error upload ' . $flatPath . " - $errMsg");
+                    return $this->response->send(ResponseStatus::BAD_REQUEST, [], $errMsg);
+                }
+            }
+        }
+    
+        log_message('debug', 'DATA AKHIR SETELAH PROSES UPLOAD (UPDATE): ' . print_r($data, true));
+    
+        $update = $this->MasterFormTestModel->updateQuestion_v2($id, $data, $uploadedFiles);
+        if ($update) {
+            return $this->response->send(ResponseStatus::SUCCESS, $data, 'Form test updated successfully');
+        } else {
+            foreach ($uploadedFiles as $filePath) @unlink(FCPATH . $filePath);
+            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Failed to update form test');
+        }
+    }
+    
     
 
     public function get_detail($id) {

@@ -200,7 +200,7 @@ class Form_test extends CI_Controller {
 
 
         if ($insert_success) {
-            return $this->response->send(ResponseStatus::SUCCESS, $insert_success, 'Form test successfully');
+            return $this->response->send(ResponseStatus::SUCCESS, $data_to_insert, 'Form test successfully');
         } else {
             return $this->response->send(ResponseStatus::BAD_REQUEST, $this->db->error()['message'], 'Form test data failed');
         }

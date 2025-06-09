@@ -165,8 +165,11 @@
     }
 
     function templateOpsion(parentIndex, index, type, parentValue='', initValue='') {
+
         
+        const isCorrectAnswer = (parentValue.correct_answer !== undefined && parseInt(parentValue.correct_answer) === index);
         const prefix = `${type}[${parentIndex}].opsion[${index}]`;
+        const radioDataOptions = `label:'' ${isCorrectAnswer ? ',checked:true' : ''}`;
         const template = `<div class="form-group" id="${type}_${parentIndex}_opsion_${index}" data-parent-index='${parentIndex}' data-index='${index}'>
                             <div class="fitem">
                                 <span style="width:35%; display:inline-block;" class="label-opsion_${parentIndex}">Opsion ${index+1}</span>
@@ -180,7 +183,7 @@
                             <div class="fitem">
                                 <span style="width:35%; display:inline-block;"></span>
                                 <input style="width:20%;" name="${prefix}.point" value="${initValue?.point || ''}" class="easyui-numberspinner" required=""> Point
-                                <label><input class="easyui-radiobutton" name="${type}[${parentIndex}].correct_answer" checked="${parentValue.correct_answer}" value="${index}"> Correct Answer</label>
+                                <label><input class="easyui-radiobutton" name="${type}[${parentIndex}].correct_answer" value="${index}" data-options="${radioDataOptions}"> Correct Answer</label>
                             </div>
                         </div>`;
         return template;
@@ -261,7 +264,6 @@
         if (data.json_postquestion) {
             const postJson = JSON.parse(data.json_postquestion);
             postJson.forEach((val, index) => {
-                console.log("#value", val);
                 $('#formPostQuestion').append(templateQuestion(index, 'post_question', val));
                 $.parser.parse(`#post_question_${index}`);
                 if(val.opsion) {
@@ -417,7 +419,7 @@
             $('#dlg_insert').dialog('setTitle', `Edit Master Form Test ${row.id}`)
             getDetailData(row.id);
             // $('#frm_insert').form('load', row);
-            url_save = '<?= base_url('lnd/master_form_test/update_data/') ?>' + row.id;
+            url_save = '<?= base_url('lnd/master_form_test/update_data_v2/') ?>' + row.id;
             method = 'POST';
             isUpdate = true;
         } else {
@@ -756,21 +758,20 @@
                 iconCls: 'icon-ok',
                 handler: function() {
                     if($(this).form('validate')) {
-                        var formValue = $('#frm_insert'); //.serialize();
-                        // $('#frm_insert').form()
-                        const form = $('#frm_insert')[0];
+                        const form = document.querySelector('#frm_insert');
                         const formData = new FormData(form);
+                        const { json, files } = formDataToNestedJsonWithFiles_v2(formData);
+                        
                         const data = formDataToNestedJsonWithFiles(formData);
 
-                        const sanitizedJson = sanitizeEmptyFileFields(data.json);
-                        
                         const payload = new FormData();
-                        payload.append('data', JSON.stringify(sanitizedJson)); // kirim data JSON
-                        for (const name in data.files) {
-                            payload.append(name, data.files[name]);
+                        payload.append('data', JSON.stringify(json)); // Data JSON masuk ke $_POST['data']
+
+                        for (const key in files) {
+                            payload.append(key, files[key]); // Nama key harus seperti question[0][imageQuestion]
                         }
 
-                        sendDataToServer(formValue, payload)
+                        sendDataToServer($('#frm_insert'), payload);
                     }
                 }
             }]
@@ -804,6 +805,55 @@
         }
         
         return json;
+    }
+
+    function formDataToNestedJsonWithFiles_v2(formData) {
+        const json = {};
+        const files = {};
+
+        for (let [name, value] of formData.entries()) {
+            const keys = name.match(/[^\[\]]+/g);
+            let ref = json;
+
+            // Abaikan file kosong (tanpa nama)
+            if (value instanceof File && !value.name) continue;
+
+            for (let i = 0; i < keys.length; i++) {
+                let key = keys[i].startsWith('.') ? keys[i].substring(1) : keys[i];
+                const nextKey = keys[i + 1];
+
+                if (i === keys.length - 1) {
+                    // Jangan simpan nama file jika tidak ada file
+                    if (value instanceof File) {
+                        if (value.name) {
+                            ref[key] = value.name;
+                            const fileFieldName = keys.reduce((str, k, idx) => {
+                                k = k.startsWith('.') ? k.substring(1) : k;
+                                return idx === 0 ? k : `${str}[${k}]`;
+                            }, '');
+                            files[fileFieldName] = value;
+                        }
+                    } else {
+                        // Jika value sudah ada, jadikan array
+                        if (ref[key] !== undefined) {
+                            if (!Array.isArray(ref[key])) {
+                                ref[key] = [ref[key]];
+                            }
+                            ref[key].push(value);
+                        } else {
+                            ref[key] = value;
+                        }
+                    }
+                } else {
+                    if (!ref[key]) {
+                        ref[key] = /^\d+$/.test(nextKey) ? [] : {};
+                    }
+                    ref = ref[key];
+                }
+            }
+        }
+
+        return { json, files };
     }
 
     function formDataToNestedJsonWithFiles(formData) {

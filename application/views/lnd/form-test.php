@@ -251,6 +251,7 @@
         
     })
 
+    const baseUrl = '<?= base_url('assets/image/lnd/') ?>';
     function renderFormFromJson(containerSelector, jsonData) {
         const data = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
         const $container = $(containerSelector);
@@ -266,8 +267,9 @@
             html += `<div class="easyui-panel" title="Question ${index + 1}" data-options="fit:false" style="padding:10px;">`;
 
             // Image on TOP
+            const baseUrl = '<?= base_url('assets/image/lnd/') ?>';
             if (item.imagePosition === 'UP' && item.imageQuestion) {
-                html += `<div><img src="/assets/image/lnd/${item.imageQuestion}" style="max-width:100%; margin-bottom:10px;"></div>`;
+                html += `<div><img src="${baseUrl}${item.imageQuestion}" style="max-width:100%; margin-bottom:10px;"></div>`;
             }
 
             // Question Text
@@ -278,12 +280,13 @@
 
             // Image on BOTTOM
             if (item.imagePosition === 'BELOW' && item.imageQuestion) {
-                html += `<div><img src="/assets/image/lnd/${item.imageQuestion}" style="max-width:100%; margin-top:10px;"></div>`;
+                html += `<div><img src="${baseUrl}${item.imageQuestion}" style="max-width:100%; margin-top:10px;"></div>`;
             }
 
             // Options Panel
             html += `<div class="easyui-panel" style="border:none;">`;
             item.opsion.forEach((opt, optIndex) => {
+
                 const radioId = `${questionId}_opt_${optIndex}`;
                 html += `
                     <div style="margin:5px 0;">
@@ -292,10 +295,10 @@
                             ${opt.title}
                         </label>`;
 
-                if (opt.image && Array.isArray(opt.image) && opt.image.length > 0) {
-                    opt.image.forEach(img => {
-                        html += `<div><img src="/assets/image/lnd/${img}" style="max-width:150px; margin-top:5px;"></div>`;
-                    });
+                if (opt.image ) {
+                    html += `<div><img src="${baseUrl}${opt.image}" style="max-width:150px; margin-top:5px;"></div>`;
+                    // opt.image.forEach(img => {
+                    // });
                 }
 
                 html += `</div>`;
@@ -739,13 +742,13 @@
             let html = `<div class="easyui-panel" title="Result for Question ${index + 1}" style="margin-bottom:15px;padding:10px;">`;
 
             if (item.imagePosition === 'UP' && item.imageQuestion) {
-            html += `<div><img src="/assets/image/lnd/${item.imageQuestion}" style="max-width:100%; margin-bottom:10px;"></div>`;
+            html += `<div><img src="${baseUrl}${item.imageQuestion}" style="max-width:100%; margin-bottom:10px;"></div>`;
             }
 
             html += `<div style="font-weight:bold; margin-bottom:5px;">${item.question}</div>`;
 
             if (item.imagePosition === 'BELLOW' && item.imageQuestion) {
-            html += `<div><img src="/assets/image/lnd/${item.imageQuestion}" style="max-width:100%; margin-top:10px;"></div>`;
+            html += `<div><img src="${baseUrl}${item.imageQuestion}" style="max-width:100%; margin-top:10px;"></div>`;
             }
 
             html += `<div>`;
@@ -775,7 +778,6 @@
 
     function onSelectEmployee(index, data) {
         if(data) {
-            console.log("#record", data);
             $("#employeeName").textbox('setValue', data.name);
             $("#fullNameTitle").text(data.name)
             $("#employeeDepartement").textbox('setValue', data.departement_name);
