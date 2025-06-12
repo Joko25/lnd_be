@@ -37337,3 +37337,499 @@ JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
 WHERE `a`.`approved_to` IS NULL
 GROUP BY `a`.`approved_by`
 INFO - 2025-06-09 18:41:52 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 18:42:37 --> Config Class Initialized
+INFO - 2025-06-09 18:42:37 --> Config Class Initialized
+INFO - 2025-06-09 18:42:37 --> Hooks Class Initialized
+INFO - 2025-06-09 18:42:37 --> Hooks Class Initialized
+DEBUG - 2025-06-09 18:42:37 --> UTF-8 Support Enabled
+DEBUG - 2025-06-09 18:42:37 --> UTF-8 Support Enabled
+INFO - 2025-06-09 18:42:37 --> Utf8 Class Initialized
+INFO - 2025-06-09 18:42:37 --> Utf8 Class Initialized
+INFO - 2025-06-09 18:42:37 --> URI Class Initialized
+INFO - 2025-06-09 18:42:37 --> URI Class Initialized
+INFO - 2025-06-09 18:42:37 --> Router Class Initialized
+INFO - 2025-06-09 18:42:37 --> Router Class Initialized
+INFO - 2025-06-09 18:42:37 --> Output Class Initialized
+INFO - 2025-06-09 18:42:37 --> Output Class Initialized
+INFO - 2025-06-09 18:42:37 --> Security Class Initialized
+INFO - 2025-06-09 18:42:37 --> Security Class Initialized
+DEBUG - 2025-06-09 18:42:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 18:42:37 --> Input Class Initialized
+DEBUG - 2025-06-09 18:42:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 18:42:37 --> Language Class Initialized
+INFO - 2025-06-09 18:42:37 --> Input Class Initialized
+INFO - 2025-06-09 18:42:37 --> Language Class Initialized
+INFO - 2025-06-09 18:42:37 --> Loader Class Initialized
+INFO - 2025-06-09 18:42:37 --> Loader Class Initialized
+INFO - 2025-06-09 18:42:37 --> Helper loaded: url_helper
+INFO - 2025-06-09 18:42:37 --> Helper loaded: url_helper
+INFO - 2025-06-09 18:42:37 --> Helper loaded: file_helper
+INFO - 2025-06-09 18:42:37 --> Helper loaded: file_helper
+INFO - 2025-06-09 18:42:37 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:42:37 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:42:37 --> Email Class Initialized
+DEBUG - 2025-06-09 18:42:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-06-09 18:42:37 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 18:42:37 --> Controller Class Initialized
+INFO - 2025-06-09 18:42:37 --> Helper loaded: form_helper
+INFO - 2025-06-09 18:42:37 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 18:42:37 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 18:42:37 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:42:37 --> Model "Crud" initialized
+INFO - 2025-06-09 18:42:37 --> Email Class Initialized
+DEBUG - 2025-06-09 18:42:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+ERROR - 2025-06-09 18:42:37 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 18:42:37 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 18:42:37 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 18:42:37 --> Controller Class Initialized
+INFO - 2025-06-09 18:42:37 --> Helper loaded: form_helper
+INFO - 2025-06-09 18:42:37 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 18:42:37 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 18:42:37 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:42:37 --> Model "Crud" initialized
+ERROR - 2025-06-09 18:42:37 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 18:42:37 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 18:42:41 --> Config Class Initialized
+INFO - 2025-06-09 18:42:41 --> Hooks Class Initialized
+DEBUG - 2025-06-09 18:42:41 --> UTF-8 Support Enabled
+INFO - 2025-06-09 18:42:41 --> Utf8 Class Initialized
+INFO - 2025-06-09 18:42:41 --> URI Class Initialized
+INFO - 2025-06-09 18:42:41 --> Config Class Initialized
+INFO - 2025-06-09 18:42:41 --> Router Class Initialized
+INFO - 2025-06-09 18:42:41 --> Hooks Class Initialized
+INFO - 2025-06-09 18:42:41 --> Output Class Initialized
+DEBUG - 2025-06-09 18:42:41 --> UTF-8 Support Enabled
+INFO - 2025-06-09 18:42:41 --> Security Class Initialized
+INFO - 2025-06-09 18:42:41 --> Utf8 Class Initialized
+DEBUG - 2025-06-09 18:42:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 18:42:41 --> URI Class Initialized
+INFO - 2025-06-09 18:42:41 --> Input Class Initialized
+INFO - 2025-06-09 18:42:41 --> Language Class Initialized
+INFO - 2025-06-09 18:42:41 --> Router Class Initialized
+INFO - 2025-06-09 18:42:41 --> Output Class Initialized
+INFO - 2025-06-09 18:42:41 --> Loader Class Initialized
+INFO - 2025-06-09 18:42:41 --> Security Class Initialized
+INFO - 2025-06-09 18:42:41 --> Helper loaded: url_helper
+DEBUG - 2025-06-09 18:42:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 18:42:41 --> Helper loaded: file_helper
+INFO - 2025-06-09 18:42:41 --> Input Class Initialized
+INFO - 2025-06-09 18:42:41 --> Language Class Initialized
+INFO - 2025-06-09 18:42:41 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:42:41 --> Loader Class Initialized
+INFO - 2025-06-09 18:42:41 --> Helper loaded: url_helper
+INFO - 2025-06-09 18:42:41 --> Helper loaded: file_helper
+INFO - 2025-06-09 18:42:41 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:42:41 --> Email Class Initialized
+DEBUG - 2025-06-09 18:42:41 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-06-09 18:42:41 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 18:42:41 --> Controller Class Initialized
+INFO - 2025-06-09 18:42:41 --> Helper loaded: form_helper
+INFO - 2025-06-09 18:42:41 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 18:42:41 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 18:42:41 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:42:41 --> Email Class Initialized
+DEBUG - 2025-06-09 18:42:41 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-06-09 18:42:41 --> Model "Crud" initialized
+ERROR - 2025-06-09 18:42:41 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 18:42:41 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 18:42:41 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 18:42:41 --> Controller Class Initialized
+INFO - 2025-06-09 18:42:41 --> Helper loaded: form_helper
+INFO - 2025-06-09 18:42:41 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 18:42:41 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 18:42:41 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:42:41 --> Model "Crud" initialized
+ERROR - 2025-06-09 18:42:41 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 18:42:41 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 18:46:09 --> Config Class Initialized
+INFO - 2025-06-09 18:46:09 --> Hooks Class Initialized
+INFO - 2025-06-09 18:46:09 --> Config Class Initialized
+INFO - 2025-06-09 18:46:09 --> Hooks Class Initialized
+DEBUG - 2025-06-09 18:46:09 --> UTF-8 Support Enabled
+INFO - 2025-06-09 18:46:09 --> Utf8 Class Initialized
+DEBUG - 2025-06-09 18:46:09 --> UTF-8 Support Enabled
+INFO - 2025-06-09 18:46:09 --> Utf8 Class Initialized
+INFO - 2025-06-09 18:46:09 --> URI Class Initialized
+INFO - 2025-06-09 18:46:09 --> URI Class Initialized
+INFO - 2025-06-09 18:46:09 --> Router Class Initialized
+INFO - 2025-06-09 18:46:09 --> Router Class Initialized
+INFO - 2025-06-09 18:46:09 --> Output Class Initialized
+INFO - 2025-06-09 18:46:09 --> Output Class Initialized
+INFO - 2025-06-09 18:46:09 --> Security Class Initialized
+INFO - 2025-06-09 18:46:09 --> Security Class Initialized
+DEBUG - 2025-06-09 18:46:09 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2025-06-09 18:46:09 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 18:46:09 --> Input Class Initialized
+INFO - 2025-06-09 18:46:09 --> Input Class Initialized
+INFO - 2025-06-09 18:46:09 --> Language Class Initialized
+INFO - 2025-06-09 18:46:09 --> Language Class Initialized
+INFO - 2025-06-09 18:46:09 --> Loader Class Initialized
+INFO - 2025-06-09 18:46:09 --> Loader Class Initialized
+INFO - 2025-06-09 18:46:09 --> Helper loaded: url_helper
+INFO - 2025-06-09 18:46:09 --> Helper loaded: url_helper
+INFO - 2025-06-09 18:46:09 --> Helper loaded: file_helper
+INFO - 2025-06-09 18:46:09 --> Helper loaded: file_helper
+INFO - 2025-06-09 18:46:09 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:46:09 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:46:09 --> Email Class Initialized
+INFO - 2025-06-09 18:46:09 --> Email Class Initialized
+DEBUG - 2025-06-09 18:46:09 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-06-09 18:46:09 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-06-09 18:46:09 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 18:46:09 --> Controller Class Initialized
+INFO - 2025-06-09 18:46:09 --> Helper loaded: form_helper
+INFO - 2025-06-09 18:46:09 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 18:46:09 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 18:46:09 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:46:09 --> Model "Crud" initialized
+ERROR - 2025-06-09 18:46:09 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 18:46:09 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 18:46:09 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 18:46:09 --> Controller Class Initialized
+INFO - 2025-06-09 18:46:09 --> Helper loaded: form_helper
+INFO - 2025-06-09 18:46:09 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 18:46:09 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 18:46:09 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:46:09 --> Model "Crud" initialized
+ERROR - 2025-06-09 18:46:09 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 18:46:09 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 18:46:10 --> Config Class Initialized
+INFO - 2025-06-09 18:46:10 --> Hooks Class Initialized
+DEBUG - 2025-06-09 18:46:10 --> UTF-8 Support Enabled
+INFO - 2025-06-09 18:46:10 --> Utf8 Class Initialized
+INFO - 2025-06-09 18:46:10 --> URI Class Initialized
+INFO - 2025-06-09 18:46:10 --> Config Class Initialized
+INFO - 2025-06-09 18:46:10 --> Hooks Class Initialized
+INFO - 2025-06-09 18:46:10 --> Router Class Initialized
+DEBUG - 2025-06-09 18:46:10 --> UTF-8 Support Enabled
+INFO - 2025-06-09 18:46:10 --> Output Class Initialized
+INFO - 2025-06-09 18:46:10 --> Utf8 Class Initialized
+INFO - 2025-06-09 18:46:10 --> Security Class Initialized
+INFO - 2025-06-09 18:46:10 --> URI Class Initialized
+DEBUG - 2025-06-09 18:46:10 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 18:46:10 --> Router Class Initialized
+INFO - 2025-06-09 18:46:10 --> Input Class Initialized
+INFO - 2025-06-09 18:46:10 --> Output Class Initialized
+INFO - 2025-06-09 18:46:10 --> Language Class Initialized
+INFO - 2025-06-09 18:46:10 --> Security Class Initialized
+DEBUG - 2025-06-09 18:46:10 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 18:46:10 --> Loader Class Initialized
+INFO - 2025-06-09 18:46:10 --> Input Class Initialized
+INFO - 2025-06-09 18:46:10 --> Helper loaded: url_helper
+INFO - 2025-06-09 18:46:10 --> Language Class Initialized
+INFO - 2025-06-09 18:46:10 --> Helper loaded: file_helper
+INFO - 2025-06-09 18:46:10 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:46:10 --> Loader Class Initialized
+INFO - 2025-06-09 18:46:10 --> Helper loaded: url_helper
+INFO - 2025-06-09 18:46:10 --> Helper loaded: file_helper
+INFO - 2025-06-09 18:46:10 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:46:10 --> Email Class Initialized
+DEBUG - 2025-06-09 18:46:10 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-06-09 18:46:10 --> Email Class Initialized
+INFO - 2025-06-09 18:46:10 --> Session: Class initialized using 'files' driver.
+DEBUG - 2025-06-09 18:46:10 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-06-09 18:46:10 --> Controller Class Initialized
+INFO - 2025-06-09 18:46:10 --> Helper loaded: form_helper
+INFO - 2025-06-09 18:46:10 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 18:46:10 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 18:46:10 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:46:10 --> Model "Crud" initialized
+ERROR - 2025-06-09 18:46:10 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 18:46:10 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 18:46:10 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 18:46:10 --> Controller Class Initialized
+INFO - 2025-06-09 18:46:10 --> Helper loaded: form_helper
+INFO - 2025-06-09 18:46:10 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 18:46:10 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 18:46:10 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:46:10 --> Model "Crud" initialized
+ERROR - 2025-06-09 18:46:10 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 18:46:10 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 18:52:34 --> Config Class Initialized
+INFO - 2025-06-09 18:52:34 --> Config Class Initialized
+INFO - 2025-06-09 18:52:34 --> Hooks Class Initialized
+INFO - 2025-06-09 18:52:34 --> Hooks Class Initialized
+DEBUG - 2025-06-09 18:52:34 --> UTF-8 Support Enabled
+DEBUG - 2025-06-09 18:52:34 --> UTF-8 Support Enabled
+INFO - 2025-06-09 18:52:34 --> Utf8 Class Initialized
+INFO - 2025-06-09 18:52:34 --> Utf8 Class Initialized
+INFO - 2025-06-09 18:52:34 --> URI Class Initialized
+INFO - 2025-06-09 18:52:34 --> URI Class Initialized
+INFO - 2025-06-09 18:52:34 --> Router Class Initialized
+INFO - 2025-06-09 18:52:34 --> Router Class Initialized
+INFO - 2025-06-09 18:52:34 --> Output Class Initialized
+INFO - 2025-06-09 18:52:34 --> Output Class Initialized
+INFO - 2025-06-09 18:52:34 --> Security Class Initialized
+INFO - 2025-06-09 18:52:34 --> Security Class Initialized
+DEBUG - 2025-06-09 18:52:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 18:52:34 --> Input Class Initialized
+DEBUG - 2025-06-09 18:52:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 18:52:34 --> Language Class Initialized
+INFO - 2025-06-09 18:52:34 --> Input Class Initialized
+INFO - 2025-06-09 18:52:34 --> Language Class Initialized
+INFO - 2025-06-09 18:52:34 --> Loader Class Initialized
+INFO - 2025-06-09 18:52:34 --> Loader Class Initialized
+INFO - 2025-06-09 18:52:34 --> Helper loaded: url_helper
+INFO - 2025-06-09 18:52:34 --> Helper loaded: url_helper
+INFO - 2025-06-09 18:52:34 --> Helper loaded: file_helper
+INFO - 2025-06-09 18:52:34 --> Helper loaded: file_helper
+INFO - 2025-06-09 18:52:34 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:52:34 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:52:34 --> Email Class Initialized
+INFO - 2025-06-09 18:52:34 --> Email Class Initialized
+DEBUG - 2025-06-09 18:52:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2025-06-09 18:52:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-06-09 18:52:34 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 18:52:34 --> Controller Class Initialized
+INFO - 2025-06-09 18:52:34 --> Helper loaded: form_helper
+INFO - 2025-06-09 18:52:34 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 18:52:34 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 18:52:34 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:52:34 --> Model "Crud" initialized
+ERROR - 2025-06-09 18:52:34 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 18:52:34 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 18:52:34 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 18:52:34 --> Controller Class Initialized
+INFO - 2025-06-09 18:52:34 --> Helper loaded: form_helper
+INFO - 2025-06-09 18:52:34 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 18:52:34 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 18:52:34 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:52:34 --> Model "Crud" initialized
+ERROR - 2025-06-09 18:52:34 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 18:52:34 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 18:52:42 --> Config Class Initialized
+INFO - 2025-06-09 18:52:42 --> Hooks Class Initialized
+DEBUG - 2025-06-09 18:52:42 --> UTF-8 Support Enabled
+INFO - 2025-06-09 18:52:42 --> Utf8 Class Initialized
+INFO - 2025-06-09 18:52:42 --> URI Class Initialized
+INFO - 2025-06-09 18:52:42 --> Router Class Initialized
+INFO - 2025-06-09 18:52:42 --> Output Class Initialized
+INFO - 2025-06-09 18:52:42 --> Security Class Initialized
+DEBUG - 2025-06-09 18:52:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 18:52:42 --> Input Class Initialized
+INFO - 2025-06-09 18:52:42 --> Language Class Initialized
+INFO - 2025-06-09 18:52:42 --> Config Class Initialized
+INFO - 2025-06-09 18:52:42 --> Hooks Class Initialized
+DEBUG - 2025-06-09 18:52:42 --> UTF-8 Support Enabled
+INFO - 2025-06-09 18:52:42 --> Utf8 Class Initialized
+INFO - 2025-06-09 18:52:42 --> Loader Class Initialized
+INFO - 2025-06-09 18:52:42 --> Helper loaded: url_helper
+INFO - 2025-06-09 18:52:42 --> URI Class Initialized
+INFO - 2025-06-09 18:52:42 --> Helper loaded: file_helper
+INFO - 2025-06-09 18:52:42 --> Router Class Initialized
+INFO - 2025-06-09 18:52:42 --> Output Class Initialized
+INFO - 2025-06-09 18:52:42 --> Security Class Initialized
+DEBUG - 2025-06-09 18:52:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 18:52:42 --> Input Class Initialized
+INFO - 2025-06-09 18:52:42 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:52:42 --> Language Class Initialized
+INFO - 2025-06-09 18:52:42 --> Loader Class Initialized
+INFO - 2025-06-09 18:52:42 --> Helper loaded: url_helper
+INFO - 2025-06-09 18:52:42 --> Helper loaded: file_helper
+INFO - 2025-06-09 18:52:42 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:52:42 --> Email Class Initialized
+DEBUG - 2025-06-09 18:52:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-06-09 18:52:42 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 18:52:42 --> Controller Class Initialized
+INFO - 2025-06-09 18:52:42 --> Helper loaded: form_helper
+INFO - 2025-06-09 18:52:42 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 18:52:42 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 18:52:42 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:52:42 --> Email Class Initialized
+DEBUG - 2025-06-09 18:52:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-06-09 18:52:42 --> Model "Crud" initialized
+ERROR - 2025-06-09 18:52:42 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 18:52:42 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 18:52:42 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 18:52:42 --> Controller Class Initialized
+INFO - 2025-06-09 18:52:42 --> Helper loaded: form_helper
+INFO - 2025-06-09 18:52:42 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 18:52:42 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 18:52:42 --> Database Driver Class Initialized
+INFO - 2025-06-09 18:52:42 --> Model "Crud" initialized
+ERROR - 2025-06-09 18:52:42 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 18:52:42 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 19:00:29 --> Config Class Initialized
+INFO - 2025-06-09 19:00:29 --> Hooks Class Initialized
+DEBUG - 2025-06-09 19:00:29 --> UTF-8 Support Enabled
+INFO - 2025-06-09 19:00:29 --> Utf8 Class Initialized
+INFO - 2025-06-09 19:00:29 --> URI Class Initialized
+INFO - 2025-06-09 19:00:29 --> Router Class Initialized
+INFO - 2025-06-09 19:00:29 --> Output Class Initialized
+INFO - 2025-06-09 19:00:29 --> Security Class Initialized
+DEBUG - 2025-06-09 19:00:29 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 19:00:29 --> Input Class Initialized
+INFO - 2025-06-09 19:00:29 --> Language Class Initialized
+INFO - 2025-06-09 19:00:29 --> Loader Class Initialized
+INFO - 2025-06-09 19:00:29 --> Config Class Initialized
+INFO - 2025-06-09 19:00:29 --> Helper loaded: url_helper
+INFO - 2025-06-09 19:00:29 --> Hooks Class Initialized
+INFO - 2025-06-09 19:00:29 --> Helper loaded: file_helper
+DEBUG - 2025-06-09 19:00:29 --> UTF-8 Support Enabled
+INFO - 2025-06-09 19:00:29 --> Utf8 Class Initialized
+INFO - 2025-06-09 19:00:29 --> URI Class Initialized
+INFO - 2025-06-09 19:00:29 --> Database Driver Class Initialized
+INFO - 2025-06-09 19:00:29 --> Router Class Initialized
+INFO - 2025-06-09 19:00:29 --> Output Class Initialized
+INFO - 2025-06-09 19:00:29 --> Security Class Initialized
+DEBUG - 2025-06-09 19:00:29 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 19:00:29 --> Input Class Initialized
+INFO - 2025-06-09 19:00:29 --> Language Class Initialized
+INFO - 2025-06-09 19:00:29 --> Loader Class Initialized
+INFO - 2025-06-09 19:00:29 --> Helper loaded: url_helper
+INFO - 2025-06-09 19:00:29 --> Helper loaded: file_helper
+INFO - 2025-06-09 19:00:29 --> Database Driver Class Initialized
+INFO - 2025-06-09 19:00:29 --> Email Class Initialized
+DEBUG - 2025-06-09 19:00:29 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-06-09 19:00:29 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 19:00:29 --> Controller Class Initialized
+INFO - 2025-06-09 19:00:29 --> Email Class Initialized
+INFO - 2025-06-09 19:00:29 --> Helper loaded: form_helper
+INFO - 2025-06-09 19:00:29 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 19:00:29 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 19:00:29 --> Database Driver Class Initialized
+DEBUG - 2025-06-09 19:00:29 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-06-09 19:00:29 --> Model "Crud" initialized
+ERROR - 2025-06-09 19:00:29 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 19:00:29 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 19:00:29 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 19:00:29 --> Controller Class Initialized
+INFO - 2025-06-09 19:00:29 --> Helper loaded: form_helper
+INFO - 2025-06-09 19:00:29 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 19:00:29 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 19:00:29 --> Database Driver Class Initialized
+INFO - 2025-06-09 19:00:29 --> Model "Crud" initialized
+ERROR - 2025-06-09 19:00:29 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 19:00:29 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 19:00:31 --> Config Class Initialized
+INFO - 2025-06-09 19:00:31 --> Hooks Class Initialized
+INFO - 2025-06-09 19:00:31 --> Config Class Initialized
+INFO - 2025-06-09 19:00:31 --> Hooks Class Initialized
+DEBUG - 2025-06-09 19:00:31 --> UTF-8 Support Enabled
+INFO - 2025-06-09 19:00:31 --> Utf8 Class Initialized
+DEBUG - 2025-06-09 19:00:31 --> UTF-8 Support Enabled
+INFO - 2025-06-09 19:00:31 --> Utf8 Class Initialized
+INFO - 2025-06-09 19:00:31 --> URI Class Initialized
+INFO - 2025-06-09 19:00:31 --> Router Class Initialized
+INFO - 2025-06-09 19:00:31 --> URI Class Initialized
+INFO - 2025-06-09 19:00:31 --> Output Class Initialized
+INFO - 2025-06-09 19:00:31 --> Security Class Initialized
+DEBUG - 2025-06-09 19:00:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 19:00:31 --> Input Class Initialized
+INFO - 2025-06-09 19:00:31 --> Language Class Initialized
+INFO - 2025-06-09 19:00:31 --> Router Class Initialized
+INFO - 2025-06-09 19:00:31 --> Loader Class Initialized
+INFO - 2025-06-09 19:00:31 --> Output Class Initialized
+INFO - 2025-06-09 19:00:31 --> Helper loaded: url_helper
+INFO - 2025-06-09 19:00:31 --> Helper loaded: file_helper
+INFO - 2025-06-09 19:00:31 --> Security Class Initialized
+DEBUG - 2025-06-09 19:00:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-06-09 19:00:31 --> Input Class Initialized
+INFO - 2025-06-09 19:00:31 --> Language Class Initialized
+INFO - 2025-06-09 19:00:31 --> Database Driver Class Initialized
+INFO - 2025-06-09 19:00:31 --> Loader Class Initialized
+INFO - 2025-06-09 19:00:31 --> Helper loaded: url_helper
+INFO - 2025-06-09 19:00:31 --> Helper loaded: file_helper
+INFO - 2025-06-09 19:00:31 --> Database Driver Class Initialized
+INFO - 2025-06-09 19:00:31 --> Email Class Initialized
+DEBUG - 2025-06-09 19:00:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-06-09 19:00:31 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 19:00:31 --> Controller Class Initialized
+INFO - 2025-06-09 19:00:31 --> Helper loaded: form_helper
+INFO - 2025-06-09 19:00:31 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 19:00:31 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 19:00:31 --> Database Driver Class Initialized
+INFO - 2025-06-09 19:00:31 --> Email Class Initialized
+DEBUG - 2025-06-09 19:00:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-06-09 19:00:31 --> Model "Crud" initialized
+ERROR - 2025-06-09 19:00:31 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 19:00:31 --> Language file loaded: language/english/db_lang.php
+INFO - 2025-06-09 19:00:31 --> Session: Class initialized using 'files' driver.
+INFO - 2025-06-09 19:00:31 --> Controller Class Initialized
+INFO - 2025-06-09 19:00:31 --> Helper loaded: form_helper
+INFO - 2025-06-09 19:00:31 --> Form Validation Class Initialized
+DEBUG - 2025-06-09 19:00:31 --> Session class already loaded. Second attempt ignored.
+INFO - 2025-06-09 19:00:31 --> Database Driver Class Initialized
+INFO - 2025-06-09 19:00:31 --> Model "Crud" initialized
+ERROR - 2025-06-09 19:00:31 --> Query error: Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'hris_bri.a.approved_to' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by - Invalid query: SELECT `b`.`name` as `fullname`, `a`.`approved_to`, `a`.`approved_by`, `b`.`avatar`
+FROM `cash_carries` `a`
+JOIN `users` `b` ON `a`.`approved_by` = `b`.`username`
+JOIN `users` `c` ON `a`.`approved_to` = `c`.`username`
+WHERE `a`.`approved_to` IS NULL
+GROUP BY `a`.`approved_by`
+INFO - 2025-06-09 19:00:31 --> Language file loaded: language/english/db_lang.php

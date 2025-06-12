@@ -135,6 +135,12 @@
     </div>
 </div>
 
+<div id="dlg_attachment" class="easyui-dialog" title="Attachment" data-options="closed: true,modal:true" style="width: 1500px; height: 700px; padding:10px; top: 20px;">
+    <div id="attachmentContainer">
+        
+    </div>
+</div>
+
 <!-- PDF -->
 <iframe id="printout" src="<?= base_url('lnd/training_activity/print') ?>" style="width: 100%;" hidden></iframe>
 
@@ -1154,12 +1160,27 @@
         }
     }
 
+    function openAttachment(url){
+        $('#dlg_attachment').dialog('open');
+        $('#attachmentContainer').empty();
+        $('#attachmentContainer').append(`
+            <div class="attachment-preview">
+                <iframe src="${url}" width="100%" height="600px" frameborder="0"></iframe>
+                <div class="attachment-actions">
+                    <a href="${url}" class="easyui-linkbutton" target="_blank">
+                        <i class="fa fa-download"></i> Download File
+                    </a>
+                </div>
+            </div>
+        `);
+    }
+
 	function fileFormatter(value) {
         if (value == "" || value == null) {
             return '-';
 		} else {
             const baseUrl = '<?= base_url('assets/document/request-training/') ?>';
-			return `<a href="${baseUrl}${value}" style="text-decoration: none;"><i class="fa fa-download"></i> Download</a>`;
+			return `<a style="text-decoration: none;" onclick="openAttachment('${baseUrl}${value}')"><i class="fa fa-download"></i> Download</a>`;
 		}
 	};
 </script>

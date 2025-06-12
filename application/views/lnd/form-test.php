@@ -179,6 +179,8 @@
         let data = <?php echo json_encode($data); ?>;
         let dataFeedback = <?php echo json_encode($data_feedback); ?>;
         if(data) {
+            console.log("#data", data);
+            
             $("#trainingName").textbox('setValue', data.trainingActivity);
             $("#trainerName").textbox('setValue', data.trainer_name);
             $('#trainingNameTitle').text(data.trainingActivity)
@@ -742,30 +744,31 @@
             let html = `<div class="easyui-panel" title="Result for Question ${index + 1}" style="margin-bottom:15px;padding:10px;">`;
 
             if (item.imagePosition === 'UP' && item.imageQuestion) {
-            html += `<div><img src="${baseUrl}${item.imageQuestion}" style="max-width:100%; margin-bottom:10px;"></div>`;
+                html += `<div><img src="${baseUrl}${item.imageQuestion}" style="max-width:100%; margin-bottom:10px;"></div>`;
             }
 
             html += `<div style="font-weight:bold; margin-bottom:5px;">${item.question}</div>`;
 
             if (item.imagePosition === 'BELLOW' && item.imageQuestion) {
-            html += `<div><img src="${baseUrl}${item.imageQuestion}" style="max-width:100%; margin-top:10px;"></div>`;
+                html += `<div><img src="${baseUrl}${item.imageQuestion}" style="max-width:100%; margin-top:10px;"></div>`;
             }
 
             html += `<div>`;
             item.opsion.forEach((opt, optIndex) => {
-            const isSelected = answer.selectedIndex === optIndex;
-            const isCorrect = parseInt(item.correct_answer) === optIndex;
+                const isSelected = answer.selectedIndex === optIndex;
+                const isCorrect = parseInt(item.correct_answer) === optIndex;
 
-            html += `
-                <div style="margin:5px 0; ${isCorrect ? 'color:blue;' : ''}">
-                <label>
+                html += `
+                    <div style="margin:5px 0; ${isCorrect ? 'color:blue;' : ''}">
+                    <label>
                     <input type="radio" disabled ${isSelected ? 'checked' : ''}>
-                    ${opt.title}
-                    ${isCorrect ? '<span style="color:blue;">✅ Correct</span>' : ''}
-                    ${isSelected && !isCorrect ? '<span style="color:red;">❌ Your Choice</span>' : ''}
-                </label>
-                </div>
-            `;
+                        ${opt.title}
+                        ${isCorrect ? '<span style="color:blue;">✅ Correct</span>' : ''}
+                        ${isSelected && !isCorrect ? '<span style="color:red;">❌ Your Choice</span>' : ''}
+                    </label>
+                    ${opt.image ? `<img src="${baseUrl}${opt.image}" style="max-width:150px; margin-top:5px; margin-bottom:10px;">` : ''}
+                    </div>
+                `;
             });
             html += `</div></div>`;
             $container.append(html);
