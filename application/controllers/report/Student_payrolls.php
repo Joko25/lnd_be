@@ -93,7 +93,12 @@ class Student_payrolls extends CI_Controller
             $this->db->from('groups a');
             $this->db->join('sources b', 'a.id = b.group_id');
             $this->db->where('a.id', $filter_group);
-            $this->db->like('b.id', $filter_source);
+            // if ($filter_group != "") {
+            //     $this->db->where('a.id', $filter_group);
+            // }
+            if ($filter_source != "") {
+                $this->db->like('b.id', $filter_source);
+            }
             $this->db->group_by('b.id');
             $this->db->order_by('a.name', 'ASC');
             $this->db->order_by('b.name', 'ASC');
@@ -269,38 +274,44 @@ class Student_payrolls extends CI_Controller
 
                         $html .= '</table><br>';
 
-                        $hal++;
-                        if (($i + 1) != $page) {
-                            $html .= '<div style="page-break-after:always;"></div>';
+                        if (($i + 1) == $page) {
+                            $html .= '<center>
+                                        <table id="customers" style="width:70%;">
+                                            <tr>
+                                                <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
+                                                <th colspan="2" style="text-align:center;">CONFIRM OK</th>
+                                                <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
+                                            </tr>
+                                            <tr>
+                                                <th width="100" style="text-align:center;">COST CONTROL</th>
+                                                <th width="100" style="text-align:center;">HRD</th>
+                                            </tr>
+                                            <tr>
+                                                <td style="height:60px;"></td>
+                                                <td style="height:60px;"></td>
+                                                <td style="height:60px;"></td>
+                                                <td style="height:60px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center;">BOD</th>
+                                                <th style="text-align:center;">ASSISTANT MANAGER</th>
+                                                <th style="text-align:center;">ASSISTANT MANAGER</th>
+                                                <th style="text-align:center;">PAYROLL STAFF</th>
+                                            </tr>
+                                        </table>
+                                    </center>';
                         }
+
+                        $hal++;
+
+                        if (($i + 1) != $page) {
+
+                            $html .= '<div style="page-break-after:always;"></div>';
+
+                        }
+
                     }
 
-                    $html .= '<center>
-                                <table id="customers" style="width:70%;">
-                                    <tr>
-                                        <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
-                                        <th colspan="2" style="text-align:center;">CONFIRM OK</th>
-                                        <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
-                                    </tr>
-                                    <tr>
-                                        <th width="100" style="text-align:center;">COST CONTROL</th>
-                                        <th width="100" style="text-align:center;">HRD</th>
-                                    </tr>
-                                    <tr>
-                                        <td style="height:60px;"></td>
-                                        <td style="height:60px;"></td>
-                                        <td style="height:60px;"></td>
-                                        <td style="height:60px;"></td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:center;">BOD</th>
-                                        <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                        <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                        <th style="text-align:center;">PAYROLL STAFF</th>
-                                    </tr>
-                                </table>
-                            </center>';
-                            
                     $html .= "</div>";
                 }
 
@@ -425,8 +436,7 @@ class Student_payrolls extends CI_Controller
                                         <th style="text-align:right;">' . number_format($total) . '</th>
                                         <th style="text-align:right;"></th>
                                     </tr>';
-                        // echo $autoid . "<br>";
-                        // if($autoid == count($records)){
+
                         if (($i + 1) == $page) {
                             $html2 .= '  <tr>
                                             <th style="text-align:right;" colspan="16">TOTAL '.$record['source_name'].'</th>
@@ -444,11 +454,9 @@ class Student_payrolls extends CI_Controller
                         }
 
                         $html2 .= '</table><br>';
-                        $hal++;
-                    }
 
-                    if(count($payrolls) > 0){
-                        $html2 .= '<center>
+                        if (($i + 1) == $page) {
+                            $html2 .= '<center>
                                         <table id="customers" style="width:70%;">
                                             <tr>
                                                 <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
@@ -473,7 +481,10 @@ class Student_payrolls extends CI_Controller
                                             </tr>
                                         </table>
                                     </center>';
-                                    
+                        }
+                        $hal++;
+                    }
+                    if(count($payrolls) > 0){
                         $html2 .= '<div style="page-break-after:always;"></div>';
                     }
                 }
