@@ -5,80 +5,28 @@
 			<fieldset style="width: 99%; border:2px solid #d0d0d0; margin-bottom: 5px; margin-top: 5px; border-radius:4px;">
 				<legend><b>Form Filter Data</b></legend>
 				<div style="width: 50%; float:left;">
-					<div class="fitem">
-						<span style="width:35%; display:inline-block;">Division</span>
-						<input style="width:60%;" name="filter_division" id="filter_division" class="easyui-combobox">
+				<div class="fitem">
+						<span style="width:30%; display:inline-block;">Period Date</span>
+						<input style="width:29%;" name="filter_from" id="filter_from" value="<?= date("Y-m-01") ?>" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox"> To
+                        <input style="width:29%;" name="filter_to" id="filter_to" value="<?= date("Y-m-t") ?>" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
 					</div>
 					<div class="fitem">
-						<span style="width:35%; display:inline-block;">Departement</span>
+						<span style="width:30%; display:inline-block;">Departement</span>
 						<input style="width:60%;" name="filter_departement" id="filter_departement" class="easyui-combobox">
 					</div>
 					<div class="fitem">
-						<span style="width:35%; display:inline-block;">Departement Sub</span>
-						<input style="width:60%;" name="filter_departement_sub" id="filter_departement_sub" class="easyui-combobox">
+						<span style="width:30%; display:inline-block;">Training Name</span>
+						<input style="width:60%;" name="filter_training_name" id="filter_training_name" class="easyui-combobox">
 					</div>
 					<div class="fitem">
-						<span style="width:35%; display:inline-block;"></span>
+						<span style="width:30%; display:inline-block;"></span>
 						<a href="javascript:;" class="easyui-linkbutton" onclick="filter()"><i class="fa fa-search"></i> Filter Data</a>
 					</div>
 				</div>
 				<div style="width: 49%; float:left;">
 					<div class="fitem">
-						<span style="width:35%; display:inline-block;">Employee</span>
+						<span style="width:30%; display:inline-block;">Trainer Name</span>
 						<input style="width:60%;" name="filter_employee" id="filter_employee" class="easyui-combogrid">
-					</div>
-					<div class="fitem">
-						<span style="width:35%; display:inline-block;">Status</span>
-						<select style="width:60%;" name="filter_status" id="filter_status" class="easyui-combobox" panelHeight="auto">
-							<option value="">Choose All</option>
-							<option value="0">ACTIVE</option>
-							<option value="1">NOT ACTIVE</option>
-						</select>
-					</div>
-					<div class="fitem">
-						<span style="width:35%; display:inline-block;">Display Column</span>
-						<select style="width:60%;" name="filter_column[]" id="filter_column" class="easyui-combobox" data-options="prompt:'Choose Column'" multiple="true">
-							<option value="number">ID</option>
-							<option value="name">Name</option>
-							<option value="nickname">Nick Name</option>
-							<option value="division_name">Division</option>
-							<option value="departement_name">Departement</option>
-							<option value="departement_sub_name">Departement Sub</option>
-							<option value="contract_name">Type</option>
-							<option value="position_name">Position</option>
-							<option value="group_name">Group</option>
-							<option value="source_name">Source</option>
-							<option value="marital_name">Marital Status</option>
-							<option value="religion_name">Religion</option>
-							<option value="education">Education</option>
-							<option value="date_sign">Sign In</option>
-							<option value="date_expired">Sign Expired</option>
-							<option value="address">Address</option>
-							<option value="place_birth">Place Birth</option>
-							<option value="birthday">Birthday</option>
-							<option value="gender">Gender</option>
-							<option value="blood">Blood</option>
-							<option value="national_id">National ID</option>
-							<option value="tax_id">Tax ID</option>
-							<option value="jamsostek">Jamsostek</option>
-							<option value="jamsostek_date">Jamsostek Date</option>
-							<option value="jkn">JKN</option>
-							<option value="jkn_date">JKN Date</option>
-							<option value="jkn_family">JKN Family</option>
-							<option value="telphone">Telphone</option>
-							<option value="mobile_phone">Mobile Phone</option>
-							<option value="emergency_no">Emergency No</option>
-							<option value="email">Email</option>
-							<option value="driving_no">Driving No</option>
-							<option value="driving_date">Driving Date</option>
-							<option value="stnk_no">STNK No</option>
-							<option value="stnk_date">STNK Date</option>
-							<option value="maps">Maps</option>
-							<option value="bank_no">Bank No</option>
-							<option value="bank_name">Bank Name</option>
-							<option value="bank_branch">Bank Branch</option>
-							<option value="status_date">Status Date</option>
-						</select>
 					</div>
 				</div>
 			</fieldset>
@@ -117,8 +65,8 @@
 
 	$(function() {
 		//Get Departement
-		$('#filter_division').combobox({
-			url: '<?php echo base_url('employee/divisions/reads'); ?>',
+		$('#filter_departement').combobox({
+			url: '<?php echo base_url('employee/departements/reads'); ?>',
 			valueField: 'id',
 			textField: 'name',
 			prompt: 'Choose All',
@@ -128,66 +76,13 @@
 					$(e.data.target).combobox('clear').combobox('textbox').focus();
 				}
 			}],
-			onSelect: function(division) {
-				$('#filter_departement').combobox({
-					url: '<?php echo base_url('employee/departements/reads'); ?>?division_id=' + division.id,
-					valueField: 'id',
-					textField: 'name',
-					prompt: 'Choose All',
-					icons: [{
-						iconCls: 'icon-clear',
-						handler: function(e) {
-							$(e.data.target).combobox('clear').combobox('textbox').focus();
-						}
-					}],
-					onSelect: function(departement) {
-						$('#filter_departement_sub').combobox({
-							url: '<?php echo base_url('employee/departement_subs/reads'); ?>?division_id=' + division.id + '&departement_id=' + departement.id,
-							valueField: 'id',
-							textField: 'name',
-							prompt: 'Choose All',
-							icons: [{
-								iconCls: 'icon-clear',
-								handler: function(e) {
-									$(e.data.target).combobox('clear').combobox('textbox').focus();
-								}
-							}],
-							onSelect: function(departement_sub) {
-								$('#filter_employee').combogrid({
-									url: '<?= base_url('employee/employees/reads?departement_sub_id=') ?>' + departement_sub.id,
-									panelWidth: 450,
-									idField: 'id',
-									textField: 'name',
-									mode: 'remote',
-									fitColumns: true,
-									prompt: 'Choose All',
-									icons: [{
-										iconCls: 'icon-clear',
-										handler: function(e) {
-											$(e.data.target).combogrid('clear').combogrid('textbox').focus();
-										}
-									}],
-									columns: [
-										[{
-											field: 'number',
-											title: 'Employee ID',
-											width: 120
-										}, {
-											field: 'name',
-											title: 'Employee Name',
-											width: 200
-										}]
-									],
-								});
-							}
-						});
-					}
-				});
+			onSelect: function(departement) {
+				
 			}
 		});
 
-		$('#filter_employee').combogrid({
-			url: '<?= base_url('employee/employees/reads') ?>',
+		$('#filter_training_name').combogrid({
+			url: '<?= base_url('lnd/Trainee_Training_History/readTrainingName') ?>',
 			panelWidth: 450,
 			idField: 'id',
 			textField: 'name',
@@ -202,7 +97,34 @@
 			}],
 			columns: [
 				[{
-					field: 'number',
+					field: 'name',
+					title: 'Training Name',
+					width: 200
+				}, {
+					field: 'induction',
+					title: 'Induction',
+					width: 200
+				}]
+			],
+		});
+
+		$('#filter_employee').combogrid({
+			url: '<?= base_url('lnd/Trainee_Training_History/readsEmployeesLeaderUp') ?>',
+			panelWidth: 450,
+			idField: 'id',
+			textField: 'name',
+			mode: 'remote',
+			fitColumns: true,
+			prompt: 'Choose All',
+			icons: [{
+				iconCls: 'icon-clear',
+				handler: function(e) {
+					$(e.data.target).combogrid('clear').combogrid('textbox').focus();
+				}
+			}],
+			columns: [
+				[{
+					field: 'id',
 					title: 'Employee ID',
 					width: 120
 				}, {

@@ -31,6 +31,32 @@ class Trainee_Training_History extends CI_Controller {
 		}
 	}
 
+	public function readTrainingName() {
+		$this->db->start_cache();
+		$this->db->select("a.*,  c.trainingActivity as name, c.induction");
+		$this->db->from('lnd_master_form_test a');
+        $this->db->join('lnd_schedule_training b', 'b.id = a.training_name', 'left');
+        $this->db->join('lnd_training_activity c', 'c.id = b.trainingName', 'left');		
+		$this->db->stop_cache();
+		$res = $this->db->get()->result_array();
+		$this->db->flush_cache(); // Hapus cache query
+		echo json_encode($res);
+
+	}
+
+	public function readsEmployeesLeaderUp()
+	{
+		$this->db->start_cache();
+		$this->db->select('a.id, a.name, b.name as positionName');
+		$this->db->from('employees a');
+		$this->db->join('positions b', 'b.id = a.position_id', 'left');
+		$this->db->where('b.level <', '05');
+		$this->db->stop_cache();
+		$res = $this->db->get()->result_array();
+		$this->db->flush_cache(); // Hapus cache query
+		echo json_encode($res);
+	}
+
 	public function print($option = "")
 	{
 		if ($option == "excel") {
@@ -42,10 +68,10 @@ class Trainee_Training_History extends CI_Controller {
 		if ($this->input->get()) {
 			$form = $this->input->get();
 
-			if (@$form['filter_column'][0] == "") {
-				die('<h3 style="color:red;">PLEASE CHOOSE DISPLAY COLUMN</h3>');
-			} else {
-				$this->db->select("a.*, 
+			// if (@$form['filter_column'][0] == "") {
+			// 	die('<h3 style="color:red;">PLEASE CHOOSE DISPLAY COLUMN</h3>');
+			// } else {
+				$this->db->select("a.*, a.id as employee_id,
                         (CASE
                                 WHEN CAST(a.date_expired AS CHAR) = '0000-00-00' THEN '-'
                                 ELSE CAST(a.date_expired AS CHAR)
@@ -75,20 +101,24 @@ class Trainee_Training_History extends CI_Controller {
 				$this->db->join('maritals k', 'k.id = a.marital_id', 'left');
 				$this->db->join('religions l', 'l.id = a.religion_id', 'left');
 				$this->db->where('a.deleted', 0);
-				$this->db->like("a.division_id", $form['filter_division']);
+				// $this->db->like("a.division_id", $form['filter_division']);
 				$this->db->like("a.departement_id", $form['filter_departement']);
-				$this->db->like("a.departement_sub_id", $form['filter_departement_sub']);
-				$this->db->like("a.id", $form['filter_employee']);
-				$this->db->like("a.status", $form['filter_status']);
+				// $this->db->like("a.departement_sub_id", $form['filter_departement_sub']);
+				$this->db->like("a.id", $form['filter_trainee_name']);
+				// $this->db->like("a.status", $form['filter_status']);
 				$this->db->order_by('a.name', 'ASC');
 				$records = $this->db->get()->result_array();
+
+				if(empty($records)) {
+					die('<h3 style="color:red;">DATA NOT FOUND</h3>');
+				}
 
 				$header = "<tr><th width='20' rowSpan='2'>No</th>";
 //				for ($i = 0; $i < count($form['filter_column']); $i++) {
 //					$header .= "<th>" . strtoupper(strtr($form['filter_column'][$i], "_", " ")) . "</th>";
 //				}
 				$header .= "<th width='180' rowSpan='2'>Training Name</th>";
-				$header .= "<th width='180' rowSpan='2'>Trainee Name</th>";
+				$header .= "<th width='180' rowSpan='2'>Trainer Name</th>";
 				$header .= "<th width='180' rowSpan='2'>Training Date</th>";
 				$header .= "<th width='180' rowSpan='2'>Location</th>";
 				$header .= "<th width='80' colSpan='2' style='text-align: center'>Score</th>";
@@ -126,7 +156,7 @@ class Trainee_Training_History extends CI_Controller {
                 </center><br><br><br>
                 <center>
                     <h3 style="margin:0;">Trainee Training History</h3>
-                    <p style="margin: 0">Period 2025-05-05 to 2025-06-05</p>
+                    <p style="margin: 0">Period '. $form['filter_from'] .' to '. $form['filter_to'] .'</p>
                 </center>
                 <br>
                 <div style="width: 100%; margin-left: 25px;">
@@ -134,27 +164,27 @@ class Trainee_Training_History extends CI_Controller {
 						<tr>
 							<td>Trainee Name</td>
 							<td>:</td>
-							<td>Fulan bin fulan</td>
+							<td>'.$records[0]['name'] .'</td>
 						</tr>
 						<tr>
 							<td>Employee ID</td>
 							<td>:</td>
-							<td>1234567890</td>
+							<td>'. $records[0]['number'].'</td>
 						</tr>
 						<tr>
 							<td>Position</td>
 							<td>:</td>
-							<td>Fulan bin fulan</td>
+							<td>'. $records[0]['position_name'].'</td>
 						</tr>
 						<tr>
 							<td>Departement</td>
 							<td>:</td>
-							<td>Programmer</td>
+							<td>'. $records[0]['departement_name'].'</td>
 						</tr>
 						<tr>
 							<td>Section</td>
 							<td>:</td>
-							<td>R & D</td>
+							<td>'. $records[0]['departement_sub_name'].'</td>
 						</tr>
 					</table>              	
 				</div>
@@ -165,32 +195,46 @@ class Trainee_Training_History extends CI_Controller {
 				$no = 1;
 				$content = "";
 				foreach ($records as $data) {
-					if ($data['status'] == 0) {
-						$status = "ACTIVE";
-						$style = "style='background: #82FF6C; text-align:center;'";
-					} else {
-						$status = "NON ACTIVE";
-						$style = "style='background: #FF796C; text-align:center;'";
+					$this->db->select("lta.trainingActivity as training_name, lth.trainer, ltd.test_date, ltd.score_pre_test, ltd.score_post_test, lfh.json_response as json_feedback_history");
+					$this->db->from('lnd_training_history lth');
+					$this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
+					$this->db->join('lnd_master_form_test lmft', "lth.test_id = lmft.id", "left");
+					$this->db->join('lnd_schedule_training lst', "lmft.training_name = lst.id", "left");
+					$this->db->join('lnd_training_activity lta', "lst.trainingName = lta.id", "left");
+					$this->db->join('lnd_feedback_history lfh', "lth.history_feedback_id = lfh.id", "left");
+					$this->db->where('lth.employee_id', $records[0]['employee_id']);
+					$this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
+					if (!empty($form['filter_trainer_name'])) {
+						$this->db->where('lth.trainer', $form['filter_trainer_name']);
 					}
 
-					$this->db->select('level');
-					$this->db->from('employee_educations');
-					$this->db->where('number', $data['number']);
-					$this->db->order_by('id', 'desc');
-					$employee_education = $this->db->get()->row();
+					if (!empty($form['filter_training_name'])) {
+						$this->db->where('lth.test_id', $form['filter_training_name']);
+					}
 
-					$content = "<tr>
-                                    <td>" . $no . "</td>";
-					for ($z = 0; $z < count($form['filter_column']); $z++) {
-						if($form['filter_column'][$z] == "education"){
-							$content .= "<td style='mso-number-format:\@;'>" . @$employee_education->level . "</td>";
-						}else{
-							$content .= "<td style='mso-number-format:\@;'>" . $data[$form['filter_column'][$z]] . "</td>";
+					$html .= 'lth.test_id'. $form['filter_training_name'];
+
+					$history_training = $this->db->get()->result_array();
+					if (count($history_training) > 0) {
+						foreach ($history_training as $traine) {
+							$content .= "<tr>
+											<td>" . $no . "</td>
+											<td style='mso-number-format:\@;width:100px'>" . htmlspecialchars($traine['training_name']) . "</td>
+											<td style='mso-number-format:\@;width:100px'>" . htmlspecialchars($traine['trainer']) . "</td>
+											<td style='mso-number-format:\@;width:100px'>" . htmlspecialchars($traine['test_date']) . "</td>
+											<td style='mso-number-format:\@;width:100px'>PT. PIRANTI TEKNIK INDONESIA</td>
+											<td style='mso-number-format:\@;width:100px'>".$traine['score_pre_test']." </td>
+											<td style='mso-number-format:\@;width:100px'>".$traine['score_post_test']." </td>
+										</tr>";
+							$no++;
 						}
+					} else {
+						$content .= "<tr>
+										<td colspan='7' style='text-align:center'>Data tidak ditemukan</td>
+									</tr>";
 					}
 
-					$content .= "   <td " . $style . ">" . $status . "</td>
-                                </tr>";
+					$content .= "</tr>";
 
 					$html .= $content;
 					$no++;
@@ -222,7 +266,7 @@ class Trainee_Training_History extends CI_Controller {
 				$html .= '</table>';
 				$html .= '</body></html>';
 				echo $html;
-			}
+			// }
 		}
 	}
 }

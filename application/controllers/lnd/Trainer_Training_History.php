@@ -42,8 +42,8 @@ class Trainer_Training_History extends CI_Controller {
 		if ($this->input->get()) {
 			$form = $this->input->get();
 
-			if (@$form['filter_column'][0] == "") {
-				die('<h3 style="color:red;">PLEASE CHOOSE DISPLAY COLUMN</h3>');
+			if (@$form['filter_employee']== "") {
+				die('<h3 style="color:red;">PLEASE CHOOSE TRAINER NAME</h3>');
 			} else {
 				$this->db->select("a.*, a.id as employee_id, (CASE
                                 WHEN CAST(a.date_expired AS CHAR) = '0000-00-00' THEN '-'
@@ -75,13 +75,17 @@ class Trainer_Training_History extends CI_Controller {
 				$this->db->join('maritals k', 'k.id = a.marital_id', 'left');
 				$this->db->join('religions l', 'l.id = a.religion_id', 'left');
 				$this->db->where('a.deleted', 0);
-				$this->db->like("a.division_id", $form['filter_division']);
+				// $this->db->like("a.division_id", $form['filter_division']);
 				$this->db->like("a.departement_id", $form['filter_departement']);
-				$this->db->like("a.departement_sub_id", $form['filter_departement_sub']);
+				// $this->db->like("a.departement_sub_id", $form['filter_departement_sub']);
 				$this->db->like("a.id", $form['filter_employee']);
-				$this->db->like("a.status", $form['filter_status']);
+				// $this->db->like("a.status", $form['filter_status']);
 				$this->db->order_by('a.name', 'ASC');
 				$records = $this->db->get()->result_array();
+
+				if(empty($records)) {
+					die('<h3 style="color:red;">DATA NOT FOUND</h3>');
+				}
 
 				log_message('debug', 'Records data history: ' . json_encode($records));
 				$header = "<tr><th width='20' rowSpan='2'>No</th>";
@@ -125,7 +129,7 @@ class Trainer_Training_History extends CI_Controller {
                 </center><br><br><br>
                 <center>
                     <h3 style="margin:0;">Trainer Training History</h3>
-                    <p style="margin: 0">Period 2025-05-05 to 2025-06-05</p>
+                    <p style="margin: 0">Period '. $form['filter_from'] .' to '. $form['filter_to'] .'</p>
                 </center>
                 <br>
                 <div style="width: 100%; margin-left: 25px;">
@@ -138,7 +142,7 @@ class Trainer_Training_History extends CI_Controller {
 						<tr>
 							<td>Employee ID</td>
 							<td>:</td>
-							<td>'. $records[0]['employee_id'].'</td>
+							<td>'. $records[0]['number'].'</td>
 						</tr>
 						<tr>
 							<td>Position</td>
@@ -172,41 +176,53 @@ class Trainer_Training_History extends CI_Controller {
 						$style = "style='background: #FF796C; text-align:center;'";
 					}
 					
-					$this->db->select("lta.trainingActivity as training_name,  '' as test_date, ltd.score_pre_test, ltd.score_post_test, lfh.json_response as json_feedback_history");
+					$this->db->select("lta.trainingActivity as training_name, ltd.test_date, ltd.score_pre_test, ltd.score_post_test, lfh.json_response as json_feedback_history");
 					$this->db->from('lnd_training_history lth');
 					$this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
 					$this->db->join('lnd_master_form_test lmft', "lth.test_id = lmft.id", "left");
 					$this->db->join('lnd_schedule_training lst', "lmft.training_name = lst.id", "left");
 					$this->db->join('lnd_training_activity lta', "lst.trainingName = lta.id", "left");
 					$this->db->join('lnd_feedback_history lfh', "lth.history_feedback_id = lfh.id", "left");
-					$this->db->where('lth.employee_id', $records[0]['employee_id']);
+					$this->db->where('lth.trainer', $records[0]['name']);
+					$this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
+					if (!empty($form['filter_training_name'])) {
+						$this->db->where('lth.test_id', $form['filter_training_name']);
+					}
+
 					$history_training = $this->db->get()->result_array();
 					
-					foreach ($history_training as $training) {
-						$feedback_history = json_decode($training['json_feedback_history'], true);
-						
-						// Cek apakah feedback history valid
-						if (!empty($feedback_history) && isset($feedback_history['feedbackItems'])) {
-							$rowspan = count($feedback_history['feedbackItems']);
+					if (count($history_training) > 0) { 
+						foreach ($history_training as $training) {
+							$feedback_history = json_decode($training['json_feedback_history'], true);
 							
-							$content = "<tr>
-										<td>" . $no . "</td>
-										<td style='mso-number-format:\@;width:100px'>" . htmlspecialchars($training['training_name']) . "</td>
-										<td style='mso-number-format:\@;width:100px'>" . htmlspecialchars($training['test_date']) . "</td>
-										<td style='mso-number-format:\@;width:100px' colspan='2'>
-											<table style='width:100%; border:none;'>";
-												
-							foreach($feedback_history['feedbackItems'] as $itemsFeedback) {
-								$content .= "<tr>
-												<td style='width:50%; border:none; border-right:1px;'>" . htmlspecialchars($itemsFeedback['question']) . "</td>
-												<td style='width:50%; border:none;'>" . htmlspecialchars($itemsFeedback['point']) . "</td>
-											</tr>";
+							// Cek apakah feedback history valid
+							if (!empty($feedback_history) && isset($feedback_history['feedbackItems'])) {
+								$rowspan = count($feedback_history['feedbackItems']);
+								
+								$content = "<tr>
+											<td>" . $no . "</td>
+											<td style='mso-number-format:\@;width:100px'>" . htmlspecialchars($training['training_name']) . "</td>
+											<td style='mso-number-format:\@;width:100px'>" . htmlspecialchars($training['test_date']) . "</td>
+											<td style='mso-number-format:\@;width:100px' colspan='2'>
+												<table style='width:100%; border:none;'>";
+													
+								foreach($feedback_history['feedbackItems'] as $itemsFeedback) {
+									$content .= "<tr>
+													<td style='width:50%; border:none; border-right:1px;'>" . htmlspecialchars($itemsFeedback['question']) . "</td>
+													<td style='width:50%; border:none;'>" . htmlspecialchars($itemsFeedback['point']) . "</td>
+												</tr>";
+								}
+								
+								$content .= "</table></td></tr>";
+								$no++;
+								$html .= $content;
 							}
-							
-							$content .= "</table></td></tr>";
-							$no++;
-							$html .= $content;
 						}
+					}
+					else {
+						$html .= "<tr>
+										<td colspan='7' style='text-align:center'>Data tidak ditemukan</td>
+									</tr>";
 					}
 
 
