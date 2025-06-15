@@ -402,11 +402,27 @@
                 {field: '', colspan:2, title:'Updated', width:80, align: 'center'},
                 {field: '', colspan:2, title:'Approved', width:80, align: 'center'},
             ],[
-                {field: 'statusApproval', title:'Approval', width:100, align: 'center', 
+                {field: 'statusApproval', title:'Approval', width:100, align: 'center',
                     formatter: function(value, row, index) {
-                        if(value === '0') return 'Waiting Approval Bu Fatma';
-                        if(value === '1') return 'Waiting Approval Bapak Goesly';
-                        if(value === '2') return 'Waiting Approval Bapak Kinenta';
+						let approverName = row.approverName;
+						let gender = row.gender;
+						let inputterName = row.inputter;
+                        if(value === '0') {
+							const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Bapak ' + approverName : 'Ibu ' + approverName);
+							return '<div style="background-color:green;color:white;padding:5px;border-radius:5px;">' + label + '</div>';
+						}
+						if(value === '1') {
+							const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Bapak ' + approverName : 'Ibu ' + approverName);
+							return '<div style="background-color:green;color:white;padding:5px;border-radius:5px;">' + label + '</div>';
+						}
+						if(value === '2') {
+							const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Bapak ' + approverName : 'Ibu ' + approverName);
+							return '<div style="background-color:green;color:white;padding:5px;border-radius:5px;">' + label + '</div>';
+						}
+						if(value === '-1') {
+							const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Bapak ' + inputterName : 'Ibu ' + inputterName);
+							return '<div style="background-color:red;color:white;padding:5px;border-radius:5px;">' + label + '</div>';
+						}
                         return '-';
                     }
                 },

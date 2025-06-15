@@ -96,4 +96,27 @@ class RequestTrainingModel extends CI_Model {
             mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
         );
     }
+
+	public function get_detail_data_history_approval($id) {
+		$query = $this->db->get_where('lnd_request_training_approvals_history', ['trainingRequestId' => $id]);
+
+		if($query->num_rows() > 0) {
+			return $query->row_array();
+		}
+
+		return null;
+	}
+
+	public function update_data_request_training_history($id, $data) {
+		$this->db->where('id', $id);
+		$data['approved_date'] = date('Y-m-d H:i:s');
+
+		$this->db->update('lnd_request_training_approvals_history', $data);
+
+		$query = $this->db->limit(1)->get('lnd_request_training_approvals_history');
+
+		$record = $query->row();
+
+		return $record;
+	}
 }

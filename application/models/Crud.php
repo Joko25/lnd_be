@@ -292,8 +292,8 @@ class Crud extends CI_Model
         $query = $this->db->query("DESCRIBE $table");
         $fields = $query->result_array();
 
-        $user = $this->read('users', [], ["username" => $this->session->username]);
-        $approval = $this->read('approvals', [], ["table_name" => $table, "departement_id" => @$user->departement_id]);
+//        $user = $this->read('users', [], ["username" => $this->session->username]);
+        $approval = $this->read('approvals', [], ["table_name" => $table]);
 
         $fieldExists = false;
         foreach ($fields as $field) {
@@ -309,7 +309,7 @@ class Crud extends CI_Model
                     $idReference => $idReferenceValue,
                     "approved" => 1,
                     "approved_to" => $approval->user_approval_1,
-                    "approved_by" => $this->session->username,
+                    "approved_by" => $approval->user_approval_1,
                     "approved_date" => date('Y-m-d H:i:s'),
                 ];
 

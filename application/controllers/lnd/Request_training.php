@@ -55,11 +55,15 @@ class Request_training extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, a.status as statusTraining, a.status as statusApproval, rth.approved_by, rth.approved_date, COALESCE(e.name, a.trainer_name) as trainerName');
+        $this->db->select('a.*, a.status as statusTraining, rth.approved as statusApproval, rth.approved_by, rth.approved_date, COALESCE(e.name, a.trainer_name) as trainerName, employeeApprover.gender, u.name as approverName, userReject.name as inputter');
         $this->db->from('lnd_request_training a');
-        $this->db->join('lnd_request_training_approvals_history rth', 'a.id = rth.trainingRequestId', 'left');
+        $this->db->join('lnd_request_training_approvals_history rth', 'a.requestTrainingId = rth.trainingRequestId', 'left');
         $this->db->join('employees e', 'a.trainer_name = e.id', 'left');
-        
+		$this->db->join('users u', 'rth.approved_to = u.username', 'left');
+		$this->db->join('employees employeeApprover', 'u.number = employeeApprover.number', 'left');
+		$this->db->join('users userReject', 'rth.approved_by = userReject.username', 'left');
+		$this->db->join('employees employeeReject', 'userReject.number = employeeReject.number', 'left');
+		$this->db->where('rth.status', 0);
         if (!empty($suggestTrainingDate)) {
             $this->db->where('a.suggestDateTraining', $suggestTrainingDate);
         }
@@ -75,6 +79,7 @@ class Request_training extends CI_Controller {
         if (!empty($departement)) {
             $this->db->like('a.id', $departement);
         }
+		$this->db->group_by('a.id');
         $this->db->stop_cache(); // Stop caching the query
         
         // Hitung total data (tanpa limit dan offset)
@@ -158,9 +163,18 @@ class Request_training extends CI_Controller {
                     $data['attachment'] = $attachment;
                 }
             }
-
+			$dataRequestTrainingExisting = $this->RequestTrainingModel->get_detail_data($id);
+			if(!empty($dataRequestTrainingExisting)) {
+				$dataApprovalHistoryExisting = $this->RequestTrainingModel->get_detail_data_history_approval($dataRequestTrainingExisting['requestTrainingId']);
+				if(!empty($dataApprovalHistoryExisting) && $dataApprovalHistoryExisting['status'] == -1) {
+					$dataApprovalHistoryExisting['status'] = 0;
+					$resUpdateHistory = $this->RequestTrainingModel->update_data_request_training_history($dataApprovalHistoryExisting['id'], $dataApprovalHistoryExisting);
+				}
+			}
             $dataTemp = $this->RequestTrainingModel->update_data($id, $data);
-            $this->response->send(ResponseStatus::SUCCESS, $dataTemp, 'Request Training updated successfully');
+			if(!empty($dataTemp) && !empty($resUpdateHistory)) {
+            	$this->response->send(ResponseStatus::SUCCESS, $dataTemp, 'Request Training updated successfully');
+			}
         } else {
             $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Request Training updated failed.');
         }

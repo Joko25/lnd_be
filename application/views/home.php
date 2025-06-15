@@ -1523,8 +1523,8 @@
 							align: 'center',
 							title: "Action",
 							formatter: function(val, row) {
-								var approve = "approve('" + row.id + "','" + table + "')";
-								var disapprove = "disapprove('" + row.id + "','" + table + "')";
+								var approve = "approveLnd('" + row.approvalHistoryId + "','" + table + "')";
+								var disapprove = "disapproveLnd('" + row.approvalHistoryId + "','" + table + "')";
 								var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
 								var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
 								return a + " " + b;
@@ -1650,10 +1650,49 @@
 		});
 	}
 
+	function approveLnd(id, tablename) {
+		$.messager.confirm('Warning', 'Are you sure you want to approve this data?', function(r) {
+			if (r) {
+				$.post('<?= base_url('approvals/approveLnd') ?>', {
+					id: id,
+					tablename: tablename
+				}, function(result) {
+					var result = eval('(' + result + ')');
+					if (result.theme == "success") {
+						toastr.success(result.message, result.title);
+						$("#dg_approval").datagrid("reload");
+					} else {
+						toastr.error(result.message, result.title);
+					}
+				});
+			}
+		});
+	}
+
 	function disapprove(id, tablename) {
 		$.messager.confirm('Warning', 'Are you sure you want to disapprove this data?', function(r) {
 			if (r) {
 				$.post('<?= base_url('approvals/disapprove') ?>', {
+					id: id,
+					tablename: tablename
+				}, function(result) {
+					var result = eval('(' + result + ')');
+
+					if (result.theme == "success") {
+						toastr.success(result.message, result.title);
+						$("#dg_approval").datagrid("reload");
+					} else {
+						toastr.error(result.message, result.title);
+					}
+				});
+			}
+		});
+	}
+
+	function disapproveLnd(id, tablename) {
+		$.messager.confirm('Warning', 'Are you sure you want to disapprove this data?', function(r) {
+			if (r) {
+				$.post('<?= base_url('approvals/disapproveLnd') ?>', {
 					id: id,
 					tablename: tablename
 				}, function(result) {
