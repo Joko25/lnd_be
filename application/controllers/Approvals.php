@@ -821,7 +821,7 @@ class Approvals extends CI_Controller
 			COALESCE(e.name, a.trainer_name) as trainerName'
 		);
 		$this->db->from('lnd_request_training a');
-		$this->db->join('lnd_request_training_approvals_history rth', 'a.requestTrainingId = rth.trainingRequestId', 'left');
+		$this->db->join('lnd_request_training_approvals_history rth', 'a.id = rth.trainingRequestId', 'left');
 		$this->db->join('employees e', 'a.trainer_name = e.id', 'left');
 		$this->db->where('rth.status', 0);
 		$this->db->where('rth.approved_to', $approved_to);

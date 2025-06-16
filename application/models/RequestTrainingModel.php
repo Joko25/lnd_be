@@ -26,7 +26,6 @@ class RequestTrainingModel extends CI_Model {
     public function insert_data($data) {
         $data['createdBy'] = $this->session->username;
         $data['createdTime'] = date('Y-m-d H:i:s');
-        $data['id'] = $this->uuid();
         $this->db->insert('lnd_request_training', $data);
 
         $query = $this->db->order_by('createdTime')->limit(1)->get('lnd_request_training');

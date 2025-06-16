@@ -55,15 +55,28 @@ class Request_training extends CI_Controller {
 
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, a.status as statusTraining, rth.approved as statusApproval, rth.approved_by, rth.approved_date, COALESCE(e.name, a.trainer_name) as trainerName, employeeApprover.gender, u.name as approverName, userReject.name as inputter');
+
+        // Menggunakan ANY_VALUE() untuk kolom-kolom dari JOINed tables
+        $this->db->select('
+            a.*,
+            a.status as statusTraining,
+            ANY_VALUE(rth.approved) as statusApproval,
+            ANY_VALUE(rth.approved_by) as approved_by,
+            ANY_VALUE(rth.approved_date) as approved_date,
+            COALESCE(ANY_VALUE(e.name), a.trainer_name) as trainerName,
+            ANY_VALUE(employeeApprover.gender) as gender,
+            ANY_VALUE(u.name) as approverName,
+            ANY_VALUE(userReject.name) as inputter
+        ');
         $this->db->from('lnd_request_training a');
-        $this->db->join('lnd_request_training_approvals_history rth', 'a.requestTrainingId = rth.trainingRequestId', 'left');
+        $this->db->join('lnd_request_training_approvals_history rth', 'a.id = rth.trainingRequestId', 'left');
         $this->db->join('employees e', 'a.trainer_name = e.id', 'left');
-		$this->db->join('users u', 'rth.approved_to = u.username', 'left');
-		$this->db->join('employees employeeApprover', 'u.number = employeeApprover.number', 'left');
-		$this->db->join('users userReject', 'rth.approved_by = userReject.username', 'left');
-		$this->db->join('employees employeeReject', 'userReject.number = employeeReject.number', 'left');
-		$this->db->where('rth.status', 0);
+        $this->db->join('users u', 'rth.approved_to = u.username', 'left');
+        $this->db->join('employees employeeApprover', 'u.number = employeeApprover.number', 'left');
+        $this->db->join('users userReject', 'rth.approved_by = userReject.username', 'left');
+        $this->db->join('employees employeeReject', 'userReject.number = employeeReject.number', 'left');
+        $this->db->where('rth.status', 0);
+
         if (!empty($suggestTrainingDate)) {
             $this->db->where('a.suggestDateTraining', $suggestTrainingDate);
         }
@@ -77,9 +90,10 @@ class Request_training extends CI_Controller {
             $this->db->like('a.reasons', $reasons);
         }
         if (!empty($departement)) {
-            $this->db->like('a.id', $departement);
+            $this->db->like('a.id', $departement); // Periksa apakah ini benar: `a.id` untuk departement
         }
-		$this->db->group_by('a.id');
+
+        $this->db->group_by('a.id'); // Group by a.id tetap dipertahankan
         $this->db->stop_cache(); // Stop caching the query
         
         // Hitung total data (tanpa limit dan offset)
@@ -126,6 +140,7 @@ class Request_training extends CI_Controller {
 
         $data = $this->input->post();
 		$idGenerateDateTemp = $this->crud->autoidPrifix('lnd_request_training', 'requestTrainingId', 'T');
+        $data['id'] = $this->uuid();
         $data['requestTrainingId'] = $idGenerateDateTemp;
 		if (!empty($_FILES['attachment']['name'])) {
             $attachment = $this->LndModel->upload_v2('attachment', ['jpg', 'pdf', 'jpeg', 'png', 'gif'], 'assets/document/request-training/');
@@ -136,7 +151,7 @@ class Request_training extends CI_Controller {
         if (!empty($data)) {
             // $this->idGenerateDate = $dataTemp->id;
             $dataTemp = $this->RequestTrainingModel->insert_data($data);
-            $approval = $this->crud->approvalsLnd('lnd_request_training_approvals_history', 'trainingRequestId', $data['requestTrainingId']);
+            $approval = $this->crud->approvalsLnd('lnd_request_training_approvals_history', 'trainingRequestId', $data['id']);
 
             if ($approval) {
                 log_message('error', 'Approval berhasil dibuat: ' . json_encode($approval));
@@ -328,4 +343,16 @@ class Request_training extends CI_Controller {
 		$this->db->flush_cache(); // Hapus cache query
 		echo json_encode($res);
 	}
+
+    private function uuid()
+    {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+        );
+    }
 }
