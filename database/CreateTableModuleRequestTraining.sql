@@ -34,6 +34,8 @@ CREATE TABLE lnd_request_training (
 									  trainerFees VARCHAR(30),
 									  status INT NOT NULL DEFAULT 0, -- Status dalam bentuk angka (Waiting, Approved, etc.)
 									  latestApprovalId CHAR(30) DEFAULT NULL, -- Foreign Key ke approval terbaru
+									  attachment TEXT,
+									  trainer_name VARCHAR(36),
 									  createdBy CHAR(30),
 									  createdTime DATETIME DEFAULT CURRENT_TIMESTAMP,
 									  updatedBy CHAR(30),

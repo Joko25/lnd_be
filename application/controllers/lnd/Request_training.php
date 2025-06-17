@@ -59,23 +59,60 @@ class Request_training extends CI_Controller {
         // Menggunakan ANY_VALUE() untuk kolom-kolom dari JOINed tables
         $this->db->select('
             a.*,
+            DATE_FORMAT(a.suggestDateTraining, "%Y-%m-%d") as suggestDate,
             a.status as statusTraining,
-            ANY_VALUE(rth.approved) as statusApproval,
-            ANY_VALUE(rth.approved_by) as approved_by,
-            ANY_VALUE(rth.approved_date) as approved_date,
-            COALESCE(ANY_VALUE(e.name), a.trainer_name) as trainerName,
-            ANY_VALUE(employeeApprover.gender) as gender,
-            ANY_VALUE(u.name) as approverName,
-            ANY_VALUE(userReject.name) as inputter
+            rth.status as statusApproval,
+            rth.approved as statusApproved,
+            rth.approval_data as approvedData,
+            rth.approved_by as approved_by,
+            rth.approved_date as approved_date,
+            COALESCE(e.name, a.trainer_name) as trainerName,
+            employeeApprover.gender as gender,
+            u.name as approverName,
+            userReject.name as inputter
         ');
+
         $this->db->from('lnd_request_training a');
-        $this->db->join('lnd_request_training_approvals_history rth', 'a.id = rth.trainingRequestId', 'left');
+
+        // --- Perubahan Utama untuk mengatasi masalah ONLY_FULL_GROUP_BY dan ANY_VALUE() ---
+        // Subquery untuk mendapatkan baris lnd_request_training_approvals_history terbaru/terpilih
+        // Ini akan mengambil satu baris rth untuk setiap a.requestTrainingId yang memenuhi kriteria status 0
+        $latest_approval_subquery = '(
+            SELECT
+                rth_inner.*
+            FROM
+                lnd_request_training_approvals_history rth_inner
+            INNER JOIN (
+                SELECT
+                    trainingRequestId,
+                    MAX(approved_date) AS max_approved_date,
+                    MAX(approved) AS max_approved_for_tiebreaker -- BARIS INI DIPERBAIKI: Menggunakan MAX(approved) sebagai tie-breaker
+                FROM
+                    lnd_request_training_approvals_history
+                GROUP BY
+                    trainingRequestId
+            ) AS latest_rth ON rth_inner.trainingRequestId = latest_rth.trainingRequestId
+                            AND rth_inner.approved_date = latest_rth.max_approved_date
+                            AND rth_inner.approved = latest_rth.max_approved_for_tiebreaker -- BARIS INI DIPERBAIKI: Menggunakan approved untuk kondisi tie-breaker
+        ) AS rth';
+
+        $this->db->join($latest_approval_subquery, 'a.requestTrainingId = rth.trainingRequestId', 'left');
+        // --- Akhir Perubahan Utama ---
+
+        // Join ke tabel employees untuk nama trainer
         $this->db->join('employees e', 'a.trainer_name = e.id', 'left');
+
+        // Join ke tabel users untuk detail approver
         $this->db->join('users u', 'rth.approved_to = u.username', 'left');
+
+        // Join ke tabel employees untuk gender approver
         $this->db->join('employees employeeApprover', 'u.number = employeeApprover.number', 'left');
+
+        // Join ke tabel users untuk detail inputter (yang sebelumnya userReject)
         $this->db->join('users userReject', 'rth.approved_by = userReject.username', 'left');
+
+        // Join ke tabel employees untuk detail employeeReject, jika diperlukan
         $this->db->join('employees employeeReject', 'userReject.number = employeeReject.number', 'left');
-        $this->db->where('rth.status', 0);
 
         if (!empty($suggestTrainingDate)) {
             $this->db->where('a.suggestDateTraining', $suggestTrainingDate);
@@ -90,10 +127,10 @@ class Request_training extends CI_Controller {
             $this->db->like('a.reasons', $reasons);
         }
         if (!empty($departement)) {
-            $this->db->like('a.id', $departement); // Periksa apakah ini benar: `a.id` untuk departement
+            $this->db->like('a.id', $departement);
         }
 
-        $this->db->group_by('a.id'); // Group by a.id tetap dipertahankan
+        // $this->db->group_by('a.id');
         $this->db->stop_cache(); // Stop caching the query
         
         // Hitung total data (tanpa limit dan offset)
@@ -144,6 +181,7 @@ class Request_training extends CI_Controller {
         $data['requestTrainingId'] = $idGenerateDateTemp;
 		if (!empty($_FILES['attachment']['name'])) {
             $attachment = $this->LndModel->upload_v2('attachment', ['jpg', 'pdf', 'jpeg', 'png', 'gif'], 'assets/document/request-training/');
+            log_message('debug', 'ATTACHMENT: ' . $attachment);
             if ($attachment) {
                 $data['attachment'] = $attachment;
             }
@@ -151,7 +189,7 @@ class Request_training extends CI_Controller {
         if (!empty($data)) {
             // $this->idGenerateDate = $dataTemp->id;
             $dataTemp = $this->RequestTrainingModel->insert_data($data);
-            $approval = $this->crud->approvalsLnd('lnd_request_training_approvals_history', 'trainingRequestId', $data['id']);
+            $approval = $this->crud->approvalsLnd('lnd_request_training_approvals_history', 'trainingRequestId', $data['requestTrainingId']);
 
             if ($approval) {
                 log_message('error', 'Approval berhasil dibuat: ' . json_encode($approval));
@@ -220,7 +258,7 @@ class Request_training extends CI_Controller {
         $trainingRequestId = $this->input->get('trainingRequestId', true); // Sanitize input GET
 
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('e.fullName, e.national_id, e.date_sign, e.position, e.departement, e.departement_subs');
+        $this->db->select('e.fullName, e.national_id, e.date_sign, e.position, e.departement, e.departement_subs, DATE_FORMAT(e.date_sign, "%Y-%m-%d") as join_date,');
         $this->db->from('lnd_request_training_trainee e');
         $this->db->where('e.trainingRequestId', $trainingRequestId);
         $this->db->stop_cache(); // Stop caching the query

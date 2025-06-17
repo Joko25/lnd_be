@@ -1690,11 +1690,12 @@
 	}
 
 	function disapproveLnd(id, tablename) {
-		$.messager.confirm('Warning', 'Are you sure you want to disapprove this data?', function(r) {
+		$.messager.prompt('Warning', 'Are you sure you want to disapprove this data? please fill remark', function(r) {
 			if (r) {
 				$.post('<?= base_url('approvals/disapproveLnd') ?>', {
 					id: id,
-					tablename: tablename
+					tablename: tablename,
+					remark: r
 				}, function(result) {
 					var result = eval('(' + result + ')');
 

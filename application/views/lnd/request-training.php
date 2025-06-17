@@ -369,7 +369,7 @@
                         {field: 'position', title: 'Position', width: 150, halign: 'left'},
                         {field: 'departement', title: 'Departement', width: 150, align: 'center'},
                         {field: 'departement_subs', title: 'Sub Departement', width: 150, align: 'center'},
-                        {field: 'date_sign', title: 'Join Date', width: 250, align: 'center'},
+                        {field: 'join_date', title: 'Join Date', width: 250, align: 'center'},
                     ]],
                     onResize: function() {
                         $('#dg').datagrid('fixDetailRowHeight', index);
@@ -387,7 +387,7 @@
                 {field: 'requestTrainingId', rowspan:'2', width:150, title:'Request Training ID', halign: 'center'},
                 {field: 'induction', rowspan:'2', width:280, title:'Induction', halign: 'center'},
                 {field: 'trainingActivities', rowspan:'2', width:180, title:'Training Activities', halign: 'center'},
-                {field: 'suggestDateTraining', rowspan:'2', width:150, title:'Suggest Date Training', halign: 'center'},
+                {field: 'suggestDate', rowspan:'2', width:150, title:'Suggest Date Training', halign: 'center'},
                 {field: 'reasons', rowspan:'2', width:150, title:'Reasons', halign: 'center'},
 				{field: 'trainer', rowspan:'2', width:100, title:'Trainer', halign: 'center'},
 				{field: 'trainerName', rowspan:'2', width:100, title:'Trainer Name', halign: 'center'},
@@ -402,35 +402,32 @@
                 {field: '', colspan:2, title:'Updated', width:80, align: 'center'},
                 {field: '', colspan:2, title:'Approved', width:80, align: 'center'},
             ],[
-                {field: 'statusApproval', title:'Approval', width:100, align: 'center',
+                {field: 'statusApproved', title:'Approval', width:100, align: 'center',
                     formatter: function(value, row, index) {
 						let approverName = row.approverName;
 						let gender = row.gender;
 						let inputterName = row.inputter;
-                        if(value === '0') {
-							const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Bapak ' + approverName : 'Ibu ' + approverName);
-							return '<div style="background-color:green;color:white;padding:5px;border-radius:5px;">' + label + '</div>';
-						}
-						if(value === '1') {
-							const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Bapak ' + approverName : 'Ibu ' + approverName);
-							return '<div style="background-color:green;color:white;padding:5px;border-radius:5px;">' + label + '</div>';
-						}
-						if(value === '2') {
-							const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Bapak ' + approverName : 'Ibu ' + approverName);
-							return '<div style="background-color:green;color:white;padding:5px;border-radius:5px;">' + label + '</div>';
-						}
-						if(value === '-1') {
-							const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Bapak ' + inputterName : 'Ibu ' + inputterName);
-							return '<div style="background-color:red;color:white;padding:5px;border-radius:5px;">' + label + '</div>';
-						}
+                        if(row.statusApproval == '-1') {
+                            return '<div style="color:black;padding:5px;"><b>Remark: ' + row.approvedData + ' </b></div>';
+                        }else {
+                            if(value === '-1') {
+                                const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Bapak ' + inputterName : 'Ibu ' + inputterName);
+                                return '<div style="background-color:red;color:white;padding:5px;border-radius:5px;">' + label + '</div>';
+                            }else{
+                                const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Bapak ' + approverName : 'Ibu ' + approverName);
+                                return '<div style="background-color:green;color:white;padding:5px;border-radius:5px;">' + label + '</div>';
+
+                            }
+                        }
                         return '-';
                     }
                 },
                 {field: 'statusTraining', title:'Training', width:150, align: 'center',
                     formatter: function(value, row, index) {
-                        if(value === '0') return 'Open';
-                        if(value === '1') return 'On Progress';
-                        if(value === '2') return 'Complete';
+                        if(row.statusApproval === '-1') return 'Pending';
+                        if(row.statusApproval === '0') return 'Open';
+                        if(row.statusApproval === '1') return 'On Progress';
+                        if(row.statusApproval === '2') return 'Complete';
                         return '-';
                     }
                 },
@@ -438,8 +435,18 @@
                 {field: 'createdTime', title:'Date', width:150, align: 'center'},
                 {field: 'updatedBy', title:'By', width:100, align: 'center'},
                 {field: 'updatedTime', title:'Date', width:150, align: 'center'},
-                {field: 'approved_by', title:'By', width:100, align: 'center'},
-                {field: 'approved_date', title:'Date', width:150, align: 'center'},
+                {field: 'approved_by', title:'By', width:100, align: 'center',
+                    formatter: function(value, row, index) {
+                        if(parseInt(row.statusApproved) > 1) return value;
+                        return '-';
+                    }
+                },
+                {field: 'approved_date', title:'Date', width:150, align: 'center',
+                    formatter: function(value, row, index) {
+                        if(parseInt(row.statusApproved) > 1) return value;
+                        return '-';
+                    }
+                },
             ]],
             toolbar: '#toolbar',
             pagination: true,
@@ -480,7 +487,6 @@
 						}
 
                         var rowForm = $('#dgTrainee').datagrid('getRows');
-                        console.log("#fromData", formData, rowForm);
                         
 
 						// Call with isFormData = true
