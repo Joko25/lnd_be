@@ -204,7 +204,7 @@ class FormTestModel extends CI_Model {
                 'type_training' => $data['type_training'],
                 'json_response' => $data['json_response_detail'] ?? null, // Ambil dari combined data
                 'grade'         => $data['grade'] ?? null,
-                'date_test'         => $data['date_test'] ?? null,
+                'date_test'         => $data['test_date'] ?? null,
                 'type_training'     => $data['type_training'], // Menggunakan type_training yang sama
                 'json_result'       => $data['json_result_history'] ?? null, // Ambil dari combined data
                 'score_pre_test'    => $data['score_pre_test'] ?? null,

@@ -503,7 +503,12 @@
             jsonData = JSON.parse(window.originalQuestionJson.json_question);
             result = evaluateTest(jsonData, '#preTestContainer');
         }else{
-            jsonData = JSON.parse(window.originalQuestionJson.json_postquestion);
+            let data = <?php echo json_encode($data); ?>;
+            if(data.question_type === 'SAME') {
+                jsonData = JSON.parse(window.originalQuestionJson.json_question);
+            }else{
+                jsonData = JSON.parse(window.originalQuestionJson.json_postquestion);
+            }
             result = evaluateTest(jsonData, '#postTestContainer');
         }
         
@@ -517,10 +522,11 @@
             json_response_detail: JSON.stringify(jsonData),
             grade: result.totalPoint,
             test_date: $('#trainingDate').datebox('getValue'),
+            test_completed_date: testType === 'POST_TEST' ? $('#trainingDate').datebox('getValue'): null,
             trainer: $('#trainerName').textbox('getValue'),
             json_result_history: JSON.stringify(result.userAnswers),
-            score_pre_test: result.totalPoint,
-            score_post_test: typeof testType === 'POST_TEST' ? result.totalPoint : null,
+            score_pre_test: testType === 'PRE_TEST' ? result.totalPoint : null,
+            score_post_test: testType === 'POST_TEST' ? result.totalPoint : null,
             history_feedback_id: typeof testType === 'POST_TEST' ? window.feedbackResult.feedbackItems[0].id : null,
             createdBy: $("#employeeName").textbox('getValue')
         };
@@ -622,7 +628,13 @@
         $("#resultContainer").show();
         $("#titleContainer").hide();
         if(testType === 'POST_TEST') {
-            const jsonData = JSON.parse(window.originalQuestionJson.json_postquestion); // simpan json awal di variable global sebelumnya
+            let data = <?php echo json_encode($data); ?>;
+            let jsonData = '';
+            if(data.question_type === 'SAME') {
+                jsonData = JSON.parse(window.originalQuestionJson.json_question); 
+            }else{
+                jsonData = JSON.parse(window.originalQuestionJson.json_postquestion);
+            }
             const result = evaluateTest(jsonData, '#postTestContainer');
             renderTestResult(jsonData, result.userAnswers, '#resultContainer');
         } else{
@@ -810,7 +822,9 @@
             $("#postTestContainer").show();
             
             let data = <?php echo json_encode($data); ?>;
-            if(data.json_question) {
+            if(data.question_type === 'SAME') {
+                renderFormFromJson('#postTestContainer', data.json_question)
+            }else{
                 renderFormFromJson('#postTestContainer', data.json_postquestion)
             }
 

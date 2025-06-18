@@ -176,28 +176,145 @@ class Trainer_Training_History extends CI_Controller {
 						$style = "style='background: #FF796C; text-align:center;'";
 					}
 					
-					$this->db->select("lta.trainingActivity as training_name, ltd.test_date, ltd.score_pre_test, ltd.score_post_test, lfh.json_response as json_feedback_history");
+					// $this->db->select("lta.trainingActivity as training_name, ltd.test_date, ltd.score_pre_test, ltd.score_post_test, lfh.json_response as json_feedback_history");
+					// $this->db->from('lnd_training_history lth');
+					// $this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
+					// $this->db->join('lnd_master_form_test lmft', "lth.test_id = lmft.id", "left");
+					// $this->db->join('lnd_schedule_training lst', "lmft.training_name = lst.id", "left");
+					// $this->db->join('lnd_training_activity lta', "lst.trainingName = lta.id", "left");
+					// $this->db->join('lnd_feedback_history lfh', "lth.history_feedback_id = lfh.id", "left");
+					// $this->db->where('lth.trainer', $records[0]['name']);
+					// $this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
+					// if (!empty($form['filter_training_name'])) {
+					// 	$this->db->where('lth.test_id', $form['filter_training_name']);
+					// }
+
+					// $history_training = $this->db->get()->result_array();
+
+					$this->db->select("
+						lta.trainingActivity AS training_name,
+						lta.induction,
+						MAX(lth.history_feedback_id) AS history_feedback_id, -- Menggunakan MAX karena tidak di GROUP BY
+						MAX(ltd.test_date) AS test_date,                     -- Menggunakan MAX
+						MAX(ltd.score_pre_test) AS score_pre_test,           -- Menggunakan MAX
+						MAX(ltd.score_post_test) AS score_post_test          -- Menggunakan MAX
+					");
+
 					$this->db->from('lnd_training_history lth');
 					$this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
 					$this->db->join('lnd_master_form_test lmft', "lth.test_id = lmft.id", "left");
 					$this->db->join('lnd_schedule_training lst', "lmft.training_name = lst.id", "left");
 					$this->db->join('lnd_training_activity lta', "lst.trainingName = lta.id", "left");
 					$this->db->join('lnd_feedback_history lfh', "lth.history_feedback_id = lfh.id", "left");
+
+					// Mengubah kondisi WHERE dari employee_id ke trainer
 					$this->db->where('lth.trainer', $records[0]['name']);
 					$this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
+
 					if (!empty($form['filter_training_name'])) {
 						$this->db->where('lth.test_id', $form['filter_training_name']);
 					}
 
-					$history_training = $this->db->get()->result_array();
+					// Mengelompokkan hasil berdasarkan training_name (lta.trainingActivity)
+					// Semua kolom SELECT lainnya yang tidak diagregasi harus ada di sini
+					$this->db->group_by('lta.trainingActivity');
+					$this->db->group_by('lta.induction');
+
+
+					// --- Perbaikan untuk error "No tables used" ---
+					// Hitung total data TANPA mereset query builder
+					// Parameter kedua 'FALSE' mencegah reset Active Record class
+					$totalRows = $this->db->count_all_results(null, FALSE);
+
+					// Mengurutkan hasil (ini harus setelah count_all_results jika Anda ingin menghitung sebelum order/limit)
+					$this->db->order_by('lta.trainingActivity'); // Mengurutkan berdasarkan nama pelatihan
+
+					// Jalankan query untuk mendapatkan data aktual
+					$query = $this->db->get();
+
+					// Ambil hasil
+					$history_training = $query->result_array(); // atau $query->result() untuk objek
 					
 					if (count($history_training) > 0) { 
 						foreach ($history_training as $training) {
-							$feedback_history = json_decode($training['json_feedback_history'], true);
+							// $feedback_history = json_decode($training['json_feedback_history'], true);
 							
 							// Cek apakah feedback history valid
-							if (!empty($feedback_history) && isset($feedback_history['feedbackItems'])) {
-								$rowspan = count($feedback_history['feedbackItems']);
+							// if (!empty($feedback_history) && isset($feedback_history['feedbackItems'])) {
+								// $rowspan = count($feedback_history['feedbackItems']);
+
+								if (!empty($training['history_feedback_id'])) {
+									$feedback_query = $this->db->select('json_response')
+															   ->from('lnd_training_history a')
+															   ->join('lnd_feedback_history b', "a.history_feedback_id = b.id", "left")
+															   ->where('a.trainer', $records[0]['name'])
+															   ->get();
+									$feedback_result = $feedback_query->result_array();
+
+									// Inisialisasi array untuk menyimpan data per question
+									$question_data = array();
+
+									// Loop melalui setiap feedback result
+									foreach ($feedback_result as $feedback_data) {
+										if (!empty($feedback_data['json_response'])) {
+											// Decode JSON response
+											$feedback_history = json_decode($feedback_data['json_response'], true);
+											
+											// Cek apakah feedbackItems ada dan valid
+											if (isset($feedback_history['feedbackItems']) && is_array($feedback_history['feedbackItems'])) {
+												// Loop melalui setiap feedback item
+												foreach ($feedback_history['feedbackItems'] as $item) {
+													if (isset($item['question']) && isset($item['point']) && is_numeric($item['point'])) {
+														$question = $item['question'];
+														
+														// Inisialisasi data question jika belum ada
+														if (!isset($question_data[$question])) {
+															$question_data[$question] = array(
+																'points' => array(),
+																'count' => 0
+															);
+														}
+														
+														// Tambahkan point ke array
+														$question_data[$question]['points'][] = $item['point'];
+														$question_data[$question]['count']++;
+													}
+												}
+											}
+										}
+									}
+
+									// Hitung rata-rata untuk setiap question dan buat JSON result
+									$result_feedback = array();
+									foreach ($question_data as $question => $data) {
+										$average_score = ($data['count'] > 0) ? round(array_sum($data['points']) / $data['count'], 2) : 0;
+										
+										// Tentukan feedbackText berdasarkan rata-rata
+										$feedbackText = '';
+										if ($average_score <= 4) {
+											$feedbackText = 'Kurang Baik';
+										} elseif ($average_score <= 6) {
+											$feedbackText = 'Cukup';
+										} elseif ($average_score <= 8) {
+											$feedbackText = 'Baik';
+										} elseif ($average_score < 10) {
+											$feedbackText = 'Baik Sekali';
+										} else {
+											$feedbackText = 'Sangat Baik';
+										}
+										
+										$result_feedback[] = array(
+											'question' => $question,
+											'scoreAverage' => $average_score,
+											'feedbackText' => $feedbackText
+										);
+									}
+
+									// Debug: print hasil dalam format JSON
+									// echo "Hasil rata-rata feedback:<br>";
+									// echo json_encode($result_feedback, JSON_PRETTY_PRINT);
+									// echo "<br><br>";
+								}
 								
 								$content = "<tr>
 											<td>" . $no . "</td>
@@ -205,18 +322,28 @@ class Trainer_Training_History extends CI_Controller {
 											<td style='mso-number-format:\@;width:100px'>" . htmlspecialchars($training['test_date']) . "</td>
 											<td style='mso-number-format:\@;width:100px' colspan='2'>
 												<table style='width:100%; border:none;'>";
-													
-								foreach($feedback_history['feedbackItems'] as $itemsFeedback) {
-									$content .= "<tr>
-													<td style='width:50%; border:none; border-right:1px;'>" . htmlspecialchars($itemsFeedback['question']) . "</td>
-													<td style='width:50%; border:none;'>" . htmlspecialchars($itemsFeedback['point']) . "</td>
-												</tr>";
+								if (isset($result_feedback) && is_array($result_feedback)) {
+									foreach($result_feedback as $itemsFeedback) {
+										$content .= "<tr>
+														<td style='width:50%; border:none; border-right:1px solid #ccc;'>".htmlspecialchars($itemsFeedback['question'])."</td>
+														<td style='width:50%; border:none;'>".htmlspecialchars($itemsFeedback['scoreAverage'])."</td>
+													</tr>";
+									}
+								} else {
+									$content .= "<tr><td colspan='2'>No detailed feedback available.</td></tr>";
 								}
+													
+								// foreach($feedback_history['feedbackItems'] as $itemsFeedback) {
+								// 	$content .= "<tr>
+								// 					<td style='width:50%; border:none; border-right:1px;'> </td>
+								// 					<td style='width:50%; border:none;'></td>
+								// 				</tr>";
+								// // }
 								
 								$content .= "</table></td></tr>";
 								$no++;
 								$html .= $content;
-							}
+							// }
 						}
 					}
 					else {

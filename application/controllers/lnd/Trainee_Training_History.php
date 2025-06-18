@@ -68,9 +68,9 @@ class Trainee_Training_History extends CI_Controller {
 		if ($this->input->get()) {
 			$form = $this->input->get();
 
-			// if (@$form['filter_column'][0] == "") {
-			// 	die('<h3 style="color:red;">PLEASE CHOOSE DISPLAY COLUMN</h3>');
-			// } else {
+			if (@$form['filter_trainee_name'] == "") {
+				die('<h3 style="color:red;">PLEASE CHOOSE TRAINEE NAME</h3>');
+			} else {
 				$this->db->select("a.*, a.id as employee_id,
                         (CASE
                                 WHEN CAST(a.date_expired AS CHAR) = '0000-00-00' THEN '-'
@@ -195,15 +195,47 @@ class Trainee_Training_History extends CI_Controller {
 				$no = 1;
 				$content = "";
 				foreach ($records as $data) {
-					$this->db->select("lta.trainingActivity as training_name, lth.trainer, ltd.test_date, ltd.score_pre_test, ltd.score_post_test, lfh.json_response as json_feedback_history");
+					// $this->db->select("lta.trainingActivity as training_name, lth.trainer, ltd.test_date, ltd.score_pre_test, ltd.score_post_test, lfh.json_response as json_feedback_history");
+					// $this->db->from('lnd_training_history lth');
+					// $this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
+					// $this->db->join('lnd_master_form_test lmft', "lth.test_id = lmft.id", "left");
+					// $this->db->join('lnd_schedule_training lst', "lmft.training_name = lst.id", "left");
+					// $this->db->join('lnd_training_activity lta', "lst.trainingName = lta.id", "left");
+					// $this->db->join('lnd_feedback_history lfh', "lth.history_feedback_id = lfh.id", "left");
+					// $this->db->where('lth.employee_id', $records[0]['employee_id']);
+					// $this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
+					// if (!empty($form['filter_trainer_name'])) {
+					// 	$this->db->where('lth.trainer', $form['filter_trainer_name']);
+					// }
+
+					// if (!empty($form['filter_training_name'])) {
+					// 	$this->db->where('lth.test_id', $form['filter_training_name']);
+					// }
+
+					// $history_training = $this->db->get()->result_array();
+
+					$this->db->select("
+						lta.trainingActivity AS training_name,
+						lth.trainer,
+						MAX(ltd.score_pre_test) AS score_pre_test,
+						MAX(ltd.score_post_test) AS score_post_test,
+						MAX(ltd.test_date) AS test_date,
+						MAX(ltd.test_date) AS completed_date,
+						lfh.json_response AS json_feedback_history
+					");
+
 					$this->db->from('lnd_training_history lth');
 					$this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
 					$this->db->join('lnd_master_form_test lmft', "lth.test_id = lmft.id", "left");
 					$this->db->join('lnd_schedule_training lst', "lmft.training_name = lst.id", "left");
 					$this->db->join('lnd_training_activity lta', "lst.trainingName = lta.id", "left");
 					$this->db->join('lnd_feedback_history lfh', "lth.history_feedback_id = lfh.id", "left");
+
+					// $this->db->where('lth.employee_id', $employee_id);
+					// $this->db->where("DATE(ltd.test_date) BETWEEN '".$filter_from."' AND '".$filter_to."'");
 					$this->db->where('lth.employee_id', $records[0]['employee_id']);
 					$this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
+
 					if (!empty($form['filter_trainer_name'])) {
 						$this->db->where('lth.trainer', $form['filter_trainer_name']);
 					}
@@ -212,9 +244,26 @@ class Trainee_Training_History extends CI_Controller {
 						$this->db->where('lth.test_id', $form['filter_training_name']);
 					}
 
-					$html .= 'lth.test_id'. $form['filter_training_name'];
+					// Mengelompokkan hasil untuk agregasi skor dan tanggal
+					$this->db->group_by('lth.id');
+					$this->db->group_by('lta.trainingActivity');
+					$this->db->group_by('lth.trainer');
+					$this->db->group_by('lfh.json_response');
 
-					$history_training = $this->db->get()->result_array();
+					// --- Perbaikan untuk error "No tables used" ---
+					// Hitung total data TANPA mereset query builder
+					// Parameter kedua 'FALSE' mencegah reset Active Record class
+					$totalRows = $this->db->count_all_results(null, FALSE);
+
+					// Mengurutkan hasil (ini harus setelah count_all_results jika Anda ingin menghitung sebelum order/limit)
+					$this->db->order_by('lth.id');
+
+					// Jalankan query untuk mendapatkan data aktual
+					$query = $this->db->get();
+
+					// Ambil hasil
+					// $result = $query->result_array(); // atau $query->result() untuk objek
+					$history_training = $query->result_array(); //$this->db->get()->result_array();
 					if (count($history_training) > 0) {
 						foreach ($history_training as $traine) {
 							$content .= "<tr>
@@ -254,19 +303,19 @@ class Trainee_Training_History extends CI_Controller {
 						</tr>
 						<tr>
 							<td>Achmad Goesly</td>
-							<td>Ayudya W. Traya</td>
-							<td>Fatma Nuraida</td>
+							<td>Fajar Budi P.</td>
+							<td>Susi Yulia</td>
 						</tr>
 						<tr>
 							<td>Manager HRD & GA</td>
-							<td>Asst. Manager HRD & GA</td>
+							<td>Asst. Manager HRD &GA</td>
 							<td>Leader LnD</td>
 						</tr>
 						";
 				$html .= '</table>';
 				$html .= '</body></html>';
 				echo $html;
-			// }
+			}
 		}
 	}
 }

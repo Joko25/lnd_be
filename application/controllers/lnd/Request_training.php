@@ -151,6 +151,42 @@ class Request_training extends CI_Controller {
         echo json_encode($result);
     }
 
+    public function history_approval() {
+        // Ambil parameter dari GET request
+        $trainingRequestId = $this->input->get('trainingRequestId');
+        
+        // Validasi parameter
+        if (empty($trainingRequestId)) {
+            echo json_encode([
+                'total' => 0,
+                'rows' => []
+            ]);
+            return;
+        }
+
+        // Query untuk mengambil data history approval
+        $this->db->select('
+            rth.*,
+            u.name as approver_name
+        ');
+        $this->db->from('lnd_request_training_approvals_history rth');
+        $this->db->join('users u', 'rth.approved_by = u.username', 'left');
+        $this->db->where('rth.trainingRequestId', $trainingRequestId);
+        $this->db->where('rth.approved > 1');
+        $this->db->order_by('rth.approved_date', 'ASC');
+        
+        $records = $this->db->get()->result_array();
+        
+        // Mapping Data
+        $result = [
+            'total' => count($records),
+            'rows' => $records
+        ];
+
+        // Kirim sebagai JSON
+        echo json_encode($result);
+    }
+
     public function get_data() {
         $data = $this->RequestTrainingModel->get_all_data();
 

@@ -143,7 +143,7 @@ class Form_test extends CI_Controller {
         $this->form_validation->set_rules('score_post_test', 'Post-Test Score', 'numeric|less_than_equal_to[100]|greater_than_equal_to[0]');
         // $this->form_validation->set_rules('json_response_detail', 'JSON Response Detail', 'callback_is_json');
         // $this->form_validation->set_rules('json_result_history', 'JSON Result History', 'callback_is_json');
-        $this->form_validation->set_rules('test_completed_date', 'Test Completed Date', 'valid_datetime'); // Tambahkan jika Anda ingin validasi tanggal
+        // $this->form_validation->set_rules('test_completed_date', 'Test Completed Date', 'valid_datetime'); // Tambahkan jika Anda ingin validasi tanggal
 
         // Menjalankan validasi
         if ($this->form_validation->run() == FALSE) {

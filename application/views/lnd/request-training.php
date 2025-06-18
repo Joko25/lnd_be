@@ -141,6 +141,10 @@
     </div>
 </div>
 
+<div id="dlg_approval_history" class="easyui-dialog" title="History Approval" data-options="closed: true,modal:true" style="width: 500px; height: 500px; padding:10px; top: 20px;">
+    <table id="dgApprovalHistory" class="easyui-datagrid" style="width:100%;"></table>
+</div>
+
 <!-- PDF -->
 <iframe id="printout" src="<?= base_url('lnd/training_activity/print') ?>" style="width: 100%;" hidden></iframe>
 
@@ -342,9 +346,37 @@
     }
 
 
-
-
+    function showHistoryApproval(id) {
+        
+        $("#dgApprovalHistory").datagrid({
+            url: '<?= base_url('lnd/request_training/history_approval') ?>?trainingRequestId=' + id,
+            width: 500,
+            height: 400,
+            pagination: false,
+            rownumbers: true,
+            fit: true,
+            nowrap: false,
+            singleSelect: true,
+            loadMsg: 'Loading...',
+            columns: [[
+                {field: 'approver_name', title: 'Historical', width: 250, halign: 'center'},
+                {field: 'approved_date', title: 'Date Approved', width: 150, halign: 'center'}
+            ]],
+            onLoadSuccess: function(data) {
+                if (data.total === 0) {
+                    $(this).datagrid('appendRow', {
+                        requestTrainingId: 'No data available',
+                        induction: '-'
+                    });
+                }
+            }
+        });
+        $('#dlg_approval_history').dialog('open');
+        
+    }
+    
 	$(function() {
+        var id = '123'
         //SETTING DATAGRID EASYUI
         $('#dg').datagrid({
             url: '<?= base_url('lnd/request_training/datatables') ?>',
@@ -407,15 +439,18 @@
 						let approverName = row.approverName;
 						let gender = row.gender;
 						let inputterName = row.inputter;
+                        if(row.statusApproved === '4') {
+                            return `<div style="color:black;padding:5px;"><b><a href="#" onClick="showHistoryApproval('${row.requestTrainingId}')">Completed<a/></b></div>`;
+                        }
                         if(row.statusApproval == '-1') {
-                            return '<div style="color:black;padding:5px;"><b>Remark: ' + row.approvedData + ' </b></div>';
+                            return '<div style="background-color:orange;color:white;padding:5px;">Remark: ' + row.approvedData + ' </div>';
                         }else {
                             if(value === '-1') {
-                                const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Bapak ' + inputterName : 'Ibu ' + inputterName);
-                                return '<div style="background-color:red;color:white;padding:5px;border-radius:5px;">' + label + '</div>';
+                                const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Bpk. ' + inputterName : 'Ibu ' + inputterName);
+                                return '<div style="background-color:red;color:white;padding:5px;">' + label + '</div>';
                             }else{
-                                const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Bapak ' + approverName : 'Ibu ' + approverName);
-                                return '<div style="background-color:green;color:white;padding:5px;border-radius:5px;">' + label + '</div>';
+                                const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Bpk. ' + approverName : 'Ibu ' + approverName);
+                                return '<div style="background-color:green;color:white;padding:5px;">' + label + '</div>';
 
                             }
                         }
@@ -427,7 +462,7 @@
                         if(row.statusApproval === '-1') return 'Pending';
                         if(row.statusApproval === '0') return 'Open';
                         if(row.statusApproval === '1') return 'On Progress';
-                        if(row.statusApproval === '2') return 'Complete';
+                        if(row.statusApproval === '2' || row.statusApproved === '4') return 'Complete';
                         return '-';
                     }
                 },
