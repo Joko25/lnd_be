@@ -4,7 +4,8 @@
         <tr>
             <th rowspan="2" data-options="field:'departement_name',width:200,halign:'center'">Departement</th>
             <th rowspan="2" data-options="field:'departement_sub_name',width:200,halign:'center'">Departement Sub</th>
-            <th rowspan="2" data-options="field:'group_name',width:120,halign:'center'">Group</th>
+            <th rowspan="2" data-options="field:'position_name',width:160,halign:'center'">Position</th>
+            <th rowspan="2" data-options="field:'group_name',width:160,halign:'center'">Group</th>
             <th rowspan="2" data-options="field:'employee',width:100,halign:'center'">Employee</th>
             <th rowspan="2" data-options="field:'income',width:150,halign:'center', align:'right', formatter:numberformat">Pay Amount</th>
             <th rowspan="2" data-options="field:'print',width:100,halign:'center',formatter:FormatterFile"> Print</th>
@@ -52,6 +53,10 @@
                 <input style="width:60%;" id="filter_employee" class="easyui-combogrid">
             </div>
             <div class="fitem">
+                <span style="width:35%; display:inline-block;">Position</span>
+                <input style="width:60%;" id="filter_position" class="easyui-combobox">
+            </div>
+            <div class="fitem">
                 <span style="width:35%; display:inline-block;">Group</span>
                 <input style="width:60%;" id="filter_group" name="filter_group" class="easyui-combobox">
             </div>
@@ -70,6 +75,7 @@
     </div>
 </div>
 <script>
+
     function reload() {
         window.location.reload();
     }
@@ -90,9 +96,7 @@
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_group = $("#filter_group").combobox('getText');
-
-        // if (filter_from == "" || filter_to == "" || filter_division == "") {
-        //     toastr.warning("Please Choose Filter Date & Division");
+        var filter_position = $("#filter_position").combobox('getValue');
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Choose Filter Date");
         } else {
@@ -103,11 +107,12 @@
                 '&filter_to=' + filter_to +
                 '&filter_employee=' + filter_employee +
                 '&filter_group=' + window.btoa(filter_group);
-
+            if(filter_position && filter_position != '') {
+                url += '&filter_position=' + filter_position;
+            }
             $('#dg').datagrid({
                 url: '<?= base_url('report/summary_payrolls/datatables') ?>' + url
             });
-
             $("#printout_recap").attr('src', '<?= base_url('report/summary_payrolls/print_recap') ?>' + url);
         }
     }
@@ -117,7 +122,7 @@
         var filter_to = $("#filter_to").textbox('getValue');
         var filter_division = $("#filter_division").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
-
+        var filter_position = $("#filter_position").combobox('getValue');
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Choose Filter Date");
         } else {
@@ -128,8 +133,8 @@
                 '&filter_from=' + filter_from +
                 '&filter_to=' + filter_to +
                 '&filter_employee=' + filter_employee +
-                '&filter_group=' + filter_group;
-
+                '&filter_group=' + filter_group +
+                '&filter_position=' + filter_position;
             $("#printout").contents().find('html').html("<center><br><br><br><b style='font-size:20px;'>Please Wait...</b></center>");
             $("#printout").attr('src', '<?= base_url('report/summary_payrolls/print') ?>' + url);
         }
@@ -140,7 +145,7 @@
         var filter_to = $("#filter_to").textbox('getValue');
         var filter_division = $("#filter_division").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
-
+        var filter_position = $("#filter_position").combobox('getValue');
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Choose Filter Date");
         } else {
@@ -150,8 +155,8 @@
                 '&filter_from=' + filter_from +
                 '&filter_to=' + filter_to +
                 '&filter_employee=' + filter_employee +
-                '&filter_group=' + filter_group;
-
+                '&filter_group=' + filter_group +
+                '&filter_position=' + filter_position;
             window.location.assign('<?= base_url('report/summary_payrolls/print/excel') ?>' + url);
         }
     }
@@ -164,9 +169,7 @@
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_group = $("#filter_group").combobox('getText');
-
-        // if (filter_from == "" || filter_to == "" || filter_division == "") {
-        //     toastr.warning("Please Choose Filter Date & Division");
+        var filter_position = $("#filter_position").combobox('getValue');
         if (filter_from == "" || filter_to == "") {
             toastr.warning("Please Choose Filter Date");
         } else {
@@ -177,7 +180,9 @@
                 '&filter_to=' + filter_to +
                 '&filter_employee=' + filter_employee +
                 '&filter_group=' + btoa(filter_group);
-
+            if(filter_position && filter_position != '') {
+                url += '&filter_position=' + filter_position;
+            }
             window.location.assign('<?= base_url('report/summary_payrolls/print_detail/excel') ?>' + url);
         }
     }
@@ -190,11 +195,9 @@
         var filter_departement_sub = $("#filter_departement_sub").combobox('getValue');
         var filter_employee = $("#filter_employee").combogrid('getValue');
         var filter_group = $("#filter_group").combobox('getText');
-
-        // if (filter_from == "" || filter_to == "" || filter_division == "") {
-        //     toastr.warning("Please Choose Filter Date & Division");
+        var filter_position = $("#filter_position").combobox('getValue');
         if (filter_from == "" || filter_to == "") {
-            toastr.warning("Please Choose Filter Date");
+            toastr.warning("Please Choose Filter Date & Division");
         } else {
             var url = "?filter_division=" + filter_division +
                 "&filter_departement=" + filter_departement +
@@ -203,7 +206,9 @@
                 '&filter_to=' + filter_to +
                 '&filter_employee=' + filter_employee +
                 '&filter_group=' + window.btoa(filter_group);
-
+            if(filter_position && filter_position != '') {
+                url += '&filter_position=' + filter_position;
+            }
             window.location.assign('<?= base_url('report/summary_payrolls/print_recap/excel') ?>' + url);
         }
     }
@@ -233,7 +238,6 @@
                 $("#filter_to").textbox('setValue', row.finish);
             }
         });
-
         //Get Division
         $('#filter_division').combobox({
             url: '<?php echo base_url('employee/divisions/reads'); ?>',
@@ -331,6 +335,20 @@
             ],
         });
 
+        $("#filter_position").combobox({
+            url: '<?= base_url('employee/positions/reads') ?>',
+            valueField: 'id',
+            textField: 'name',
+            prompt: 'Choose All',
+            multiple: true,
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combobox('clear').combobox('textbox').focus();
+                }
+            }],
+        });
+
         $("#filter_group").combobox({
             url: '<?= base_url('admin/privilege_groups/reads') ?>',
             valueField: 'id',
@@ -375,7 +393,6 @@
         } else {
             $("#pdf_detail").linkbutton('disable');
         }
-
         return '<a href="#" onclick="' + linkPrint + '" class="btn btn-primary btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-eye"></i> View</a>';
     };
 
@@ -385,7 +402,6 @@
         } else {
             var linkPrint = "toastr.info('Still Checked Approval')";
         }
-
         return '<a href="#" onclick="' + linkPrint + '" class="btn btn-success btn-sm" style="pointer-events: auto; opacity:1; width:100%;"><i class="fa fa-file"></i> Download</a>';
     };
 
@@ -395,7 +411,6 @@
             currency: 'IDR',
             minimumFractionDigits: 0
         });
-
         return "<b>" + formatter.format(value) + "</b>";
     }
 
@@ -407,6 +422,7 @@
             return 'background: #FF5F5F; color:white;';
         }
     }
+    
     //FORMATTER STATUS
     function statusFormatter(value, row) {
         if (row.approved_to == "" || row.approved_to == null) {
