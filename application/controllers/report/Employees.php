@@ -56,7 +56,8 @@ class Employees extends CI_Controller
                         i.name as group_name,
                         j.name as source_name,
                         k.name as marital_name,
-                        l.name as religion_name");
+                        l.name as religion_name,
+                        a.job_type");
                 $this->db->from('employees a');
                 $this->db->join('notifications b', "a.id = b.table_id and b.table_name = 'employees'", 'left');
                 $this->db->join('divisions c', 'c.id = a.division_id');
@@ -116,7 +117,7 @@ class Employees extends CI_Controller
                     <h3 style="margin:0;">REPORT EMPLOYEE</h3>
                 </center>
                 <br>
-                
+
                 <table id="customers" border="1">';
                 $html .= $header;
 
@@ -142,6 +143,8 @@ class Employees extends CI_Controller
                     for ($z = 0; $z < count($form['filter_column']); $z++) {
                         if($form['filter_column'][$z] == "education"){
                             $content .= "<td style='mso-number-format:\@;'>" . @$employee_education->level . "</td>";
+                        }elseif($form['filter_column'][$z] == "job_type"){
+                            $content .= "<td style='mso-number-format:\@;'>" . ($data['job_type'] ? $data['job_type'] : '-') . "</td>";
                         }else{
                             $content .= "<td style='mso-number-format:\@;'>" . $data[$form['filter_column'][$z]] . "</td>";
                         }

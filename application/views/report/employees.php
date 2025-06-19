@@ -78,6 +78,7 @@
                             <option value="bank_name">Bank Name</option>
                             <option value="bank_branch">Bank Branch</option>
                             <option value="status_date">Status Date</option>
+                            <option value="job_type">Job Type</option>
                         </select>
                     </div>
                 </div>
