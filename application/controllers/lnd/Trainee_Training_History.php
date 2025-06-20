@@ -68,9 +68,9 @@ class Trainee_Training_History extends CI_Controller {
 		if ($this->input->get()) {
 			$form = $this->input->get();
 
-			if (@$form['filter_trainee_name'] == "") {
-				die('<h3 style="color:red;">PLEASE CHOOSE TRAINEE NAME</h3>');
-			} else {
+			// if (@$form['filter_trainee_name'] == "") {
+			// 	die('<h3 style="color:red;">PLEASE CHOOSE TRAINEE NAME</h3>');
+			// } else {
 				$this->db->select("a.*, a.id as employee_id,
                         (CASE
                                 WHEN CAST(a.date_expired AS CHAR) = '0000-00-00' THEN '-'
@@ -131,165 +131,154 @@ class Trainee_Training_History extends CI_Controller {
 				$this->db->select('*');
 				$this->db->from('config');
 				$config = $this->db->get()->row();
-
-				$html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}#approver {border-collapse: collapse;width: 50%;font-size: 10px;}#approver td, #approver th {border: 1px solid #ddd;padding: 2px;}#approver tr:nth-child(even){background-color: #f2f2f2;}#approver tr:hover {background-color: #ddd;}#approver th {padding-top: 2px;padding-bottom: 2px;text-align: center;color: black;}</style>
-                <style> .str{ mso-number-format:\@; } </style>
-                <body>
-                <center>
-                    <div style="float: left; font-size: 12px; text-align: left;">
-                        <table style="width: 100%;">
-                            <tr>
-                                <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
-                                    <img src="' . $config->favicon . '" width="30">
-                                </td>
-                                <td style="font-size: 14px; text-align: left; margin:2px;">
-                                    <b>' . $config->name . '</b><br>
-                                    <small>' . $config->description . '</small>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div style="float: right; font-size: 12px; text-align: right;">
-                        Print Date ' . date("d M Y H:i:s") . ' <br>
-                        Print By ' . $this->session->username . '  
-                    </div>
-                </center><br><br><br>
-                <center>
-                    <h3 style="margin:0;">Trainee Training History</h3>
-                    <p style="margin: 0">Period '. $form['filter_from'] .' to '. $form['filter_to'] .'</p>
-                </center>
-                <br>
-                <div style="width: 100%; margin-left: 25px;">
-					<table>
-						<tr>
-							<td>Trainee Name</td>
-							<td>:</td>
-							<td>'.$records[0]['name'] .'</td>
-						</tr>
-						<tr>
-							<td>Employee ID</td>
-							<td>:</td>
-							<td>'. $records[0]['number'].'</td>
-						</tr>
-						<tr>
-							<td>Position</td>
-							<td>:</td>
-							<td>'. $records[0]['position_name'].'</td>
-						</tr>
-						<tr>
-							<td>Departement</td>
-							<td>:</td>
-							<td>'. $records[0]['departement_name'].'</td>
-						</tr>
-						<tr>
-							<td>Section</td>
-							<td>:</td>
-							<td>'. $records[0]['departement_sub_name'].'</td>
-						</tr>
-					</table>              	
-				</div>
-				<br>
-                <table id="customers" border="1">';
-				$html .= $header;
-
-				$no = 1;
-				$content = "";
-				foreach ($records as $data) {
-					// $this->db->select("lta.trainingActivity as training_name, lth.trainer, ltd.test_date, ltd.score_pre_test, ltd.score_post_test, lfh.json_response as json_feedback_history");
-					// $this->db->from('lnd_training_history lth');
-					// $this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
-					// $this->db->join('lnd_master_form_test lmft', "lth.test_id = lmft.id", "left");
-					// $this->db->join('lnd_schedule_training lst', "lmft.training_name = lst.id", "left");
-					// $this->db->join('lnd_training_activity lta', "lst.trainingName = lta.id", "left");
-					// $this->db->join('lnd_feedback_history lfh', "lth.history_feedback_id = lfh.id", "left");
-					// $this->db->where('lth.employee_id', $records[0]['employee_id']);
-					// $this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
-					// if (!empty($form['filter_trainer_name'])) {
-					// 	$this->db->where('lth.trainer', $form['filter_trainer_name']);
-					// }
-
-					// if (!empty($form['filter_training_name'])) {
-					// 	$this->db->where('lth.test_id', $form['filter_training_name']);
-					// }
-
-					// $history_training = $this->db->get()->result_array();
-
-					$this->db->select("
-						lta.trainingActivity AS training_name,
-						lth.trainer,
-						MAX(ltd.score_pre_test) AS score_pre_test,
-						MAX(ltd.score_post_test) AS score_post_test,
-						MAX(ltd.test_date) AS test_date,
-						MAX(ltd.test_date) AS completed_date,
-						lfh.json_response AS json_feedback_history
-					");
-
-					$this->db->from('lnd_training_history lth');
-					$this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
-					$this->db->join('lnd_master_form_test lmft', "lth.test_id = lmft.id", "left");
-					$this->db->join('lnd_schedule_training lst', "lmft.training_name = lst.id", "left");
-					$this->db->join('lnd_training_activity lta', "lst.trainingName = lta.id", "left");
-					$this->db->join('lnd_feedback_history lfh', "lth.history_feedback_id = lfh.id", "left");
-
-					// $this->db->where('lth.employee_id', $employee_id);
-					// $this->db->where("DATE(ltd.test_date) BETWEEN '".$filter_from."' AND '".$filter_to."'");
-					$this->db->where('lth.employee_id', $records[0]['employee_id']);
-					$this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
-
-					if (!empty($form['filter_trainer_name'])) {
-						$this->db->where('lth.trainer', $form['filter_trainer_name']);
-					}
-
-					if (!empty($form['filter_training_name'])) {
-						$this->db->where('lth.test_id', $form['filter_training_name']);
-					}
-
-					// Mengelompokkan hasil untuk agregasi skor dan tanggal
-					$this->db->group_by('lth.id');
-					$this->db->group_by('lta.trainingActivity');
-					$this->db->group_by('lth.trainer');
-					$this->db->group_by('lfh.json_response');
-
-					// --- Perbaikan untuk error "No tables used" ---
-					// Hitung total data TANPA mereset query builder
-					// Parameter kedua 'FALSE' mencegah reset Active Record class
-					$totalRows = $this->db->count_all_results(null, FALSE);
-
-					// Mengurutkan hasil (ini harus setelah count_all_results jika Anda ingin menghitung sebelum order/limit)
-					$this->db->order_by('lth.id');
-
-					// Jalankan query untuk mendapatkan data aktual
-					$query = $this->db->get();
-
-					// Ambil hasil
-					// $result = $query->result_array(); // atau $query->result() untuk objek
-					$history_training = $query->result_array(); //$this->db->get()->result_array();
-					if (count($history_training) > 0) {
-						foreach ($history_training as $traine) {
-							$content .= "<tr>
-											<td>" . $no . "</td>
-											<td style='mso-number-format:\@;width:100px'>" . htmlspecialchars($traine['training_name']) . "</td>
-											<td style='mso-number-format:\@;width:100px'>" . htmlspecialchars($traine['trainer']) . "</td>
-											<td style='mso-number-format:\@;width:100px'>" . htmlspecialchars($traine['test_date']) . "</td>
-											<td style='mso-number-format:\@;width:100px'>PT. PIRANTI TEKNIK INDONESIA</td>
-											<td style='mso-number-format:\@;width:100px'>".$traine['score_pre_test']." </td>
-											<td style='mso-number-format:\@;width:100px'>".$traine['score_post_test']." </td>
-										</tr>";
+				$html = '';
+				
+				if($records) {
+					foreach ($records as $dataEmployee) {
+						# code...
+						$html .= '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}#approver {border-collapse: collapse;width: 50%;font-size: 10px;}#approver td, #approver th {border: 1px solid #ddd;padding: 2px;}#approver tr:nth-child(even){background-color: #f2f2f2;}#approver tr:hover {background-color: #ddd;}#approver th {padding-top: 2px;padding-bottom: 2px;text-align: center;color: black;}</style>
+						<style> .str{ mso-number-format:\@; } </style>
+						<body>
+						<center>
+							<div style="float: left; font-size: 12px; text-align: left;">
+								<table style="width: 100%;">
+									<tr>
+										<td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+											<img src="' . $config->favicon . '" width="30">
+										</td>
+										<td style="font-size: 14px; text-align: left; margin:2px;">
+											<b>' . $config->name . '</b><br>
+											<small>' . $config->description . '</small>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div style="float: right; font-size: 12px; text-align: right;">
+								Print Date ' . date("d M Y H:i:s") . ' <br>
+								Print By ' . $this->session->username . '  
+							</div>
+						</center><br><br><br>
+						<center>
+							<h3 style="margin:0;">Trainee Training History</h3>
+							<p style="margin: 0">Period '. $form['filter_from'] .' to '. $form['filter_to'] .'</p>
+						</center>
+						<br>
+						<div style="width: 100%; margin-left: 25px;">
+							<table>
+								<tr>
+									<td>Trainee Name</td>
+									<td>:</td>
+									<td>'.$dataEmployee['name'] .'</td>
+								</tr>
+								<tr>
+									<td>Employee ID</td>
+									<td>:</td>
+									<td>'. $dataEmployee['number'].'</td>
+								</tr>
+								<tr>
+									<td>Position</td>
+									<td>:</td>
+									<td>'. $dataEmployee['position_name'].'</td>
+								</tr>
+								<tr>
+									<td>Departement</td>
+									<td>:</td>
+									<td>'. $dataEmployee['departement_name'].'</td>
+								</tr>
+								<tr>
+									<td>Section</td>
+									<td>:</td>
+									<td>'. $dataEmployee['departement_sub_name'].'</td>
+								</tr>
+							</table>              	
+						</div>
+						<br>
+						<table id="customers" border="1">';
+						$html .= $header;
+		
+						$no = 1;
+						$content = "";
+						// foreach ($records as $data) {
+							$this->db->select("
+								lta.trainingActivity AS training_name,
+								lth.trainer,
+								MAX(ltd.score_pre_test) AS score_pre_test,
+								MAX(ltd.score_post_test) AS score_post_test,
+								MAX(ltd.test_date) AS test_date,
+								MAX(ltd.test_date) AS completed_date,
+								lfh.json_response AS json_feedback_history
+							");
+		
+							$this->db->from('lnd_training_history lth');
+							$this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
+							$this->db->join('lnd_master_form_test lmft', "lth.test_id = lmft.id", "left");
+							$this->db->join('lnd_schedule_training lst', "lmft.training_name = lst.id", "left");
+							$this->db->join('lnd_training_activity lta', "lst.trainingName = lta.id", "left");
+							$this->db->join('lnd_feedback_history lfh', "lth.history_feedback_id = lfh.id", "left");
+		
+							// $this->db->where('lth.employee_id', $employee_id);
+							// $this->db->where("DATE(ltd.test_date) BETWEEN '".$filter_from."' AND '".$filter_to."'");
+							$this->db->where('lth.employee_id', $dataEmployee['employee_id']);
+							$this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
+		
+							if (!empty($form['filter_trainer_name'])) {
+								$this->db->where('lth.trainer', $form['filter_trainer_name']);
+							}
+		
+							if (!empty($form['filter_training_name'])) {
+								$this->db->where('lth.test_id', $form['filter_training_name']);
+							}
+		
+							// Mengelompokkan hasil untuk agregasi skor dan tanggal
+							$this->db->group_by('lth.id');
+							$this->db->group_by('lta.trainingActivity');
+							$this->db->group_by('lth.trainer');
+							$this->db->group_by('lfh.json_response');
+		
+							// --- Perbaikan untuk error "No tables used" ---
+							// Hitung total data TANPA mereset query builder
+							// Parameter kedua 'FALSE' mencegah reset Active Record class
+							$totalRows = $this->db->count_all_results(null, FALSE);
+		
+							// Mengurutkan hasil (ini harus setelah count_all_results jika Anda ingin menghitung sebelum order/limit)
+							$this->db->order_by('lth.id');
+		
+							// Jalankan query untuk mendapatkan data aktual
+							$query = $this->db->get();
+		
+							// Ambil hasil
+							// $result = $query->result_array(); // atau $query->result() untuk objek
+							$history_training = $query->result_array(); //$this->db->get()->result_array();
+							if (count($history_training) > 0) {
+								foreach ($history_training as $traine) {
+									$content .= "<tr>
+													<td>" . $no . "</td>
+													<td style='mso-number-format:\@;width:100px'>" . htmlspecialchars($traine['training_name']) . "</td>
+													<td style='mso-number-format:\@;width:100px'>" . htmlspecialchars($traine['trainer']) . "</td>
+													<td style='mso-number-format:\@;width:100px'>" . htmlspecialchars($traine['test_date']) . "</td>
+													<td style='mso-number-format:\@;width:100px'>PT. PIRANTI TEKNIK INDONESIA</td>
+													<td style='mso-number-format:\@;width:100px'>".$traine['score_pre_test']." </td>
+													<td style='mso-number-format:\@;width:100px'>".$traine['score_post_test']." </td>
+												</tr>";
+									$no++;
+								}
+							} else {
+								$content .= "<tr>
+												<td colspan='7' style='text-align:center'>Data tidak ditemukan</td>
+											</tr>";
+							}
+		
+							$content .= "</tr>";
+		
+							$html .= $content;
 							$no++;
-						}
-					} else {
-						$content .= "<tr>
-										<td colspan='7' style='text-align:center'>Data tidak ditemukan</td>
-									</tr>";
+						// }
+		
+						$html .= '</table> <br> <br>';
 					}
-
-					$content .= "</tr>";
-
-					$html .= $content;
-					$no++;
 				}
 
-				$html .= '</table> <br> <br>';
+
 				$html .= '<table id="approver" width="20%" style="float: right; font-size: 12px; text-align: center;">';
 				$html .= "<tr>
 							<th>Disetujui</th>
@@ -313,9 +302,10 @@ class Trainee_Training_History extends CI_Controller {
 						</tr>
 						";
 				$html .= '</table>';
+				$html .= "<div style='height:350px;'></div>";
 				$html .= '</body></html>';
 				echo $html;
-			}
+			// }
 		}
 	}
 }
