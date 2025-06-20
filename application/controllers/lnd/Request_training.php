@@ -262,7 +262,9 @@ class Request_training extends CI_Controller {
 			}
             $dataTemp = $this->RequestTrainingModel->update_data($id, $data);
 			if(!empty($dataTemp) && !empty($resUpdateHistory)) {
-            	$this->response->send(ResponseStatus::SUCCESS, $dataTemp, 'Request Training updated successfully');
+            	$this->response->send(ResponseStatus::SUCCESS, $dataTemp, 'Request Training with update approval successfully');
+			} else {
+				$this->response->send(ResponseStatus::SUCCESS, $dataTemp, 'Request Training updated successfully');
 			}
         } else {
             $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Request Training updated failed.');
