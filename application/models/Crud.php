@@ -38,6 +38,43 @@ class Crud extends CI_Model
         return $autoid;
     }
 
+    function autoidCreatedTime($table)
+    {
+        $date = date("Ymdms");
+        $sql = $this->db->query("SELECT max(`createdTime`) as kode FROM $table WHERE createdTime like '%$date%'");
+        $row = $sql->row();
+        $kode = $row->kode;
+
+        if ($kode == NULL) {
+            $autoid        = $date . sprintf("%06s", $kode + 1);
+        } else {
+            $autoid        = (int) $kode + 1;
+        }
+
+        return $autoid;
+    }
+    function autoidPrifix($table, $id, $prefix)
+    {
+        $yearMonth = date("Ym"); // Format: YYYYMM
+        $sql = $this->db->query("SELECT MAX($id) as maxId FROM $table WHERE $id LIKE '$prefix-$yearMonth%'");
+        $row = $sql->row();
+        $maxId = $row->maxId;
+
+        if ($maxId == NULL) {
+            $newNumber = 1; // Mulai dari 0001 jika belum ada data
+        } else {
+            // Ambil 4 digit terakhir sebagai nomor urut
+            $lastNumber = (int) substr($maxId, -4);
+            $newNumber = $lastNumber + 1;
+        }
+
+        // Format ID menjadi PREFIX-YYYYMMXXXX (XXXX = 4 digit nomor urut)
+        $autoid = sprintf("%s-%s%04d", $prefix, $yearMonth, $newNumber);
+
+        return $autoid;
+    }
+
+
     function query($query)
     {
         $query = $this->db->query($query);
@@ -94,16 +131,25 @@ class Crud extends CI_Model
     function create($table, $values)
     {
         if ($this->session->username != "") {
-            $id = $this->autoid($table);
-            $data = array_merge($values, [
-                "id" => $id,
-                "created_by" => $this->session->username,
-                "created_date" => date('Y-m-d H:i:s')
-            ]);
+            if(substr($table, 0, 3) === 'lnd') {
+                $data = array_merge($values, [
+                    "createdBy" => $this->session->username,
+                    "createdTime" => date('Y-m-d H:i:s')
+                ]);    
+            } else {
+                $id = $this->autoid($table);
+                $data = array_merge($values, [
+                    "id" => $id,
+                    "created_by" => $this->session->username,
+                    "created_date" => date('Y-m-d H:i:s')
+                ]);
+            }
 
             if ($this->db->insert($table, $data)) {
                 $this->logs("Create", json_encode($data), $table);
-                $this->approvals($table, $id);
+                if(substr($table, 0, 3) !== 'lnd') {
+                    $this->approvals($table, $id);
+                }
                 return json_encode(array("title" => "Good Job", "message" => "Data Saved Successfully", "theme" => "success"));
             } else {
                 return log_message('error', 'There is an error in your system or data');
@@ -237,6 +283,38 @@ class Crud extends CI_Model
 
                 $this->db->where(["id" => $table_id]);
                 $this->db->update($table, $formApprove);
+            }
+        }
+    }
+
+    function approvalsLnd($table, $idReference, $idReferenceValue)
+    {
+        $query = $this->db->query("DESCRIBE $table");
+        $fields = $query->result_array();
+
+//        $user = $this->read('users', [], ["username" => $this->session->username]);
+        $approval = $this->read('approvals', [], ["table_name" => $table]);
+
+        $fieldExists = false;
+        foreach ($fields as $field) {
+            if ($field['Field'] == "approved") {
+                $fieldExists = true;
+                break;
+            }
+        }
+
+        if ($fieldExists) {
+            if (!empty($approval)) {
+                $formApprove = [
+                    $idReference => $idReferenceValue,
+                    "approved" => 1,
+                    "approved_to" => $approval->user_approval_1,
+                    "approved_by" => $approval->user_approval_1,
+                    "approved_date" => date('Y-m-d H:i:s'),
+                ];
+
+                // $this->db->where(["id" => $table_id]);
+                $this->db->insert($table, $formApprove);
             }
         }
     }
