@@ -87,7 +87,7 @@
                 
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Question Type</span>
-                    <select class="easyui-combobox" name="questionType" required="" style="width:60%;" data-options="onSelect: onTypeSelect, panelHeight:100">
+                    <select class="easyui-combobox" name="questionType" id="questionType" required="" style="width:60%;" data-options="onSelect: onTypeSelect, panelHeight:100">
                         <option value="DIFFERENT" selected>Pre-Test & Post Test is Different</option>
                         <option value="SAME">Pre-Test & Post Test is The Same</option>
                     </select>
@@ -240,14 +240,15 @@
     }
 
     function renderForm(data) {
+        
         $('#training_name').combogrid('setValue', data.training_name);
         $('#department').combogrid('setValue', data.department);
-        $('#questionType').combogrid('setValue', data.question_type);
+        $('#questionType').combobox('setValue', data.question_type);
         if(data.department === 'All Dept') {
             toggleDepartment(true);
             $('#allDept').checkbox('check');
         }
-
+        
         const questionJson = JSON.parse(data.json_question);
         questionJson.forEach((value, index) => {
             
