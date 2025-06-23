@@ -84,7 +84,9 @@
         fetch(url)
         .then(response => response.json())
         .then(response => {
-            if (response.code === 200) {
+            console.log("#resp", response);
+            
+            if (response.success) {
                 renderForm(response.data);
             } else {
                 alert("Gagal mengambil data.");

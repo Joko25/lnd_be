@@ -217,13 +217,19 @@ class Master_feedback extends CI_Controller {
     
 
     public function get_detail($id) {
+        
         $data = $this->MasterFeedbackModel->get_detail_data($id);
 
-        if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get data failed');
-        } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get data successfully');
-        } 
+        echo json_encode([
+            'success' => true,
+            'data' => $data
+        ]);
+
+        // if(empty($data)) {
+        //     $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get data failed');
+        // } else {
+        //     $this->response->send(ResponseStatus::SUCCESS, $data, 'Get data successfully');
+        // } 
     }
 
     public function delete_data($id) {
