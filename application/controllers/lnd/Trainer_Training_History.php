@@ -195,13 +195,15 @@ class Trainer_Training_History extends CI_Controller {
 
 						// $history_training = $this->db->get()->result_array();
 
+						// Ambil semua test_date, format ke yyyy-mm-dd, dan gabungkan jika test_date sama
+						// Perbaikan: history_feedback_id diambil dengan GROUP_CONCAT agar tidak error only_full_group_by
 						$this->db->select("
 							lta.trainingActivity AS training_name,
 							lta.induction,
-							MAX(lth.history_feedback_id) AS history_feedback_id, -- Menggunakan MAX karena tidak di GROUP BY
-							MAX(ltd.test_date) AS test_date,                     -- Menggunakan MAX
-							MAX(ltd.score_pre_test) AS score_pre_test,           -- Menggunakan MAX
-							MAX(ltd.score_post_test) AS score_post_test          -- Menggunakan MAX
+							GROUP_CONCAT(DISTINCT lth.history_feedback_id) AS history_feedback_id,
+							DATE_FORMAT(ltd.test_date, '%Y-%m-%d') AS test_date,
+							GROUP_CONCAT(DISTINCT ltd.score_pre_test) AS score_pre_test,
+							GROUP_CONCAT(DISTINCT ltd.score_post_test) AS score_post_test
 						");
 
 						$this->db->from('lnd_training_history lth');
@@ -211,7 +213,7 @@ class Trainer_Training_History extends CI_Controller {
 						$this->db->join('lnd_training_activity lta', "lst.trainingName = lta.id", "left");
 						$this->db->join('lnd_feedback_history lfh', "lth.history_feedback_id = lfh.id", "left");
 
-						// Mengubah kondisi WHERE dari employee_id ke trainer
+						// Filter berdasarkan trainer dan rentang tanggal
 						$this->db->where('lth.trainer', $dataEmployee['name']);
 						$this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
 
@@ -219,10 +221,10 @@ class Trainer_Training_History extends CI_Controller {
 							$this->db->where('lth.test_id', $form['filter_training_name']);
 						}
 
-						// Mengelompokkan hasil berdasarkan training_name (lta.trainingActivity)
-						// Semua kolom SELECT lainnya yang tidak diagregasi harus ada di sini
+						// Group by training_name, induction, dan test_date (agar test_date yang sama digabung)
 						$this->db->group_by('lta.trainingActivity');
 						$this->db->group_by('lta.induction');
+						$this->db->group_by('DATE_FORMAT(ltd.test_date, "%Y-%m-%d")');
 
 
 						// --- Perbaikan untuk error "No tables used" ---
