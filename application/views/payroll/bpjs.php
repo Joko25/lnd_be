@@ -5,12 +5,13 @@
             <th rowspan="2" field="ck" checkbox="true"></th>
             <th rowspan="2" data-options="field:'number',width:100,align:'center'">Code</th>
             <th rowspan="2" data-options="field:'name',width:200,halign:'center'">Name</th>
-            <th colspan="2" data-options="field:'',width:100,halign:'center'">Payment Composition</th>
+            <th colspan="3" data-options="field:'',width:100,halign:'center'">Payment Composition</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
         </tr>
         <tr>
             <th data-options="field:'company',width:100,align:'center'"> % Company</th>
+            <th data-options="field:'max_salary',width:100,align:'center',formatter:function(value){return value ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '';}">Max Salary (Rp)</th>
             <th data-options="field:'employee',width:100,align:'center'"> % Employee</th>
             <th data-options="field:'created_by',width:100,align:'center'"> By</th>
             <th data-options="field:'created_date',width:150,align:'center'"> Date</th>
@@ -41,6 +42,10 @@
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Company</span>
                 <input style="width:30%;" name="company" required="" data-options="buttonText:'%', buttonAlign:'right', precision:2" class="easyui-numberbox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Max Salary</span>
+                <input style="width:30%;" name="max_salary" required="" data-options="buttonText:'Rp', buttonAlign:'right', precision:0, formatter:function(value){return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');}, parser:function(value){return value.replace(/,/g,'');}" class="easyui-numberbox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Employee</span>

@@ -91,7 +91,7 @@ class Absences extends CI_Controller
                     </div>
                 </center><br><br><br>
                 <center>
-                    <h3 style="margin:0;">Report Summary of Absence</h3>
+                    <h3 style="margin:0;">Report Summary Per Departement</h3>
                     <p style="margin:0;">Period ' . $filter_from . ' to ' . $filter_to . '</p>
                     <br><br>
                 </center>
