@@ -109,34 +109,62 @@ class Trainer_Training_History extends CI_Controller {
 				$html = '';
 
 				foreach ($records as $dataEmployee) {
-					$html .= '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}#approver {border-collapse: collapse;width: 50%;font-size: 10px;}#approver td, #approver th {border: 1px solid #ddd;padding: 2px;}#approver tr:nth-child(even){background-color: #f2f2f2;}#approver tr:hover {background-color: #ddd;}#approver th {padding-top: 2px;padding-bottom: 2px;text-align: center;color: black;}</style>
-					<style> .str{ mso-number-format:\@; } </style>
+					$html .= '<html><head><title>Print Data</title></head><style>
+					@media print {
+						body {font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 20px;}
+						.page-break {page-break-before: always;}
+						.page-break-after {page-break-after: always;}
+						.no-break {page-break-inside: avoid;}
+						table {page-break-inside: auto;}
+						tr {page-break-inside: avoid; page-break-after: auto;}
+						thead {display: table-header-group;}
+						tfoot {display: table-footer-group;}
+					}
+					body {font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 20px;}
+					#customers {border-collapse: collapse;width: 100%;font-size: 10px;page-break-inside: auto;}
+					#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}
+					#customers tr:nth-child(even){background-color: #f2f2f2;}
+					#customers tr:hover {background-color: #ddd;}
+					#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}
+					#approver {border-collapse: collapse;width: 50%;font-size: 10px;page-break-inside: avoid;}
+					#approver td, #approver th {border: 1px solid #ddd;padding: 2px;}
+					#approver tr:nth-child(even){background-color: #f2f2f2;}
+					#approver tr:hover {background-color: #ddd;}
+					#approver th {padding-top: 2px;padding-bottom: 2px;text-align: center;color: black;}
+					.str{ mso-number-format:\@; }
+					.header-section {page-break-inside: avoid;}
+					.employee-info {page-break-inside: avoid;}
+					.table-section {page-break-inside: auto;}
+					.approver-section {page-break-inside: avoid; margin-top: 20px;}
+					</style>
 					<body>
-					<center>
-						<div style="float: left; font-size: 12px; text-align: left;">
-							<table style="width: 100%;">
-								<tr>
-									<td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
-										<img src="' . $config->favicon . '" width="30">
-									</td>
-									<td style="font-size: 14px; text-align: left; margin:2px;">
-										<b>' . $config->name . '</b><br>
-										<small>' . $config->description . '</small>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<div style="float: right; font-size: 12px; text-align: right;">
-							Print Date ' . date("d M Y H:i:s") . ' <br>
-							Print By ' . $this->session->username . '  
-						</div>
-					</center><br><br><br>
-					<center>
-						<h3 style="margin:0;">Trainer Training History</h3>
-						<p style="margin: 0">Period '. $form['filter_from'] .' to '. $form['filter_to'] .'</p>
-					</center>
+					<div class="header-section">
+						<center>
+							<div style="float: left; font-size: 12px; text-align: left;">
+								<table style="width: 100%;">
+									<tr>
+										<td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+											<img src="' . $config->favicon . '" width="30">
+										</td>
+										<td style="font-size: 14px; text-align: left; margin:2px;">
+											<b>' . $config->name . '</b><br>
+											<small>' . $config->description . '</small>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div style="float: right; font-size: 12px; text-align: right;">
+								Print Date ' . date("d M Y H:i:s") . ' <br>
+								Print By ' . $this->session->username . '  
+							</div>
+						</center><br><br><br>
+						<center>
+							<h3 style="margin:0;">Trainer Training History</h3>
+							<p style="margin: 0">Period '. $form['filter_from'] .' to '. $form['filter_to'] .'</p>
+						</center>
+					</div>
 					<br>
-					<div style="width: 100%; margin-left: 25px;">
+					<div class="employee-info" style="width: 100%; margin-left: 25px;">
 						<table>
 							<tr>
 								<td>Trainer Name</td>
@@ -380,12 +408,12 @@ class Trainer_Training_History extends CI_Controller {
 						<tr>
 							<td>Achmad Goesly</td>
 							<td>Fajar Budi P.</td>
-							<td>Susi Yulia</td>
+							<td>Rizal Alip P.</td>
 						</tr>
 						<tr>
 							<td>Manager HRD & GA</td>
 							<td>Asst. Manager HRD & GA</td>
-							<td>Leader LnD</td>
+							<td>Coordinator LnD</td>
 						</tr>
 						";
 				$html .= '</table>';
