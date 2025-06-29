@@ -88,7 +88,7 @@
         var template = $(`<div data-index='${index}' data-parent-index='${parentIndex}' id="template-training_${parentIndex}_${index}">
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;"><strong>Training Activity ${index+1}</strong></span>
-                    <select name='${prefix}.training_activity' id='${prefix}.training_activity' required class="type easyui-combogrid" value='${valueTraining}' style="width:50%" data-options="
+                    <select name='${prefix}.training_activity' id='${prefix}.training_activity' required='true' class="type easyui-combogrid" value='${valueTraining}' style="width:50%" data-options="
                         url: '<?= base_url('lnd/training_activity/list') ?>',
                         idField: 'id',
                         textField: 'trainingActivity', 
@@ -118,7 +118,7 @@
         var template = $(`<div data-index='${index}' data-training-index='${trainingIndex}'data-compentence-index='${competenceIndex}' id="template-indicator_${competenceIndex}_${trainingIndex}_${index}">
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Indicator ${index+1}</span>
-                    <input style="width:50%;" name="${prefix}" id="${prefix}" required value="${valueIndicator}" class="easyui-textbox">
+                    <input style="width:50%;" name="${prefix}" id="${prefix}" required="true" value="${valueIndicator}" class="easyui-textbox">
                     <a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="removeIndicator(${competenceIndex}, ${trainingIndex}, ${index})"><i class="fa fa-times"></i></a>
                 </div>
             </div>`);
@@ -206,7 +206,7 @@
         trainingContainer.append(templateTraining)
 
         var indicatorContainer = $(`#indicator_${index}_${totalData}`)
-        if(indicatorContainer.children().length === 0) addIndicator(index, totalData)
+        if(indicatorContainer.children().length === 0 && !initValue) addIndicator(index, totalData)
 
         
         $.parser.parse(`#template-training_${index}_${totalData}`);
@@ -217,7 +217,7 @@
         var indicatorContainer = $(`#indicator_${competenceIndex}_${trainingIndex}`)
         var totalData = indicatorContainer.children().length;
         var template = indicatorTemplate(competenceIndex, trainingIndex, totalData, value);
-        indicatorContainer.append(template)
+        indicatorContainer.append(template);
         $.parser.parse(`#template-indicator_${competenceIndex}_${trainingIndex}_${totalData}`);
         $(`#template-indicator_${competenceIndex}_${trainingIndex}_${totalData}`).form('validate');
         
@@ -230,9 +230,6 @@
             var $input = $(this);
             var value = $input.val();
             var required = $input.attr('required');
-
-            console.log("#value", value);
-            
 
             // Cek hanya field yang required
             if (required && (value === null || value.trim() === '')) {

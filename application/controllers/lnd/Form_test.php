@@ -110,9 +110,25 @@ class Form_test extends CI_Controller {
 
         $insert_success = $this->FormTestModel->insert_feedback($data_to_insert);
         if ($insert_success) {
-            return $this->response->send(ResponseStatus::SUCCESS, $insert_success, 'feedback test successfully');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'code' => 200,
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $insert_success,
+                    'message' => 'feedback test successfully'
+                ]));
         } else {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, $this->db->error()['message'], 'feedback test data failed');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'code' => 400,
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => $this->db->error()['message'],
+                    'message' => 'feedback test data failed'
+                ]));
         }
     }
 
@@ -200,9 +216,25 @@ class Form_test extends CI_Controller {
 
 
         if ($insert_success) {
-            return $this->response->send(ResponseStatus::SUCCESS, $data_to_insert, 'Form test successfully');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'code' => 200,
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $insert_success,
+                    'message' => 'Form test successfully'
+                ]));
         } else {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, $this->db->error()['message'], 'Form test data failed');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(503)
+                ->set_output(json_encode([
+                    'code' => 503,
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => $this->db->error()['message'],
+                    'message' => 'Form test data failed'
+                ]));
         }
 
         // Mengirim respons JSON
@@ -278,9 +310,25 @@ class Form_test extends CI_Controller {
         // Simpan ke DB (pass both JSON data & uploadedFiles)
         $save = $this->FormTestModel->insert_lnd_data($data);
         if($save) {
-            return $this->response->send(ResponseStatus::SUCCESS, $save, 'Form test successfully');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'code' => 200,
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $save,
+                    'message' => 'Form test successfully'
+                ]));
         }else{
-            return $this->response->send(ResponseStatus::BAD_REQUEST, $data, 'Form test data failed');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(503)
+                ->set_output(json_encode([
+                    'code' => 503,
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => $data,
+                    'message' => 'Form test data failed'
+                ]));
         }
     }
 }

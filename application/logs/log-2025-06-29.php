@@ -1705,7 +1705,7 @@ INFO - 2025-06-29 14:04:34 --> Database Driver Class Initialized
 INFO - 2025-06-29 14:04:34 --> Model "Crud" initialized
 DEBUG - 2025-06-29 14:04:34 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 14:04:34 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 14:04:34 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 14:04:34 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 14:04:34 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 14:04:35 --> Config Class Initialized
 INFO - 2025-06-29 14:04:35 --> Hooks Class Initialized
@@ -2856,7 +2856,7 @@ INFO - 2025-06-29 19:16:13 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:16:13 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:16:13 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:16:13 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:16:13 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:16:13 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:16:13 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:16:14 --> Config Class Initialized
 INFO - 2025-06-29 19:16:14 --> Hooks Class Initialized
@@ -4644,7 +4644,7 @@ INFO - 2025-06-29 19:21:58 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:21:58 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:21:58 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:21:58 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:21:58 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:21:58 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:21:58 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:21:59 --> Config Class Initialized
 INFO - 2025-06-29 19:21:59 --> Hooks Class Initialized
@@ -5132,7 +5132,7 @@ INFO - 2025-06-29 19:23:03 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:23:03 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:23:03 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:23:03 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:23:03 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:23:03 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:23:03 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:23:04 --> Config Class Initialized
 INFO - 2025-06-29 19:23:04 --> Hooks Class Initialized
@@ -6088,7 +6088,7 @@ INFO - 2025-06-29 19:27:09 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:27:10 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:27:10 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:27:10 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:27:10 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:27:10 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:27:10 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:27:11 --> Config Class Initialized
 INFO - 2025-06-29 19:27:11 --> Hooks Class Initialized
@@ -6576,7 +6576,7 @@ INFO - 2025-06-29 19:29:29 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:29:29 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:29:29 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:29:29 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:29:29 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:29:29 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:29:29 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:29:30 --> Config Class Initialized
 INFO - 2025-06-29 19:29:30 --> Hooks Class Initialized
@@ -7116,7 +7116,7 @@ INFO - 2025-06-29 19:30:12 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:30:12 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:30:12 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:30:12 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:30:12 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:30:12 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:30:12 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:30:12 --> Config Class Initialized
 INFO - 2025-06-29 19:30:12 --> Hooks Class Initialized
@@ -7468,7 +7468,7 @@ INFO - 2025-06-29 19:30:46 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:30:46 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:30:46 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:30:46 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:30:46 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:30:46 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:30:46 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:30:46 --> Config Class Initialized
 INFO - 2025-06-29 19:30:46 --> Hooks Class Initialized
@@ -7872,7 +7872,7 @@ INFO - 2025-06-29 19:31:31 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:31:31 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:31:31 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:31:31 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:31:31 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:31:31 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:31:31 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:31:31 --> Config Class Initialized
 INFO - 2025-06-29 19:31:31 --> Hooks Class Initialized
@@ -8224,7 +8224,7 @@ INFO - 2025-06-29 19:32:00 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:32:00 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:32:00 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:32:00 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:32:00 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:32:00 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:32:00 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:32:01 --> Config Class Initialized
 INFO - 2025-06-29 19:32:01 --> Hooks Class Initialized
@@ -8524,7 +8524,7 @@ INFO - 2025-06-29 19:32:21 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:32:21 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:32:21 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:32:21 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:32:21 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:32:21 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:32:21 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:32:21 --> Config Class Initialized
 INFO - 2025-06-29 19:32:21 --> Hooks Class Initialized
@@ -8824,7 +8824,7 @@ INFO - 2025-06-29 19:32:36 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:32:36 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:32:36 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:32:36 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:32:36 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:32:36 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:32:36 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:32:36 --> Config Class Initialized
 INFO - 2025-06-29 19:32:36 --> Hooks Class Initialized
@@ -9176,7 +9176,7 @@ INFO - 2025-06-29 19:33:09 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:33:09 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:33:09 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:33:09 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:33:09 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:33:09 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:33:09 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:33:09 --> Config Class Initialized
 INFO - 2025-06-29 19:33:09 --> Hooks Class Initialized
@@ -9476,7 +9476,7 @@ INFO - 2025-06-29 19:33:25 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:33:25 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:33:25 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:33:25 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:33:25 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:33:25 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:33:25 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:33:25 --> Config Class Initialized
 INFO - 2025-06-29 19:33:25 --> Hooks Class Initialized
@@ -9860,7 +9860,7 @@ INFO - 2025-06-29 19:33:44 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:33:44 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:33:44 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:33:44 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:33:44 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:33:44 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:33:44 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:33:44 --> Config Class Initialized
 INFO - 2025-06-29 19:33:44 --> Hooks Class Initialized
@@ -10452,7 +10452,7 @@ INFO - 2025-06-29 19:35:02 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:35:02 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:35:02 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:35:02 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:35:02 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:35:02 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:35:02 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:35:03 --> Config Class Initialized
 INFO - 2025-06-29 19:35:03 --> Hooks Class Initialized
@@ -11048,7 +11048,7 @@ INFO - 2025-06-29 19:35:57 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:35:57 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:35:57 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:35:57 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:35:57 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:35:57 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:35:57 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:35:57 --> Config Class Initialized
 INFO - 2025-06-29 19:35:57 --> Hooks Class Initialized
@@ -11320,7 +11320,7 @@ INFO - 2025-06-29 19:36:19 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:36:19 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:36:19 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:36:19 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:36:19 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:36:19 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:36:19 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:36:19 --> Config Class Initialized
 INFO - 2025-06-29 19:36:19 --> Hooks Class Initialized
@@ -11592,7 +11592,7 @@ INFO - 2025-06-29 19:36:32 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:36:32 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:36:32 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:36:32 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:36:32 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:36:32 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:36:32 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:36:32 --> Config Class Initialized
 INFO - 2025-06-29 19:36:32 --> Hooks Class Initialized
@@ -11944,7 +11944,7 @@ INFO - 2025-06-29 19:37:10 --> Database Driver Class Initialized
 INFO - 2025-06-29 19:37:10 --> Model "Crud" initialized
 DEBUG - 2025-06-29 19:37:10 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 19:37:10 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 19:37:10 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 19:37:10 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 19:37:10 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 19:37:11 --> Config Class Initialized
 INFO - 2025-06-29 19:37:11 --> Hooks Class Initialized
@@ -16832,7 +16832,7 @@ DEBUG - 2025-06-29 21:39:59 --> Uuid class already loaded. Second attempt ignore
 INFO - 2025-06-29 21:39:59 --> Model "LndModel" initialized
 DEBUG - 2025-06-29 21:39:59 --> Form_validation class already loaded. Second attempt ignored.
 DEBUG - 2025-06-29 21:39:59 --> Session class already loaded. Second attempt ignored.
-ERROR - 2025-06-29 21:39:59 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='‚ZjXì' and b.username='admin'
+ERROR - 2025-06-29 21:39:59 --> Query error: Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb3_general_ci,COERCIBLE) for operation '=' - Invalid query: SELECT a.* FROM setting_users a JOIN users b ON a.users_id = b.username WHERE a.menus_id='ï¿½ZjXï¿½' and b.username='admin'
 INFO - 2025-06-29 21:39:59 --> Language file loaded: language/english/db_lang.php
 INFO - 2025-06-29 21:40:01 --> Config Class Initialized
 INFO - 2025-06-29 21:40:01 --> Hooks Class Initialized

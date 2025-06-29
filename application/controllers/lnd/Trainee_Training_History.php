@@ -293,12 +293,12 @@ class Trainee_Training_History extends CI_Controller {
 						<tr>
 							<td>Achmad Goesly</td>
 							<td>Fajar Budi P.</td>
-							<td>Susi Yulia</td>
+							<td>Rizal Alip P.</td>
 						</tr>
 						<tr>
 							<td>Manager HRD & GA</td>
 							<td>Asst. Manager HRD &GA</td>
-							<td>Leader LnD</td>
+							<td>Coordinator LnD</td>
 						</tr>
 						";
 				$html .= '</table>';
