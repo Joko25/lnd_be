@@ -295,7 +295,7 @@ class Schedule_training extends CI_Controller {
 	public function readsTrainingActivity()
 	{
 		$induction = $this->input->get('induction') ? $this->input->get('induction') : "";
-		$send = $this->crud->query("SELECT a.*, b.name as competenceName FROM lnd_training_activity a JOIN lnd_competence b ON a.competenceId = b.id WHERE a.induction = '$induction' ORDER BY a.index ASC");
+		$send = $this->crud->query("SELECT a.*, a.trainingActivities as trainingActivity, a.reasons as competenceName FROM lnd_request_training a JOIN lnd_request_training_approvals_history b on b.trainingRequestId = a.requestTrainingId AND b.approved = 4 WHERE a.induction = '$induction' ORDER BY a.requestTrainingId ASC");
 		echo json_encode($send);
 	}
 
@@ -481,62 +481,184 @@ class Schedule_training extends CI_Controller {
 		    e.name as trainee_name, 
 		    e.id as departementId, 
 		    ta.id as trainingActivityId, 
-		    ta.trainingActivity
+		    ta.trainingActivities as trainingActivity
 		");
 		$this->db->from('lnd_schedule_training a');
 		$this->db->join('lnd_schedule_training_dates b', 'a.id = b.training_id', 'left');
 		$this->db->join('departements e', 'e.id = a.trainee', 'left');
-		$this->db->join('lnd_training_activity ta', 'ta.id = a.trainingName', 'left');
+		$this->db->join('lnd_request_training ta', 'ta.id = a.trainingName', 'left');
 		$this->db->join('lnd_schedule_trainers st', 'a.id = st.training_id', 'left');
 		$this->db->group_by('a.id');
         $records = $this->db->get()->result_array();
 
-        $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
-        <center>
-            <div style="float: left; font-size: 12px; text-align: left;">
-                <table style="width: 100%;">
-                    <tr>
-                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
-                            <img src="' . $config->favicon . '" width="30">
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div style="float: right; font-size: 12px; text-align: right;">
-                Print Date ' . date("d M Y H:m:s") . ' <br>
-                Print By ' . $this->session->username . '  
-            </div>
-        </center>
-        <br><br><br>
-        
-        <table id="customers" border="1">
-            <tr>
-                <th>No</th>
-				<th>Induction</th>
-				<th>Training Name</th>
-				<th>Trainer</th>
-				<th>Trainee</th>
-				<th>Remarks</th>
-				<th>Total Trainees</th>
-				<th>Duration</th>
-				<th>Training Date</th>
-            </tr>';
-        $no = 1;
-		foreach ($records as $data) {
-			$html .= '<tr>
-                <td>' . $no . '</td>
-                <td>' . $data['induction'] . '</td>
-                <td>' . $data['trainingActivity'] . '</td>
-                <td>' . $data['trainers'] . '</td>
-                <td>' . (!empty($data['trainee_name']) ? $data['trainee_name'] : $data['category']) . '</td>
-                <td>' . $data['remarks'] . '</td>
-                <td>' . $data['totalTrainee'] . '</td>
-                <td>' . $data['duration'] . '</td>
-                <td>' . $data['training_dates'] . '</td>';
-			$no++;
+//        $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+//        <center>
+//            <div style="float: left; font-size: 12px; text-align: left;">
+//                <table style="width: 100%;">
+//                    <tr>
+//                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+//                            <img src="' . $config->favicon . '" width="30">
+//                        </td>
+//                    </tr>
+//                </table>
+//            </div>
+//            <div style="float: right; font-size: 12px; text-align: right;">
+//                Print Date ' . date("d M Y H:m:s") . ' <br>
+//                Print By ' . $this->session->username . '
+//            </div>
+//        </center>
+//        <br><br><br>
+//
+//        <table id="customers" border="1">
+//            <tr>
+//                <th>No</th>
+//				<th>Induction</th>
+//				<th>Training Name</th>
+//				<th>Trainer</th>
+//				<th>Trainee</th>
+//				<th>Remarks</th>
+//				<th>Total Trainees</th>
+//				<th>Duration</th>
+//				<th>Training Date</th>
+//            </tr>';
+//        $no = 1;
+//		foreach ($records as $data) {
+//			$html .= '<tr>
+//                <td>' . $no . '</td>
+//                <td>' . $data['induction'] . '</td>
+//                <td>' . $data['trainingActivity'] . '</td>
+//                <td>' . $data['trainers'] . '</td>
+//                <td>' . (!empty($data['trainee_name']) ? $data['trainee_name'] : $data['category']) . '</td>
+//                <td>' . $data['remarks'] . '</td>
+//                <td>' . $data['totalTrainee'] . '</td>
+//                <td>' . $data['duration'] . '</td>
+//                <td>' . $data['training_dates'] . '</td>';
+//			$no++;
+//		}
+//
+//        $html .= '</table></body></html>';
+//        echo $html;
+
+// Helper functions
+		function dateToIndex($date) {
+			$dt = DateTime::createFromFormat('Y-m-d', $date);
+			if (!$dt) return -1;
+			$month = (int)$dt->format('n');
+			$day = (int)$dt->format('j');
+			$week = ceil($day / 8);
+			if ($week > 4) $week = 4;
+			return ($month - 1) * 4 + ($week - 1);
 		}
 
-        $html .= '</table></body></html>';
-        echo $html;
+		function roman($n) {
+			$map = ['M'=>1000,'CM'=>900,'D'=>500,'CD'=>400,'C'=>100,'XC'=>90,'L'=>50,'XL'=>40,'X'=>10,'IX'=>9,'V'=>5,'IV'=>4,'I'=>1];
+			$result = '';
+			foreach ($map as $r => $v) {
+				while ($n >= $v) {
+					$result .= $r;
+					$n -= $v;
+				}
+			}
+			return $result;
+		}
+
+// Group by induction
+		$groupedRecords = [];
+		foreach ($records as $row) {
+			$group = $row['induction'] ?? 'Others';
+			if (!isset($groupedRecords[$group])) $groupedRecords[$group] = [];
+			$groupedRecords[$group][] = [
+				'trainingActivity' => $row['trainingActivity'],
+				'trainers' => $row['trainers'],
+				'trainee_name' => $row['trainee_name'],
+				'totalTrainee' => $row['totalTrainee'],
+				'duration' => $row['duration'],
+				'training_dates' => $row['training_dates'],
+//				'training_actuals' => $row['training_dates'],
+				'remarks' => $row['remarks'],
+			];
+		}
+
+// Start HTML
+		$months = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+		$html = '';
+		$html .= '<html><head><meta charset="UTF-8"></head><body>';
+		$html .= '<table border="1" style="border-collapse: collapse; font-family: Arial; font-size: 12px; width: 100%;">';
+
+		$html .= '<tr><td colspan="55" style="text-align: center; font-size: 16px; font-weight: bold;">
+            PT BANSHU ELECTRIC INDONESIA<br>SCHEDULE TRAINING
+          </td></tr>';
+
+		$html .= '<tr style="background: #a9d08e; text-align: center; font-weight: bold;">
+            <td rowspan="2">No.</td>
+            <td rowspan="2">Materi Training</td>
+            <td rowspan="2">Trainer</td>
+            <td rowspan="2">Peserta</td>
+            <td rowspan="2">∑ MP</td>
+            <td rowspan="2">Durasi (Menit)</td>
+            <td rowspan="2">Remarks</td>
+            <td rowspan="2">Plan/Act</td>';
+		foreach ($months as $m) {
+			$html .= "<td colspan='4'>{$m}</td>";
+		}
+		$html .= '</tr><tr style="background: #a9d08e; text-align: center;">';
+		for ($i = 0; $i < 12; $i++) {
+			for ($j = 1; $j <= 4; $j++) {
+				$html .= "<td>M{$j}</td>";
+			}
+		}
+		$html .= '</tr>';
+
+// Content Rows
+		$sectionNo = 1;
+
+		foreach ($groupedRecords as $sectionTitle => $records) {
+			$html .= '<tr><td colspan="55" style="font-weight: bold; background-color: #9BC2E6; text-align: left;">'
+				. roman($sectionNo++) . '. ' . strtoupper($sectionTitle) . '</td></tr>';
+			$no = 1;
+
+			foreach ($records as $data) {
+				$plan_map = array_fill(0, 48, '');
+				foreach (explode(',', $data['training_dates']) as $dt) {
+					$idx = dateToIndex(trim($dt));
+					if ($idx >= 0) $plan_map[$idx] = date('j-M', strtotime($dt));
+				}
+
+				$act_map = array_fill(0, 48, '');
+//				foreach (explode(',', $data['training_actuals']) as $dt) {
+//					$idx = dateToIndex(trim($dt));
+//					if ($idx >= 0) $act_map[$idx] = date('j-M', strtotime($dt));
+//				}
+
+				$html .= '<tr>';
+				$html .= '<td rowspan="2" style="text-align: center; vertical-align: middle;">' . $no . '</td>';
+				$html .= '<td rowspan="2" style="text-align: center; vertical-align: middle;">' . $data['trainingActivity'] . '</td>';
+				$html .= '<td rowspan="2" style="text-align: center; vertical-align: middle;">' . $data['trainers'] . '</td>';
+				$html .= '<td rowspan="2" style="text-align: center; vertical-align: middle;">' . $data['trainee_name'] . '</td>';
+				$html .= '<td rowspan="2" style="text-align: center; vertical-align: middle;">' . $data['totalTrainee'] . '</td>';
+				$html .= '<td rowspan="2" style="text-align: center; vertical-align: middle;">' . $data['duration'] . '</td>';
+				$html .= '<td rowspan="2" style="text-align: center; vertical-align: middle;">' . $data['remarks'] . '</td>';
+
+				$html .= '<td style="text-align: center;">Plan</td>';
+				foreach ($plan_map as $val) {
+					$bg = $val !== '' ? 'background-color: #9BC2E6;' : '';
+					$html .= '<td style="text-align: center; ' . $bg . '">' . $val . '</td>';
+				}
+
+				$html .= '</tr>';
+
+				$html .= '<tr>';
+				$html .= '<td style="text-align: center;">Act</td>';
+				foreach ($act_map as $val) {
+					$html .= '<td style="text-align: center;">' . $val . '</td>';
+				}
+				$html .= '</tr>';
+
+				$no++;
+			}
+		}
+
+		$html .= '</table></body></html>';
+		echo $html;
     }
 }
