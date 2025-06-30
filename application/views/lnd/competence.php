@@ -67,7 +67,7 @@
 </div>
 
 <!-- PDF -->
-<iframe id="printout" src="<?= base_url('employee/competence/print') ?>" style="width: 100%;" hidden></iframe>
+<iframe id="printout" src="<?= base_url('employee/departements/print') ?>" style="width: 100%;" hidden></iframe>
 <script>
     // Initialize competence grid on page load
     window.onload = initCompetenceGrid;

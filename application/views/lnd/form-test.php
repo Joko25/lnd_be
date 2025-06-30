@@ -761,7 +761,7 @@
 
             html += `<div style="font-weight:bold; margin-bottom:5px;">${item.question}</div>`;
 
-            if (item.imagePosition === 'BELLOW' && item.imageQuestion) {
+            if (item.imagePosition === 'BELOW' && item.imageQuestion) {
                 html += `<div><img src="${baseUrl}${item.imageQuestion}" style="max-width:100%; margin-top:10px;"></div>`;
             }
 
@@ -778,7 +778,9 @@
                         ${isCorrect ? '<span style="color:blue;">✅ Correct</span>' : ''}
                         ${isSelected && !isCorrect ? '<span style="color:red;">❌ Your Choice</span>' : ''}
                     </label>
-                    ${opt.image ? `<img src="${baseUrl}${opt.image}" style="max-width:150px; margin-top:5px; margin-bottom:10px;">` : ''}
+                    <div>
+                        ${opt.image ? `<img src="${baseUrl}${opt.image}" style="max-width:150px; margin-top:5px; margin-bottom:10px;">` : ''}
+                    </div>
                     </div>
                 `;
             });

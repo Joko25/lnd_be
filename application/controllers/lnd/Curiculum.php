@@ -88,9 +88,25 @@ class Curiculum extends CI_Controller {
         $data = $this->CuriculumModel->get_all_data();
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, [], 'Get Curiculum data failed');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => null,
+                'message' => 'Get Curiculum data failed'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Curiculum data successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $data,
+                'message' => 'Get Curiculum data successfully.'
+            ]));
         } 
     }
 
@@ -98,9 +114,25 @@ class Curiculum extends CI_Controller {
         $data = $this->CuriculumModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get Curiculum data failed');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => null,
+                'message' => 'Get Curiculum data failed'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Curiculum data successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $data,
+                'message' => 'Get Curiculum data successfully'
+            ]));
         } 
     }
 
@@ -146,8 +178,16 @@ class Curiculum extends CI_Controller {
         $rawInput = file_get_contents("php://input");
         $data = json_decode($rawInput, true);
         
-        if (!is_array($data)) {
-            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Invalid data format');
+        if (!is_array($data)) {            
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Invalid data format'
+            ]));
             return;
         }
 
@@ -158,16 +198,40 @@ class Curiculum extends CI_Controller {
         $requiredFields = ['competenceId', 'trainingActivityId', 'indicators'];
         foreach ($requiredFields as $field) {
             if (!isset($data[$field]) || empty($data[$field])) {
-                $this->response->send(ResponseStatus::BAD_REQUEST, null, $field . ' is required');
+                $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'code' => 400,
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => null,
+                    'message' => $field . ' is required'
+                ]));
                 return;
             }
         }
 
         $dataTemp = $this->CuriculumModel->insert_data($data);
         if ($dataTemp) {
-            $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Curiculum created successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(201)
+            ->set_output(json_encode([
+                'code' => 201,
+                'status' => ResponseStatus::CREATED,
+                'data' => null,
+                'message' => 'Curiculum created successfully'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Failed to create curriculum');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Failed to create curriculum'
+            ]));
         }
     }
 
@@ -185,15 +249,38 @@ class Curiculum extends CI_Controller {
         $data = json_decode($jsonData, true);
 
         if (!$data) {
-            $this->response->send(400, $data, 'Invalid data format');
-            return;
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Invalid data format'
+            ]));
         }
 
         $dataTemp = $this->CuriculumModel->update_curriculum($id, $data);
         if ($dataTemp) {
-            $this->response->send(200, $dataTemp, 'Curiculum updated successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => null,
+                'message' => 'Curiculum updated successfully'
+            ]));
         } else {
-            $this->response->send(400, null, 'Curiculum update failed');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Curiculum update failed'
+            ]));
         }
     }
 
@@ -211,10 +298,26 @@ class Curiculum extends CI_Controller {
         $data = $this->CuriculumModel->get_curriculum_detail($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Data not found');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => null,
+                'message' => 'Data not found'
+            ]));
         } else {
             $this->CuriculumModel->delete_curriculum($id);
-            $this->response->send(200, $id, 'Curiculum delete successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => null,
+                'message' => 'Curiculum delete successfully'
+            ]));
         }
     }
 

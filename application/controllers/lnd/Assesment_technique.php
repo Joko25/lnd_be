@@ -86,9 +86,25 @@ class Assesment_technique extends CI_Controller {
         $data = $this->AssesmentTechniqueModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get Competence data failed');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => null,
+                'message' => 'Get Competence data failed'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Competence data successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $data,
+                'message' => 'Get Competence data successfully'
+            ]));
         } 
     }
 
@@ -102,9 +118,25 @@ class Assesment_technique extends CI_Controller {
         // Validasi dan proses data
         if (!empty($data)) {
             $dataTemp = $this->AssesmentTechniqueModel->insert_data($data);
-            $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Competence created successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::CREATED,
+                'data' => $data,
+                'message' => 'Competence created successfully'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Competence creation failed.');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Competence creation failed.'
+            ]));
         }
     }
     
@@ -116,9 +148,25 @@ class Assesment_technique extends CI_Controller {
 
         if (!empty($data)) {
             $dataTemp = $this->AssesmentTechniqueModel->update_data($id, $data);
-            $this->response->send(200, $dataTemp, 'Competence updated successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => null,
+                'message' => 'Competence updated successfully'
+            ]));
         } else {
-            $this->response->send(400, null, 'Competence updated failed.');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Competence updated failed.'
+            ]));
         }
     }
 
@@ -126,10 +174,26 @@ class Assesment_technique extends CI_Controller {
         $data = $this->AssesmentTechniqueModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Data not found');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => null,
+                'message' => 'Data not found.'
+            ]));
         } else {
             $this->AssesmentTechniqueModel->delete_data($id);
-            $this->response->send(200, $id, 'Competence delete successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => null,
+                'message' => 'Competence delete successfully'
+            ]));
         }
     }
 

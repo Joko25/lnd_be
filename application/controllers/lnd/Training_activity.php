@@ -82,9 +82,25 @@ class Training_activity extends CI_Controller {
         $data = $this->TrainingActivityModel->get_all_data();
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, [], 'Get Training Activity data failed');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => null,
+                'message' => 'Get Training Activity data failed'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Training Activity data successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $data,
+                'message' => 'Get Training Activity data successfully'
+            ]));
         } 
     }
 
@@ -92,9 +108,25 @@ class Training_activity extends CI_Controller {
         $data = $this->TrainingActivityModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get Training Activity data failed');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => null,
+                'message' => 'Get Training Activity data failed'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Training Activity data successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $data,
+                'message' => 'Get Training Activity data successfully'
+            ]));
         } 
     }
 
@@ -105,13 +137,30 @@ class Training_activity extends CI_Controller {
         // Generate trainingActivityId
         $idGenerateDate = $this->crud->autoidPrifix('lnd_training_activity', 'trainingActivityId', 'T'); 
         $data['trainingActivityId'] = $idGenerateDate;
+        $data['id'] = $this->uuid();
 
         // Validasi dan proses data
         if (!empty($data)) {
             $dataTemp = $this->TrainingActivityModel->insert_data($data);
-            $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Training Activity created successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $dataTemp,
+                'message' => 'Training Activity created successfully'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Training Activity creation failed.');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Training Activity creation failed.'
+            ]));
         }
     }
     
@@ -123,9 +172,25 @@ class Training_activity extends CI_Controller {
 
         if (!empty($data)) {
             $dataTemp = $this->TrainingActivityModel->update_data($id, $data);
-            $this->response->send(200, $dataTemp, 'Training Activity updated successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $dataTemp,
+                'message' => 'Training Activity updated successfully'
+            ]));
         } else {
-            $this->response->send(400, null, 'Training Activity updated failed.');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Training Activity updated failed.'
+            ]));
         }
     }
 
@@ -133,10 +198,26 @@ class Training_activity extends CI_Controller {
         $data = $this->TrainingActivityModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Data not found');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => null,
+                'message' => 'Data not found'
+            ]));
         } else {
             $this->TrainingActivityModel->delete_data($id);
-            $this->response->send(200, $id, 'Training Activity delete successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $id,
+                'message' => 'Training Activity delete successfully'
+            ]));
         }
     }
 
@@ -221,6 +302,7 @@ class Training_activity extends CI_Controller {
             $lnd_training_activity = $this->crud->read('lnd_training_activity', ["competenceId" => $data['competenceId'], "trainingActivity" => $data['trainingActivity'], "index" => $data['index'], "remarks" => $data['remarks'], "induction" => $data['induction']]);
             $idGenerateDate = $this->crud->autoidPrifix('lnd_training_activity', 'trainingActivityId', 'T'); 
             $data['trainingActivityId'] = $idGenerateDate;
+            $data['id'] = $this->uuid();
 
             if (empty($resCompetence)) {
                 echo json_encode(array("title" => "Not Found", "message" => "Competence  " . $data['competenceId'] . " Not Found", "theme" => "error"));
@@ -326,5 +408,17 @@ class Training_activity extends CI_Controller {
 
         $html .= '</table></body></html>';
         echo $html;
+    }
+
+    private function uuid()
+    {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+        );
     }
 }

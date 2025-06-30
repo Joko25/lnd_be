@@ -10,6 +10,7 @@ class Competence extends CI_Controller {
         $this->load->helper('url');
         $this->load->library('form_validation');
         $this->load->model('crud');
+        // $this->load->library('response'); // Load the response library
 
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
@@ -74,15 +75,6 @@ class Competence extends CI_Controller {
         echo json_encode($result);
     }
 
-    public function get_data() {
-        $data = $this->CompetenceModel->get_all_data();
-
-        if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, [], 'Get Competence data failed');
-        } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Competence data successfully');
-        } 
-    }
 
     //PRINT & EXCEL DATA
     public function print($option = "")
@@ -152,9 +144,25 @@ class Competence extends CI_Controller {
         $data = $this->CompetenceModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get Competence data failed');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(404)
+                ->set_output(json_encode([
+                    'code' => 404,
+                    'status' => ResponseStatus::NOT_FOUND,
+                    'data' => null,
+                    'message' => 'Get Competence data failed'
+                ]));
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Competence data successfully');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'code' => 200,
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $data,
+                    'message' => 'Get Competence data successfully'
+                ]));
         } 
     }
 
@@ -165,18 +173,42 @@ class Competence extends CI_Controller {
         $competenceCheck = $this->crud->read('lnd_competence', [], ["LOWER(name)" => strtolower($data["name"])]);
         if(!empty($competenceCheck)) {
             // die(json_encode(array("title" => "Duplicate", "message" => "Your Competence Name has been registered", "theme" => "error")));
-            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Your Competence Name has been registered.');
-            return;
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Your Competence Name has been registered.'
+            ]));
         }
         // Generate competenceId
         $idGenerateDate = $this->crud->autoidPrifix('lnd_competence', 'competenceId', 'C'); 
+        $data['id'] = $this->uuid();
         $data['competenceId'] = $idGenerateDate;
         // Validasi dan proses data
         if (!empty($data)) {
             $dataTemp = $this->CompetenceModel->insert_data($data);
-            $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Competence created successfully');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'code' => 200,
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $dataTemp,
+                    'message' => 'Competence created successfully'
+                ]));
         } else {
-            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Competence creation failed.');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'code' => 400,
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => null,
+                    'message' => 'Competence creation failed.'
+                ]));
         }
     }
     
@@ -188,9 +220,25 @@ class Competence extends CI_Controller {
 
         if (!empty($data)) {
             $dataTemp = $this->CompetenceModel->update_data($id, $data);
-            $this->response->send(200, $dataTemp, 'Competence updated successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => null,
+                'message' => 'Competence updated successfully'
+            ]));
         } else {
-            $this->response->send(400, null, 'Competence updated failed.');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Competence updated failed.'
+            ]));
         }
     }
 
@@ -198,10 +246,26 @@ class Competence extends CI_Controller {
         $data = $this->CompetenceModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Data not found');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => null,
+                'message' => 'Data not found.'
+            ]));
         } else {
             $this->CompetenceModel->delete_data($id);
-            $this->response->send(200, $id, 'Competence delete successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $id,
+                'message' => 'Competence delete successfully.'
+            ]));
         }
     }
 
@@ -305,5 +369,17 @@ class Competence extends CI_Controller {
         header('Content-Length: ' . @filesize($file));
         header("Content-Type: text/plain");
         @readfile($file);
+    }
+
+    private function uuid()
+    {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+        );
     }
 }

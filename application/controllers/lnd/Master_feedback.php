@@ -96,9 +96,23 @@ class Master_feedback extends CI_Controller {
         // Simpan ke DB (pass both JSON data & uploadedFiles)
         $save = $this->MasterFeedbackModel->insertQuestion($data);
         if($save) {
-            return $this->response->send(ResponseStatus::SUCCESS, $save, 'Form test successfully');
-        }else{
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Get Competence data failed');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $save,
+                    'message' => 'Form test successfully'
+                ]));
+        } else {
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => [],
+                    'message' => 'Get Competence data failed'
+                ]));
         }
     }
 
@@ -209,31 +223,61 @@ class Master_feedback extends CI_Controller {
         // Update ke DB
         $update = $this->MasterFeedbackModel->updateQuestion($id, $data);
         if ($update) {
-            return $this->response->send(ResponseStatus::SUCCESS, $update, 'Form test updated successfully');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'code' => 200,
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $update,
+                    'message' => 'Form test updated successfully'
+                ]));
         } else {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Failed to update form test');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'code' => 400,
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => [],
+                    'message' => 'Failed to update Form test'
+                ]));
         }
     }
     
 
     public function get_detail($id) {
+        
         $data = $this->MasterFeedbackModel->get_detail_data($id);
 
-        if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get data failed');
-        } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get data successfully');
-        } 
+        echo json_encode([
+            'success' => true,
+            'data' => $data
+        ]);
     }
 
     public function delete_data($id) {
         $data = $this->MasterFeedbackModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Data not found');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(404)
+                ->set_output(json_encode([
+                    'status' => ResponseStatus::NOT_FOUND,
+                    'data' => null,
+                    'message' => 'Data not found'
+                ]));
         } else {
             $this->MasterFeedbackModel->delete_data($id);
-            $this->response->send(200, $id, 'Competence delete successfully');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $id,
+                    'message' => 'Master feedback deleted successfully'
+                ]));
         }
     }
 

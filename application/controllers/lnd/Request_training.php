@@ -191,9 +191,25 @@ class Request_training extends CI_Controller {
         $data = $this->RequestTrainingModel->get_all_data();
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, [], 'Get Request Training data failed');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => [],
+                'message' => 'Get Request Training data failed'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Request Training data successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $data,
+                'message' => 'Get Request Training data successfully'
+            ]));
         } 
     }
 
@@ -201,9 +217,25 @@ class Request_training extends CI_Controller {
         $data = $this->RequestTrainingModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get Request Training data failed');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => null,
+                'message' => 'Get Request Training data failed'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Request Training data successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $data,
+                'message' => 'Get Request Training data successfully'
+            ]));
         } 
     }
 
@@ -232,9 +264,25 @@ class Request_training extends CI_Controller {
             } else {
                 log_message('error', 'Gagal membuat approval: ' . json_encode($approval));
             }
-            $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Request Training created successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(201)
+            ->set_output(json_encode([
+                'code' => 201,
+                'status' => ResponseStatus::CREATED,
+                'data' => $dataTemp,
+                'message' => 'Request Training created successfully'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Request Training creation failed.');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Request Training creation failed.'
+            ]));
         }
     }
     
@@ -262,10 +310,36 @@ class Request_training extends CI_Controller {
 			}
             $dataTemp = $this->RequestTrainingModel->update_data($id, $data);
 			if(!empty($dataTemp) && !empty($resUpdateHistory)) {
-            	$this->response->send(ResponseStatus::SUCCESS, $dataTemp, 'Request Training updated successfully');
+                return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'code' => 200,
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $dataTemp,
+                    'message' => 'Request Training with update approval successfully'
+                ]));
+			} else {
+                return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'code' => 200,
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $dataTemp,
+                    'message' => 'Request Training updated successfully'
+                ]));
 			}
         } else {
-            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Request Training updated failed.');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Request Training updated failed.'
+            ]));
         }
     }
 
@@ -273,11 +347,27 @@ class Request_training extends CI_Controller {
         $data = $this->RequestTrainingModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Data not found');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => null,
+                'message' => 'Data not found'
+            ]));
         } else {
             $this->RequestTrainingModel->delete_data($id);
             $this->RequestTrainingModel->delete_data_trainee($id);
-            $this->response->send(200, $id, 'Request Training delete successfully');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $id,
+                'message' => 'Request Training delete successfully'
+            ]));
         }
     }
 
@@ -356,16 +446,40 @@ class Request_training extends CI_Controller {
         if (!empty($data)) {
             if(!isset($data['id']) || $data['id'] == '') {
                 $dataTemp = $this->RequestTrainingModel->insert_data_trainee($data);
-                $this->response->send(ResponseStatus::CREATED, $data, 'Request Training Trainee created successfully');
                 $this->idGenerateDate = null;
+                return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(201)
+                ->set_output(json_encode([
+                    'code' => 201,
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $data,
+                    'message' => 'Request Training Trainee created successfully'
+                ]));
             } else {
                 $dataTemp = $this->RequestTrainingModel->update_data_trainee($data['id'], $data);
-                $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Request Training Trainee updated successfully');
                 $this->idGenerateDate = null;
+                return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(201)
+                ->set_output(json_encode([
+                    'code' => 201,
+                    'status' => ResponseStatus::CREATED,
+                    'data' => $dataTemp,
+                    'message' => 'Request Training Trainee updated successfully'
+                ]));
             }
         } else {
-            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Request Training Trainee creation failed.');
             $this->idGenerateDate = null;
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Request Training Trainee creation failed.'
+            ]));
         }
     }
 

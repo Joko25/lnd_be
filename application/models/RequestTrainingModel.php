@@ -97,6 +97,7 @@ class RequestTrainingModel extends CI_Model {
     }
 
 	public function get_detail_data_history_approval($id) {
+		$this->db->order_by('approved_date', 'DESC');
 		$query = $this->db->get_where('lnd_request_training_approvals_history', ['trainingRequestId' => $id]);
 
 		if($query->num_rows() > 0) {
