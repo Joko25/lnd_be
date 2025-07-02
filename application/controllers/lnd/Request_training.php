@@ -323,7 +323,7 @@ class Request_training extends CI_Controller {
     {
         $post = isset($_POST['q']) ? array("e.name" => $_POST['q']) : $this->input->get();
 
-        $this->db->select('e.id, e.name, e.national_id, p.name as position, d.name as departement, ds.name as departement_subs, e.date_sign');
+        $this->db->select('e.id, e.name, e.number as employeeId, p.name as position, d.name as departement, ds.name as departement_subs, e.date_sign');
         $this->db->from('employees e');
         $this->db->join('positions p', 'p.id = e.position_id');
         $this->db->join('departements d', 'd.id = e.departement_id');
