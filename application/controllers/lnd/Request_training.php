@@ -431,4 +431,290 @@ class Request_training extends CI_Controller {
             mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
         );
     }
+
+	//PRINT & EXCEL DATA
+	public function print($option = "")
+	{
+		if ($option == "excel") {
+			$format = date("Ymd");
+			header("Content-type: application/vnd-ms-excel");
+			header("Content-Disposition: attachment; filename=schedule_training_$format.xls");
+		}
+
+		$html = '
+		<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Permohonan Riquest Training</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+        margin: 20px;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 8px;
+        font-size: 16px;
+        text-transform: uppercase;
+      }
+
+      .catatan-container {
+        display: flex;
+        margin: 10px;
+        padding: 10px;
+      }
+
+      .arrow-box {
+        position: relative;
+        width: 100px;
+        height: 45px;
+        border: 1px solid black;
+        margin-right: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      .arrow-box::after {
+        content: "";
+        position: absolute;
+        right: -20px;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-top: 22.5px solid transparent;
+        border-bottom: 22.5px solid transparent;
+        border-left: 20px solid black;
+      }
+
+      .catatan-text {
+        font-size: 11px;
+      }
+
+      .catatan-text p {
+        margin: 0 0 3px 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+
+      td,
+      th {
+        border: 1px solid #000;
+        padding: 4px;
+        vertical-align: top;
+      }
+
+      .no-border {
+        border: none !important;
+      }
+
+      .center {
+        text-align: center;
+      }
+
+      .checkbox {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border: 1px solid #000;
+        margin-right: 4px;
+        vertical-align: middle;
+      }
+
+      .signature {
+        height: 80px;
+        text-align: center;
+        vertical-align: bottom;
+      }
+
+      .signature u {
+        display: inline-block;
+        margin-top: 40px;
+      }
+
+      .small-note {
+        font-size: 10px;
+        margin-top: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>PERMOHONAN RIQUEST TRAINING</h2>
+
+	<table>
+	
+    <div class="catatan-container">
+    	<td style="padding-left: 80px; padding-top: 10px; padding-bottom: 0px;">
+      		<div class="arrow-box">Catatan</div>
+      	</td>
+      	<td>
+			<div class="catatan-text">
+				<p>
+				  1. Formulir ini bisa digunakan untuk internal dan external training.
+				</p>
+				<p>
+				  2. Diisi oleh atasan (Dept. Head) untuk disetujui oleh management.
+				</p>
+				<p>3. Diserahkan kepada L&D Supervisor untuk ditindak lanjuti.</p>
+				<p>
+				  4. Copy Certificate training diserahkan ke L&D supervisor untuk
+				  kepentingan up-dating dan Filling.
+				</p>
+			</div>
+		</td>
+      
+    </div>
+	</table>
+    <table>
+      <tr>
+        <td width="20%">Kepada</td>
+        <td width="30%">: BOD / L&D Divison Head</td>
+        <td width="20%">Pemohon</td>
+        <td width="30%">
+          :
+          
+        </td>
+      </tr>
+      <tr>
+        <td>Dari</td>
+        <td>
+          :
+        </td>
+        <td rowspan="3" colspan="2"></td>
+      </tr>
+      <tr>
+        <td>Dept</td>
+        <td>
+          :
+        </td>
+      </tr>
+      <tr>
+        <td>Materi Training</td>
+        <td>
+          :
+        </td>
+      </tr>
+      <tr>
+        <td>Nama Trainer</td>
+        <td>
+          :
+        </td>
+        <td rowspan="2" colspan="2">
+          Tick salah satu:<br /><br />
+          <span class="checkbox"></span> Trainer Internal &nbsp;&nbsp;&nbsp;
+          <span class="checkbox"></span> Trainer External
+        </td>
+      </tr>
+      <tr>
+        <td>Tgl. Training</td>
+        <td>
+          :
+          
+        </td>
+      </tr>
+    </table>
+
+    <p>
+      <strong><u>EXTERNAL TRAINING</u></strong> (diisi hanya untuk external
+      Training dan Sertakan proposal dan brosur)
+    </p>
+
+    <table>
+      <tr>
+        <td class="no-border" width="40%">
+          Perkiraan biaya untuk external training
+        </td>
+        <td class="no-border" width="20%">
+          Rp
+        </td>
+        <td class="no-border" width="15%">Penyelenggara :</td>
+        <td class="no-border" width="25%">
+        </td>
+      </tr>
+    </table>
+
+    <br />
+    <center><strong>CALON PESERTA TRAINING</strong></center>
+    <table>
+      <tr class="center">
+        <th width="5%">No</th>
+        <th width="20%">Nama</th>
+        <th width="15%">NIK</th>
+        <th width="20%">Jabatan</th>
+        <th width="15%">Bagian / Section</th>
+        <th width="15%">Departemen</th>
+        <th width="10%">Tanggal Masuk</th>
+      </tr>
+      <tr>
+        <td class="center">1</td>
+        <td>Nama</td>
+        <td>NIK</td>
+        <td>Jabatan</td>
+        <td>Bagian</td>
+        <td>Departement</td>
+        <td>Join Date</td>
+      </tr>
+      <tr>
+        <td class="center"></td>
+        <td colspan="6">&nbsp;</td>
+      </tr>
+    </table>
+
+    <br />
+    <strong>Alasan :</strong>
+    <table>
+      <tr>
+        <td><span class="checkbox"></span> Promosi</td>
+        <td><span class="checkbox"></span> Produk baru</td>
+        <td><span class="checkbox"></span> System baru</td>
+      </tr>
+      <tr>
+        <td><span class="checkbox"></span> Mutasi</td>
+        <td><span class="checkbox"></span> Technology baru</td>
+        <td><span class="checkbox"></span> Peningkatan skill</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <span class="checkbox"></span> Lain-lain:
+          ..................................................
+        </td>
+      </tr>
+    </table>
+
+    <br />
+    <center><strong>APPROVAL</strong></center>
+    <table>
+      <tr>
+        <td class="signature">
+          BOD<br /><br /><u>(..................................)</u><br />Tgl:
+          ....................
+        </td>
+        <td class="signature">
+          L&D Div Head<br /><br /><u>(..................................)</u
+          ><br />Tgl: ....................
+        </td>
+      </tr>
+    </table>
+
+    <p class="small-note">
+      <strong>Catatan :</strong><br />
+      - Lampiran training diisi oleh bag. training jika schedule belum dibuat
+      oleh pemohon.<br />
+      - Pelaksanaan internal dan external training harus ada approval dari L&D
+      Div Head dan BOD.
+    </p>
+  </body>
+</html>
+
+		';
+		echo $html;
+	}
 }

@@ -146,7 +146,7 @@
 </div>
 
 <!-- PDF -->
-<iframe id="printout" src="<?= base_url('lnd/training_activity/print') ?>" style="width: 100%;" hidden></iframe>
+<iframe id="printout" style="width: 100%;" hidden></iframe>
 
 <script>
     window.onload = function() {
@@ -857,15 +857,25 @@
         return html;
     } 
 
-    //PRINT PDF
-    // function pdf() {
-    //     $("#printout").get(0).contentWindow.print();
-    // }
+    // PRINT PDF
+	function pdf(id) {
+		const iframe = document.getElementById("printout");
+		const row = $('#dg').datagrid('getSelected');
 
-    // //PRINT EXCEL
-    // function excel() {
-    //     window.location.assign('<?= base_url('lnd/training_activity/print/excel') ?>');
-    // }
+		// Set the onload BEFORE setting src to ensure it catches the event
+		iframe.onload = function () {
+			// Trigger print inside iframe when it's loaded
+			this.contentWindow.print();
+		};
+
+		// Set the source with ID parameter
+		iframe.src = '<?= base_url('lnd/request_training/print') ?>/' + row.id;
+	}
+
+     //PRINT EXCEL
+     function excel() {
+         window.location.assign('<?= base_url('lnd/request_training/print/excel') ?>');
+     }
 
     //UPLOAD DATA
     // $('#dlg_upload').dialog({
