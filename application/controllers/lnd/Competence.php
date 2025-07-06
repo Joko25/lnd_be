@@ -338,6 +338,7 @@ class Competence extends CI_Controller {
             } else if(empty($data['index'])) {
                 echo json_encode(array("title" => "Not Found", "message" => "Index cannot be Null", "theme" => "error"));
             } else {
+                $data['id'] = $this->uuid();
                 $send = $this->crud->create('lnd_competence', $data);
                 echo $send;
             }

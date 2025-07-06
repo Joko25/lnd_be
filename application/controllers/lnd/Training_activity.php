@@ -371,7 +371,7 @@ class Training_activity extends CI_Controller {
                         </td>
                         <td style="font-size: 14px; text-align: left; margin:2px;">
                             <b>' . $config->name . '</b><br>
-                            <small>TER CATEGORIES</small>
+                            <small>HUMAN RESOURCE INFORMATION SYSTEM</small>
                         </td>
                     </tr>
                 </table>

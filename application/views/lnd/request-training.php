@@ -446,10 +446,10 @@
                             return '<div style="background-color:orange;color:white;padding:5px;">Remark: ' + row.approvedData + ' </div>';
                         }else {
                             if(value === '-1') {
-                                const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Bpk. ' + inputterName : 'Ibu ' + inputterName);
+                                const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Pak ' + inputterName : 'Ibu ' + inputterName);
                                 return '<div style="background-color:red;color:white;padding:5px;">' + label + '</div>';
                             }else{
-                                const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Bpk. ' + approverName : 'Ibu ' + approverName);
+                                const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Pak ' + approverName : 'Ibu ' + approverName);
                                 return '<div style="background-color:green;color:white;padding:5px;">' + label + '</div>';
 
                             }
