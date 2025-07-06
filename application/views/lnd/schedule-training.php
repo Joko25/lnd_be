@@ -18,7 +18,7 @@
                         <input style="width:30%;" id="trainingDateFilter" class="easyui-combogrid">
                     </div>
                     <div class="fitem">
-                        <span style="width:35%; display:inline-block;">Training Material</span>
+                        <span style="width:35%; display:inline-block;">Training Name</span>
                         <input style="width:60%;" id="trainingMaterialFilter" class="easyui-combogrid">
                     </div>
                     <div class="fitem">
@@ -202,7 +202,7 @@
 			textField: 'trainingActivity',
 			mode: 'remote',
 			fitColumns: true,
-			prompt: 'Choose Training Material',
+			prompt: 'Choose Training Name',
 			icons: [{
 				iconCls: 'icon-clear',
 				handler: function(e) {

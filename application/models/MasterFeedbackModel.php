@@ -51,6 +51,7 @@ class MasterFeedbackModel extends CI_Model {
 
     public function insertQuestion($data) {
         $insert = [
+            'id' => $this->uuid(),
             'title' => $data['title'],
             'instruction' => $data['instruction'],
             'json_feedback' => json_encode($data['question']),
@@ -64,5 +65,17 @@ class MasterFeedbackModel extends CI_Model {
     public function delete_data($id) {
         $this->db->where('id', $id);
         $this->db->delete('lnd_master_feedback');
+    }
+
+    private function uuid()
+    {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+        );
     }
 }

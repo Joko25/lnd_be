@@ -337,6 +337,14 @@ class CuriculumModel extends CI_Model {
         return $this->db->get()->result();
     }
 
+    public function get_indicator_list()
+    {
+        // Ambil distinct curriculum_id, latest updatedTime, dan jumlah competence
+        $this->db->select('id, indicator_name');
+        $this->db->from('lnd_curriculum_indicator');
+        return $this->db->get()->result();
+    }
+
     private function uuid()
     {
         return sprintf(

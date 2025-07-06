@@ -194,7 +194,8 @@ class Form_test extends CI_Controller {
             'history_feedback_id'   => $this->input->post('history_feedback_id') ? $this->input->post('history_feedback_id') : null,
             // Ambil createdBy/updatedBy dari POST jika ada, jika tidak, dari session, jika tidak ada juga, default 'system'
             'createdBy'             => $this->input->post('createdBy') ?? ($this->session->username ?? 'system'),
-            'updatedBy'             => $this->input->post('updatedBy') ?? ($this->session->username ?? 'system')
+            'updatedBy'             => $this->input->post('updatedBy') ?? ($this->session->username ?? 'system'),
+            'trainer_id_arr'        => $this->input->post('trainingTrainerId')
         ];
 
         if ($this->input->post('test_date')) {

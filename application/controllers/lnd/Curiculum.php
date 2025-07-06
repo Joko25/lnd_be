@@ -34,7 +34,9 @@ class Curiculum extends CI_Controller {
 
     public function datatables()
     {
-        $curriculum_id = $this->input->get('curriculumId', true); // optional filter by curriculum_id
+        $competence_id = $this->input->get('competence_id', true);
+        $training_activity_id = $this->input->get('training_activity_id', true);
+        $indicator_id = $this->input->get('indicator_id', true); // optional filter by curriculum_id
         $page = $this->input->post('page');
         $rows = $this->input->post('rows');
 
@@ -62,8 +64,16 @@ class Curiculum extends CI_Controller {
         $this->db->join('lnd_training_activity d', 'b.training_activity = d.id', 'left'); // join ke master activity
         $this->db->join('lnd_competence e', 'e.competenceId = a.competence_standard', 'left'); // join ke master activity
 
-        if (!empty($curriculum_id)) {
-            $this->db->where('a.curriculum_id', $curriculum_id);
+        if (!empty($competence_id)) {
+            $this->db->where('a.competenceId', $competence_id);
+        }
+
+        if (!empty($training_activity_id)) {
+            $this->db->where('d.id', $training_activity_id);
+        }
+
+        if (!empty($indicator_id)) {
+            $this->db->where('c.id', $indicator_id);
         }
 
         $this->db->stop_cache();
@@ -166,8 +176,16 @@ class Curiculum extends CI_Controller {
 
     public function get_curriculum_list()
     {
-        $this->load->model('Curriculum_model');
         $result = $this->CuriculumModel->get_curriculum_list();
+
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
+    }
+
+    public function get_indicator_list()
+    {
+        $result = $this->CuriculumModel->get_indicator_list();
 
         $this->output
             ->set_content_type('application/json')

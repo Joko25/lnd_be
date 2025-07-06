@@ -134,16 +134,46 @@ class Trainee_Training_History extends CI_Controller {
 				$html = '';
 				
 				if($records) {
+					$employeeCount = 0;
 					foreach ($records as $dataEmployee) {
-						# code...
-						$html .= '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}#approver {border-collapse: collapse;width: 50%;font-size: 10px;}#approver td, #approver th {border: 1px solid #ddd;padding: 2px;}#approver tr:nth-child(even){background-color: #f2f2f2;}#approver tr:hover {background-color: #ddd;}#approver th {padding-top: 2px;padding-bottom: 2px;text-align: center;color: black;}</style>
+						$employeeCount++;
+						
+						// Add page break for every employee except the first one
+						if ($employeeCount > 1) {
+							$html .= '<div style="page-break-before: always;"></div>';
+						}
+						
+						$html .= '<html><head><title>Print Data</title></head><style>
+							body {font-family: Arial, Helvetica, sans-serif;}
+							#customers {border-collapse: collapse;width: 100%;font-size: 10px;}
+							#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}
+							#customers tr:nth-child(even){background-color: #f2f2f2;}
+							#customers tr:hover {background-color: #ddd;}
+							#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}
+							#approver {border-collapse: collapse;width: 50%;font-size: 10px;}
+							#approver td, #approver th {border: 1px solid #ddd;padding: 2px;}
+							#approver tr:nth-child(even){background-color: #f2f2f2;}
+							#approver tr:hover {background-color: #ddd;}
+							#approver th {padding-top: 2px;padding-bottom: 2px;text-align: center;color: black;}
+							.page-header {position: relative; width: 100%; margin-bottom: 20px;}
+							.form-label {position: absolute; top: 0; right: 0; font-size: 10px; font-weight: bold; color: #333;}
+							.header-content {display: flex; justify-content: space-between; align-items: flex-start; margin-top: 30px;}
+							.company-info {flex: 1; text-align: left;}
+							.print-info {flex: 1; text-align: right; margin-top: 10px;}
+							@media print {
+								.page-break {page-break-before: always;}
+							}
+						</style>
 						<style> .str{ mso-number-format:\@; } </style>
 						<body>
-						<center>
-							<div style="float: left; font-size: 12px; text-align: left;">
+						<div class="page-header">
+							<div class="form-label">FRM-L&D-005 Rev.01</div>
+						</div>
+						<div class="header-content">
+							<div class="company-info">
 								<table style="width: 100%;">
 									<tr>
-										<td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+										<td width="50" style="font-size: 12px; vertical-align: top; text-align: center; margin-right:10px;">
 											<img src="' . $config->favicon . '" width="30">
 										</td>
 										<td style="font-size: 14px; text-align: left; margin:2px;">
@@ -153,11 +183,14 @@ class Trainee_Training_History extends CI_Controller {
 									</tr>
 								</table>
 							</div>
-							<div style="float: right; font-size: 12px; text-align: right;">
-								Print Date ' . date("d M Y H:i:s") . ' <br>
-								Print By ' . $this->session->username . '  
+							<div class="print-info">
+								<div style="font-size: 12px; text-align: right;">
+									Print Date ' . date("d M Y H:i:s") . ' <br>
+									Print By ' . $this->session->username . '  
+								</div>
 							</div>
-						</center><br><br><br>
+						</div>
+						<br><br>
 						<center>
 							<h3 style="margin:0;">Trainee Training History</h3>
 							<p style="margin: 0">Period '. $form['filter_from'] .' to '. $form['filter_to'] .'</p>

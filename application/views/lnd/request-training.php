@@ -285,7 +285,7 @@
                         id: rowForm[i].id,
                         fullName: rowForm[i].fullName,
                         trainingRequestId: isUpdate ? updateId: id,
-                        national_id: rowForm[i].national_id,
+                        national_id: rowForm[i].employeeId,
                         position: rowForm[i].position,
                         departement: rowForm[i].departement,
                         departement_subs: rowForm[i].departement_subs,
@@ -397,7 +397,7 @@
                     height: 'auto',
                     columns: [[
                         {field: 'fullName', title: 'Full Name', width: 150, halign: 'center'},
-                        {field: 'national_id', title: 'Natinal ID', width: 150, halign: 'center'},
+                        {field: 'national_id', title: 'Employee ID', width: 150, halign: 'center'},
                         {field: 'position', title: 'Position', width: 150, halign: 'left'},
                         {field: 'departement', title: 'Departement', width: 150, align: 'center'},
                         {field: 'departement_subs', title: 'Sub Departement', width: 150, align: 'center'},
@@ -446,10 +446,10 @@
                             return '<div style="background-color:orange;color:white;padding:5px;">Remark: ' + row.approvedData + ' </div>';
                         }else {
                             if(value === '-1') {
-                                const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Bpk. ' + inputterName : 'Ibu ' + inputterName);
+                                const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Pak ' + inputterName : 'Ibu ' + inputterName);
                                 return '<div style="background-color:red;color:white;padding:5px;">' + label + '</div>';
                             }else{
-                                const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Bpk. ' + approverName : 'Ibu ' + approverName);
+                                const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Pak ' + approverName : 'Ibu ' + approverName);
                                 return '<div style="background-color:green;color:white;padding:5px;">' + label + '</div>';
 
                             }
@@ -743,7 +743,7 @@
                         }
                     } 
                 },
-                { field: 'national_id', title: 'National ID', width: 200, align: 'center'},
+                { field: 'national_id', title: 'Employee ID', width: 200, align: 'center'},
                 { field: 'position_id', title: 'Position', width: 120, align: 'center' },
                 { field: 'departement_id', title: 'Department', width: 150, align: 'center' },
                 { field: 'departement_sub_id', title: 'Sub Department', width: 150, align: 'center' },
@@ -763,7 +763,7 @@
         $("#btnAdd").click(function() {
             $('#dgForm').datagrid('appendRow', {
                 full_name: '',
-                national_id: '',
+                employeeId: '',
                 position: '',
                 department: '',
                 sub_department: '',
@@ -1035,7 +1035,7 @@
                                             index: rowIndex,
                                             row: {
                                                 fullName: row.name,
-                                                national_id: row.national_id,
+												national_id: row.employeeId,
                                                 position: row.position,
                                                 departement: row.departement,
                                                 departement_subs: row.departement_subs,
@@ -1053,7 +1053,7 @@
                     width: 150,
                     readonly: true,
                     halign: 'center',
-                    title: "National ID",
+                    title: "Employee ID",
                     editor: {
                         type: 'textbox',
                         options: {
