@@ -754,7 +754,7 @@ class Request_training extends CI_Controller {
         <th width="10%">Tanggal Masuk</th>
       </tr>';
 
-		$this->db->select('*');
+		$this->db->select('*, DATE_FORMAT(date_sign, "%Y-%m-%d") as date_sign_converted');
 		$this->db->from('lnd_request_training_trainee');
 		$this->db->where('trainingRequestId', $option);
 		$traineeList = $this->db->get()->result_array();
@@ -767,7 +767,7 @@ class Request_training extends CI_Controller {
 			<td>'. $trainee['position'] .'</td>
 			<td>'. $trainee['departement_subs'] .'</td>
 			<td>'. $trainee['departement'] .'</td>
-			<td>'. $trainee['date_sign'] .'</td>
+			<td>'. $trainee['date_sign_converted'] .'</td>
 		  </tr>';
 			$no++;
 		}
@@ -800,16 +800,33 @@ class Request_training extends CI_Controller {
     </table>
 
     <br />
-    <center><strong>APPROVAL</strong></center>
-    <table>
+    <center><strong>APPROVAL</strong></center>';
+
+		$this->db->select('*, DATE_FORMAT(approved_date, "%Y-%m-%d") as approved_date_convert');
+		$this->db->from('lnd_request_training_approvals_history');
+		$this->db->where('trainingRequestId', $result->requestTrainingId);
+		$historyApprovalTraining = $this->db->get()->result_array();
+
+		$approvedDateBod = '';
+		$approvedDateDivHead = '';
+
+		foreach ($historyApprovalTraining as $approval) {
+			if($approval['approved'] == '2') {
+				$approvedDateBod = $approval['approved_date_convert'];
+			} else if($approval['approved'] == '3') {
+				$approvedDateDivHead = $approval['approved_date_convert'];
+			}
+		}
+
+    $html .= '<table>
       <tr>
         <td class="signature">
           BOD<br /><br /><u>(..................................)</u><br />Tgl:
-          ....................
+          '.$approvedDateBod.'
         </td>
         <td class="signature">
           L&D Div Head<br /><br /><u>(..................................)</u
-          ><br />Tgl: ....................
+          ><br />Tgl: '.$approvedDateDivHead.'
         </td>
       </tr>
     </table>
