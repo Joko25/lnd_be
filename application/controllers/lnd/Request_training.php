@@ -137,6 +137,7 @@ class Request_training extends CI_Controller {
         $totalRows = $this->db->count_all_results();
         
         // Ambil data dengan limit dan offset
+		$this->db->order_by('suggestDate', 'ASC');
         $this->db->limit($rows, $offset);
         $records = $this->db->get()->result_array();
         $this->db->flush_cache(); // Hapus cache query
