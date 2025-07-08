@@ -137,6 +137,7 @@ class Request_training extends CI_Controller {
         $totalRows = $this->db->count_all_results();
         
         // Ambil data dengan limit dan offset
+		$this->db->order_by('suggestDate', 'ASC');
         $this->db->limit($rows, $offset);
         $records = $this->db->get()->result_array();
         $this->db->flush_cache(); // Hapus cache query
@@ -543,4 +544,416 @@ class Request_training extends CI_Controller {
             mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
         );
     }
+
+	//PRINT & EXCEL DATA
+	public function print($option = "")
+	{
+		if ($option == "excel") {
+			$format = date("Ymd");
+			header("Content-type: application/vnd-ms-excel");
+			header("Content-Disposition: attachment; filename=schedule_training_$format.xls");
+		}
+		//Config
+		$this->db->select('*');
+		$this->db->from('config');
+		$config = $this->db->get()->row();
+
+		$escapedId = $this->db->escape($option); // Will be quoted and escaped
+
+		$sql = "
+        SELECT
+            a.*,
+            DATE_FORMAT(a.suggestDateTraining, '%Y-%m-%d') as suggestDate,
+            a.status as statusTraining,
+            rth.status as statusApproval,
+            rth.approved as statusApproved,
+            rth.approval_data as approvedData,
+            rth.approved_by as approved_by,
+            rth.approved_date as approved_date,
+            COALESCE(e.name, a.trainer_name) as trainerName,
+            employeeApprover.gender as gender,
+            u.name as approverName,
+            userReject.name as inputter,
+            employeeReject.departement_id as departmentInputter
+        FROM lnd_request_training a
+        LEFT JOIN (
+            SELECT rth_inner.*
+            FROM lnd_request_training_approvals_history rth_inner
+            INNER JOIN (
+                SELECT
+                    trainingRequestId,
+                    MAX(approved_date) AS max_approved_date,
+                    MAX(approved) AS max_approved_for_tiebreaker
+                FROM lnd_request_training_approvals_history
+                GROUP BY trainingRequestId
+            ) AS latest_rth
+            ON rth_inner.trainingRequestId = latest_rth.trainingRequestId
+            AND rth_inner.approved_date = latest_rth.max_approved_date
+            AND rth_inner.approved = latest_rth.max_approved_for_tiebreaker
+        ) AS rth ON a.requestTrainingId = rth.trainingRequestId
+        LEFT JOIN employees e ON a.trainer_name = e.id
+        LEFT JOIN users u ON rth.approved_to = u.username
+        LEFT JOIN employees employeeApprover ON u.number = employeeApprover.number
+        LEFT JOIN users userReject ON rth.approved_by = userReject.username
+        LEFT JOIN employees employeeReject ON userReject.number = employeeReject.number
+        WHERE a.id = $escapedId
+    ";
+
+		// Execute the query
+		$query = $this->db->query($sql);
+		$result = $query->row();
+
+		$html = '
+		<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Permohonan Riquest Training</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+        margin: 20px;
+        border: 1px solid #000;
+      }
+
+      h2 {
+        text-align: center;
+        font-size: 16px;
+        text-transform: uppercase;
+      }
+
+      .catatan-container {
+        display: flex;
+      }
+
+      .arrow-box {
+        position: relative;
+        width: 100px;
+        height: 45px;
+        border: 1px solid black;
+        margin-right: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      .arrow-box::after {
+        content: "";
+        position: absolute;
+        right: -20px;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-top: 22.5px solid transparent;
+        border-bottom: 22.5px solid transparent;
+        border-left: 20px solid black;
+      }
+
+      .catatan-text {
+        font-size: 11px;
+      }
+
+      .catatan-text p {
+        margin: 0 0 3px 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      td,
+      th {
+        border: 1px solid #000;
+        padding: 4px;
+        vertical-align: top;
+      }
+
+      .no-border {
+        border: none !important;
+      }
+
+      .center {
+        text-align: center;
+      }
+
+      .checkbox {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border: 1px solid #000;
+        margin-right: 4px;
+        vertical-align: middle;
+      }
+
+	  .checkbox-checked  {
+	    display: inline-block;
+        width: 12px;
+        height: 12px;
+        border: 1px solid #000;
+        margin-right: 4px;
+        vertical-align: middle;
+	  	color: #000;
+	  }
+
+      .signature {
+        height: 80px;
+        text-align: center;
+        vertical-align: bottom;
+      }
+
+      .signature u {
+        display: inline-block;
+        margin-top: 40px;
+      }
+
+      .small-note {
+        font-size: 10px;
+        margin-top: 8px;
+      }
+    </style>
+  </head>
+  <body>
+  <center>
+            <div style="float: left; font-size: 12px; text-align: left;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+                            <img src="' . $config->favicon . '" width="30">
+                        </td>
+                        <td style="font-size: 14px; text-align: left; margin:2px;">
+							<b>' . $config->name . '</b><br>
+							<small>' . $config->description . '</small>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="float: right; font-size: 12px; text-align: right;">
+                Print Date ' . date("d M Y H:m:s") . ' <br>
+                Print By ' . $this->session->username . '
+            </div>
+        </center>
+        <br/>
+                <br/>
+        <br/>
+        <br/>
+
+    <h2>PERMOHONAN REQUEST TRAINING</h2>
+	<table>
+	
+    <div class="catatan-container">
+    	<td style="padding-left: 10px; padding-top: 10px; padding-bottom: 0px;">
+      		<div class="arrow-box">Catatan</div>
+      	</td>
+      	<td>
+			<div class="catatan-text">
+				<p>
+				  1. Formulir ini bisa digunakan untuk internal dan external training.
+				</p>
+				<p>
+				  2. Diisi oleh atasan (Dept. Head) untuk disetujui oleh management.
+				</p>
+				<p>3. Diserahkan kepada L&D Supervisor untuk ditindak lanjuti.</p>
+				<p>
+				  4. Copy Certificate training diserahkan ke L&D supervisor untuk
+				  kepentingan up-dating dan Filling.
+				</p>
+			</div>
+		</td>
+      
+    </div>
+	</table>
+    <table>
+      <tr>
+        <td style="border: none" width="30%">Kepada</td>
+        <td style="border-left: none; border-bottom: none; border-top: none" width="50%">: BOD / L&D Divison Head</td>
+        <td style="border-top: none; border-bottom: none;" width="20%"><center>Pemohon,</center></td>
+      </tr>
+      <tr>
+        <td style="border: none">Dari</td>
+        <td style="border-left: none; border-bottom: none; border-top: none">
+          : '. $result->createdBy .'
+        </td>
+        <td style="border-top: none; border-bottom: none;"><center>Dept. Head</center></td>
+      </tr>
+      <tr>
+        <td style="border: none">Dept</td>
+        <td style="border-left: none; border-bottom: none; border-top: none">
+          : '. $result->departmentInputter .'
+        </td>
+        <td style="border-top: none; border-bottom: none;"></td>
+        
+      </tr>
+      <tr>
+        <td style="border: none">Materi Training</td>
+        <td style="border-left: none; border-bottom: none; border-top: none">
+          : '. $result->trainingActivities .'
+        </td>
+        <td style="border-top: none; border-bottom: none;"></td>
+      </tr>
+      <tr>
+        <td style="border: none">Nama Trainer</td>
+        <td style="border-left: none; border-bottom: none; border-top: none">
+          : '. $result->trainerName .'
+        </td>
+        <td style="border-top: none; border-bottom: none;"></td>
+      </tr>
+      <tr>
+        <td style="border: none">Tgl. Training</td>
+        <td style="border-left: none; border-bottom: none; border-top: none">
+          : '. $result->suggestDate .'
+        </td>
+        <td style="border-top: none; border-bottom: none;"></td>
+      </tr>
+      <tr>
+        <td style="border: none">Tempat</td>
+        <td style="border-left: none; border-bottom: none; border-top: none">
+          : PT. PIRANTI TEKNIK INDONESIA
+        </td>
+        <td style="border-top: none; border-bottom: none;"></td>
+      </tr>
+      <tr>
+        <td style="border: none">Jam</td>
+        <td style="border-left: none; border-bottom: none; border-top: none">
+          :
+        </td>
+        <td style="border-top: none; border-bottom: none;"><center><u>(............................)</u></center></td>
+      </tr>
+      <tr>
+      	<td style="border-left: none; border-top: none; border-right: none">
+      		Tick salah satu
+      	</td>
+      	<td style="border-left: none; border-top: none">
+      	:
+          <span class="checkbox">'. ($result->trainer === 'Internal' ? '✔' : '') .'</span> Trainer Internal &nbsp;&nbsp;&nbsp;
+          <span class="checkbox-checked">'. ($result->trainer === 'External' ? '✔' : '') .'</span> Trainer External
+        </td>
+        <td style="border-top: none"><center>Tgl: ....................</center></td>
+	  </tr>
+    </table>
+
+    <p>
+      <strong><u>EXTERNAL TRAINING</u></strong> (diisi hanya untuk external
+      Training dan Sertakan proposal dan brosur)
+    </p>
+
+    <table>
+      <tr>
+        <td class="no-border" width="40%">
+          Perkiraan biaya untuk external training
+        </td>
+        <td class="no-border" width="20%">
+          Rp '. $result->trainerFees .'
+        </td>
+        <td class="no-border" width="15%">Penyelenggara :</td>
+        <td class="no-border" width="25%">
+        </td>
+      </tr>
+    </table>
+
+    <br />
+    <center style="border-top: 1px solid #000"><strong>CALON PESERTA TRAINING</strong></center>
+    <table>
+      <tr class="center">
+        <th width="5%">No</th>
+        <th width="20%">Nama</th>
+        <th width="15%">NIK</th>
+        <th width="20%">Jabatan</th>
+        <th width="15%">Bagian / Section</th>
+        <th width="15%">Departemen</th>
+        <th width="10%">Tanggal Masuk</th>
+      </tr>';
+
+		$this->db->select('*, DATE_FORMAT(date_sign, "%Y-%m-%d") as date_sign_converted');
+		$this->db->from('lnd_request_training_trainee');
+		$this->db->where('trainingRequestId', $option);
+		$traineeList = $this->db->get()->result_array();
+		$no = 1;
+		foreach ($traineeList as $trainee) {
+		 $html .= '<tr>
+			<td class="center">'. $no .'</td>
+			<td>'. $trainee['fullName'] .'</td>
+			<td>'. $trainee['national_id'] .'</td>
+			<td>'. $trainee['position'] .'</td>
+			<td>'. $trainee['departement_subs'] .'</td>
+			<td>'. $trainee['departement'] .'</td>
+			<td>'. $trainee['date_sign_converted'] .'</td>
+		  </tr>';
+			$no++;
+		}
+
+      $html.= '<tr>
+        <td class="center"></td>
+        <td colspan="6">&nbsp;</td>
+      </tr>
+    </table>
+
+    <br />
+    <strong>Alasan :</strong>
+    <table>
+      <tr>
+        <td><span class="checkbox">'. ($result->reasons === 'Promotion' ? '✔' : '') .'</span> Promosi</td>
+        <td><span class="checkbox">'. ($result->reasons === 'New Product' ? '✔' : '') .'</span> Produk baru</td>
+        <td><span class="checkbox">'. ($result->reasons === 'New System' ? '✔' : '') .'</span> System baru</td>
+      </tr>
+      <tr>
+        <td><span class="checkbox">'. ($result->reasons === 'Mutation' ? '✔' : '') .'</span> Mutasi</td>
+        <td><span class="checkbox">'. ($result->reasons === 'New Technology' ? '✔' : '') .'</span> Technology baru</td>
+        <td><span class="checkbox">'. ($result->reasons === 'Skill Upgrades' ? '✔' : '') .'</span> Peningkatan skill</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <span class="checkbox"></span> Lain-lain:
+          ..................................................
+        </td>
+      </tr>
+    </table>
+
+    <br />
+    <center><strong>APPROVAL</strong></center>';
+
+		$this->db->select('*, DATE_FORMAT(approved_date, "%Y-%m-%d") as approved_date_convert');
+		$this->db->from('lnd_request_training_approvals_history');
+		$this->db->where('trainingRequestId', $result->requestTrainingId);
+		$historyApprovalTraining = $this->db->get()->result_array();
+
+		$approvedDateBod = '';
+		$approvedDateDivHead = '';
+
+		foreach ($historyApprovalTraining as $approval) {
+			if($approval['approved'] == '2') {
+				$approvedDateBod = $approval['approved_date_convert'];
+			} else if($approval['approved'] == '3') {
+				$approvedDateDivHead = $approval['approved_date_convert'];
+			}
+		}
+
+    $html .= '<table>
+      <tr>
+        <td class="signature">
+          BOD<br /><br /><u>(..................................)</u><br />Tgl:
+          '.$approvedDateBod.'
+        </td>
+        <td class="signature">
+          L&D Div Head<br /><br /><u>(..................................)</u
+          ><br />Tgl: '.$approvedDateDivHead.'
+        </td>
+      </tr>
+    </table>
+
+    <p class="small-note">
+      <strong>Catatan :</strong><br />
+      - Lampiran training diisi oleh bag. training jika schedule belum dibuat
+      oleh pemohon.<br />
+      - Pelaksanaan internal dan external training harus ada approval dari L&D
+      Div Head dan BOD.
+    </p>
+  </body>
+</html>
+
+		';
+		echo $html;
+	}
 }
