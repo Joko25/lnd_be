@@ -36,7 +36,8 @@ class Master_form_test extends CI_Controller {
     public function datatables()
     {
         // Ambil parameter dari request
-        $competence_id = $this->input->get('competenceId', true); // Sanitize input GET
+        $filter_training_name = $this->input->get('filter_training_name', true); // Sanitize input GET
+        $filter_department = $this->input->get('filter_department', true); // Sanitize input GET
         $page = $this->input->post('page');
         $rows = $this->input->post('rows');
         
@@ -58,9 +59,13 @@ class Master_form_test extends CI_Controller {
         $this->db->join('lnd_schedule_training b', 'b.id = a.training_name', 'left');
         $this->db->join('lnd_training_activity c', 'c.id = b.trainingName', 'left');
         
-        if (!empty($competence_id)) {
-            $this->db->like('competenceId', $competence_id);
+        if (!empty($filter_training_name)) {
+            $this->db->where('b.id', $filter_training_name);
         }
+        if (!empty($filter_department)) {
+            $this->db->like('a.department', $filter_department);
+        }
+
         $this->db->stop_cache(); // Stop caching the query
 
         // Hitung total data (tanpa limit dan offset)

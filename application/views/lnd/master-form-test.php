@@ -8,11 +8,32 @@
             <legend><b>Form Filter Data</b></legend>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Training Name</span>
-                <input style="width:60%;" id="name" class="easyui-combogrid">
+                <input style="width:60%;" id="filter_training_name" class="easyui-combogrid" data-options="
+                        url: '<?= base_url('lnd/master_form_test/readsTrainings') ?>',
+                        idField: 'id',
+                        textField: 'name', 
+                        mode: 'remote',
+                        fitColumns: true,
+                        panelWidth: 500,
+                        columns: [[
+                            {field:'name',title:'Training Name',width:200},
+                            {field:'induction',title:'Induction',width:200}
+                    ]]">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Departement</span>
-                <input style="width:60%;" id="training_activity_id" class="easyui-combogrid">
+                <input style="width:60%;" id="filter_department" class="easyui-combobox" data-options="
+                            url: '<?= base_url('employee/departements/reads') ?>',
+                            valueField: 'name',
+                            textField: 'name',
+                            prompt: 'Select Departement',
+                            icons: [{
+                                iconCls: 'icon-clear',
+                                handler: function(e) {
+                                    $(e.data.target).combobox('clear').combobox('textbox').focus();
+                                }
+                            }]
+                        ">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;"></span>
@@ -503,9 +524,18 @@
 
 
     function filter() {
-        var master_form_test_id = $("#master_form_test_id").combogrid('getValue');
+        var filter_training_name = $("#filter_training_name").combogrid('getValue');
+        var filter_department = $("#filter_department").combobox('getValue');
+        
 
-        var params = "?master_form_testId=" + master_form_test_id ;
+
+        var params = '';
+        if (filter_training_name) {
+            params += '?filter_training_name=' + encodeURIComponent(filter_training_name);
+        }
+        if (filter_department) {
+            params += (params ? '&' : '?') + 'filter_department=' + encodeURIComponent(filter_department);
+        }
 
         $('#dg').datagrid({
             url: '<?= base_url('lnd/master_form_test/datatables') ?>' + params
