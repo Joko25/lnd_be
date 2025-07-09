@@ -223,7 +223,7 @@
                                 $('#dg').datagrid('reload');
                                 toastr.success(data.message, 'Success');
                             } else {
-                                toastr.success("Something Wrong", 'error');
+                                toastr.error("Something Wrong", 'error');
                             }
                         })
                         .catch(error => {
