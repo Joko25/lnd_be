@@ -858,24 +858,36 @@
     } 
 
     // PRINT PDF
-	function pdf(id) {
+	function pdf() {
 		const iframe = document.getElementById("printout");
 		const row = $('#dg').datagrid('getSelected');
 
-		// Set the onload BEFORE setting src to ensure it catches the event
-		iframe.onload = function () {
-			// Trigger print inside iframe when it's loaded
-			this.contentWindow.print();
-		};
+		if(row) {
+			// Set the onload BEFORE setting src to ensure it catches the event
+			iframe.onload = function () {
+				// Trigger print inside iframe when it's loaded
+				this.contentWindow.print();
+			};
 
-		// Set the source with ID parameter
-		iframe.src = '<?= base_url('lnd/request_training/print') ?>/' + row.id;
+			// Set the source with ID parameter
+			iframe.src = '<?= base_url('lnd/request_training/print') ?>/' + row.id;
+		} else {
+			alert("Please select a row first.");
+		}
+
 	}
 
      //PRINT EXCEL
-     function excel() {
-         window.location.assign('<?= base_url('lnd/request_training/print/excel') ?>');
-     }
+	function excel() {
+		const row = $('#dg').datagrid('getSelected');
+
+		if (row) {
+			// Go to the export URL with the selected ID
+			window.location.assign('<?= base_url('lnd/request_training/print/excel') ?>/' + row.id);
+		} else {
+			alert("Please select a row first.");
+		}
+	}
 
     //UPLOAD DATA
     // $('#dlg_upload').dialog({

@@ -14,6 +14,7 @@ class Request_training extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model('crud');
         $this->load->model('LndModel');
+		$this->load->library('Ciqrcode');
 
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
@@ -546,19 +547,21 @@ class Request_training extends CI_Controller {
     }
 
 	//PRINT & EXCEL DATA
-	public function print($option = "")
+	public function print($option = "", $id = '')
 	{
+
 		if ($option == "excel") {
 			$format = date("Ymd");
 			header("Content-type: application/vnd-ms-excel");
 			header("Content-Disposition: attachment; filename=schedule_training_$format.xls");
+			$lala = $id;
 		}
 		//Config
 		$this->db->select('*');
 		$this->db->from('config');
 		$config = $this->db->get()->row();
 
-		$escapedId = $this->db->escape($option); // Will be quoted and escaped
+		$escapedId = $this->db->escape($option == 'excel' ? $id : $option); // Will be quoted and escaped
 
 		$sql = "
         SELECT
@@ -921,25 +924,74 @@ class Request_training extends CI_Controller {
 
 		$approvedDateBod = '';
 		$approvedDateDivHead = '';
+		$approvedNameBod = '';
+		$approvedNameDivHead = '';
+
 
 		foreach ($historyApprovalTraining as $approval) {
-			if($approval['approved'] == '2') {
+			if($approval['approved'] == '3') {
 				$approvedDateBod = $approval['approved_date_convert'];
-			} else if($approval['approved'] == '3') {
+				$approvedNameBod = $approval['approved_by'];
+			} else if($approval['approved'] == '4') {
 				$approvedDateDivHead = $approval['approved_date_convert'];
+				$approvedNameDivHead = $approval['approved_by'];
 			}
 		}
 
-    $html .= '<table>
+		$qrUrlBOD = '';
+		$qrUrlDivHead = '';
+//START BOD QR CODE
+		$qrTextBOD = $approvedNameBod;
+		if($approvedNameBod != '') {
+			$filenameBOD = 'qr_' . strtolower(str_replace(' ', '_', $qrTextBOD)) . '.png';
+			$pathBOD = 'assets/image/qrcode/';
+			$savePathBOD = FCPATH . $pathBOD . $filenameBOD; // Full physical path to save
+			$paramsBOD['data'] = $qrTextBOD;
+			$paramsBOD['level'] = 'H'; // High error correction
+			$paramsBOD['size'] = 2;
+			$paramsBOD['savename'] = $savePathBOD;
+			$this->ciqrcode->generate($paramsBOD);
+			$qrUrlBOD = base_url($pathBOD . $filenameBOD);
+		}
+//END BOD QR CODE
+
+//START DIV HEAD QR CODE
+		$qrText = $approvedNameDivHead;
+		if($approvedNameDivHead != '') {
+			$filename = 'qr_' . strtolower(str_replace(' ', '_', $qrText)) . '.png';
+			$path = 'assets/image/qrcode/';
+			$savePath = FCPATH . $path . $filename; // Full physical path to save
+			$params['data'] = $qrText;
+			$params['level'] = 'H'; // High error correction
+			$params['size'] = 2;
+			$params['savename'] = $savePath;
+			$this->ciqrcode->generate($params);
+			$qrUrlDivHead = base_url($path . $filename);
+		}
+//START DIV HEAD QR CODE
+
+		$html .= '<table>
       <tr>
         <td class="signature">
-          BOD<br /><br /><u>(..................................)</u><br />Tgl:
-          '.$approvedDateBod.'
-        </td>
+          BOD<br /><br />';
+        if($qrUrlBOD == '') {
+			$html .= '<u>(..................................)</u><br />Tgl: ....................';
+		} else {
+			$html .= '<img src = "' . $qrUrlBOD . '"<br /><br />Tgl:
+			  '.$approvedDateBod.'';
+		}
+        $html .= '<br /></td>
         <td class="signature">
-          L&D Div Head<br /><br /><u>(..................................)</u
-          ><br />Tgl: '.$approvedDateDivHead.'
-        </td>
+          L&D Div Head<br /><br />';
+
+		if($qrUrlDivHead == '') {
+			$html .= '<u>(..................................)</u><br />Tgl: ....................';
+		} else {
+			$html .= '<img src = "' . $qrUrlDivHead . '"<br /><br />Tgl: 
+			  '.$approvedDateDivHead.'';
+		}
+
+        $html .= '</td>
       </tr>
     </table>
 
