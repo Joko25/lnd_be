@@ -15,6 +15,7 @@
                         mode: 'remote',
                         fitColumns: true,
                         panelWidth: 500,
+                        prompt: 'Select Training Name',
                         columns: [[
                             {field:'name',title:'Training Name',width:200},
                             {field:'induction',title:'Induction',width:200}

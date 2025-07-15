@@ -32,7 +32,7 @@
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Departement</span>
-                        <input style="width:60%;" id="departementFilter" class="easyui-combogrid">
+                        <input style="width:60%;" id="departementFilter" class="easyui-combobox">
                     </div>
                 </div>
             </fieldset>
@@ -659,27 +659,18 @@
             ],
         });
 
-        $('#departementFilter').combogrid({
-            url: '<?= base_url('lnd/request_training/readsTrainee') ?>',
+        $('#departementFilter').combobox({
+            url: '<?= base_url('employee/departements/reads') ?>',
             panelWidth: 450,
             idField: 'id',
-            textField: 'departement',
-            mode: 'remote',
-            fitColumns: true,
-            prompt: 'Choose All',
+            textField: 'name',
+            prompt: 'Select Departement',
             icons: [{
                 iconCls: 'icon-clear',
                 handler: function(e) {
-                    $(e.data.target).combogrid('clear').combogrid('textbox').focus();
+                    $(e.data.target).combobox('clear').combobox('textbox').focus();
                 }
-            }],
-            columns: [
-                [{
-                    field: 'departement',
-                    title: 'Departement',
-                    width: 120
-                }]
-            ],
+            }]
         });
     });
     
