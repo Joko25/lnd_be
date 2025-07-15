@@ -46,11 +46,12 @@ class Schedule_training extends CI_Controller {
         $offset = ($page - 1) * $rows;
 		// Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, a.id as id_training, b.*, e.name, e.id as departementId, ta.id as trainingActivityId, ta.trainingActivities as trainingActivity, st.trainer_name, st.trainer_id, st.trainer_id as trainingTrainerId');
+        $this->db->select('a.*, a.id as id_training, b.*, e.name, e.id as departementId, COALESCE(ta.id, rt.id) as trainingActivityId, COALESCE(ta.trainingActivity, rt.trainingActivities) as trainingActivity, st.trainer_name, st.trainer_id, st.trainer_id as trainingTrainerId');
         $this->db->from('lnd_schedule_training a');
         $this->db->join('lnd_schedule_training_dates b', 'a.id = b.training_id', 'left');
 		$this->db->join('departements e', 'e.id = a.trainee', 'left');
-		$this->db->join('lnd_request_training ta', 'ta.id = a.trainingName', 'left');
+		$this->db->join('lnd_request_training rt', 'rt.id = a.trainingName', 'left');
+		$this->db->join('lnd_training_activity ta', 'ta.id = a.trainingName', 'left');
 		$this->db->join('lnd_schedule_trainers st', 'a.id = st.training_id', 'left');
 
          if (!empty($trainingName)) {
@@ -65,7 +66,7 @@ class Schedule_training extends CI_Controller {
         $totalRows = $this->db->count_all_results();
         
         // Ambil data dengan limit dan offset
-        $this->db->order_by('a.createdTime', 'ASC');
+        $this->db->order_by('a.induction', 'ASC');
         $this->db->limit($rows, $offset);
         $records = $this->db->get()->result_array();
         $this->db->flush_cache(); // Hapus cache query
@@ -391,8 +392,26 @@ class Schedule_training extends CI_Controller {
 	public function readsTrainingActivity()
 	{
 		$induction = $this->input->get('induction') ? $this->input->get('induction') : "";
-		$send = $this->crud->query("SELECT a.*, a.trainingActivities as trainingActivity, a.reasons as competenceName FROM lnd_request_training a JOIN lnd_request_training_approvals_history b on b.trainingRequestId = a.requestTrainingId AND b.approved = 4 WHERE a.induction = '$induction' ORDER BY a.requestTrainingId ASC");
-		echo json_encode($send);
+
+		// Query 1: From lnd_training_activity
+		$activity = $this->crud->query("SELECT a.*, b.name as competenceName 
+        FROM lnd_training_activity a 
+        JOIN lnd_competence b ON a.competenceId = b.id 
+        WHERE a.induction = '$induction' 
+        ORDER BY a.index ASC");
+
+		// Query 2: From lnd_request_training
+		$request = $this->crud->query("SELECT a.*, a.trainingActivities as trainingActivity, a.reasons as competenceName 
+        FROM lnd_request_training a 
+        JOIN lnd_request_training_approvals_history b 
+            ON b.trainingRequestId = a.requestTrainingId 
+        WHERE a.induction = '$induction' AND b.approved = 4 
+        ORDER BY a.requestTrainingId ASC");
+
+		// Combine both into one response
+		$combined = array_merge($activity, $request);
+
+		echo json_encode($combined);
 	}
 
 	public function readsEmployeesLeaderUp()
@@ -574,17 +593,19 @@ class Schedule_training extends CI_Controller {
 		    a.id as id_training, 
 		    GROUP_CONCAT(DISTINCT st.trainer_name SEPARATOR ', ') as trainers, 
 		    GROUP_CONCAT(DISTINCT b.training_date SEPARATOR ', ') as training_dates, 
-		    e.name as trainee_name, 
+		    COALESCE(e.name, a.category) as trainee_name, 
 		    e.id as departementId, 
-		    ta.id as trainingActivityId, 
-		    ta.trainingActivities as trainingActivity
+		    COALESCE(ta.id,rt.id) as trainingActivityId, 
+		    COALESCE(ta.trainingActivity,rt.trainingActivities) as trainingActivity
 		");
 		$this->db->from('lnd_schedule_training a');
 		$this->db->join('lnd_schedule_training_dates b', 'a.id = b.training_id', 'left');
 		$this->db->join('departements e', 'e.id = a.trainee', 'left');
-		$this->db->join('lnd_request_training ta', 'ta.id = a.trainingName', 'left');
+		$this->db->join('lnd_training_activity ta', 'ta.id = a.trainingName', 'left');
+		$this->db->join('lnd_request_training rt', 'rt.id = a.trainingName', 'left');
 		$this->db->join('lnd_schedule_trainers st', 'a.id = st.training_id', 'left');
 		$this->db->group_by('a.id');
+		$this->db->order_by('a.induction', 'ASC');
         $records = $this->db->get()->result_array();
 
 //        $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
