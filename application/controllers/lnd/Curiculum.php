@@ -65,7 +65,7 @@ class Curiculum extends CI_Controller {
         $this->db->join('lnd_competence e', 'e.competenceId = a.competence_standard', 'left'); // join ke master activity
 
         if (!empty($competence_id)) {
-            $this->db->where('a.competenceId', $competence_id);
+            $this->db->where('a.competence_standard', $competence_id);
         }
 
         if (!empty($training_activity_id)) {

@@ -553,7 +553,7 @@ class Request_training extends CI_Controller {
 		if ($option == "excel") {
 			$format = date("Ymd");
 			header("Content-type: application/vnd-ms-excel");
-			header("Content-Disposition: attachment; filename=schedule_training_$format.xls");
+			header("Content-Disposition: attachment; filename=request_training_$format.xls");
 			$lala = $id;
 		}
 		//Config
