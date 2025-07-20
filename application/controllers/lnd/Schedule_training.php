@@ -36,7 +36,12 @@ class Schedule_training extends CI_Controller {
     {
         // Ambil parameter dari request
 		$trainingName = $this->input->get('trainingName', true); // Sanitize input GET
-        $trainingActivityId = $this->input->get('id', true); // Sanitize input GET
+		$registerDate = $this->input->get('registerDate', true); // Sanitize input GET
+		$category = $this->input->get('category', true); // Sanitize input GET
+		$trainee = $this->input->get('trainee', true); // Sanitize input GET
+		$trainingDateFrom = $this->input->get('trainingDateFrom', true); // Sanitize input GET
+		$trainingDateEnd = $this->input->get('trainingDateEnd', true); // Sanitize input GET
+
         $page = $this->input->post('page');
         $rows = $this->input->post('rows');
         
@@ -54,16 +59,31 @@ class Schedule_training extends CI_Controller {
 		$this->db->join('lnd_training_activity ta', 'ta.id = a.trainingName', 'left');
 		$this->db->join('lnd_schedule_trainers st', 'a.id = st.training_id', 'left');
 
-         if (!empty($trainingName)) {
-             $this->db->like('a.trainingName', $trainingName);
-         }
-        // if (!empty($competenceId)) {
-        //     $this->db->like('a.competenceId', $competenceId);
-        // }
+		if (!empty($registerDate)) {
+			$this->db->where('a.registerDate', $registerDate);
+		}
+		if (!empty($trainingName)) {
+			$this->db->like('a.trainingName', $trainingName);
+		}
+		if (!empty($category)){
+			if($category == 'New') {
+				$this->db->like('a.category', 'New');
+			} else if ($category == 'Mutasi') {
+				$this->db->like('a.category', 'Mutasi');
+			} else {
+				$this->db->like('a.category', 'Departement');
+			}
+		}
+		if(!empty($trainee)){
+			$this->db->like('a.trainee', $trainee);
+		}
+		if(!empty($trainingDateFrom) && !empty($trainingDateEnd)){
+			$this->db->where("b.training_date BETWEEN '$trainingDateFrom' AND '$trainingDateEnd'");
+		}
         $this->db->stop_cache(); // Stop caching the query
         
         // Hitung total data (tanpa limit dan offset)
-        $totalRows = $this->db->count_all_results();
+//        $totalRows = $this->db->count_all_results();
         
         // Ambil data dengan limit dan offset
         $this->db->order_by('a.induction', 'ASC');
@@ -148,7 +168,7 @@ class Schedule_training extends CI_Controller {
 
 		// Mapping Data
         $result = [
-            'total' => $totalRows,
+            'total' => count($data),
             'rows' => $data
         ];
 
@@ -288,9 +308,10 @@ class Schedule_training extends CI_Controller {
     // GET DATA DEPARTEMENTS
     public function readsDepartements() 
     {
-//        $session_dept = $this->session->departement_id;
-        $send = $this->crud->reads('departements', [], [], "");
-        echo json_encode($send);
+		$departements = $this->crud->query("SELECT dep.id, dep.name, divs.name as division 
+		FROM departements dep
+		JOIN divisions divs ON dep.division_id = divs.id");
+        echo json_encode($departements);
     }
 
 	public function readsTrainingActivity()
@@ -602,34 +623,32 @@ class Schedule_training extends CI_Controller {
 
 // Start HTML
 		$months = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-		$html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
-<center>
-            <div style="float: left; font-size: 12px; text-align: left;">
-                <table style="width: 100%;">
-                    <tr>
-                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
-                            <img src="' . $config->favicon . '" width="30">
-                        </td>
-                        <td style="font-size: 14px; text-align: left; margin:2px;">
-							<b>' . $config->name . '</b><br>
-							<small>' . $config->description . '</small>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+		$html = '<html><head></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+		<center>
             <div style="float: right; font-size: 12px; text-align: right;">
-                Print Date ' . date("d M Y H:m:s") . ' <br>
-                Print By ' . $this->session->username . '
+                FRM-L&D-006 Rev.00
             </div>
         </center>
-        <br><br><br>
 ';
 		$html .= '<html><head><meta charset="UTF-8"></head><body>';
 		$html .= '<table border="1" style="border-collapse: collapse; font-family: Arial; font-size: 12px; width: 100%;">';
 
-		$html .= '<tr><td colspan="56" style="text-align: center; font-size: 16px; font-weight: bold;">
-            PT BANSHU ELECTRIC INDONESIA<br>SCHEDULE TRAINING
-          </td></tr>';
+		$html .= '<tr>
+			<td colspan="56" style="position: relative; text-align: center; font-size: 16px; font-weight: bold;">
+				<div style="position: absolute; top: 0; left: 0; font-size: 12px; text-align: left;">
+					<img src="' . $config->favicon . '" width="30">
+					<b>' . $config->name . '</b><br>
+					<small>' . $config->description . '</small>
+				</div>
+				PT BANSHU ELECTRIC INDONESIA<br>SCHEDULE TRAINING
+				<div style="position: absolute; top: 0; right: 0; font-size: 12px; text-align: right;">
+            	    Print Date ' . date("d M Y H:m:s") . ' <br>
+            	    Print By ' . $this->session->username . '
+            	</div>
+			</td>
+        </tr>
+        <tr></tr>
+        ';
 
 		$html .= '<tr style="background: #a9d08e; text-align: center; font-weight: bold;">
             <td rowspan="2">No.</td>

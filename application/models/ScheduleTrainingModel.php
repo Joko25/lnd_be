@@ -59,6 +59,8 @@ class ScheduleTrainingModel extends CI_Model {
 			unset($data['trainingTrainerId']);
 		}
         // Insert into master table
+		$data['updatedBy'] = null;
+		$data['updatedTime'] = null;
         $this->db->insert('lnd_schedule_training', $data);
 
         // Insert trainingDates (detail rows)
