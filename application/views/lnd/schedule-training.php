@@ -14,8 +14,9 @@
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Training Date</span>
-                        <input style="width:30%;" id="trainingDateFilter" class="easyui-combogrid">
-                        <input style="width:30%;" id="trainingDateFilter" class="easyui-combogrid">
+                        <input style="width:29%;" id="trainingDateFromFilter" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser, editable: false">
+                        To
+						<input style="width:28%;" id="trainingDateEndFilter" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser, editable: false">
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Training Name</span>
@@ -29,8 +30,13 @@
                 <div style="width:50%; float: left;">
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Category</span>
-                        <input style="width:60%;" id="categoryFilter" class="easyui-combogrid">
-                    </div>
+						<select style="width:60%;" name="categoryFilter" id="categoryFilter" required="" class="easyui-combobox" panelHeight="auto">
+							<option value="">Choose All</option>
+							<option value="New">New</option>
+							<option value="Mutasi">Mutasi</option>
+							<option value="Departement">Departement</option>
+						</select>
+					</div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Trainee</span>
                         <input style="width:60%;" id="traineeFilter" class="easyui-combogrid">
@@ -74,7 +80,7 @@
                             </td>
                             <td style="padding-bottom:5px;">
                                 <select class="easyui-combobox batch-count" style="width:100px;">
-                                    <option value="">Batch</option>
+<!--                                    <option value="">Batch</option>-->
                                     <?php for ($i = 1; $i <= 10; $i++): ?>
                                         <option value="<?= $i ?>"><?= $i ?> Batch<?= $i > 1 ? 'es' : '' ?></option>
                                     <?php endfor; ?>
@@ -118,7 +124,7 @@
 			<div id="trainers-wrapper">
 				<div class="fitem" id="trainerRow_1">
 					<span style="width:35%; display:inline-block;">Trainer Name</span>
-					<input style="width:60%;" name="trainerName[]" id="trainerName_1" required class="easyui-combobox" panelHeight="auto">
+					<input style="width:60%;" name="trainerName[]" id="trainerName_1" required class="easyui-combogrid">
 					<a href="javascript:void(0)" class="easyui-linkbutton" style="margin-left:5px;" onclick="addTrainer()">+</a>
 				</div>
 			</div>
@@ -222,6 +228,35 @@
 			],
 		});
 
+		$('#traineeFilter').combogrid({
+			url: '<?= base_url('lnd/schedule_training/readsDepartements') ?>',
+			panelWidth: 450,
+			idField: 'id',
+			textField: 'name',
+			mode: 'remote',
+			fitColumns: true,
+			prompt: 'Choose Department Name',
+			icons: [{
+				iconCls: 'icon-clear',
+				handler: function(e) {
+					$(e.data.target).combogrid('clear').combogrid('textbox').focus();
+				}
+			}],
+			columns: [
+				[
+					{
+						field: 'division',
+						title: 'Division Name',
+						width: 120
+					},
+					{
+						field: 'name',
+						title: 'Department Name',
+						width: 120
+					}]
+			],
+		});
+
 		$('#trainerName').combogrid({
 			url: '<?= base_url('lnd/schedule_training/readsEmployeesLeaderUp') ?>',
 			panelWidth: 450,
@@ -277,7 +312,7 @@
 		const trainerRow = $(`
         <div class="fitem" id="trainerRow_${defaultTrainerId}">
             <span style="width:35%; display:inline-block;">Trainer Name</span>
-            <input style="width:60%;" name="trainerName[]" id="trainerName_${defaultTrainerId}" required class="easyui-combogrid" panelHeight="auto">
+            <input style="width:60%;" name="trainerName[]" id="trainerName_${defaultTrainerId}" required class="easyui-combogrid">
             <input type="hidden" name="trainingTrainerId[]" id="trainingTrainerId_${defaultTrainerId}" value="">
             <a href="javascript:void(0)" class="easyui-linkbutton" style="margin-left:5px;" onclick="addTrainer()">+</a>
         </div>
@@ -431,7 +466,7 @@
 			const trainerRow = $(`
 			<div class="fitem" id="trainerRow_${trainerId}">
 				<span style="width:35%; display:inline-block;">Trainer Name</span>
-				<input style="width:60%;" name="trainerName[]" id="trainerName_${trainerId}" required class="easyui-combogrid" panelHeight="auto">
+				<input style="width:60%;" name="trainerName[]" id="trainerName_${trainerId}" required class="easyui-combogrid">
 				<input type="hidden" name="trainingTrainerId[]" id="trainingTrainerId_${trainerId}" value="${trainerUuid}">
 				${buttonHtml}
 			</div>
@@ -447,7 +482,7 @@
 				textField: 'name',
 				mode: 'remote',
 				fitColumns: true,
-				prompt: 'Choose Trainer Name',
+				prompt: 'Choose Trainer Nameeee',
 				icons: [{
 					iconCls: 'icon-clear',
 					handler: function (e) {
@@ -516,6 +551,7 @@
 					}
 				}],
 				columns: [[
+					{ field: 'division', title: 'Division Name', width: 120 },
 					{ field: 'name', title: 'Department Name', width: 120 }
 				]],
 				onLoadSuccess: function () {
@@ -771,10 +807,16 @@
                             }
                         }],
                         columns: [
-                            [{
-                                field: 'name',
-                                title: 'Department Name',
-                                width: 120
+                            [
+								{
+									field: 'division',
+									title: 'Division Name',
+									width: 120
+								},
+								{
+									field: 'name',
+									title: 'Department Name',
+									width: 120
                             }]
                         ],
                     });
@@ -1033,7 +1075,7 @@
 		div.id = `trainerRow_${trainerCount}`;
 		div.innerHTML = `
             <span style="width:35%; display:inline-block;"></span>
-            <input style="width:60%;" name="trainerName[]" id="trainerName_${currentId}" required class="easyui-combobox" panelHeight="auto">
+            <input style="width:60%;" name="trainerName[]" id="trainerName_${currentId}" required class="easyui-combobox">
             <a href="javascript:void(0)" class="easyui-linkbutton" style="margin-left:5px;" onclick="removeTrainer(${currentId})">❌</a>
         `;
 		wrapper.appendChild(div);
@@ -1075,9 +1117,20 @@
 
 	function filter() {
 		var trainingMaterialFilter = $("#trainingMaterialFilter").combogrid('getValue');
-		// var training_activity_id = $("#training_activity_id").combogrid('getValue');
+		var registerDateFilter = $("#registerDateFilter").datebox('getValue');
+		var categoryFilter = $("#categoryFilter").combogrid('getValue');
+		var traineeFilter = $("#traineeFilter").combogrid('getValue');
+		var trainingDateFromFilter = $("#trainingDateFromFilter").datebox('getValue');
+		var trainingDateEndFilter = $("#trainingDateEndFilter").datebox('getValue');
+
 		// debug_to_console(curiculum_id);
-		var params = "?trainingName=" + trainingMaterialFilter ;
+		var params = "?trainingName=" + trainingMaterialFilter +
+			"&registerDate=" + registerDateFilter +
+			"&category=" + categoryFilter +
+			"&trainee=" + traineeFilter +
+			"&trainingDateFrom=" + trainingDateFromFilter +
+			"&trainingDateEnd=" + trainingDateEndFilter
+		;
 
 		$('#dg').datagrid({
 			url: '<?= base_url('lnd/schedule_training/datatables') ?>' + params
