@@ -323,7 +323,7 @@ class Competence extends CI_Controller {
             $existingData = $this->db->get('lnd_competence')->row_array();
 
             if (!empty($existingData)) {
-                echo json_encode(array("title" => "Data Duplicated", "message" => "please check Competene Name => ". $data['trainingActivity'], "theme" => "error"));
+                echo json_encode(array("title" => "Data Duplicated", "message" => "silakan cek Competence Name => " . (isset($data['name']) ? $data['name'] : json_encode($data)), "theme" => "error"));
                 return;
             }
 

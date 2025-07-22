@@ -1,2 +1,1 @@
-Index  4 already exists 
-Competence Name cannot be Null
+silakan cek Competence Name => name4
