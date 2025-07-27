@@ -505,7 +505,6 @@ class Request_training extends CI_Controller {
         font-family: Arial, sans-serif;
         font-size: 11px;
         margin: 20px;
-        border: 1px solid #000;
       }
 
       h2 {
@@ -607,6 +606,14 @@ class Request_training extends CI_Controller {
     </style>
   </head>
   <body>
+  <div style="position: relative;">
+	  
+		<div style="position: absolute; top: 0; right: 0;">
+			FRM-L&D-006 Rev.00
+		</div>
+  </div>
+  <br/>
+  <div style="border: 1px solid black;">
   <center>
             <div style="float: left; font-size: 12px; text-align: left;">
                 <table style="width: 100%;">
@@ -890,6 +897,7 @@ class Request_training extends CI_Controller {
       - Pelaksanaan internal dan external training harus ada approval dari L&D
       Div Head dan BOD.
     </p>
+    </div>
   </body>
 </html>
 

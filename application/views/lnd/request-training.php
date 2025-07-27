@@ -660,10 +660,10 @@
         });
 
         $('#departementFilter').combogrid({
-            url: '<?= base_url('lnd/request_training/readsTrainee') ?>',
+            url: '<?= base_url('lnd/schedule_training/readsDepartements') ?>',
             panelWidth: 450,
             idField: 'id',
-            textField: 'departement',
+            textField: 'name',
             mode: 'remote',
             fitColumns: true,
             prompt: 'Choose All',
@@ -673,13 +673,19 @@
                     $(e.data.target).combogrid('clear').combogrid('textbox').focus();
                 }
             }],
-            columns: [
-                [{
-                    field: 'departement',
-                    title: 'Departement',
-                    width: 120
-                }]
-            ],
+			columns: [
+				[
+					{
+						field: 'division',
+						title: 'Division Name',
+						width: 120
+					},
+					{
+						field: 'name',
+						title: 'Department Name',
+						width: 120
+					}]
+			],
         });
     });
     

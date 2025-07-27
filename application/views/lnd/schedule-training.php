@@ -53,10 +53,20 @@
         <div>
             <h1>QR Pre Test</h1>
             <div id="qrcode-pretest"></div>
+			<div style="display: flex; flex-direction: column; align-items: stretch; margin-top: 10px; gap: 8px;">
+				<button onclick="downloadQR('qrcode-pretest', 'pre_test_qr.png')">⬇️ Download QR</button>
+				<button onclick="copyLink('pretest-url')">📋 Copy Link</button>
+				<input type="hidden" id="pretest-url">
+			</div>
         </div>
         <div>
             <h1>QR Post Test</h1>
             <div id="qrcode-posttest"></div>
+			<div style="display: flex; flex-direction: column; align-items: stretch; margin-top: 10px; gap: 8px;">
+				<button onclick="downloadQR('qrcode-posttest', 'post_test_qr.png')">⬇️ Download QR</button>
+				<button onclick="copyLink('posttest-url')">📋 Copy Link</button>
+				<input type="hidden" id="posttest-url">
+			</div>
         </div>
         
     </div>    
@@ -610,7 +620,9 @@
                     height: 228,
                     correctLevel: QRCode.CorrectLevel['H']
                 });
-            } else {
+				$('#pretest-url').val(url);
+
+			} else {
                 toastr.warning("Gagal mengambil data. Data training tidak di temukan.", "Warning");
                 // alert("Gagal mengambil data. Data training tidak di temukan.");
             }
@@ -620,7 +632,26 @@
         });
     }
 
-    function deleted() {
+	function downloadQR(qrElementId, filename) {
+		const canvas = document.querySelector(`#${qrElementId} canvas`);
+		if (!canvas) return alert("QR code not ready yet.");
+
+		const link = document.createElement("a");
+		link.href = canvas.toDataURL("image/png");
+		link.download = filename;
+		link.click();
+	}
+
+	function copyLink(inputId) {
+		const link = document.getElementById(inputId).value;
+		navigator.clipboard.writeText(link).then(() => {
+			toastr.success("Link copied to clipboard!");
+		}).catch(() => {
+			toastr.error("Failed to copy link.");
+		});
+	}
+
+	function deleted() {
         var rows = $('#dg').datagrid('getSelections');
         if (rows.length > 0) {
             $.messager.confirm('Warning', 'Are you sure you want to delete this data?', function(r) {
@@ -657,7 +688,7 @@
 
 	//DOWNLOAD EXCEL TEMPLATE
 	function download_excel() {
-		window.location.assign('<?= base_url('template/tmp_schedule_training.xls') ?>');
+		window.location.assign('<?= base_url('template/template_schedule_training.xls') ?>');
 	}
 
     function sendDataToServer(requestData) {
@@ -948,7 +979,6 @@
             </td>
             <td style="padding-bottom:5px;">
                 <select class="easyui-combobox batch-count" style="width:100px;">
-                    <option value="">Batch</option>
                     <?php for ($i = 1; $i <= 10; $i++): ?>
                         <option value="<?= $i ?>"><?= $i ?> Batch<?= $i > 1 ? 'es' : '' ?></option>
                     <?php endfor; ?>

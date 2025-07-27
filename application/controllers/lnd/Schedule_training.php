@@ -161,6 +161,16 @@ class Schedule_training extends CI_Controller {
 					$grouped[$key]['trainingTrainerId'] = $trainingTrainerid;
 				}
 			}
+			if(strpos($row['induction'], 'L&amp;D') !== false) {
+				$idTempIncorrectValue = $row['id_training'];
+				$originalIncorrectValue = $row['induction'];
+				$decodeIncorrectValue = html_entity_decode($row['induction']);
+
+				if($originalIncorrectValue != $decodeIncorrectValue) {
+					$this->db->where('id', $idTempIncorrectValue);
+					$this->db->update('lnd_schedule_training', ['induction' => $decodeIncorrectValue]);
+				}
+			}
 		}
 
 		// Push all grouped data to final $data array
@@ -361,7 +371,10 @@ class Schedule_training extends CI_Controller {
         chmod($_FILES['file_upload']['name'], 0777);
         $file = $_FILES['file_upload']['name'];
         $data = new Spreadsheet_Excel_Reader($file, false);
-        $total_row = $data->rowcount($sheet_index = 0);
+		$total_row = $data->rowcount($sheet_index = 0);
+		$total_row_sheet_training_activity = $data->rowcount($sheet_index = 1);
+		$total_row_sheet_trainer = $data->rowcount($sheet_index = 2);
+		$total_row_sheet_trainee = $data->rowcount($sheet_index = 3);
 
         for ($i = 3; $i <= $total_row; $i++) {
             $datas[] = array(
@@ -377,19 +390,37 @@ class Schedule_training extends CI_Controller {
 					$data->val($i, 8),
 				]),
 				'induction' => $data->val($i, 9),
-				'trainingName' => $data->val($i, 10),
+//				'trainingName' => $data->val($i, 10),
 				'category' => $data->val($i, 11),
-				'trainerNames' => array_filter([
-					$data->val($i, 12),
-					$data->val($i, 13),
-					$data->val($i, 14)
-				]),
-				'trainee' => $data->val($i, 15),
+//				'trainerNames' => array_filter([
+//					$data->val($i, 12),
+//					$data->val($i, 13),
+//					$data->val($i, 14)
+//				]),
+//				'trainee' => $data->val($i, 15),
 				'remarks' => $data->val($i, 16),
 				'totalTrainee' => $data->val($i, 17),
 				'duration' => $data->val($i, 18),
             );
         }
+
+		for ($i = 3; $i <= $total_row_sheet_training_activity; $i++) {
+			$index = 0;
+			$datas[$index]['trainingName'] = $data->val($i, 2,1);
+			$index++;
+		}
+
+		for ($i = 3; $i <= $total_row_sheet_trainer; $i++) {
+			$index = 0;
+			$datas[$index]['trainerNames'][] = $data->val($i, 2,2);
+			$index++;
+		}
+
+		for ($i = 3; $i <= $total_row_sheet_trainee; $i++) {
+			$index = 0;
+			$datas[$index]['trainee'][] = $data->val($i, 2,3);
+			$index++;
+		}
 
         $datas['total'] = count($datas);
         echo json_encode($datas);
@@ -663,7 +694,7 @@ class Schedule_training extends CI_Controller {
 			$html .= "<td colspan='4'>{$m}</td>";
 		}
 		$html .= '</tr><tr style="background: #a9d08e; text-align: center;">';
-		for ($i = 0; $i < 12; $i++) {
+		for ($i = 1; $i <= 12; $i++) {
 			for ($j = 1; $j <= 4; $j++) {
 				$html .= "<td>M{$j}</td>";
 			}
@@ -674,7 +705,7 @@ class Schedule_training extends CI_Controller {
 		$sectionNo = 1;
 
 		foreach ($groupedRecords as $sectionTitle => $records) {
-			$html .= '<tr><td colspan="55" style="font-weight: bold; background-color: #9BC2E6; text-align: left;">'
+			$html .= '<tr><td colspan="56" style="font-weight: bold; background-color: #9BC2E6; text-align: left;">'
 				. roman($sectionNo++) . '. ' . strtoupper($sectionTitle) . '</td></tr>';
 			$no = 1;
 
