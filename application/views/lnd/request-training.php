@@ -32,7 +32,7 @@
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Departement</span>
-                        <input style="width:60%;" id="departementFilter" class="easyui-combogrid">
+                        <input style="width:60%;" id="departementFilter" class="easyui-combobox">
                     </div>
                 </div>
             </fieldset>
@@ -446,10 +446,10 @@
                             return '<div style="background-color:orange;color:white;padding:5px;">Remark: ' + row.approvedData + ' </div>';
                         }else {
                             if(value === '-1') {
-                                const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Bpk. ' + inputterName : 'Ibu ' + inputterName);
+                                const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Pak ' + inputterName : 'Ibu ' + inputterName);
                                 return '<div style="background-color:red;color:white;padding:5px;">' + label + '</div>';
                             }else{
-                                const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Bpk. ' + approverName : 'Ibu ' + approverName);
+                                const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Pak ' + approverName : 'Ibu ' + approverName);
                                 return '<div style="background-color:green;color:white;padding:5px;">' + label + '</div>';
 
                             }
@@ -659,33 +659,18 @@
             ],
         });
 
-        $('#departementFilter').combogrid({
-            url: '<?= base_url('lnd/schedule_training/readsDepartements') ?>',
+        $('#departementFilter').combobox({
+            url: '<?= base_url('employee/departements/reads') ?>',
             panelWidth: 450,
             idField: 'id',
             textField: 'name',
-            mode: 'remote',
-            fitColumns: true,
-            prompt: 'Choose All',
+            prompt: 'Select Departement',
             icons: [{
                 iconCls: 'icon-clear',
                 handler: function(e) {
-                    $(e.data.target).combogrid('clear').combogrid('textbox').focus();
+                    $(e.data.target).combobox('clear').combobox('textbox').focus();
                 }
-            }],
-			columns: [
-				[
-					{
-						field: 'division',
-						title: 'Division Name',
-						width: 120
-					},
-					{
-						field: 'name',
-						title: 'Department Name',
-						width: 120
-					}]
-			],
+            }]
         });
     });
     
