@@ -20,3 +20,14 @@ CREATE TABLE lnd_feedback_history (
     updatedTime DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (feedback_id) REFERENCES lnd_master_feedback(id) ON DELETE CASCADE
 );
+
+CREATE TABLE lnd_detail_trainer_history (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    training_history_id CHAR(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+    trainer_name VARCHAR(255) NOT NULL,
+    createdBy CHAR(36),
+    createdTime DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedBy CHAR(36),
+    updatedTime DATETIME,
+    FOREIGN KEY (training_history_id) REFERENCES lnd_training_history(id) ON DELETE CASCADE
+);

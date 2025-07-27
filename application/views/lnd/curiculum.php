@@ -8,7 +8,7 @@
             <legend><b>Form Filter Data</b></legend>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Competence Standard</span>
-                <input style="width:60%;" id="name" class="easyui-combogrid">
+                <input style="width:60%;" id="competence_id" class="easyui-combogrid">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Training Activity</span>
@@ -16,7 +16,7 @@
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Indicator</span>
-                <input style="width:60%;" id="indicator" class="easyui-combogrid">
+                <input style="width:60%;" id="indicator_id" class="easyui-combobox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;"></span>
@@ -88,7 +88,7 @@
         var template = $(`<div data-index='${index}' data-parent-index='${parentIndex}' id="template-training_${parentIndex}_${index}">
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;"><strong>Training Activity ${index+1}</strong></span>
-                    <select name='${prefix}.training_activity' id='${prefix}.training_activity' required class="type easyui-combogrid" value='${valueTraining}' style="width:50%" data-options="
+                    <select name='${prefix}.training_activity' id='${prefix}.training_activity' required='true' class="type easyui-combogrid" value='${valueTraining}' style="width:50%" data-options="
                         url: '<?= base_url('lnd/training_activity/list') ?>',
                         idField: 'id',
                         textField: 'trainingActivity', 
@@ -118,7 +118,7 @@
         var template = $(`<div data-index='${index}' data-training-index='${trainingIndex}'data-compentence-index='${competenceIndex}' id="template-indicator_${competenceIndex}_${trainingIndex}_${index}">
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Indicator ${index+1}</span>
-                    <input style="width:50%;" name="${prefix}" id="${prefix}" required value="${valueIndicator}" class="easyui-textbox">
+                    <input style="width:50%;" name="${prefix}" id="${prefix}" required="true" value="${valueIndicator}" class="easyui-textbox">
                     <a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="removeIndicator(${competenceIndex}, ${trainingIndex}, ${index})"><i class="fa fa-times"></i></a>
                 </div>
             </div>`);
@@ -127,14 +127,14 @@
 
     }
     window.onload = function() {
-        $('#curiculum_id').combogrid({
-            url: '<?php echo base_url('lnd/curiculum/list'); ?>',
-            panelWidth: 420,
-            idField: 'curiculumId',
-            textField: 'curiculumId',
+        $('#competence_id').combogrid({
+            url: '<?= base_url('lnd/training_activity/readsCompetence') ?>',
+            panelWidth: 450,
+            idField: 'competenceId',
+            textField: 'name',
             mode: 'remote',
             fitColumns: true,
-            prompt: "Choose Division",
+            prompt: 'Choose Competence',
             icons: [{
                 iconCls: 'icon-clear',
                 handler: function(e) {
@@ -143,14 +143,54 @@
             }],
             columns: [
                 [{
-                    field: 'curiculumId',
-                    title: 'Curiculum ID'
+                    field: 'competenceId',
+                    title: 'Competence ID',
+                    width: 120
                 }, {
-                    field: 'desc',
-                    title: 'Description',
-                    width: 250
+                    field: 'name',
+                    title: 'Competence Name',
+                    width: 200
                 }]
             ],
+        });
+
+        $('#training_activity_id').combogrid({
+            url: '<?= base_url('lnd/training_activity/list') ?>',
+            panelWidth: 450,
+            idField: 'id',
+            textField: 'trainingActivity',
+            mode: 'remote',
+            fitColumns: true,
+            prompt: 'Choose Training Activity',
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combogrid('clear').combogrid('textbox').focus();
+                }
+            }],
+            columns: [
+                [{
+                    field: 'trainingActivityId',
+                    title: 'Training Activity ID',
+                    width: 120
+                }, {
+                    field: 'trainingActivity',
+                    title: 'Training Activity Name',
+                    width: 200
+                }]
+            ],
+        });
+        $('#indicator_id').combobox({
+            url: '<?php echo base_url('lnd/curiculum/get_indicator_list'); ?>',
+            valueField: 'id',
+            textField: 'indicator_name',
+            prompt: 'Choose All',
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combobox('clear').combobox('textbox').focus();
+                }
+            }],
         });
         
     };
@@ -206,7 +246,7 @@
         trainingContainer.append(templateTraining)
 
         var indicatorContainer = $(`#indicator_${index}_${totalData}`)
-        if(indicatorContainer.children().length === 0) addIndicator(index, totalData)
+        if(indicatorContainer.children().length === 0 && !initValue) addIndicator(index, totalData)
 
         
         $.parser.parse(`#template-training_${index}_${totalData}`);
@@ -217,7 +257,7 @@
         var indicatorContainer = $(`#indicator_${competenceIndex}_${trainingIndex}`)
         var totalData = indicatorContainer.children().length;
         var template = indicatorTemplate(competenceIndex, trainingIndex, totalData, value);
-        indicatorContainer.append(template)
+        indicatorContainer.append(template);
         $.parser.parse(`#template-indicator_${competenceIndex}_${trainingIndex}_${totalData}`);
         $(`#template-indicator_${competenceIndex}_${trainingIndex}_${totalData}`).form('validate');
         
@@ -230,9 +270,6 @@
             var $input = $(this);
             var value = $input.val();
             var required = $input.attr('required');
-
-            console.log("#value", value);
-            
 
             // Cek hanya field yang required
             if (required && (value === null || value.trim() === '')) {
@@ -462,9 +499,11 @@
     }
 
     function filter() {
-        var curiculum_id = $("#curiculum_id").combogrid('getValue');
+        var competence_id = $("#competence_id").combogrid('getValue');
+        var training_activity_id = $("#training_activity_id").combogrid('getValue');
+        var indicator_id = $("#indicator_id").combobox('getValue');
 
-        var params = "?curiculumId=" + curiculum_id ;
+        var params = `?competence_id=${competence_id}&training_activity_id=${training_activity_id}&indicator_id=${indicator_id}` ;
 
         $('#dg').datagrid({
             url: '<?= base_url('lnd/curiculum/datatables') ?>' + params

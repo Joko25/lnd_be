@@ -14,7 +14,6 @@ class FormTestModel extends CI_Model {
     }
 
     public function get_detail_data($id) {
-        // $query = $this->db->get_where('lnd_master_form_test', ['id' => $id]);
         $this->db->select("a.*,
                         CASE
                             WHEN a.question_type = 'SAME' THEN 'Pre-Test & Post Test is The Same'
@@ -22,7 +21,7 @@ class FormTestModel extends CI_Model {
                             ELSE 'Unknown'
                         END as type, c.trainingActivity as name,
                         c.*,
-                        d.*
+                         d.trainer_name, d.trainer_id, d.trainer_id as trainingTrainerId
                      ");
         $this->db->from('lnd_master_form_test a');
         $this->db->join('lnd_schedule_training b', 'b.id = a.training_name', 'left');
@@ -30,9 +29,57 @@ class FormTestModel extends CI_Model {
         $this->db->join('lnd_schedule_trainers d', 'd.training_id = b.id', 'left');
         $this->db->where('a.id', $id);
         $query = $this->db->get();
+        $records = $query->result_array();
 
         if ($query->num_rows() > 0) {
-            return $query->row_array(); 
+            $grouped = [];
+            
+            foreach ($records as $row) {
+                $key = $row['id']; // Grouping berdasarkan ID form test
+                
+                if (!isset($grouped[$key])) {
+                    $grouped[$key] = [
+                        'id' => $row['id'],
+                        'question_type' => $row['question_type'],
+                        'type' => $row['type'],
+                        'name' => $row['name'],
+                        'training_name' => $row['training_name'],
+                        'createdBy' => $row['createdBy'],
+                        'createdTime' => $row['createdTime'],
+                        'updatedBy' => $row['updatedBy'],
+                        'updatedTime' => $row['updatedTime'],
+                        // Menambahkan semua field dari tabel c (lnd_training_activity)
+                        'department' => $row['department'],
+                        'type' => $row['type'],
+                        'json_question' => $row['json_question'],
+                        'json_postquestion' => $row['json_postquestion'],
+                        'trainingActivity' => $row['trainingActivity'],
+                    ];
+                }
+                
+                // Handle trainer data
+                $trainerName = $row['trainer_name'];
+                $trainerId = $row['trainer_id'];
+                $trainingTrainerId = $row['trainingTrainerId'];
+                
+                if($trainerName && $trainerId) {
+                    if (!empty($grouped[$key]['trainer'])) {
+                        $existingTrainers = explode(', ', $grouped[$key]['trainer']);
+                        
+                        // Only add if not already in the list
+                        if (!in_array($trainerName, $existingTrainers)) {
+                            $grouped[$key]['trainer'] .= ', ' . $trainerName;
+                            $grouped[$key]['trainingTrainerId'] .= ', ' . $trainingTrainerId;
+                        }
+                    } else {
+                        $grouped[$key]['trainer'] = $trainerName;
+                        $grouped[$key]['trainingTrainerId'] = $trainingTrainerId;
+                    }
+                }
+            }
+            
+            // Return first (and only) grouped result
+            return array_values($grouped)[0];
         }
 
         return null;
@@ -83,6 +130,17 @@ class FormTestModel extends CI_Model {
         ];
 
         $insert_detail_success = $this->insert_test_form_detail($test_form_detail_data);
+
+        if (isset($data_combined['trainer_id_arr']) && is_array($data_combined['trainer_id_arr'])) {
+            foreach ($data_combined['trainer_id_arr'] as $trainer_id) {
+                $trainer_history_data = [
+                    'training_history_id' => $id,
+                    'trainer_id' => $trainer_id,
+                    'createdBy' => $data_combined['createdBy'] ?? null
+                ];
+                $this->insert_detail_trainer_history($trainer_history_data);
+            }
+        }
         $this->db->trans_complete();
 
         // Mengembalikan status keberhasilan transaksi
@@ -156,6 +214,25 @@ class FormTestModel extends CI_Model {
 
         // Mengambil data yang baru saja diinsert
         $query = $this->db->order_by('createdTime', 'DESC')->limit(1)->get('lnd_training_history');
+        
+        return $query->row();
+    }
+
+    public function insert_detail_trainer_history($data) {
+        // Menyiapkan data untuk insert
+        $insert_data = [
+            'id' => $this->uuid(),
+            'training_history_id' => $data['training_history_id'],
+            'trainer_name' => $data['trainer_id'],
+            'createdBy' => $data['createdBy'],
+            'createdTime' => date('Y-m-d H:i:s')
+        ];
+
+        // Melakukan insert ke tabel lnd_detail_trainer_history
+        $this->db->insert('lnd_detail_trainer_history', $insert_data);
+
+        // Mengambil data yang baru saja diinsert
+        $query = $this->db->order_by('createdTime', 'DESC')->limit(1)->get('lnd_detail_trainer_history');
         
         return $query->row();
     }

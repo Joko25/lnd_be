@@ -190,9 +190,25 @@ class Schedule_training extends CI_Controller {
         $data = $this->ScheduleTrainingModel->get_all_data();
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, [], 'Get Schedule Training data failed');
+			return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => [],
+                'message' => 'Get Schedule Training data failed'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Schedule Training data successfully');
+			return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $data,
+                'message' => 'Get Schedule Training data successfully'
+            ]));
         } 
     }
 
@@ -200,9 +216,25 @@ class Schedule_training extends CI_Controller {
         $data = $this->ScheduleTrainingModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get Schedule Training data failed');
+			return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => null,
+                'message' => 'Get Schedule Training data failed'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Schedule Training data successfully');
+			return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $data,
+                'message' => 'Get Schedule Training data successfully'
+            ]));
         } 
     }
 
@@ -210,9 +242,25 @@ class Schedule_training extends CI_Controller {
         $data = $this->ScheduleTrainingModel->get_detail_form_test($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get master form test failed');
+			return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => null,
+                'message' => 'Get master form test failed'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get Master Form Test successfully');
+			return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $data,
+                'message' => 'Get Master Form Test successfully'
+            ]));
         } 
     }
 
@@ -243,9 +291,25 @@ class Schedule_training extends CI_Controller {
         // Validasi dan proses data
         if (!empty($data)) {
             $dataTemp = $this->ScheduleTrainingModel->insert_data($data, $trainingDates, $combineTrainer);
-            $this->response->send(ResponseStatus::CREATED, $dataTemp, 'Schedule Training created successfully');
+			return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(201)
+            ->set_output(json_encode([
+                'code' => 201,
+                'status' => ResponseStatus::CREATED,
+                'data' => $dataTemp,
+                'message' => 'Schedule Training created successfully'
+            ]));
         } else {
-            $this->response->send(ResponseStatus::BAD_REQUEST, null, 'Schedule Training creation failed.');
+			return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Schedule Training creation failed.'
+            ]));
         }
     }
 
@@ -281,9 +345,25 @@ class Schedule_training extends CI_Controller {
 		// Proceed with update
 		if (!empty($data)) {
 			$dataTemp = $this->ScheduleTrainingModel->update_data($id, $data, $trainingDates, $combineTrainer);
-			$this->response->send(200, $dataTemp, 'Schedule Training updated successfully');
+			return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $dataTemp,
+                'message' => 'Schedule Training updated successfully'
+            ]));
 		} else {
-			$this->response->send(400, null, 'Schedule Training update failed.');
+			return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Schedule Training update failed.'
+            ]));
 		}
     }
 
@@ -291,10 +371,26 @@ class Schedule_training extends CI_Controller {
         $data = $this->ScheduleTrainingModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Data not found');
+			return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(404)
+            ->set_output(json_encode([
+                'code' => 404,
+                'status' => ResponseStatus::NOT_FOUND,
+                'data' => null,
+                'message' => 'Data not found'
+            ]));
         } else {
             $this->ScheduleTrainingModel->delete_data($id);
-            $this->response->send(200, $id, 'Schedule Training delete successfully');
+			return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'code' => 200,
+                'status' => ResponseStatus::SUCCESS,
+                'data' => $id,
+                'message' => 'Schedule Training delete successfully'
+            ]));
         }
     }
 

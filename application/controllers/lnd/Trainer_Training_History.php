@@ -108,35 +108,70 @@ class Trainer_Training_History extends CI_Controller {
 
 				$html = '';
 
-				foreach ($records as $dataEmployee) {
-					$html .= '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}#approver {border-collapse: collapse;width: 50%;font-size: 10px;}#approver td, #approver th {border: 1px solid #ddd;padding: 2px;}#approver tr:nth-child(even){background-color: #f2f2f2;}#approver tr:hover {background-color: #ddd;}#approver th {padding-top: 2px;padding-bottom: 2px;text-align: center;color: black;}</style>
-					<style> .str{ mso-number-format:\@; } </style>
+				foreach ($records as $index => $dataEmployee) {
+					// Add page break for every employee except the first one
+					if ($index > 0) {
+						$html .= '<div style="page-break-before: always;"></div>';
+					}
+					
+					$html .= '<html><head><title>Print Data</title></head><style>
+					@media print {
+						body {font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 20px;}
+						.page-break {page-break-before: always;}
+						.page-break-after {page-break-after: always;}
+						.no-break {page-break-inside: avoid;}
+						table {page-break-inside: auto;}
+						tr {page-break-inside: avoid; page-break-after: auto;}
+						thead {display: table-header-group;}
+						tfoot {display: table-footer-group;}
+					}
+					body {font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 20px;}
+					#customers {border-collapse: collapse;width: 100%;font-size: 10px;page-break-inside: auto;}
+					#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}
+					#customers tr:nth-child(even){background-color: #f2f2f2;}
+					#customers tr:hover {background-color: #ddd;}
+					#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}
+					#approver {border-collapse: collapse;width: 50%;font-size: 10px;page-break-inside: avoid;}
+					#approver td, #approver th {border: 1px solid #ddd;padding: 2px;}
+					#approver tr:nth-child(even){background-color: #f2f2f2;}
+					#approver tr:hover {background-color: #ddd;}
+					#approver th {padding-top: 2px;padding-bottom: 2px;text-align: center;color: black;}
+					.str{ mso-number-format:\@; }
+					.header-section {page-break-inside: avoid;}
+					.employee-info {page-break-inside: avoid;}
+					.table-section {page-break-inside: auto;}
+					.approver-section {page-break-inside: avoid; margin-top: 20px;}
+					.employee-page {page-break-inside: avoid;}
+					</style>
 					<body>
-					<center>
-						<div style="float: left; font-size: 12px; text-align: left;">
-							<table style="width: 100%;">
-								<tr>
-									<td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
-										<img src="' . $config->favicon . '" width="30">
-									</td>
-									<td style="font-size: 14px; text-align: left; margin:2px;">
-										<b>' . $config->name . '</b><br>
-										<small>' . $config->description . '</small>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<div style="float: right; font-size: 12px; text-align: right;">
-							Print Date ' . date("d M Y H:i:s") . ' <br>
-							Print By ' . $this->session->username . '  
-						</div>
-					</center><br><br><br>
-					<center>
-						<h3 style="margin:0;">Trainer Training History</h3>
-						<p style="margin: 0">Period '. $form['filter_from'] .' to '. $form['filter_to'] .'</p>
-					</center>
+					<div class="employee-page">
+					<div class="header-section">
+						<center>
+							<div style="float: left; font-size: 12px; text-align: left;">
+								<table style="width: 100%;">
+									<tr>
+										<td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+											<img src="' . $config->favicon . '" width="30">
+										</td>
+										<td style="font-size: 14px; text-align: left; margin:2px;">
+											<b>' . $config->name . '</b><br>
+											<small>' . $config->description . '</small>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div style="float: right; font-size: 12px; text-align: right;">
+								Print Date ' . date("d M Y H:i:s") . ' <br>
+								Print By ' . $this->session->username . '  
+							</div>
+						</center><br><br><br>
+						<center>
+							<h3 style="margin:0;">Trainer Training History</h3>
+							<p style="margin: 0">Period '. $form['filter_from'] .' to '. $form['filter_to'] .'</p>
+						</center>
+					</div>
 					<br>
-					<div style="width: 100%; margin-left: 25px;">
+					<div class="employee-info" style="width: 100%; margin-left: 25px;">
 						<table>
 							<tr>
 								<td>Trainer Name</td>
@@ -206,7 +241,8 @@ class Trainer_Training_History extends CI_Controller {
 							GROUP_CONCAT(DISTINCT ltd.score_post_test) AS score_post_test
 						");
 
-						$this->db->from('lnd_training_history lth');
+						$this->db->from("lnd_detail_trainer_history ldth");
+						$this->db->join('lnd_training_history lth', "ldth.training_history_id = lth.id", "left");
 						$this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
 						$this->db->join('lnd_master_form_test lmft', "lth.test_id = lmft.id", "left");
 						$this->db->join('lnd_schedule_training lst', "lmft.training_name = lst.id", "left");
@@ -214,7 +250,7 @@ class Trainer_Training_History extends CI_Controller {
 						$this->db->join('lnd_feedback_history lfh', "lth.history_feedback_id = lfh.id", "left");
 
 						// Filter berdasarkan trainer dan rentang tanggal
-						$this->db->where('lth.trainer', $dataEmployee['name']);
+						$this->db->where('ldth.trainer_name', $dataEmployee['employee_id']);
 						$this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
 
 						if (!empty($form['filter_training_name'])) {
@@ -250,10 +286,13 @@ class Trainer_Training_History extends CI_Controller {
 									// $rowspan = count($feedback_history['feedbackItems']);
 
 									if (!empty($training['history_feedback_id'])) {
-										$feedback_query = $this->db->select('json_response')
+										$feedback_query = $this->db->select('b.json_response')
 																->from('lnd_training_history a')
 																->join('lnd_feedback_history b', "a.history_feedback_id = b.id", "left")
-																->where('a.trainer', $dataEmployee['name'])
+																->join('lnd_detail_trainer_history c', 'a.id=c.training_history_id', 'left')
+																->join('lnd_test_form_detail d', 'a.id=d.test_id', 'left')
+																->where('c.trainer_name', $dataEmployee['employee_id'])
+																->where('d.test_completed_date IS NOT NULL')
 																->get();
 										$feedback_result = $feedback_query->result_array();
 
@@ -380,12 +419,12 @@ class Trainer_Training_History extends CI_Controller {
 						<tr>
 							<td>Achmad Goesly</td>
 							<td>Fajar Budi P.</td>
-							<td>Susi Yulia</td>
+							<td>Rizal Alip P.</td>
 						</tr>
 						<tr>
 							<td>Manager HRD & GA</td>
 							<td>Asst. Manager HRD & GA</td>
-							<td>Leader LnD</td>
+							<td>Coordinator LnD</td>
 						</tr>
 						";
 				$html .= '</table>';

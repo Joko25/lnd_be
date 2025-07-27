@@ -78,12 +78,30 @@ class CuriculumModel extends CI_Model {
 
     public function save_curriculum($curriculum_id, $data)
     {
-        // Hapus dulu data lama
-        $this->delete_curriculum($curriculum_id);
+        // Cek dulu apakah sudah ada data curriculum_id yang sama
+        $this->db->where('curriculum_id', $curriculum_id);
+        $existing = $this->db->get('lnd_curriculum')->num_rows();
+
+        if ($existing > 0) {
+            // Jika sudah ada, hapus data lama agar tidak duplikat
+            $this->delete_curriculum($curriculum_id);
+        }
 
         $lastInsertedId = null;
 
         foreach ($data['competence'] as $comp) {
+            // Validasi: cek competence_standard sudah ada atau belum untuk curriculum_id ini
+            $this->db->where([
+                'curriculum_id' => $curriculum_id,
+                'competence_standard' => $comp['competence_standard']
+            ]);
+            $is_competence_exist = $this->db->get('lnd_curriculum')->num_rows();
+
+            if ($is_competence_exist > 0) {
+                // Jika competence_standard sudah ada, skip
+                continue;
+            }
+
             $curr_id = $this->uuid();
             $lastInsertedId = $curr_id;
 
@@ -96,6 +114,18 @@ class CuriculumModel extends CI_Model {
             ]);
 
             foreach ($comp['training'] as $train) {
+                // Validasi: cek training_activity sudah ada atau belum untuk competence_id ini
+                $this->db->where([
+                    'competence_id' => $curr_id,
+                    'training_activity' => $train['training_activity']
+                ]);
+                $is_training_exist = $this->db->get('lnd_curriculum_training_activity')->num_rows();
+
+                if ($is_training_exist > 0) {
+                    // Jika training_activity sudah ada, skip
+                    continue;
+                }
+
                 $train_id = $this->uuid();
 
                 $this->db->insert('lnd_curriculum_training_activity', [
@@ -105,6 +135,18 @@ class CuriculumModel extends CI_Model {
                 ]);
 
                 foreach ($train['indicator'] as $indicator) {
+                    // Validasi: cek indicator_name sudah ada atau belum untuk training_id ini
+                    $this->db->where([
+                        'training_id' => $train_id,
+                        'indicator_name' => $indicator
+                    ]);
+                    $is_indicator_exist = $this->db->get('lnd_curriculum_indicator')->num_rows();
+
+                    if ($is_indicator_exist > 0) {
+                        // Jika indicator_name sudah ada, skip
+                        continue;
+                    }
+
                     $this->db->insert('lnd_curriculum_indicator', [
                         'id' => $this->uuid(),
                         'training_id' => $train_id,
@@ -334,6 +376,14 @@ class CuriculumModel extends CI_Model {
         $this->db->from('lnd_curriculum');
         $this->db->group_by('curriculum_id');
         $this->db->order_by('updated_at', 'DESC');
+        return $this->db->get()->result();
+    }
+
+    public function get_indicator_list()
+    {
+        // Ambil distinct curriculum_id, latest updatedTime, dan jumlah competence
+        $this->db->select('id, indicator_name');
+        $this->db->from('lnd_curriculum_indicator');
         return $this->db->get()->result();
     }
 

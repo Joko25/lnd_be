@@ -36,7 +36,8 @@ class Master_form_test extends CI_Controller {
     public function datatables()
     {
         // Ambil parameter dari request
-        $competence_id = $this->input->get('competenceId', true); // Sanitize input GET
+        $filter_training_name = $this->input->get('filter_training_name', true); // Sanitize input GET
+        $filter_department = $this->input->get('filter_department', true); // Sanitize input GET
         $page = $this->input->post('page');
         $rows = $this->input->post('rows');
         
@@ -58,9 +59,13 @@ class Master_form_test extends CI_Controller {
         $this->db->join('lnd_schedule_training b', 'b.id = a.training_name', 'left');
         $this->db->join('lnd_training_activity c', 'c.id = b.trainingName', 'left');
         
-        if (!empty($competence_id)) {
-            $this->db->like('competenceId', $competence_id);
+        if (!empty($filter_training_name)) {
+            $this->db->where('b.id', $filter_training_name);
         }
+        if (!empty($filter_department)) {
+            $this->db->like('a.department', $filter_department);
+        }
+
         $this->db->stop_cache(); // Stop caching the query
 
         // Hitung total data (tanpa limit dan offset)
@@ -137,19 +142,53 @@ class Master_form_test extends CI_Controller {
         $json = $this->input->post('data');
         $data = json_decode($json, true);
     
-        if (!$data) return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Invalid JSON');
+        if (!$data) {
+            return $this->output
+                    ->set_content_type('application/json')
+                    ->set_status_header(400)
+                    ->set_output(json_encode([
+                        'code' => 400,
+                        'status' => ResponseStatus::BAD_REQUEST,
+                        'data' => [],
+                        'message' => 'Invalid JSON'
+                    ]));
+        }
     
         if (isset($data['allDept'])) $data['department'] = $data['allDept'];
         if (empty($data['training_name']) || empty($data['department']) || empty($data['questionType'])) {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Missing required fields');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'code' => 400,
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => [],
+                    'message' => 'Missing required fields'
+                ]));
         }
     
         $uploadPath = 'assets/image/lnd/';
         if (!is_dir($uploadPath) && !mkdir($uploadPath, 0755, true)) {
-            return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Failed to create upload directory');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(500)
+                ->set_output(json_encode([
+                    'code' => 500,
+                    'status' => ResponseStatus::SERVER_ERROR,
+                    'data' => [],
+                    'message' => 'Failed to create upload directory'
+                ]));
         }
         if (!is_writable($uploadPath)) {
-            return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Upload directory is not writable');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(500)
+                ->set_output(json_encode([
+                    'code' => 500,
+                    'status' => ResponseStatus::SERVER_ERROR,
+                    'data' => [],
+                    'message' => 'Upload directory is not writable'
+                ]));
         }
     
         $uploadedFiles = [];
@@ -169,12 +208,28 @@ class Master_form_test extends CI_Controller {
                         $uploadedFiles[] = $uploadPath . $fileName;
                     } else {
                         log_message('error', 'FORM TEST: Upload gagal untuk ' . implode(' -> ', $path));
-                        return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Upload gagal');
+                        return $this->output
+                        ->set_content_type('application/json')
+                        ->set_status_header(400)
+                        ->set_output(json_encode([
+                            'code' => 400,
+                            'status' => ResponseStatus::BAD_REQUEST,
+                            'data' => [],
+                            'message' => 'Upload gagal'
+                        ]));
                     }
                 } elseif ($file['error'] !== UPLOAD_ERR_NO_FILE) {
                     $errMsg = $this->getUploadError($file['error']);
                     log_message('error', 'FORM TEST: Error upload ' . implode(' -> ', $path) . " - $errMsg");
-                    return $this->response->send(ResponseStatus::BAD_REQUEST, [], $errMsg);
+                    return $this->output
+                    ->set_content_type('application/json')
+                    ->set_status_header(400)
+                    ->set_output(json_encode([
+                        'code' => 400,
+                        'status' => ResponseStatus::BAD_REQUEST,
+                        'data' => [],
+                        'message' => $errMsg
+                    ]));
                 }
             }
         }
@@ -183,81 +238,29 @@ class Master_form_test extends CI_Controller {
     
         $save = $this->MasterFormTestModel->insertQuestion($data, $uploadedFiles);
         if ($save) {
-            return $this->response->send(ResponseStatus::SUCCESS, $data, 'Form test saved successfully');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'code' => 200,
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $data,
+                    'message' => 'Form test saved successfully'
+                ]));
         } else {
             foreach ($uploadedFiles as $filePath) @unlink(FCPATH . $filePath);
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Failed to save form data');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'code' => 400,
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => [],
+                    'message' => 'Failed to save form data'
+                ]));
         }
     }
     
-
-    public function storeData_v2_backup() {
-        // Logging awal
-        log_message('debug', 'ISI $_FILES: ' . print_r($_FILES, true));
-        log_message('debug', 'ISI $_POST: ' . print_r($_POST, true));
-    
-        // Ambil JSON string dari multipart field 'data'
-        $json = $this->input->post('data');
-        $data = json_decode($json, true);
-    
-        if (!$data) {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Invalid JSON');
-        }
-    
-        // Validasi manual
-        if (isset($data['allDept'])) $data['department'] = $data['allDept'];
-        if (empty($data['training_name']) || empty($data['department']) || empty($data['questionType'])) {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Missing required fields');
-        }
-    
-        // Persiapan direktori upload
-        $uploadPath = 'assets/image/lnd/';
-        if (!is_dir($uploadPath)) {
-            if (!mkdir($uploadPath, 0755, true)) {
-                return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Failed to create upload directory');
-            }
-        }
-        if (!is_writable($uploadPath)) {
-            return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Upload directory is not writable');
-        }
-    
-        // Proses file upload
-        $uploadedFiles = [];
-    
-        foreach ($_FILES as $field => $file) {
-            log_message('debug', 'FORM TEST: Memproses field file: ' . $field);
-    
-            if ($file['error'] === UPLOAD_ERR_OK) {
-                $image = $this->LndModel->upload_v2($field, ['jpg', 'jpeg', 'png', 'gif'], $uploadPath);
-    
-                if ($image) {
-                    $this->setNestedValue($data, $field, $image); // <-- set ke posisi nested sesuai nama field
-                    $uploadedFiles[] = $uploadPath . $image;
-                } else {
-                    log_message('error', 'FORM TEST: Upload gagal untuk field: ' . $field . ' - ' . $this->getUploadError($file['error']));
-                    return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Upload file gagal');
-                }
-    
-            } elseif ($file['error'] !== UPLOAD_ERR_NO_FILE) {
-                log_message('error', 'FORM TEST: Error upload untuk field: ' . $field . ' - ' . $this->getUploadError($file['error']));
-                return $this->response->send(ResponseStatus::BAD_REQUEST, [], $this->getUploadError($file['error']));
-            }
-        }
-    
-        log_message('debug', 'DATA AKHIR SETELAH PROSES UPLOAD: ' . print_r($data, true));
-    
-        // Simpan ke database
-        $save = $this->MasterFormTestModel->insertQuestion($data, $uploadedFiles);
-        if ($save) {
-            return $this->response->send(ResponseStatus::SUCCESS, $data, 'Form test saved successfully');
-        } else {
-            // Cleanup jika gagal
-            foreach ($uploadedFiles as $filePath) {
-                @unlink(FCPATH . $filePath);
-            }
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Failed to save form data');
-        }
-    }
     
     /**
      * Helper untuk set nilai nested array dari path seperti question[0].imageQuestion
@@ -451,13 +454,29 @@ class Master_form_test extends CI_Controller {
         $data = json_decode($json, true);
     
         if (!$data) {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Invalid JSON');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'code' => 400,
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => [],
+                    'message' => 'Invalid JSON'
+                ]));
         }
 
         if (isset($data['allDept'])) $data['department'] = $data['allDept'];
     
         if (empty($data['training_name']) || empty($data['department']) || empty($data['questionType'])) {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Missing required fields');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'code' => 400,
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => [],
+                    'message' => 'Missing required fields'
+                ]));
         }
     
         // Handle file upload
@@ -478,7 +497,15 @@ class Master_form_test extends CI_Controller {
                     $uploaded = $this->upload->data();
                     $uploadedFiles[$field] = 'assets/image/lnd/' . $uploaded['file_name'];
                 } else {
-                    return $this->response->send(ResponseStatus::BAD_REQUEST, [], $this->upload->display_errors('', ''));
+                    return $this->output
+                    ->set_content_type('application/json')
+                    ->set_status_header(400)
+                    ->set_output(json_encode([
+                        'code' => 400,
+                        'status' => ResponseStatus::BAD_REQUEST,
+                        'data' => [],
+                        'message' => $this->upload->display_errors('', '')
+                    ]));
                 }
             }
         }
@@ -486,9 +513,25 @@ class Master_form_test extends CI_Controller {
         // Update ke DB
         $update = $this->MasterFormTestModel->updateQuestion($id, $data, $uploadedFiles);
         if ($update) {
-            return $this->response->send(ResponseStatus::SUCCESS, $update, 'Form test updated successfully');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'code' => 200,
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $update,
+                    'message' => 'Form test updated successfully'
+                ]));
         } else {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Failed to update form test');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'code' => 400,
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => [],
+                    'message' => 'Failed to update form test'
+                ]));
         }
     }
 
@@ -500,7 +543,15 @@ class Master_form_test extends CI_Controller {
         $data = json_decode($json, true);
     
         if (!$data) {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Invalid JSON');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'code' => 400,
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => [],
+                    'message' => 'Invalid JSON'
+                ]));
         }
     
         if (isset($data['allDept'])) {
@@ -508,15 +559,39 @@ class Master_form_test extends CI_Controller {
         }
     
         if (empty($data['training_name']) || empty($data['department']) || empty($data['questionType'])) {
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Missing required fields');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'code' => 400,
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => [],
+                    'message' => 'Missing required fields'
+                ]));
         }
     
         $uploadPath = 'assets/image/lnd/';
         if (!is_dir($uploadPath) && !mkdir($uploadPath, 0755, true)) {
-            return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Failed to create upload directory');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(500)
+                ->set_output(json_encode([
+                    'code' => 500,
+                    'status' => ResponseStatus::SERVER_ERROR,
+                    'data' => [],
+                    'message' => 'Failed to create upload directory'
+                ]));
         }
         if (!is_writable($uploadPath)) {
-            return $this->response->send(ResponseStatus::SERVER_ERROR, [], 'Upload directory is not writable');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(500)
+                ->set_output(json_encode([
+                    'code' => 500,
+                    'status' => ResponseStatus::SERVER_ERROR,
+                    'data' => [],
+                    'message' => 'Upload directory is not writable'
+                ]));
         }
     
         $uploadedFiles = [];
@@ -535,12 +610,28 @@ class Master_form_test extends CI_Controller {
                         $uploadedFiles[] = $uploadPath . $fileName;
                     } else {
                         log_message('error', 'FORM TEST: Upload gagal untuk ' . $flatPath);
-                        return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Upload gagal');
+                        return $this->output
+                        ->set_content_type('application/json')
+                        ->set_status_header(400)
+                        ->set_output(json_encode([
+                            'code' => 400,
+                            'status' => ResponseStatus::BAD_REQUEST,
+                            'data' => [],
+                            'message' => 'Upload gagal'
+                        ]));
                     }
                 } elseif ($file['error'] !== UPLOAD_ERR_NO_FILE) {
                     $errMsg = $this->getUploadError($file['error']);
                     log_message('error', 'FORM TEST: Error upload ' . $flatPath . " - $errMsg");
-                    return $this->response->send(ResponseStatus::BAD_REQUEST, [], $errMsg);
+                    return $this->output
+                    ->set_content_type('application/json')
+                    ->set_status_header(400)
+                    ->set_output(json_encode([
+                        'code' => 400,
+                        'status' => ResponseStatus::BAD_REQUEST,
+                        'data' => [],
+                        'message' => $errMsg
+                    ]));
                 }
             }
         }
@@ -549,10 +640,26 @@ class Master_form_test extends CI_Controller {
     
         $update = $this->MasterFormTestModel->updateQuestion_v2($id, $data, $uploadedFiles);
         if ($update) {
-            return $this->response->send(ResponseStatus::SUCCESS, $data, 'Form test updated successfully');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'code' => 200,
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $data,
+                    'message' => 'Form test updated successfully'
+                ]));
         } else {
             foreach ($uploadedFiles as $filePath) @unlink(FCPATH . $filePath);
-            return $this->response->send(ResponseStatus::BAD_REQUEST, [], 'Failed to update form test');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'code' => 400,
+                    'status' => ResponseStatus::BAD_REQUEST,
+                    'data' => [],
+                    'message' => 'Failed to update form test'
+                ]));
         }
     }
     
@@ -562,9 +669,25 @@ class Master_form_test extends CI_Controller {
         $data = $this->MasterFormTestModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Get data failed');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(404)
+                ->set_output(json_encode([
+                    'code' => 404,
+                    'status' => ResponseStatus::NOT_FOUND,
+                    'data' => null,
+                    'message' => 'Get data failed'
+                ]));
         } else {
-            $this->response->send(ResponseStatus::SUCCESS, $data, 'Get data successfully');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'code' => 200,
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $data,
+                    'message' => 'Get data successfully'
+                ]));
         } 
     }
 
@@ -572,10 +695,26 @@ class Master_form_test extends CI_Controller {
         $data = $this->MasterFormTestModel->get_detail_data($id);
 
         if(empty($data)) {
-            $this->response->send(ResponseStatus::NOT_FOUND, null, 'Data not found');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'code' => 200,
+                    'status' => ResponseStatus::NOT_FOUND,
+                    'data' => null,
+                    'message' => 'Data not found'
+                ]));
         } else {
             $this->MasterFormTestModel->delete_data($id);
-            $this->response->send(200, $id, 'Competence delete successfully');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'code' => 200,
+                    'status' => ResponseStatus::SUCCESS,
+                    'data' => $id,
+                    'message' => 'Master Form Test Deleted successfully'
+                ]));
         }
     }
 
