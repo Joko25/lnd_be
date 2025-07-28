@@ -600,8 +600,10 @@
             if (response.code === 200) {
                 $('#dlg_qr').dialog('open');
                 let id = response.data.id;
-                let url = '<?= base_url('lnd/form_test/pre_test/') ?>' + id;
-                let url_post = '<?= base_url('lnd/form_test/post_test/') ?>' + id;
+				let rawTrainingActivity = response.data.trainingActivity;
+				let trainingActivity = rawTrainingActivity.replace(/\s+/g, '_').toLowerCase();
+                let url = '<?= base_url('lnd/form_test/pre_test/') ?>' + trainingActivity + '/' + id;
+                let url_post = '<?= base_url('lnd/form_test/post_test/') ?>' + trainingActivity + '/' + id;
                 $('#qrcode-pretest').empty();
                 var qrcode = new QRCode("qrcode-pretest", {
                     text: url,
@@ -621,7 +623,7 @@
                     correctLevel: QRCode.CorrectLevel['H']
                 });
 				$('#pretest-url').val(url);
-
+				$('#posttest-url').val(url_post);
 			} else {
                 toastr.warning("Gagal mengambil data. Data training tidak di temukan.", "Warning");
                 // alert("Gagal mengambil data. Data training tidak di temukan.");
