@@ -175,6 +175,7 @@ class FormTestModel extends CI_Model {
     public function insert_test_form_detail($data) {
         // Menyiapkan data untuk insert
         $insert_data = [
+            'id' => $this->uuid(),
             'test_id' => $data['test_id'],
             'employee_id' => $data['employee_id'],
             'type_training' => $data['type_training'],
