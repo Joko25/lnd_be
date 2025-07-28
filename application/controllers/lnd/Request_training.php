@@ -115,6 +115,12 @@ class Request_training extends CI_Controller {
         // Join ke tabel employees untuk detail employeeReject, jika diperlukan
         $this->db->join('employees employeeReject', 'userReject.number = employeeReject.number', 'left');
 
+		$this->db->join('users usersCreator', 'a.createdBy = usersCreator.username', 'left');
+
+		$this->db->join('employees employeeCreator', 'usersCreator.number = employeeCreator.number', 'left');
+
+		$this->db->join('departements departementsCreator', 'employeeCreator.departement_id = departementsCreator.id', 'left');
+
         if (!empty($suggestTrainingDate)) {
             $this->db->where('a.suggestDateTraining', $suggestTrainingDate);
         }
@@ -128,7 +134,7 @@ class Request_training extends CI_Controller {
             $this->db->like('a.reasons', $reasons);
         }
         if (!empty($departement)) {
-            $this->db->like('a.id', $departement);
+            $this->db->where('departementsCreator.id', $departement);
         }
 
         // $this->db->group_by('a.id');
@@ -577,7 +583,7 @@ class Request_training extends CI_Controller {
             employeeApprover.gender as gender,
             u.name as approverName,
             userReject.name as inputter,
-            employeeReject.departement_id as departmentInputter
+            departementsCreator.name as departmentInputter
         FROM lnd_request_training a
         LEFT JOIN (
             SELECT rth_inner.*
@@ -599,6 +605,9 @@ class Request_training extends CI_Controller {
         LEFT JOIN employees employeeApprover ON u.number = employeeApprover.number
         LEFT JOIN users userReject ON rth.approved_by = userReject.username
         LEFT JOIN employees employeeReject ON userReject.number = employeeReject.number
+        LEFT JOIN users userCreator ON userCreator.username = a.createdBy
+        LEFT JOIN employees employeesCreator ON userCreator.number = employeesCreator.number
+        LEFT JOIN departements departementsCreator ON departementsCreator.id = employeesCreator.departement_id
         WHERE a.id = $escapedId
     ";
 
@@ -721,7 +730,7 @@ class Request_training extends CI_Controller {
   <div style="position: relative;">
 	  
 		<div style="position: absolute; top: 0; right: 0;">
-			FRM-L&D-006 Rev.00
+			FRM-L&D-002 Rev.00
 		</div>
   </div>
   <br/>
@@ -884,7 +893,7 @@ class Request_training extends CI_Controller {
 		foreach ($traineeList as $trainee) {
 		 $html .= '<tr>
 			<td class="center">'. $no .'</td>
-			<td>'. $trainee['fullName'] .'</td>
+			<td>'. $trainee['fullName'] .'aaa</td>
 			<td>'. $trainee['national_id'] .'</td>
 			<td>'. $trainee['position'] .'</td>
 			<td>'. $trainee['departement_subs'] .'</td>
