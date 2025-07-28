@@ -442,6 +442,7 @@ class Schedule_training extends CI_Controller {
 		$this->db->from('employees a');
 		$this->db->join('positions b', 'b.id = a.position_id', 'left');
 		$this->db->where('b.level <', '05');
+		$this->db->or_where('a.departement_sub_id', '20221213000007');
 		$this->db->stop_cache();
 		$res = $this->db->get()->result_array();
 		$this->db->flush_cache(); // Hapus cache query
