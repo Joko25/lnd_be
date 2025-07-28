@@ -400,7 +400,7 @@ class FormTestModel extends CI_Model {
         return $this->db->insert('lnd_master_form_test', $insert);
     }
 
-    private function uuid() {
+    public function uuid() {
         return sprintf(
             '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
             mt_rand(0, 0xffff), mt_rand(0, 0xffff),
