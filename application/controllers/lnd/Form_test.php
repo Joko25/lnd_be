@@ -71,7 +71,7 @@ class Form_test extends CI_Controller {
         $this->load->view('lnd/form-test', $data);
     }
 
-    public function pre_test($id) {
+    public function pre_test($slug,$id) {
         //  Panggil model untuk mendapatkan data produk
         $data['test_type']="PRE_TEST";
         $data['title']="Pre Test";
