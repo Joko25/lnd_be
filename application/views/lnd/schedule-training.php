@@ -645,12 +645,31 @@
 	}
 
 	function copyLink(inputId) {
-		const link = document.getElementById(inputId).value;
-		navigator.clipboard.writeText(link).then(() => {
-			toastr.success("Link copied to clipboard!");
-		}).catch(() => {
-			toastr.error("Failed to copy link.");
-		});
+		const linkInput = document.getElementById(inputId);
+		if (!linkInput) {
+			toastr.error("Input link tidak ditemukan.");
+			return;
+		}
+		const link = linkInput.value;
+
+		// Cek apakah navigator.clipboard dan writeText tersedia
+		if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+			navigator.clipboard.writeText(link).then(() => {
+				toastr.success("Link berhasil disalin ke clipboard!");
+			}).catch(() => {
+				toastr.error("Gagal menyalin link.");
+			});
+		} else {
+			// Fallback untuk browser yang tidak support navigator.clipboard
+			try {
+				linkInput.select();
+				linkInput.setSelectionRange(0, 99999); // Untuk mobile
+				document.execCommand('copy');
+				toastr.success("Link berhasil disalin ke clipboard!");
+			} catch (err) {
+				toastr.error("Fitur salin tidak didukung di browser ini.");
+			}
+		}
 	}
 
 	function deleted() {
