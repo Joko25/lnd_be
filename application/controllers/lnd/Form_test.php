@@ -58,7 +58,7 @@ class Form_test extends CI_Controller {
         $this->load->view('lnd/form-test', $data);
     }
 
-    public function post_test($id) {
+    public function post_test($slug, $id) {
         //  Panggil model untuk mendapatkan data produk
         $data['test_type']="POST_TEST";
         $data['title']="Post Test";

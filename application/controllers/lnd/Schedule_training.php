@@ -17,6 +17,8 @@ class Schedule_training extends CI_Controller {
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->library('session');
+		$this->load->library('Spreadsheet');
+
     }
 
     public function index() {
@@ -447,11 +449,16 @@ class Schedule_training extends CI_Controller {
 
 	public function readsEmployeesLeaderUp()
 	{
+		$post = isset($_POST['q']) ? array("a.name" => $_POST['q']) : $this->input->get();
+
 		$this->db->start_cache();
 		$this->db->select('a.id, a.name, b.name as positionName');
 		$this->db->from('employees a');
 		$this->db->join('positions b', 'b.id = a.position_id', 'left');
 		$this->db->where('b.level <', '05');
+		if(!empty($post)) {
+			$this->db->like($post);
+		}
 		$this->db->stop_cache();
 		$res = $this->db->get()->result_array();
 		$this->db->flush_cache(); // Hapus cache query
@@ -849,4 +856,32 @@ class Schedule_training extends CI_Controller {
 		$html .= '</table></body></html>';
 		echo $html;
     }
+
+//	public function export_excel()
+//	{
+//		// Load your static Excel template
+////		$templatePath = base_url( 'assets/template/template_schedule_training.xls');
+//		$templatePath = FCPATH .  'template\template_schedule_training.xls';
+//		$spreadsheet = $this->spreadsheet->loadTemplate($templatePath);
+//		$sheet = $spreadsheet->getActiveSheet();
+//
+//		// Example dynamic data
+//		$data = [
+//			['name' => 'John', 'position' => 'Manager'],
+//			['name' => 'Alice', 'position' => 'Staff'],
+//		];
+//
+//		$start = 2;
+//		foreach ($data as $index => $row) {
+//			$sheet->setCellValue('A' . $start, $index + 1);
+//			$sheet->setCellValue('B' . $start, $row['name']);
+//			$sheet->setCellValue('C' . $start, $row['position']);
+//			$start++;
+//		}
+//
+//		// Download the generated file
+//		$this->spreadsheet->outputToBrowser($spreadsheet, 'Trainee_Report.xlsx');
+//	}
+
+
 }
