@@ -534,6 +534,9 @@ class Request_training extends CI_Controller {
 		$this->db->from('employees a');
 		$this->db->join('positions b', 'b.id = a.position_id', 'left');
 		$this->db->where('b.level <', '05');
+		if(!empty($post)) {
+			$this->db->like($post);
+		}
 		$this->db->stop_cache();
 		$res = $this->db->get()->result_array();
 		$this->db->flush_cache(); // Hapus cache query
@@ -887,7 +890,8 @@ class Request_training extends CI_Controller {
 
 		$this->db->select('*, DATE_FORMAT(date_sign, "%Y-%m-%d") as date_sign_converted');
 		$this->db->from('lnd_request_training_trainee');
-		$this->db->where('trainingRequestId', $option);
+		$trainingIdForExcel = $option == 'excel' ? $id : $option;
+		$this->db->where('trainingRequestId', $trainingIdForExcel);
 		$traineeList = $this->db->get()->result_array();
 		$no = 1;
 		foreach ($traineeList as $trainee) {
