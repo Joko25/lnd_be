@@ -62,7 +62,9 @@ class Trainer_Training_History extends CI_Controller {
                         k.name as marital_name,
                         l.name as religion_name");
 				
-				$this->db->from('employees a');		
+				$this->db->from('lnd_training_history lth');
+				$this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
+				$this->db->join('employees a', 'lth.employee_id = a.id', 'right');
 				$this->db->join('notifications b', "a.id = b.table_id and b.table_name = 'employees'", 'left');
 				$this->db->join('divisions c', 'c.id = a.division_id');
 				$this->db->join('departements d', 'd.id = a.departement_id');
@@ -75,7 +77,11 @@ class Trainer_Training_History extends CI_Controller {
 				$this->db->join('maritals k', 'k.id = a.marital_id', 'left');
 				$this->db->join('religions l', 'l.id = a.religion_id', 'left');
 				$this->db->where('a.deleted', 0);
-				$this->db->where('g.level <', '05');
+				$this->db->where('CAST(g.level AS UNSIGNED) <= 5');
+				$this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
+				if (!empty($form['filter_training_name'])) {
+					$this->db->where('lth.test_id', $form['filter_training_name']);
+				}
 				// $this->db->like("a.division_id", $form['filter_division']);
 				$this->db->like("a.departement_id", $form['filter_departement']);
 				// $this->db->like("a.departement_sub_id", $form['filter_departement_sub']);
@@ -215,23 +221,6 @@ class Trainer_Training_History extends CI_Controller {
 							$style = "style='background: #FF796C; text-align:center;'";
 						}
 						
-						// $this->db->select("lta.trainingActivity as training_name, ltd.test_date, ltd.score_pre_test, ltd.score_post_test, lfh.json_response as json_feedback_history");
-						// $this->db->from('lnd_training_history lth');
-						// $this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
-						// $this->db->join('lnd_master_form_test lmft', "lth.test_id = lmft.id", "left");
-						// $this->db->join('lnd_schedule_training lst', "lmft.training_name = lst.id", "left");
-						// $this->db->join('lnd_training_activity lta', "lst.trainingName = lta.id", "left");
-						// $this->db->join('lnd_feedback_history lfh', "lth.history_feedback_id = lfh.id", "left");
-						// $this->db->where('lth.trainer', $dataEmployee['name']);
-						// $this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
-						// if (!empty($form['filter_training_name'])) {
-						// 	$this->db->where('lth.test_id', $form['filter_training_name']);
-						// }
-
-						// $history_training = $this->db->get()->result_array();
-
-						// Ambil semua test_date, format ke yyyy-mm-dd, dan gabungkan jika test_date sama
-						// Perbaikan: history_feedback_id diambil dengan GROUP_CONCAT agar tidak error only_full_group_by
 						$this->db->select("
 							lta.trainingActivity AS training_name,
 							lta.induction,

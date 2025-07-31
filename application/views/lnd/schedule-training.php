@@ -55,8 +55,8 @@
             <div id="qrcode-pretest"></div>
 			<div style="display: flex; flex-direction: column; align-items: stretch; margin-top: 10px; gap: 8px;">
 				<button onclick="downloadQR('qrcode-pretest', 'pre_test_qr.png')">⬇️ Download QR</button>
-				<button onclick="copyLink('pretest-url')">📋 Copy Link</button>
 				<input type="hidden" id="pretest-url">
+				<button class="btn-copy" data-clipboard-target="#pretest-url">📋 Copy Link</button>
 			</div>
         </div>
         <div>
@@ -64,8 +64,8 @@
             <div id="qrcode-posttest"></div>
 			<div style="display: flex; flex-direction: column; align-items: stretch; margin-top: 10px; gap: 8px;">
 				<button onclick="downloadQR('qrcode-posttest', 'post_test_qr.png')">⬇️ Download QR</button>
-				<button onclick="copyLink('posttest-url')">📋 Copy Link</button>
 				<input type="hidden" id="posttest-url">
+				<button class="btn-copy" data-clipboard-target="#posttest-url">📋 Copy Link</button>
 			</div>
         </div>
         
@@ -184,6 +184,18 @@
 
 <script>
     window.onload = function() {
+		var clipboard = new ClipboardJS('.btn-copy');
+
+		clipboard.on('success', function(e) {
+			console.log('Teks berhasil disalin:', e.text);
+			toastr.success("Link berhasil disalin ke clipboard!"); // Tetap gunakan toastr
+			e.clearSelection();
+		});
+
+		clipboard.on('error', function(e) {
+			console.error('Gagal menyalin teks:', e.action);
+			toastr.error("Gagal menyalin link.");
+		});
 		$(`#trainerName_1`).combogrid({
 			url: '<?= base_url('lnd/schedule_training/readsEmployeesLeaderUp') ?>',
 			panelWidth: 450,
@@ -645,12 +657,44 @@
 	}
 
 	function copyLink(inputId) {
-		const link = document.getElementById(inputId).value;
-		navigator.clipboard.writeText(link).then(() => {
-			toastr.success("Link copied to clipboard!");
-		}).catch(() => {
-			toastr.error("Failed to copy link.");
+		var clipboard = new ClipboardJS(inputId);
+
+		clipboard.on('success', function(e) {
+			console.log('Teks berhasil disalin:', e.text);
+			toastr.success("Link berhasil disalin ke clipboard!"); // Tetap gunakan toastr
+			e.clearSelection();
 		});
+
+		clipboard.on('error', function(e) {
+			console.error('Gagal menyalin teks:', e.action);
+			toastr.error("Gagal menyalin link.");
+		});
+
+		const linkInput = document.getElementById(inputId);
+		if (!linkInput) {
+			toastr.error("Input link tidak ditemukan.");
+			return;
+		}
+		const link = linkInput.value;
+
+		// Cek apakah navigator.clipboard dan writeText tersedia
+		if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+			navigator.clipboard.writeText(link).then(() => {
+				toastr.success("Link berhasil disalin ke clipboard!");
+			}).catch(() => {
+				toastr.error("Gagal menyalin link.");
+			});
+		} else {
+			// Fallback untuk browser yang tidak support navigator.clipboard
+			try {
+				linkInput.select();
+				linkInput.setSelectionRange(0, 99999); // Untuk mobile
+				document.execCommand('copy');
+				toastr.success("Link berhasil disalin ke clipboard!");
+			} catch (err) {
+				toastr.error("Fitur salin tidak didukung di browser ini.");
+			}
+		}
 	}
 
 	function deleted() {

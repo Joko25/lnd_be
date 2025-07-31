@@ -40,6 +40,7 @@ $config = $this->db->get()->row();
     <script type="text/javascript" src="<?= base_url('assets/datagrid-filter.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/datagrid-export.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/datagrid-groupview.js') ?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/Clipboard.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/lodash.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/qrcode.min.js') ?>"></script>
 

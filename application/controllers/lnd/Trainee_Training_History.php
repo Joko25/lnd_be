@@ -50,7 +50,8 @@ class Trainee_Training_History extends CI_Controller {
 		$this->db->select('a.id, a.name, b.name as positionName');
 		$this->db->from('employees a');
 		$this->db->join('positions b', 'b.id = a.position_id', 'left');
-		$this->db->where('b.level <', '05');
+		// Perbaikan: pastikan perbandingan level sebagai integer agar '01', '02', dst bisa dibandingkan dengan benar
+		$this->db->where("(CAST(b.level AS UNSIGNED) <= 5 OR a.departement_sub_id = '20221213000007') AND a.status = 0", null, false);
 		$this->db->stop_cache();
 		$res = $this->db->get()->result_array();
 		$this->db->flush_cache(); // Hapus cache query
@@ -88,7 +89,9 @@ class Trainee_Training_History extends CI_Controller {
                         j.name as source_name,
                         k.name as marital_name,
                         l.name as religion_name");
-				$this->db->from('employees a');
+				$this->db->from('lnd_training_history lth');
+				$this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
+				$this->db->join('employees a', 'lth.employee_id = a.id', 'right');
 				$this->db->join('notifications b', "a.id = b.table_id and b.table_name = 'employees'", 'left');
 				$this->db->join('divisions c', 'c.id = a.division_id');
 				$this->db->join('departements d', 'd.id = a.departement_id');
@@ -101,6 +104,10 @@ class Trainee_Training_History extends CI_Controller {
 				$this->db->join('maritals k', 'k.id = a.marital_id', 'left');
 				$this->db->join('religions l', 'l.id = a.religion_id', 'left');
 				$this->db->where('a.deleted', 0);
+				$this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
+				if (!empty($form['filter_training_name'])) {
+					$this->db->where('lth.test_id', $form['filter_training_name']);
+				}
 				// $this->db->like("a.division_id", $form['filter_division']);
 				$this->db->like("a.departement_id", $form['filter_departement']);
 				// $this->db->like("a.departement_sub_id", $form['filter_departement_sub']);
