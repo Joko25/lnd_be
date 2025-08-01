@@ -72,7 +72,7 @@ class Trainee_Training_History extends CI_Controller {
 			// if (@$form['filter_trainee_name'] == "") {
 			// 	die('<h3 style="color:red;">PLEASE CHOOSE TRAINEE NAME</h3>');
 			// } else {
-				$this->db->select("a.*, a.id as employee_id,
+				$this->db->select("a.name, a.number, a.status, a.id as employee_id,
                         (CASE
                                 WHEN CAST(a.date_expired AS CHAR) = '0000-00-00' THEN '-'
                                 ELSE CAST(a.date_expired AS CHAR)
@@ -113,6 +113,12 @@ class Trainee_Training_History extends CI_Controller {
 				// $this->db->like("a.departement_sub_id", $form['filter_departement_sub']);
 				$this->db->like("a.id", $form['filter_trainee_name']);
 				// $this->db->like("a.status", $form['filter_status']);
+				$this->db->group_by('a.name');
+				$this->db->group_by('a.number');
+				$this->db->group_by('a.status');
+				$this->db->group_by('a.id');
+				$this->db->group_by('b.users_id_from');
+				$this->db->group_by('b.users_id_to');
 				$this->db->order_by('a.name', 'ASC');
 				$records = $this->db->get()->result_array();
 

@@ -45,7 +45,7 @@ class Trainer_Training_History extends CI_Controller {
 			// if (@$form['filter_employee']== "") {
 			// 	die('<h3 style="color:red;">PLEASE CHOOSE TRAINER NAME</h3>');
 			// } else {
-				$this->db->select("a.*, a.id as employee_id, (CASE
+				$this->db->select("a.name, a.number, a.status, a.id as employee_id, (CASE
                                 WHEN CAST(a.date_expired AS CHAR) = '0000-00-00' THEN '-'
                                 ELSE CAST(a.date_expired AS CHAR)
                             END) as date_expired,
@@ -64,7 +64,7 @@ class Trainer_Training_History extends CI_Controller {
 				
 				$this->db->from('lnd_training_history lth');
 				$this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
-				$this->db->join('employees a', 'lth.employee_id = a.id', 'right');
+				$this->db->join('employees a', 'lth.trainer = a.name COLLATE utf8mb4_unicode_ci', 'right', FALSE);
 				$this->db->join('notifications b', "a.id = b.table_id and b.table_name = 'employees'", 'left');
 				$this->db->join('divisions c', 'c.id = a.division_id');
 				$this->db->join('departements d', 'd.id = a.departement_id');
@@ -87,6 +87,12 @@ class Trainer_Training_History extends CI_Controller {
 				// $this->db->like("a.departement_sub_id", $form['filter_departement_sub']);
 				$this->db->like("a.id", $form['filter_employee']);
 				// $this->db->like("a.status", $form['filter_status']);
+				$this->db->group_by('a.name');
+				$this->db->group_by('a.number');
+				$this->db->group_by('a.status');
+				$this->db->group_by('a.id');
+				$this->db->group_by('b.users_id_from');
+				$this->db->group_by('b.users_id_to');
 				$this->db->order_by('a.name', 'ASC');
 				$records = $this->db->get()->result_array();
 
