@@ -95,7 +95,8 @@
                     <div style="width:60%;">
                         <input style="width:100%;" name="attachment" id="attachment" class="easyui-filebox"  data-options="
                             accept: 'image/jpeg,image/png,image/gif,application/pdf',">
-                        <span style="color:red;">Only PDF and image files are allowed for data attachment upload</span>
+						<span style="color:red;">Only PDF and image files are allowed for data attachment upload.</span>
+						<span style="color:red;">Max 2 MB</span>
                     </div>
 				</div>
             </div>
@@ -278,6 +279,7 @@
 
         for (let i = 0; i < totalForm; i++) {
             if (rowForm[i].fullName) {
+				console.log(rowForm);
                 $.ajax({
                     type: "POST", 
                     url: '<?= base_url('lnd/request_training/create_data_trainee') ?>',
@@ -285,7 +287,7 @@
                         id: rowForm[i].id,
                         fullName: rowForm[i].fullName,
                         trainingRequestId: isUpdate ? updateId: id,
-                        national_id: rowForm[i].employeeId,
+                        national_id: rowForm[i].national_id,
                         position: rowForm[i].position,
                         departement: rowForm[i].departement,
                         departement_subs: rowForm[i].departement_subs,
