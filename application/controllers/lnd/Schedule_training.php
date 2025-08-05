@@ -1,11 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once(APPPATH . '../vendor/autoload.php');
-
-// Use PhpSpreadsheet classes
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xls;
+//require_once(APPPATH . '../vendor/autoload.php');
+//
+//// Use PhpSpreadsheet classes
+//use PhpOffice\PhpSpreadsheet\Spreadsheet;
+//use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 class Schedule_training extends CI_Controller {
 
