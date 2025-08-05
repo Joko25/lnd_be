@@ -46,12 +46,19 @@ class Trainee_Training_History extends CI_Controller {
 
 	public function readsEmployeesLeaderUp()
 	{
+		$post = isset($_POST['q']) ? $_POST['q'] : "";
+        $get = $this->input->get();
 		$this->db->start_cache();
 		$this->db->select('a.id, a.name, b.name as positionName');
 		$this->db->from('employees a');
 		$this->db->join('positions b', 'b.id = a.position_id', 'left');
 		// Perbaikan: pastikan perbandingan level sebagai integer agar '01', '02', dst bisa dibandingkan dengan benar
 		$this->db->where("(CAST(b.level AS UNSIGNED) <= 5 OR a.departement_sub_id = '20221213000007') AND a.status = 0", null, false);
+		if ($get) {
+            $this->db->like($get);
+        }
+		$this->db->like('a.number', $post);
+        $this->db->or_like('a.name', $post);
 		$this->db->stop_cache();
 		$res = $this->db->get()->result_array();
 		$this->db->flush_cache(); // Hapus cache query

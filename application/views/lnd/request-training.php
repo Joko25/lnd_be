@@ -28,7 +28,16 @@
                 <div style="width:50%; float: left;">
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Reasons</span>
-                        <input style="width:60%;" id="reasonsFilter" class="easyui-combogrid">
+                        <!-- <input style="width:60%;"  class="easyui-combobox"> -->
+                        <select style="width:60%;" id="reasonsFilter" value="" name="reasons" class="easyui-combobox" panelHeight="auto">
+                            <option value="" selected></option>    
+                            <option value="Promotion">Promotion</option>
+                            <option value="Mutation">Mutation</option>
+                            <option value="New Product">New Product</option>
+                            <option value="New Technology">New Technology</option>
+                            <option value="New System">New System</option>
+                            <option value="Skill Upgrades">Skill Upgrades</option>
+                        </select>
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Departement</span>
@@ -638,28 +647,28 @@
 				}]
 			],
 		});
-        $('#reasonsFilter').combogrid({
-            url: '<?= base_url('lnd/request_training/reads') ?>',
-            panelWidth: 450,
-            idField: 'reasons',
-            textField: 'reasons',
-            mode: 'remote',
-            fitColumns: true,
-            prompt: 'Choose All',
-            icons: [{
-                iconCls: 'icon-clear',
-                handler: function(e) {
-                    $(e.data.target).combogrid('clear').combogrid('textbox').focus();
-                }
-            }],
-            columns: [
-                [{
-                    field: 'reasons',
-                    title: 'Reasons',
-                    width: 120
-                }]
-            ],
-        });
+        // $('#reasonsFilter').combogrid({
+        //     url: '<?= base_url('lnd/request_training/reads') ?>',
+        //     panelWidth: 450,
+        //     idField: 'reasons',
+        //     textField: 'reasons',
+        //     mode: 'remote',
+        //     fitColumns: true,
+        //     prompt: 'Choose All',
+        //     icons: [{
+        //         iconCls: 'icon-clear',
+        //         handler: function(e) {
+        //             $(e.data.target).combogrid('clear').combogrid('textbox').focus();
+        //         }
+        //     }],
+        //     columns: [
+        //         [{
+        //             field: 'reasons',
+        //             title: 'Reasons',
+        //             width: 120
+        //         }]
+        //     ],
+        // });
 
         $('#departementFilter').combogrid({
             url: '<?= base_url('lnd/schedule_training/readsDepartements') ?>',
@@ -1003,7 +1012,7 @@
     function filter() {
         var trainingMaterial = $("#trainingMaterialFilter").combogrid('getValue');
         var trainee = $("#traineeFilter").combogrid('getValue');
-        var reasons = $("#reasonsFilter").combogrid('getValue');
+        var reasons = $("#reasonsFilter").combobox('getValue');
         var departement = $("#departementFilter").combogrid('getValue');
         var suggestTrainingDate = $("#suggestTrainingDateFilter").datebox('getValue');
         var params = "?trainingActivities=" + trainingMaterial + "&id=" + trainee + "&reasons=" + reasons + "&departement=" + departement + "&suggestDateTraining=" + btoa(suggestTrainingDate);

@@ -306,6 +306,7 @@ class Crud extends CI_Model
         if ($fieldExists) {
             if (!empty($approval)) {
                 $formApprove = [
+                    'id' => $this->uuid_key(),
                     $idReference => $idReferenceValue,
                     "approved" => 1,
                     "approved_to" => $approval->user_approval_1,
