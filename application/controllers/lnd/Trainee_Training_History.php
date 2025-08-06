@@ -57,8 +57,13 @@ class Trainee_Training_History extends CI_Controller {
 		if ($get) {
             $this->db->like($get);
         }
-		$this->db->like('a.number', $post);
-        $this->db->or_like('a.name', $post);
+		if(!empty($post)) {
+			// Jika $post ada isinya, tambahkan kondisi where untuk filter berdasarkan nomor atau nama
+			$this->db->group_start();
+			$this->db->like('a.number', $post);
+			$this->db->or_like('a.name', $post);
+			$this->db->group_end();
+		}
 		$this->db->stop_cache();
 		$res = $this->db->get()->result_array();
 		$this->db->flush_cache(); // Hapus cache query
