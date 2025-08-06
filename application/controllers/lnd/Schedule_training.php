@@ -1,8 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+//require_once(APPPATH . '../vendor/autoload.php');
+//
+//// Use PhpSpreadsheet classes
+//use PhpOffice\PhpSpreadsheet\Spreadsheet;
+//use PhpOffice\PhpSpreadsheet\Writer\Xls;
+
 class Schedule_training extends CI_Controller {
-    
+
     public function __construct() {
         parent::__construct();
         // Load any models or libraries needed
@@ -17,6 +23,7 @@ class Schedule_training extends CI_Controller {
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->library('session');
+
     }
 
     public function index() {
@@ -414,9 +421,11 @@ class Schedule_training extends CI_Controller {
     // GET DATA DEPARTEMENTS
     public function readsDepartements() 
     {
+		$post = isset($_POST['q']) ? $_POST['q'] : "";
+
 		$departements = $this->crud->query("SELECT dep.id, dep.name, divs.name as division 
 		FROM departements dep
-		JOIN divisions divs ON dep.division_id = divs.id");
+		JOIN divisions divs ON dep.division_id = divs.id WHERE dep.name LIKE '%$post%'");
         echo json_encode($departements);
     }
 
@@ -665,54 +674,6 @@ class Schedule_training extends CI_Controller {
 		$this->db->order_by('a.induction', 'ASC');
         $records = $this->db->get()->result_array();
 
-//        $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
-//        <center>
-//            <div style="float: left; font-size: 12px; text-align: left;">
-//                <table style="width: 100%;">
-//                    <tr>
-//                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
-//                            <img src="' . $config->favicon . '" width="30">
-//                        </td>
-//                    </tr>
-//                </table>
-//            </div>
-//            <div style="float: right; font-size: 12px; text-align: right;">
-//                Print Date ' . date("d M Y H:m:s") . ' <br>
-//                Print By ' . $this->session->username . '
-//            </div>
-//        </center>
-//        <br><br><br>
-//
-//        <table id="customers" border="1">
-//            <tr>
-//                <th>No</th>
-//				<th>Induction</th>
-//				<th>Training Name</th>
-//				<th>Trainer</th>
-//				<th>Trainee</th>
-//				<th>Remarks</th>
-//				<th>Total Trainees</th>
-//				<th>Duration</th>
-//				<th>Training Date</th>
-//            </tr>';
-//        $no = 1;
-//		foreach ($records as $data) {
-//			$html .= '<tr>
-//                <td>' . $no . '</td>
-//                <td>' . $data['induction'] . '</td>
-//                <td>' . $data['trainingActivity'] . '</td>
-//                <td>' . $data['trainers'] . '</td>
-//                <td>' . (!empty($data['trainee_name']) ? $data['trainee_name'] : $data['category']) . '</td>
-//                <td>' . $data['remarks'] . '</td>
-//                <td>' . $data['totalTrainee'] . '</td>
-//                <td>' . $data['duration'] . '</td>
-//                <td>' . $data['training_dates'] . '</td>';
-//			$no++;
-//		}
-//
-//        $html .= '</table></body></html>';
-//        echo $html;
-
 // Helper functions
 		function dateToIndex($date) {
 			$dt = DateTime::createFromFormat('Y-m-d', $date);
@@ -854,4 +815,72 @@ class Schedule_training extends CI_Controller {
 		$html .= '</table></body></html>';
 		echo $html;
     }
+
+//	public function download_template_schedule_training() {
+////		$format  = date("Ymd");
+////		header("Content-type: application/vnd-ms-excel");
+////		header("Content-Disposition: attachment; filename=template_schedule_training_$format.xls");
+////
+////		$html = '<html><body>
+////<table>
+////<thead>
+////	<td>no</td>
+////</thead>
+////<tbody>
+////	<td>1</td>
+////</tbody>
+////</table></body></html>';
+////		echo $html;
+//		// Load PhpSpreadsheet manually
+//		// Load Composer autoloader
+////		require_once(APPPATH . '../vendor/autoload.php');
+//
+//		// Create new spreadsheet
+//		$spreadsheet = new Spreadsheet();
+//
+//		// Sheet 1: Schedule
+//		$spreadsheet->getActiveSheet()->setTitle('Schedule Training');
+//		$spreadsheet->getActiveSheet()
+//			->setCellValue('A1', 'Template Schedule Training')
+//			->setCellValue('A2', 'No')
+//			->setCellValue('B2', 'REGISTER DATE')
+//			->setCellValue('C2', 'TRAINING DATES 1')
+//			->setMergeCells(['A1:K1'])
+//			->getStyle('A1')->getAlignment()->setHorizontal('center')
+//			->setVertical('center')->setb;
+//
+//		// Sheet 2: Trainer
+//		$sheet2 = $spreadsheet->createSheet();
+//		$sheet2->setTitle('Trainer');
+//		$sheet2->setCellValue('A1', 'Trainer Name')
+//			->setCellValue('B1', 'Expertise');
+//
+//		// Sheet 3: Participant
+//		$sheet3 = $spreadsheet->createSheet();
+//		$sheet3->setTitle('Participant');
+//		$sheet3->setCellValue('A1', 'Participant Name')
+//			->setCellValue('B1', 'Department');
+//
+//		// Sheet 4: Material
+//		$sheet4 = $spreadsheet->createSheet();
+//		$sheet4->setTitle('Material');
+//		$sheet4->setCellValue('A1', 'Material Title')
+//			->setCellValue('B1', 'Duration (Hours)');
+//
+//		// Set active sheet index back to the first sheet
+//		$spreadsheet->setActiveSheetIndex(0);
+//
+//		// Set filename with today's date
+//		$filename = "template_schedule_training_" . date("Ymd") . ".xls";
+//
+//		// Set HTTP headers for Excel file download
+//		header('Content-Type: application/vnd.ms-excel');
+//		header("Content-Disposition: attachment; filename=\"$filename\"");
+//		header('Cache-Control: max-age=0');
+//
+//		// Write and output Excel file
+//		$writer = new Xls($spreadsheet);
+//		$writer->save('php://output');
+//		exit;
+//	}
 }

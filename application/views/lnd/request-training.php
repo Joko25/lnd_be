@@ -681,7 +681,7 @@
             icons: [{
                 iconCls: 'icon-clear',
                 handler: function(e) {
-                    $(e.data.target).combobox('clear').combobox('textbox').focus();
+                    $(e.data.target).combogrid('clear').combogrid('textbox').focus();
                 }
             }],
 			columns: [
