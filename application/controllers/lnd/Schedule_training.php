@@ -1,11 +1,16 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-//require_once(APPPATH . '../vendor/autoload.php');
-//
-//// Use PhpSpreadsheet classes
+require_once(APPPATH . '../vendor/autoload.php');
+
+// Use PhpSpreadsheet classes
 //use PhpOffice\PhpSpreadsheet\Spreadsheet;
 //use PhpOffice\PhpSpreadsheet\Writer\Xls;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class Schedule_training extends CI_Controller {
 
@@ -816,71 +821,109 @@ class Schedule_training extends CI_Controller {
 		echo $html;
     }
 
-//	public function download_template_schedule_training() {
-////		$format  = date("Ymd");
-////		header("Content-type: application/vnd-ms-excel");
-////		header("Content-Disposition: attachment; filename=template_schedule_training_$format.xls");
-////
-////		$html = '<html><body>
-////<table>
-////<thead>
-////	<td>no</td>
-////</thead>
-////<tbody>
-////	<td>1</td>
-////</tbody>
-////</table></body></html>';
-////		echo $html;
-//		// Load PhpSpreadsheet manually
-//		// Load Composer autoloader
-////		require_once(APPPATH . '../vendor/autoload.php');
-//
-//		// Create new spreadsheet
-//		$spreadsheet = new Spreadsheet();
-//
-//		// Sheet 1: Schedule
-//		$spreadsheet->getActiveSheet()->setTitle('Schedule Training');
-//		$spreadsheet->getActiveSheet()
-//			->setCellValue('A1', 'Template Schedule Training')
-//			->setCellValue('A2', 'No')
-//			->setCellValue('B2', 'REGISTER DATE')
-//			->setCellValue('C2', 'TRAINING DATES 1')
-//			->setMergeCells(['A1:K1'])
-//			->getStyle('A1')->getAlignment()->setHorizontal('center')
-//			->setVertical('center')->setb;
-//
-//		// Sheet 2: Trainer
-//		$sheet2 = $spreadsheet->createSheet();
-//		$sheet2->setTitle('Trainer');
-//		$sheet2->setCellValue('A1', 'Trainer Name')
-//			->setCellValue('B1', 'Expertise');
-//
-//		// Sheet 3: Participant
-//		$sheet3 = $spreadsheet->createSheet();
-//		$sheet3->setTitle('Participant');
-//		$sheet3->setCellValue('A1', 'Participant Name')
-//			->setCellValue('B1', 'Department');
-//
-//		// Sheet 4: Material
-//		$sheet4 = $spreadsheet->createSheet();
-//		$sheet4->setTitle('Material');
-//		$sheet4->setCellValue('A1', 'Material Title')
-//			->setCellValue('B1', 'Duration (Hours)');
-//
-//		// Set active sheet index back to the first sheet
-//		$spreadsheet->setActiveSheetIndex(0);
-//
-//		// Set filename with today's date
-//		$filename = "template_schedule_training_" . date("Ymd") . ".xls";
-//
-//		// Set HTTP headers for Excel file download
-//		header('Content-Type: application/vnd.ms-excel');
-//		header("Content-Disposition: attachment; filename=\"$filename\"");
-//		header('Cache-Control: max-age=0');
-//
-//		// Write and output Excel file
-//		$writer = new Xls($spreadsheet);
-//		$writer->save('php://output');
-//		exit;
-//	}
+	public function download_template_schedule_training() {
+
+		// Create new spreadsheet
+		$spreadsheet = new Spreadsheet();
+		$spreadsheet->removeSheetByIndex(0);
+		// Sheet 1: Schedule
+		$sheet = $spreadsheet->createSheet();
+		$sheet->setTitle('Schedule Training');
+		$sheet
+			->setCellValue('A1', 'Template Schedule Training')
+			->setCellValue('A2', 'No')
+			->setCellValue('B2', 'REGISTER DATE')
+			->setCellValue('C2', 'TRAINING DATES 1')
+			->setCellValue('D2', 'BATCH TRAINING DATES 1')
+			->setCellValue('E2', 'TRAINING DATES 2 (Optional)')
+			->setCellValue('F2', 'BATCH TRAINING DATES 2 (Optional)')
+			->setCellValue('G2', 'TRAINING DATES 3 (Optional)')
+			->setCellValue('H2', 'BATCH TRAINING DATES 3 (Optional)')
+			->setCellValue('I2', 'INDUCTION')
+			->setCellValue('J2', 'TRAINING NAME (Training Activity ID)')
+			->setCellValue('K2', 'CATEGORY')
+			->setCellValue('L2', 'TRAINER NAME (Employee ID)')
+			->setCellValue('M2', 'TRAINER NAME (Employee ID Optional)')
+			->setCellValue('N2', 'TRAINER NAME (Employee ID Optional)')
+			->setCellValue('O2', 'TRAINEE (Fill Department ID if Category is Department')
+			->setCellValue('P2', 'REMARKS')
+			->setCellValue('Q2', 'TOTAL TRAINEE')
+			->setCellValue('R2', 'DURATION')
+			->setMergeCells(['A1:K1'])
+			->getStyle('A1')->getAlignment()->setHorizontal('center')
+			->setVertical('center');
+		foreach (range('A', 'R') as $col) {
+			$sheet->getColumnDimension($col)->setAutoSize(true);
+		}
+
+		// Sheet 2: Trainer
+		$this->db->start_cache(); // Cache query sebelum count_all_results
+		$this->db->select('a.*');
+		$this->db->from('lnd_training_activity a');
+		$records = $this->db->get()->result_array();
+
+		$sheet2 = $spreadsheet->createSheet();
+		$sheet2->setTitle('Master Training Activity');
+		$sheet2->setCellValue('A1', 'Master Training Activity')
+			->setCellValue('A2', 'No')
+			->setCellValue('B2', 'ID')
+			->setCellValue('C2', 'Induction')
+			->setCellValue('D2', 'Training Activity')
+			->setMergeCells(['A1:D1'])
+			->getStyle('A1')->getAlignment()->setHorizontal('center');
+		foreach (range('A', 'D') as $col) {
+			$sheet2->getColumnDimension($col)->setAutoSize(true);
+		}
+		$indexTrainingActivity = 3;
+		foreach ($records as $row => $data) {
+			$sheet2->setCellValue("A" . $indexTrainingActivity, $row+1);
+			$sheet2->setCellValue("B" . $indexTrainingActivity, $data['trainingActivityId']);
+			$sheet2->setCellValue("C" . $indexTrainingActivity, $data['induction']);
+			$sheet2->setCellValue("D" . $indexTrainingActivity, $data['trainingActivity']);
+			$indexTrainingActivity++;
+		}
+
+		// Sheet 3: Participant
+		$sheet3 = $spreadsheet->createSheet();
+		$sheet3->setTitle('Trainer Name');
+		$sheet3->setCellValue('A1', 'Trainer Name')
+			->setCellValue('A2', 'No')
+			->setCellValue('B2', 'Employee ID')
+			->setCellValue('C2', 'Name')
+			->setMergeCells(['A1:C1'])
+			->getStyle('A1')->getAlignment()->setHorizontal('center');
+		foreach (range('A', 'C') as $col) {
+			$sheet3->getColumnDimension($col)->setAutoSize(true);
+		}
+
+		// Sheet 4: Material
+		$sheet4 = $spreadsheet->createSheet();
+		$sheet4->setTitle('Trainee');
+		$sheet4->setCellValue('A1', 'Trainee (if Category is Department)')
+			->setCellValue('A2', 'No')
+			->setCellValue('B2', 'ID')
+			->setCellValue('C2', 'Division')
+			->setCellValue('D2', 'Department')
+			->setMergeCells(['A1:D1'])
+			->getStyle('A1')->getAlignment()->setHorizontal('center');
+		foreach (range('A', 'D') as $col) {
+			$sheet4->getColumnDimension($col)->setAutoSize(true);
+		}
+
+		// Set active sheet index back to the first sheet
+		$spreadsheet->setActiveSheetIndexByName('Schedule Training');
+
+		// Set filename with today's date
+		$filename = "template_schedule_training_" . date("Ymd") . ".xls";
+
+		// Set HTTP headers for Excel file download
+		header('Content-Type: application/vnd.ms-excel');
+		header("Content-Disposition: attachment; filename=\"$filename\"");
+		header('Cache-Control: max-age=0');
+
+		// Write and output Excel
+		$writer = new Xls($spreadsheet);
+		$writer->save('php://output');
+		exit;
+	}
 }

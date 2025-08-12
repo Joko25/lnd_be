@@ -734,7 +734,7 @@
 
 	//DOWNLOAD EXCEL TEMPLATE
 	function download_excel() {
-		window.location.assign('<?= base_url('template/template_schedule_training.xls') ?>');
+		window.location.assign('<?= base_url('lnd/schedule_training/download_template_schedule_training') ?>');
 	}
 
     function sendDataToServer(requestData) {
