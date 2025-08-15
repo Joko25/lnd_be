@@ -424,6 +424,8 @@ class Request_training extends CI_Controller {
         $this->db->join('positions p', 'p.id = e.position_id');
         $this->db->join('departements d', 'd.id = e.departement_id');
         $this->db->join('departement_subs ds', 'ds.id = e.departement_sub_id');
+        $this->db->where('e.status', 0);
+        
         if($post) {
             $this->db->like($post);
         }
