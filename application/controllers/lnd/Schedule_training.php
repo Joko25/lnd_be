@@ -5,7 +5,7 @@ require_once(APPPATH . '../vendor/autoload.php');
 
 // Use PhpSpreadsheet classes
 //use PhpOffice\PhpSpreadsheet\Spreadsheet;
-//use PhpOffice\PhpSpreadsheet\Writer\Xls;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Border;
