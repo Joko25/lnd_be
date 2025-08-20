@@ -255,7 +255,7 @@ class Request_training extends CI_Controller {
 		$idGenerateDateTemp = $this->crud->autoidPrifix('lnd_request_training', 'requestTrainingId', 'T');
         $data['id'] = $this->uuid();
         $data['requestTrainingId'] = $idGenerateDateTemp;
-		if (!empty($_FILES['attachment']['name'])) {
+		    if (!empty($_FILES['attachment'])) {
             $attachment = $this->LndModel->upload_v2('attachment', ['jpg', 'pdf', 'jpeg', 'png', 'gif'], 'assets/document/request-training/');
             log_message('debug', 'ATTACHMENT: ' . $attachment);
             if ($attachment) {
@@ -302,7 +302,7 @@ class Request_training extends CI_Controller {
 
         if (!empty($data)) {
             // Upload attachment jika ada file baru
-            if (!empty($_FILES['attachment']['name'])) {
+            if (!empty($_FILES['attachment'])) {
                 $attachment = $this->LndModel->upload_v2('attachment', ['jpg', 'pdf', 'jpeg', 'png', 'gif'], 'assets/document/request-training/');
                 if ($attachment) {
                     $data['attachment'] = $attachment;
@@ -424,6 +424,8 @@ class Request_training extends CI_Controller {
         $this->db->join('positions p', 'p.id = e.position_id');
         $this->db->join('departements d', 'd.id = e.departement_id');
         $this->db->join('departement_subs ds', 'ds.id = e.departement_sub_id');
+        $this->db->where('e.status', 0);
+        
         if($post) {
             $this->db->like($post);
         }
