@@ -1532,6 +1532,7 @@
 						}]
 					],
 				}).datagrid('enableFilter');
+				$('#dlg_approval').dialog('close');
 			}
 		}
 	}
@@ -1661,6 +1662,7 @@
 					if (result.theme == "success") {
 						toastr.success(result.message, result.title);
 						$("#dg_approval").datagrid("reload");
+						$('#dlg_approval_detail').window('close');
 					} else {
 						toastr.error(result.message, result.title);
 					}
