@@ -57,8 +57,8 @@ class Request_training extends CI_Controller {
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
 
-        // Menggunakan ANY_VALUE() untuk kolom-kolom dari JOINed tables
-        $this->db->select('
+        // Tambahkan DISTINCT pada select
+        $this->db->select('DISTINCT
             a.*,
             DATE_FORMAT(a.suggestDateTraining, "%Y-%m-%d") as suggestDate,
             a.status as statusTraining,
@@ -71,13 +71,11 @@ class Request_training extends CI_Controller {
             employeeApprover.gender as gender,
             u.name as approverName,
             userReject.name as inputter
-        ');
+        ', false);
 
         $this->db->from('lnd_request_training a');
 
-        // --- Perubahan Utama untuk mengatasi masalah ONLY_FULL_GROUP_BY dan ANY_VALUE() ---
         // Subquery untuk mendapatkan baris lnd_request_training_approvals_history terbaru/terpilih
-        // Ini akan mengambil satu baris rth untuk setiap a.requestTrainingId yang memenuhi kriteria status 0
         $latest_approval_subquery = '(
             SELECT
                 rth_inner.*
@@ -87,39 +85,24 @@ class Request_training extends CI_Controller {
                 SELECT
                     trainingRequestId,
                     MAX(approved_date) AS max_approved_date,
-                    MAX(approved) AS max_approved_for_tiebreaker -- BARIS INI DIPERBAIKI: Menggunakan MAX(approved) sebagai tie-breaker
+                    MAX(approved) AS max_approved_for_tiebreaker
                 FROM
                     lnd_request_training_approvals_history
                 GROUP BY
                     trainingRequestId
             ) AS latest_rth ON rth_inner.trainingRequestId = latest_rth.trainingRequestId
                             AND rth_inner.approved_date = latest_rth.max_approved_date
-                            AND rth_inner.approved = latest_rth.max_approved_for_tiebreaker -- BARIS INI DIPERBAIKI: Menggunakan approved untuk kondisi tie-breaker
+                            AND rth_inner.approved = latest_rth.max_approved_for_tiebreaker
         ) AS rth';
 
         $this->db->join($latest_approval_subquery, 'a.requestTrainingId = rth.trainingRequestId', 'left');
-        // --- Akhir Perubahan Utama ---
 
-        // Join ke tabel employees untuk nama trainer
+        $this->db->join('lnd_request_training_trainee lrtt', 'a.id = lrtt.trainingRequestId', 'left');
         $this->db->join('employees e', 'a.trainer_name = e.id', 'left');
-
-        // Join ke tabel users untuk detail approver
         $this->db->join('users u', 'rth.approved_to = u.username', 'left');
-
-        // Join ke tabel employees untuk gender approver
         $this->db->join('employees employeeApprover', 'u.number = employeeApprover.number', 'left');
-
-        // Join ke tabel users untuk detail inputter (yang sebelumnya userReject)
         $this->db->join('users userReject', 'rth.approved_by = userReject.username', 'left');
-
-        // Join ke tabel employees untuk detail employeeReject, jika diperlukan
-        $this->db->join('employees employeeReject', 'userReject.number = employeeReject.number', 'left');
-
-		$this->db->join('users usersCreator', 'a.createdBy = usersCreator.username', 'left');
-
-		$this->db->join('employees employeeCreator', 'usersCreator.number = employeeCreator.number', 'left');
-
-		$this->db->join('departements departementsCreator', 'employeeCreator.departement_id = departementsCreator.id', 'left');
+        $this->db->join('departements departementsCreator', 'lrtt.departement = departementsCreator.name', 'left');
 
         if (!empty($suggestTrainingDate)) {
             $this->db->where('a.suggestDateTraining', $suggestTrainingDate);
@@ -144,7 +127,7 @@ class Request_training extends CI_Controller {
         $totalRows = $this->db->count_all_results();
         
         // Ambil data dengan limit dan offset
-		$this->db->order_by('suggestDate', 'ASC');
+        $this->db->order_by('suggestDate', 'ASC');
         $this->db->limit($rows, $offset);
         $records = $this->db->get()->result_array();
         $this->db->flush_cache(); // Hapus cache query
@@ -798,14 +781,14 @@ class Request_training extends CI_Controller {
       <tr>
         <td style="border: none">Dari</td>
         <td style="border-left: none; border-bottom: none; border-top: none">
-          : '. $result->createdBy .'
+          : <span style="display: inline-block; min-width: 350px; border-bottom: 1px solid #000;">'. $result->createdBy .'</span>
         </td>
         <td style="border-top: none; border-bottom: none;"><center>Dept. Head</center></td>
       </tr>
       <tr>
         <td style="border: none">Dept</td>
         <td style="border-left: none; border-bottom: none; border-top: none">
-          : '. $result->departmentInputter .'
+          : <span style="display: inline-block; min-width: 350px; border-bottom: 1px solid #000;">'. $result->departmentInputter .'</span>
         </td>
         <td style="border-top: none; border-bottom: none;"></td>
         
@@ -813,35 +796,35 @@ class Request_training extends CI_Controller {
       <tr>
         <td style="border: none">Materi Training</td>
         <td style="border-left: none; border-bottom: none; border-top: none">
-          : '. $result->trainingActivities .'
+          : <span style="display: inline-block; min-width: 350px; border-bottom: 1px solid #000;">'. $result->trainingActivities .'</span>
         </td>
         <td style="border-top: none; border-bottom: none;"></td>
       </tr>
       <tr>
         <td style="border: none">Nama Trainer</td>
         <td style="border-left: none; border-bottom: none; border-top: none">
-          : '. $result->trainerName .'
+          : <span style="display: inline-block; min-width: 350px; border-bottom: 1px solid #000;">'. $result->trainerName .'</span>
         </td>
         <td style="border-top: none; border-bottom: none;"></td>
       </tr>
       <tr>
         <td style="border: none">Tgl. Training</td>
         <td style="border-left: none; border-bottom: none; border-top: none">
-          : '. $result->suggestDate .'
+          : <span style="display: inline-block; min-width: 350px; border-bottom: 1px solid #000;">'. $result->suggestDate .'</span>
         </td>
         <td style="border-top: none; border-bottom: none;"></td>
       </tr>
       <tr>
         <td style="border: none">Tempat</td>
         <td style="border-left: none; border-bottom: none; border-top: none">
-          : PT. PIRANTI TEKNIK INDONESIA
+          : <span style="display: inline-block; min-width: 350px; border-bottom: 1px solid #000;"> PT. PIRANTI TEKNIK INDONESIA </span>
         </td>
         <td style="border-top: none; border-bottom: none;"></td>
       </tr>
       <tr>
         <td style="border: none">Jam</td>
         <td style="border-left: none; border-bottom: none; border-top: none">
-          :
+          : <span style="display: inline-block; min-width: 350px; border-bottom: 1px solid #000;"> </span>
         </td>
         <td style="border-top: none; border-bottom: none;"><center><u>(............................)</u></center></td>
       </tr>
@@ -917,19 +900,19 @@ class Request_training extends CI_Controller {
 
     <br />
     <strong>Alasan :</strong>
-    <table>
+    <table style="border: none;">
       <tr>
-        <td><span class="checkbox">'. ($result->reasons === 'Promotion' ? '✔' : '') .'</span> Promosi</td>
-        <td><span class="checkbox">'. ($result->reasons === 'New Product' ? '✔' : '') .'</span> Produk baru</td>
-        <td><span class="checkbox">'. ($result->reasons === 'New System' ? '✔' : '') .'</span> System baru</td>
+        <td style="border: none;"><span class="checkbox">'. ($result->reasons === 'Promotion' ? '✔' : '') .'</span> Promosi</td>
+        <td style="border: none;"><span class="checkbox">'. ($result->reasons === 'New Product' ? '✔' : '') .'</span> Produk baru</td>
+        <td style="border: none;"><span class="checkbox">'. ($result->reasons === 'New System' ? '✔' : '') .'</span> System baru</td>
       </tr>
       <tr>
-        <td><span class="checkbox">'. ($result->reasons === 'Mutation' ? '✔' : '') .'</span> Mutasi</td>
-        <td><span class="checkbox">'. ($result->reasons === 'New Technology' ? '✔' : '') .'</span> Technology baru</td>
-        <td><span class="checkbox">'. ($result->reasons === 'Skill Upgrades' ? '✔' : '') .'</span> Peningkatan skill</td>
+        <td style="border: none;"><span class="checkbox">'. ($result->reasons === 'Mutation' ? '✔' : '') .'</span> Mutasi</td>
+        <td style="border: none;"><span class="checkbox">'. ($result->reasons === 'New Technology' ? '✔' : '') .'</span> Technology baru</td>
+        <td style="border: none;"><span class="checkbox">'. ($result->reasons === 'Skill Upgrades' ? '✔' : '') .'</span> Peningkatan skill</td>
       </tr>
       <tr>
-        <td colspan="3">
+        <td colspan="3" style="border: none;">
           <span class="checkbox"></span> Lain-lain:
           ..................................................
         </td>
