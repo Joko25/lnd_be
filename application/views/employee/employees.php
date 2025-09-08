@@ -4,6 +4,7 @@
         <tr>
             <th rowspan="2" field="ck" checkbox="true"></th>
             <th rowspan="2" data-options="field:'image_profile',width:35,halign:'center',formatter:FormatterImage">Foto</th>
+            <th rowspan="2" data-options="field:'print',width:75,align:'center', formatter:btnPrint">Print Detail</th>
             <th rowspan="2" data-options="field:'details',width:50,halign:'center',formatter:FormatterDetail">Detail</th>
             <th rowspan="2" data-options="field:'number',width:120,halign:'center'">Employee ID</th>
             <th rowspan="2" data-options="field:'name',width:200,halign:'center'">Fullname</th>
@@ -146,7 +147,7 @@
                     <input style="width:30%;" name="number" id="number" required="" class="easyui-textbox">
                     <a class="easyui-linkbutton" onclick="generate_id()"><i class="fa fa-rotate-left"></i></a>
                 </div>
-                <div class="fitem">
+                <div class="fitem" hidden>
                     <span style="width:35%; display:inline-block;">Candidate ID</span>
                     <input style="width:60%;" name="candidate_id" id="candidate_id" class="easyui-combogrid">
                 </div>
@@ -154,7 +155,7 @@
                     <span style="width:35%; display:inline-block;">Fullname</span>
                     <input style="width:60%;" name="name" id="name" required="" class="easyui-textbox">
                 </div>
-                <div class="fitem">
+                <div class="fitem" hidden>
                     <span style="width:35%; display:inline-block;">Nickname</span>
                     <input style="width:60%;" name="nickname" id="nickname" class="easyui-textbox">
                 </div>
@@ -170,12 +171,12 @@
                     <span style="width:35%; display:inline-block;">Contract Expired</span>
                     <input style="width:60%;" name="date_expired" id="date_expired" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
                 </div>
-            </div>
-            <div style="width: 50%; float: left;">
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Division</span>
                     <input style="width:60%;" name="division_id" id="division_id" required="" class="easyui-combobox">
                 </div>
+            </div>
+            <div style="width: 50%; float: left;">
                 <div class="fitem">
                     <span style="width:35%; display:inline-block;">Departement</span>
                     <input style="width:60%;" name="departement_id" id="departement_id" required="" class="easyui-combobox">
@@ -2524,6 +2525,15 @@
     function FormatterDetail(val, row) {
         return '<a class="button-green" style="width:100%;" href="<?= base_url('employee/employees/details/') ?>' + row.id + '/<?= $id_menu ?>"><i class="fa fa-user"></i></a>';
     };
+
+    function btnPrint(val, row) {
+        var print = "print_employee_detail('" + row.number + "')";
+        return '<a class="btn btn-primary w-100" onClick="' + print + '" style="pointer-events: visible; opacity:1;"><i class="fa fa-print"></i></a>';
+    }
+
+    function print_employee_detail(employee_number) {
+        window.open("<?= base_url('employee/employees/print_employee_detail/') ?>" + window.btoa(employee_number), "_blank", "width=1200,height=600");
+    }
 
     function FormatterDate(val) {
         if (val == "0000-00-00") {

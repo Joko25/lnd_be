@@ -179,6 +179,7 @@ class Summary_payrolls extends CI_Controller
             $no = 1;
             $hal = 1;
             $subtotal = 0;
+            $grand_total = 0;
             for ($i = 0; $i < $page; $i++) {
                 $offset = ($i * $rows);
                 $records = array_slice($payrolls, $offset, $rows);
@@ -348,10 +349,19 @@ class Summary_payrolls extends CI_Controller
                     $no++;
                 }
 
+                $grand_total += $total;
+
                 $html .= '  <tr>
-                                <th style="text-align:right;" colspan="27">GRAND TOTAL</th>
+                                <th style="text-align:right;" colspan="29">TOTAL SUB</th>
                                 <th style="text-align:right;">' . number_format($total) . '</th>
                             </tr>';
+                // Jika halaman terakhir, tambahkan GRAND TOTAL
+                if (($i + 1) == $page) {
+                    $html .= '  <tr>
+                                    <th style="text-align:right;" colspan="29">GRAND TOTAL</th>
+                                    <th style="text-align:right;">' . number_format($grand_total) . '</th>
+                                </tr>';
+                }
                 $html .= '</table><br>';
                             
                 $hal++;
@@ -416,8 +426,8 @@ class Summary_payrolls extends CI_Controller
             $filter_departement = $this->input->get('filter_departement');
             $filter_departement_sub = $this->input->get('filter_departement_sub');
             $filter_employee = $this->input->get('filter_employee');
-            $filter_group = $this->input->get('filter_group');
-            $filter_group_ex = explode(",", $filter_group);
+            $filter_group = base64_decode($this->input->get('filter_group'));
+            $filter_group_ex = explode(",", trim($filter_group));
             $filter_position = $this->input->get('filter_position');
             $username = $this->session->username;
 
@@ -589,7 +599,7 @@ class Summary_payrolls extends CI_Controller
                         <tr>
                             <td style="border:none;"></td>
                             <td style="text-align:center;">Abdul Rachman</td>
-                            <td style="text-align:center;">Santy Nofianty</td>
+                            <td style="text-align:center;"></td>
                             <td style="text-align:center;">Rizki Andri S</td>
                             <td style="text-align:center;">Nia Nurazizah</td>
                             <td style="text-align:center;">Jihan Maharani</td>

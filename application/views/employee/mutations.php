@@ -9,6 +9,7 @@
             <th rowspan="2" data-options="field:'division_name',width:200,halign:'center'">Division</th>
             <th rowspan="2" data-options="field:'departement_name',width:150,halign:'center'">Departement</th>
             <th rowspan="2" data-options="field:'departement_sub_name',width:150,halign:'center'">Departement Sub</th>
+            <th rowspan="2" data-options="field:'mutation_type',width:150,halign:'center'">Mutation Type</th>
             <th rowspan="2" data-options="field:'description',width:300,halign:'center'">Note</th>
             <th rowspan="2" data-options="field:'approved',width:100,align:'center',styler:statusStyler, formatter:statusFormatter">Approval</th>
             <th rowspan="2" data-options="field:'approved_by',width:120,align:'center'">Approval By</th>
@@ -31,6 +32,11 @@
             <fieldset style="width: 100%; border:2px solid #d0d0d0; border-radius:4px;">
                 <legend><b>Form Filter Data</b></legend>
                 <div style="width: 50%; float: left;">
+                    <div class="fitem">
+                        <span style="width:35%; display:inline-block;">Trans Date</span>
+                        <input style="width:30%;" name="filter_from" id="filter_from" value="<?= date("Y-m-01") ?>" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
+                        <input style="width:30%;" name="filter_to" id="filter_to" value="<?= date("Y-m-t") ?>" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
+                    </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Division</span>
                         <input style="width:60%;" id="filter_divisions" class="easyui-combogrid">
@@ -96,6 +102,10 @@
                 <span style="width:35%; display:inline-block;">Departement Sub</span>
                 <input style="width:60%;" id="departement_sub_old" disabled class="easyui-textbox">
             </div>
+            <!-- Hidden inputs untuk menyimpan ID lama -->
+            <input type="hidden" name="division_old_id" id="division_old_id">
+            <input type="hidden" name="departement_old_id" id="departement_old_id">
+            <input type="hidden" name="departement_sub_old_id" id="departement_sub_old_id">
         </fieldset>
         <fieldset style="width:100%; border:1px solid #d0d0d0; margin-bottom: 10px; border-radius:4px; float: left;">
             <legend><b>Mutation To</b></legend>
@@ -121,6 +131,15 @@
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Departement Sub</span>
                 <input style="width:60%;" name="departement_sub_id" id="departement_sub_id" required="" class="easyui-combobox">
+            </div>
+            <div class="fitem">
+                <span style="width:35%; display:inline-block;">Mutation Type</span>
+                <select style="width:60%;" name="mutation_type" id="mutation_type" required="" class="easyui-combobox" panelHeight="auto">
+                    <option value="MUTATION">MUTATION</option>
+                    <option value="ROTATION">ROTATION</option>
+                    <option value="PROMOTION">PROMOTION</option>
+                    <option value="DEMOTION">DEMOTION</option>
+                </select>
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Note</span>
@@ -161,6 +180,11 @@
         url_save = '<?= base_url('employee/mutations/create') ?>';
         $('#frm_insert').form('clear');
         $('#trans_date').datebox('setValue', "<?= date("Y-m-d") ?>");
+        
+        // Kosongkan hidden inputs
+        $("#division_old_id").val('');
+        $("#departement_old_id").val('');
+        $("#departement_sub_old_id").val('');
     }
 
     //EDIT DATA
@@ -171,6 +195,59 @@
                 if (row.status_check == "" || row.status_check == null) {
                     $('#dlg_insert').dialog('open');
                     $('#frm_insert').form('load', row);
+                    
+                    // Set hidden inputs dengan ID lama dari data yang dipilih
+                    if (row.division_old_id) {
+                        $("#division_old_id").val(row.division_old_id);
+                    }
+                    if (row.departement_old_id) {
+                        $("#departement_old_id").val(row.departement_old_id);
+                    }
+                    if (row.departement_sub_old_id) {
+                        $("#departement_sub_old_id").val(row.departement_sub_old_id);
+                    }
+                    
+                    // Set field lama untuk ditampilkan
+                    if (row.division_old_id) {
+                        // Ambil nama division lama
+                        $.ajax({
+                            url: '<?= base_url('employee/divisions/reads') ?>',
+                            data: {id: row.division_old_id},
+                            success: function(data) {
+                                var divisions = JSON.parse(data);
+                                if (divisions.length > 0) {
+                                    $("#division_old").textbox('setValue', divisions[0].name);
+                                }
+                            }
+                        });
+                    }
+                    if (row.departement_old_id) {
+                        // Ambil nama departement lama
+                        $.ajax({
+                            url: '<?= base_url('employee/departements/reads') ?>',
+                            data: {id: row.departement_old_id},
+                            success: function(data) {
+                                var departements = JSON.parse(data);
+                                if (departements.length > 0) {
+                                    $("#departement_old").textbox('setValue', departements[0].name);
+                                }
+                            }
+                        });
+                    }
+                    if (row.departement_sub_old_id) {
+                        // Ambil nama departement sub lama
+                        $.ajax({
+                            url: '<?= base_url('employee/departement_subs/reads') ?>',
+                            data: {id: row.departement_sub_old_id},
+                            success: function(data) {
+                                var departement_subs = JSON.parse(data);
+                                if (departement_subs.length > 0) {
+                                    $("#departement_sub_old").textbox('setValue', departement_subs[0].name);
+                                }
+                            }
+                        });
+                    }
+                    
                     url_save = '<?= base_url('employee/mutations/update') ?>?id=' + btoa(row.id);
                 } else {
                     toastr.error("Approval still Checked");
@@ -218,6 +295,8 @@
 
     //FILTER DATA
     function filter() {
+        var filter_from = $("#filter_from").datebox('getValue');
+        var filter_to = $("#filter_to").datebox('getValue');
         var filter_divisions = $("#filter_divisions").combobox('getValue');
         var filter_departements = $("#filter_departements").combobox('getValue');
         var filter_departement_subs = $("#filter_departement_subs").combobox('getValue');
@@ -225,7 +304,9 @@
         var filter_approval = $("#filter_approval").combobox('getValue');
         var filter_status = $("#filter_status").combobox('getValue');
 
-        var url = "?filter_divisions=" + filter_divisions +
+        var url = "?filter_from=" + filter_from +
+            "&filter_to=" + filter_to +
+            "&filter_divisions=" + filter_divisions +
             "&filter_departements=" + filter_departements +
             "&filter_departement_subs=" + filter_departement_subs +
             "&filter_employees=" + filter_employees +
@@ -246,6 +327,8 @@
     }
     //PRINT EXCEL
     function excel() {
+        var filter_from = $("#filter_from").datebox('getValue');
+        var filter_to = $("#filter_to").datebox('getValue');
         var filter_divisions = $("#filter_divisions").combobox('getValue');
         var filter_departements = $("#filter_departements").combobox('getValue');
         var filter_departement_subs = $("#filter_departement_subs").combobox('getValue');
@@ -253,7 +336,9 @@
         var filter_approval = $("#filter_approval").combobox('getValue');
         var filter_status = $("#filter_status").combobox('getValue');
 
-        var url = "?filter_divisions=" + filter_divisions +
+        var url = "?filter_from=" + filter_from +
+            "&filter_to=" + filter_to +
+            "&filter_divisions=" + filter_divisions +
             "&filter_departements=" + filter_departements +
             "&filter_departement_subs=" + filter_departement_subs +
             "&filter_employees=" + filter_employees +
@@ -289,6 +374,37 @@
                 if (row.status == 1) {
                     return 'background-color:#FFDCDC;';
                 }
+            },
+            view: detailview,
+            detailFormatter: function(index, row) {
+                return '<div style="padding:2px;position:relative;"><table class="ddv" title="History Mutation"></table></div>';
+            },
+            onExpandRow: function(index, row) {
+                var ddv = $(this).datagrid('getRowDetail', index).find('table.ddv');
+                ddv.datagrid({
+                    url: '<?= base_url('employee/mutations/history?employee_id=') ?>' + row.employee_id,
+                    singleSelect: true,
+                    rownumbers: true,
+                    columns: [[
+                        {field: 'employee_number', title: 'Employee ID', width: 120},
+                        {field: 'employee_name', title: 'Employee Name', width: 150},
+                        {field: 'trans_date', title: 'Trans Date', width: 150},
+                        {field: 'division_name', title: 'Division', width: 150},
+                        {field: 'departement_name', title: 'Departement', width: 150},
+                        {field: 'departement_sub_name', title: 'Departement Sub', width: 150},
+                        {field: 'mutation_type', title: 'Mutation Type', width: 120},
+                        {field: 'description', title: 'Note', width: 200}
+                    ]],
+                    onResize: function() {
+                        $('#dg').datagrid('fixDetailRowHeight', index);
+                    },
+                    onLoadSuccess: function() {
+                        setTimeout(function() {
+                            $('#dg').datagrid('fixDetailRowHeight', index);
+                        }, 0);
+                    }
+                });
+                $('#dg').datagrid('fixDetailRowHeight', index);
             }
         });
 
@@ -556,6 +672,10 @@
                 $("#division_old").textbox('setValue', row.division_name);
                 $("#departement_old").textbox('setValue', row.departement_name);
                 $("#departement_sub_old").textbox('setValue', row.departement_sub_name);
+                // Set hidden inputs dengan ID lama
+                $("#division_old_id").val(row.division_old_id);
+                $("#departement_old_id").val(row.departement_old_id);
+                $("#departement_sub_old_id").val(row.departement_sub_old_id);
             }
         });
     });

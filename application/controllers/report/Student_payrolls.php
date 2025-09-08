@@ -1,70 +1,138 @@
 <?php
+
 date_default_timezone_set("Asia/Bangkok");
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
+
+
 class Student_payrolls extends CI_Controller
+
 {
+
     public function __construct()
+
     {
+
         parent::__construct();
+
         $this->load->helper('url');
+
         $this->load->helper(array('form', 'url'));
+
         $this->load->library('form_validation');
+
         $this->load->library('session');
+
         $this->load->model('crud');
+
     }
+
+
 
     //HALAMAN UTAMA
+
     public function index()
+
     {
+
         if (empty($this->session->username)) {
+
             redirect('error_session');
+
         } elseif ($this->checkuserAccess($this->id_menu()) > 0) {
+
             $data['button'] = $this->getbutton($this->id_menu());
 
+
+
             $this->load->view('template/header', $data);
+
             $this->load->view('report/student_payrolls');
+
         } else {
+
             redirect('error_access');
+
         }
+
     }
+
+
 
     public function readService($dateSign = "", $dateout = "")
+
     {
+
         if ($dateSign == "") {
+
             $date = $this->input->post('date');
+
         } else {
+
             $date = $dateSign;
+
         }
+
+
 
         if ($dateout == "") {
+
             $end = date_create(); // waktu sekarang
+
         } else {
+
             $end = date_create($dateout);
+
         }
+
+
 
         $start  = date_create($date);
+
         $diff  = date_diff($start, $end);
+
         $d = $diff->d . ' Days ';
 
+
+
         if ($diff->y == 0) {
+
             $y = '';
+
         } else {
+
             $y = $diff->y . ' Years, ';
+
         }
+
+
 
         if ($diff->m == 0) {
+
             $m = '';
+
         } else {
+
             $m = $diff->m . ' Month, ';
+
         }
 
+
+
         if ($dateSign == "") {
+
             echo $y . $m . $d;
+
         } else {
+
             return $y . $m . $d;
+
         }
+
     }
+
+
 
     public function print($option = "")
     {
@@ -88,6 +156,7 @@ class Student_payrolls extends CI_Controller
 
             $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid black;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style>
             <style> .str{ mso-number-format:\@; } </style>
+
             <body>';
             $this->db->select('a.id as group_id, a.name as group_name, b.id as source_id, b.name as source_name');
             $this->db->from('groups a');
@@ -118,7 +187,7 @@ class Student_payrolls extends CI_Controller
                         JOIN employees b ON a.employee_id = b.id
                         LEFT JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                         WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
-                        AND b.status = 0
+                        -- AND b.status = 0
                         AND b.group_id = '$record[group_id]'
                         AND b.source_id = '$record[source_id]'
                         AND b.id like '%$filter_employee%'
@@ -139,7 +208,7 @@ class Student_payrolls extends CI_Controller
                             JOIN employees b ON a.employee_id = b.id
                             LEFT JOIN privilege_groups c ON b.group_id = c.group_id and c.username = '$username' and c.status = '1'
                             WHERE a.period_start = '$period_start' and a.period_end = '$period_end'
-                            AND b.status = 0
+                            -- AND b.status = 0
                             AND b.group_id = '$record[group_id]'
                             AND b.source_id = '$record[source_id]'
                             AND b.id like '%$filter_employee%'
@@ -247,8 +316,13 @@ class Student_payrolls extends CI_Controller
                             $no++;
                         }
 
+
+
                         $totalgroup += $total;
+
                         $grandtotal += $total;
+
+
 
                         $html .= '  <tr>
                                         <th style="text-align:right;" colspan="18">TOTAL SUB</th>
@@ -256,24 +330,35 @@ class Student_payrolls extends CI_Controller
                                         <th style="text-align:right;"></th>
                                     </tr>';
 
+
+
                         if (($i + 1) == $page) {
+
                             $html .= '  <tr>
                                             <th style="text-align:right;" colspan="18">TOTAL '.$record['source_name'].'</th>
                                             <th style="text-align:right;">' . number_format($totalgroup) . '</th>
                                             <th style="text-align:right;"></th>
                                         </tr>';
+
                         }
 
+
+
                         if($autoid == count($records) && ($i + 1) == $page){
+
                             $html .= '  <tr>
                                             <th style="text-align:right;" colspan="18">GRAND TOTAL ALL '.$record['group_name'].'</th>
                                             <th style="text-align:right;">' . number_format($grandtotal) . '</th>
                                             <th style="text-align:right;"></th>
                                         </tr>';
+
                         }
+
+
 
                         $html .= '</table><br>';
 
+                        // Add signature table at the end of each source's last page
                         if (($i + 1) == $page) {
                             $html .= '<center>
                                         <table id="customers" style="width:70%;">
@@ -455,6 +540,7 @@ class Student_payrolls extends CI_Controller
 
                         $html2 .= '</table><br>';
 
+                        // Add signature table at the end of each source's last page
                         if (($i + 1) == $page) {
                             $html2 .= '<center>
                                         <table id="customers" style="width:70%;">
@@ -482,8 +568,10 @@ class Student_payrolls extends CI_Controller
                                         </table>
                                     </center>';
                         }
+
                         $hal++;
                     }
+
                     if(count($payrolls) > 0){
                         $html2 .= '<div style="page-break-after:always;"></div>';
                     }
@@ -496,3 +584,4 @@ class Student_payrolls extends CI_Controller
         }
     }
 }
+

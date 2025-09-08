@@ -461,7 +461,7 @@ class Salary_slips extends CI_Controller
 
         $email = $this->emails->emailSalarySlip($record['email'], $record['name'], $config->name, base64_encode($html));
         if (!filter_var($record['email'], FILTER_VALIDATE_EMAIL)) {
-            echo json_encode(array("title" => "Not Registered", "message" => "Email not register in Employee List", "theme" => "error"));
+            echo json_encode(array("title" => "Not Registered", "message" => "Email not register in " . $record['name'], "theme" => "error"));
         } elseif ($email) {
             echo json_encode(array("title" => "Delivered", "message" => "Salary Slip successfully sent to " . $record['email'], "theme" => "success"));
         } else {

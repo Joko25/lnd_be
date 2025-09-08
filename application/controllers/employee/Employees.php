@@ -97,7 +97,7 @@ class Employees extends CI_Controller
         $get = $this->input->get();
         $aprvDepartement = $this->checkApprovalAccess('employees');
 
-        $this->db->select('a.*, c.name as division_name, d.name as departement_name, e.name as departement_sub_name, f.name as position_name');
+        $this->db->select('a.*, c.name as division_name, d.name as departement_name, e.name as departement_sub_name, f.name as position_name, a.division_id as division_old_id, a.departement_id as departement_old_id, a.departement_sub_id as departement_sub_old_id');
         $this->db->from('employees a');
         $this->db->join('divisions c', 'a.division_id = c.id');
         $this->db->join('departements d', 'a.departement_id = d.id');
@@ -177,6 +177,17 @@ class Employees extends CI_Controller
         }
     }
 
+    //GET LATEST CUTOFF PERIOD
+    private function getLatestCutoffPeriod()
+    {
+        $this->db->select('*');
+        $this->db->from('cutoff');
+        $this->db->where('deleted', 0);
+        $this->db->order_by('start', 'desc');
+        $this->db->limit(1);
+        return $this->db->get()->row();
+    }
+
     function formatDate($date)
     {
         // menggunakan class Datetime
@@ -239,6 +250,7 @@ class Employees extends CI_Controller
     //GET DATATABLES
     public function datatables()
     {
+        
         $filter_divisions = $this->input->get('filter_divisions');
         $filter_departements = $this->input->get('filter_departements');
         $filter_departement_subs = $this->input->get('filter_departement_subs');
@@ -311,10 +323,13 @@ class Employees extends CI_Controller
                 c.name as division_name, 
                 d.name as departement_name, 
                 e.name as departement_sub_name,
+                e.proses,
+                e.sub_proses,
                 (case when a.job_type is null then e.type else a.job_type end) as type, 
                 g.name as position_name,
                 h.name as contract_name,
                 i.resign_date,
+                (CASE WHEN i.resign_date IS NOT NULL THEN LAST_DAY(i.resign_date) ELSE NULL END) as cutoff_date,
                 j.name as shift_name');
         $this->db->from('employees a');
         $this->db->join('divisions c', 'c.id = a.division_id');
@@ -1199,5 +1214,143 @@ class Employees extends CI_Controller
 
         $html .= '</table></body></html>';
         echo $html;
+    }
+
+    public function print_employee_detail($number)
+    {
+        $number = base64_decode($number);
+        // Data utama karyawan
+        $employee = $this->crud->read('employees', [], ["number" => $number]);
+        $division = $this->crud->read('divisions', [], ["id" => $employee->division_id]);
+        $departement = $this->crud->read('departements', [], ["id" => $employee->departement_id]);
+        $departement_sub = $this->crud->read('departement_subs', [], ["id" => $employee->departement_sub_id]);
+        $contract = $this->crud->read('contracts', [], ["id" => $employee->contract_id]);
+        $position = $this->crud->read('positions', [], ["id" => $employee->position_id]);
+        $group = $this->crud->read('groups', [], ["id" => $employee->group_id]);
+        $source = $this->crud->read('sources', [], ["id" => $employee->source_id]);
+        $religion = $this->crud->read('religions', [], ["id" => $employee->religion_id]);
+        $marital = $this->crud->read('maritals', [], ["id" => $employee->marital_id]);
+
+        // Data tab
+        $family = $this->crud->reads('employee_familys', [], ["number" => $employee->number]);
+        $education = $this->crud->reads('employee_educations', [], ["number" => $employee->number]);
+        $experience = $this->crud->reads('employee_experiences', [], ["number" => $employee->number]);
+        $training = $this->crud->reads('employee_trainings', [], ["number" => $employee->number]);
+        $career = $this->crud->reads('employee_carrers', [], ["number" => $employee->number]);
+
+        // Data warning letter dan mutations
+        $this->db->select('a.*, c.name as violation_name');
+        $this->db->from('warning_letters a');
+        $this->db->join('violations c', 'a.violation_id = c.id', 'left');
+        $this->db->where('a.employee_id', $employee->id);
+        $this->db->where('a.deleted', 0);
+        // Filter warning letter hanya 6 bulan terakhir
+        $six_months_ago = date('Y-m-d', strtotime('-6 months'));
+        $this->db->where('a.issue_date >=', $six_months_ago);
+        $this->db->order_by('a.issue_date', 'DESC');
+        $warning = $this->db->get()->result();
+        
+        // Ambil data mutasi dan urutkan dari yang terbaru
+        $this->db->select('a.*, b.name as division_to, c.name as departement_to, d.name as departement_sub_to, a.description, a.division_old_id, a.departement_old_id, a.departement_sub_old_id');
+        $this->db->from('mutations a');
+        $this->db->join('divisions b', 'a.division_id = b.id');
+        $this->db->join('departements c', 'a.departement_id = c.id');
+        $this->db->join('departement_subs d', 'a.departement_sub_id = d.id');
+        $this->db->where('a.employee_id', $employee->id);
+        $this->db->where('a.deleted', 0);
+        $this->db->order_by('a.trans_date', 'DESC');
+        $mutations = $this->db->get()->result_array();
+
+        // Gabungkan data: mutasi + posisi awal
+        $result = [];
+        
+        // Tambahkan semua mutasi (dari terbaru ke lama)
+        $result = array_merge($result, $mutations);
+        
+        // Cari mutasi PERMANENT yang pertama kali dibuat untuk mendapatkan posisi awal
+        $permanent_mutation = null;
+        // Urutkan mutasi dari yang paling lama ke terbaru untuk mencari yang pertama
+        $sorted_mutations = $mutations;
+        usort($sorted_mutations, function($a, $b) {
+            return strtotime($a['trans_date']) - strtotime($b['trans_date']);
+        });
+        
+        foreach ($sorted_mutations as $mutation) {
+            if ($mutation['type'] == 'PERMANENT' && !empty($mutation['division_old_id'])) {
+                $permanent_mutation = $mutation;
+                break; // Ambil yang pertama kali dibuat
+            }
+        }
+        
+        // Jika ada mutasi PERMANENT, ambil posisi awal dari old_id
+        if ($permanent_mutation) {
+            // Ambil nama division lama
+            $division_old = $this->crud->read('divisions', [], ["id" => $permanent_mutation['division_old_id']]);
+            $departement_old = $this->crud->read('departements', [], ["id" => $permanent_mutation['departement_old_id']]);
+            $departement_sub_old = $this->crud->read('departement_subs', [], ["id" => $permanent_mutation['departement_sub_old_id']]);
+            
+            $result[] = [
+                'id' => 'initial',
+                'employee_id' => $employee->id,
+                'trans_date' => $employee->date_sign ?? date('Y-m-d'),
+                'mutation_type' => 'INITIAL POSITION',
+                'description' => 'Initial Position',
+                'type' => 'PERMANENT',
+                'division_to' => $division_old ? $division_old->name : '-',
+                'departement_to' => $departement_old ? $departement_old->name : '-',
+                'departement_sub_to' => $departement_sub_old ? $departement_sub_old->name : '-'
+            ];
+        } else {
+            // Jika tidak ada mutasi PERMANENT, ambil dari tabel employees
+            $this->db->select('b.*, c.name as division_to, d.name as departement_to, e.name as departement_sub_to');
+            $this->db->from('employees b');
+            $this->db->join('divisions c', 'b.division_id = c.id');
+            $this->db->join('departements d', 'b.departement_id = d.id');
+            $this->db->join('departement_subs e', 'b.departement_sub_id = e.id');
+            $this->db->where('b.id', $employee->id);
+            $initial_position = $this->db->get()->row_array();
+
+            if ($initial_position) {
+                $result[] = array_merge($initial_position, [
+                    'id' => 'initial',
+                    'employee_id' => $employee->id,
+                    'trans_date' => $employee->date_sign ?? date('Y-m-d'),
+                    'mutation_type' => 'INITIAL POSITION',
+                    'description' => 'Initial Position',
+                    'type' => 'PERMANENT'
+                ]);
+            }
+        }
+
+        // Urutkan berdasarkan trans_date dari terbaru ke lama
+        usort($result, function($a, $b) {
+            return strtotime($b['trans_date']) - strtotime($a['trans_date']);
+        });
+
+        $mutations = $result;
+
+        // Hitung service
+        $service = $this->readService($employee->date_sign);
+
+        $data['employee'] = $employee;
+        $data['division'] = $division;
+        $data['departement'] = $departement;
+        $data['departement_sub'] = $departement_sub;
+        $data['contract'] = $contract;
+        $data['position'] = $position;
+        $data['group'] = $group;
+        $data['source'] = $source;
+        $data['religion'] = $religion;
+        $data['marital'] = $marital;
+        $data['family'] = $family;
+        $data['education'] = $education;
+        $data['experience'] = $experience;
+        $data['training'] = $training;
+        $data['career'] = $career;
+        $data['warning'] = $warning;
+        $data['mutations'] = $mutations;
+        $data['service'] = $service;
+
+        $this->load->view('employee/employee_print_detail', $data);
     }
 }

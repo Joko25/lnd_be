@@ -435,7 +435,7 @@ class Setup_salaries extends CI_Controller
         foreach ($records as $data) {
             $html .= '<tr>
                         <td>' . $no . '</td>
-                        <td class="str">' . $data['employee_number'] . '</td>
+                        <td style="mso-number-format:\@;">' . $data['employee_number'] . '</td>
                         <td>' . $data['employee_name'] . '</td>
                         <td>' . $data['division_name'] . '</td>
                         <td>' . $data['departement_name'] . '</td>

@@ -355,14 +355,23 @@ class Payroll_pkl extends CI_Controller
                 $result = @$arr;
             }
 
-            $checkPayroll = $this->crud->read("payroll_pkl", [], ["employee_id" => $record['id'], "period_start" => $filter_from]);
+            // $checkPayroll = $this->crud->read("payroll_pkl", [], ["employee_id" => $record['id'], "period_start" => $filter_from]);
+            // if (!empty($checkPayroll->employee_id)) {
+            //     $send = $this->crud->update('payroll_pkl', ["employee_id" => $record['id'], "period_start" => $filter_from], $result);
+            //     echo $send;
+            // } else {
+            //     $send = $this->crud->create('payroll_pkl', $result);
+            //     echo $send;
+            // }
+
+	    $checkPayroll = $this->crud->read("payroll_pkl", [], ["employee_id" => $record['id'], "period_start" => $filter_from]);
+            
             if (!empty($checkPayroll->employee_id)) {
-                $send = $this->crud->update('payroll_pkl', ["employee_id" => $record['id'], "period_start" => $filter_from], $result);
-                echo $send;
-            } else {
-                $send = $this->crud->create('payroll_pkl', $result);
-                echo $send;
+                $this->crud->delete("payroll_pkl", ["employee_id" => $record['id'], "period_start" => $filter_from]);
             }
+            
+            $send = $this->crud->create('payroll_pkl', $result);
+            echo $send;
         } else {
             echo json_encode(array("title" => "Error", "message" => "Cannot Process your request", "theme" => "error"));
         }
@@ -434,6 +443,7 @@ class Payroll_pkl extends CI_Controller
         $this->db->join('account_coa c', 'b.division_id = c.division_id and b.departement_id = c.departement_id and b.position_id = c.position_id and b.contract_id = c.contract_id', 'left');
         $this->db->join('accounts d', "c.account_id = d.id and d.category = 'payroll'", 'left');
         $this->db->join('divisions e', 'b.division_id = e.id');
+	$this->db->where('b.status', 0);
         if ($filter_from != "" && $filter_to != "") {
             $this->db->where('a.period_start =', $filter_from);
         }
