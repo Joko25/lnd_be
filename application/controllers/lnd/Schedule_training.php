@@ -1,8 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require_once(APPPATH . '../vendor/autoload.php');
+
+// Use PhpSpreadsheet classes
+//use PhpOffice\PhpSpreadsheet\Spreadsheet;
+//use PhpOffice\PhpSpreadsheet\Writer\Xls;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+
 class Schedule_training extends CI_Controller {
-    
+
     public function __construct() {
         parent::__construct();
         // Load any models or libraries needed
@@ -17,6 +28,7 @@ class Schedule_training extends CI_Controller {
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->library('session');
+
     }
 
     public function index() {
@@ -36,7 +48,12 @@ class Schedule_training extends CI_Controller {
     {
         // Ambil parameter dari request
 		$trainingName = $this->input->get('trainingName', true); // Sanitize input GET
-        $trainingActivityId = $this->input->get('id', true); // Sanitize input GET
+		$registerDate = $this->input->get('registerDate', true); // Sanitize input GET
+		$category = $this->input->get('category', true); // Sanitize input GET
+		$trainee = $this->input->get('trainee', true); // Sanitize input GET
+		$trainingDateFrom = $this->input->get('trainingDateFrom', true); // Sanitize input GET
+		$trainingDateEnd = $this->input->get('trainingDateEnd', true); // Sanitize input GET
+
         $page = $this->input->post('page');
         $rows = $this->input->post('rows');
         
@@ -46,26 +63,42 @@ class Schedule_training extends CI_Controller {
         $offset = ($page - 1) * $rows;
 		// Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('a.*, a.id as id_training, b.*, e.name, e.id as departementId, ta.id as trainingActivityId, ta.trainingActivity, st.trainer_name, st.trainer_id, st.trainer_id as trainingTrainerId');
+        $this->db->select('a.*, a.id as id_training, b.*, e.name, e.id as departementId, COALESCE(ta.id, rt.id) as trainingActivityId, COALESCE(ta.trainingActivity, rt.trainingActivities) as trainingActivity, st.trainer_name, st.trainer_id, st.trainer_id as trainingTrainerId');
         $this->db->from('lnd_schedule_training a');
         $this->db->join('lnd_schedule_training_dates b', 'a.id = b.training_id', 'left');
 		$this->db->join('departements e', 'e.id = a.trainee', 'left');
+		$this->db->join('lnd_request_training rt', 'rt.id = a.trainingName', 'left');
 		$this->db->join('lnd_training_activity ta', 'ta.id = a.trainingName', 'left');
 		$this->db->join('lnd_schedule_trainers st', 'a.id = st.training_id', 'left');
 
-         if (!empty($trainingName)) {
-             $this->db->like('a.trainingName', $trainingName);
-         }
-        // if (!empty($competenceId)) {
-        //     $this->db->like('a.competenceId', $competenceId);
-        // }
+		if (!empty($registerDate)) {
+			$this->db->where('a.registerDate', $registerDate);
+		}
+		if (!empty($trainingName)) {
+			$this->db->like('a.trainingName', $trainingName);
+		}
+		if (!empty($category)){
+			if($category == 'New') {
+				$this->db->like('a.category', 'New');
+			} else if ($category == 'Mutasi') {
+				$this->db->like('a.category', 'Mutasi');
+			} else {
+				$this->db->like('a.category', 'Departement');
+			}
+		}
+		if(!empty($trainee)){
+			$this->db->like('a.trainee', $trainee);
+		}
+		if(!empty($trainingDateFrom) && !empty($trainingDateEnd)){
+			$this->db->where("b.training_date BETWEEN '$trainingDateFrom' AND '$trainingDateEnd'");
+		}
         $this->db->stop_cache(); // Stop caching the query
         
         // Hitung total data (tanpa limit dan offset)
-        $totalRows = $this->db->count_all_results();
+//        $totalRows = $this->db->count_all_results();
         
         // Ambil data dengan limit dan offset
-        $this->db->order_by('a.createdTime', 'ASC');
+        $this->db->order_by('a.induction', 'ASC');
         $this->db->limit($rows, $offset);
         $records = $this->db->get()->result_array();
         $this->db->flush_cache(); // Hapus cache query
@@ -140,6 +173,16 @@ class Schedule_training extends CI_Controller {
 					$grouped[$key]['trainingTrainerId'] = $trainingTrainerid;
 				}
 			}
+			if(strpos($row['induction'], 'L&amp;D') !== false) {
+				$idTempIncorrectValue = $row['id_training'];
+				$originalIncorrectValue = $row['induction'];
+				$decodeIncorrectValue = html_entity_decode($row['induction']);
+
+				if($originalIncorrectValue != $decodeIncorrectValue) {
+					$this->db->where('id', $idTempIncorrectValue);
+					$this->db->update('lnd_schedule_training', ['induction' => $decodeIncorrectValue]);
+				}
+			}
 		}
 
 		// Push all grouped data to final $data array
@@ -147,7 +190,7 @@ class Schedule_training extends CI_Controller {
 
 		// Mapping Data
         $result = [
-            'total' => $totalRows,
+            'total' => count($data),
             'rows' => $data
         ];
 
@@ -383,25 +426,51 @@ class Schedule_training extends CI_Controller {
     // GET DATA DEPARTEMENTS
     public function readsDepartements() 
     {
-//        $session_dept = $this->session->departement_id;
-        $send = $this->crud->reads('departements', [], [], "");
-        echo json_encode($send);
+		$post = isset($_POST['q']) ? $_POST['q'] : "";
+
+		$departements = $this->crud->query("SELECT dep.id, dep.name, divs.name as division 
+		FROM departements dep
+		JOIN divisions divs ON dep.division_id = divs.id WHERE dep.name LIKE '%$post%'");
+        echo json_encode($departements);
     }
 
 	public function readsTrainingActivity()
 	{
 		$induction = $this->input->get('induction') ? $this->input->get('induction') : "";
-		$send = $this->crud->query("SELECT a.*, a.trainingActivities as trainingActivity, a.reasons as competenceName FROM lnd_request_training a JOIN lnd_request_training_approvals_history b on b.trainingRequestId = a.requestTrainingId AND b.approved = 4 WHERE a.induction = '$induction' ORDER BY a.requestTrainingId ASC");
-		echo json_encode($send);
+
+		// Query 1: From lnd_training_activity
+		$activity = $this->crud->query("SELECT a.*, b.name as competenceName 
+        FROM lnd_training_activity a 
+        JOIN lnd_competence b ON a.competenceId = b.id 
+        WHERE a.induction = '$induction' 
+        ORDER BY a.index ASC");
+
+		// Query 2: From lnd_request_training
+		$request = $this->crud->query("SELECT a.*, a.trainingActivities as trainingActivity, a.reasons as competenceName 
+        FROM lnd_request_training a 
+        JOIN lnd_request_training_approvals_history b 
+            ON b.trainingRequestId = a.requestTrainingId 
+        WHERE a.induction = '$induction' AND b.approved = 4 
+        ORDER BY a.requestTrainingId ASC");
+
+		// Combine both into one response
+		$combined = array_merge($activity, $request);
+
+		echo json_encode($combined);
 	}
 
 	public function readsEmployeesLeaderUp()
 	{
+		$post = isset($_POST['q']) ? array("a.name" => $_POST['q']) : $this->input->get();
+
 		$this->db->start_cache();
 		$this->db->select('a.id, a.name, b.name as positionName');
 		$this->db->from('employees a');
 		$this->db->join('positions b', 'b.id = a.position_id', 'left');
-		$this->db->where('b.level <', '05');
+		$this->db->where("(CAST(b.level AS UNSIGNED) <= 5 OR a.departement_sub_id = '20221213000007') AND a.status = 0", null, false);
+		if(!empty($post)) {
+			$this->db->like($post);
+		}
 		$this->db->stop_cache();
 		$res = $this->db->get()->result_array();
 		$this->db->flush_cache(); // Hapus cache query
@@ -417,7 +486,10 @@ class Schedule_training extends CI_Controller {
         chmod($_FILES['file_upload']['name'], 0777);
         $file = $_FILES['file_upload']['name'];
         $data = new Spreadsheet_Excel_Reader($file, false);
-        $total_row = $data->rowcount($sheet_index = 0);
+		$total_row = $data->rowcount($sheet_index = 0);
+		$total_row_sheet_training_activity = $data->rowcount($sheet_index = 1);
+		$total_row_sheet_trainer = $data->rowcount($sheet_index = 2);
+		$total_row_sheet_trainee = $data->rowcount($sheet_index = 3);
 
         for ($i = 3; $i <= $total_row; $i++) {
             $datas[] = array(
@@ -433,19 +505,37 @@ class Schedule_training extends CI_Controller {
 					$data->val($i, 8),
 				]),
 				'induction' => $data->val($i, 9),
-				'trainingName' => $data->val($i, 10),
+//				'trainingName' => $data->val($i, 10),
 				'category' => $data->val($i, 11),
-				'trainerNames' => array_filter([
-					$data->val($i, 12),
-					$data->val($i, 13),
-					$data->val($i, 14)
-				]),
-				'trainee' => $data->val($i, 15),
+//				'trainerNames' => array_filter([
+//					$data->val($i, 12),
+//					$data->val($i, 13),
+//					$data->val($i, 14)
+//				]),
+//				'trainee' => $data->val($i, 15),
 				'remarks' => $data->val($i, 16),
 				'totalTrainee' => $data->val($i, 17),
 				'duration' => $data->val($i, 18),
             );
         }
+
+		for ($i = 3; $i <= $total_row_sheet_training_activity; $i++) {
+			$index = 0;
+			$datas[$index]['trainingName'] = $data->val($i, 2,1);
+			$index++;
+		}
+
+		for ($i = 3; $i <= $total_row_sheet_trainer; $i++) {
+			$index = 0;
+			$datas[$index]['trainerNames'][] = $data->val($i, 2,2);
+			$index++;
+		}
+
+		for ($i = 3; $i <= $total_row_sheet_trainee; $i++) {
+			$index = 0;
+			$datas[$index]['trainee'][] = $data->val($i, 2,3);
+			$index++;
+		}
 
         $datas['total'] = count($datas);
         echo json_encode($datas);
@@ -561,7 +651,7 @@ class Schedule_training extends CI_Controller {
         if ($option == "excel") {
             $format  = date("Ymd");
             header("Content-type: application/vnd-ms-excel");
-            header("Content-Disposition: attachment; filename=training_activity_$format.xls");
+            header("Content-Disposition: attachment; filename=schedule_training_$format.xls");
         }
 
         //Config
@@ -574,66 +664,20 @@ class Schedule_training extends CI_Controller {
 		    a.id as id_training, 
 		    GROUP_CONCAT(DISTINCT st.trainer_name SEPARATOR ', ') as trainers, 
 		    GROUP_CONCAT(DISTINCT b.training_date SEPARATOR ', ') as training_dates, 
-		    e.name as trainee_name, 
+		    COALESCE(e.name, a.category) as trainee_name, 
 		    e.id as departementId, 
-		    ta.id as trainingActivityId, 
-		    ta.trainingActivities as trainingActivity
+		    COALESCE(ta.id,rt.id) as trainingActivityId, 
+		    COALESCE(ta.trainingActivity,rt.trainingActivities) as trainingActivity
 		");
 		$this->db->from('lnd_schedule_training a');
 		$this->db->join('lnd_schedule_training_dates b', 'a.id = b.training_id', 'left');
 		$this->db->join('departements e', 'e.id = a.trainee', 'left');
-		$this->db->join('lnd_request_training ta', 'ta.id = a.trainingName', 'left');
+		$this->db->join('lnd_training_activity ta', 'ta.id = a.trainingName', 'left');
+		$this->db->join('lnd_request_training rt', 'rt.id = a.trainingName', 'left');
 		$this->db->join('lnd_schedule_trainers st', 'a.id = st.training_id', 'left');
 		$this->db->group_by('a.id');
+		$this->db->order_by('a.induction', 'ASC');
         $records = $this->db->get()->result_array();
-
-//        $html = '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
-//        <center>
-//            <div style="float: left; font-size: 12px; text-align: left;">
-//                <table style="width: 100%;">
-//                    <tr>
-//                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
-//                            <img src="' . $config->favicon . '" width="30">
-//                        </td>
-//                    </tr>
-//                </table>
-//            </div>
-//            <div style="float: right; font-size: 12px; text-align: right;">
-//                Print Date ' . date("d M Y H:m:s") . ' <br>
-//                Print By ' . $this->session->username . '
-//            </div>
-//        </center>
-//        <br><br><br>
-//
-//        <table id="customers" border="1">
-//            <tr>
-//                <th>No</th>
-//				<th>Induction</th>
-//				<th>Training Name</th>
-//				<th>Trainer</th>
-//				<th>Trainee</th>
-//				<th>Remarks</th>
-//				<th>Total Trainees</th>
-//				<th>Duration</th>
-//				<th>Training Date</th>
-//            </tr>';
-//        $no = 1;
-//		foreach ($records as $data) {
-//			$html .= '<tr>
-//                <td>' . $no . '</td>
-//                <td>' . $data['induction'] . '</td>
-//                <td>' . $data['trainingActivity'] . '</td>
-//                <td>' . $data['trainers'] . '</td>
-//                <td>' . (!empty($data['trainee_name']) ? $data['trainee_name'] : $data['category']) . '</td>
-//                <td>' . $data['remarks'] . '</td>
-//                <td>' . $data['totalTrainee'] . '</td>
-//                <td>' . $data['duration'] . '</td>
-//                <td>' . $data['training_dates'] . '</td>';
-//			$no++;
-//		}
-//
-//        $html .= '</table></body></html>';
-//        echo $html;
 
 // Helper functions
 		function dateToIndex($date) {
@@ -677,13 +721,32 @@ class Schedule_training extends CI_Controller {
 
 // Start HTML
 		$months = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-		$html = '';
+		$html = '<html><head></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 12px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}</style><body>
+		<center>
+            <div style="float: right; font-size: 12px; text-align: right;">
+                FRM-L&D-006 Rev.00
+            </div>
+        </center>
+';
 		$html .= '<html><head><meta charset="UTF-8"></head><body>';
 		$html .= '<table border="1" style="border-collapse: collapse; font-family: Arial; font-size: 12px; width: 100%;">';
 
-		$html .= '<tr><td colspan="55" style="text-align: center; font-size: 16px; font-weight: bold;">
-            PT BANSHU ELECTRIC INDONESIA<br>SCHEDULE TRAINING
-          </td></tr>';
+		$html .= '<tr>
+			<td colspan="56" style="position: relative; text-align: center; font-size: 16px; font-weight: bold;">
+				<div style="position: absolute; top: 0; left: 0; font-size: 12px; text-align: left;">
+					<img src="' . $config->favicon . '" width="30">
+					<b>' . $config->name . '</b><br>
+					<small>' . $config->description . '</small>
+				</div>
+				PT BANSHU ELECTRIC INDONESIA<br>SCHEDULE TRAINING
+				<div style="position: absolute; top: 0; right: 0; font-size: 12px; text-align: right;">
+            	    Print Date ' . date("d M Y H:m:s") . ' <br>
+            	    Print By ' . $this->session->username . '
+            	</div>
+			</td>
+        </tr>
+        <tr></tr>
+        ';
 
 		$html .= '<tr style="background: #a9d08e; text-align: center; font-weight: bold;">
             <td rowspan="2">No.</td>
@@ -698,7 +761,7 @@ class Schedule_training extends CI_Controller {
 			$html .= "<td colspan='4'>{$m}</td>";
 		}
 		$html .= '</tr><tr style="background: #a9d08e; text-align: center;">';
-		for ($i = 0; $i < 12; $i++) {
+		for ($i = 1; $i <= 12; $i++) {
 			for ($j = 1; $j <= 4; $j++) {
 				$html .= "<td>M{$j}</td>";
 			}
@@ -709,7 +772,7 @@ class Schedule_training extends CI_Controller {
 		$sectionNo = 1;
 
 		foreach ($groupedRecords as $sectionTitle => $records) {
-			$html .= '<tr><td colspan="55" style="font-weight: bold; background-color: #9BC2E6; text-align: left;">'
+			$html .= '<tr><td colspan="56" style="font-weight: bold; background-color: #9BC2E6; text-align: left;">'
 				. roman($sectionNo++) . '. ' . strtoupper($sectionTitle) . '</td></tr>';
 			$no = 1;
 
@@ -757,4 +820,110 @@ class Schedule_training extends CI_Controller {
 		$html .= '</table></body></html>';
 		echo $html;
     }
+
+	public function download_template_schedule_training() {
+
+		// Create new spreadsheet
+		$spreadsheet = new Spreadsheet();
+		$spreadsheet->removeSheetByIndex(0);
+		// Sheet 1: Schedule
+		$sheet = $spreadsheet->createSheet();
+		$sheet->setTitle('Schedule Training');
+		$sheet
+			->setCellValue('A1', 'Template Schedule Training')
+			->setCellValue('A2', 'No')
+			->setCellValue('B2', 'REGISTER DATE')
+			->setCellValue('C2', 'TRAINING DATES 1')
+			->setCellValue('D2', 'BATCH TRAINING DATES 1')
+			->setCellValue('E2', 'TRAINING DATES 2 (Optional)')
+			->setCellValue('F2', 'BATCH TRAINING DATES 2 (Optional)')
+			->setCellValue('G2', 'TRAINING DATES 3 (Optional)')
+			->setCellValue('H2', 'BATCH TRAINING DATES 3 (Optional)')
+			->setCellValue('I2', 'INDUCTION')
+			->setCellValue('J2', 'TRAINING NAME (Training Activity ID)')
+			->setCellValue('K2', 'CATEGORY')
+			->setCellValue('L2', 'TRAINER NAME (Employee ID)')
+			->setCellValue('M2', 'TRAINER NAME (Employee ID Optional)')
+			->setCellValue('N2', 'TRAINER NAME (Employee ID Optional)')
+			->setCellValue('O2', 'TRAINEE (Fill Department ID if Category is Department')
+			->setCellValue('P2', 'REMARKS')
+			->setCellValue('Q2', 'TOTAL TRAINEE')
+			->setCellValue('R2', 'DURATION')
+			->setMergeCells(['A1:K1'])
+			->getStyle('A1')->getAlignment()->setHorizontal('center')
+			->setVertical('center');
+		foreach (range('A', 'R') as $col) {
+			$sheet->getColumnDimension($col)->setAutoSize(true);
+		}
+
+		// Sheet 2: Trainer
+		$this->db->start_cache(); // Cache query sebelum count_all_results
+		$this->db->select('a.*');
+		$this->db->from('lnd_training_activity a');
+		$records = $this->db->get()->result_array();
+
+		$sheet2 = $spreadsheet->createSheet();
+		$sheet2->setTitle('Master Training Activity');
+		$sheet2->setCellValue('A1', 'Master Training Activity')
+			->setCellValue('A2', 'No')
+			->setCellValue('B2', 'ID')
+			->setCellValue('C2', 'Induction')
+			->setCellValue('D2', 'Training Activity')
+			->setMergeCells(['A1:D1'])
+			->getStyle('A1')->getAlignment()->setHorizontal('center');
+		foreach (range('A', 'D') as $col) {
+			$sheet2->getColumnDimension($col)->setAutoSize(true);
+		}
+		$indexTrainingActivity = 3;
+		foreach ($records as $row => $data) {
+			$sheet2->setCellValue("A" . $indexTrainingActivity, $row+1);
+			$sheet2->setCellValue("B" . $indexTrainingActivity, $data['trainingActivityId']);
+			$sheet2->setCellValue("C" . $indexTrainingActivity, $data['induction']);
+			$sheet2->setCellValue("D" . $indexTrainingActivity, $data['trainingActivity']);
+			$indexTrainingActivity++;
+		}
+
+		// Sheet 3: Participant
+		$sheet3 = $spreadsheet->createSheet();
+		$sheet3->setTitle('Trainer Name');
+		$sheet3->setCellValue('A1', 'Trainer Name')
+			->setCellValue('A2', 'No')
+			->setCellValue('B2', 'Employee ID')
+			->setCellValue('C2', 'Name')
+			->setMergeCells(['A1:C1'])
+			->getStyle('A1')->getAlignment()->setHorizontal('center');
+		foreach (range('A', 'C') as $col) {
+			$sheet3->getColumnDimension($col)->setAutoSize(true);
+		}
+
+		// Sheet 4: Material
+		$sheet4 = $spreadsheet->createSheet();
+		$sheet4->setTitle('Trainee');
+		$sheet4->setCellValue('A1', 'Trainee (if Category is Department)')
+			->setCellValue('A2', 'No')
+			->setCellValue('B2', 'ID')
+			->setCellValue('C2', 'Division')
+			->setCellValue('D2', 'Department')
+			->setMergeCells(['A1:D1'])
+			->getStyle('A1')->getAlignment()->setHorizontal('center');
+		foreach (range('A', 'D') as $col) {
+			$sheet4->getColumnDimension($col)->setAutoSize(true);
+		}
+
+		// Set active sheet index back to the first sheet
+		$spreadsheet->setActiveSheetIndexByName('Schedule Training');
+
+		// Set filename with today's date
+		$filename = "template_schedule_training_" . date("Ymd") . ".xls";
+
+		// Set HTTP headers for Excel file download
+		header('Content-Type: application/vnd.ms-excel');
+		header("Content-Disposition: attachment; filename=\"$filename\"");
+		header('Cache-Control: max-age=0');
+
+		// Write and output Excel
+		$writer = new Xls($spreadsheet);
+		$writer->save('php://output');
+		exit;
+	}
 }

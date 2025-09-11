@@ -75,6 +75,17 @@ class Cutoff extends CI_Controller
         }
     }
 
+    public function generate(){
+        $start = new DateTime("2023-01-01");
+        $end = new DateTime("2025-05-16");
+        while ($start <= $end) {
+            @$this->db->insert("days", ["tanggal" => $start->format('Y-m-d')]);
+            $start->modify('+1 day');
+        }
+
+        echo "OK";
+    }
+
     //CREATE DATA
     public function create()
     {
@@ -82,6 +93,14 @@ class Cutoff extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 $post   = $this->input->post();
                 $send   = $this->crud->create('cutoff', $post);
+
+                $start = new DateTime($post['start']);
+                $end = new DateTime($post['finish']);
+                while ($start <= $end) {
+                    @$this->db->insert("days", ["tanggal" => $start->format('Y-m-d')]);
+                    $start->modify('+1 day');
+                }
+
                 echo $send;
             } else {
                 show_error(validation_errors());

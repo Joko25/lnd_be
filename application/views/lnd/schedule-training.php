@@ -14,8 +14,9 @@
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Training Date</span>
-                        <input style="width:30%;" id="trainingDateFilter" class="easyui-combogrid">
-                        <input style="width:30%;" id="trainingDateFilter" class="easyui-combogrid">
+                        <input style="width:29%;" id="trainingDateFromFilter" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser, editable: false">
+                        To
+						<input style="width:28%;" id="trainingDateEndFilter" class="easyui-datebox" data-options="formatter:myformatter,parser:myparser, editable: false">
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Training Name</span>
@@ -29,8 +30,13 @@
                 <div style="width:50%; float: left;">
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Category</span>
-                        <input style="width:60%;" id="categoryFilter" class="easyui-combogrid">
-                    </div>
+						<select style="width:60%;" name="categoryFilter" id="categoryFilter" required="" class="easyui-combobox" panelHeight="auto">
+							<option value="">Choose All</option>
+							<option value="New">New</option>
+							<option value="Mutasi">Mutasi</option>
+							<option value="Departement">Departement</option>
+						</select>
+					</div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Trainee</span>
                         <input style="width:60%;" id="traineeFilter" class="easyui-combogrid">
@@ -47,10 +53,20 @@
         <div>
             <h1>QR Pre Test</h1>
             <div id="qrcode-pretest"></div>
+			<div style="display: flex; flex-direction: column; align-items: stretch; margin-top: 10px; gap: 8px;">
+				<button onclick="downloadQR('qrcode-pretest', 'pre_test_qr.png')">⬇️ Download QR</button>
+				<input type="hidden" id="pretest-url">
+				<button class="btn-copy" data-clipboard-target="#pretest-url">📋 Copy Link</button>
+			</div>
         </div>
         <div>
             <h1>QR Post Test</h1>
             <div id="qrcode-posttest"></div>
+			<div style="display: flex; flex-direction: column; align-items: stretch; margin-top: 10px; gap: 8px;">
+				<button onclick="downloadQR('qrcode-posttest', 'post_test_qr.png')">⬇️ Download QR</button>
+				<input type="hidden" id="posttest-url">
+				<button class="btn-copy" data-clipboard-target="#posttest-url">📋 Copy Link</button>
+			</div>
         </div>
         
     </div>    
@@ -74,7 +90,7 @@
                             </td>
                             <td style="padding-bottom:5px;">
                                 <select class="easyui-combobox batch-count" style="width:100px;">
-                                    <option value="">Batch</option>
+<!--                                    <option value="">Batch</option>-->
                                     <?php for ($i = 1; $i <= 10; $i++): ?>
                                         <option value="<?= $i ?>"><?= $i ?> Batch<?= $i > 1 ? 'es' : '' ?></option>
                                     <?php endfor; ?>
@@ -118,7 +134,7 @@
 			<div id="trainers-wrapper">
 				<div class="fitem" id="trainerRow_1">
 					<span style="width:35%; display:inline-block;">Trainer Name</span>
-					<input style="width:60%;" name="trainerName[]" id="trainerName_1" required class="easyui-combobox" panelHeight="auto">
+					<input style="width:60%;" name="trainerName[]" id="trainerName_1" required class="easyui-combogrid">
 					<a href="javascript:void(0)" class="easyui-linkbutton" style="margin-left:5px;" onclick="addTrainer()">+</a>
 				</div>
 			</div>
@@ -168,6 +184,18 @@
 
 <script>
     window.onload = function() {
+		var clipboard = new ClipboardJS('.btn-copy');
+
+		clipboard.on('success', function(e) {
+			console.log('Teks berhasil disalin:', e.text);
+			toastr.success("Link berhasil disalin ke clipboard!"); // Tetap gunakan toastr
+			e.clearSelection();
+		});
+
+		clipboard.on('error', function(e) {
+			console.error('Gagal menyalin teks:', e.action);
+			toastr.error("Gagal menyalin link.");
+		});
 		$(`#trainerName_1`).combogrid({
 			url: '<?= base_url('lnd/schedule_training/readsEmployeesLeaderUp') ?>',
 			panelWidth: 450,
@@ -219,6 +247,35 @@
 					title: 'Training Activity Name',
 					width: 200
 				}]
+			],
+		});
+
+		$('#traineeFilter').combogrid({
+			url: '<?= base_url('lnd/schedule_training/readsDepartements') ?>',
+			panelWidth: 450,
+			idField: 'id',
+			textField: 'name',
+			mode: 'remote',
+			fitColumns: true,
+			prompt: 'Choose Department Name',
+			icons: [{
+				iconCls: 'icon-clear',
+				handler: function(e) {
+					$(e.data.target).combogrid('clear').combogrid('textbox').focus();
+				}
+			}],
+			columns: [
+				[
+					{
+						field: 'division',
+						title: 'Division Name',
+						width: 120
+					},
+					{
+						field: 'name',
+						title: 'Department Name',
+						width: 120
+					}]
 			],
 		});
 
@@ -277,7 +334,7 @@
 		const trainerRow = $(`
         <div class="fitem" id="trainerRow_${defaultTrainerId}">
             <span style="width:35%; display:inline-block;">Trainer Name</span>
-            <input style="width:60%;" name="trainerName[]" id="trainerName_${defaultTrainerId}" required class="easyui-combogrid" panelHeight="auto">
+            <input style="width:60%;" name="trainerName[]" id="trainerName_${defaultTrainerId}" required class="easyui-combogrid">
             <input type="hidden" name="trainingTrainerId[]" id="trainingTrainerId_${defaultTrainerId}" value="">
             <a href="javascript:void(0)" class="easyui-linkbutton" style="margin-left:5px;" onclick="addTrainer()">+</a>
         </div>
@@ -431,7 +488,7 @@
 			const trainerRow = $(`
 			<div class="fitem" id="trainerRow_${trainerId}">
 				<span style="width:35%; display:inline-block;">Trainer Name</span>
-				<input style="width:60%;" name="trainerName[]" id="trainerName_${trainerId}" required class="easyui-combogrid" panelHeight="auto">
+				<input style="width:60%;" name="trainerName[]" id="trainerName_${trainerId}" required class="easyui-combogrid">
 				<input type="hidden" name="trainingTrainerId[]" id="trainingTrainerId_${trainerId}" value="${trainerUuid}">
 				${buttonHtml}
 			</div>
@@ -447,7 +504,7 @@
 				textField: 'name',
 				mode: 'remote',
 				fitColumns: true,
-				prompt: 'Choose Trainer Name',
+				prompt: 'Choose Trainer Nameeee',
 				icons: [{
 					iconCls: 'icon-clear',
 					handler: function (e) {
@@ -516,6 +573,7 @@
 					}
 				}],
 				columns: [[
+					{ field: 'division', title: 'Division Name', width: 120 },
 					{ field: 'name', title: 'Department Name', width: 120 }
 				]],
 				onLoadSuccess: function () {
@@ -554,8 +612,10 @@
             if (response.code === 200) {
                 $('#dlg_qr').dialog('open');
                 let id = response.data.id;
-                let url = '<?= base_url('lnd/form_test/pre_test/') ?>' + id;
-                let url_post = '<?= base_url('lnd/form_test/post_test/') ?>' + id;
+				let rawTrainingActivity = response.data.trainingActivity;
+				let trainingActivity = rawTrainingActivity.replace(/\s+/g, '_').toLowerCase();
+                let url = '<?= base_url('lnd/form_test/pre_test/') ?>' + trainingActivity + '/' + id;
+                let url_post = '<?= base_url('lnd/form_test/post_test/') ?>' + trainingActivity + '/' + id;
                 $('#qrcode-pretest').empty();
                 var qrcode = new QRCode("qrcode-pretest", {
                     text: url,
@@ -574,7 +634,9 @@
                     height: 228,
                     correctLevel: QRCode.CorrectLevel['H']
                 });
-            } else {
+				$('#pretest-url').val(url);
+				$('#posttest-url').val(url_post);
+			} else {
                 toastr.warning("Gagal mengambil data. Data training tidak di temukan.", "Warning");
                 // alert("Gagal mengambil data. Data training tidak di temukan.");
             }
@@ -584,7 +646,58 @@
         });
     }
 
-    function deleted() {
+	function downloadQR(qrElementId, filename) {
+		const canvas = document.querySelector(`#${qrElementId} canvas`);
+		if (!canvas) return alert("QR code not ready yet.");
+
+		const link = document.createElement("a");
+		link.href = canvas.toDataURL("image/png");
+		link.download = filename;
+		link.click();
+	}
+
+	function copyLink(inputId) {
+		var clipboard = new ClipboardJS(inputId);
+
+		clipboard.on('success', function(e) {
+			console.log('Teks berhasil disalin:', e.text);
+			toastr.success("Link berhasil disalin ke clipboard!"); // Tetap gunakan toastr
+			e.clearSelection();
+		});
+
+		clipboard.on('error', function(e) {
+			console.error('Gagal menyalin teks:', e.action);
+			toastr.error("Gagal menyalin link.");
+		});
+
+		const linkInput = document.getElementById(inputId);
+		if (!linkInput) {
+			toastr.error("Input link tidak ditemukan.");
+			return;
+		}
+		const link = linkInput.value;
+
+		// Cek apakah navigator.clipboard dan writeText tersedia
+		if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+			navigator.clipboard.writeText(link).then(() => {
+				toastr.success("Link berhasil disalin ke clipboard!");
+			}).catch(() => {
+				toastr.error("Gagal menyalin link.");
+			});
+		} else {
+			// Fallback untuk browser yang tidak support navigator.clipboard
+			try {
+				linkInput.select();
+				linkInput.setSelectionRange(0, 99999); // Untuk mobile
+				document.execCommand('copy');
+				toastr.success("Link berhasil disalin ke clipboard!");
+			} catch (err) {
+				toastr.error("Fitur salin tidak didukung di browser ini.");
+			}
+		}
+	}
+
+	function deleted() {
         var rows = $('#dg').datagrid('getSelections');
         if (rows.length > 0) {
             $.messager.confirm('Warning', 'Are you sure you want to delete this data?', function(r) {
@@ -621,7 +734,7 @@
 
 	//DOWNLOAD EXCEL TEMPLATE
 	function download_excel() {
-		window.location.assign('<?= base_url('template/tmp_schedule_training.xls') ?>');
+		window.location.assign('<?= base_url('lnd/schedule_training/download_template_schedule_training') ?>');
 	}
 
     function sendDataToServer(requestData) {
@@ -771,10 +884,16 @@
                             }
                         }],
                         columns: [
-                            [{
-                                field: 'name',
-                                title: 'Department Name',
-                                width: 120
+                            [
+								{
+									field: 'division',
+									title: 'Division Name',
+									width: 120
+								},
+								{
+									field: 'name',
+									title: 'Department Name',
+									width: 120
                             }]
                         ],
                     });
@@ -906,7 +1025,6 @@
             </td>
             <td style="padding-bottom:5px;">
                 <select class="easyui-combobox batch-count" style="width:100px;">
-                    <option value="">Batch</option>
                     <?php for ($i = 1; $i <= 10; $i++): ?>
                         <option value="<?= $i ?>"><?= $i ?> Batch<?= $i > 1 ? 'es' : '' ?></option>
                     <?php endfor; ?>
@@ -1033,7 +1151,7 @@
 		div.id = `trainerRow_${trainerCount}`;
 		div.innerHTML = `
             <span style="width:35%; display:inline-block;"></span>
-            <input style="width:60%;" name="trainerName[]" id="trainerName_${currentId}" required class="easyui-combobox" panelHeight="auto">
+            <input style="width:60%;" name="trainerName[]" id="trainerName_${currentId}" required class="easyui-combobox">
             <a href="javascript:void(0)" class="easyui-linkbutton" style="margin-left:5px;" onclick="removeTrainer(${currentId})">❌</a>
         `;
 		wrapper.appendChild(div);
@@ -1075,9 +1193,20 @@
 
 	function filter() {
 		var trainingMaterialFilter = $("#trainingMaterialFilter").combogrid('getValue');
-		// var training_activity_id = $("#training_activity_id").combogrid('getValue');
+		var registerDateFilter = $("#registerDateFilter").datebox('getValue');
+		var categoryFilter = $("#categoryFilter").combogrid('getValue');
+		var traineeFilter = $("#traineeFilter").combogrid('getValue');
+		var trainingDateFromFilter = $("#trainingDateFromFilter").datebox('getValue');
+		var trainingDateEndFilter = $("#trainingDateEndFilter").datebox('getValue');
+
 		// debug_to_console(curiculum_id);
-		var params = "?trainingName=" + trainingMaterialFilter ;
+		var params = "?trainingName=" + trainingMaterialFilter +
+			"&registerDate=" + registerDateFilter +
+			"&category=" + categoryFilter +
+			"&trainee=" + traineeFilter +
+			"&trainingDateFrom=" + trainingDateFromFilter +
+			"&trainingDateEnd=" + trainingDateEndFilter
+		;
 
 		$('#dg').datagrid({
 			url: '<?= base_url('lnd/schedule_training/datatables') ?>' + params

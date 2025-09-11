@@ -80,7 +80,7 @@ class Sources extends CI_Controller
 
     }
 
-        public function read_source($group_id = "")
+    public function read_source($group_id = "")
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
         $where = [];
@@ -97,6 +97,8 @@ class Sources extends CI_Controller
         $send = $query->result_array();
         echo json_encode($send);
     }
+
+
 
     public function read($group_name)
 

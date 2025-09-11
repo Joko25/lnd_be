@@ -208,7 +208,8 @@
                 toastr.success(data.message, 'Success');
                 $('#dg').datagrid('reload');
                 $('#dlg_insert').dialog('close');
-                
+            }else{
+                toastr.error(data.message, 'Something Error');
             }
         })
         .catch(error => {

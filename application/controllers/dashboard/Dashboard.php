@@ -405,7 +405,7 @@ class Dashboard extends CI_Controller
     public function contracts()
     {
         $today = date("Y-m-d");
-        $nextday = date("Y-m-d", strtotime($today . ' + 3 days'));
+        $nextday = date("Y-m-d", strtotime($today . ' + 30 days'));
         $this->db->select('number, name, image_profile, date_expired, position_id, departement_id');
         $this->db->from('employees');
         $this->db->where('status', 0);

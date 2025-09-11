@@ -296,7 +296,7 @@
                         <span style="width:35%; display:inline-block;">Phone No</span>
                         <input style="width:60%;" name="mobile_phone" data-options="buttonText:'+62', buttonAlign:'left'" id="mobile_phone" class="easyui-numberbox">
                     </div>
-                    <div class="fitem">
+                    <div class="fitem" hidden>
                         <span style="width:35%; display:inline-block;">Emergency No</span>
                         <input style="width:60%;" name="emergency_no" data-options="buttonText:'+62', buttonAlign:'left'" id="emergency_no" class="easyui-numberbox">
                     </div>
@@ -304,12 +304,12 @@
                         <span style="width:35%; display:inline-block;">Email</span>
                         <input style="width:60%;" name="email" data-options="validType:'email'" id="email" class="easyui-textbox">
                     </div>
-                    <div class="fitem">
+                    <div class="fitem" hidden>
                         <span style="width:35%; display:inline-block;">Driving Licensed</span>
                         <input style="width:35%;" name="driving_no" id="driving_no" class="easyui-textbox">
                         <input style="width:20%;" name="driving_date" id="driving_date" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
                     </div>
-                    <div class="fitem">
+                    <div class="fitem" hidden>
                         <span style="width:35%; display:inline-block;">STNK No</span>
                         <input style="width:35%;" name="stnk_no" id="stnk_no" class="easyui-textbox">
                         <input style="width:20%;" name="stnk_date" id="stnk_date" data-options="formatter:myformatter,parser:myparser, editable: false" class="easyui-datebox">
@@ -322,7 +322,7 @@
                         <span style="width:35%; display:inline-block;">Foto Profile</span>
                         <input style="width:60%;" name="image_profile" accept=".jpg, .png, .jpeg" id="image_profile" class="easyui-filebox">
                     </div>
-                    <div class="fitem">
+                    <div class="fitem" hidden>
                         <span style="width:35%; display:inline-block;">Google Maps Point</span>
                         <input style="width:60%; height: 115px;" name="maps" multiline="true" id="maps" class="easyui-textbox">
                     </div>
@@ -2197,7 +2197,7 @@
         });
 
         $('#filter_contracts').combobox({
-            url: '<?php echo base_url('employee/contracts/reads'); ?>',
+            url: '<?php echo base_url('employee/employees/readContracts'); ?>',
             valueField: 'id',
             textField: 'name',
             prompt: 'Choose All',
@@ -2210,7 +2210,7 @@
         });
 
         $('#filter_groups').combobox({
-            url: '<?php echo base_url('employee/groups/reads'); ?>',
+            url: '<?php echo base_url('employee/employees/readGroups'); ?>',
             valueField: 'id',
             textField: 'name',
             prompt: 'Choose All',
@@ -2250,7 +2250,7 @@
         });
 
         $('#filter_employees').combogrid({
-            url: '<?= base_url('employee/employees/reads') ?>',
+            url: '<?= base_url('employee/employees/readEmployees') ?>',
             panelWidth: 450,
             idField: 'id',
             textField: 'name',

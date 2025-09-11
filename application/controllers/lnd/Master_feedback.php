@@ -100,6 +100,7 @@ class Master_feedback extends CI_Controller {
                 ->set_content_type('application/json')
                 ->set_status_header(200)
                 ->set_output(json_encode([
+                    'code' => 200,
                     'status' => ResponseStatus::SUCCESS,
                     'data' => $save,
                     'message' => 'Form test successfully'
@@ -109,6 +110,7 @@ class Master_feedback extends CI_Controller {
                 ->set_content_type('application/json')
                 ->set_status_header(400)
                 ->set_output(json_encode([
+                    'code' => 400,
                     'status' => ResponseStatus::BAD_REQUEST,
                     'data' => [],
                     'message' => 'Get Competence data failed'
@@ -264,6 +266,7 @@ class Master_feedback extends CI_Controller {
                 ->set_content_type('application/json')
                 ->set_status_header(404)
                 ->set_output(json_encode([
+                    'code' => 404,
                     'status' => ResponseStatus::NOT_FOUND,
                     'data' => null,
                     'message' => 'Data not found'
@@ -274,6 +277,7 @@ class Master_feedback extends CI_Controller {
                 ->set_content_type('application/json')
                 ->set_status_header(200)
                 ->set_output(json_encode([
+                    'code' => 200,
                     'status' => ResponseStatus::SUCCESS,
                     'data' => $id,
                     'message' => 'Master feedback deleted successfully'

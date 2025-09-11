@@ -21,7 +21,7 @@ class Emails extends CI_Model
             'smtp_host' => 'aeconsys.com',
             'smtp_port' => 465,
             'smtp_user' => 'kinenta@aeconsys.com',
-            'smtp_pass' => 'Angeska@123#',
+            'smtp_pass' => 'Hilman1196',
             'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
             'mailtype' => 'html', //plaintext 'text' mails or 'html'
             'smtp_timeout' => '4', //in seconds
@@ -94,7 +94,7 @@ class Emails extends CI_Model
             'smtp_host' => 'aeconsys.com',
             'smtp_port' => 465,
             'smtp_user' => 'kinenta@aeconsys.com',
-            'smtp_pass' => 'Angeska@123#',
+            'smtp_pass' => 'Hilman1196',
             'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
             'mailtype' => 'html', //plaintext 'text' mails or 'html'
             'smtp_timeout' => '4', //in seconds
@@ -151,7 +151,7 @@ class Emails extends CI_Model
             'smtp_host' => 'aeconsys.com',
             'smtp_port' => 465,
             'smtp_user' => 'kinenta@aeconsys.com',
-            'smtp_pass' => 'Angeska@123#',
+            'smtp_pass' => 'Hilman1196',
             'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
             'mailtype' => 'html', //plaintext 'text' mails or 'html'
             'smtp_timeout' => '4', //in seconds
@@ -219,6 +219,31 @@ class Emails extends CI_Model
         $this->email->from('kinenta@aeconsys.com', $company . ' [Salary Slip]');
         $this->email->to($email);
         $this->email->subject('Salary Slip ' . $employee);
+        $this->email->message(base64_decode($html));
+        $email = $this->email->send();
+
+        return $email;
+    }
+
+    public function emailThrSlip($email, $employee, $company, $html)
+    {
+        $config = array(
+            'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
+            'smtp_host' => 'aeconsys.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'kinenta@aeconsys.com',
+            'smtp_pass' => 'Hilman1196',
+            'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
+            'mailtype' => 'html', //plaintext 'text' mails or 'html'
+            'smtp_timeout' => '4', //in seconds
+            'charset' => 'iso-8859-1',
+            'wordwrap' => TRUE
+        );
+
+        $this->email->initialize($config);
+        $this->email->from('kinenta@aeconsys.com', $company . ' [THR Slip]');
+        $this->email->to($email);
+        $this->email->subject('THR Slip ' . $employee);
         $this->email->message(base64_decode($html));
         $email = $this->email->send();
 

@@ -402,7 +402,7 @@ if ($employee->image_profile == "" || $employee->image_profile == null) {
 
                         </tr>
 
-                        <tr>
+                        <!-- <tr>
 
                             <td>Emergency No</td>
 
@@ -432,7 +432,7 @@ if ($employee->image_profile == "" || $employee->image_profile == null) {
 
                             <td><b><?= $employee->maps ?></b></td>
 
-                        </tr>
+                        </tr> -->
 
                     </table>
 

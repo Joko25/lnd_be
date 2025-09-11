@@ -8,7 +8,7 @@
             <legend><b>Form Filter Data</b></legend>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Competence Standard</span>
-                <input style="width:60%;" id="name" class="easyui-combogrid">
+                <input style="width:60%;" id="competence_id" class="easyui-combogrid">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Training Activity</span>
@@ -16,7 +16,7 @@
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;">Indicator</span>
-                <input style="width:60%;" id="indicator" class="easyui-combogrid">
+                <input style="width:60%;" id="indicator_id" class="easyui-combobox">
             </div>
             <div class="fitem">
                 <span style="width:35%; display:inline-block;"></span>
@@ -127,14 +127,14 @@
 
     }
     window.onload = function() {
-        $('#curiculum_id').combogrid({
-            url: '<?php echo base_url('lnd/curiculum/list'); ?>',
-            panelWidth: 420,
-            idField: 'curiculumId',
-            textField: 'curiculumId',
+        $('#competence_id').combogrid({
+            url: '<?= base_url('lnd/training_activity/readsCompetence') ?>',
+            panelWidth: 450,
+            idField: 'competenceId',
+            textField: 'name',
             mode: 'remote',
             fitColumns: true,
-            prompt: "Choose Division",
+            prompt: 'Choose Competence',
             icons: [{
                 iconCls: 'icon-clear',
                 handler: function(e) {
@@ -143,14 +143,54 @@
             }],
             columns: [
                 [{
-                    field: 'curiculumId',
-                    title: 'Curiculum ID'
+                    field: 'competenceId',
+                    title: 'Competence ID',
+                    width: 120
                 }, {
-                    field: 'desc',
-                    title: 'Description',
-                    width: 250
+                    field: 'name',
+                    title: 'Competence Name',
+                    width: 200
                 }]
             ],
+        });
+
+        $('#training_activity_id').combogrid({
+            url: '<?= base_url('lnd/training_activity/list') ?>',
+            panelWidth: 450,
+            idField: 'id',
+            textField: 'trainingActivity',
+            mode: 'remote',
+            fitColumns: true,
+            prompt: 'Choose Training Activity',
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combogrid('clear').combogrid('textbox').focus();
+                }
+            }],
+            columns: [
+                [{
+                    field: 'trainingActivityId',
+                    title: 'Training Activity ID',
+                    width: 120
+                }, {
+                    field: 'trainingActivity',
+                    title: 'Training Activity Name',
+                    width: 200
+                }]
+            ],
+        });
+        $('#indicator_id').combobox({
+            url: '<?php echo base_url('lnd/curiculum/get_indicator_list'); ?>',
+            valueField: 'id',
+            textField: 'indicator_name',
+            prompt: 'Choose All',
+            icons: [{
+                iconCls: 'icon-clear',
+                handler: function(e) {
+                    $(e.data.target).combobox('clear').combobox('textbox').focus();
+                }
+            }],
         });
         
     };
@@ -459,9 +499,11 @@
     }
 
     function filter() {
-        var curiculum_id = $("#curiculum_id").combogrid('getValue');
+        var competence_id = $("#competence_id").combogrid('getValue');
+        var training_activity_id = $("#training_activity_id").combogrid('getValue');
+        var indicator_id = $("#indicator_id").combobox('getValue');
 
-        var params = "?curiculumId=" + curiculum_id ;
+        var params = `?competence_id=${competence_id}&training_activity_id=${training_activity_id}&indicator_id=${indicator_id}` ;
 
         $('#dg').datagrid({
             url: '<?= base_url('lnd/curiculum/datatables') ?>' + params

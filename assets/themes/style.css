@@ -26,22 +26,22 @@
 
 body {
 	font-size: 12px;
-	zoom: 80%;
+	/* zoom: 80%; */
 }
 
 /* Resolution Laptop */
-/* @media screen and (max-width: 1366px) {
+@media screen and (max-width: 1366px) {
 	body {
 		zoom: 80%;
 	}
-} */
+}
 
 /* Resolution Notebook */
-/* @media screen and (max-width: 1280px) {
+@media screen and (max-width: 1280px) {
 	body {
 		zoom: 80%;
 	}
-} */
+}
 
 #header {
 	height: 70px;
@@ -50,7 +50,7 @@ body {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	/*background-image: url(../../assets/image/header_v6.jpg);*/
+	background-image: url(../../assets/image/header_v2.jpg);
 	height: 100%;
 }
 
@@ -212,23 +212,6 @@ fieldset {
 
 .button-green:hover {
 	background-color: #3e8e41
-}
-
-.button-blue {
-	display: inline-block;
-	padding: 5px;
-	cursor: pointer;
-	text-align: center;
-	text-decoration: none;
-	outline: none;
-	color: #fff;
-	background-color: #5184B4;
-	border: none;
-	border-radius: 5px;
-}
-
-.button-blue:hover {
-	background-color: #5184B4
 }
 
 .button-red {

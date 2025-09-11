@@ -170,7 +170,12 @@ class Competence extends CI_Controller {
         // Ambil request body secara manual
         $rawInput = file_get_contents("php://input");
         parse_str($rawInput, $data);
-        $competenceCheck = $this->crud->read('lnd_competence', [], ["LOWER(name)" => strtolower($data["name"])]);
+        // Ubah pengecekan menjadi OR (atau) pada kondisi where
+        $competenceCheck = $this->db
+            ->where('LOWER(name)', strtolower($data["name"]))
+            ->or_where('`index`', $data['index'])
+            ->get('lnd_competence')
+            ->result_array();
         if(!empty($competenceCheck)) {
             // die(json_encode(array("title" => "Duplicate", "message" => "Your Competence Name has been registered", "theme" => "error")));
             return $this->output
@@ -180,7 +185,7 @@ class Competence extends CI_Controller {
                 'code' => 400,
                 'status' => ResponseStatus::BAD_REQUEST,
                 'data' => null,
-                'message' => 'Your Competence Name has been registered.'
+                'message' => 'Duplicate, Your Competence Name or index has been registered.'
             ]));
         }
         // Generate competenceId
@@ -313,14 +318,12 @@ class Competence extends CI_Controller {
     {
         if ($this->input->post()) {
             $data = $this->input->post('data');
-            // Validasi data duplikat terlebih dahulu
-            $existingData = $this->crud->read('lnd_competence', [
-                "name" => $data['name'],
-                "index" => $data['index']
-            ]);
+            $this->db->where('name', $data['name']);
+            $this->db->or_where('index', $data['index']);
+            $existingData = $this->db->get('lnd_competence')->row_array();
 
             if (!empty($existingData)) {
-                echo json_encode(array("title" => "Data Duplicated", "message" => "please check Competene Name => ". $data['trainingActivity'], "theme" => "error"));
+                echo json_encode(array("title" => "Data Duplicated", "message" => "silakan cek Competence Name => " . (isset($data['name']) ? $data['name'] : json_encode($data)), "theme" => "error"));
                 return;
             }
 
@@ -338,6 +341,7 @@ class Competence extends CI_Controller {
             } else if(empty($data['index'])) {
                 echo json_encode(array("title" => "Not Found", "message" => "Index cannot be Null", "theme" => "error"));
             } else {
+                $data['id'] = $this->uuid();
                 $send = $this->crud->create('lnd_competence', $data);
                 echo $send;
             }

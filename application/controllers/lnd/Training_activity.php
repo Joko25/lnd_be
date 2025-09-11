@@ -139,6 +139,25 @@ class Training_activity extends CI_Controller {
         $data['trainingActivityId'] = $idGenerateDate;
         $data['id'] = $this->uuid();
 
+        $existingData = $this->crud->read('lnd_training_activity', [
+            "index" => $data['index']
+        ]);
+
+        if (!empty($existingData)) {
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(400)
+            ->set_output(json_encode([
+                'code' => 400,
+                'status' => ResponseStatus::BAD_REQUEST,
+                'data' => null,
+                'message' => 'Data Duplicated. please check Training Activity => '. $data['trainingActivity']
+            ]));
+            echo json_encode(array("title" => "Data Duplicated", "message" => "please check Training Activity => ". $data['trainingActivity'], "theme" => "error"));
+            return;
+        }
+        
+
         // Validasi dan proses data
         if (!empty($data)) {
             $dataTemp = $this->TrainingActivityModel->insert_data($data);
@@ -283,10 +302,10 @@ class Training_activity extends CI_Controller {
             $data = $this->input->post('data');
             
             // Validasi data duplikat terlebih dahulu
-            $existingData = $this->crud->read('lnd_training_activity', [
-                "trainingActivity" => $data['trainingActivity'],
-                "index" => $data['index']
-            ]);
+            // Ubah pengecekan menjadi OR (atau) pada kondisi where
+            $this->db->where('trainingActivity', $data['trainingActivity']);
+            $this->db->or_where('index', $data['index']);
+            $existingData = $this->db->get('lnd_training_activity')->result_array();
 
             if (!empty($existingData)) {
                 echo json_encode(array("title" => "Data Duplicated", "message" => "please check Training Activity => ". $data['trainingActivity'], "theme" => "error"));
@@ -371,7 +390,7 @@ class Training_activity extends CI_Controller {
                         </td>
                         <td style="font-size: 14px; text-align: left; margin:2px;">
                             <b>' . $config->name . '</b><br>
-                            <small>TER CATEGORIES</small>
+                            <small>HUMAN RESOURCE INFORMATION SYSTEM</small>
                         </td>
                     </tr>
                 </table>

@@ -214,7 +214,7 @@
                 $('#dlg_insert').dialog('close');
             } 
             if(data.code == 400) {
-                toastr.info(data.message, 'Info');
+                toastr.error(data.message, 'Something Error');
                 $('#dg').datagrid('reload');
                 // $('#dlg_insert').dialog('close');
             }

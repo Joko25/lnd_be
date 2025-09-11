@@ -46,7 +46,7 @@ class Summary_payrolls extends CI_Controller
         $period_start = date("Y-m", strtotime($filter_from));
         $period_end = date("Y-m", strtotime($filter_to));
 
-        //Select Query
+        // Query untuk payrolls reguler
         $this->db->select('
             a.approved,
             a.approved_to,
@@ -60,7 +60,8 @@ class Summary_payrolls extends CI_Controller
             e.name as group_name,
             g.name as position_name,
             COUNT(b.id) as employee, 
-            SUM(a.net_income) as income');
+            SUM(a.net_income) as income,
+            "REGULER" as payroll_type');
         $this->db->from('payrolls a');
         $this->db->join('employees b', "a.employee_id = b.id");
         $this->db->join('departements c', "b.departement_id = c.id");
@@ -68,7 +69,6 @@ class Summary_payrolls extends CI_Controller
         $this->db->join('groups e', "b.group_id = e.id");
         $this->db->join('privilege_groups f', "b.group_id = f.group_id and f.username = '$username' and f.status = '1'");
         $this->db->join('positions g', "b.position_id = g.id");
-        // $this->db->where("(a.approved_to = '' or a.approved_to is null)");
         $this->db->where('a.deleted', 0);
         $this->db->where('a.period_start =', $period_start);
         $this->db->where('a.period_end =', $period_end);
@@ -85,12 +85,80 @@ class Summary_payrolls extends CI_Controller
         }
         
         $this->db->group_by(array("c.id", "d.id", "e.id", "g.id"));
-        $this->db->order_by('c.name', 'ASC');
-        $this->db->order_by('d.name', 'ASC');
-        $this->db->order_by('g.name', 'ASC');
-        $this->db->order_by('SUM(a.net_income)', 'ASC');
-        //Get Data Array
-        $records = $this->db->get()->result_array();
+        
+        $query1 = $this->db->get_compiled_select();
+        
+        // Reset query builder
+        $this->db->reset_query();
+        
+        // Query untuk payroll_harian_lepas
+        $this->db->select('
+            a.approved,
+            a.approved_to,
+            a.approved_by,
+            a.approved_date,
+            b.departement_id,
+            b.departement_sub_id,
+            b.group_id,
+            c.name as departement_name, 
+            d.name as departement_sub_name, 
+            e.name as group_name,
+            g.name as position_name,
+            COUNT(b.id) as employee, 
+            SUM(a.net_income) as income,
+            "HARIAN_LEPAS" as payroll_type');
+        $this->db->from('payroll_harian_lepas a');
+        $this->db->join('employees b', "a.employee_id = b.id");
+        $this->db->join('departements c', "b.departement_id = c.id");
+        $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
+        $this->db->join('groups e', "b.group_id = e.id");
+        $this->db->join('privilege_groups f', "b.group_id = f.group_id and f.username = '$username' and f.status = '1'");
+        $this->db->join('positions g', "b.position_id = g.id");
+        $this->db->where('a.period_start =', $period_start);
+        $this->db->where('a.period_end =', $period_end);
+        if($filter_group != ""){
+            $this->db->where_in('e.name', $filter_group_ex);
+        }
+        $this->db->like('b.id', $filter_employee);
+        $this->db->like('b.division_id', $filter_division);
+        $this->db->like('b.departement_id', $filter_departement);
+        $this->db->like('b.departement_sub_id', $filter_departement_sub);
+        
+        if($filter_position && $filter_position != '' && $filter_position != 'undefined') {
+            $this->db->where('b.position_id', $filter_position);
+        }
+        
+        $this->db->group_by(array("c.id", "d.id", "e.id", "g.id"));
+        
+        $query2 = $this->db->get_compiled_select();
+        
+        // Reset query builder
+        $this->db->reset_query();
+        
+        // Gabungkan kedua query dengan UNION
+        $union_query = "($query1) UNION ALL ($query2)";
+        
+        // Query final untuk menggabungkan dan mengelompokkan hasil
+        $final_query = "SELECT 
+            approved,
+            approved_to,
+            approved_by,
+            approved_date,
+            departement_id,
+            departement_sub_id,
+            group_id,
+            departement_name, 
+            departement_sub_name, 
+            group_name,
+            position_name,
+            SUM(employee) as employee, 
+            SUM(income) as income,
+            GROUP_CONCAT(DISTINCT payroll_type ORDER BY payroll_type SEPARATOR ', ') as payroll_type
+        FROM ($union_query) as combined_data
+        GROUP BY departement_id, departement_sub_id, group_id, position_name
+        ORDER BY departement_name ASC, departement_sub_name ASC, position_name ASC, SUM(income) ASC";
+        
+        $records = $this->db->query($final_query)->result_array();
 
         echo json_encode($records);
     }
@@ -116,7 +184,8 @@ class Summary_payrolls extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            $this->db->select('a.*, b.bank_branch, b.bank_no, b.national_id');
+            // Query untuk payrolls reguler
+            $this->db->select('a.*, b.bank_branch, b.bank_no, b.national_id, "REGULER" as payroll_type');
             $this->db->from('payrolls a');
             $this->db->join('employees b', 'a.employee_id = b.id');
             $this->db->join('privilege_groups c', "b.group_id = c.group_id and c.username = '$username' and c.status = '1'");
@@ -132,7 +201,38 @@ class Summary_payrolls extends CI_Controller
             }
             
             $this->db->order_by('a.name', 'ASC');
-            $payrolls = $this->db->get()->result_array();
+            $payrolls_reguler = $this->db->get()->result_array();
+            
+            // Reset query builder
+            $this->db->reset_query();
+            
+            // Query untuk payroll_harian_lepas
+            $this->db->select('a.*, b.bank_branch, b.bank_no, b.national_id, "HARIAN_LEPAS" as payroll_type');
+            $this->db->from('payroll_harian_lepas a');
+            $this->db->join('employees b', 'a.employee_id = b.id');
+            $this->db->join('privilege_groups c', "b.group_id = c.group_id and c.username = '$username' and c.status = '1'");
+            $this->db->where('a.period_start', $period_start);
+            $this->db->where('a.period_end', $period_end);
+            $this->db->like('b.division_id', $filter_division);
+            $this->db->like('b.departement_id', $filter_departement);
+            $this->db->like('b.departement_sub_id', $filter_departement_sub);
+            $this->db->like('a.employee_id', $filter_employee);
+            
+            if($filter_position && $filter_position != 'undefined') {
+                $this->db->where('b.position_id', $filter_position);
+            }
+            
+            $this->db->order_by('a.name', 'ASC');
+            $payrolls_harian_lepas = $this->db->get()->result_array();
+            // die($this->db->last_query());
+            
+            // Gabungkan kedua array
+            $payrolls = array_merge($payrolls_reguler, $payrolls_harian_lepas);
+            
+            // Urutkan berdasarkan nama
+            usort($payrolls, function($a, $b) {
+                return strcmp($a['name'], $b['name']);
+            });
 
             $bpjsComs = $this->crud->reads('bpjs', ['status' => 0]);
 
@@ -321,6 +421,14 @@ class Summary_payrolls extends CI_Controller
                         $total_ip_amount += (int)$val_ip_amount;
                     }
 
+                    $total_income = $record['salary'] + $total_allowence + $record['correction_plus'] + $record['bpjs_company_total'];
+
+                    if ($record['group_name'] == 'HARIAN LEPAS' && $record['contract_name'] != 'HARIAN LEPAS KHUSUS') {
+                        $record['deduction_absence'] = '0';
+                        $record['deduction_absence_amount'] = '0';
+                        $total_income = (floatval($record['attandance_wd']) * floatval($record['salary'])) + floatval($record['correction_plus']);
+                    }
+
                     $html .= '<tr>
                                 <td>' . $no . '</td>
                                 <td style="mso-number-format:\@;">' . $record['number'] . '</td>
@@ -334,7 +442,7 @@ class Summary_payrolls extends CI_Controller
                                 <td style="text-align:right;">' . number_format($total_allowence_temp) . '</td>
                                 ' . $html_bpjs_company . '
                                 <td style="text-align:right;">' . number_format($record['correction_plus']) . '</td>
-                                <td style="text-align:right;">' . number_format(($record['salary'] + $total_allowence + $record['correction_plus'] + $record['bpjs_company_total'])) . '</td>
+                                <td style="text-align:right;">' . number_format($total_income) . '</td>
                                 ' . $html_bpjs_employee . '
                                 <td style="text-align:right;">' . number_format($total_deduction) . '</td>
                                 <td style="text-align:right;">' . number_format($record['deduction_absence'] + $total_ip) . '</td>
@@ -434,7 +542,7 @@ class Summary_payrolls extends CI_Controller
             $period_start = date("Y-m", strtotime($filter_from));
             $period_end = date("Y-m", strtotime($filter_to));
 
-            //Select Query
+            // Query untuk payrolls reguler
             $this->db->select('
                 b.division_id,
                 b.departement_id,
@@ -447,7 +555,8 @@ class Summary_payrolls extends CI_Controller
                 e.name as group_name,
                 g.name as position_name,
                 COUNT(b.id) as employee, 
-                SUM(a.net_income) as income');
+                SUM(a.net_income) as income,
+                "REGULER" as payroll_type');
             $this->db->from('payrolls a');
             $this->db->join('employees b', "a.employee_id = b.id");
             $this->db->join('divisions v', "b.division_id = v.id");
@@ -456,7 +565,6 @@ class Summary_payrolls extends CI_Controller
             $this->db->join('groups e', "b.group_id = e.id");
             $this->db->join('privilege_groups f', "b.group_id = f.group_id and f.username = '$username' and f.status = '1'");
             $this->db->join('positions g', "b.position_id = g.id");
-            // $this->db->where("(a.approved_to = '' or a.approved_to is null)");
             $this->db->where('a.deleted', 0);
             $this->db->where('a.period_start =', $period_start);
             $this->db->where('a.period_end =', $period_end);
@@ -471,11 +579,76 @@ class Summary_payrolls extends CI_Controller
                 $this->db->where('b.position_id', $filter_position);
             }
             $this->db->group_by(array("v.id", "c.id", "d.id", "e.id", "g.id"));
-            $this->db->order_by('v.name', 'ASC');
-            $this->db->order_by('c.name', 'ASC');
-            $this->db->order_by('SUM(a.net_income)', 'ASC');
-            //Get Data Array
-            $payrolls = $this->db->get()->result_array();
+            
+            $query1 = $this->db->get_compiled_select();
+            
+            // Reset query builder
+            $this->db->reset_query();
+            
+            // Query untuk payroll_harian_lepas
+            $this->db->select('
+                b.division_id,
+                b.departement_id,
+                b.departement_sub_id,
+                b.group_id,
+                b.position_id,
+                v.name as division_name,
+                c.name as departement_name, 
+                d.name as departement_sub_name, 
+                e.name as group_name,
+                g.name as position_name,
+                COUNT(b.id) as employee, 
+                SUM(a.net_income) as income,
+                "HARIAN_LEPAS" as payroll_type');
+            $this->db->from('payroll_harian_lepas a');
+            $this->db->join('employees b', "a.employee_id = b.id");
+            $this->db->join('divisions v', "b.division_id = v.id");
+            $this->db->join('departements c', "b.departement_id = c.id");
+            $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
+            $this->db->join('groups e', "b.group_id = e.id");
+            $this->db->join('privilege_groups f', "b.group_id = f.group_id and f.username = '$username' and f.status = '1'");
+            $this->db->where('a.period_start =', $period_start);
+            $this->db->where('a.period_end =', $period_end);
+            if($filter_group != ""){
+                $this->db->where_in('e.name', $filter_group_ex);
+            }
+            $this->db->like('b.id', $filter_employee);
+            $this->db->like('b.division_id', $filter_division);
+            $this->db->like('b.departement_id', $filter_departement);
+            $this->db->like('b.departement_sub_id', $filter_departement_sub);
+            if($filter_position && $filter_position != ''){
+                $this->db->where('b.position_id', $filter_position);
+            }
+            $this->db->group_by(array("v.id", "c.id", "d.id", "e.id", "g.id"));
+            
+            $query2 = $this->db->get_compiled_select();
+            
+            // Reset query builder
+            $this->db->reset_query();
+            
+            // Gabungkan kedua query dengan UNION
+            $union_query = "($query1) UNION ALL ($query2)";
+            
+            // Query final untuk menggabungkan dan mengelompokkan hasil
+            $final_query = "SELECT 
+                division_id,
+                departement_id,
+                departement_sub_id,
+                group_id,
+                position_id,
+                division_name,
+                departement_name, 
+                departement_sub_name, 
+                group_name,
+                position_name,
+                SUM(employee) as employee, 
+                SUM(income) as income,
+                GROUP_CONCAT(DISTINCT payroll_type ORDER BY payroll_type SEPARATOR ', ') as payroll_type
+            FROM ($union_query) as combined_data
+            GROUP BY division_id, departement_id, departement_sub_id, group_id, position_id
+            ORDER BY division_name ASC, departement_name ASC, SUM(income) ASC";
+            
+            $payrolls = $this->db->query($final_query)->result_array();
 
             //Config Page
             $rows = 30;
@@ -738,6 +911,7 @@ class Summary_payrolls extends CI_Controller
                                     <th rowspan="2" style="text-align:center;">Employee ID</th>
                                     <th rowspan="2" style="text-align:center;">National ID</th>
                                     <th rowspan="2" style="text-align:center;">Employee Name</th>
+                                    <th rowspan="2" style="text-align:center;">Payroll Type</th>
                                     <th rowspan="2" style="text-align:center;">NPWP</th>
                                     <th rowspan="2" style="text-align:center;">Position</th>
                                     <th rowspan="2" style="text-align:center;">Marital</th>
@@ -766,7 +940,8 @@ class Summary_payrolls extends CI_Controller
                                     <th style="text-align:center;">ABS (AMT)</th>
                                 </tr>';
 
-            $this->db->select('a.*, b.bank_branch, b.bank_no, b.national_id, b.tax_id as npwp');
+            // Query untuk payrolls reguler
+            $this->db->select('a.*, b.bank_branch, b.bank_no, b.national_id, b.tax_id as npwp, "REGULER" as payroll_type');
             $this->db->from('payrolls a');
             $this->db->join('employees b', "a.employee_id = b.id");
             $this->db->join('privilege_groups c', "b.group_id = c.group_id and c.username = '$username' and c.status = '1'");
@@ -782,7 +957,36 @@ class Summary_payrolls extends CI_Controller
             $this->db->like('b.departement_id', $filter_departement);
             $this->db->like('b.departement_sub_id', $filter_departement_sub);
             $this->db->order_by('a.name', 'ASC');
-            $records = $this->db->get()->result_array();
+            $records_reguler = $this->db->get()->result_array();
+            
+            // Reset query builder
+            $this->db->reset_query();
+            
+            // Query untuk payroll_harian_lepas
+            $this->db->select('a.*, b.bank_branch, b.bank_no, b.national_id, b.tax_id as npwp, "HARIAN_LEPAS" as payroll_type');
+            $this->db->from('payroll_harian_lepas a');
+            $this->db->join('employees b', "a.employee_id = b.id");
+            $this->db->join('privilege_groups c', "b.group_id = c.group_id and c.username = '$username' and c.status = '1'");
+            $this->db->join('groups d', "b.group_id = d.id");
+            $this->db->where('a.period_start =', $period_start);
+            $this->db->where('a.period_end =', $period_end);
+            if($filter_group != ""){
+                $this->db->where_in('d.name', $filter_group_ex);
+            }
+            $this->db->like('a.employee_id', $filter_employee);
+            $this->db->like('b.division_id', $filter_division);
+            $this->db->like('b.departement_id', $filter_departement);
+            $this->db->like('b.departement_sub_id', $filter_departement_sub);
+            $this->db->order_by('a.name', 'ASC');
+            $records_harian_lepas = $this->db->get()->result_array();
+            
+            // Gabungkan kedua array
+            $records = array_merge($records_reguler, $records_harian_lepas);
+            
+            // Urutkan berdasarkan nama
+            usort($records, function($a, $b) {
+                return strcmp($a['name'], $b['name']);
+            });
 
             $no = 1;
             $total = 0;
@@ -833,6 +1037,7 @@ class Summary_payrolls extends CI_Controller
                             <td style="mso-number-format:\@;">' . $record['number'] . '</td>
                             <td style="mso-number-format:\@;">' . $record['national_id'] . '</td>
                             <td>' . $record['name'] . '</td>
+                            <td style="text-align:center;">' . $record['payroll_type'] . '</td>
                             <td style="mso-number-format:\@;">' . $record['npwp'] . '</td>
                             <td>' . $record['position_name'] . '</td>
                             <td>' . $record['marital'] . '</td>
@@ -861,7 +1066,7 @@ class Summary_payrolls extends CI_Controller
             }
 
             $html .= '  <tr>
-                            <th style="text-align:right;" colspan="29">GRAND TOTAL</th>
+                            <th style="text-align:right;" colspan="30">GRAND TOTAL</th>
                             <th style="text-align:right;">' . number_format($total) . '</th>
                         </tr>';
             $html .= '</body></html>';

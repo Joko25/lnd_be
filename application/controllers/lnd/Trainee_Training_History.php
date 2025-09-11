@@ -46,11 +46,24 @@ class Trainee_Training_History extends CI_Controller {
 
 	public function readsEmployeesLeaderUp()
 	{
+		$post = isset($_POST['q']) ? $_POST['q'] : "";
+        $get = $this->input->get();
 		$this->db->start_cache();
 		$this->db->select('a.id, a.name, b.name as positionName');
 		$this->db->from('employees a');
 		$this->db->join('positions b', 'b.id = a.position_id', 'left');
-		$this->db->where('b.level <', '05');
+		// Perbaikan: pastikan perbandingan level sebagai integer agar '01', '02', dst bisa dibandingkan dengan benar
+		$this->db->where("(CAST(b.level AS UNSIGNED) <= 5 OR a.departement_sub_id = '20221213000007') AND a.status = 0", null, false);
+		if ($get) {
+            $this->db->like($get);
+        }
+		if(!empty($post)) {
+			// Jika $post ada isinya, tambahkan kondisi where untuk filter berdasarkan nomor atau nama
+			$this->db->group_start();
+			$this->db->like('a.number', $post);
+			$this->db->or_like('a.name', $post);
+			$this->db->group_end();
+		}
 		$this->db->stop_cache();
 		$res = $this->db->get()->result_array();
 		$this->db->flush_cache(); // Hapus cache query
@@ -71,7 +84,7 @@ class Trainee_Training_History extends CI_Controller {
 			// if (@$form['filter_trainee_name'] == "") {
 			// 	die('<h3 style="color:red;">PLEASE CHOOSE TRAINEE NAME</h3>');
 			// } else {
-				$this->db->select("a.*, a.id as employee_id,
+				$this->db->select("a.name, a.number, a.status, a.id as employee_id,
                         (CASE
                                 WHEN CAST(a.date_expired AS CHAR) = '0000-00-00' THEN '-'
                                 ELSE CAST(a.date_expired AS CHAR)
@@ -88,7 +101,9 @@ class Trainee_Training_History extends CI_Controller {
                         j.name as source_name,
                         k.name as marital_name,
                         l.name as religion_name");
-				$this->db->from('employees a');
+				$this->db->from('lnd_training_history lth');
+				$this->db->join('lnd_test_form_detail ltd', "lth.id = ltd.test_id", "left");
+				$this->db->join('employees a', 'lth.employee_id = a.id', 'right');
 				$this->db->join('notifications b', "a.id = b.table_id and b.table_name = 'employees'", 'left');
 				$this->db->join('divisions c', 'c.id = a.division_id');
 				$this->db->join('departements d', 'd.id = a.departement_id');
@@ -101,11 +116,21 @@ class Trainee_Training_History extends CI_Controller {
 				$this->db->join('maritals k', 'k.id = a.marital_id', 'left');
 				$this->db->join('religions l', 'l.id = a.religion_id', 'left');
 				$this->db->where('a.deleted', 0);
+				$this->db->where("DATE(ltd.test_date) BETWEEN '".$form['filter_from']."' AND '".$form['filter_to']."'");
+				if (!empty($form['filter_training_name'])) {
+					$this->db->where('lth.test_id', $form['filter_training_name']);
+				}
 				// $this->db->like("a.division_id", $form['filter_division']);
 				$this->db->like("a.departement_id", $form['filter_departement']);
 				// $this->db->like("a.departement_sub_id", $form['filter_departement_sub']);
 				$this->db->like("a.id", $form['filter_trainee_name']);
 				// $this->db->like("a.status", $form['filter_status']);
+				$this->db->group_by('a.name');
+				$this->db->group_by('a.number');
+				$this->db->group_by('a.status');
+				$this->db->group_by('a.id');
+				$this->db->group_by('b.users_id_from');
+				$this->db->group_by('b.users_id_to');
 				$this->db->order_by('a.name', 'ASC');
 				$records = $this->db->get()->result_array();
 
@@ -134,16 +159,46 @@ class Trainee_Training_History extends CI_Controller {
 				$html = '';
 				
 				if($records) {
+					$employeeCount = 0;
 					foreach ($records as $dataEmployee) {
-						# code...
-						$html .= '<html><head><title>Print Data</title></head><style>body {font-family: Arial, Helvetica, sans-serif;}#customers {border-collapse: collapse;width: 100%;font-size: 10px;}#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}#approver {border-collapse: collapse;width: 50%;font-size: 10px;}#approver td, #approver th {border: 1px solid #ddd;padding: 2px;}#approver tr:nth-child(even){background-color: #f2f2f2;}#approver tr:hover {background-color: #ddd;}#approver th {padding-top: 2px;padding-bottom: 2px;text-align: center;color: black;}</style>
+						$employeeCount++;
+						
+						// Add page break for every employee except the first one
+						if ($employeeCount > 1) {
+							$html .= '<div style="page-break-before: always;"></div>';
+						}
+						
+						$html .= '<html><head><title>Print Data</title></head><style>
+							body {font-family: Arial, Helvetica, sans-serif;}
+							#customers {border-collapse: collapse;width: 100%;font-size: 10px;}
+							#customers td, #customers th {border: 1px solid #ddd;padding: 2px;}
+							#customers tr:nth-child(even){background-color: #f2f2f2;}
+							#customers tr:hover {background-color: #ddd;}
+							#customers th {padding-top: 2px;padding-bottom: 2px;text-align: left;color: black;}
+							#approver {border-collapse: collapse;width: 50%;font-size: 10px;}
+							#approver td, #approver th {border: 1px solid #ddd;padding: 2px;}
+							#approver tr:nth-child(even){background-color: #f2f2f2;}
+							#approver tr:hover {background-color: #ddd;}
+							#approver th {padding-top: 2px;padding-bottom: 2px;text-align: center;color: black;}
+							.page-header {position: relative; width: 100%; margin-bottom: 20px;}
+							.form-label {position: absolute; top: 0; right: 0; font-size: 10px; font-weight: bold; color: #333;}
+							.header-content {display: flex; justify-content: space-between; align-items: flex-start; margin-top: 30px;}
+							.company-info {flex: 1; text-align: left;}
+							.print-info {flex: 1; text-align: right; margin-top: 10px;}
+							@media print {
+								.page-break {page-break-before: always;}
+							}
+						</style>
 						<style> .str{ mso-number-format:\@; } </style>
 						<body>
-						<center>
-							<div style="float: left; font-size: 12px; text-align: left;">
+						<div class="page-header">
+							<div class="form-label">FRM-L&D-005 Rev.01</div>
+						</div>
+						<div class="header-content">
+							<div class="company-info">
 								<table style="width: 100%;">
 									<tr>
-										<td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
+										<td width="50" style="font-size: 12px; vertical-align: top; text-align: center; margin-right:10px;">
 											<img src="' . $config->favicon . '" width="30">
 										</td>
 										<td style="font-size: 14px; text-align: left; margin:2px;">
@@ -153,11 +208,14 @@ class Trainee_Training_History extends CI_Controller {
 									</tr>
 								</table>
 							</div>
-							<div style="float: right; font-size: 12px; text-align: right;">
-								Print Date ' . date("d M Y H:i:s") . ' <br>
-								Print By ' . $this->session->username . '  
+							<div class="print-info">
+								<div style="font-size: 12px; text-align: right;">
+									Print Date ' . date("d M Y H:i:s") . ' <br>
+									Print By ' . $this->session->username . '  
+								</div>
 							</div>
-						</center><br><br><br>
+						</div>
+						<br><br>
 						<center>
 							<h3 style="margin:0;">Trainee Training History</h3>
 							<p style="margin: 0">Period '. $form['filter_from'] .' to '. $form['filter_to'] .'</p>

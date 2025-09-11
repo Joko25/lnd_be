@@ -65,9 +65,7 @@ class Cash_carries extends CI_Controller
     }
 
 
-
     //GET DATA
-
     public function reads()
 
     {
@@ -559,6 +557,12 @@ class Cash_carries extends CI_Controller
             $this->db->join('allowance_cash_carries i', 'h.allowance_id = i.id', 'left');
 
             $this->db->where('b.deleted', 0);
+
+            $this->db->where('b.contract_id !=', 20221119000003);
+
+            $this->db->where('b.contract_id !=', 20250704000001);
+
+            $this->db->where('b.group_id !=', 20221119000002);
 
             $this->db->where('b.status', 0);
 
@@ -2011,6 +2015,10 @@ class Cash_carries extends CI_Controller
         $this->db->join('allowance_cash_carries i', 'h.allowance_id = i.id', 'left');
 
         $this->db->where('b.deleted', 0);
+
+        $this->db->where('b.contract_id !=', 20221119000003);
+        $this->db->where('b.contract_id !=', 20250704000001);
+        $this->db->where('b.group_id !=', 20221119000002);
 
         $this->db->where('b.status', 0);
 

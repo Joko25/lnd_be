@@ -24,12 +24,15 @@ class ScheduleTrainingModel extends CI_Model {
     }
 
     public function get_detail_form_test($id) {
-        $query = $this->db->get_where('lnd_master_form_test', ['training_name' => $id]);
-
-        if($query->num_rows() > 0) {
-            return $query->row_array();
+		$this->db->select('lmft.*, ta.trainingActivity');
+		$this->db->from('lnd_master_form_test lmft');
+		$this->db->join('lnd_schedule_training st', 'st.id = lmft.training_name');
+		$this->db->join('lnd_training_activity ta', 'ta.id = st.trainingName');
+		$this->db->where('lmft.training_name', $id);
+		$query = $this->db->get()->row_array();
+        if($query != null) {
+            return $query;
         }
-
         return null;
     }
 
@@ -59,6 +62,8 @@ class ScheduleTrainingModel extends CI_Model {
 			unset($data['trainingTrainerId']);
 		}
         // Insert into master table
+		$data['updatedBy'] = null;
+		$data['updatedTime'] = null;
         $this->db->insert('lnd_schedule_training', $data);
 
         // Insert trainingDates (detail rows)

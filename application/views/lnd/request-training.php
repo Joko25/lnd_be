@@ -28,7 +28,16 @@
                 <div style="width:50%; float: left;">
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Reasons</span>
-                        <input style="width:60%;" id="reasonsFilter" class="easyui-combogrid">
+                        <!-- <input style="width:60%;"  class="easyui-combobox"> -->
+                        <select style="width:60%;" id="reasonsFilter" value="" name="reasons" class="easyui-combobox" panelHeight="auto">
+                            <option value="" selected></option>    
+                            <option value="Promotion">Promotion</option>
+                            <option value="Mutation">Mutation</option>
+                            <option value="New Product">New Product</option>
+                            <option value="New Technology">New Technology</option>
+                            <option value="New System">New System</option>
+                            <option value="Skill Upgrades">Skill Upgrades</option>
+                        </select>
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Departement</span>
@@ -95,7 +104,8 @@
                     <div style="width:60%;">
                         <input style="width:100%;" name="attachment" id="attachment" class="easyui-filebox"  data-options="
                             accept: 'image/jpeg,image/png,image/gif,application/pdf',">
-                        <span style="color:red;">Only PDF and image files are allowed for data attachment upload</span>
+						<span style="color:red;">Only PDF and image files are allowed for data attachment upload.</span>
+						<span style="color:red;">Max 2 MB</span>
                     </div>
 				</div>
             </div>
@@ -146,7 +156,7 @@
 </div>
 
 <!-- PDF -->
-<iframe id="printout" src="<?= base_url('lnd/training_activity/print') ?>" style="width: 100%;" hidden></iframe>
+<iframe id="printout" style="width: 100%;" hidden></iframe>
 
 <script>
     window.onload = function() {
@@ -278,6 +288,7 @@
 
         for (let i = 0; i < totalForm; i++) {
             if (rowForm[i].fullName) {
+				console.log(rowForm);
                 $.ajax({
                     type: "POST", 
                     url: '<?= base_url('lnd/request_training/create_data_trainee') ?>',
@@ -397,7 +408,7 @@
                     height: 'auto',
                     columns: [[
                         {field: 'fullName', title: 'Full Name', width: 150, halign: 'center'},
-                        {field: 'national_id', title: 'Natinal ID', width: 150, halign: 'center'},
+                        {field: 'national_id', title: 'Employee ID', width: 150, halign: 'center'},
                         {field: 'position', title: 'Position', width: 150, halign: 'left'},
                         {field: 'departement', title: 'Departement', width: 150, align: 'center'},
                         {field: 'departement_subs', title: 'Sub Departement', width: 150, align: 'center'},
@@ -446,10 +457,10 @@
                             return '<div style="background-color:orange;color:white;padding:5px;">Remark: ' + row.approvedData + ' </div>';
                         }else {
                             if(value === '-1') {
-                                const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Bpk. ' + inputterName : 'Ibu ' + inputterName);
+                                const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Pak ' + inputterName : 'Ibu ' + inputterName);
                                 return '<div style="background-color:red;color:white;padding:5px;">' + label + '</div>';
                             }else{
-                                const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Bpk. ' + approverName : 'Ibu ' + approverName);
+                                const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Pak ' + approverName : 'Ibu ' + approverName);
                                 return '<div style="background-color:green;color:white;padding:5px;">' + label + '</div>';
 
                             }
@@ -636,50 +647,56 @@
 				}]
 			],
 		});
-        $('#reasonsFilter').combogrid({
-            url: '<?= base_url('lnd/request_training/reads') ?>',
-            panelWidth: 450,
-            idField: 'reasons',
-            textField: 'reasons',
-            mode: 'remote',
-            fitColumns: true,
-            prompt: 'Choose All',
-            icons: [{
-                iconCls: 'icon-clear',
-                handler: function(e) {
-                    $(e.data.target).combogrid('clear').combogrid('textbox').focus();
-                }
-            }],
-            columns: [
-                [{
-                    field: 'reasons',
-                    title: 'Reasons',
-                    width: 120
-                }]
-            ],
-        });
+        // $('#reasonsFilter').combogrid({
+        //     url: '<?= base_url('lnd/request_training/reads') ?>',
+        //     panelWidth: 450,
+        //     idField: 'reasons',
+        //     textField: 'reasons',
+        //     mode: 'remote',
+        //     fitColumns: true,
+        //     prompt: 'Choose All',
+        //     icons: [{
+        //         iconCls: 'icon-clear',
+        //         handler: function(e) {
+        //             $(e.data.target).combogrid('clear').combogrid('textbox').focus();
+        //         }
+        //     }],
+        //     columns: [
+        //         [{
+        //             field: 'reasons',
+        //             title: 'Reasons',
+        //             width: 120
+        //         }]
+        //     ],
+        // });
 
         $('#departementFilter').combogrid({
-            url: '<?= base_url('lnd/request_training/readsTrainee') ?>',
-            panelWidth: 450,
-            idField: 'id',
-            textField: 'departement',
-            mode: 'remote',
-            fitColumns: true,
-            prompt: 'Choose All',
+            url: '<?= base_url('lnd/schedule_training/readsDepartements') ?>',
+			panelWidth: 450,
+			idField: 'id',
+			textField: 'name',
+			mode: 'remote',
+			fitColumns: true,
+            prompt: 'Select Departement',
             icons: [{
                 iconCls: 'icon-clear',
                 handler: function(e) {
                     $(e.data.target).combogrid('clear').combogrid('textbox').focus();
                 }
             }],
-            columns: [
-                [{
-                    field: 'departement',
-                    title: 'Departement',
-                    width: 120
-                }]
-            ],
+			columns: [
+				[
+					{
+						field: 'division',
+						title: 'Division Name',
+						width: 120
+					},
+					{
+						field: 'name',
+						title: 'Department Name',
+						width: 120
+					}]
+			],
         });
     });
     
@@ -743,7 +760,7 @@
                         }
                     } 
                 },
-                { field: 'national_id', title: 'National ID', width: 200, align: 'center'},
+                { field: 'national_id', title: 'Employee ID', width: 200, align: 'center'},
                 { field: 'position_id', title: 'Position', width: 120, align: 'center' },
                 { field: 'departement_id', title: 'Department', width: 150, align: 'center' },
                 { field: 'departement_sub_id', title: 'Sub Department', width: 150, align: 'center' },
@@ -763,7 +780,7 @@
         $("#btnAdd").click(function() {
             $('#dgForm').datagrid('appendRow', {
                 full_name: '',
-                national_id: '',
+                employeeId: '',
                 position: '',
                 department: '',
                 sub_department: '',
@@ -857,15 +874,37 @@
         return html;
     } 
 
-    //PRINT PDF
-    // function pdf() {
-    //     $("#printout").get(0).contentWindow.print();
-    // }
+    // PRINT PDF
+	function pdf() {
+		const iframe = document.getElementById("printout");
+		const row = $('#dg').datagrid('getSelected');
 
-    // //PRINT EXCEL
-    // function excel() {
-    //     window.location.assign('<?= base_url('lnd/training_activity/print/excel') ?>');
-    // }
+		if(row) {
+			// Set the onload BEFORE setting src to ensure it catches the event
+			iframe.onload = function () {
+				// Trigger print inside iframe when it's loaded
+				this.contentWindow.print();
+			};
+
+			// Set the source with ID parameter
+			iframe.src = '<?= base_url('lnd/request_training/print') ?>/' + row.id;
+		} else {
+			alert("Please select a row first.");
+		}
+
+	}
+
+     //PRINT EXCEL
+	function excel() {
+		const row = $('#dg').datagrid('getSelected');
+
+		if (row) {
+			// Go to the export URL with the selected ID
+			window.location.assign('<?= base_url('lnd/request_training/print/excel') ?>/' + row.id);
+		} else {
+			alert("Please select a row first.");
+		}
+	}
 
     //UPLOAD DATA
     // $('#dlg_upload').dialog({
@@ -973,7 +1012,7 @@
     function filter() {
         var trainingMaterial = $("#trainingMaterialFilter").combogrid('getValue');
         var trainee = $("#traineeFilter").combogrid('getValue');
-        var reasons = $("#reasonsFilter").combogrid('getValue');
+        var reasons = $("#reasonsFilter").combobox('getValue');
         var departement = $("#departementFilter").combogrid('getValue');
         var suggestTrainingDate = $("#suggestTrainingDateFilter").datebox('getValue');
         var params = "?trainingActivities=" + trainingMaterial + "&id=" + trainee + "&reasons=" + reasons + "&departement=" + departement + "&suggestDateTraining=" + btoa(suggestTrainingDate);
@@ -1035,7 +1074,7 @@
                                             index: rowIndex,
                                             row: {
                                                 fullName: row.name,
-                                                national_id: row.national_id,
+												national_id: row.employeeId,
                                                 position: row.position,
                                                 departement: row.departement,
                                                 departement_subs: row.departement_subs,
@@ -1053,7 +1092,7 @@
                     width: 150,
                     readonly: true,
                     halign: 'center',
-                    title: "National ID",
+                    title: "Employee ID",
                     editor: {
                         type: 'textbox',
                         options: {

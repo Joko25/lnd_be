@@ -32,6 +32,54 @@ class Machines extends CI_Controller
         }
     }
 
+    public function testing(){
+        $ip = "160.150.140.44"; // IP mesin absensi
+        $key = "0"; // CommKey
+
+        $connect = fsockopen($ip, "80", $errno, $errstr, 1);
+        if ($connect) {
+            $soap_request = "<GetAttLog><ArgComKey xsi:type=\"xsd:integer\">$key</ArgComKey><Arg><PIN xsi:type=\"xsd:integer\">All</PIN></Arg></GetAttLog>";
+            $newLine = "\r\n";
+
+            fputs($connect, "POST /iWsService HTTP/1.0" . $newLine);
+            fputs($connect, "Content-Type: text/xml" . $newLine);
+            fputs($connect, "Content-Length: " . strlen($soap_request) . $newLine . $newLine);
+            fputs($connect, $soap_request . $newLine);
+
+            $buffer = "";
+            while ($response = fgets($connect, 1024)) {
+                $buffer .= $response;
+            }
+
+            // Parsing data
+            function Parse_Data($data, $start, $end) {
+                $data = " " . $data;
+                $result = "";
+                $start_pos = strpos($data, $start);
+                if ($start_pos !== false) {
+                    $end_pos = strpos(substr($data, $start_pos), $end);
+                    if ($end_pos !== false) {
+                        $result = substr($data, $start_pos + strlen($start), $end_pos - strlen($start));
+                    }
+                }
+                return $result;
+            }
+
+            $buffer = Parse_Data($buffer, "<GetAttLogResponse>", "</GetAttLogResponse>");
+            $rows = explode("\r\n", $buffer);
+            die(json_encode($rows));
+            foreach ($rows as $row) {
+                $data = Parse_Data($row, "<Row>", "</Row>");
+                $pin = Parse_Data($data, "<PIN>", "</PIN>");
+                $datetime = Parse_Data($data, "<DateTime>", "</DateTime>");
+                echo "User: $pin - Waktu: $datetime<br>";
+            }
+        } else {
+            echo "Koneksi gagal.";
+        }
+
+    }
+
     //GET DATA
     public function reads()
     {

@@ -182,7 +182,7 @@
             console.log("#data", data);
             
             $("#trainingName").textbox('setValue', data.trainingActivity);
-            $("#trainerName").textbox('setValue', data.trainer_name);
+            $("#trainerName").textbox('setValue', data.trainer);
             $('#trainingNameTitle').text(data.trainingActivity)
         }
         if(testType === 'REVIEW' || testType === 'REVIEW-FEEDBACK') {
@@ -511,6 +511,8 @@
             }
             result = evaluateTest(jsonData, '#postTestContainer');
         }
+
+        let dataTraining = <?php echo json_encode($data); ?>;
         
 
         let payload = {
@@ -528,7 +530,8 @@
             score_pre_test: testType === 'PRE_TEST' ? result.totalPoint : null,
             score_post_test: testType === 'POST_TEST' ? result.totalPoint : null,
             history_feedback_id: typeof testType === 'POST_TEST' ? window.feedbackResult.feedbackItems[0].id : null,
-            createdBy: $("#employeeName").textbox('getValue')
+            createdBy: $("#employeeName").textbox('getValue'),
+            trainingTrainerId: dataTraining.trainingTrainerId.split(', ')
         };
         
 

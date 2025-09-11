@@ -91,6 +91,42 @@ class Employees extends CI_Controller
         echo json_encode($records);
     }
 
+    //GET DATA
+    public function readEmployees($status = 0)
+    {
+        $post = isset($_POST['q']) ? $_POST['q'] : "";
+        $get = $this->input->get();
+        $aprvDepartement = $this->checkApprovalAccess('employees');
+
+        $session_id = $this->session->id;
+        $session_dept = $this->session->departement_id;
+
+        $user = $this->crud->read("users", [], ["id" => $session_id]);
+        if ($user->access == "0") {
+            $departement_id = "";
+        } else {
+            $departement_id = $session_dept;
+        }
+
+        $this->db->select('*');
+        $this->db->from('employees');
+        $this->db->where('contract_id !=', 20221119000003);
+        $this->db->where('contract_id !=', 20250704000001);
+        $this->db->where('group_id !=', 20221119000002);
+        $this->db->where('status', $status);
+        if ($get) {
+            $this->db->like($get);
+        }
+        $this->db->like('departement_id', $departement_id);
+        $this->db->group_start();
+        $this->db->like('number', $post);
+        $this->db->or_like('name', $post);
+        $this->db->group_end();
+        $this->db->order_by('name', 'asc');
+        $records = $this->db->get()->result_array();
+        echo json_encode($records);
+    }
+
     public function readFulls()
     {
         $post = isset($_POST['q']) ? $_POST['q'] : "";
@@ -144,6 +180,26 @@ class Employees extends CI_Controller
         echo json_encode($reads);
     }
 
+    public function readGroups()
+    {
+        $post = isset($_POST['q']) ? $_POST['q'] : "";
+        $send = $this->crud->reads('groups', [], ["id !=" => "20221119000002"]);
+        echo json_encode($send);
+    }
+
+    public function readContracts()
+    {
+        $post = isset($_POST['q']) ? $_POST['q'] : "";
+        
+        $this->db->select('*');
+        $this->db->from('contracts');
+        $this->db->where('id !=', '20221119000003');
+        $this->db->where('id !=', '20250704000001');
+        $send = $this->db->get()->result_object();
+        
+        echo json_encode($send);
+    }
+
     //GET DATE SERVICE
     public function readService($dateSign = "")
     {
@@ -187,6 +243,7 @@ class Employees extends CI_Controller
         $this->db->limit(1);
         return $this->db->get()->row();
     }
+
 
     function formatDate($date)
     {
@@ -249,8 +306,7 @@ class Employees extends CI_Controller
 
     //GET DATATABLES
     public function datatables()
-    {
-        
+    {   
         $filter_divisions = $this->input->get('filter_divisions');
         $filter_departements = $this->input->get('filter_departements');
         $filter_departement_subs = $this->input->get('filter_departement_subs');
@@ -341,6 +397,9 @@ class Employees extends CI_Controller
         $this->db->join('shift_employees f', 'a.id = f.employee_id', 'left');
         $this->db->join('shifts j', 'f.shift_id = j.id', 'left');
         $this->db->where('a.deleted', 0);
+        $this->db->where('a.contract_id !=', 20221119000003);
+        $this->db->where('a.contract_id !=', 20250704000001);
+        $this->db->where('a.group_id !=', 20221119000002);
         if($filter_from_join != ""  && $filter_to_join != ""){
             $this->db->where("a.date_sign between '$filter_from_join' and '$filter_to_join'");
         }
@@ -394,11 +453,11 @@ class Employees extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 $post = $this->input->post();
 
-                $national_id = $this->crud->read('employees', [], ["national_id", $post['national_id']]);
-                $tax_id = $this->crud->read('employees', [], ["tax_id", $post['tax_id']]);
-                $email = $this->crud->read('employees', [], ["email", $post['email']]);
-                $mobile_phone = $this->crud->read('employees', [], ["mobile_phone", $post['mobile_phone']]);
-                $bank_no = $this->crud->read('employees', [], ["bank_no", $post['bank_no']]);
+                $national_id = $this->crud->read('employees', [], ["national_id" => $post['national_id']]);
+                $tax_id = $this->crud->read('employees', [], ["tax_id" => $post['tax_id']]);
+                $email = $this->crud->read('employees', [], ["email" => $post['email']]);
+                $mobile_phone = $this->crud->read('employees', [], ["mobile_phone" => $post['mobile_phone']]);
+                $bank_no = $this->crud->read('employees', [], ["bank_no" => $post['bank_no']]);
 
                 if ($national_id) {
                     echo json_encode(array("title" => "Duplicate", "message" => "National ID Duplicate", "theme" => "error"));
@@ -950,6 +1009,8 @@ class Employees extends CI_Controller
     //PRINT & EXCEL DATA
     public function print($option = "")
     {
+
+        
         if ($option == "excel") {
             $format  = date("Ymd");
             header("Content-type: application/vnd-ms-excel");
@@ -1052,6 +1113,9 @@ class Employees extends CI_Controller
         $this->db->join('shift_employees f', 'a.id = f.employee_id', 'left');
         $this->db->join('shifts n', 'f.shift_id = n.id', 'left');
         $this->db->where('a.deleted', 0);
+        $this->db->where('a.contract_id !=', 20221119000003);
+        $this->db->where('a.contract_id !=', 20250704000001);
+        $this->db->where('a.group_id !=', 20221119000002);
         if($filter_from_join != ""  && $filter_to_join != ""){
             $this->db->where("a.date_sign between '$filter_from_join' and '$filter_to_join'");
         }
