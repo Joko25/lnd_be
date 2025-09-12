@@ -257,7 +257,7 @@ class Attandances extends CI_Controller
             $this->db->order_by('a.name', 'asc');
 
             $records = $this->db->get()->result_array();
-
+            // die($this->db->last_query());
 
 
             //Config
@@ -442,6 +442,8 @@ class Attandances extends CI_Controller
 
                         <th rowspan="2" style="text-align:center;">Remarks</th>
 
+                        <th rowspan="2" style="text-align:center;">Approval Status</th>
+
                     </tr>
 
                     <tr>
@@ -545,7 +547,7 @@ class Attandances extends CI_Controller
                     $this->db->order_by('date_in', 'asc');
 
                     $attandance = $this->db->get()->row();
-
+                    // die($this->db->last_query());
 
 
                     //Shift and Setting Group
@@ -666,7 +668,8 @@ class Attandances extends CI_Controller
 
                     }
 
-
+                    $approval_status = '';
+                    if (@$permit->approved != null) { $approval_status = ($permit->approved == '1') ? 'Checked' : 'Approved'; }
 
                     //jika status tanggal merah nya kosong
 
@@ -946,6 +949,8 @@ class Attandances extends CI_Controller
 
                                         <td>' . $holiday . '</td>
 
+                                        <td>' . $approval_status . '</td>
+
                                     </tr>';
 
                     } else if($filter_permit_type == "") {
@@ -973,6 +978,8 @@ class Attandances extends CI_Controller
                                     <td ' . $style_status . '>' . $attandance_status . '</td>
 
                                     <td>' . $holiday . '</td>
+
+                                    <td>' . $approval_status . '</td>
 
                                 </tr>';
 
