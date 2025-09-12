@@ -607,6 +607,7 @@ class Summary_payrolls extends CI_Controller
             $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
             $this->db->join('groups e', "b.group_id = e.id");
             $this->db->join('privilege_groups f', "b.group_id = f.group_id and f.username = '$username' and f.status = '1'");
+            $this->db->join('positions g', "b.position_id = g.id");
             $this->db->where('a.period_start =', $period_start);
             $this->db->where('a.period_end =', $period_end);
             if($filter_group != ""){
