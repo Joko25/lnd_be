@@ -457,7 +457,7 @@ class Employees extends CI_Controller
                 $tax_id = $this->crud->read('employees', [], ["tax_id" => $post['tax_id']]);
                 $email = $this->crud->read('employees', [], ["email" => $post['email']]);
                 $mobile_phone = $this->crud->read('employees', [], ["mobile_phone" => $post['mobile_phone']]);
-                $bank_no = $this->crud->read('employees', [], ["bank_no" => $post['bank_no']]);
+                $bank_no = ($post['bank_no'] == '-') ? [] : $this->crud->read('employees', [], ["bank_no" => $post['bank_no']]);
 
                 if ($national_id) {
                     echo json_encode(array("title" => "Duplicate", "message" => "National ID Duplicate", "theme" => "error"));

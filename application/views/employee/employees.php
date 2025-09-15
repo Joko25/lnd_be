@@ -258,11 +258,11 @@
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">National ID No</span>
-                        <input style="width:60%;" name="national_id" id="national_id" class="easyui-textbox">
+                        <input style="width:60%;" name="national_id" id="national_id" required="" class="easyui-textbox">
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Tax No (NPWP)</span>
-                        <input style="width:60%;" name="tax_id" id="tax_id" class="easyui-textbox">
+                        <input style="width:60%;" name="tax_id" id="tax_id" required="" class="easyui-textbox">
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">BPJS TK</span>
@@ -294,7 +294,7 @@
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Phone No</span>
-                        <input style="width:60%;" name="mobile_phone" data-options="buttonText:'+62', buttonAlign:'left'" id="mobile_phone" class="easyui-numberbox">
+                        <input style="width:60%;" name="mobile_phone" data-options="buttonText:'+62', buttonAlign:'left'" id="mobile_phone" required="" class="easyui-numberbox">
                     </div>
                     <div class="fitem" hidden>
                         <span style="width:35%; display:inline-block;">Emergency No</span>
@@ -302,7 +302,7 @@
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Email</span>
-                        <input style="width:60%;" name="email" data-options="validType:'email'" id="email" class="easyui-textbox">
+                        <input style="width:60%;" name="email" data-options="validType:'email'" id="email" required="" class="easyui-textbox">
                     </div>
                     <div class="fitem" hidden>
                         <span style="width:35%; display:inline-block;">Driving Licensed</span>
