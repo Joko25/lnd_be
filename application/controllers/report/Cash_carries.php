@@ -166,7 +166,7 @@ class Cash_carries extends CI_Controller
         //Get Data Array
 
         $cash_carries = $this->db->get()->result_array();
-
+        // die($this->db->last_query());
 
 
         $datas = [];
