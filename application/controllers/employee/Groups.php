@@ -74,43 +74,27 @@ class Groups extends CI_Controller
 
         $post = isset($_POST['q']) ? $_POST['q'] : "";
 
+        $hl = ($this->input->get('hl')) ? '' : ' !=';
+
+        $send = $this->crud->reads('groups', ["name" => $post], ['id'.$hl => 20221119000002]);
+
+        echo json_encode($send);
+
+    }
+
+    public function read_groups()
+
+    {
+
+        $post = isset($_POST['q']) ? $_POST['q'] : "";
+
+        $this->db->where('name !=', 'HARIAN LEPAS');
+
         $send = $this->crud->reads('groups', ["name" => $post]);
 
         echo json_encode($send);
 
     }
-
-    // public function reads()
-
-    // {
-
-    //     $post = isset($_POST['q']) ? $_POST['q'] : "";
-
-    //     $this->db->where('name !=', 'HARIAN LEPAS');
-
-    //     $send = $this->crud->reads('groups', ["name" => $post]);
-
-    //     echo json_encode($send);
-
-    // }
-
-
-
-    // Tambahan: hanya untuk HARIAN LEPAS
-
-    public function read_harian_lepas()
-
-    {
-
-        $this->db->where('name', 'HARIAN LEPAS');
-
-        $send = $this->crud->reads('groups');
-
-        echo json_encode($send);
-
-    }
-
-
 
     //GET DATATABLES
 
