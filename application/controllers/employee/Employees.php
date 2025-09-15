@@ -77,6 +77,8 @@ class Employees extends CI_Controller
 
         $this->db->select('*');
         $this->db->from('employees');
+        $this->db->where('contract_id !=', 20221119000003);
+        $this->db->where('contract_id !=', 20250704000001);
         $this->db->where('status', $status);
         if ($get) {
             $this->db->like($get);
