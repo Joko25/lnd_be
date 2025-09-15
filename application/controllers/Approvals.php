@@ -251,6 +251,7 @@ class Approvals extends CI_Controller
 		$resUpdated = $this->db->update($tablename, $valuesUpdate, ["id" => $id]);
 
 		$values = array(
+            "id" => $this->uuid(),
 			"trainingRequestId" => $data->trainingRequestId,
 			"approved_by" => $this->session->username,
 			"approved_date" => date('Y-m-d H:i:s'),
@@ -290,6 +291,18 @@ class Approvals extends CI_Controller
         /* Default */
         $send = $this->crud->delete($tablename, ["id" => $id]);
         echo json_encode(array("title" => "Disapproved", "message" => "Data Disapproved Successfully", "theme" => "success"));
+    }
+    
+    private function uuid()
+    {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+        );
     }
 
 	public function disapproveLnd()
