@@ -77,12 +77,12 @@ class Employees extends CI_Controller
 
         $this->db->select('*');
         $this->db->from('employees');
-        $this->db->where('contract_id !=', 20221119000003);
-        $this->db->where('contract_id !=', 20250704000001);
-        $this->db->where('status', $status);
-        if ($get) {
-            $this->db->like($get);
+        if (isset($get['not_hl'])) {
+            $this->db->where('contract_id !=', 20221119000003);
+            $this->db->where('contract_id !=', 20250704000001);
         }
+        $this->db->where('status', $status);
+        if (isset($get['departement_sub_id'])) { $this->db->like($get['departement_sub_id']); }
         $this->db->like('departement_id', $departement_id);
         $this->db->group_start();
         $this->db->like('number', $post);
@@ -90,6 +90,7 @@ class Employees extends CI_Controller
         $this->db->group_end();
         $this->db->order_by('name', 'asc');
         $records = $this->db->get()->result_array();
+        // die($this->db->last_query());
         echo json_encode($records);
     }
 
