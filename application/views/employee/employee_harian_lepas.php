@@ -2431,7 +2431,7 @@
         });
 
         $('#group_id').combobox({
-            url: '<?php echo base_url('employee/groups/reads'); ?>',
+            url: '<?php echo base_url('employee/groups/reads?hl=1'); ?>',
             valueField: 'id',
             textField: 'name',
             prompt: 'Choose Group',
