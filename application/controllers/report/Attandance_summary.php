@@ -27,6 +27,7 @@ class Attandance_summary extends CI_Controller
             redirect('error_access');
         }
     }
+
     public function print($option = "")
     {
         if ($option == "excel") {
@@ -166,7 +167,7 @@ class Attandance_summary extends CI_Controller
                 $this->db->group_by('a.number');
                 $this->db->order_by('e.name, a.name', 'asc');
                 $employees = $this->db->get()->result_array();
-                
+                // die($this->db->last_query());
                 $attandance_absece = 0;
                 $attandance_total = 0;
                 $attandance_days = 0;
@@ -245,6 +246,7 @@ class Attandance_summary extends CI_Controller
                     }
                     $this->db->group_by('date_in');
                     $attandances = $this->db->get()->result_array();
+                    // die($this->db->last_query());
                     $attandance_amount = 0;
                     foreach ($attandances as $attandance) {
                         $attandance_amount++;
@@ -320,6 +322,7 @@ class Attandance_summary extends CI_Controller
                             $this->db->where('a.time_in IS NOT NULL');
                             $this->db->where('a.time_in !=', '');
                             $attendance_data = $this->db->get()->row();
+                            // if ($data['employee_id'] == 'KINP04250002') { die($this->db->last_query()); }
                             if ($attendance_data && $attendance_data->shift_start && $attendance_data->time_in) {
                                 $shift_start = strtotime($attendance_data->shift_start);
                                 $time_in = strtotime($attendance_data->time_in);
@@ -334,7 +337,7 @@ class Attandance_summary extends CI_Controller
                     $q_permit = $this->db->query("SELECT b.name, COUNT(a.duration) as permit
                             FROM permit_types b
                             LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$data[employee_id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to'
-                            WHERE (a.approved_to = '' or a.approved_to is null)
+                            WHERE COALESCE(a.approved_to, '') IN ('','fitri')
                             GROUP BY b.id ORDER BY b.name asc");
                     $r_permit = $q_permit->result_array();
                     $html .= '<tr>
