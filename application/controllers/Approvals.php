@@ -1725,5 +1725,103 @@ class Approvals extends CI_Controller
 
     }
 
+    public function approveLnd()
+	{
+		$id = $this->input->post('id');
+		$tablename = $this->input->post('tablename');
+		$data = $this->crud->read($tablename, [], ["id" => $id, "status" => 0]);
+		$approval = $this->crud->read('approvals', [], ["table_name" => $tablename]);
+
+		if ($data->approved == 1) {
+			$users_id = @$approval->user_approval_2;
+			$approved = 2;
+		} elseif ($data->approved == 2) {
+			$users_id = @$approval->user_approval_3;
+			$approved = 3;
+		} elseif ($data->approved == 3) {
+			$users_id = @$approval->user_approval_4;
+			$approved = 4;
+		} elseif ($data->approved == 4) {
+			$users_id = @$approval->user_approval_5;
+			$approved = 5;
+		} else {
+			$users_id = "";
+			$approved = 0;
+		}
+
+		$valuesUpdate = array(
+			"status" => 1,
+			"id" => $id,
+		);
+
+		$resUpdated = $this->db->update($tablename, $valuesUpdate, ["id" => $id]);
+
+		$values = array(
+            "id" => $this->uuid(),
+			"trainingRequestId" => $data->trainingRequestId,
+			"approved_by" => $this->session->username,
+			"approved_date" => date('Y-m-d H:i:s'),
+			"approved_to" => $users_id,
+			"approved" => $approved,
+			"status" => 0
+		);
+
+		$send = $this->db->insert($tablename, $values, ["id" => $id]);
+		if($send && $resUpdated){
+			echo json_encode(array("title" => "Approved", "message" => "Data Approved Successfully", "theme" => "success"));
+		} else {
+			echo log_message('error', 'There is an error in your system or data');
+		}
+	}
+
+    private function uuid()
+    {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+        );
+    }
+
+	public function disapproveLnd()
+	{
+		$id = $this->input->post('id');
+		$tablename = $this->input->post('tablename');
+		$remark = $this->input->post('remark');
+
+		$values = array(
+			"status" => -1,
+			"id" => $id,
+            "approval_data" => $remark
+		);
+
+		$send = $this->db->update($tablename, $values, ["id" => $id]);
+		echo json_encode(array("title" => "Disapproved", "message" => "Data Disapproved Successfully", "theme" => "success"));
+	}
+
+    public function approvalRequestTraining($approved_to, $approved_by)
+	{
+		$this->db->select('a.*, 
+			a.status as statusTraining, 
+			a.status as statusApproval, 
+			rth.approved_by, 
+			rth.approved_date, 
+			rth.id as approvalHistoryId,
+			COALESCE(e.name, a.trainer_name) as trainerName'
+		);
+		$this->db->from('lnd_request_training a');
+		$this->db->join('lnd_request_training_approvals_history rth', 'a.requestTrainingId = rth.trainingRequestId', 'left');
+		$this->db->join('employees e', 'a.trainer_name = e.id', 'left');
+		$this->db->where('rth.status', 0);
+		$this->db->where('rth.approved_to', $approved_to);
+		$this->db->where('rth.approved_by', $approved_by);
+		$records = $this->db->get()->result_array();
+
+		die(json_encode($records));
+	}
+
 }
 
