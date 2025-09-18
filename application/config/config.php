@@ -50,7 +50,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 */
 
-$config['base_url'] = "http://" . $_SERVER['HTTP_HOST'] . "/hris-kinenta-dummy";
+$config['base_url'] = "http://" . $_SERVER['HTTP_HOST'] . "/hris_new";
 
 //$config['base_url'] = "http://43.254.126.202/hris-kinenta";
 

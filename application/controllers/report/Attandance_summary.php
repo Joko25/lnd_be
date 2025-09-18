@@ -227,6 +227,7 @@ class Attandance_summary extends CI_Controller
                         $this->db->where_not_in('trans_date', $weekend2);
                     }
                     $calendar = $this->db->get()->result_array();
+                    // if ($data['number'] == '22070011210433') { die($this->db->last_query()); }
                     $calendar_amount = empty($calendar) ? 0 : count($calendar);
                     $w_calendars = array();
                     foreach ($calendar as $cal) {
@@ -267,9 +268,10 @@ class Attandance_summary extends CI_Controller
                     $q_permit = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                             FROM permit_types b
                             LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$data[employee_id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date)
-                            WHERE b.absence = 'NO' and (a.approved_to = '' or a.approved_to is null)
+                            WHERE b.absence = 'NO' and COALESCE(a.approved_to, '') IN ('','fitri')
                             GROUP BY b.id");
                     $r_permit = $q_permit->result_array();
+                    // if ($data['number'] == '22070011210433') { die($this->db->last_query()); }
                     $arr_total_permit = 0;
                     foreach ($r_permit as $permit_data) {
                         $arr_total_permit += $permit_data['amount'];
@@ -278,7 +280,7 @@ class Attandance_summary extends CI_Controller
                     // $q_permit_deduction = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                     // FROM permit_types b
                     // LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$data[employee_id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) and a.permit_date not in ($calendar_date)
-                    // WHERE b.payroll = 'DEDUCTION' and (a.approved_to = '' or a.approved_to is null)
+                    // WHERE b.payroll = 'DEDUCTION' and COALESCE(a.approved_to, '') IN ('','fitri')
                     // GROUP BY b.id");
                     // $r_permit_deduction = $q_permit_deduction->result_array();
                     // $arr_total_permit_deduction = 0;
@@ -289,7 +291,7 @@ class Attandance_summary extends CI_Controller
                     $q_permit_absence = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                     FROM permit_types b
                     LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$data[employee_id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date) and a.permit_date not in ($calendar_date)
-                    WHERE b.absence = 'YES' and (a.approved_to = '' or a.approved_to is null)
+                    WHERE b.absence = 'YES' and COALESCE(a.approved_to, '') IN ('','fitri')
                     GROUP BY b.id");
                     $r_permit_absence = $q_permit_absence->result_array();
                     $arr_total_permit_absence = 0;
@@ -300,6 +302,7 @@ class Attandance_summary extends CI_Controller
                     $working_days = ($attandance_amount + $arr_total_permit_absence);
                     $hkw = (@count($weekday_day) - @$calendar_amount);
                     $absence = (@count($weekday_day) - @$calendar_amount - @$working_days - $arr_total_permit - @$changeDays_amount);
+                    // if ($data['number'] == '22070011210433') { die(@count($weekday_day).' - '.@$calendar_amount.' - '.@$working_days.' - '.$arr_total_permit.' - '.@$changeDays_amount); }
                     if ($absence < 0) {
                         $absence_final = 0;
                     } else {
@@ -321,14 +324,19 @@ class Attandance_summary extends CI_Controller
                             $this->db->where('a.date_in', $working_date);
                             $this->db->where('a.time_in IS NOT NULL');
                             $this->db->where('a.time_in !=', '');
-                            $attendance_data = $this->db->get()->row();
+                            $attendance_data = $this->db->get()->result_object();
                             // if ($data['employee_id'] == 'KINP04250002') { die($this->db->last_query()); }
-                            if ($attendance_data && $attendance_data->shift_start && $attendance_data->time_in) {
-                                $shift_start = strtotime($attendance_data->shift_start);
-                                $time_in = strtotime($attendance_data->time_in);
-                                // Jika terlambat (time_in > shift_start)
-                                if ($time_in > $shift_start) {
-                                    $late_count++;
+                            if ($attendance_data) {
+                                foreach ($attendance_data as $key => $value) {
+                                    $shift_start = strtotime($value->shift_start);
+                                    $time_in = strtotime($value->time_in);
+
+                                    $min = strtotime('-2 Hour', $time_in);
+                                    $max = strtotime('+2 Hour', $time_in);
+
+                                    // Jika terlambat (time_in > shift_start)
+                                    if ($min <= $shift_start && $shift_start <= $max && $time_in > $shift_start)
+                                        { $late_count++; }
                                 }
                             }
                         }
@@ -369,7 +377,7 @@ class Attandance_summary extends CI_Controller
                 $this->db->select("b.name, COUNT(a.duration) as permit");
                 $this->db->from("permit_types b");
                 $this->db->join(
-                    "(SELECT a.employee_id, a.permit_type_id, a.permit_date, a.duration, b.departement_id, b.departement_sub_id, b.group_id FROM permits a JOIN employees b ON a.employee_id = b.id WHERE b.status = 0 and (a.approved_to = '' or a.approved_to is null)) a",
+                    "(SELECT a.employee_id, a.permit_type_id, a.permit_date, a.duration, b.departement_id, b.departement_sub_id, b.group_id FROM permits a JOIN employees b ON a.employee_id = b.id WHERE b.status = 0 and COALESCE(a.approved_to, '') IN ('','fitri')) a",
                     "a.permit_type_id = b.id and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.employee_id LIKE '%$filter_employee%' and a.departement_id like '%$filter_departement%' and a.departement_sub_id LIKE '%$filter_departement_sub%' and a.group_id LIKE '%$filter_group%'",
                     "left"
                 );
@@ -378,7 +386,7 @@ class Attandance_summary extends CI_Controller
                 $rt_permit = $this->db->get()->result_array();
                 //Total Permit Final MP
                 $q_permit_mp = $this->db->query("SELECT a.name, COUNT(b.employee_id) as employee FROM permit_types a 
-                LEFT JOIN (SELECT a.employee_id, a.permit_type_id, a.permit_date, a.duration, b.departement_id, b.departement_sub_id, b.group_id FROM permits a JOIN employees b ON a.employee_id = b.id WHERE b.status = 0 and (a.approved_to = '' or a.approved_to is null) 
+                LEFT JOIN (SELECT a.employee_id, a.permit_type_id, a.permit_date, a.duration, b.departement_id, b.departement_sub_id, b.group_id FROM permits a JOIN employees b ON a.employee_id = b.id WHERE b.status = 0 and COALESCE(a.approved_to, '') IN ('','fitri') 
                 and a.permit_date BETWEEN '$filter_from' and '$filter_to' and a.employee_id LIKE '%$filter_employee%' and b.departement_id LIKE '%$filter_departement%' and b.departement_sub_id LIKE '%$filter_departement_sub%' and b.group_id LIKE '%$filter_group%'
                 GROUP BY a.employee_id, a.permit_type_id) b ON a.id = b.permit_type_id
                 GROUP BY a.id ORDER BY a.name ASC");

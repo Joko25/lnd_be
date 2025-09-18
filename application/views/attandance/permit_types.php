@@ -11,7 +11,7 @@
             <th rowspan="2" data-options="field:'name',width:200,halign:'center'">Name</th>
             <th rowspan="2" data-options="field:'payroll',width:150,halign:'center'">Payroll</th>
             <th rowspan="2" data-options="field:'cutoff',width:80,align:'center'">Cut Off</th>
-            <th rowspan="2" data-options="field:'absence',width:80,align:'center'">Attandance</th>
+            <th rowspan="2" data-options="field:'attandance',width:80,align:'center'">Attandance</th>
             <th rowspan="2" data-options="field:'attachment',width:80,align:'center'">Attachment</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Created</th>
             <th colspan="2" data-options="field:'',width:100,halign:'center'"> Updated</th>
@@ -104,7 +104,7 @@
 
                 <span style="width:35%; display:inline-block;">Attandance</span>
 
-                <select style="width:60%;" name="absence" required="" class="easyui-combobox" panelHeight="auto">
+                <select style="width:60%;" name="attandance" required="" class="easyui-combobox" panelHeight="auto">
 
                     <option value="YES">YES</option>
 
