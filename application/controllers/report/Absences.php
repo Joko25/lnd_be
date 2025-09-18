@@ -332,7 +332,7 @@ class Absences extends CI_Controller
 
                     $absence = 0;
 
-
+                    // $workings = [];
 
                     foreach ($employees as $employee) {
 
@@ -538,7 +538,7 @@ class Absences extends CI_Controller
 
                                 a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date)
 
-                                WHERE (a.approved_to = '' or a.approved_to is null)
+                                WHERE COALESCE(a.approved_to, '') IN ('','fitri')
 
                                 GROUP BY b.id");
 
@@ -596,7 +596,7 @@ class Absences extends CI_Controller
 
                         $working += (count($weekday_day) - @$calendar_amount + $changeDays_amount);
 
-
+                        // array_push($workings, count($weekday_day).' - '.@$calendar_amount.' + '.$changeDays_amount);
 
                         // Hitung keterlambatan (Late)
 
@@ -620,7 +620,7 @@ class Absences extends CI_Controller
 
                                 $this->db->where('b.employee_id', $employee['id']);
 
-                                $shift = $this->db->get()->row();
+                                $shift = $this->db->get()->result_object();
 
                                 if ($shift) {
 
@@ -634,12 +634,25 @@ class Absences extends CI_Controller
 
                                     $att = $this->db->get()->row();
 
-                                    if ($att && $att->time_in && $shift->start && strtotime($att->time_in) > strtotime($shift->start)) {
+                                    // if ($att && $att->time_in && $shift->start && strtotime($att->time_in) > strtotime($shift->start)) {
 
-                                        $late++;
+                                    //     $late++;
 
+                                    // }
+
+                                    if ($att) {
+                                        $time_in = strtotime($att->time_in);
+                                        $min = strtotime('-2 Hour', $time_in);
+                                        $max = strtotime('+2 Hour', $time_in);
+
+                                        foreach ($shift as $key => $value) {
+                                            $shift_start = strtotime($value->start);
+
+                                            // Jika terlambat (time_in > shift_start)
+                                            if ($min <= $shift_start && $shift_start <= $max && $time_in > $shift_start)
+                                                { $late++; }
+                                        }
                                     }
-
                                 }
 
                             }
@@ -647,9 +660,11 @@ class Absences extends CI_Controller
                         }
 
                     }
+                    // die(var_dump($workings));
 
                     // Hitung absence setelah seluruh perhitungan selesai
                     $absence = $working - $check_in - $permit - $sick - $leave;
+                    // die($working.' - '.$check_in.' - '.$permit.' - '.$sick.' - '.$leave);
                     if ($absence < 0) $absence = 0;
 
                     // Hitung Warning Letter 1/2/3
