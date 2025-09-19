@@ -594,7 +594,7 @@ class Absences extends CI_Controller
 
                         $check_in += ($attandance_amount + $arr_permit_yes);
 
-                        $working += (count($weekday_day) - @$calendar_amount + $changeDays_amount);
+                        $working += (count($weekday_day) - @$calendar_amount - $changeDays_amount);
 
                         // array_push($workings, count($weekday_day).' - '.@$calendar_amount.' + '.$changeDays_amount);
 

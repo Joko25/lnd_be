@@ -146,7 +146,7 @@ class Employees_hl extends CI_Controller
             WHERE status = 0 AND contract_id IN ('20221119000003', '20250704000001') AND group_id = '20221119000002'
         ) a");
 
-        
+        die(var_dump($query));
 
         $name = array();
 
