@@ -129,7 +129,8 @@
                     <option value="setup_salaries">Setup Salary</option>
 
                     <option value="payrolls">Payrolls</option>
-
+                    <option value="lnd_request_training_approvals_history">Request Training</option>
+                    
                 </select>
 
             </div>
