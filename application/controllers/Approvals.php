@@ -812,9 +812,18 @@ class Approvals extends CI_Controller
 
         $change_days = $this->db->get()->result_object();
 
+        $this->db->select('b.name as fullname, a.approved_to, a.approved_by, b.avatar');
+		$this->db->from('lnd_request_training_approvals_history a');
+		$this->db->join('users b', 'a.approved_by = b.username');
+		$this->db->join('users c', 'a.approved_to = c.username');
+		$this->db->where('a.approved_to', $this->session->username);
+		// $this->db->where('a.approved', 1);
+		$this->db->group_by('a.approved_by');
+		$lnd_request_training_approvals_history = $this->db->get()->result_object();
 
 
-        $totalRows = (count($cash_carries) + count($payrolls) + count($payroll_harian_lepas) + count($setup_salaries) + count($permits) + count($change_days));
+
+        $totalRows = (count($cash_carries) + count($payrolls) + count($payroll_harian_lepas) + count($setup_salaries) + count($permits) + count($change_days) + count($lnd_request_training_approvals_history));
 
         if ($totalRows > 0) {
 
@@ -850,7 +859,8 @@ class Approvals extends CI_Controller
 
         $this->db->where('a.approved_to', $this->session->username);
 
-        $this->db->group_by('a.approved_by');
+        // $this->db->group_by('a.approved_by');
+        $this->db->group_by(['a.approved_by', 'a.approved_to', 'b.name', 'b.avatar', 'e.name']);
 
         $cash_carries = $this->db->get()->result_object();
         // die($this->db->last_query());
@@ -946,6 +956,16 @@ class Approvals extends CI_Controller
         $change_days = $this->db->get()->result_object();
 
 
+        $this->db->select('b.name as fullname, a.approved_to, a.approved_by, b.avatar');
+		$this->db->from('lnd_request_training_approvals_history a');
+		$this->db->join('users b', 'a.approved_by = b.username');
+		$this->db->join('users c', 'a.approved_to = c.username');
+		$this->db->where('a.approved_to', $this->session->username);
+		// $this->db->where('a.approved', 1);
+		$this->db->group_by('a.approved_by');
+		$lnd_request_training_approvals_history = $this->db->get()->result_object();
+
+
 
         if (count($cash_carries) > 0) {
 
@@ -1016,6 +1036,12 @@ class Approvals extends CI_Controller
             }
 
         }
+
+        if(count($lnd_request_training_approvals_history) > 0) {
+			foreach ($lnd_request_training_approvals_history as $val) {
+				$this->approvalMessage($val->avatar, $val->fullname, $val->approved_to, $val->approved_by, "lnd_request_training_approvals_history");
+			}
+		}
 
     }
 
