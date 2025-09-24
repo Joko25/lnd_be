@@ -310,7 +310,7 @@ class Crud extends CI_Model
                     $idReference => $idReferenceValue,
                     "approved" => 1,
                     "approved_to" => $approval->user_approval_1,
-                    "approved_by" => $approval->user_approval_1,
+                    "approved_by" => $this->session->username,
                     "approved_date" => date('Y-m-d H:i:s'),
                 ];
 

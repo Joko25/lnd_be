@@ -3032,7 +3032,7 @@
 							halign: 'center',
 							title: "Training Activities",
 						}, {
-							field: 'suggestDateTraining',
+							field: 'suggestDate',
 							width: 150,
 							halign: 'center',
 							title: "Suggest Date Training",

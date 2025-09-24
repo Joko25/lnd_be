@@ -750,19 +750,19 @@ class Approvals extends CI_Controller
 
 
 
-        $this->db->select('b.name as fullname, a.approved_to, a.approved_by, b.avatar');
+        // $this->db->select('b.name as fullname, a.approved_to, a.approved_by, b.avatar');
 
-        $this->db->from('payroll_harian_lepas a');
+        // $this->db->from('payroll_harian_lepas a');
 
-        $this->db->join('users b', 'a.approved_by = b.username');
+        // $this->db->join('users b', 'a.approved_by = b.username');
 
-        $this->db->join('users c', 'a.approved_to = c.username');
+        // $this->db->join('users c', 'a.approved_to = c.username');
 
-        $this->db->where('a.approved_to', $this->session->username);
+        // $this->db->where('a.approved_to', $this->session->username);
 
-        $this->db->group_by('a.approved_by');
+        // $this->db->group_by('a.approved_by');
 
-        $payroll_harian_lepas = $this->db->get()->result_object();
+        // $payroll_harian_lepas = $this->db->get()->result_object();
 
         
 
@@ -817,13 +817,14 @@ class Approvals extends CI_Controller
 		$this->db->join('users b', 'a.approved_by = b.username');
 		$this->db->join('users c', 'a.approved_to = c.username');
 		$this->db->where('a.approved_to', $this->session->username);
+        $this->db->where('a.status', 0);
 		// $this->db->where('a.approved', 1);
 		$this->db->group_by('a.approved_by');
 		$lnd_request_training_approvals_history = $this->db->get()->result_object();
 
 
 
-        $totalRows = (count($cash_carries) + count($payrolls) + count($payroll_harian_lepas) + count($setup_salaries) + count($permits) + count($change_days) + count($lnd_request_training_approvals_history));
+        $totalRows = (count($cash_carries) + count($payrolls) + count($setup_salaries) + count($permits) + count($change_days) + count($lnd_request_training_approvals_history));
 
         if ($totalRows > 0) {
 
@@ -887,19 +888,19 @@ class Approvals extends CI_Controller
 
         //Payroll Harian Lepas
 
-        $this->db->select('b.name as fullname, a.approved_to, a.approved_by, b.avatar');
+        // $this->db->select('b.name as fullname, a.approved_to, a.approved_by, b.avatar');
 
-        $this->db->from('payroll_harian_lepas a');
+        // $this->db->from('payroll_harian_lepas a');
 
-        $this->db->join('users b', 'a.approved_by = b.username');
+        // $this->db->join('users b', 'a.approved_by = b.username');
 
-        $this->db->join('users c', 'a.approved_to = c.username');
+        // $this->db->join('users c', 'a.approved_to = c.username');
 
-        $this->db->where('a.approved_to', $this->session->username);
+        // $this->db->where('a.approved_to', $this->session->username);
 
-        $this->db->group_by('a.approved_by');
+        // $this->db->group_by('a.approved_by');
 
-        $payroll_harian_lepas = $this->db->get()->result_object();
+        // $payroll_harian_lepas = $this->db->get()->result_object();
 
 
 
@@ -961,6 +962,7 @@ class Approvals extends CI_Controller
 		$this->db->join('users b', 'a.approved_by = b.username');
 		$this->db->join('users c', 'a.approved_to = c.username');
 		$this->db->where('a.approved_to', $this->session->username);
+        $this->db->where('a.status', 0);
 		// $this->db->where('a.approved', 1);
 		$this->db->group_by('a.approved_by');
 		$lnd_request_training_approvals_history = $this->db->get()->result_object();
@@ -991,15 +993,15 @@ class Approvals extends CI_Controller
 
 
 
-        if(count($payroll_harian_lepas) > 0) {
+        // if(count($payroll_harian_lepas) > 0) {
 
-            foreach ($payroll_harian_lepas as $payroll_hl) {
+        //     foreach ($payroll_harian_lepas as $payroll_hl) {
 
-                $this->approvalMessage($payroll_hl->avatar, $payroll_hl->fullname, $payroll_hl->approved_to, $payroll_hl->approved_by, "payroll_harian_lepas");
+        //         $this->approvalMessage($payroll_hl->avatar, $payroll_hl->fullname, $payroll_hl->approved_to, $payroll_hl->approved_by, "payroll_harian_lepas");
 
-            }
+        //     }
 
-        }
+        // }
 
 
 
@@ -1831,6 +1833,7 @@ class Approvals extends CI_Controller
     public function approvalRequestTraining($approved_to, $approved_by)
 	{
 		$this->db->select('a.*, 
+            DATE_FORMAT(a.suggestDateTraining, "%Y-%m-%d") as suggestDate,
 			a.status as statusTraining, 
 			a.status as statusApproval, 
 			rth.approved_by, 
