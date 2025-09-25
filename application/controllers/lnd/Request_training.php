@@ -734,156 +734,165 @@ class Request_training extends CI_Controller {
   <body>
   <div style="position: relative;">
 	  
-		<div style="position: absolute; top: 0; right: 0;">
-			FRM-L&D-002 Rev.00
-		</div>
+		<table>
+      <td class="no-border" colspan="8" style="text-align:right;">
+			  <small>FRM-L&D-002 Rev.00</small>
+      </td>
+		</table>
   </div>
-  <br/>
-  <div style="border: 1px solid black;">
-  <center>
-            <div style="float: left; font-size: 12px; text-align: left;">
-                <table style="width: 100%;">
-                    <tr>
-                        <td width="50" style="font-size: 12px; vertical-align: top; text-align: center; vertical-align:jus margin-right:10px;">
-                            <img src="' . $config->favicon . '" width="30">
-                        </td>
-                        <td style="font-size: 14px; text-align: left; margin:2px;">
-							<b>' . $config->name . '</b><br>
-							<small>' . $config->description . '</small>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div style="float: right; font-size: 12px; text-align: right;">
-                Print Date ' . date("d M Y H:m:s") . ' <br>
-                Print By ' . $this->session->username . '
-            </div>
-        </center>
-        <br/>
-                <br/>
-        <br/>
-        <br/>
+  <div>
+    <table style="width: 100%;">
+        <tr>
+            <td style="font-size: 12px; vertical-align: top; text-align: center; width: 10px;">
+                <img src="' . $config->favicon . '" width="10">
+            </td>
+            <td colspan="2" style="font-size: 14px; text-align: left; margin:2px;">
+                <b>' . $config->name . '</b><br>
+                <small>' . $config->description . '</small>
+            </td>
+            <td colspan="5" style="border-bottom:0">
+              <div style="text-align: right;">
+                  <small>Print Date ' . date("d M Y H:i:s") . '</small> <br>
+                  <small>Print By ' . $this->session->username . '</small>
+              </div>
+            </td>
+        </tr>
+        <tr style="height:50px;">
+          <td colspan="8" style="border-top:0; border-bottom:0;">
+            &nbsp;
+          </td>
+        </tr>
+        <tr style="height:50px;">
+          <td colspan="8" style="border-top:0; border-bottom:0;">
+            <h2 class="height:50px">PERMOHONAN REQUEST TRAINING</h2>
+          </td>
+        </tr>
+    </table>
 
-    <h2>PERMOHONAN REQUEST TRAINING</h2>
-	<table>
-	
-    <div class="catatan-container">
-    	<td style="padding-left: 10px; padding-top: 10px; padding-bottom: 0px;">
-      		<div class="arrow-box">Catatan</div>
-      	</td>
-      	<td>
-			<div class="catatan-text">
-				<p>
-				  1. Formulir ini bisa digunakan untuk internal dan external training.
-				</p>
-				<p>
-				  2. Diisi oleh atasan (Dept. Head) untuk disetujui oleh management.
-				</p>
-				<p>3. Diserahkan kepada L&D Supervisor untuk ditindak lanjuti.</p>
-				<p>
-				  4. Copy Certificate training diserahkan ke L&D supervisor untuk
-				  kepentingan up-dating dan Filling.
-				</p>
-			</div>
-		</td>
-      
-    </div>
-	</table>
+	  <table>
+      <div class="catatan-container">
+        <td style="padding-left: 10px; padding-top: 10px; padding-bottom: 0px;">
+            <div class="arrow-box">Catatan</div>
+        </td>
+        <td colspan="7">
+          <div class="catatan-text">
+            <p>
+              1. Formulir ini bisa digunakan untuk internal dan external training.
+            </p>
+            <p>
+              2. Diisi oleh atasan (Dept. Head) untuk disetujui oleh management.
+            </p>
+            <p>3. Diserahkan kepada L&D Supervisor untuk ditindak lanjuti.</p>
+            <p>
+              4. Copy Certificate training diserahkan ke L&D supervisor untuk
+              kepentingan up-dating dan Filling.
+            </p>
+          </div>
+        </td>
+      </div>
+    </table>
     <table>
       <tr>
-        <td style="border: none" width="30%">Kepada</td>
-        <td style="border-left: none; border-bottom: none; border-top: none" width="50%">: BOD / L&D Divison Head</td>
-        <td style="border-top: none; border-bottom: none;" width="20%"><center>Pemohon,</center></td>
+        <td colspan="2" style="border: none">Kepada</td>
+        <td colspan="4" style="border-left: none; border-bottom: none; border-top: none" width="50%">: BOD / L&D Divison Head</td>
+        <td colspan="2" style="border-top: none; border-bottom: none;" width="20%"><center>Pemohon,</center></td>
       </tr>
       <tr>
-        <td style="border: none">Dari</td>
-        <td style="border-left: none; border-bottom: none; border-top: none">
+        <td colspan="2" style="border: none">Dari</td>
+        <td colspan="4" style="border-left: none; border-bottom: none; border-top: none">
           : '. $result->createdBy .'
         </td>
-        <td style="border-top: none; border-bottom: none;"><center>Dept. Head</center></td>
+        <td colspan="2" style="border-top: none; border-bottom: none;"><center>Dept. Head</center></td>
       </tr>
       <tr>
-        <td style="border: none">Dept</td>
-        <td style="border-left: none; border-bottom: none; border-top: none">
+        <td colspan="2" style="border: none">Dept</td>
+        <td colspan="4" style="border-left: none; border-bottom: none; border-top: none">
           : '. $result->departmentInputter .'
         </td>
-        <td style="border-top: none; border-bottom: none;"></td>
+        <td colspan="2" style="border-top: none; border-bottom: none;"></td>
         
       </tr>
       <tr>
-        <td style="border: none">Materi Training</td>
-        <td style="border-left: none; border-bottom: none; border-top: none">
+        <td colspan="2" style="border: none">Materi Training</td>
+        <td colspan="4" style="border-left: none; border-bottom: none; border-top: none">
           : '. $result->trainingActivities .'
         </td>
-        <td style="border-top: none; border-bottom: none;"></td>
+        <td colspan="2" style="border-top: none; border-bottom: none;"></td>
       </tr>
       <tr>
-        <td style="border: none">Nama Trainer</td>
-        <td style="border-left: none; border-bottom: none; border-top: none">
+        <td colspan="2" style="border: none">Nama Trainer</td>
+        <td colspan="4" style="border-left: none; border-bottom: none; border-top: none">
           : '. $result->trainerName .'
         </td>
-        <td style="border-top: none; border-bottom: none;"></td>
+        <td colspan="2" style="border-top: none; border-bottom: none;"></td>
       </tr>
       <tr>
-        <td style="border: none">Tgl. Training</td>
-        <td style="border-left: none; border-bottom: none; border-top: none">
+        <td colspan="2" style="border: none">Tgl. Training</td>
+        <td colspan="4" style="border-left: none; border-bottom: none; border-top: none">
           : '. $result->suggestDate .'
         </td>
-        <td style="border-top: none; border-bottom: none;"></td>
+        <td colspan="2" style="border-top: none; border-bottom: none;"></td>
       </tr>
       <tr>
-        <td style="border: none">Tempat</td>
-        <td style="border-left: none; border-bottom: none; border-top: none">
+        <td colspan="2" style="border: none">Tempat</td>
+        <td colspan="4" style="border-left: none; border-bottom: none; border-top: none">
           : PT. PIRANTI TEKNIK INDONESIA
         </td>
-        <td style="border-top: none; border-bottom: none;"></td>
+        <td colspan="2" style="border-top: none; border-bottom: none;"></td>
       </tr>
       <tr>
-        <td style="border: none">Jam</td>
-        <td style="border-left: none; border-bottom: none; border-top: none">
+        <td colspan="2" style="border: none">Jam</td>
+        <td colspan="4" style="border-left: none; border-bottom: none; border-top: none">
           :
         </td>
-        <td style="border-top: none; border-bottom: none;"><center><u>(............................)</u></center></td>
+        <td colspan="2" style="border-top: none; border-bottom: none;"><center><u>(............................)</u></center></td>
       </tr>
       <tr>
-      	<td style="border-left: none; border-top: none; border-right: none">
+      	<td colspan="2" style="border-left: none; border-top: none; border-right: none">
       		Tick salah satu
       	</td>
-      	<td style="border-left: none; border-top: none">
+      	<td colspan="4" style="border-left: none; border-top: none">
       	:
           <span class="checkbox">'. ($result->trainer === 'Internal' ? '✔' : '') .'</span> Trainer Internal &nbsp;&nbsp;&nbsp;
           <span class="checkbox-checked">'. ($result->trainer === 'External' ? '✔' : '') .'</span> Trainer External
         </td>
-        <td style="border-top: none"><center>Tgl: ....................</center></td>
-	  </tr>
-    </table>
-
-    <p>
-      <strong><u>EXTERNAL TRAINING</u></strong> (diisi hanya untuk external
-      Training dan Sertakan proposal dan brosur)
-    </p>
-
-    <table>
+        <td colspan="2" style="border-top: none"><center>Tgl: ....................</center></td>
+	    </tr>
       <tr>
-        <td class="no-border" width="40%">
-          Perkiraan biaya untuk external training
-        </td>
-        <td class="no-border" width="20%">
-          Rp '. $result->trainerFees .'
-        </td>
-        <td class="no-border" width="15%">Penyelenggara :</td>
-        <td class="no-border" width="25%">
+        <td colspan="8" style="border-bottom:0;">
+          <p>
+            <strong><u>EXTERNAL TRAINING</u></strong> (diisi hanya untuk external
+            Training dan Sertakan proposal dan brosur)
+          </p>
         </td>
       </tr>
+      <tr>
+          <td colspan="8" style="border-top:0; border-bottom:0;">
+            &nbsp;
+          </td>
+        </tr>
+      <tr>
+        <td colspan="3" class="no-border">
+          Perkiraan biaya untuk external training
+        </td>
+        <td colspan="2" class="no-border">
+          Rp '. $result->trainerFees .'
+        </td>
+        <td colspan="3" style="border-top:0; border-bottom:0; border-left:0;">Penyelenggara :</td>
+      </tr>
+        <tr style="height:50px;">
+          <td colspan="8" style="border-top:0; border-bottom:0;">
+          <br/>
+            <center><h2>CALON PESERTA TRAINING</h2></center>
+            
+          </td>
+        </tr>
     </table>
-
-    <br />
-    <center style="border-top: 1px solid #000"><strong>CALON PESERTA TRAINING</strong></center>
     <table>
       <tr class="center">
-        <th width="5%">No</th>
-        <th width="20%">Nama</th>
-        <th width="15%">NIK</th>
+        <th>No</th>
+        <th colspan="2">Nama</th>
+        <th>NIK</th>
         <th width="20%">Jabatan</th>
         <th width="15%">Bagian / Section</th>
         <th width="15%">Departemen</th>
@@ -899,8 +908,8 @@ class Request_training extends CI_Controller {
 		foreach ($traineeList as $trainee) {
 		 $html .= '<tr>
 			<td class="center">'. $no .'</td>
-			<td>'. $trainee['fullName'] .'aaa</td>
-			<td>'. $trainee['national_id'] .'</td>
+			<td colspan="2">'. $trainee['fullName'] .'aaa</td>
+			<td>\''. strval($trainee['national_id']) .'</td>
 			<td>'. $trainee['position'] .'</td>
 			<td>'. $trainee['departement_subs'] .'</td>
 			<td>'. $trainee['departement'] .'</td>
@@ -911,33 +920,40 @@ class Request_training extends CI_Controller {
 
       $html.= '<tr>
         <td class="center"></td>
-        <td colspan="6">&nbsp;</td>
-      </tr>
-    </table>
-
-    <br />
-    <strong>Alasan :</strong>
-    <table>
-      <tr>
-        <td><span class="checkbox">'. ($result->reasons === 'Promotion' ? '✔' : '') .'</span> Promosi</td>
-        <td><span class="checkbox">'. ($result->reasons === 'New Product' ? '✔' : '') .'</span> Produk baru</td>
-        <td><span class="checkbox">'. ($result->reasons === 'New System' ? '✔' : '') .'</span> System baru</td>
+        <td colspan="7">&nbsp;</td>
       </tr>
       <tr>
-        <td><span class="checkbox">'. ($result->reasons === 'Mutation' ? '✔' : '') .'</span> Mutasi</td>
-        <td><span class="checkbox">'. ($result->reasons === 'New Technology' ? '✔' : '') .'</span> Technology baru</td>
-        <td><span class="checkbox">'. ($result->reasons === 'Skill Upgrades' ? '✔' : '') .'</span> Peningkatan skill</td>
+          <td colspan="8" style=" border-top:0; border-bottom:0;">
+            <h2 style="text-align:left;">Alasan :</h2>
+          </td>
       </tr>
       <tr>
-        <td colspan="3">
+        <td colspan="2"><span class="checkbox">'. ($result->reasons === 'Promotion' ? '✔' : '') .'</span> Promosi</td>
+        <td colspan="3"><span class="checkbox">'. ($result->reasons === 'New Product' ? '✔' : '') .'</span> Produk baru</td>
+        <td colspan="3"><span class="checkbox">'. ($result->reasons === 'New System' ? '✔' : '') .'</span> System baru</td>
+      </tr>
+      <tr>
+        <td colspan="2"><span class="checkbox">'. ($result->reasons === 'Mutation' ? '✔' : '') .'</span> Mutasi</td>
+        <td colspan="3"><span class="checkbox">'. ($result->reasons === 'New Technology' ? '✔' : '') .'</span> Technology baru</td>
+        <td colspan="3"><span class="checkbox">'. ($result->reasons === 'Skill Upgrades' ? '✔' : '') .'</span> Peningkatan skill</td>
+      </tr>
+      <tr>
+        <td colspan="8">
           <span class="checkbox"></span> Lain-lain:
           ..................................................
         </td>
       </tr>
-    </table>
-
-    <br />
-    <center><strong>APPROVAL</strong></center>';
+      <tr>
+          <td colspan="8" style="border-top:0; border-bottom:0;">
+            
+          </td>
+        </tr>
+      <tr>
+          <td colspan="8" style="border-top:0; border-bottom:0;">
+            <center><h2>APPROVAL</h2></center>
+          </td>
+        </tr>
+    </table>';
 
 		$this->db->select('*, DATE_FORMAT(approved_date, "%Y-%m-%d") as approved_date_convert');
 		$this->db->from('lnd_request_training_approvals_history');
@@ -994,17 +1010,18 @@ class Request_training extends CI_Controller {
 
 		$html .= '<table>
       <tr>
-        <td class="signature">
-          BOD<br /><br />';
+        <td colspan="4" class="signature">
+          BOD<br /><br /><br /><br />';
         if($qrUrlBOD == '') {
 			$html .= '<u>(..................................)</u><br />Tgl: ....................';
 		} else {
 			$html .= '<img src = "' . $qrUrlBOD . '"<br /><br />Tgl:
 			  '.$approvedDateBod.'';
 		}
-        $html .= '<br /></td>
-        <td class="signature">
-          L&D Div Head<br /><br />';
+        $html .= '
+        <br /></td>
+        <td colspan="4" class="signature">
+          L&D Div Head<br /><br /><br /><br />';
 
 		if($qrUrlDivHead == '') {
 			$html .= '<u>(..................................)</u><br />Tgl: ....................';
