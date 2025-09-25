@@ -209,13 +209,17 @@ class Permits extends CI_Controller
             for ($i = $date_from; $i <= $date_to; $i += (60 * 60 * 24)) {
                 $permit_date = date('Y-m-d', $i);
 
-                $this->db->select('*');
-                $this->db->from('permits');
-                $this->db->where("employee_id", $post['employee_id']);
-                $this->db->where("permit_date", $permit_date);
-                $permit = $this->db->get()->row();
+                $attandance = $this->db->select('a.*')
+                ->from('attandances a')->join('employees b', 'a.number = b.number')
+                ->where("b.id", $post['employee_id'])->where("a.date_in", $permit_date)->get()->row();
 
-                if (!empty($permit)) {
+                $permit = $this->db->select('*')->from('permits')
+                ->where("employee_id", $post['employee_id'])->where("permit_date", $permit_date)->get()->row();
+
+                if (!empty($attandance)) {
+                    echo json_encode(array("title" => "Available", "message" => "The attandance for this employee and date in has been created", "theme" => "error"));
+                    exit;
+                } elseif (!empty($permit)) {
                     echo json_encode(array("title" => "Available", "message" => "The permit requestion for this employee and permit date has been created", "theme" => "error"));
                     exit;
                 } else {
