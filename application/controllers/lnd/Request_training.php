@@ -57,8 +57,8 @@ class Request_training extends CI_Controller {
         // Query Builder
         $this->db->start_cache(); // Cache query sebelum count_all_results
 
-        // Menggunakan ANY_VALUE() untuk kolom-kolom dari JOINed tables
-        $this->db->select('
+        // Tambahkan DISTINCT pada select
+        $this->db->select('DISTINCT
             a.*,
             DATE_FORMAT(a.suggestDateTraining, "%Y-%m-%d") as suggestDate,
             a.status as statusTraining,
@@ -71,13 +71,11 @@ class Request_training extends CI_Controller {
             employeeApprover.gender as gender,
             u.name as approverName,
             userReject.name as inputter
-        ');
+        ', false);
 
         $this->db->from('lnd_request_training a');
 
-        // --- Perubahan Utama untuk mengatasi masalah ONLY_FULL_GROUP_BY dan ANY_VALUE() ---
         // Subquery untuk mendapatkan baris lnd_request_training_approvals_history terbaru/terpilih
-        // Ini akan mengambil satu baris rth untuk setiap a.requestTrainingId yang memenuhi kriteria status 0
         $latest_approval_subquery = '(
             SELECT
                 rth_inner.*
@@ -87,39 +85,24 @@ class Request_training extends CI_Controller {
                 SELECT
                     trainingRequestId,
                     MAX(approved_date) AS max_approved_date,
-                    MAX(approved) AS max_approved_for_tiebreaker -- BARIS INI DIPERBAIKI: Menggunakan MAX(approved) sebagai tie-breaker
+                    MAX(approved) AS max_approved_for_tiebreaker
                 FROM
                     lnd_request_training_approvals_history
                 GROUP BY
                     trainingRequestId
             ) AS latest_rth ON rth_inner.trainingRequestId = latest_rth.trainingRequestId
                             AND rth_inner.approved_date = latest_rth.max_approved_date
-                            AND rth_inner.approved = latest_rth.max_approved_for_tiebreaker -- BARIS INI DIPERBAIKI: Menggunakan approved untuk kondisi tie-breaker
+                            AND rth_inner.approved = latest_rth.max_approved_for_tiebreaker
         ) AS rth';
 
         $this->db->join($latest_approval_subquery, 'a.requestTrainingId = rth.trainingRequestId', 'left');
-        // --- Akhir Perubahan Utama ---
 
-        // Join ke tabel employees untuk nama trainer
+        $this->db->join('lnd_request_training_trainee lrtt', 'a.id = lrtt.trainingRequestId', 'left');
         $this->db->join('employees e', 'a.trainer_name = e.id', 'left');
-
-        // Join ke tabel users untuk detail approver
         $this->db->join('users u', 'rth.approved_to = u.username', 'left');
-
-        // Join ke tabel employees untuk gender approver
         $this->db->join('employees employeeApprover', 'u.number = employeeApprover.number', 'left');
-
-        // Join ke tabel users untuk detail inputter (yang sebelumnya userReject)
         $this->db->join('users userReject', 'rth.approved_by = userReject.username', 'left');
-
-        // Join ke tabel employees untuk detail employeeReject, jika diperlukan
-        $this->db->join('employees employeeReject', 'userReject.number = employeeReject.number', 'left');
-
-		$this->db->join('users usersCreator', 'a.createdBy = usersCreator.username', 'left');
-
-		$this->db->join('employees employeeCreator', 'usersCreator.number = employeeCreator.number', 'left');
-
-		$this->db->join('departements departementsCreator', 'employeeCreator.departement_id = departementsCreator.id', 'left');
+        $this->db->join('departements departementsCreator', 'lrtt.departement = departementsCreator.name', 'left');
 
         if (!empty($suggestTrainingDate)) {
             $this->db->where('a.suggestDateTraining', $suggestTrainingDate);
@@ -144,7 +127,7 @@ class Request_training extends CI_Controller {
         $totalRows = $this->db->count_all_results();
         
         // Ambil data dengan limit dan offset
-		$this->db->order_by('suggestDate', 'ASC');
+        $this->db->order_by('suggestDate', 'ASC');
         $this->db->limit($rows, $offset);
         $records = $this->db->get()->result_array();
         $this->db->flush_cache(); // Hapus cache query
@@ -392,7 +375,7 @@ class Request_training extends CI_Controller {
         $trainingRequestId = $this->input->get('trainingRequestId', true); // Sanitize input GET
 
         $this->db->start_cache(); // Cache query sebelum count_all_results
-        $this->db->select('e.fullName, e.national_id, e.date_sign, e.position, e.departement, e.departement_subs, DATE_FORMAT(e.date_sign, "%Y-%m-%d") as join_date,');
+        $this->db->select('e.fullName, e.national_id, e.date_sign, e.position, e.departement, e.departement_subs, DATE_FORMAT(e.date_sign, "%Y-%m-%d") as join_date');
         $this->db->from('lnd_request_training_trainee e');
         $this->db->where('e.trainingRequestId', $trainingRequestId);
         $this->db->stop_cache(); // Stop caching the query
@@ -620,6 +603,78 @@ class Request_training extends CI_Controller {
 		$query = $this->db->query($sql);
 		$result = $query->row();
 
+    $this->db->select('*, DATE_FORMAT(approved_date, "%Y-%m-%d") as approved_date_convert');
+		$this->db->from('lnd_request_training_approvals_history');
+		$this->db->where('trainingRequestId', $result->requestTrainingId);
+		$historyApprovalTraining = $this->db->get()->result_array();
+
+		$approvedDateBod = '';
+		$approvedDateDivHead = '';
+		$approvedNameBod = '';
+		$approvedNameDivHead = '';
+		$approvedNamePIC = '';
+		$approvedDatePIC = '';
+
+
+		foreach ($historyApprovalTraining as $approval) {
+			if($approval['approved'] == '1') {
+				$approvedDatePIC = $approval['approved_date_convert'];
+				$approvedNamePIC = $approval['approved_by'];
+
+      } else if($approval['approved'] == '3') {
+				$approvedDateDivHead = $approval['approved_date_convert'];
+				$approvedNameDivHead = $approval['approved_by'];
+      } else if($approval['approved'] == '4') {
+				$approvedDateBod = $approval['approved_date_convert'];
+				$approvedNameBod = $approval['approved_by'];
+			}
+		}
+
+    $qrUrlBOD = '';
+		$qrUrlDivHead = '';
+		$qrUrlPIC = '';
+//START BOD QR CODE
+		$qrTextBOD = $approvedNameBod;
+		if($approvedNameBod != '') {
+			$filenameBOD = 'qr_' . strtolower(str_replace(' ', '_', $qrTextBOD)) . '.png';
+			$pathBOD = 'assets/image/qrcode/';
+			$savePathBOD = FCPATH . $pathBOD . $filenameBOD; // Full physical path to save
+			$paramsBOD['data'] = $qrTextBOD;
+			$paramsBOD['level'] = 'H'; // High error correction
+			$paramsBOD['size'] = 2;
+			$paramsBOD['savename'] = $savePathBOD;
+			$this->ciqrcode->generate($paramsBOD);
+			$qrUrlBOD = base_url($pathBOD . $filenameBOD);
+		}
+//END BOD QR CODE
+
+//START DIV HEAD QR CODE
+		$qrText = $approvedNameDivHead;
+		if($approvedNameDivHead != '') {
+			$filename = 'qr_' . strtolower(str_replace(' ', '_', $qrText)) . '.png';
+			$path = 'assets/image/qrcode/';
+			$savePath = FCPATH . $path . $filename; // Full physical path to save
+			$params['data'] = $qrText;
+			$params['level'] = 'H'; // High error correction
+			$params['size'] = 2;
+			$params['savename'] = $savePath;
+			$this->ciqrcode->generate($params);
+			$qrUrlDivHead = base_url($path . $filename);
+		}
+
+    $qrTextPIC = $approvedNamePIC;
+		if($approvedNamePIC != '') {
+			$filename = 'qr_' . strtolower(str_replace(' ', '_', $qrTextPIC)) . '.png';
+			$path = 'assets/image/qrcode/';
+			$savePath = FCPATH . $path . $filename; // Full physical path to save
+			$params['data'] = $qrText;
+			$params['level'] = 'H'; // High error correction
+			$params['size'] = 2;
+			$params['savename'] = $savePath;
+			$this->ciqrcode->generate($params);
+			$qrUrlPIC = base_url($path . $filename);
+		}
+
 		$html = '
 		<!DOCTYPE html>
 <html>
@@ -845,7 +900,14 @@ class Request_training extends CI_Controller {
         <td colspan="4" style="border-left: none; border-bottom: none; border-top: none">
           :
         </td>
-        <td colspan="2" style="border-top: none; border-bottom: none;"><center><u>(............................)</u></center></td>
+        <td colspan="2" style="border-top: none; border-bottom: none; text-align: center;">
+        ';
+        if($qrUrlPIC == '') {
+          $html .= '<u>(............................)</u>';
+        } else {
+          $html .= '<img src="' . $qrUrlPIC . '" style="display: block; margin-left: auto; margin-right: auto;">';
+        }
+        $html .= '</td>
       </tr>
       <tr>
       	<td colspan="2" style="border-left: none; border-top: none; border-right: none">
@@ -856,7 +918,14 @@ class Request_training extends CI_Controller {
           <span class="checkbox">'. ($result->trainer === 'Internal' ? '✔' : '') .'</span> Trainer Internal &nbsp;&nbsp;&nbsp;
           <span class="checkbox-checked">'. ($result->trainer === 'External' ? '✔' : '') .'</span> Trainer External
         </td>
-        <td colspan="2" style="border-top: none"><center>Tgl: ....................</center></td>
+        <td colspan="2" style="border-top: none; text-align: center;">
+        ';
+        if($qrUrlPIC == '') {
+          $html .= '<span style="display: inline-block; width: 100%; text-align: center;">Tgl: ....................</span>';
+        } else {
+          $html .= '<span style="display: inline-block; width: 100%; text-align: center;">Tgl: '.$approvedDatePIC.'</span>';
+        }
+        $html .= '</td>
 	    </tr>
       <tr>
         <td colspan="8" style="border-bottom:0;">
@@ -955,58 +1024,6 @@ class Request_training extends CI_Controller {
         </tr>
     </table>';
 
-		$this->db->select('*, DATE_FORMAT(approved_date, "%Y-%m-%d") as approved_date_convert');
-		$this->db->from('lnd_request_training_approvals_history');
-		$this->db->where('trainingRequestId', $result->requestTrainingId);
-		$historyApprovalTraining = $this->db->get()->result_array();
-
-		$approvedDateBod = '';
-		$approvedDateDivHead = '';
-		$approvedNameBod = '';
-		$approvedNameDivHead = '';
-
-
-		foreach ($historyApprovalTraining as $approval) {
-			if($approval['approved'] == '3') {
-				$approvedDateBod = $approval['approved_date_convert'];
-				$approvedNameBod = $approval['approved_by'];
-			} else if($approval['approved'] == '4') {
-				$approvedDateDivHead = $approval['approved_date_convert'];
-				$approvedNameDivHead = $approval['approved_by'];
-			}
-		}
-
-		$qrUrlBOD = '';
-		$qrUrlDivHead = '';
-//START BOD QR CODE
-		$qrTextBOD = $approvedNameBod;
-		if($approvedNameBod != '') {
-			$filenameBOD = 'qr_' . strtolower(str_replace(' ', '_', $qrTextBOD)) . '.png';
-			$pathBOD = 'assets/image/qrcode/';
-			$savePathBOD = FCPATH . $pathBOD . $filenameBOD; // Full physical path to save
-			$paramsBOD['data'] = $qrTextBOD;
-			$paramsBOD['level'] = 'H'; // High error correction
-			$paramsBOD['size'] = 2;
-			$paramsBOD['savename'] = $savePathBOD;
-			$this->ciqrcode->generate($paramsBOD);
-			$qrUrlBOD = base_url($pathBOD . $filenameBOD);
-		}
-//END BOD QR CODE
-
-//START DIV HEAD QR CODE
-		$qrText = $approvedNameDivHead;
-		if($approvedNameDivHead != '') {
-			$filename = 'qr_' . strtolower(str_replace(' ', '_', $qrText)) . '.png';
-			$path = 'assets/image/qrcode/';
-			$savePath = FCPATH . $path . $filename; // Full physical path to save
-			$params['data'] = $qrText;
-			$params['level'] = 'H'; // High error correction
-			$params['size'] = 2;
-			$params['savename'] = $savePath;
-			$this->ciqrcode->generate($params);
-			$qrUrlDivHead = base_url($path . $filename);
-		}
-//START DIV HEAD QR CODE
 
 		$html .= '<table>
       <tr>
