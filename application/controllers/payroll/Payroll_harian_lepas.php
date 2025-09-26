@@ -283,7 +283,7 @@ class Payroll_harian_lepas extends CI_Controller
                 AND a.contract_id LIKE '%20221119000003%'
                 GROUP BY a.id
                 ORDER BY b.name ASC, c.name ASC, d.name ASC");
-            
+            // die($this->db->last_query());
             $records = $query->result_array();
             $datas = array();
             $datas['total'] = count($records);
@@ -346,10 +346,14 @@ class Payroll_harian_lepas extends CI_Controller
             $permit_date = "'" . implode("', '", $weekend_day) . "'";
             $q_permit = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                     FROM permit_types b
-                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date)
-                    WHERE b.payroll = 'NON DEDUCTION' and (a.approved_to = '' or a.approved_to is null)
+                    LEFT JOIN permits a ON a.permit_type_id = b.id AND a.employee_id = '$record[id]'
+                    WHERE b.payroll = 'HARIAN LEPAS'
+                        AND b.attandance = 'YES'
+                        AND (a.approved_to = '' or a.approved_to is null)
+                        AND a.permit_date >= '$filter_from' AND a.permit_date <= '$filter_to'
                     GROUP BY b.id");
             $r_permit = $q_permit->result_array();
+            // die($this->db->last_query());
             $arr_permit_number = "";
             $arr_permit_amount = "";
             $arr_total_permit = 0;
@@ -375,10 +379,11 @@ class Payroll_harian_lepas extends CI_Controller
             //Permit atau absen nya YES di anggap masuk kerja
             $q_permit_absence = $this->db->query("SELECT b.number, b.name, COUNT(a.permit_date) as amount
                     FROM permit_types b
-                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to' and a.permit_date not in ($permit_date)
-                    WHERE b.absence = 'YES' and (a.approved_to = '' or a.approved_to is null)
+                    LEFT JOIN permits a ON a.permit_type_id = b.id and a.employee_id = '$record[id]' and a.permit_date >= '$filter_from' and a.permit_date <= '$filter_to'
+                    WHERE b.payroll = 'HARIAN LEPAS' and (a.approved_to = '' or a.approved_to is null)
                     GROUP BY b.id");
             $r_permit_absence = $q_permit_absence->result_array();
+            // die($this->db->last_query());
             $arr_total_permit_absence = 0;
             foreach ($r_permit_absence as $permit_data_absence) {
                 $arr_total_permit_absence += $permit_data_absence['amount'];
@@ -403,6 +408,7 @@ class Payroll_harian_lepas extends CI_Controller
                 $this->db->where_in('end', $weekday_day);
             }
             $changeDays = $this->db->get()->row();
+            // die($this->db->last_query());
             $changeDays_amount = empty($changeDays->days) ? 0 : $changeDays->days;
             //Correction PLUS
             $this->db->select("SUM(amount) as amount");
@@ -455,13 +461,14 @@ class Payroll_harian_lepas extends CI_Controller
             $this->db->from('attandances');
             $this->db->where('number', $record['number']);
             $this->db->where("((date_in >= '$filter_from' and date_in <= '$filter_to') or (date_out >= '$tomorow' and date_out <= '$filter_to'))");
-            if (count($weekend_day) > 0) {
-                $this->db->where_not_in('date_in', $weekend_day);
-            }
+            // if (count($weekend_day) > 0) {
+            //     $this->db->where_not_in('date_in', $weekend_day);
+            // }
             //Untuk payroll harian lepas, tidak perlu exclude calendar holidays
             //karena karyawan HL bisa masuk kerja di hari libur nasional
             $this->db->group_by('date_in');
             $attandances = $this->db->get()->result_array();
+            // die($this->db->last_query());
             $attandance_amount = 0;
             foreach ($attandances as $attandance) {
                 $attandance_amount++;
@@ -474,6 +481,7 @@ class Payroll_harian_lepas extends CI_Controller
             //Hitung Hari dia masuk kerja
             $working_days = ($attandance_amount + $arr_total_permit_absence + $changeDays_amount);
             //Jika hari kerja nya lebih besar dari HKW maka nilai ambil HKW
+            // die($attandance_amount.' + '.$arr_total_permit_absence.' + '.$changeDays_amount.' = '.$working_days);
             if ($working_days >= $hkw) {
                 $wd = $hkw;
             } else {
