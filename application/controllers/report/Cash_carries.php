@@ -880,9 +880,13 @@ class Cash_carries extends CI_Controller
 
                                     <tr>
 
-                                        <th width="100" style="text-align:center;">BOD</th>
+                                        <th width="100" style="text-align:center;" colspan="2">BOD</th>
 
-                                        <th width="100" style="text-align:center;">ASSISTANT MANAGER</th>
+                                        <th width="100" style="text-align:center;">LEADER FAT COST CONTROL</th>
+
+                                        <th width="100" style="text-align:center;">ASSISTANT MANAGER HRD-GA</th>
+
+                                        <th width="100" style="text-align:center;">LEADER HR</th>
 
                                         <th width="100" style="text-align:center;">PAYROLL STAFF</th>
 
@@ -896,11 +900,23 @@ class Cash_carries extends CI_Controller
 
                                         <td style="height:60px;"></td>
 
+                                        <td style="height:60px;"></td>
+
+                                        <td style="height:60px;"></td>
+
+                                        <td style="height:60px;"></td>
+
                                     </tr>
 
                                     <tr>
 
                                         <th style="text-align:center; height:20px;"></th>
+
+                                        <th style="text-align:center;"></th>
+
+                                        <th style="text-align:center;"></th>
+
+                                        <th style="text-align:center;"></th>
 
                                         <th style="text-align:center;"></th>
 
@@ -1177,7 +1193,7 @@ class Cash_carries extends CI_Controller
                     <center>
                         <table id="customers" style="width:100%;">
                             <tr>
-                                <th width="20%" style="text-align:center;">Disetujui</th>
+                                <th width="20%" style="text-align:center;" colspan="2">Disetujui</th>
                                 <th width="40%" style="text-align:center;" colspan="2">Diketahui</th>
                                 <th width="20%" style="text-align:center;">Diperiksa</th>
                                 <th width="20%" style="text-align:center;">Dibuat</th>
@@ -1188,19 +1204,21 @@ class Cash_carries extends CI_Controller
                                 <td style="height:60px;"></td>
                                 <td style="height:60px;"></td>
                                 <td style="height:60px;"></td>
+                                <td style="height:60px;"></td>
                             </tr>
                             <tr>
                                 <td style="text-align:center;font-weight:bold;">Abdul Rachman</td>
-                                <td style="text-align:center;font-weight:bold;">Santy Nofianty</td>
+                                <td style="text-align:center;font-weight:bold;">Kinenta Harsono</td>
+                                <td style="text-align:center;font-weight:bold;">Maya Evilia</td>
                                 <td style="text-align:center;font-weight:bold;">Rizki Andri S</td>
                                 <td style="text-align:center;font-weight:bold;">Nia Nurazizah</td>
                                 <td style="text-align:center;font-weight:bold;">Jihan Maharani</td>
                             </tr>
                              <tr>
-                                <td style="text-align:center;">BOD</td>
-                                <td style="text-align:center;">Asst Manager FAT Cost Control</td>
+                                <td style="text-align:center;" colspan="2">BOD</td>
+                                <td style="text-align:center;">Leader FAT Cost Control</td>
                                 <td style="text-align:center;">Asst Manager HRD-GA</td>
-                                <td style="text-align:center;">Leader HRD-NRM</td>
+                                <td style="text-align:center;">Leader HR</td>
                                 <td style="text-align:center;">Staff HR-Payroll</td>
                             </tr>
                         </table>

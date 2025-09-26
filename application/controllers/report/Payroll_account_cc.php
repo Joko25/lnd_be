@@ -772,9 +772,9 @@ class Payroll_account_cc extends CI_Controller
 
                         <tr>
 
-                            <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
+                            <th colspan="2" rowspan="2" style="text-align:center;">APPROVED</th>
 
-                            <th colspan="2" style="text-align:center;">CONFIRM OK</th>
+                            <th colspan="3" style="text-align:center;">CONFIRM OK</th>
 
                             <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
 
@@ -784,12 +784,18 @@ class Payroll_account_cc extends CI_Controller
 
                             <th width="100" style="text-align:center;">COST CONTROL</th>
 
-                            <th width="100" style="text-align:center;">HRD</th>
+                            <th width="100" style="text-align:center;">HRD-GA</th>
+
+                            <th width="100" style="text-align:center;">HR</th>
 
                         </tr>
 
                         <tr>
 
+                            <td style="height:60px;" width="100"></td>
+
+                            <td style="height:60px;" width="100"></td>
+
                             <td style="height:60px;"></td>
 
                             <td style="height:60px;"></td>
@@ -802,11 +808,29 @@ class Payroll_account_cc extends CI_Controller
 
                         <tr>
 
-                            <th style="text-align:center;">BOD</th>
+                            <td>&nbsp;</td>
+
+                            <td>&nbsp;</td>
+
+                            <td>&nbsp;</td>
+
+                            <td>&nbsp;</td>
+
+                            <td>&nbsp;</td>
+
+                            <td>&nbsp;</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th style="text-align:center;" colspan="2">BOD</th>
 
                             <th style="text-align:center;">LEADER</th>
 
                             <th style="text-align:center;">ASSISTANT MANAGER</th>
+
+                            <th style="text-align:center;">LEADER</th>
 
                             <th style="text-align:center;">PAYROLL STAFF</th>
 

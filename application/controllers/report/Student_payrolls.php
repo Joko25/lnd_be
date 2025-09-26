@@ -384,24 +384,36 @@ class Student_payrolls extends CI_Controller
                             $html .= '<center>
                                         <table id="customers" style="width:70%;">
                                             <tr>
-                                                <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
-                                                <th colspan="2" style="text-align:center;">CONFIRM OK</th>
+                                                <th colspan="2" rowspan="2" style="text-align:center;">APPROVED</th>
+                                                <th colspan="3" style="text-align:center;">CONFIRM OK</th>
                                                 <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
                                             </tr>
                                             <tr>
                                                 <th width="100" style="text-align:center;">COST CONTROL</th>
-                                                <th width="100" style="text-align:center;">HRD</th>
+                                                <th width="100" style="text-align:center;">HRD-GA</th>
+                                                <th width="100" style="text-align:center;">HR</th>
                                             </tr>
                                             <tr>
+                                                <td style="height:60px;" width="100"></td>
+                                                <td style="height:60px;" width="100"></td>
                                                 <td style="height:60px;"></td>
                                                 <td style="height:60px;"></td>
                                                 <td style="height:60px;"></td>
                                                 <td style="height:60px;"></td>
                                             </tr>
                                             <tr>
-                                                <th style="text-align:center;">BOD</th>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center;" colspan="2">BOD</th>
+                                                <th style="text-align:center;">LEADER</th>
                                                 <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                                <th style="text-align:center;">ASSISTANT MANAGER</th>
+                                                <th style="text-align:center;">LEADER</th>
                                                 <th style="text-align:center;">PAYROLL STAFF</th>
                                             </tr>
                                         </table>
@@ -564,30 +576,34 @@ class Student_payrolls extends CI_Controller
                         // Add signature table at the end of each source's last page
                         if (($i + 1) == $page) {
                             $html2 .= '<center>
-                                        <table id="customers" style="width:70%;">
-                                            <tr>
-                                                <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
-                                                <th colspan="2" style="text-align:center;">CONFIRM OK</th>
-                                                <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
-                                            </tr>
-                                            <tr>
-                                                <th width="100" style="text-align:center;">COST CONTROL</th>
-                                                <th width="100" style="text-align:center;">HRD</th>
-                                            </tr>
-                                            <tr>
-                                                <td style="height:60px;"></td>
-                                                <td style="height:60px;"></td>
-                                                <td style="height:60px;"></td>
-                                                <td style="height:60px;"></td>
-                                            </tr>
-                                            <tr>
-                                                <th style="text-align:center;">BOD</th>
-                                                <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                                <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                                <th style="text-align:center;">PAYROLL STAFF</th>
-                                            </tr>
-                                        </table>
-                                    </center>';
+                                <table id="customers" style="width:70%;">
+                                    <tr>
+                                        <th colspan="2" rowspan="2" style="text-align:center;">APPROVED</th>
+                                        <th colspan="3" style="text-align:center;">CONFIRM OK</th>
+                                        <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
+                                    </tr>
+                                    <tr>
+                                        <th width="100" style="text-align:center;">COST CONTROL</th>
+                                        <th width="100" style="text-align:center;">HRD-GA</th>
+                                        <th width="100" style="text-align:center;">HR</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="height:60px;" width="100"></td>
+                                        <td style="height:60px;" width="100"></td>
+                                        <td style="height:60px;"></td>
+                                        <td style="height:60px;"></td>
+                                        <td style="height:60px;"></td>
+                                        <td style="height:60px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:center;" colspan="2">BOD</th>
+                                        <th style="text-align:center;">LEADER</th>
+                                        <th style="text-align:center;">ASSISTANT MANAGER</th>
+                                        <th style="text-align:center;">LEADER</th>
+                                        <th style="text-align:center;">PAYROLL STAFF</th>
+                                    </tr>
+                                </table>
+                            </center>';
                         }
 
                         $hal++;

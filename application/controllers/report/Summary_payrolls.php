@@ -479,31 +479,43 @@ class Summary_payrolls extends CI_Controller
             }
 
             $html .= '  <br>
-                        <center>
-                            <table id="customers" style="width:70%;">
-                                <tr>
-                                    <th rowspan="2" width="100" style="text-align:center;">APPROVED</th>
-                                    <th colspan="2" style="text-align:center;">CONFIRM OK</th>
-                                    <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
-                                </tr>
-                                <tr>
-                                    <th width="100" style="text-align:center;">COST CONTROL</th>
-                                    <th width="100" style="text-align:center;">HRD</th>
-                                </tr>
-                                <tr>
-                                    <td style="height:60px;"></td>
-                                    <td style="height:60px;"></td>
-                                    <td style="height:60px;"></td>
-                                    <td style="height:60px;"></td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align:center;">BOD</th>
-                                    <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                    <th style="text-align:center;">ASSISTANT MANAGER</th>
-                                    <th style="text-align:center;">PAYROLL STAFF</th>
-                                </tr>
-                            </table>
-                        </center><br><br><br>';
+                <center>
+                    <table id="customers" style="width:70%;">
+                        <tr>
+                            <th colspan="2" rowspan="2" width="100" style="text-align:center;">APPROVED</th>
+                            <th colspan="3" style="text-align:center;">CONFIRM OK</th>
+                            <th rowspan="2" width="100" style="text-align:center;">PREPARED</th>
+                        </tr>
+                        <tr>
+                            <th width="100" style="text-align:center;">COST CONTROL</th>
+                            <th width="100" style="text-align:center;">HRD-GA</th>
+                            <th width="100" style="text-align:center;">HR</th>
+                        </tr>
+                        <tr>
+                            <td style="height:60px;"></td>
+                            <td style="height:60px;"></td>
+                            <td style="height:60px;"></td>
+                            <td style="height:60px;"></td>
+                            <td style="height:60px;"></td>
+                            <td style="height:60px;"></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="text-align:center;">BOD</th>
+                            <th style="text-align:center;">LEADER</th>
+                            <th style="text-align:center;">ASSISTANT MANAGER</th>
+                            <th style="text-align:center;">LEADER</th>
+                            <th style="text-align:center;">PAYROLL STAFF</th>
+                        </tr>
+                    </table>
+                </center><br><br><br>';
 
             $html .= '</body></html>';
             echo $html;
@@ -607,7 +619,7 @@ class Summary_payrolls extends CI_Controller
             $this->db->join('departement_subs d', "b.departement_sub_id = d.id");
             $this->db->join('groups e', "b.group_id = e.id");
             $this->db->join('privilege_groups f', "b.group_id = f.group_id and f.username = '$username' and f.status = '1'");
-            $this->db->join('positions g', "b.position_id = g.id");
+	    $this->db->join('positions g', "b.position_id = g.id");
             $this->db->where('a.period_start =', $period_start);
             $this->db->where('a.period_end =', $period_end);
             if($filter_group != ""){
@@ -757,7 +769,7 @@ class Summary_payrolls extends CI_Controller
                     $html .= '<br><br><table id="customers" style="width:100%; page-break-inside: avoid;">
                         <tr>
                             <td style="border:none;"></td>
-                            <th style="text-align:center;">Disetujui</th>
+                            <th style="text-align:center;" colspan="2">Disetujui</th>
                             <th style="text-align:center;">Diketahui</th>
                             <th style="text-align:center;" colspan="2">Diperiksa</th>
                             <th style="text-align:center;">Dibuat</th>
@@ -769,21 +781,23 @@ class Summary_payrolls extends CI_Controller
                             <td style="text-align:center;"></td>
                             <td style="text-align:center;"></td>
                             <td style="text-align:center;"></td>
+                            <td style="text-align:center;"></td>
                         </tr>
                         <tr>
                             <td style="border:none;"></td>
                             <td style="text-align:center;">Abdul Rachman</td>
-                            <td style="text-align:center;"></td>
+                            <td style="text-align:center;">Kinenta Harsono</td>
+                            <td style="text-align:center;">Maya Evilia</td>
                             <td style="text-align:center;">Rizki Andri S</td>
                             <td style="text-align:center;">Nia Nurazizah</td>
                             <td style="text-align:center;">Jihan Maharani</td>
                         </tr>
                         <tr>
                             <td style="border:none;"></td>
-                            <th style="text-align:center;">BOD</th>
-                            <th style="text-align:center;">Asst Manager FAT  Cost Control</th>
+                            <th style="text-align:center;" colspan="2">BOD</th>
+                            <th style="text-align:center;">Leader FAT Cost Control</th>
                             <th style="text-align:center;">Asst Manager HRD-GA</th>
-                            <th style="text-align:center;">Leader HRD-NRM</th>
+                            <th style="text-align:center;">Leader HR</th>
                             <th style="text-align:center;">HR-Payroll</th>
                         </tr>
                     </table><br>';
