@@ -292,8 +292,13 @@ class Crud extends CI_Model
         $query = $this->db->query("DESCRIBE $table");
         $fields = $query->result_array();
 
-//        $user = $this->read('users', [], ["username" => $this->session->username]);
-        $approval = $this->read('approvals', [], ["table_name" => $table]);
+       $user = $this->read('users', [], ["username" => $this->session->username]);
+        $this->db->where('table_name', $table);
+        $this->db->group_start();
+        $this->db->where('departement_id', @$user->departement_id);
+        $this->db->or_where('departement_sub_id', @$user->departement_id);
+        $this->db->group_end();
+        $approval = $this->db->get('approvals')->row();
 
         $fieldExists = false;
         foreach ($fields as $field) {
