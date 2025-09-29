@@ -62,7 +62,7 @@ class Employees extends CI_Controller
 
         $querys = $this->crud->query("SELECT b.name, COUNT(a.number) AS total
         FROM departements b LEFT JOIN employees a ON a.departement_id = b.id
-        WHERE a.status = 0 AND a.contract_id NOT IN ('20221119000003', '20250704000001') AND a.group_id != '20221119000002'
+        WHERE a.status = 0
         GROUP BY b.name");
 
         $name = array();
@@ -99,7 +99,7 @@ class Employees extends CI_Controller
 
         $querys = $this->crud->query("SELECT b.name, COUNT(a.number) as total
         FROM groups b LEFT JOIN employees a ON a.group_id = b.id
-        WHERE a.status = 0 AND a.contract_id NOT IN ('20221119000003', '20250704000001') AND a.group_id != '20221119000002'
+        WHERE a.status = 0
         GROUP BY b.name");
 
         $name = array();
@@ -143,7 +143,7 @@ class Employees extends CI_Controller
             SUM(CASE WHEN (a.usia > 55) THEN 1 ELSE 0 END) as enam
         FROM (
             SELECT TIMESTAMPDIFF(YEAR, birthday, CURDATE()) AS usia FROM employees
-            WHERE status = 0 AND contract_id NOT IN ('20221119000003', '20250704000001') AND group_id != '20221119000002'
+            WHERE status = 0
         ) a");
 
         
@@ -192,7 +192,7 @@ class Employees extends CI_Controller
 
         $querys = $this->crud->query(
             "SELECT CASE WHEN gender = '' THEN 'EMPTY' ELSE gender END AS gender, COUNT(number) AS total FROM employees
-            WHERE status = 0 AND contract_id NOT IN ('20221119000003', '20250704000001') AND group_id != '20221119000002'
+            WHERE status = 0
             GROUP BY gender"
         );
 
@@ -223,7 +223,7 @@ class Employees extends CI_Controller
         // Hitung jumlah karyawan per status marital
         $data = $this->crud->query("SELECT b.id, b.name, COUNT(a.number) as total
         FROM maritals b LEFT JOIN employees a ON a.marital_id = b.id
-        WHERE a.status = 0 AND a.contract_id NOT IN ('20221119000003', '20250704000001') AND a.group_id != '20221119000002'
+        WHERE a.status = 0
         GROUP BY b.id, b.name ORDER BY b.name ASC");
         $categories = array();
         $values = array();
@@ -258,7 +258,7 @@ class Employees extends CI_Controller
             SUM(CASE WHEN address LIKE '%purwakarta%' THEN 1 ELSE 0 END) as purwakarta,
             SUM(CASE WHEN address NOT LIKE '%purwakarta%' THEN 1 ELSE 0 END) as not_purwakarta
         FROM employees
-        WHERE status = 0 AND contract_id NOT IN ('20221119000003', '20250704000001') AND group_id != '20221119000002'");
+        WHERE status = 0");
 
         $name = array();
 
@@ -286,7 +286,7 @@ class Employees extends CI_Controller
 
         $querys = $this->crud->query("SELECT b.level, COUNT(a.number) as number
         FROM employees a JOIN (select number, level from employee_educations GROUP by number) b ON a.number = b.number
-        WHERE a.status = 0 AND a.contract_id NOT IN ('20221119000003', '20250704000001') AND a.group_id != '20221119000002'
+        WHERE a.status = 0
         GROUP BY b.level");
 
         $name = array();
