@@ -456,11 +456,22 @@ class Employees extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 $post = $this->input->post();
 
-                $national_id = $this->crud->read('employees', [], ["national_id" => $post['national_id']]);
-                $tax_id = $this->crud->read('employees', [], ["tax_id" => $post['tax_id']]);
-                $email = $this->crud->read('employees', [], ["email" => $post['email']]);
-                $mobile_phone = $this->crud->read('employees', [], ["mobile_phone" => $post['mobile_phone']]);
-                $bank_no = ($post['bank_no'] == '-') ? [] : $this->crud->read('employees', [], ["bank_no" => $post['bank_no']]);
+                $regis_bf = $post['regis_bf'] == 'No';
+                $national_id = [];
+                $tax_id = [];
+                $email = [];
+                $mobile_phone = [];
+                $bank_no = [];
+                if ($regis_bf) {
+                    $national_id = $this->crud->read('employees', [], ["national_id" => $post['national_id']]);
+                    $tax_id = $this->crud->read('employees', [], ["tax_id" => $post['tax_id']]);
+                    if ($post['email'] == '-')
+                        { $email = $this->crud->read('employees', [], ["email" => $post['email']]); }
+                    if ($post['mobile_phone'] == '0')
+                        { $mobile_phone = $this->crud->read('employees', [], ["mobile_phone" => $post['mobile_phone']]); }
+                    if ($post['bank_no'] == '-')
+                        { $bank_no = $this->crud->read('employees', [], ["bank_no" => $post['bank_no']]); }
+                }
 
                 if ($national_id) {
                     echo json_encode(array("title" => "Duplicate", "message" => "National ID Duplicate", "theme" => "error"));
@@ -475,6 +486,7 @@ class Employees extends CI_Controller
                 } else {
                     $image_id = $this->crud->upload('image_id', ['png', 'jpg', 'jpeg'], 'assets/image/employee/id/');
                     $image_profile = $this->crud->upload('image_profile', ['png', 'jpg', 'jpeg'], 'assets/image/employee/profile/');
+                    unset($post['regis_bf']);
                     $post_final = array_merge($post, ["image_id" => $image_id, "image_profile" => $image_profile]);
 
                     $employees = $this->crud->create('employees', $post_final);

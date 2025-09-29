@@ -207,6 +207,11 @@
                     <span style="width:35%; display:inline-block;">Source</span>
                     <input style="width:60%;" name="source_id" id="source_id" class="easyui-combobox">
                 </div>
+                <div class="fitem" style="margin-bottom: 5px;">
+                    <span style="width:35%; display:inline-block;">Registered Before</span>
+                    <input class="easyui-radiobutton" name="regis_bf" value="Yes"> Yes &nbsp;
+                    <input class="easyui-radiobutton" name="regis_bf" id="regis_bf" value="No"> No
+                </div>
                 <!-- <div class="fitem" style="margin-bottom: 5px;">
                     <span style="width:35%; display:inline-block;">Employee Status</span>
                     <input class="easyui-radiobutton status_active" name="status" checked="true" value="0"> Active &nbsp;
@@ -302,7 +307,7 @@
                     </div>
                     <div class="fitem">
                         <span style="width:35%; display:inline-block;">Email</span>
-                        <input style="width:60%;" name="email" data-options="validType:'email'" id="email" required="" class="easyui-textbox">
+                        <input style="width:60%;" name="email" id="email" required="" class="easyui-textbox">
                     </div>
                     <div class="fitem" hidden>
                         <span style="width:35%; display:inline-block;">Driving Licensed</span>
@@ -532,6 +537,9 @@
             checked: true
         });
         $(".status_active").radiobutton({
+            checked: true
+        });
+        $("#regis_bf").radiobutton({
             checked: true
         });
         $("#jkn_family").combobox("setValue", "1");
