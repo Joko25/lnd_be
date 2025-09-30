@@ -1758,7 +1758,13 @@ class Approvals extends CI_Controller
 		$id = $this->input->post('id');
 		$tablename = $this->input->post('tablename');
 		$data = $this->crud->read($tablename, [], ["id" => $id, "status" => 0]);
-		$approval = $this->crud->read('approvals', [], ["table_name" => $tablename]);
+        $user = $this->crud->read('users', [], ["username" => $this->session->username]);
+		$this->db->where('table_name', $tablename);
+        $this->db->group_start();
+        $this->db->where('departement_id', @$user->departement_id);
+        $this->db->or_where('departement_sub_id', @$user->departement_id);
+        $this->db->group_end();
+        $approval = $this->db->get('approvals')->row();
 
 		if ($data->approved == 1) {
 			$users_id = @$approval->user_approval_2;
