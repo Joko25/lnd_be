@@ -450,19 +450,21 @@
 						let approverName = row.approverName;
 						let gender = row.gender;
 						let inputterName = row.inputter;
-                        if(row.statusApproved === '4') {
+                        if(row.approvedData === 'COMPLETED') {
                             return `<div style="color:black;padding:5px;"><b><a href="#" onClick="showHistoryApproval('${row.requestTrainingId}')">Completed<a/></b></div>`;
                         }
                         if(row.statusApproval == '-1') {
                             return '<div style="background-color:orange;color:white;padding:5px;">Remark: ' + row.approvedData + ' </div>';
-                        }else {
+                        } else {
+							if (inputterName == null || inputterName === '' || approverName == null || approverName == '') {
+								return '<div style="background-color:red;color:white;padding:5px;">Not Valid</div>';
+							}
                             if(value === '-1') {
-                                const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Pak ' + inputterName : 'Ibu ' + inputterName);
+                                const label = 'Waiting Revision ' + (gender === 'MALE' ? 'Pak ' + inputterName : gender === 'FA MALE' ?'Ibu ' + inputterName : inputterName);
                                 return '<div style="background-color:red;color:white;padding:5px;">' + label + '</div>';
-                            }else{
-                                const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Pak ' + approverName : 'Ibu ' + approverName);
+                            } else {
+                                const label = 'Waiting Approval ' + (gender === 'MALE' ? 'Pak ' + approverName : gender === 'FAMALE' ? 'Ibu ' + approverName : approverName);
                                 return '<div style="background-color:green;color:white;padding:5px;">' + label + '</div>';
-
                             }
                         }
                         return '-';

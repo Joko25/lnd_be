@@ -957,14 +957,14 @@ class Approvals extends CI_Controller
         $change_days = $this->db->get()->result_object();
 
 
-        $this->db->select('b.name as fullname, a.approved_to, a.approved_by, b.avatar');
+        $this->db->select('b.name as fullname, a.approved_to, a.approved_by, b.avatar, lrt.createdBy');
 		$this->db->from('lnd_request_training_approvals_history a');
 		$this->db->join('users b', 'a.approved_by = b.username');
 		$this->db->join('users c', 'a.approved_to = c.username');
+		$this->db->join('lnd_request_training lrt', 'a.trainingRequestId = lrt.requestTrainingId');
 		$this->db->where('a.approved_to', $this->session->username);
         $this->db->where('a.status', 0);
-		// $this->db->where('a.approved', 1);
-		$this->db->group_by('a.approved_by');
+		$this->db->group_by('a.approved_by, lrt.createdBy');
 		$lnd_request_training_approvals_history = $this->db->get()->result_object();
 
 
@@ -1757,8 +1757,9 @@ class Approvals extends CI_Controller
 	{
 		$id = $this->input->post('id');
 		$tablename = $this->input->post('tablename');
+        $createdBy = $this->input->post('createdBy');
 		$data = $this->crud->read($tablename, [], ["id" => $id, "status" => 0]);
-        $user = $this->crud->read('users', [], ["username" => $this->session->username]);
+        $user = $this->crud->read('users', [], ["username" => $createdBy]);
 		$this->db->where('table_name', $tablename);
         $this->db->group_start();
         $this->db->where('departement_id', @$user->departement_id);
@@ -1766,21 +1767,39 @@ class Approvals extends CI_Controller
         $this->db->group_end();
         $approval = $this->db->get('approvals')->row();
 
-		if ($data->approved == 1) {
-			$users_id = @$approval->user_approval_2;
-			$approved = 2;
-		} elseif ($data->approved == 2) {
-			$users_id = @$approval->user_approval_3;
-			$approved = 3;
-		} elseif ($data->approved == 3) {
-			$users_id = @$approval->user_approval_4;
-			$approved = 4;
-		} elseif ($data->approved == 4) {
-			$users_id = @$approval->user_approval_5;
-			$approved = 5;
-		} else {
-			$users_id = "";
-			$approved = 0;
+		// Perbaikan logika approval LND
+		$users_id = "";
+		$approved = 0;
+		$approval_data = null;
+
+		if (isset($data->approved)) {
+			switch ($data->approved) {
+				case 1:
+					$users_id = isset($approval->user_approval_2) ? $approval->user_approval_2 : "";
+					$approved = 2;
+					$approval_data = empty($approval->user_approval_2) ? 'COMPLETED' : null;
+					break;
+				case 2:
+					$users_id = isset($approval->user_approval_3) ? $approval->user_approval_3 : "";
+					$approved = 3;
+					$approval_data = empty($approval->user_approval_3) ? 'COMPLETED' : null;
+					break;
+				case 3:
+					$users_id = isset($approval->user_approval_4) ? $approval->user_approval_4 : "";
+					$approved = 4;
+					$approval_data = empty($approval->user_approval_4) ? 'COMPLETED' : null;
+					break;
+				case 4:
+					$users_id = isset($approval->user_approval_5) ? $approval->user_approval_5 : "";
+					$approved = 5;
+					$approval_data = empty($approval->user_approval_5) ? 'COMPLETED' : null;
+					break;
+				default:
+					$users_id = "";
+					$approved = 0;
+					$approval_data = null;
+					break;
+			}
 		}
 
 		$valuesUpdate = array(
@@ -1797,12 +1816,13 @@ class Approvals extends CI_Controller
 			"approved_date" => date('Y-m-d H:i:s'),
 			"approved_to" => $users_id,
 			"approved" => $approved,
-			"status" => 0
+			"status" => 0,
+            "approval_data" => $approval_data
 		);
 
 		$send = $this->db->insert($tablename, $values, ["id" => $id]);
 		if($send && $resUpdated){
-			echo json_encode(array("title" => "Approved", "message" => "Data Approved Successfully", "theme" => "success"));
+			echo json_encode(array("title" => "Approved", "message" => "Data Approved Successful", "theme" => "success"));
 		} else {
 			echo log_message('error', 'There is an error in your system or data');
 		}

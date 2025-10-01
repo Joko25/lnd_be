@@ -3057,7 +3057,7 @@
 							align: 'center',
 							title: "Action",
 							formatter: function(val, row) {
-								var approve = "approveLnd('" + row.approvalHistoryId + "','" + table + "')";
+								var approve = "approveLnd('" + row.approvalHistoryId + "','" + table + "','" + row.createdBy + "')";
 								var disapprove = "disapproveLnd('" + row.approvalHistoryId + "','" + table + "')";
 								var a = '<a class="btn btn-success w-50" style="pointer-events: visible; opacity:1;" onclick="' + approve + '"><i class="fa fa-check"></i></a>';
 								var b = '<a class="btn btn-danger w-50" style="pointer-events: visible; opacity:1;" onclick="' + disapprove + '"><i class="fa fa-times"></i></a>';
@@ -3072,12 +3072,13 @@
 
 	}
 
-	function approveLnd(id, tablename) {
+	function approveLnd(id, tablename, createdBy) {
 		$.messager.confirm('Warning', 'Are you sure you want to approve this data?', function(r) {
 			if (r) {
 				$.post('<?= base_url('approvals/approveLnd') ?>', {
 					id: id,
-					tablename: tablename
+					tablename: tablename,
+					createdBy: createdBy
 				}, function(result) {
 					var result = eval('(' + result + ')');
 					if (result.theme == "success") {
